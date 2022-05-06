@@ -19,6 +19,19 @@ export default function Home() {
       <div className="relative bg-white flex flex-col items-center pb-[100px]">
         <NavbarPostHeader/>
         {/* <Story /> */}
+        <div
+          className={
+            "relative max-w-[1310px] w-full justify-items-center newFeedGrid justify-center py-[50px]"
+          }
+        >
+          {
+            articles.slice(0, 9).map((data, index) => {
+              return(
+                <FeedCard key={index} post={data}/>
+              )
+            })
+          }
+        </div>
         <TopTags/>
         <div
           className={
@@ -26,7 +39,7 @@ export default function Home() {
           }
         >
           {
-            articles.map((data, index) => {
+            articles.slice(9, 15).map((data, index) => {
               return(
                 <FeedCard key={index} post={data}/>
               )
@@ -34,6 +47,19 @@ export default function Home() {
           }
         </div>
         <MagazineFeed feed/>
+        <div
+          className={
+            "relative max-w-[1310px] w-full justify-items-center newFeedGrid justify-center py-[50px]"
+          }
+        >
+          {
+            articles.slice(15).map((data, index) => {
+              return(
+                <FeedCard key={index} post={data}/>
+              )
+            })
+          }
+        </div>
       </div>
     </ >
   );

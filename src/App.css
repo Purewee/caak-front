@@ -86,45 +86,6 @@ border-radius: 8px;
 font-weight: 700;
 }
 
-.button {
-  @apply: transition duration-100 inline-flex items-center text-sm justify-center text-15px tracking-0.23px rounded-square font-medium;
-  height: 36px;
-  border-radius: 8px;
-  padding: 9px 24px;
-}
-
-.button.primary {
-  background-color : #FF6600;
-  color: #fff;
-}
-/* 
-.button.secondary {
-  @apply: text-caak-generalblack bg-gray-200 hover:bg-gray-300 focus:outline-none;
-}
-
-.button.round {
-  @apply: rounded-square;
-}
-
-.button.white {
-  @apply: bg-white text-caak-primary font-bold justify-start shadow-button;
-}
-
-.button.transparent {
-  @apply: text-caak-generalblack font-bold justify-start border-transparent shadow-none hover:bg-caak-titaniumwhite bg-transparent;
-}
-
-.button.circular {
-  @apply: rounded-full;
-}
-
-.button.small {
-  height: 34px;
-  padding: 7px 24px;
-  @apply: font-bold text-15px tracking-0.23px;
-  border-radius: 8px;
-} */
-
 .navBarPostHeaderCardGradient {
 background: transparent
   linear-gradient(180deg, #11111100 0%, #111111cc 100%) 0 0 no-repeat
