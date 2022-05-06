@@ -1,0 +1,222 @@
+@font-face {
+  font-family: "caakmoon";
+  src: url("../assets/fonts/caakmoon.eot?9j9lnf");
+  src: url("../assets/fonts/caakmoon.eot?9j9lnf#iefix")
+      format("embedded-opentype"),
+    url("../assets/fonts/caakmoon.ttf?9j9lnf") format("truetype"),
+    url("../assets/fonts/caakmoon.woff?9j9lnf") format("woff"),
+    url("../assets/fonts/caakmoon.svg?9j9lnf#caakmoon") format("svg");
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'caakmoon' !important;
+  speak: never;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-fi-rs-ads:before {
+  content: "\e900";
+}
+.icon-fi-rs-bookmark:before {
+  content: "\e901";
+}
+.icon-fi-rs-close:before {
+  content: "\e902";
+}
+.icon-fi-rs-down-chevron:before {
+  content: "\e903";
+}
+.icon-fi-rs-fb:before {
+  content: "\e904";
+}
+.icon-fi-rs-hamburger-menu:before {
+  content: "\e905";
+}
+.icon-fi-rs-heart:before {
+  content: "\e906";
+}
+.icon-fi-rs-ig:before {
+  content: "\e907";
+}
+.icon-fi-rs-jor:before {
+  content: "\e908";
+}
+.icon-fi-rs-mic:before {
+  content: "\e909";
+}
+.icon-fi-rs-more-ver:before {
+  content: "\e90a";
+}
+.icon-fi-rs-phone:before {
+  content: "\e90b";
+}
+.icon-fi-rs-plus:before {
+  content: "\e90c";
+}
+.icon-fi-rs-search:before {
+  content: "\e90d";
+}
+.icon-fi-rs-share:before {
+  content: "\e90e";
+}
+.icon-fi-rs-tag:before {
+  content: "\e90f";
+}
+.icon-fi-rs-tw:before {
+  content: "\e910";
+}
+.icon-fi-rs-wave:before {
+  content: "\e911";
+}
+.icon-fi-rs-yt:before {
+  content: "\e912";
+}
+
+@font-face {
+  font-family: 'caakmoon';
+  src:  url('../assets/fonts/caakmoon.eot?5sctdk');
+  src:  url('../assets/fonts/caakmoon.eot?5sctdk#iefix') format('embedded-opentype'),
+    url('../assets/fonts/caakmoon.ttf?5sctdk') format('truetype'),
+    url('../assets/fonts/caakmoon.woff?5sctdk') format('woff'),
+    url('../assets/fonts/caakmoon.svg?5sctdk#caakmoon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'caakmoon' !important;
+  speak: never;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-fi-rs-mute:before {
+  content: "\e920";
+}
+.icon-fi-rs-pause:before {
+  content: "\e921";
+}
+.icon-fi-rs-play:before {
+  content: "\e922";
+}
+.icon-fi-rs-volume:before {
+  content: "\e923";
+}
+.icon-fi-rs-camera-f:before {
+  content: "\e91e";
+}
+.icon-fi-rs-camera-o:before {
+  content: "\e91f";
+}
+.icon-fi-rs-ads:before {
+  content: "\e900";
+}
+.icon-fi-rs-bolt:before {
+  content: "\e901";
+}
+.icon-fi-rs-bookmark:before {
+  content: "\e902";
+}
+.icon-fi-rs-close:before {
+  content: "\e903";
+}
+.icon-fi-rs-down-chevron:before {
+  content: "\e904";
+}
+.icon-fi-rs-edit:before {
+  content: "\e905";
+}
+.icon-fi-rs-editor:before {
+  content: "\e906";
+}
+.icon-fi-rs-exit:before {
+  content: "\e907";
+}
+.icon-fi-rs-fb:before {
+  content: "\e908";
+}
+.icon-fi-rs-flag:before {
+  content: "\e909";
+}
+.icon-fi-rs-hamburger-menu:before {
+  content: "\e90a";
+}
+.icon-fi-rs-heart:before {
+  content: "\e90b";
+}
+.icon-fi-rs-ig:before {
+  content: "\e90c";
+}
+.icon-fi-rs-jor:before {
+  content: "\e90d";
+}
+.icon-fi-rs-megaphone:before {
+  content: "\e90e";
+}
+.icon-fi-rs-mic:before {
+  content: "\e90f";
+}
+.icon-fi-rs-more-ver:before {
+  content: "\e910";
+}
+.icon-fi-rs-notification:before {
+  content: "\e911";
+}
+.icon-fi-rs-phone:before {
+  content: "\e912";
+}
+.icon-fi-rs-plus:before {
+  content: "\e913";
+}
+.icon-fi-rs-search:before {
+  content: "\e914";
+}
+.icon-fi-rs-settings:before {
+  content: "\e915";
+}
+.icon-fi-rs-share:before {
+  content: "\e916";
+}
+.icon-fi-rs-statistic:before {
+  content: "\e917";
+}
+.icon-fi-rs-tag:before {
+  content: "\e918";
+}
+.icon-fi-rs-tw:before {
+  content: "\e919";
+}
+.icon-fi-rs-user:before {
+  content: "\e91a";
+}
+.icon-fi-rs-verified:before {
+  content: "\e91b";
+}
+.icon-fi-rs-wave:before {
+  content: "\e91c";
+}
+.icon-fi-rs-yt:before {
+  content: "\e91d";
+}
+

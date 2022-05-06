@@ -36,3 +36,102 @@
     transform: rotate(360deg);
   }
 }
+
+.newFeedGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(422px, 1px));
+  grid-gap: 40px 22px;
+}
+.trendPostsCardWrapper {
+overflow: hidden;
+}
+.trendPostsCardWrapper::-webkit-scrollbar {
+width: 0;
+height: 0;
+background: 0 0;
+}
+
+.truncate-3 {
+display: -webkit-box;
+-webkit-line-clamp: 3;
+-webkit-box-orient: vertical;
+overflow: hidden;
+}
+
+.truncate-2 {
+display: -webkit-box;
+-webkit-line-clamp: 2;
+-webkit-box-orient: vertical;
+overflow: hidden;
+}
+
+.truncate-1 {
+display: -webkit-box;
+-webkit-line-clamp: 1;
+-webkit-box-orient: vertical;
+overflow: hidden;
+}
+
+.button {
+height: 36px;
+border-radius: 8px;
+padding: 9px 24px;
+transition: all;
+transition-duration: 100s;
+display: inline-flex;
+align-items: center;
+font-size: 15px;
+justify-content: center;
+border-radius: 8px;
+font-weight: 700;
+}
+
+.button {
+  @apply: transition duration-100 inline-flex items-center text-sm justify-center text-15px tracking-0.23px rounded-square font-medium;
+  height: 36px;
+  border-radius: 8px;
+  padding: 9px 24px;
+}
+
+.button.primary {
+  background-color : #FF6600;
+  color: #fff;
+}
+/* 
+.button.secondary {
+  @apply: text-caak-generalblack bg-gray-200 hover:bg-gray-300 focus:outline-none;
+}
+
+.button.round {
+  @apply: rounded-square;
+}
+
+.button.white {
+  @apply: bg-white text-caak-primary font-bold justify-start shadow-button;
+}
+
+.button.transparent {
+  @apply: text-caak-generalblack font-bold justify-start border-transparent shadow-none hover:bg-caak-titaniumwhite bg-transparent;
+}
+
+.button.circular {
+  @apply: rounded-full;
+}
+
+.button.small {
+  height: 34px;
+  padding: 7px 24px;
+  @apply: font-bold text-15px tracking-0.23px;
+  border-radius: 8px;
+} */
+
+.navBarPostHeaderCardGradient {
+background: transparent
+  linear-gradient(180deg, #11111100 0%, #111111cc 100%) 0 0 no-repeat
+  padding-box;
+}
+
+.storyLinear {
+background: transparent
+  linear-gradient(180deg,  #00000067 0%, #00000000 100%) 0% 0% no-repeat;
+}
