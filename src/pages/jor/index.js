@@ -1,99 +1,25 @@
-import {useState} from 'react'
-import FeedCard from '../../src/component/card/FeedCard'
-import Link from 'next/link'
+import React, {useState, useEffect} from 'react'
+import FeedCard from '../../component/card/FeedCard'
+import { ESService } from '../../lib/esService'
 
 const menu = [
-    {
-        title: 'ШИНЭ',
-    },
-    {
-        title: 'ШИЛДЭГ',
-    },
+  {
+      title: 'ШИНЭ',
+  },
+  {
+      title: 'ШИЛДЭГ',
+  },
 ]
 
-const posts = [
-    {
-      id: 1,
-      title: "ФОТО: Мөнгөн мод 2021 ёслолын арга хэмжээ",
-      category: {
-        name: 'cateName'
-      },
-      group: {
-        name: 'groupName'
-      },
-      user: {
-        nickname: 'userName'
-      }
-    },
-    {
-      id: 2,
-      title: "Насанд хүрэгчид 19, хүүхдүүд зургаан төрлийн үзлэг оношилгоонд хамрагдана",
-      category: {
-        name: 'cateName'
-      },
-      group: {
-        name: 'groupName'
-      },
-      user: {
-        nickname: 'userName'
-      }
-    },
-    {
-      id: 3,
-      title: "Б.Барслхагва: Энэ шагнал бол минийх биш ханийн минь шагнал юм шүү",
-      category: {
-        name: 'cateName'
-      },
-      group: {
-        name: 'groupName'
-      },
-      user: {
-        nickname: 'userName'
-      }
-    },
-    {
-      id: 4,
-      title: "hellooo",
-      category: {
-        name: 'cateName'
-      },
-      group: {
-        name: 'groupName'
-      },
-      user: {
-        nickname: 'userName'
-      }
-    },
-    {
-      id: 5,
-      title: "hellooo",
-      category: {
-        name: 'cateName'
-      },
-      group: {
-        name: 'groupName'
-      },
-      user: {
-        nickname: 'userName'
-      }
-    },
-    {
-      id: 6,
-      title: "hellooo",
-      category: {
-        name: 'cateName'
-      },
-      group: {
-        name: 'groupName'
-      },
-      user: {
-        nickname: 'userName'
-      }
-    },
-]
 
 export default function Jor({owned}) {
     const [selected, setSelected] = useState(0)
+    const [articles, setArticles] = useState([]);
+  
+    useEffect(() => {
+      const es = new ESService('caak');
+      es.home_articles().then(setArticles);
+    }, []);
     return (
         <div className="py-[31px] flex flex-col items-center w-full">
             <img className="w-[800px] h-[360px] rounded-[10px] object-cover" alt="" src="https://namastehallyu.com/wp-content/uploads/2021/03/suzynamastehallyu.jpg"/>
@@ -101,9 +27,7 @@ export default function Jor({owned}) {
             <div className="text-[#555555] text-[15px] leading-[18px] flex flex-row items-center mt-[10px]">
                 жор үүсгэсэн:<div className="text-[#111111] font-medium flex flex-row items-center ml-[8px]"><img className="h-[22px] w-[22px] rounded-full object-cover mr-[6px]" alt="" src="https://i.mydramalist.com/pOqyQf.jpg"/>Sam Dorj</div>
             </div>
-            <Link href={{pathname: `/jor`}}>
-                <p className="text-[#555555] text-[15px] mt-[20px]">Энэхүү жор дээр технологи болон иноваци тухай мэдээнүүдийг оруулах болно.</p>
-            </Link>
+            <p className="text-[#555555] text-[15px] mt-[20px]">Энэхүү жор дээр технологи болон иноваци тухай мэдээнүүдийг оруулах болно.</p>
             <div className="flex flex-row text-[#555555] mt-[20px] text-[15px] leading-[18px]">
                 <p><span className='text-[#111111] font-medium'>8</span> Пост</p>
                 <p><span className='text-[#111111] font-medium ml-[20px]'>30</span> Дагагчид</p>
@@ -138,9 +62,9 @@ export default function Jor({owned}) {
                 "relative max-w-[1310px] w-full justify-items-center newFeedGrid justify-center mt-[50px]"
               }
             >
-              {/* {posts.map((data, index) => {
+              {articles.map((data, index) => {
                 return <FeedCard key={index} post={data} />;
-              })} */}
+              })}
             </div>
         </div>
     )
