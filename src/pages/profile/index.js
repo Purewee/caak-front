@@ -1,6 +1,5 @@
 import {useState} from 'react'
 import MagazineFeed from '../../../src/component/magazine'
-import {useRouter} from 'next/router'
 
 const menu = [
   {
@@ -19,8 +18,6 @@ const menu = [
 
 export default function Profile() {
   const [selected, setSelected] = useState(0)
-  const router = useRouter()
-  const user = router.query
   return (
     <div className='flex justify-center'>
       <div className="max-w-[1310px] w-full flex flex-col">
@@ -28,7 +25,7 @@ export default function Profile() {
           <div className="flex flex-row">
             <img alt="" src="https://lh3.googleusercontent.com/iZiNP57j33Ds2vQrdLiMldv1Jd61QAfU2MIo5kJhtKkysyDkOdGc0LUNDnMQKeZ6uOuZ_CWenRzwYRLpYAiKfn-rMd44Aavy=w960-rj-nu-e365" className="w-[82px] object-cover h-[82px] rounded-full"/>
             <div className="ml-[16px]">
-              <p className="text-[30px] font-bold text-black leading-[35px]">{user.nickname}</p>
+              <p className="text-[30px] font-bold text-black leading-[35px]">user name</p>
               <p className="mt-[12px] text-[15px] text-[#555555] leading-[18px] max-w-[600px]">Өөрийн дуртай график дизайны мэдээллээ авдаг сайтнаас хүргэх болно.</p>
               <div className="flex flex-row text-[#555555] mt-[18px] text-[15px] leading-[18px]">
                 <p><span className='text-[#111111] font-medium'>8</span> Пост</p>

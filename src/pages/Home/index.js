@@ -3,7 +3,7 @@ import NavbarPostHeader from '../../component/navigation/navbarPostHeader';
 import Story from '../../component/story';
 import { ESService } from '../../lib/esService';
 import React from "react";
-import MagazineFeed from '../../component/magazine';
+import FeedMagazine from '../../component/magazine/FeedMagazine';
 import TopTags from '../../component/toptags/TopTags';
 
 export default function Home() {
@@ -46,7 +46,7 @@ export default function Home() {
             })
           }
         </div>
-        <MagazineFeed feed/>
+        <FeedMagazine/>
         <div
           className={
             "relative max-w-[1310px] w-full justify-items-center newFeedGrid justify-center py-[50px]"

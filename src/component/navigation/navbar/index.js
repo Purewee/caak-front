@@ -19,7 +19,7 @@ export default function NavbarNew() {
   return (
     loaded && (
       <nav
-        className={`bg-transparent absolute z-[2] border-b top-0 w-full px-[40px] flex items-center h-[70px]`}
+        className={`bg-transparent absolute z-[2] top-0 w-full px-[40px] flex items-center h-[70px]`}
       >
         <div
           className={"h-[42.33px] flex flex-row items-center justify-between w-full"}

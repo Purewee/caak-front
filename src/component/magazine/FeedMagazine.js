@@ -82,7 +82,7 @@ const trendingPostsByCategory = [
   },
 ]
 
-const Magazine = () => {
+const FeedMagazine = () => {
   const [activeIndex, setActiveIndex] = useState(0);
   const trendPostsRef = useRef(null);
   const nextItem = () => {
@@ -97,7 +97,7 @@ const Magazine = () => {
   };
 
   return  (
-    <div className="w-full pt-[21px] flex justify-center">
+    <div className="w-full py-[50px] bg-[#F5F5F5] flex justify-center">
       <div
         className={
           "flex flex-col w-full relative max-w-[400px] sm:max-w-[600px] md:max-w-[700px] lg:max-w-[950px] xl:max-w-[1200px] 2xl:max-w-[1310px]"
@@ -140,7 +140,7 @@ const Magazine = () => {
             />
           </div>
         )}
-        {/* <div className="flex flex-row items-center mb-[21px]">
+        <div className="flex flex-row items-center mb-[21px]">
           <span className="icon-fi-rs-jor text-[20px] text-[#FF6600]"/>
           <p
             className={
@@ -149,7 +149,7 @@ const Magazine = () => {
           >
             АЛДАРТАЙ ЖОРНУУД
           </p>
-        </div> */}
+        </div>
         <div
           ref={trendPostsRef}
           className={"trendPostsCardWrapper relative overflow-x-scroll"}
@@ -159,20 +159,6 @@ const Magazine = () => {
               " flex flex-row flex-nowrap w-full h-full gap-[21px] transition-all duration-300"
             }
           >
-            <div className='min-w-[348px] max-w-[348px] h-[227px] relative'>
-              <div className='absolute bg-[#FFF9F5] z-20 top-0 left-0 w-[338px] flex flex-col items-center justify-center h-[219px] rounded-[4px] border-[1px] border-[#D4D8D8]'>
-                  <div className="flex items-center justify-center w-[44px] h-[44px] border-[2px] border-dashed border-caak-primary rounded-[6px]">
-                    <span className="icon-fi-rs-plus text-caak-primary"/>
-                  </div>
-                  <p className="text-[20px] text-caak-primary font-medium mt-[19px] leading-[24px]">Шинэ жор үүсгэх</p>
-              </div>
-              <div className='absolute bg-white z-10 top-[5px] left-[5px] w-[338px] h-[218px] rounded-[4px] border-[1px] border-[#D4D8D8]'>
-
-              </div>
-              <div className='absolute z-0 bg-white top-[10px] left-[10px] w-[338px] h-[217px] rounded-[4px] border-[1px] border-[#D4D8D8]'>
-
-              </div>
-            </div>
             {trendingPostsByCategory.map((item, index) => {
               return <MagazineItem data={item} key={index} />;
             })}
@@ -183,4 +169,4 @@ const Magazine = () => {
   )
 };
 
-export default Magazine;
+export default FeedMagazine;
