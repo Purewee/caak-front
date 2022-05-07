@@ -1,4 +1,5 @@
 import ActionButtons from "./actionsButtons";
+import { Link } from "react-router-dom";
 
 const NavbarPostHeaderCard = ({ type, item }) => {
   return item && (
@@ -80,10 +81,12 @@ const NavbarPostHeaderCard = ({ type, item }) => {
           }
         >
           <div className={"flex flex-row flex-wrap items-center self-start"}>
-            &nbsp; &middot; &nbsp;
-            {/* <a as={`/profile/${item.author?.id}`} href={{pathname: `/profile/${item.author?.id}`, query: item.author}}> */}
-                <p className={"text-[14px] font-roboto font-medium tracking-[0.21px] leading-[16px]"}>{item.author?.name}</p>
-            {/* </a> */}
+          <img alt="" src={'https://scontent.fuln2-2.fna.fbcdn.net/v/t1.18169-9/16388375_1258991760846780_6001512035944932012_n.png?_nc_cat=107&ccb=1-5&_nc_sid=174925&_nc_ohc=9pNL5ldMQ0kAX_yAKha&_nc_ht=scontent.fuln2-2.fna&oh=00_AT_3pSN5nwhS6wQvQERY95zTkiYmS9VjFARKCE684yYu1w&oe=6298F67B'} className="w-[22px] h-[22px] rounded-full"/>
+            <p className="text-[15px] font-medium font-roboto ml-[6px]">gogo.mn</p>
+            &nbsp;
+            <Link to={`/profile/${item.author.id}`}>
+              <p className={"text-[14px] font-roboto font-medium tracking-[0.21px] leading-[16px]"}>• {item.author?.name.split(' ').slice(0, -1)}</p>
+            </Link>
           </div>
           <div className={"flex items-center mt-[10px] md:mt-0 self-end md:self-center"}>
             <ActionButtons />

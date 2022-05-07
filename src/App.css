@@ -57,3 +57,9 @@ background: transparent
 background: transparent
   linear-gradient(180deg,  #00000067 0%, #00000000 100%) 0% 0% no-repeat;
 }
+
+.caak-main-wrapper {
+  max-width: 1920px;
+  margin-right: auto;
+  margin-left: auto;
+}

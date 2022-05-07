@@ -15,7 +15,7 @@ const FeedCard = ({
       <div
         className={`${
           className ?? ""
-        } feedCard relative w-[422px] h-[523px] bg-white border-b border-[#EFEEEF]`}
+        } relative w-[422px] h-[523px] bg-white border-b border-[#EFEEEF]`}
       >
         {loading ? (
           <FeedCardSkeleton />
@@ -31,6 +31,13 @@ const FeedCard = ({
             />
           </>
         )}
+        {
+          sponsored && 
+          <div className="absolute top-[14px] pl-[10px] pr-[12px] pt-[5.3px] pb-[4.3px] left-[14px]  bg-black bg-opacity-60 rounded-[100px] flex flex-row items-center">
+            <span className="text-[11.8px] text-white icon-fi-rs-megaphone" />
+            <p className="text-white text-[12px] font-bold ml-[4px]">СПОНСОРОД</p>
+          </div>
+        }
       </div>
     )
   );

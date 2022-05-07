@@ -7,6 +7,7 @@ const CardFooter = ({
   post,
   sponsored
 }) => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [pathName, setPathName] = useState("");
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -15,7 +16,6 @@ const CardFooter = ({
     setIsMenuOpen(false);
   });
 
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   useEffect(() => {
     setPathName(window.location.origin);
