@@ -5,9 +5,9 @@ const menuItems = [
     { title: "TOP 100" },
     { title: "МЭДЭЭНИЙ ТӨРӨЛ", sub: [{ title: "Улс төр" }, { title: "Нийгэм" }] },
   ];
-  const MenuItems = () => {
+  const MenuItems = ({navBarStyle}) => {
     return (
-      <ul className={"uppercase text-white font-bold text-[14px] p-0 ml-[40px]"}>
+      <ul className={`uppercase ${navBarStyle ? 'text-white' : 'text-[#555555]'} font-bold text-[14px] p-0 ml-[40px]`}>
         {menuItems.map((item, index) => {
           return (
             <li

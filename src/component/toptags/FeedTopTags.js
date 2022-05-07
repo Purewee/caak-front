@@ -49,7 +49,7 @@ const posts = [
   },
 ]
 
-const TopTags = () => {
+const FeedTopTags = () => {
   const [activeIndex, setActiveIndex] = useState(0);
   const trendPostsRef = useRef(null);
   
@@ -139,4 +139,4 @@ const TopTags = () => {
   ) : null;
 };
 
-export default TopTags;
+export default FeedTopTags;

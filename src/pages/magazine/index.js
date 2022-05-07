@@ -1,6 +1,7 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useContext} from 'react'
 import FeedCard from '../../component/card/FeedCard'
 import { ESService } from '../../lib/esService'
+import { AppContext } from '../../App'
 
 const menu = [
   {
@@ -12,14 +13,20 @@ const menu = [
 ]
 
 
-export default function Jor({owned}) {
+export default function Magazine({owned}) {
     const [selected, setSelected] = useState(0)
     const [articles, setArticles] = useState([]);
+	const context = useContext(AppContext);
+
+    useEffect(() => {
+        context.setStore('default')
+    },[])
   
     useEffect(() => {
       const es = new ESService('caak');
       es.home_articles().then(setArticles);
     }, []);
+
     return (
         <div className="py-[31px] flex flex-col items-center w-full">
             <img className="w-[800px] h-[360px] rounded-[10px] object-cover" alt="" src="https://namastehallyu.com/wp-content/uploads/2021/03/suzynamastehallyu.jpg"/>

@@ -1,11 +1,14 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import Button from "../../button";
 import MenuItems from "./MenuItem";
 import useMediaQuery from "../useMediaQuery";
 import Logo from "../../logo";
+import { AppContext } from "../../../App";
 
 export default function NavbarNew() {
+	const context = useContext(AppContext);
   const [loaded, setLoaded] = useState(false);;
+  const [navBarStyle, setNavBarStyle] = useState(true);;
   const [ isMobileMenuOpen, setIsMobileMenuOpen ] = useState(false)
   const isLaptop = useMediaQuery("screen and (max-device-width: 1100px)");
   const isTablet = useMediaQuery("(max-width: 767px)");
@@ -14,12 +17,18 @@ export default function NavbarNew() {
     setLoaded(true);
   }, []);
 
-  // bg-transparent absolute z-[2]
+  useEffect(() => {
+    if(context.store === 'default'){
+      setNavBarStyle(false)
+    }else if(context.store === 'transparent'){
+      setNavBarStyle(true)
+    }
+  }, [context.store])
 
   return (
     loaded && (
       <nav
-        className={`bg-transparent absolute z-[2] top-0 w-full px-[40px] flex items-center h-[70px]`}
+        className={`${navBarStyle ? 'bg-transparent absolute z-[2] top-0' : 'border-b'} w-full px-[40px] flex items-center h-[70px]`}
       >
         <div
           className={"h-[42.33px] flex flex-row items-center justify-between w-full"}
@@ -56,7 +65,7 @@ export default function NavbarNew() {
             )}
 
             <Logo />
-            {!isLaptop && <MenuItems />}
+            {!isLaptop && <MenuItems navBarStyle={navBarStyle} />}
           </div>
           <div className={"flex flex-row items-center"}>
             <div

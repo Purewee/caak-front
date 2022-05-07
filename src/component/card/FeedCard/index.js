@@ -5,6 +5,7 @@ const FeedCard = ({
   post,
   loading,
   className,
+  sponsored
 }) => {
 
   // onClick={() => router.push(`/post/view/${post.id}`)}
@@ -26,6 +27,7 @@ const FeedCard = ({
               title={post.title}
               postUser={post.user}
               post={post}
+              sponsored={sponsored}
             />
           </>
         )}

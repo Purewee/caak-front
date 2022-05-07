@@ -1,5 +1,6 @@
-import {useState} from 'react'
+import {useState, useContext, useEffect} from 'react'
 import MagazineFeed from '../../../src/component/magazine'
+import { AppContext } from '../../App'
 
 const menu = [
   {
@@ -18,6 +19,12 @@ const menu = [
 
 export default function Profile() {
   const [selected, setSelected] = useState(0)
+	const context = useContext(AppContext);
+
+  useEffect(() => {
+    context.setStore('default')
+  },[])
+
   return (
     <div className='flex justify-center'>
       <div className="max-w-[1310px] w-full flex flex-col">

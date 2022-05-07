@@ -1,9 +1,15 @@
 import useAddPostLayout from '../../../../src/hooks/usePostViewLayout'
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useContext} from 'react'
 import { ESService } from '../../../../src/lib/esService'
+import { AppContext } from '../../../App'
 
 const Post = () => {
     const [news, setNews] = useState();
+	const context = useContext(AppContext);
+
+    useEffect(() => {
+        context.setStore('default')
+    },[])
 
     useEffect(() => {
       const es = new ESService('caak');
