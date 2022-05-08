@@ -3,17 +3,25 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@apollo/client": "^3.6.2",
+    "@shoppymn/js-oauth2": "^1.0.0-beta.8",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.2.0",
     "@testing-library/user-event": "^13.5.0",
+    "apollo-upload-client": "^17.0.0",
     "crypto-js": "^4.1.1",
+    "graphql": "^16.4.0",
     "luxon": "^2.3.2",
+    "moment": "^2.29.3",
+    "querystring-es3": "^0.2.1",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
     "react-lazy-load-image-component": "^1.5.4",
     "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.1",
-    "web-vitals": "^2.1.4"
+    "url": "^0.11.0",
+    "web-vitals": "^2.1.4",
+    "webpack": "^5.72.0"
   },
   "scripts": {
     "start": "react-scripts start",

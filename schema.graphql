@@ -1,0 +1,579 @@
+# This file was generated based on ".graphqlconfig". Do not edit manually.
+
+schema {
+    query: Query
+    mutation: Mutation
+}
+
+union Target = Article
+
+type Article {
+    acceptComment: Boolean!
+    acceptHomepage: Boolean!
+    author: User!
+    blocks: [ArticleBlock!]!
+    categories(
+        "Returns the elements in the list that come after the specified cursor."
+        after: String,
+        "Returns the elements in the list that come before the specified cursor."
+        before: String,
+        "Returns the first _n_ elements from the list."
+        first: Int,
+        "Returns the last _n_ elements from the list."
+        last: Int,
+        "Returns the elements skipping _n_ from the list."
+        offset: Int
+    ): CategoryConnection!
+    comments(
+        "Returns the elements in the list that come after the specified cursor."
+        after: String,
+        "Returns the elements in the list that come before the specified cursor."
+        before: String,
+        "Returns the first _n_ elements from the list."
+        first: Int,
+        "Returns the last _n_ elements from the list."
+        last: Int,
+        "Returns the elements skipping _n_ from the list."
+        offset: Int
+    ): CommentConnection!
+    createdAt: ISO8601DateTime
+    data: JSON
+    description: String
+    id: ID!
+    imageUrl: String
+    position: Int
+    publishDate: ISO8601Date
+    reactions(
+        "Returns the elements in the list that come after the specified cursor."
+        after: String,
+        "Returns the elements in the list that come before the specified cursor."
+        before: String,
+        "Returns the first _n_ elements from the list."
+        first: Int,
+        "Returns the last _n_ elements from the list."
+        last: Int,
+        "Returns the elements skipping _n_ from the list."
+        offset: Int
+    ): ReactionConnection!
+    slug: String
+    status: String!
+    title: String!
+    updatedAt: ISO8601DateTime
+    viewCount: Int
+}
+
+type ArticleBlock {
+    article: Article!
+    content: String
+    createdAt: ISO8601DateTime
+    data: JSON!
+    id: ID!
+    imageUrl: String
+    kind: String
+    position: Int
+    status: String
+    title: String
+    updatedAt: ISO8601DateTime
+}
+
+"The connection type for Article."
+type ArticleConnection {
+    "A list of edges."
+    edges: [ArticleEdge!]!
+    "A list of nodes."
+    nodes: [Article!]!
+    "Information to aid in pagination."
+    pageInfo: PageInfo!
+    totalCount: Int!
+}
+
+"An edge in a connection."
+type ArticleEdge {
+    "A cursor for use in pagination."
+    cursor: String!
+    "The item at the end of the edge."
+    node: Article!
+}
+
+type Category {
+    articles(
+        "Returns the elements in the list that come after the specified cursor."
+        after: String,
+        "Returns the elements in the list that come before the specified cursor."
+        before: String,
+        "Returns the first _n_ elements from the list."
+        first: Int,
+        "Returns the last _n_ elements from the list."
+        last: Int,
+        "Returns the elements skipping _n_ from the list."
+        offset: Int
+    ): ArticleConnection!
+    articlesCount: Int!
+    childs(
+        "Returns the elements in the list that come after the specified cursor."
+        after: String,
+        "Returns the elements in the list that come before the specified cursor."
+        before: String,
+        "Returns the first _n_ elements from the list."
+        first: Int,
+        "Returns the last _n_ elements from the list."
+        last: Int,
+        "Returns the elements skipping _n_ from the list."
+        offset: Int
+    ): CategoryConnection!
+    createdAt: ISO8601DateTime
+    data: JSON
+    id: ID!
+    name: String!
+    parent: Category
+    position: Int
+    slug: String!
+    status: String!
+    updatedAt: ISO8601DateTime
+}
+
+"The connection type for Category."
+type CategoryConnection {
+    "A list of edges."
+    edges: [CategoryEdge!]!
+    "A list of nodes."
+    nodes: [Category!]!
+    "Information to aid in pagination."
+    pageInfo: PageInfo!
+    totalCount: Int!
+}
+
+"An edge in a connection."
+type CategoryEdge {
+    "A cursor for use in pagination."
+    cursor: String!
+    "The item at the end of the edge."
+    node: Category!
+}
+
+type Comment {
+    childs(
+        "Returns the elements in the list that come after the specified cursor."
+        after: String,
+        "Returns the elements in the list that come before the specified cursor."
+        before: String,
+        "Returns the first _n_ elements from the list."
+        first: Int,
+        "Returns the last _n_ elements from the list."
+        last: Int,
+        "Returns the elements skipping _n_ from the list."
+        offset: Int
+    ): CommentConnection
+    comment: String
+    createdAt: ISO8601DateTime
+    id: ID!
+    parent: Comment
+    status: String!
+    target: Target
+    updatedAt: ISO8601DateTime
+    user: User!
+}
+
+"The connection type for Comment."
+type CommentConnection {
+    "A list of edges."
+    edges: [CommentEdge!]!
+    "A list of nodes."
+    nodes: [Comment!]!
+    "Information to aid in pagination."
+    pageInfo: PageInfo!
+    totalCount: Int!
+}
+
+"An edge in a connection."
+type CommentEdge {
+    "A cursor for use in pagination."
+    cursor: String!
+    "The item at the end of the edge."
+    node: Comment!
+}
+
+type Mutation {
+    addArticle(
+        "Parameters for addArticle"
+        input: addArticleInput!
+    ): Article
+    addCategory(
+        "Parameters for addCategory"
+        input: addCategoryInput!
+    ): Category
+    addComment(
+        "Parameters for addComment"
+        input: addCommentInput!
+    ): Comment
+    addToRecipe(
+        "Parameters for addToRecipe"
+        input: addToRecipeInput!
+    ): Recipe
+    changePassword(
+        "Parameters for changePassword"
+        input: changePasswordInput!
+    ): Boolean
+    "Checks if email or mobile registered"
+    checkLogin(
+        "Parameters for checkLogin"
+        input: checkLoginInput!
+    ): JSON
+    createReaction(
+        "Parameters for createReaction"
+        input: createReactionInput!
+    ): Reaction
+    createRecipe(
+        "Parameters for createRecipe"
+        input: createRecipeInput!
+    ): Recipe
+    destroyArticle(
+        "Parameters for destroyArticle"
+        input: destroyArticleInput!
+    ): Boolean
+    destroyCategory(
+        "Parameters for destroyCategory"
+        input: destroyCategoryInput!
+    ): Boolean
+    "Нэвтрээгүй хэрэглэгч нууц үгээ сэргээх хүсэлт илгээснээр `OTP` token очно"
+    forgotPassword(
+        "Parameters for forgotPassword"
+        input: forgotPasswordInput!
+    ): String
+    registerUser(
+        "Parameters for registerUser"
+        input: registerUserInput!
+    ): User
+    removeComment(
+        "Parameters for removeComment"
+        input: removeCommentInput!
+    ): Boolean
+    updateArticle(
+        "Parameters for updateArticle"
+        input: updateArticleInput!
+    ): Article
+    updateCategory(
+        "Parameters for updateCategory"
+        input: updateCategoryInput!
+    ): Category
+    updateComment(
+        "Parameters for updateComment"
+        input: updateCommentInput!
+    ): Comment
+    updateRecipe(
+        "Parameters for updateRecipe"
+        input: updateRecipeInput!
+    ): Recipe
+    updateUserProfile(
+        "Parameters for updateUserProfile"
+        input: updateUserProfileInput!
+    ): User
+}
+
+"Information about pagination in a connection."
+type PageInfo {
+    "When paginating forwards, the cursor to continue."
+    endCursor: String
+    "When paginating forwards, are there more items?"
+    hasNextPage: Boolean!
+    "When paginating backwards, are there more items?"
+    hasPreviousPage: Boolean!
+    "When paginating backwards, the cursor to continue."
+    startCursor: String
+}
+
+type Query {
+    article(id: ID!, impression: Boolean): Article!
+    articles(
+        "Returns the elements in the list that come after the specified cursor."
+        after: String,
+        "Returns the elements in the list that come before the specified cursor."
+        before: String,
+        "Returns the first _n_ elements from the list."
+        first: Int,
+        "Returns the last _n_ elements from the list."
+        last: Int,
+        "Returns the elements skipping _n_ from the list."
+        offset: Int
+    ): ArticleConnection
+    categories(
+        "Returns the elements in the list that come after the specified cursor."
+        after: String,
+        "Returns the elements in the list that come before the specified cursor."
+        before: String,
+        "Returns the first _n_ elements from the list."
+        first: Int,
+        "Returns the last _n_ elements from the list."
+        last: Int,
+        "Returns the elements skipping _n_ from the list."
+        offset: Int
+    ): CategoryConnection
+    me: User
+}
+
+type Reaction {
+    action: String!
+    createdAt: ISO8601DateTime
+    id: ID!
+    updatedAt: ISO8601DateTime
+    user: User!
+}
+
+"The connection type for Reaction."
+type ReactionConnection {
+    "A list of edges."
+    edges: [ReactionEdge!]!
+    "A list of nodes."
+    nodes: [Reaction!]!
+    "Information to aid in pagination."
+    pageInfo: PageInfo!
+    totalCount: Int!
+}
+
+"An edge in a connection."
+type ReactionEdge {
+    "A cursor for use in pagination."
+    cursor: String!
+    "The item at the end of the edge."
+    node: Reaction!
+}
+
+type Recipe {
+    articles(
+        "Returns the elements in the list that come after the specified cursor."
+        after: String,
+        "Returns the elements in the list that come before the specified cursor."
+        before: String,
+        "Returns the first _n_ elements from the list."
+        first: Int,
+        "Returns the last _n_ elements from the list."
+        last: Int,
+        "Returns the elements skipping _n_ from the list."
+        offset: Int
+    ): ArticleConnection!
+    createdAt: ISO8601DateTime
+    description: String
+    id: ID!
+    name: String!
+    position: Int
+    status: String!
+    updatedAt: ISO8601DateTime
+}
+
+type User {
+    createdAt: ISO8601DateTime
+    email: String
+    firstName: String
+    id: ID!
+    lastName: String
+    mobile: String
+    recipes: [Recipe!]!
+    status: String
+    updatedAt: ISO8601DateTime
+}
+
+"Reaction kinds"
+enum ActionKind {
+    "angry"
+    angry
+    "haha"
+    haha
+    "like"
+    like
+    "sad"
+    sad
+}
+
+"Reaction target types"
+enum ReactionTarget {
+    "Caak::Article"
+    article
+    "Caak::Comment"
+    comment
+}
+
+"Autogenerated input type of addArticle"
+input addArticleInput {
+    categoryIds: [ID!]
+    "A unique identifier for the client performing the mutation."
+    clientMutationId: String
+    description: String
+    publishDate: ISO8601DateTime
+    slug: String
+    title: String!
+}
+
+"Autogenerated input type of addCategory"
+input addCategoryInput {
+    "A unique identifier for the client performing the mutation."
+    clientMutationId: String
+    parentId: Int
+    position: Int
+    slug: String
+    status: String!
+    title: String!
+}
+
+"Autogenerated input type of addComment"
+input addCommentInput {
+    "A unique identifier for the client performing the mutation."
+    clientMutationId: String
+    comment: String
+    parentId: ID
+    targetId: ID!
+    targetType: String!
+}
+
+"Autogenerated input type of addToRecipe"
+input addToRecipeInput {
+    articleId: ID!
+    "A unique identifier for the client performing the mutation."
+    clientMutationId: String
+    id: ID!
+}
+
+"Autogenerated input type of changePassword"
+input changePasswordInput {
+    "A unique identifier for the client performing the mutation."
+    clientMutationId: String
+    "current valid password"
+    currentPassword: String!
+    password: String!
+    passwordConfirm: String!
+}
+
+"Autogenerated input type of checkLogin"
+input checkLoginInput {
+    "A unique identifier for the client performing the mutation."
+    clientMutationId: String
+    "Login email or mobile"
+    login: String!
+}
+
+"Autogenerated input type of createReaction"
+input createReactionInput {
+    action: ActionKind!
+    "A unique identifier for the client performing the mutation."
+    clientMutationId: String
+    targetId: ID!
+    targetType: ReactionTarget!
+}
+
+"Autogenerated input type of createRecipe"
+input createRecipeInput {
+    "A unique identifier for the client performing the mutation."
+    clientMutationId: String
+    description: String
+    name: String!
+}
+
+"Autogenerated input type of destroyArticle"
+input destroyArticleInput {
+    "A unique identifier for the client performing the mutation."
+    clientMutationId: String
+    id: ID!
+}
+
+"Autogenerated input type of destroyCategory"
+input destroyCategoryInput {
+    "A unique identifier for the client performing the mutation."
+    clientMutationId: String
+    id: String!
+}
+
+"Autogenerated input type of forgotPassword"
+input forgotPasswordInput {
+    "A unique identifier for the client performing the mutation."
+    clientMutationId: String
+    "имэйл эсвэл утасны дугаар"
+    login: String!
+    """
+
+    Хэрэв email ээр сэргээж байгаа бол холбоосоор redirect хийх хаягыг тодорхойлж болно жишээ нь:
+    `https://caak.mn/password/reset` эсвэл deeplink `caak://reset/pass`
+    """
+    redirectUri: String
+}
+
+"Autogenerated input type of registerUser"
+input registerUserInput {
+    "A unique identifier for the client performing the mutation."
+    clientMutationId: String
+    "email or mobile"
+    login: String!
+    "New password"
+    password: String!
+}
+
+"Autogenerated input type of removeComment"
+input removeCommentInput {
+    "A unique identifier for the client performing the mutation."
+    clientMutationId: String
+    id: ID!
+}
+
+"Autogenerated input type of updateArticle"
+input updateArticleInput {
+    categoryIds: [ID!]
+    "A unique identifier for the client performing the mutation."
+    clientMutationId: String
+    description: String
+    id: ID!
+    publishDate: ISO8601DateTime
+    slug: String
+    title: String!
+}
+
+"Autogenerated input type of updateCategory"
+input updateCategoryInput {
+    "A unique identifier for the client performing the mutation."
+    clientMutationId: String
+    id: String!
+    parentId: Int
+    position: Int
+    slug: String
+    status: String!
+    title: String!
+}
+
+"Autogenerated input type of updateComment"
+input updateCommentInput {
+    "A unique identifier for the client performing the mutation."
+    clientMutationId: String
+    comment: String
+    id: ID!
+    status: String
+}
+
+"Autogenerated input type of updateRecipe"
+input updateRecipeInput {
+    "A unique identifier for the client performing the mutation."
+    clientMutationId: String
+    description: String
+    id: ID!
+    name: String
+    status: String
+}
+
+"Autogenerated input type of updateUserProfile"
+input updateUserProfileInput {
+    birthday: String
+    "A unique identifier for the client performing the mutation."
+    clientMutationId: String
+    firstName: String
+    gender: String
+    "Хэрэглэгчийн ID: өөрийн бүртгэлийг шинэчэлж байх үед шаардлагагүй / Зөвхөн ADMIN user_id тайгаар update дуудаж чадна"
+    id: ID
+    lastName: String
+    register: String
+}
+
+
+"An ISO 8601-encoded date"
+scalar ISO8601Date
+
+"An ISO 8601-encoded datetime"
+scalar ISO8601DateTime
+
+"Represents untyped JSON"
+scalar JSON

@@ -37,6 +37,7 @@ export class ESService {
           ]
         }
       },
+      sort: { 'publish_date': 'desc' },
       size: 20,
     }).then(convertHits)
   }
@@ -47,11 +48,12 @@ export class ESService {
         bool: {
           must: [
             { range: { publish_date: { lte: 'now' }}},
-            { exists: { field: 'image' }}
+            { exists: { field: 'image' }},
+            // { nested: { path: 'categories', query: { term: { 'categories.id': 2 }}}},
           ]
         }
       },
-      size: 10,
+      size: 5,
     }).then(convertHits)
   }
 
@@ -65,8 +67,8 @@ export class ESService {
           ]
         }
       },
+      sort: { views_count: 'desc' },
       size: 3,
-      sort: { views_count: 'desc' }
     }).then(convertHits)
   }
 }
