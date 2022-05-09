@@ -1,7 +1,7 @@
 import React from 'react'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 
-export default function Story({story}) {
+export default function StoryItem({story}) {
   return (
     <div className='w-[290px] h-[435px] relative'>
       <LazyLoadImage

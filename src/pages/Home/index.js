@@ -24,7 +24,7 @@ export default function Home() {
     < >
       <div className="relative bg-white flex flex-col items-center pb-[100px]">
         <NavbarPostHeader/>
-         {/*<Story />*/}
+        <Story />
         <div
           className={
             "relative max-w-[1310px] w-full justify-items-center newFeedGrid justify-center py-[50px]"

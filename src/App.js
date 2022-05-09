@@ -2,7 +2,7 @@ import './App.css';
 import React, {useEffect, useState} from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import NavbarNew from './component/navigation/navbar';
-import Home from './pages/Home';
+import Home from './pages/home';
 import Post from './pages/post/view';
 import Profile from './pages/profile';
 import Magazine from './pages/magazine';

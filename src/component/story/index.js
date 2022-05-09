@@ -1,5 +1,5 @@
 import { useRef, useState, useEffect } from "react";
-import Story from ".";
+import StoryItem from "./Story";
 import { ESService } from "../../lib/esService";
 
 const StoryFeed = () => {
@@ -9,7 +9,10 @@ const StoryFeed = () => {
 
   useEffect(() => {
     const es = new ESService('caak');
-    es.stories().then(setStories);
+    es.stories().then(res => {
+      setStories(res)
+      
+    });
   }, []);
 
   const nextItem = () => {
@@ -84,7 +87,7 @@ const StoryFeed = () => {
           }
         >
           {stories.map((item, index) => {
-            return <Story story={item} key={index} />;
+            return <StoryItem story={item} key={index} />;
           })}
         </div>
       </div>

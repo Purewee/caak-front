@@ -3,9 +3,10 @@ import React, {useState, useEffect, useContext} from 'react'
 import { ESService } from '../../../lib/esService'
 import { AppContext } from '../../../App'
 import { gql, useQuery } from '@apollo/client';
-import {useParams} from "react-router-dom";
+import { useParams } from "react-router-dom";
 import moment from 'moment';
 import Configure from "../../../component/configure";
+import Loader from '../../../component/loader';
 
 const ARTICLE = gql`
   query GetArticle($id: ID!) {
@@ -17,6 +18,7 @@ const ARTICLE = gql`
       data
       viewCount
       publishDate
+      description
       createdAt
       categories {
         nodes {
@@ -44,18 +46,28 @@ const ARTICLE = gql`
 `;
 
 const Post = () => {
-  const params = useParams();
-  const { id } = params;
+  const { id } = useParams();
   const { data, loading } = useQuery(ARTICLE, { variables: { id } })
 	const context = useContext(AppContext);
   const article = data?.article || {};
+
+  function createMarkup(e) {
+    return {__html: e};
+  }
 
   useEffect(() => {
     context.setStore('default')
   },[])
 
   const Layout = useAddPostLayout();
-  if (loading ) return (<p> Loading ...</p>)
+  if (loading ) 
+  return (
+    <div className={"w-full flex justify-center"}>
+      <Loader className={`bg-caak-primary self-center`} />
+    </div>
+  )
+
+  console.log(article)
   return(
       <Layout>
         <div className='pt-[81px] flex flex-col items-center max-w-[960px] w-full'>
@@ -74,17 +86,21 @@ const Post = () => {
                 <span className="icon-fi-rs-bookmark cursor-pointer text-[#909090] text-[17px] ml-[25px]"/>
               </div>
           </div>
-          <img src={`${Configure.host}${article.imageUrl}`} style={{border: '1px solid #707070'}} alt='' className='w-full h-[530px] mt-[30px] object-cover'/>
-          <p className='text-[#555555] text-[18px] max-w-[760px] mt-[60px]'>{article.description}</p>
-          {article.blocks.map((b) => {
-            return (
-              <>
-                <p>{b.title}</p>
-                <img src={`${Configure.host}${b.imageUrl}`} style={{border: '1px solid #707070'}} alt='' className='w-full h-[530px] mt-[30px] object-cover'/>
-                <p className='text-[#555555] text-[18px] max-w-[760px] mt-[60px]'>{b.content}</p>
-              </>
-            );
-          })}
+          <img src={`${Configure.host}${article.imageUrl}`} alt='' className='w-full h-[530px] mt-[30px] object-cover'/>
+          {/* <p className='text-[#555555] text-[18px] max-w-[760px] mt-[60px]'>{article.description}</p> */}
+          
+          <p dangerouslySetInnerHTML={createMarkup(article.description)} className='text-[#555555] text-[18px] max-w-[760px] mt-[60px]'/>
+          <div className='mt-[60px] w-full'>
+            {article.blocks.map((b) => {
+              return (
+                <div className='flex flex-col items-center mb-[60px] w-full'>
+                  <img src={`${Configure.host}${b.imageUrl}`} alt='' className='w-full'/>
+                  {b.title && <p className='mt-[60px] text-[#111111] text-[26px] font-bold font-roboto max-w-[760px]'>{b.title}</p>}
+                  {b.content && <p className='text-[#555555] text-[18px] max-w-[760px] mt-[30px] text' dangerouslySetInnerHTML={createMarkup(b.content)}/>}
+                </div>
+              );
+            })}
+          </div>
           <div className='flex flex-row w-full mt-[82px]'>
             { article.categories?.nodes?.map((x) =>
               <p className='text-[14px] leading-[16px] text-[#111111] py-[7px] px-[12px] border border-[#D4D8D8] rounded-[3px]'>#{x.name}</p>

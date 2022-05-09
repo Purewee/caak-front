@@ -82,7 +82,7 @@ export default function NavbarNew() {
                   round
                   skin={"secondary"}
                   className={
-                    "mr-[12px] h-[34px] font-roboto rounded-[4px] text-[15px] font-bold text-white bg-transparent border-[1px] border-white"
+                    `mr-[12px] h-[34px] font-roboto rounded-[4px] text-[15px]${navBarStyle ? 'text-white bg-transparent border-[1px] font-bold  border-white' : 'text-[#111111] border border-[#D4D8D8] font-medium'} `
                   }
                   // onClick={() => {
                   //   router.replace(
