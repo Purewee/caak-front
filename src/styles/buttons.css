@@ -1,7 +1,7 @@
 
   .button {
     @apply: transition duration-100 inline-flex items-center text-sm justify-center text-15px tracking-0.23px rounded-square font-medium;
-    height: 36px;
+    height: 34px;
     border-radius: 8px;
     padding: 9px 24px;
   }
@@ -12,7 +12,9 @@
   }
 
   .button.secondary {
-    @apply: text-caak-generalblack bg-gray-200 hover:bg-gray-300 focus:outline-none;
+    /* @apply: text-caak-generalblack bg-gray-200 hover:bg-gray-300 focus:outline-none; */
+    color: #111111;
+    background: gray 20%;
   }
 
   .button.round {

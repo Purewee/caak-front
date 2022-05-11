@@ -1,5 +1,5 @@
 import Consts from "./Consts";
-import {DateTime} from "luxon";
+import { DateTime } from "luxon";
 import {useEffect, useRef, useState} from "react";
 
 const regexEmail = "^[a-zA-Z0-9._:$!%-]+@[a-zA-Z0-9.-]+.[a-zA-Z]$";
@@ -248,7 +248,7 @@ export function generateTimeAgo(date) {
     return diff.minutes + " мин";
   } else if (diff.seconds !== 0) {
     return diff.seconds + " сек";
-  } else {
+  } else {  
     return "Сая";
   }
 }
@@ -450,5 +450,6 @@ const object = {
   numberWithCommas,
   addDays,
   differenceDate,
+  generateTimeAgo
 };
 export default object;

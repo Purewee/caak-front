@@ -25,7 +25,11 @@ const CardFooter = ({
     <>
       <div className={`relative flex flex-col ${sponsored ? 'bg-[#813333] pt-[22px] px-[16px]' : 'pt-[20px]'} justify-between pb-[21px] h-[223px]`}>
         <div className="flex flex-col w-full">
-          {!sponsored && post.categories.map((x) => (<p key={x.id} className="text-[#FF6600] mb-[10px] text-[13px] uppercase">#{x.name}</p>)) }
+          {!sponsored && post.categories.map((x) => (
+            <Link key={x.id} to={`tags/${x.id}`}>
+              <p className="text-[#FF6600] mb-[10px] text-[13px] uppercase">#{x.name}</p>
+            </Link>
+          )) }
           <Link to={`/post/view/${post.id}`}>
             <p className={`${sponsored ? 'text-white text-center' : 'text-[#111111]'} cursor-pointer text-[22px] leading-[28px] truncate-3`}>{post.title}</p>
           </Link>
@@ -135,7 +139,7 @@ const CardFooter = ({
               <div className="flex flex-row items-center">
                 <img alt="" src={'https://scontent.fuln2-2.fna.fbcdn.net/v/t1.18169-9/16388375_1258991760846780_6001512035944932012_n.png?_nc_cat=107&ccb=1-5&_nc_sid=174925&_nc_ohc=9pNL5ldMQ0kAX_yAKha&_nc_ht=scontent.fuln2-2.fna&oh=00_AT_3pSN5nwhS6wQvQERY95zTkiYmS9VjFARKCE684yYu1w&oe=6298F67B'} className="w-[22px] h-[22px] rounded-full"/>
                 <p className="text-[#555555] leading-[18px] text-[15px] ml-[6px]">gogo.mn •
-                  <Link to={'/profile/2'}>
+                  <Link to={`/profile/${post.author.id}`}>
                     <span> {post.author.name}</span>
                   </Link>
                 </p>

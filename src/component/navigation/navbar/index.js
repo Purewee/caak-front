@@ -58,7 +58,7 @@ export default function NavbarNew() {
               >
                 <span
                   className={
-                    "icon-fi-rs-hamburger-menu text-[22px] text-white"
+                    `icon-fi-rs-hamburger-menu text-[22px] ${navBarStyle ? 'text-white' : 'text-black'}`
                   }
                 />
               </div>
@@ -78,11 +78,9 @@ export default function NavbarNew() {
 
             
               <div className={"hidden md:flex flex-row items-center"}>
-                <Button
-                  round
-                  skin={"secondary"}
+                <button
                   className={
-                    `mr-[12px] h-[34px] font-roboto rounded-[4px] text-[15px]${navBarStyle ? 'text-white bg-transparent border-[1px] font-bold  border-white' : 'text-[#111111] border border-[#D4D8D8] font-medium'} `
+                    `mr-[12px] h-[34px] font-roboto rounded-[4px] w-[92px] text-[15px] ${navBarStyle ? 'text-white bg-transparent border-[1px] font-bold  border-white' : 'text-[#111111] border border-[#D4D8D8] font-medium'} `
                   }
                   // onClick={() => {
                   //   router.replace(
@@ -100,12 +98,10 @@ export default function NavbarNew() {
                   // }}
                 >
                   Нэвтрэх
-                </Button>
-                <Button
-                  round
-                  skin={"primary"}
+                </button>
+                <button
                   className={
-                    "h-[34px] font-roboto  rounded-[4px] text-[15px] font-bold text-white"
+                    "h-[34px] font-roboto w-[112px] bg-caak-primary rounded-[4px] text-[15px] font-bold text-white"
                   }
                   // onClick={() =>
                   //   router.replace(
@@ -124,7 +120,7 @@ export default function NavbarNew() {
                   // }
                 >
                   Бүртгүүлэх
-                </Button>
+                </button>
               </div>
           </div>
         </div>

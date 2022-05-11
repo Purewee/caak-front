@@ -15,7 +15,7 @@ export default function TagsCard({middle, data}) {
         <div className={`${middle ? 'w-[640px] h-[528px]' : 'w-[290px] h-[434px]'}`}>
             <img alt='' className={`${middle ? 'w-full h-[370px]' : 'w-full h-[217.5px]'} object-cover`} src={`http://graph.caak.mn${data.image}`} />
             <div className='flex flex-row mt-[10px]'>
-                <p>{data.categories.map((x) => (<p key={x.id} className="text-[#FF6600] leading-[15px] text-[13px] uppercase">#{x.name}</p>))}</p>
+                {data.categories.map((x) => (<p key={x.id} className="text-[#FF6600] leading-[15px] text-[13px] uppercase">#{x.name}</p>))}
                 <p className='text-[14px] font-roboto leading-[16px] text-[#555555] ml-[10px]'>5 мин</p>
             </div>
             <p className={`${middle ? 'truncate-2 text-[34px] ' : 'truncate-4 text-[22px]'} text-[#111111] font-bold font-roboto leading-[40px] mt-[10px]`}>{data.title}</p>

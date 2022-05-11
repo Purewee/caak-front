@@ -1,7 +1,10 @@
 import React, {useContext, useEffect, useState} from 'react'
 import { AppContext } from '../../App';
-import TagsCard from '../../component/card/TopTags';
+import TagsCard from '../../component/card/TagsCard';
 import { ESService } from '../../lib/esService';
+import { gql, useQuery } from '@apollo/client';
+import { useParams } from "react-router-dom";
+import Loader from '../../component/loader';
 
 const menu = [
   {
@@ -12,10 +15,48 @@ const menu = [
   },
 ]
 
+const CATEGORY = gql`
+  query GetCategory($id: ID!) {
+    category(id: $id, impression: true) {
+      id
+      name
+      slug
+      status
+    },
+    articles {
+      id
+      title
+      slug
+      imageUrl
+      data
+      viewCount
+      publishDate
+      description
+      createdAt
+      categories {
+        nodes {
+          id
+          name
+        }
+      }
+      author {
+        id
+        firstName
+        lastName
+      }
+    }
+  }
+`;
+
 export default function TopTags() {
+	const context = useContext(AppContext);
+  const { id } = useParams();
   const [selected, setSelected] = useState(0)
   const [articles, setArticles] = useState([]);
-	const context = useContext(AppContext);
+  const { data, loading } = useQuery(CATEGORY, { variables: { id } })
+  const category = data?.category || {};
+
+  console.log(category)
 
   useEffect(() => {
     context.setStore('default')
@@ -26,6 +67,13 @@ export default function TopTags() {
     const es = new ESService('caak');
     es.home_articles().then(setArticles);
   }, []);
+
+  if (loading ) 
+  return (
+    <div className={"w-full flex justify-center"}>
+      <Loader className={`bg-caak-primary self-center`} />
+    </div>
+  )
 
   return (
     <div className='flex justify-center pt-[70px]'>
@@ -61,7 +109,7 @@ export default function TopTags() {
           {
             articles.slice(1, 4).map((data, index) => {
               return(
-                <TagsCard data={data} middle={index === 1 && true} />
+                <TagsCard key={index} data={data} middle={index === 1 && true} />
               )
             })
           }

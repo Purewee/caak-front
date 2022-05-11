@@ -8,14 +8,12 @@ const FeedCard = ({
   sponsored
 }) => {
 
-  // onClick={() => router.push(`/post/view/${post.id}`)}
-
   return (
     post && (
       <div
         className={`${
           className ?? ""
-        } relative w-[422px] h-[523px] bg-white border-b border-[#EFEEEF]`}
+        } relative w-[422px] h-[523px] bg-white ${!sponsored && 'border-b border-[#EFEEEF]'}`}
       >
         {loading ? (
           <FeedCardSkeleton />

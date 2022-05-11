@@ -1,6 +1,18 @@
 import {useState, useContext, useEffect} from 'react'
 import MagazineFeed from '../../../src/component/magazine'
 import { AppContext } from '../../App'
+import { gql, useQuery } from '@apollo/client';
+import { useParams } from "react-router-dom";
+import Loader from '../../component/loader';
+
+const USER = gql`
+  query GetAuthor($id: ID!) {
+    author(id: $id, impression: true) {
+      id
+      name
+    }
+  }
+`;
 
 const menu = [
   {
@@ -18,12 +30,22 @@ const menu = [
 ]
 
 export default function Profile() {
-  const [selected, setSelected] = useState(0)
 	const context = useContext(AppContext);
+  const [selected, setSelected] = useState(0)
+  const { id } = useParams();
+  // const { data, loading } = useQuery(USER, { variables: { id } })
+  // const author = data?.author || {};
 
   useEffect(() => {
     context.setStore('default')
   },[])
+
+  // if (loading ) 
+  // return (
+  //   <div className={"w-full flex justify-center"}>
+  //     <Loader className={`bg-caak-primary self-center`} />
+  //   </div>
+  // )
 
   return (
     <div className='flex justify-center'>
