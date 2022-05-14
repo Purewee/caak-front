@@ -5,13 +5,13 @@ import { Link } from 'react-router-dom'
 
 export default function StoryItem({story}) {
   return (
-    <div className='w-[290px] h-[435px] relative'>
+    <div className='min-w-[290px] max-w-[290px] min-h-[435px] max-h-[435px] relative'>
       <LazyLoadImage
         alt=''
         className={`object-cover w-[290px] h-[435px] rounded-[4px]`}
         src={`http://graph.caak.mn${story?.image}`}
       />
-      <div className='absolute bottom-0 storyLinear h-full py-[30px] px-[20px] flex flex-col items-start justify-end'>
+      <div className='absolute bottom-0 storyLinear h-full w-full py-[30px] px-[20px] flex flex-col items-start justify-end'>
         { story?.categories.map((x) => <p key={x.name} className="bg-[#FF6600] px-[8px] py-[4px] text-white text-[12px] font-bold uppercase">#{x.name}</p>) }
         <Link to={`/post/view/${story.id}`}>
             <p className='truncate-3 text-white text-[24px] font-bold mt-[10px]'>{story?.title}</p>

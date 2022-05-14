@@ -53,7 +53,7 @@ export class ESService {
           ]
         }
       },
-      size: 5,
+      size: 10,
     }).then(convertHits)
   }
 
