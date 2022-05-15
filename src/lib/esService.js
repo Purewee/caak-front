@@ -38,7 +38,7 @@ export class ESService {
         }
       },
       sort: { 'publish_date': 'desc' },
-      size: 20,
+      size: 34,
     }).then(convertHits)
   }
 

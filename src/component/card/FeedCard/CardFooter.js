@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useClickOutSide } from "../../../utility/Util";
 import DropDown from "../../navigation/DropDown";
@@ -8,18 +8,14 @@ const CardFooter = ({
   sponsored
 }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [pathName, setPathName] = useState("");
+
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
+
   const menuRef = useClickOutSide(() => {
     setIsMenuOpen(false);
   });
-
-
-  useEffect(() => {
-    setPathName(window.location.origin);
-  }, []);
 
   return (
     <>

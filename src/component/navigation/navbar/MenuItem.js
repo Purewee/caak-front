@@ -65,6 +65,8 @@ const MenuItems = ({navBarStyle}) => {
       {menuItems.map((item, index) => {
         return (
           <li
+            ref={menuRef}
+            onClick={toggleMenu}
             key={index}
             className={
               "flex flex-row items-center list-none mr-[40px] cursor-pointer float-left"
@@ -73,8 +75,6 @@ const MenuItems = ({navBarStyle}) => {
             <p className="hover:text-caak-primary">{item.title}</p>
             {item.sub ? (
                         <div
-                          ref={menuRef}
-                          onClick={toggleMenu} 
                           className={"w-[14px] relative h-[14px] flex items-center ml-[8px]"}
                         >
                           <span

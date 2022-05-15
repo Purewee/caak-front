@@ -1,5 +1,6 @@
 import CardFooter from "./CardFooter";
 import FeedCardSkeleton from "../../skeleton/FeedCardSkeleton";
+import { Link } from "react-router-dom";
 
 const FeedCard = ({
   post,
@@ -19,7 +20,9 @@ const FeedCard = ({
           <FeedCardSkeleton />
         ) : (
           <>
-            <img alt="" src={`http://graph.caak.mn${post.image}`} className="h-[300px] cursor-pointer w-full object-cover" />
+            <Link to={`/post/view/${post.id}`}>
+              <img alt="" src={`http://graph.caak.mn${post.image}`} className="h-[300px] w-full object-cover" />
+            </Link>
             <CardFooter
               postId={post.id}
               title={post.title}

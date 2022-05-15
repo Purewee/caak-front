@@ -6,6 +6,7 @@ import React, {useEffect, useState, useContext} from "react";
 import FeedMagazine from '../../component/magazine/FeedMagazine';
 import FeedTopTags from '../../component/toptags/FeedTopTags';
 import { AppContext } from '../../App';
+import HighlightCard from '../../component/card/FeedCard/HighlightCard';
 
 export default function Home() {
   const [articles, setArticles] = useState([]);
@@ -13,6 +14,7 @@ export default function Home() {
 
   useEffect(() => {
     context.setStore('transparent')
+    // eslint-disable-next-line
   },[])
 
   useEffect(() => {
@@ -27,39 +29,82 @@ export default function Home() {
         <Story />
         <div
           className={
-            "relative max-w-[1310px] w-full justify-items-center newFeedGrid justify-center py-[50px]"
+            "relative max-w-[1310px] w-full justify-items-center newFeedGrid justify-center"
           }
         >
           {
             articles.slice(0, 9).map((data, index) => {
               return(
-                <FeedCard sponsored={index === 6 && true} key={index} post={data}/>
+                <FeedCard sponsored={index === 3 && true} key={index} post={data}/>
               )
             })
           }
         </div>
-        <FeedTopTags/>
         <div
           className={
-            "relative max-w-[1310px] w-full justify-items-center newFeedGrid justify-center py-[50px]"
+            "relative max-w-[1310px] w-full justify-items-center HighlightFeedGrid justify-center pt-[44px] pb-[40px]"
           }
         >
           {
-            articles.slice(9, 15).map((data, index) => {
+            articles.slice(9, 11).map((data, index) => {
+              return(
+                <HighlightCard key={index} post={data}/>
+              )
+            })
+          }
+        </div>
+        <div
+          className={
+            "relative max-w-[1310px] w-full justify-items-center newFeedGrid justify-center"
+          }
+        >
+          {
+            articles.slice(11, 20).map((data, index) => {
               return(
                 <FeedCard key={index} post={data}/>
               )
             })
           }
         </div>
-        <FeedMagazine/>
+        <div className='py-[50px] w-full'>
+          <FeedTopTags/>
+        </div>
         <div
           className={
-            "relative max-w-[1310px] w-full justify-items-center newFeedGrid justify-center py-[50px]"
+            "relative max-w-[1310px] w-full justify-items-center newFeedGrid justify-center"
           }
         >
           {
-            articles.slice(15).map((data, index) => {
+            articles.slice(20, 26).map((data, index) => {
+              return(
+                <FeedCard key={index} post={data}/>
+              )
+            })
+          }
+        </div>
+        <div className='pb-[50px] pt-[57px] w-full'>
+          <FeedMagazine/>
+        </div>
+        <div
+          className={
+            "relative max-w-[1310px] w-full justify-items-center HighlightFeedGrid justify-center pt-[44px] pb-[40px]"
+          }
+        >
+          {
+            articles.slice(26, 28).map((data, index) => {
+              return(
+                <HighlightCard key={index} post={data}/>
+              )
+            })
+          }
+        </div>
+        <div
+          className={
+            "relative max-w-[1310px] w-full justify-items-center newFeedGrid justify-center"
+          }
+        >
+          {
+            articles.slice(28).map((data, index) => {
               return(
                 <FeedCard key={index} post={data}/>
               )
