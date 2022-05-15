@@ -4,9 +4,7 @@ import { Link } from 'react-router-dom'
 export default function HighlightCard({post}) {
   return (
     <div className='max-w-[646px] w-full h-[430px] relative'>
-        <Link to={`/post/view/${post.id}`}>
-            <img alt="" src={`http://graph.caak.mn${post.image}`} className="h-full w-full object-cover" />
-        </Link>
+        <img alt="" src={`http://graph.caak.mn${post.image}`} className="h-full w-full object-cover" />
         <div className='absolute top-[20px] left-[20px] pt-[5px] pb-[4px] pl-[10px] pr-[12px] bg-black bg-opacity-25 rounded-full flex flex-row items-center'>
             <span className='icon-fi-rs-bolt text-[#FF6600] text-[16.5px]' />
             <p className='font-bolt text-white text-[12px] leading-[14px] ml-[4px]'>ОНЦЛОХ МЭДЭЭ</p>
