@@ -220,37 +220,61 @@ export const extractDate = (date) => {
 };
 
 // Postiin uussen ognoog ni stringeer avch heden second/minute/tsagiin/odriin omno uussniig stringeer butsaadag funkts
+// export function generateTimeAgo(date) {
+//   const postdate = DateTime.fromISO(date);
+//   const today = DateTime.now();
+//   const diff = today.diff(postdate, [
+//     "years",
+//     "months",
+//     "days",
+//     "hours",
+//     "minutes",
+//     "seconds",
+//     "milliseconds",
+//   ]);
+//   if (diff.years !== 0 || diff.months !== 0) {
+//     return (
+//       postdate.year +
+//       "." +
+//       (postdate.month < 10 ? `0${postdate.month}` : postdate.month) +
+//       "." +
+//       postdate.day
+//     );
+//   } else if (diff.days !== 0) {
+//     return diff.days + " өдөр";
+//   } else if (diff.hours !== 0) {
+//     return diff.hours + " цаг";
+//   } else if (diff.minutes !== 0) {
+//     return diff.minutes + " мин";
+//   } else if (diff.seconds !== 0) {
+//     return diff.seconds + " сек";
+//   } else {  
+//     return "Сая";
+//   }
+// }
+
 export function generateTimeAgo(date) {
-  const postdate = DateTime.fromISO(date);
-  const today = DateTime.now();
-  const diff = today.diff(postdate, [
-    "years",
-    "months",
-    "days",
-    "hours",
-    "minutes",
-    "seconds",
-    "milliseconds",
-  ]);
-  if (diff.years !== 0 || diff.months !== 0) {
-    return (
-      postdate.year +
-      "." +
-      (postdate.month < 10 ? `0${postdate.month}` : postdate.month) +
-      "." +
-      postdate.day
-    );
-  } else if (diff.days !== 0) {
-    return diff.days + " өдөр";
-  } else if (diff.hours !== 0) {
-    return diff.hours + " цаг";
-  } else if (diff.minutes !== 0) {
-    return diff.minutes + " мин";
-  } else if (diff.seconds !== 0) {
-    return diff.seconds + " сек";
-  } else {  
-    return "Сая";
-  }
+  const time = new Date(date).getTime()
+  const now = new Date().getTime()
+  const diff = now - time
+  // if ((diff / 1000 / 60 / 60 / 24 / 30 / 12) > 1) {
+  //   return Math.floor(diff / 1000 / 60 / 60 / 24 / 30 / 12) + ' жил'
+  // } 
+  if ((diff / 1000 / 60 / 60 / 24 / 30) > 1) {
+    return (new Date(date).getFullYear() + '-' + (new Date(date).getMonth() + 1) + '-' + new Date(date).getDate())
+  } 
+  else if ((diff / 1000 / 60 / 60 / 24) > 1) {
+    return Math.floor(diff / 1000 / 60 / 60 / 24) + ' хоног'
+  } 
+  else if ((diff / 1000 / 60 / 60) > 1) {
+    return Math.floor(diff / 1000 / 60 / 60) + ' цаг'
+  } 
+  else if ((diff / 1000 / 60) > 1) {
+    return Math.floor(diff / 1000 / 60) + ' мин'
+  }  
+  else if ((diff / 1000) > 1) {
+    return Math.floor(diff / 1000) + ' секунд'
+  } 
 }
 
 export function getDate(date) {

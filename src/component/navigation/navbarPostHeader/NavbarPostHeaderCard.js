@@ -1,5 +1,6 @@
 import ActionButtons from "./actionsButtons";
 import { Link } from "react-router-dom";
+import { generateTimeAgo } from "../../../utility/Util";
 
 const NavbarPostHeaderCard = ({ type, item }) => {
   return item && (
@@ -54,11 +55,7 @@ const NavbarPostHeaderCard = ({ type, item }) => {
             "text-[14px] font-roboto font-medium tracking-[0.21px] leading-[16px] mt-[14px]"
           }
         >
-          {new Date(item.publish_date).getFullYear()}
-          -
-          {new Date(item.publish_date).getMonth() + 1}
-          -
-          {new Date(item.publish_date).getDate()}
+          {generateTimeAgo(item.publish_date)}
         </p>
         <div
           className={

@@ -61,7 +61,7 @@ export default function Home() {
           {
             articles.slice(11, 20).map((data, index) => {
               return(
-                <FeedCard key={index} post={data}/>
+                <FeedCard sponsored={index === 2 && true} key={index} post={data}/>
               )
             })
           }
@@ -82,12 +82,12 @@ export default function Home() {
             })
           }
         </div>
-        <div className='pb-[50px] pt-[57px] w-full'>
+        <div className='pt-[57px] w-full'>
           <FeedMagazine/>
         </div>
         <div
           className={
-            "relative max-w-[1310px] w-full justify-items-center HighlightFeedGrid justify-center pt-[44px] pb-[40px]"
+            "relative max-w-[1310px] w-full justify-items-center HighlightFeedGrid justify-center pt-[50px] pb-[40px]"
           }
         >
           {

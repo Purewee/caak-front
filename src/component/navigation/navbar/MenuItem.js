@@ -3,9 +3,9 @@ import React, {useState} from "react";
 import { useClickOutSide } from "../../../utility/Util";
 
 const menuItems = [
-  { title: "Видео" },
-  { title: "ПОДКАСТ" },
-  { title: "РАДИО" },
+  { title: "Видео", link: 'https://www.youtube.com/c/caakvideo' },
+  { title: "ПОДКАСТ", link: 'https://soundcloud.com/caak-podcast' },
+  { title: "РАДИО", link: 'https://www.caak.mn/radio/' },
   { title: "TOP 100" },
   { title: "МЭДЭЭНИЙ ТӨРӨЛ", sub: [{ title: "Улс төр" }, { title: "Нийгэм" }] },
 ];
@@ -72,7 +72,15 @@ const MenuItems = ({navBarStyle}) => {
               "flex flex-row items-center list-none mr-[40px] cursor-pointer float-left"
             }
           >
-            <p className="hover:text-caak-primary">{item.title}</p>
+            {
+              item.link 
+              ?
+              <a rel="noreferrer" href={item.link} target="_blank">
+                <p className="hover:text-caak-primary">{item.title}</p>
+              </a>
+              :
+              <p className="hover:text-caak-primary">{item.title}</p>
+            }
             {item.sub ? (
                         <div
                           className={"w-[14px] relative h-[14px] flex items-center ml-[8px]"}

@@ -1,5 +1,4 @@
 import { useEffect, useState, useContext } from "react";
-import Button from "../../button";
 import MenuItems from "./MenuItem";
 import useMediaQuery from "../useMediaQuery";
 import Logo from "../../logo";
@@ -49,7 +48,7 @@ export default function NavbarNew() {
                 {/* <MobileSideMenu setOpen={setIsMobileMenuOpen} /> */}
               </div>
             )}
-            {isLaptop && (
+            {/* {isLaptop && (
               <div
                 onClick={() => setIsMobileMenuOpen(true)}
                 className={
@@ -62,9 +61,20 @@ export default function NavbarNew() {
                   }
                 />
               </div>
-            )}
-
-            <Logo />
+            )} */}
+            <div
+              onClick={() => setIsMobileMenuOpen(true)}
+              className={
+                "mr-[30px] cursor-pointer w-[24px] h-[24px] flex items-center justify-center"
+              }
+            >
+              <span
+                className={
+                  `icon-fi-rs-hamburger-menu text-[22px] ${navBarStyle ? 'text-white' : 'text-black'}`
+                }
+              />
+            </div>
+            <Logo navBarStyle={navBarStyle} />
             {!isLaptop && <MenuItems navBarStyle={navBarStyle} />}
           </div>
           <div className={"flex flex-row items-center"}>
