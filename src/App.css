@@ -66,6 +66,10 @@ background: transparent
   linear-gradient(180deg,  #00000067 0%, #00000000 100%) 0% 0% no-repeat;
 }
 
+.storyLinearBorder {
+  background: transparent linear-gradient(214deg, #F53757 0%, #FF9E5D 100%) 0% 0% no-repeat padding-box
+  }
+
 .highlightLinear {
   background: 
     transparent linear-gradient(180deg, #11111100 0%, #11111199 100%) 0% 0% no-repeat padding-box;

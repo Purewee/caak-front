@@ -11,7 +11,6 @@ const StoryFeed = () => {
     const es = new ESService('caak');
     es.stories().then(res => {
       setStories(res)
-      
     });
   }, []);
 
@@ -87,7 +86,7 @@ const StoryFeed = () => {
           }
         >
           {stories.map((item, index) => {
-            return <StoryItem story={item} key={index} />;
+            return <StoryItem border={index === 0 && true} story={item} key={index} />;
           })}
         </div>
       </div>

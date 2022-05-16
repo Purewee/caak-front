@@ -5,7 +5,7 @@ export default function HighlightCard({post}) {
   return (
     <div className='max-w-[646px] w-full h-[430px] relative'>
         <img alt="" src={`http://graph.caak.mn${post.image}`} className="h-full w-full object-cover" />
-        <div className='absolute top-[20px] left-[20px] pt-[5px] pb-[4px] pl-[10px] pr-[12px] bg-black bg-opacity-25 rounded-full flex flex-row items-center'>
+        <div className='absolute top-[20px] cursor-pointer left-[20px] pt-[5px] pb-[4px] pl-[10px] pr-[12px] bg-black bg-opacity-25 rounded-full flex flex-row items-center'>
             <span className='icon-fi-rs-bolt text-[#FF6600] text-[16.5px]' />
             <p className='font-bolt text-white text-[12px] leading-[14px] ml-[4px]'>ОНЦЛОХ МЭДЭЭ</p>
         </div>
@@ -14,7 +14,7 @@ export default function HighlightCard({post}) {
             {
                 post.categories.map((x) => (
                     <Link key={x.id} to={`tags/${x.id}`}>
-                    <p className="text-white font-medium mb-[10px] text-[15px] leading-[18px] uppercase">#{x.name}</p>
+                    <p className="text-white font-medium mb-[10px] text-[14px] leading-[16px] uppercase">#{x.name}</p>
                     </Link>
                 ))
             }

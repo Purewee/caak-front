@@ -3,20 +3,22 @@ import { LazyLoadImage } from 'react-lazy-load-image-component'
 import { generateTimeAgo } from '../../utility/Util'
 import { Link } from 'react-router-dom'
 
-export default function StoryItem({story}) {
+export default function StoryItem({story, border }) {
   return (
-    <div className='min-w-[290px] max-w-[290px] min-h-[435px] max-h-[435px] relative'>
-      <LazyLoadImage
-        alt=''
-        className={`object-cover w-[290px] h-[435px] rounded-[4px]`}
-        src={`http://graph.caak.mn${story?.image}`}
-      />
-      <div className='absolute bottom-0 storyLinear h-full w-full py-[30px] px-[20px] flex flex-col items-start justify-end'>
-        { story?.categories.map((x) => <p key={x.name} className="bg-[#FF6600] px-[8px] py-[4px] text-white text-[12px] font-bold uppercase">#{x.name}</p>) }
-        <Link to={`/post/view/${story.id}`}>
-            <p className='truncate-3 text-white text-[24px] font-bold mt-[10px]'>{story?.title}</p>
-        </Link>
-        <p className='text-white text-[14px] font-medium mt-[10px]'>{generateTimeAgo(story?.publish_date)}</p>
+    <div className={`min-w-[290px] ${border && 'border-[3px] border-[#F53757] p-[5px]'} max-w-[290px] rounded-[8px] min-h-[435px] max-h-[435px]`}>
+      <div className='relative h-full w-full'>
+        <LazyLoadImage
+          alt=''
+          className={`object-cover h-full w-full rounded-[8px]`}
+          src={`http://graph.caak.mn${story?.image}`}
+        />
+        <div className='absolute bottom-0 rounded-[8px] storyLinear h-full w-full py-[30px] px-[20px] flex flex-col items-start justify-end'>
+          { story?.categories.map((x) => <p key={x.name} className="bg-[#FF6600] px-[8px] py-[4px] text-white text-[12px] font-bold uppercase">#{x.name}</p>) }
+          <Link to={`/post/view/${story.id}`}>
+              <p className='truncate-3 text-white text-[24px] font-bold mt-[10px]'>{story?.title}</p>
+          </Link>
+          <p className='text-white text-[14px] font-medium mt-[10px]'>{generateTimeAgo(story?.publish_date)}</p>
+        </div>
       </div>
     </div>
   )
