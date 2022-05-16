@@ -31,10 +31,7 @@ export class ESService {
     return this.post({
       query: {
         bool: {
-          must: [
-            { range: { publish_date: { lte: 'now' } } },
-            { exists: { field: 'image' } }
-          ]
+          must: defaultFilters
         }
       },
       sort: { 'publish_date': 'desc' },
@@ -47,9 +44,8 @@ export class ESService {
       query: {
         bool: {
           must: [
-            { range: { publish_date: { lte: 'now' }}},
-            { exists: { field: 'image' }},
-            // { nested: { path: 'categories', query: { term: { 'categories.id': 2 }}}},
+            ...defaultFilters,
+            { nested: { path: 'categories', query: { term: { 'categories.slug': 'travel' }}}},
           ]
         }
       },
@@ -62,8 +58,8 @@ export class ESService {
       query: {
         bool: {
           must: [
-            { range: { publish_date: { lte: 'now' }}},
-            { exists: { field: 'image' }}
+            ...defaultFilters,
+            { term: { 'data.is_featured': true }},
           ]
         }
       },
@@ -71,19 +67,40 @@ export class ESService {
       size: 3,
     }).then(convertHits)
   }
+
+  categoryPosts(slug, rest) {
+    return this.post({
+      query: {
+        bool: {
+          must: [
+            ...defaultFilters,
+            { nested: { path: 'categories', query: { term: { 'categories.slug': slug }}}},
+          ]
+        }
+      },
+      ...rest
+    }).then(convertHits)
+  }
+
+  authorPosts(authorId) {
+    return this.post({
+      query: {
+        bool: {
+          must: [
+            ...defaultFilters,
+            { term: { 'author.id': authorId }},
+          ]
+        }
+      }
+    }).then(convertHits)
+  }
 }
 
-export const BaseFilter = {
-  query: {
-    bool: {
-      must: [
-        { range: { publish_date: { lte: 'now' } } },
-        { exists: { field: 'image' } }
-      ]
-    }
-  },
-  size: 20,
-}
+
+export const defaultFilters = [
+    { range: { publish_date: { lte: 'now' } } },
+    { exists: { field: 'image' } },
+];
 
 export function convertHits(response) {
   if (!response?.ok) return [];

@@ -57,6 +57,7 @@ type Article {
     ): ReactionConnection!
     slug: String
     status: String!
+    tags: [Tag!]!
     title: String!
     updatedAt: ISO8601DateTime
     viewCount: Int
@@ -308,7 +309,11 @@ type Query {
         "Returns the elements skipping _n_ from the list."
         offset: Int
     ): CategoryConnection
+    category(id: ID, slug: String): Category!
     me: User
+    recipe(id: ID): Recipe!
+    tag(slug: String): Tag!
+    user(id: ID!): User!
 }
 
 type Reaction {
@@ -360,7 +365,42 @@ type Recipe {
     updatedAt: ISO8601DateTime
 }
 
+type Tag {
+    articles(
+        "Returns the elements in the list that come after the specified cursor."
+        after: String,
+        "Returns the elements in the list that come before the specified cursor."
+        before: String,
+        "Returns the first _n_ elements from the list."
+        first: Int,
+        "Returns the last _n_ elements from the list."
+        last: Int,
+        "Returns the elements skipping _n_ from the list."
+        offset: Int
+    ): ArticleConnection!
+    articlesCount: Int
+    createdAt: ISO8601DateTime
+    data: JSON
+    id: ID!
+    name: String!
+    slug: String
+    updatedAt: ISO8601DateTime
+    user: User
+}
+
 type User {
+    articles(
+        "Returns the elements in the list that come after the specified cursor."
+        after: String,
+        "Returns the elements in the list that come before the specified cursor."
+        before: String,
+        "Returns the first _n_ elements from the list."
+        first: Int,
+        "Returns the last _n_ elements from the list."
+        last: Int,
+        "Returns the elements skipping _n_ from the list."
+        offset: Int
+    ): ArticleConnection!
     createdAt: ISO8601DateTime
     email: String
     firstName: String

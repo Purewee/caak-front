@@ -2,7 +2,7 @@ import './App.css';
 import React, {useEffect, useState} from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import NavbarNew from './component/navigation/navbar';
-import Home from './pages/home';
+import Home from './pages/Home';
 import Post from './pages/post/view';
 import Profile from './pages/profile';
 import Magazine from './pages/magazine';
@@ -28,7 +28,7 @@ function App() {
               <Route path='/post/view/:id' element={<Post/>}/>
               <Route path='/profile/:id' element={<Profile/>}/>
               <Route path='/magazine/:id' element={<Magazine/>}/>
-              <Route path='/tags/:id' element={<TopTags/>}/>
+              <Route path='/tags/:slug' element={<TopTags/>}/>
             </Routes>
           </BrowserRouter>
         </div>

@@ -4,12 +4,23 @@ import { AppContext } from '../../App'
 import { gql, useQuery } from '@apollo/client';
 import { useParams } from "react-router-dom";
 import Loader from '../../component/loader';
+import {ESService} from "../../lib/esService";
 
 const USER = gql`
   query GetAuthor($id: ID!) {
-    author(id: $id, impression: true) {
+    user(id: $id) {
       id
-      name
+      firstName
+      lastName
+      email
+      articles {
+        totalCount
+      }
+      recipes {
+        id
+        name
+        createdAt
+      }
     }
   }
 `;
@@ -31,14 +42,17 @@ const menu = [
 
 export default function Profile() {
 	const context = useContext(AppContext);
-  const [selected, setSelected] = useState(0)
+  const [selected, setSelected] = useState(0);
+  const [articles, setArticles] = useState([]);
   const { id } = useParams();
-  // const { data, loading } = useQuery(USER, { variables: { id } })
-  // const author = data?.author || {};
+  const { data, loading } = useQuery(USER, { variables: { id } })
+  const author = data?.user || {};
 
   useEffect(() => {
-    context.setStore('default')
-  },[])
+    context.setStore('default');
+    const es = new ESService('caak');
+    es.authorPosts(id).then(setArticles);
+  }, [id])
 
   // if (loading ) 
   // return (
@@ -54,11 +68,11 @@ export default function Profile() {
           <div className="flex flex-row">
             <img alt="" src="https://lh3.googleusercontent.com/iZiNP57j33Ds2vQrdLiMldv1Jd61QAfU2MIo5kJhtKkysyDkOdGc0LUNDnMQKeZ6uOuZ_CWenRzwYRLpYAiKfn-rMd44Aavy=w960-rj-nu-e365" className="w-[82px] object-cover h-[82px] rounded-full"/>
             <div className="ml-[16px]">
-              <p className="text-[30px] font-bold text-black leading-[35px]">user name</p>
+              <p className="text-[30px] font-bold text-black leading-[35px]">{`${author?.firstName} ${author?.lastName}`}</p>
               <p className="mt-[12px] text-[15px] text-[#555555] leading-[18px] max-w-[600px]">Өөрийн дуртай график дизайны мэдээллээ авдаг сайтнаас хүргэх болно.</p>
               <div className="flex flex-row text-[#555555] mt-[18px] text-[15px] leading-[18px]">
-                <p><span className='text-[#111111] font-medium'>8</span> Пост</p>
-                <p><span className='text-[#111111] font-medium ml-[28px]'>132</span> Жор</p>
+                <p><span className='text-[#111111] font-medium'>{author?.articles?.totalCount}</span> Пост</p>
+                <p><span className='text-[#111111] font-medium ml-[28px]'>{author?.recipes?.length}</span> Жор</p>
                 <p><span className='text-[#111111] font-medium ml-[28px]'>30</span> Дагагчид</p>
                 <p><span className='text-[#111111] font-medium ml-[28px]'>1460</span> Аура</p>
               </div>

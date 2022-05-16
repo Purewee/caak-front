@@ -16,33 +16,14 @@ const menu = [
 ]
 
 const CATEGORY = gql`
-  query GetCategory($id: ID!) {
-    category(id: $id, impression: true) {
+  query GetCategory($slug: String) {
+    category(slug: $slug) {
       id
       name
       slug
       status
-    },
-    articles {
-      id
-      title
-      slug
-      imageUrl
-      data
-      viewCount
-      publishDate
-      description
-      createdAt
-      categories {
-        nodes {
-          id
-          name
-        }
-      }
-      author {
-        id
-        firstName
-        lastName
+      articles {
+        totalCount
       }
     }
   }
@@ -50,10 +31,10 @@ const CATEGORY = gql`
 
 export default function TopTags() {
 	const context = useContext(AppContext);
-  const { id } = useParams();
+  const { slug } = useParams();
   const [selected, setSelected] = useState(0)
   const [articles, setArticles] = useState([]);
-  const { data, loading } = useQuery(CATEGORY, { variables: { id } })
+  const { data, loading } = useQuery(CATEGORY, { variables: { slug } })
   const category = data?.category || {};
 
   console.log(category)
@@ -65,8 +46,8 @@ export default function TopTags() {
 
   useEffect(() => {
     const es = new ESService('caak');
-    es.home_articles().then(setArticles);
-  }, []);
+    es.categoryPosts(slug, { size: 20 }).then(setArticles);
+  }, [slug]);
 
   if (loading ) 
   return (
@@ -82,7 +63,7 @@ export default function TopTags() {
           <div className='w-[142px]'>
 
           </div>
-          <p className='text-black text-[38px] font-roboto leading-[44px] font-bold'>#БИЗНЕСС</p>
+          <p className='text-black text-[38px] font-roboto leading-[44px] font-bold'>{category?.name}</p>
           <div className='flex flex-row items-center'>
             <button className='bg-caak-primary text-white text-[15px] font-bold font-roboto w-[90px] h-[34px] rounded-[4px] border border-caak-primary'>
               Дагах
@@ -93,16 +74,16 @@ export default function TopTags() {
           </div>
         </div>
         <div className='flex flex-row items-center mt-[10px]'>
-          <p className='text-[#555555] text-[15px] leading-[18px]'><span className='text-[#111111] font-medium'>8 </span>Пост</p>
+          <p className='text-[#555555] text-[15px] leading-[18px]'><span className='text-[#111111] font-medium'>{category?.articles?.totalCount}</span> Пост</p>
           <p className='text-[#555555] text-[15px] leading-[18px] ml-[20px]'><span className='text-[#111111] font-medium'>30 </span>Дагагчид</p>
         </div>
         <div className=' mt-[40px] flex flex-row items-center border-[#EFEEEF] border-b border-t w-full justify-center gap-[50px] pb-[1px] pt-[17px]'>
           {
-              menu.map((data, index) => {
-              return(
-                  <p key={index} onClick={() => setSelected(index)} className={`text-[18px] font-bold cursor-pointer text-center leading-[21px] ${selected === index ? 'border-b-[3px] border-[#FF6600] pb-[12px]' : 'border-none pb-[15px]'} ${selected === index ? 'text-[#111111]' : 'text-[#555555]'}`}>{data.title}</p>
-              )
-              })
+            menu.map((data, index) => {
+            return(
+                <p key={index} onClick={() => setSelected(index)} className={`text-[18px] font-bold cursor-pointer text-center leading-[21px] ${selected === index ? 'border-b-[3px] border-[#FF6600] pb-[12px]' : 'border-none pb-[15px]'} ${selected === index ? 'text-[#111111]' : 'text-[#555555]'}`}>{data.title}</p>
+            )
+            })
           }
         </div>
         <div className='flex flex-row items-center justify-between w-full mt-[50px] pb-[50px]'>
