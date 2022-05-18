@@ -37,8 +37,6 @@ export default function TopTags() {
   const { data, loading } = useQuery(CATEGORY, { variables: { slug } })
   const category = data?.category || {};
 
-  console.log(category)
-
   useEffect(() => {
     context.setStore('default')
     // eslint-disable-next-line

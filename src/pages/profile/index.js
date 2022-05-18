@@ -5,6 +5,7 @@ import { gql, useQuery } from '@apollo/client';
 import { useParams } from "react-router-dom";
 import Loader from '../../component/loader';
 import {ESService} from "../../lib/esService";
+import FeedCard from '../../component/card/FeedCard';
 
 const USER = gql`
   query GetAuthor($id: ID!) {
@@ -16,6 +17,7 @@ const USER = gql`
       articles {
         totalCount
       }
+      status
       recipes {
         id
         name
@@ -54,12 +56,12 @@ export default function Profile() {
     es.authorPosts(id).then(setArticles);
   }, [id])
 
-  // if (loading ) 
-  // return (
-  //   <div className={"w-full flex justify-center"}>
-  //     <Loader className={`bg-caak-primary self-center`} />
-  //   </div>
-  // )
+  if (loading ) 
+  return (
+    <div className={"w-full flex justify-center"}>
+      <Loader className={`bg-caak-primary self-center`} />
+    </div>
+  )
 
   return (
     <div className='flex justify-center'>
@@ -99,9 +101,27 @@ export default function Profile() {
         {
           selected === 0
           ?
-          <div className='pt-[50px] text-[#111111] font-bold text-[20px] leading-[24px]'>
-            <p>Жор</p>
-            <MagazineFeed/>
+          <div>
+            <div className='pt-[50px] text-[#111111] font-bold text-[20px] leading-[24px]'>
+              <p>Жор</p>
+              <MagazineFeed/>
+            </div>
+            <div className='mt-[50px]'>
+              <p className='text-[#111111] font-bold text-[20px] leading-6'>ПОСТ</p>
+              <div
+                className={
+                  "relative mt-[20px] w-full justify-items-center newFeedGrid justify-center"
+                }
+              >
+                {
+                  articles.map((data, index) => {
+                    return(
+                      <FeedCard key={index} post={data}/>
+                    )
+                  })
+                }
+              </div>
+            </div>
           </div>
           :
           null

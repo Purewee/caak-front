@@ -3,10 +3,12 @@ import MenuItems from "./MenuItem";
 import useMediaQuery from "../useMediaQuery";
 import Logo from "../../logo";
 import { AppContext } from "../../../App";
+import SignInUpController from "../../modal//SignInUpController";
 
 export default function NavbarNew() {
 	const context = useContext(AppContext);
   const [loaded, setLoaded] = useState(false);;
+  const [isShown, setIsShown] = useState(false);;
   const [navBarStyle, setNavBarStyle] = useState(true);;
   const [ isMobileMenuOpen, setIsMobileMenuOpen ] = useState(false)
   const isLaptop = useMediaQuery("screen and (max-device-width: 1100px)");
@@ -85,27 +87,12 @@ export default function NavbarNew() {
             >
               <span className={"icon-fi-rs-search text-white text-[22px]"} />
             </div>
-
-            
               <div className={"hidden md:flex flex-row items-center"}>
                 <button
                   className={
                     `mr-[12px] h-[34px] font-roboto rounded-[4px] w-[92px] text-[15px] ${navBarStyle ? 'text-white bg-transparent border-[1px] font-bold  border-white' : 'text-[#111111] border border-[#D4D8D8] font-medium'} `
                   }
-                  // onClick={() => {
-                  //   router.replace(
-                  //     {
-                  //       query: {
-                  //         ...router.query,
-                  //         prevPath: router.asPath,
-                  //         signInUp: "signIn",
-                  //         isModal: true,
-                  //       },
-                  //     },
-                  //     `/signInUp/signIn`,
-                  //     { shallow: true }
-                  //   );
-                  // }}
+                  onClick={() => setIsShown('signin')}
                 >
                   Нэвтрэх
                 </button>
@@ -113,27 +100,14 @@ export default function NavbarNew() {
                   className={
                     "h-[34px] font-roboto w-[112px] bg-caak-primary rounded-[4px] text-[15px] font-bold text-white"
                   }
-                  // onClick={() =>
-                  //   router.replace(
-                  //     {
-                  //       pathname: router.pathname,
-                  //       query: {
-                  //         ...router.query,
-                  //         prevPath: router.asPath,
-                  //         signInUp: "signUp",
-                  //         isModal: true,
-                  //       },
-                  //     },
-                  //     `/signInUp/signUp`,
-                  //     { shallow: true, scroll: false }
-                  //   )
-                  // }
+                  onClick={() => setIsShown('signup')}
                 >
                   Бүртгүүлэх
                 </button>
               </div>
           </div>
         </div>
+        <SignInUpController isShown={isShown} setIsShown={setIsShown}/>
       </nav>
     )
   );

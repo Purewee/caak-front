@@ -9,18 +9,19 @@ import Magazine from './pages/magazine';
 import TopTags from './pages/topTags';
 import { WithApolloProvider } from './utility/WithApolloProvider';
 
-
 export const AppContext = React.createContext(null);
 
 function App() {
   const [ store, setStore ] = useState('default');
+  
   useEffect(() => {
     document.title = 'Саак'
   }, [])
+
   return (
     <AppContext.Provider value={{ store, setStore }}>
       <WithApolloProvider>
-        <div className='caak-main-wrapper font-roboto'>
+        <div className='caak-main-wrapper font-roboto text-[#111111]'>
           <BrowserRouter>
             <NavbarNew/>
             <Routes>

@@ -1,90 +1,4 @@
 @font-face {
-  font-family: "caakmoon";
-  src: url("../assets/fonts/caakmoon.eot?9j9lnf");
-  src: url("../assets/fonts/caakmoon.eot?9j9lnf#iefix")
-      format("embedded-opentype"),
-    url("../assets/fonts/caakmoon.ttf?9j9lnf") format("truetype"),
-    url("../assets/fonts/caakmoon.woff?9j9lnf") format("woff"),
-    url("../assets/fonts/caakmoon.svg?9j9lnf#caakmoon") format("svg");
-  font-weight: normal;
-  font-style: normal;
-  font-display: block;
-}
-
-[class^="icon-"], [class*=" icon-"] {
-  /* use !important to prevent issues with browser extensions that change fonts */
-  font-family: 'caakmoon' !important;
-  speak: never;
-  font-style: normal;
-  font-weight: normal;
-  font-variant: normal;
-  text-transform: none;
-  line-height: 1;
-
-  /* Better Font Rendering =========== */
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-.icon-fi-rs-ads:before {
-  content: "\e900";
-}
-.icon-fi-rs-bookmark:before {
-  content: "\e901";
-}
-.icon-fi-rs-close:before {
-  content: "\e902";
-}
-.icon-fi-rs-down-chevron:before {
-  content: "\e903";
-}
-.icon-fi-rs-fb:before {
-  content: "\e904";
-}
-.icon-fi-rs-hamburger-menu:before {
-  content: "\e905";
-}
-.icon-fi-rs-heart:before {
-  content: "\e906";
-}
-.icon-fi-rs-ig:before {
-  content: "\e907";
-}
-.icon-fi-rs-jor:before {
-  content: "\e908";
-}
-.icon-fi-rs-mic:before {
-  content: "\e909";
-}
-.icon-fi-rs-more-ver:before {
-  content: "\e90a";
-}
-.icon-fi-rs-phone:before {
-  content: "\e90b";
-}
-.icon-fi-rs-plus:before {
-  content: "\e90c";
-}
-.icon-fi-rs-search:before {
-  content: "\e90d";
-}
-.icon-fi-rs-share:before {
-  content: "\e90e";
-}
-.icon-fi-rs-tag:before {
-  content: "\e90f";
-}
-.icon-fi-rs-tw:before {
-  content: "\e910";
-}
-.icon-fi-rs-wave:before {
-  content: "\e911";
-}
-.icon-fi-rs-yt:before {
-  content: "\e912";
-}
-
-@font-face {
   font-family: 'caakmoon';
   src:  url('../assets/fonts/caakmoon.eot?5sctdk');
   src:  url('../assets/fonts/caakmoon.eot?5sctdk#iefix') format('embedded-opentype'),
@@ -110,7 +24,78 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-
+.icon-fi-rs-list-f:before {
+  content: "\e937";
+}
+.icon-fi-rs-mail-f:before {
+  content: "\e938";
+}
+.icon-fi-rs-editor-f:before {
+  content: "\e939";
+}
+.icon-fi-rs-editor-o:before {
+  content: "\e93a";
+}
+.icon-fi-rs-resend:before {
+  content: "\e93b";
+}
+.icon-fi-rs-blind:before {
+  content: "\e933";
+}
+.icon-fi-rs-eye:before {
+  content: "\e934";
+}
+.icon-fi-rs-filter-f:before {
+  content: "\e935";
+}
+.icon-fi-rs-network:before {
+  content: "\e936";
+}
+.icon-fi-rs-add-news:before {
+  content: "\e924";
+}
+.icon-fi-rs-article-f:before { 
+  content: "\e925";
+}
+.icon-fi-rs-check:before {
+  content: "\e926";
+}
+.icon-fi-rs-delete:before {
+  content: "\e927";
+}
+.icon-fi-rs-direction:before {
+  content: "\e928";
+}
+.icon-fi-rs-image-f:before {
+  content: "\e929";
+}
+.icon-fi-rs-link:before {
+  content: "\e92a";
+}
+.icon-fi-rs-play-button:before {
+  content: "\e92b";
+}
+.icon-fi-rs-save:before {
+  content: "\e92c";
+}
+.icon-fi-rs-slideshow:before {
+  content: "\e92d";
+}
+.icon-fi-rs-star-f:before {
+  content: "\e92e";
+}
+.icon-fi-rs-star-o:before {
+  content: "\e92f";
+}
+.icon-fi-rs-text-f:before {
+  content: "\e930";
+}
+.icon-fi-rs-upload:before {
+  content: "\e931";
+}
+.icon-fi-rs-view:before {
+  content: "\e932";
+}
 .icon-fi-rs-mute:before {
   content: "\e920";
 }
