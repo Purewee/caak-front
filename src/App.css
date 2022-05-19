@@ -11,14 +11,20 @@
 }
 
 .trendPostsCardWrapper {
-overflow: hidden;
+  overflow: hidden;
 }
 
 .trendPostsCardWrapper::-webkit-scrollbar {
-width: 0;
-height: 0;
-background: 0 0;
+  width: 0;
+  height: 0;
+  background: 0 0;
 }
+
+.hideScrollbar {
+  overflow: hidden;
+}
+
+
 
 .truncate-3 {
 display: -webkit-box;

@@ -1,8 +1,67 @@
 import React, { useState } from 'react'
 
+const interest = [
+    {
+        title: 'Хөгжилтэй'
+    },
+    {
+        title: 'Гэрэл зураг'
+    },
+    {
+        title: 'Шинжлэх ухаан'
+    },
+    {
+        title: 'Энтэртайнмент'
+    },
+    {
+        title: 'Түүх'
+    },
+    {
+        title: 'Кино'
+    },
+    {
+        title: 'Спорт'
+    },
+    {
+        title: 'Аялал'
+    },
+    {
+        title: 'Гэр бүл'
+    },
+    {
+        title: 'Амьтад'
+    },
+    {
+        title: 'Хоол'
+    },
+    {
+        title: 'Эрүүл амьдрал'
+    },
+    {
+        title: '1'
+    },
+    {
+        title: '2'
+    },
+    {
+        title: '3'
+    },
+    {
+        title: '4'
+    },
+    {
+        title: '5'
+    },
+    {
+        title: '6'
+    },
+]
+
 export default function SignInModal({setIsShown}) {
     const [isPasswordShown, setIsPasswordShown] = useState(false)
+    const [hovered, setHovered] = useState(false)
     const [step, setStep] = useState('default')
+
     return (
         <div className='popup_modal'>
             {
@@ -10,9 +69,9 @@ export default function SignInModal({setIsShown}) {
                 ?
                 <div className='popup_modal-content w-[380px] rounded-[6px] relative'>
                     <div className='px-[40px] relative w-full flex flex-col items-center'>
-                        <p className='mt-[60px] text-[32px] text-[#111111] leading-[38px] font-bold'>Нэвтрэх</p>
-                        <button onClick={() => setStep('social')} className='w-full h-[44px] bg-[#1876F3] rounded-[4px] text-[16px] font-medium text-white mt-[30px]'>
-                            <span className='icon-fi-rs-facebook text-white' />
+                        <p className='mt-[60px] text-[32px] text-[#111111] leading-[38px] font-condensed font-bold'>Нэвтрэх</p>
+                        <button onClick={() => setStep('social')} className='w-full h-[44px] bg-[#1876F3] rounded-[4px] relative text-[16px] font-medium text-white mt-[30px]'>
+                            <span className='icon-fi-rs-fb text-[24px] absolute top-[9px] left-[22px] w-[26px] h-[26px] flex justify-center items-center text-white' />
                             Facebook
                         </button>
                         <button className='w-full h-[44px] mt-[12px] border-[#D4D8D8] border-[1px] rounded-[4px] text-[16px] font-medium text-[#111111]'>
@@ -24,9 +83,9 @@ export default function SignInModal({setIsShown}) {
                             <p className='text-[#AFAFAF] text-[14px] leading-[16px] mx-[18px]'>Эсвэл</p>
                             <span className='h-[1px] w-full bg-[#E0E0E1]' />
                         </div>
-                        <button onClick={() => setStep('mail')} className='bg-[#FF6600] w-full rounded-[4px] h-[44px] text-[16px] text-white mt-[20px] relative'>
-                            <span className='icon-fi-rs-mail-f text-white' />
-                            Имэйл хаяг/Утасны дугаар
+                        <button onClick={() => setStep('mail')} className='bg-[#FF6600] w-full flex flex-row items-center justify-center rounded-[4px] h-[44px] text-[16px] text-white mt-[20px] relative'>
+                            <span className='icon-fi-rs-mail-f text-[23px] w-[26px] h-[26px] flex justify-center items-center mr-[20px] text-white' />
+                                Имэйл хаяг/Утасны дугаар
                         </button>
                     </div>
                     {/* footer */}
@@ -62,7 +121,7 @@ export default function SignInModal({setIsShown}) {
                 ?
                 <div className='popup_modal-content w-[380px] rounded-[6px] relative'>
                     <div className='px-[40px] relative w-full flex flex-col items-center'>
-                        <p className='mt-[60px] text-[32px] text-[#111111] leading-[38px] font-bold'>Нэвтрэх</p>
+                        <p className='mt-[60px] text-[32px] text-[#111111] leading-[38px] font-condensed font-bold'>Нэвтрэх</p>
                         <input className='w-full rounded-[4px] mt-[30px] bg-[#EFEEEF] h-[44px] px-[22px]'  placeholder='Имэйл хаяг/Утасны дугаар'/>
                         <div className='w-full relative mt-[12px]'>
                             <input type={isPasswordShown ? 'text' : 'password'} className='w-full rounded-[4px] bg-[#EFEEEF] h-[44px] pl-[22px] pr-[40px]'  placeholder='Нууц үг'/>
@@ -117,8 +176,39 @@ export default function SignInModal({setIsShown}) {
                         <input defaultValue={'James Bold'} className='w-full text-center rounded-[4px] bg-[#EFEEEF] h-[64px]'/>
                         <span className='absolute top-[22px] right-0 icon-fi-rs-editor-f text-[#909090] text-[17px] rounded-fullcursor-pointer w-[20px] h-[20px] flex items-center justify-center'/>
                     </div>
-                    <button className='w-full bg-[#FF6600] rounded-[4px] h-[44px] font-medium text-[16px] text-white mt-[40px]'>
+                    <button onClick={() => setStep('interest')} className='w-full bg-[#FF6600] rounded-[4px] h-[44px] font-medium text-[16px] text-white mt-[40px]'>
                         Үргэлжлүүлэх
+                    </button>
+                </div>
+                :
+                step === 'interest'
+                ?
+                <div className='popup_modal-content w-[851px] rounded-[6px] flex flex-col items-center pt-[37px] pb-[40px]'>
+                    <p className='text-[#111111] font-condensed font-bold text-[38px] leading-[44px]'>Таны дуртай мэдээний төрлүүд?</p>
+                    <p className='mt-[20px] text-[#555555] text-[15px] leading-[18px]'>Таны дуртай төрлөөр мэдээг шүүцгээе! Хамгийн багадаа 3 төрөл сонгоно уу.</p>
+                    <div className='flex flex-wrap gap-[14px] h-[380px] w-[730px] overflow-y-auto mt-[33px]'>
+                        {
+                            interest.map((data, index) => {
+                                return(
+                                    index === hovered 
+                                    ?
+                                    <div key={index} onMouseLeave={() => setHovered(false)} className='cursor-pointer w-[172px] h-[100px] flex justify-center items-center'>
+                                        <div key={index} className='w-[164px] h-[94px] rounded-[6px] relative'>
+                                            <img className='w-full h-full object-cover rounded-[6px]' alt='' src='https://i.scdn.co/image/ab67616d0000b273ede9f246191d55e7a5c95111' />
+                                            <p className='w-full h-full bg-black bg-opacity-50 absolute top-0 flex justify-center items-center rounded-[6px] text-white text-[16px] font-medium'>{data.title}</p>
+                                        </div>
+                                    </div>
+                                    :
+                                    <div key={index} onMouseEnter={() => setHovered(index)} className='cursor-pointer w-[172px] h-[100px] rounded-[6px] relative'>
+                                        <img className='w-full h-full object-cover rounded-[6px]' alt='' src='https://i.scdn.co/image/ab67616d0000b273ede9f246191d55e7a5c95111' />
+                                        <p className='w-full h-full bg-black bg-opacity-50 absolute top-0 flex justify-center items-center rounded-[6px] text-white text-[16px] font-medium'>{data.title}</p>
+                                    </div>
+                                )
+                            })
+                        }
+                    </div>
+                    <button>
+                        Дуусгах {'(3)'}
                     </button>
                 </div>
                 :
