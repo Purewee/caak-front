@@ -4,6 +4,8 @@ import useMediaQuery from "../useMediaQuery";
 import Logo from "../../logo";
 import { AppContext } from "../../../App";
 import SignInUpController from "../../modal//SignInUpController";
+import {useAuth} from "../../../context/AuthContext";
+import UserInfo from "./UserInfo";
 
 export default function NavbarNew() {
 	const context = useContext(AppContext);
@@ -13,6 +15,7 @@ export default function NavbarNew() {
   const [ isMobileMenuOpen, setIsMobileMenuOpen ] = useState(false)
   const isLaptop = useMediaQuery("screen and (max-device-width: 1100px)");
   const isTablet = useMediaQuery("(max-width: 767px)");
+  const { isAuth } = useAuth();
 
   useEffect(() => {
     setLoaded(true);
@@ -79,14 +82,16 @@ export default function NavbarNew() {
             <Logo navBarStyle={navBarStyle} />
             {!isLaptop && <MenuItems navBarStyle={navBarStyle} />}
           </div>
-          <div className={"flex flex-row items-center"}>
-            <div
-              className={`${
-                isTablet ? "mr-0" : "mr-[22px]"
-              } flex w-[22px] h-[22px] items-center justify-center cursor-pointer`}
-            >
-              <span className={"icon-fi-rs-search text-white text-[22px]"} />
-            </div>
+          {isAuth ? <UserInfo />
+            :
+            <div className={"flex flex-row items-center"}>
+              <div
+                className={`${
+                  isTablet ? "mr-0" : "mr-[22px]"
+                } flex w-[22px] h-[22px] items-center justify-center cursor-pointer`}
+              >
+                <span className={"icon-fi-rs-search text-white text-[22px]"}/>
+              </div>
               <div className={"hidden md:flex flex-row items-center"}>
                 <button
                   className={
@@ -105,7 +110,8 @@ export default function NavbarNew() {
                   Бүртгүүлэх
                 </button>
               </div>
-          </div>
+            </div>
+          }
         </div>
         <SignInUpController isShown={isShown} setIsShown={setIsShown}/>
       </nav>

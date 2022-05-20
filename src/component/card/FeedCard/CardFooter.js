@@ -22,7 +22,7 @@ const CardFooter = ({
       <div className={`relative flex flex-col ${sponsored ? 'bg-[#813333] pt-[22px] px-[16px]' : 'pt-[20px]'} justify-between pb-[21px] h-[223px]`}>
         <div className="flex flex-col w-full">
           {!sponsored && post.categories.map((x) => (
-            <Link key={x.id} to={`tags/${x.id}`}>
+            <Link key={x.id} to={`tags/${x.slug}`}>
               <p className="text-[#FF6600] mb-[10px] text-[13px] uppercase">#{x.name}</p>
             </Link>
           )) }

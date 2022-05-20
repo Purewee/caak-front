@@ -8,6 +8,7 @@ import Profile from './pages/profile';
 import Magazine from './pages/magazine';
 import TopTags from './pages/topTags';
 import { WithApolloProvider } from './utility/WithApolloProvider';
+import {AuthProvider} from "./context/AuthContext";
 
 export const AppContext = React.createContext(null);
 
@@ -21,18 +22,20 @@ function App() {
   return (
     <AppContext.Provider value={{ store, setStore }}>
       <WithApolloProvider>
-        <div className='caak-main-wrapper font-roboto text-[#111111]'>
-          <BrowserRouter>
-            <NavbarNew/>
-            <Routes>
-              <Route exact path='/' element={<Home/>}/>
-              <Route path='/post/view/:id' element={<Post/>}/>
-              <Route path='/profile/:id' element={<Profile/>}/>
-              <Route path='/magazine/:id' element={<Magazine/>}/>
-              <Route path='/tags/:slug' element={<TopTags/>}/>
-            </Routes>
-          </BrowserRouter>
-        </div>
+        <AuthProvider>
+          <div className='caak-main-wrapper font-roboto text-[#111111]'>
+            <BrowserRouter>
+              <NavbarNew/>
+              <Routes>
+                <Route exact path='/' element={<Home/>}/>
+                <Route path='/post/view/:id' element={<Post/>}/>
+                <Route path='/profile/:id' element={<Profile/>}/>
+                <Route path='/magazine/:id' element={<Magazine/>}/>
+                <Route path='/tags/:slug' element={<TopTags/>}/>
+              </Routes>
+            </BrowserRouter>
+          </div>
+        </AuthProvider>
       </WithApolloProvider>
     </AppContext.Provider>
   );
