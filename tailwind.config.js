@@ -5,7 +5,8 @@ module.exports = {
         fontFamily: {
           roboto: ["Roboto"],
           inter: ["Inter"],
-          condensed: ["Roboto Condensed"]
+          condensed: ["Roboto Condensed"],
+          merri: ["Merriweather"]
         },
         colors: {
           caak: {

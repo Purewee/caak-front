@@ -99,21 +99,6 @@ export default function SignInModal({setIsShown}) {
                   <span className='font-inter'>Шинэ хэрэглэгч бол </span>
                   <span onClick={() => setIsShown('signup')} className="text-caak-primary text-[15px] font-bold cursor-pointer">Бүртгүүлэх</span>
                 </div>
-                {/* <p className="mt-[40px] w-full font-inter text-13px text-[#909090]">
-                                Та энэ алхамын үргэлжлүүлснээр, сайтын{" "}
-                                <a target="_blank" rel="noopener noreferrer">
-                                    <span className="text-[#111111]">
-                                    Үйлчилгээний нөхцөл
-                                    </span>{" "}
-                                </a>
-                                болон{" "}
-                                <a target="_blank" rel="noopener noreferrer">
-                                    <span className="text-[#111111]">
-                                    Нууцлалын бодлогыг
-                                    </span>{" "}
-                                </a>
-                                зөвшөөрсөнд тооцно.
-                            </p> */}
               </div>
             </div>
             <span onClick={() => setIsShown(false)} className='absolute top-[14px] right-[14px] icon-fi-rs-close text-[#909090] text-[18px] cursor-pointer w-[24px] h-[24px] flex items-center justify-center'/>
@@ -121,7 +106,7 @@ export default function SignInModal({setIsShown}) {
           :
           step === 'mail'
             ?
-              <LoginWithMail onSuccess={() => setIsShown(false)} />
+              <LoginWithMail setIsShown={setIsShown} onSuccess={() => setIsShown(false)} />
             :
             step === 'social'
               ?
@@ -178,9 +163,8 @@ export default function SignInModal({setIsShown}) {
   )
 }
 
-function LoginWithMail({ onSuccess }) {
+function LoginWithMail({ onSuccess, setIsShown }) {
   const [password, setPassword] = useState(false);
-  const [exist, setExist] = useState(false);
   const { handleSubmit, register } = useForm();
   const { login } = useAuth();
   const navigate = useNavigate();
@@ -223,24 +207,9 @@ function LoginWithMail({ onSuccess }) {
             <span className='font-inter'>Шинэ хэрэглэгч бол </span>
             <span className="text-caak-primary text-[15px] font-bold cursor-pointer">Бүртгүүлэх</span>
           </div>
-          {/* <p className="mt-[40px] w-full font-inter text-13px text-[#909090]">
-                                Та энэ алхамын үргэлжлүүлснээр, сайтын{" "}
-                                <a target="_blank" rel="noopener noreferrer">
-                                    <span className="text-[#111111]">
-                                    Үйлчилгээний нөхцөл
-                                    </span>{" "}
-                                </a>
-                                болон{" "}
-                                <a target="_blank" rel="noopener noreferrer">
-                                    <span className="text-[#111111]">
-                                    Нууцлалын бодлогыг
-                                    </span>{" "}
-                                </a>
-                                зөвшөөрсөнд тооцно.
-                            </p> */}
         </div>
       </div>
-      <span onClick={() => setExist(false)} className='absolute top-[14px] right-[14px] icon-fi-rs-close text-[#909090] text-[18px] cursor-pointer w-[24px] h-[24px] flex items-center justify-center'/>
+      <span onClick={() => setIsShown(false)} className='absolute top-[14px] right-[14px] icon-fi-rs-close text-[#909090] text-[18px] cursor-pointer w-[24px] h-[24px] flex items-center justify-center'/>
     </div>
   );
 }

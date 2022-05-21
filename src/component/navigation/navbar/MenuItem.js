@@ -69,7 +69,7 @@ const MenuItems = ({navBarStyle}) => {
             onClick={toggleMenu}
             key={index}
             className={
-              "flex flex-row items-center list-none mr-[40px] cursor-pointer float-left"
+              "flex flex-row relative items-center list-none mr-[40px] cursor-pointer float-left"
             }
           >
             {
@@ -81,34 +81,40 @@ const MenuItems = ({navBarStyle}) => {
               :
               <p className="hover:text-caak-primary">{item.title}</p>
             }
-            {item.sub ? (
-                        <div
-                          className={"w-[14px] relative h-[14px] flex items-center ml-[8px]"}
-                        >
-                          <span
-                            className={
-                              "icon-fi-rs-down-chevron text-[12px] text-caak-primary"
-                            }
-                          />
-                          <DropDown
-                            arrow={'centerTop'}
-                            className="absolute left-[-330px] bg-white rounded-[8px] top-[30px]"
-                            open={isMenuOpen}
-                            onToggle={toggleMenu}
-                            content={
-                              <div className={" columns-3 py-[24px] px-[28px]"}>
-                                {
-                                  subMenu.map((data, index) => {
-                                    return(
-                                      <p key={index} className="text-[#111111] mb-[12px] leading-[18px] font-roboto text-[15px]">{data.title}</p>
-                                    )
-                                  })
-                                }
-                              </div>
-                            }
-                          />
-                        </div>
-            ) : null}
+            {
+              item.sub && (
+                <div
+                  className={"w-[14px] h-[14px] flex items-center ml-[8px]"}
+                >
+                  <span
+                    className={
+                      "icon-fi-rs-down-chevron text-[12px] text-caak-primary"
+                    }
+                  />
+                </div>
+              )
+            }
+            {
+              item.sub && (
+                <DropDown
+              arrow={'centerTop'}
+              className="absolute -left-[160px] rounded-[8px] top-[30px]"
+              open={isMenuOpen}
+              onToggle={toggleMenu}
+              content={
+                <div className={"columns-3 py-[24px] px-[28px]"}>
+                  {
+                    subMenu.map((data, index) => {
+                      return(
+                        <p key={index} className="text-[#111111] mb-[12px] leading-[18px] font-roboto text-[15px]">{data.title}</p>
+                      )
+                    })
+                  }
+                </div>
+              }
+            />
+              )
+            }
           </li>
         );
       })}
