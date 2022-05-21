@@ -5,7 +5,7 @@ const DropDown = ({ open, onToggle, className, content, arrow }) => {
     open && (
       <div
         onClick={onToggle}
-        className={`dropdown shadow-dropdown ${className && className}`}
+        className={`dropdown ${className && className}`}
       >
         {content ? content : null}
         <div

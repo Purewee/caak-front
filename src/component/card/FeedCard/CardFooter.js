@@ -17,6 +17,10 @@ const CardFooter = ({
     setIsMenuOpen(false);
   });
 
+  const toggleMenu = () => {
+      setIsMenuOpen(!isMenuOpen);
+  };
+
   return (
     <>
       <div className={`relative flex flex-col ${sponsored ? 'bg-[#813333] pt-[22px] px-[16px]' : 'pt-[20px]'} justify-between pb-[21px] h-[223px]`}>
@@ -83,13 +87,33 @@ const CardFooter = ({
                 />
               </div>
               <div
+                ref={menuRef}
+                onClick={toggleMenu}
                 className={
-                  "flex flex-row items-center cursor-pointer w-[20px] h-[20px] ml-[10px]"
+                  "flex flex-row relative items-center cursor-pointer w-[20px] h-[20px] ml-[10px]"
                 }
               >
                 <span
                   className={
                     "icon-fi-rs-more-ver text-white transition duration-150 text-[16px]"
+                  }
+                />
+                <DropDown
+                  arrow={"topRight"}
+                  className="absolute border border-[#D4D8D8] drop-shadow-[0_2px_2px_rgba(0,0,0,0.06)] top-[28px] -left-[128px] w-[166px] h-[97px]"
+                  open={isMenuOpen}
+                  onToggle={toggleMenu}
+                  content={
+                      <div className='flex flex-col justify-center h-full pl-[14px]'>
+                          <div className='flex flex-row items-center'>
+                              <span className='text-[#555555] text-[16px] mr-[11px] w-[22px] h-[22px] flex items-center justify-center icon-fi-rs-bookmark'/>
+                              <p className='text-[#555555] text-[15px] leading-[18px]'>Жорд нэмэх</p>
+                          </div>
+                          <div className='flex flex-row items-center mt-[12px]'>
+                              <span className='text-[#555555] text-[15px] mr-[11px] w-[22px] h-[22px] flex items-center justify-center icon-fi-rs-flag'/>
+                              <p className='text-[#555555] text-[15px] leading-[18px]'>Репорт</p>
+                          </div>
+                      </div>
                   }
                 />
               </div>
@@ -194,13 +218,33 @@ const CardFooter = ({
                 />
               </div>
               <div
+                ref={menuRef}
+                onClick={toggleMenu}
                 className={
-                  "flex flex-row items-center cursor-pointer w-[20px] h-[20px] ml-[10px]"
+                  "flex flex-row relative items-center cursor-pointer w-[20px] h-[20px] ml-[10px]"
                 }
               >
                 <span
                   className={
                     "icon-fi-rs-more-ver text-[#909090] transition duration-150 text-[16px]"
+                  }
+                />
+                <DropDown
+                  arrow={"topRight"}
+                  className="absolute border border-[#D4D8D8] drop-shadow-[0_2px_2px_rgba(0,0,0,0.06)] top-[28px] -left-[128px] w-[166px] h-[97px]"
+                  open={isMenuOpen}
+                  onToggle={toggleMenu}
+                  content={
+                      <div className='flex flex-col justify-center h-full pl-[14px]'>
+                          <div className='flex flex-row items-center'>
+                              <span className='text-[#555555] text-[16px] mr-[11px] w-[22px] h-[22px] flex items-center justify-center icon-fi-rs-bookmark'/>
+                              <p className='text-[#555555] text-[15px] leading-[18px]'>Жорд нэмэх</p>
+                          </div>
+                          <div className='flex flex-row items-center mt-[12px]'>
+                              <span className='text-[#555555] text-[15px] mr-[11px] w-[22px] h-[22px] flex items-center justify-center icon-fi-rs-flag'/>
+                              <p className='text-[#555555] text-[15px] leading-[18px]'>Репорт</p>
+                          </div>
+                      </div>
                   }
                 />
               </div>

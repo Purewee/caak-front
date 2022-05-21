@@ -2,10 +2,22 @@ import React, {useState} from 'react'
 import { Link } from 'react-router-dom'
 import PostShareModal from '../../modal/PostShareModal';
 import PostSaveModal from '../../modal/PostSaveModal';
+import DropDown from '../../navigation/DropDown';
+import { useClickOutSide } from '../../../utility/Util';
 
 export default function HighlightCard({post}) {
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [sharePostOpen, setSharePostOpen] = useState(false);
     const [savePostOpen, setSavePostOpen] = useState(false);
+
+    const menuRef = useClickOutSide(() => {
+        setIsMenuOpen(false);
+    });
+
+    const toggleMenu = () => {
+        setIsMenuOpen(!isMenuOpen);
+    };
+
     return (
         <div className='max-w-[646px] w-full h-[430px] relative'>
             <img alt="" src={`http://graph.caak.mn${post.image}`} className="h-full w-full object-cover" />
@@ -37,8 +49,6 @@ export default function HighlightCard({post}) {
                     <div className="flex flex-row items-center">
                         <div
                             onClick={() => setSharePostOpen(true)}
-                            // ref={menuRef}
-                            // onClick={toggleMenu}
                             className={
                             "flex flex-row items-center cursor-pointer w-[13.6px] h-[16.6px]"
                             }
@@ -48,42 +58,7 @@ export default function HighlightCard({post}) {
                                 "icon-fi-rs-share text-white transition duration-150 text-[16px]"
                             }
                             />
-                            {/* <DropDown
-                            arrow={"centerBottom"}
-                            className="absolute right-0 bottom-12"
-                            open={isMenuOpen}
-                            onToggle={toggleMenu}
-                            content={
-                                <div className={"flex flex-row items-center"}>
-                                <div className={"flex flex-col  justify-start  z-1"}>
-                                    <div
-                                    className="hover:bg-caak-liquidnitrogen w-full px-c6"
-                                    >
-                                    <div
-                                        className={
-                                        "flex items-center  rounded-full cursor-pointer h-[36px]"
-                                        }
-                                    >
-                                        <div
-                                        className={
-                                            "flex justify-center items-center p-[5px] w-[22px] h-[22px] rounded-full bg-caak-red"
-                                        }
-                                        >
-                                        <span
-                                            className={
-                                            "icon-fi-rs-link text-white text-[11px]"
-                                            }
-                                        />
-                                        </div>
-                                        <p className="text-14px text-caak-extraBlack ml-px-12">
-                                        Линк хуулах
-                                        </p>
-                                    </div>
-                                    </div>
-                                </div>
-                                </div>
-                            }
-                            /> */}
+                            
                         </div>
                         <PostShareModal post={post} setSharePostOpen={setSharePostOpen} sharePostOpen={sharePostOpen}/>
                         <div
@@ -111,15 +86,31 @@ export default function HighlightCard({post}) {
                             />
                         </div>
                         <div
-                        className={
-                        "flex flex-row items-center cursor-pointer w-[20px] h-[20px] ml-[10px]"
-                        }
-                    >
-                        <span
-                        className={
-                            "icon-fi-rs-more-ver text-white transition duration-150 text-[16px]"
-                        }
-                        />
+                            ref={menuRef}
+                            onClick={toggleMenu}
+                            className={
+                            "flex flex-row  relative items-center cursor-pointer w-[20px] h-[20px] ml-[10px]"
+                            }
+                        >
+                            <span className={"icon-fi-rs-more-ver text-white transition duration-150 text-[16px]"}/>
+                            <DropDown
+                                arrow={"topRight"}
+                                className="absolute border border-[#D4D8D8] drop-shadow-[0_2px_2px_rgba(0,0,0,0.06)] top-[28px] -left-[128px] w-[166px] h-[97px]"
+                                open={isMenuOpen}
+                                onToggle={toggleMenu}
+                                content={
+                                    <div className='flex flex-col justify-center h-full pl-[14px]'>
+                                        <div className='flex flex-row items-center'>
+                                            <span className='text-[#555555] text-[16px] mr-[11px] w-[22px] h-[22px] flex items-center justify-center icon-fi-rs-bookmark'/>
+                                            <p className='text-[#555555] text-[15px] leading-[18px]'>Жорд нэмэх</p>
+                                        </div>
+                                        <div className='flex flex-row items-center mt-[12px]'>
+                                            <span className='text-[#555555] text-[15px] mr-[11px] w-[22px] h-[22px] flex items-center justify-center icon-fi-rs-flag'/>
+                                            <p className='text-[#555555] text-[15px] leading-[18px]'>Репорт</p>
+                                        </div>
+                                    </div>
+                                }
+                            />
                         </div>
                     </div>
                 </div>
