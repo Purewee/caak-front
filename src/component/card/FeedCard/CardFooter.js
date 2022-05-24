@@ -4,12 +4,18 @@ import { useClickOutSide } from "../../../utility/Util";
 import PostShareModal from "../../modal/PostShareModal";
 import PostSaveModal from "../../modal/PostSaveModal";
 import DropDown from "../../navigation/DropDown";
+import LoveIcon from '../../../assets/images/fi-rs-react-love.svg'
+import CryIcon from '../../../assets/images/fi-rs-react-cry.svg'
+import AngerIcon from '../../../assets/images/fi-rs-react-anger.svg'
+import HahaIcon from '../../../assets/images/fi-rs-react-haha.svg'
+import WowIcon from '../../../assets/images/fi-rs-react-wow.svg'
 
 const CardFooter = ({
   post,
   sponsored
 }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [reactMenuOpen, setReactMenuOpen] = useState(false);
   const [sharePostOpen, setSharePostOpen] = useState(false);
   const [savePostOpen, setSavePostOpen] = useState(false);
 
@@ -17,8 +23,16 @@ const CardFooter = ({
     setIsMenuOpen(false);
   });
 
+  const reactRef = useClickOutSide(() => {
+    setReactMenuOpen(false)
+  });
+
   const toggleMenu = () => {
       setIsMenuOpen(!isMenuOpen);
+  };
+
+  const toggleReactMenu = () => {
+    setReactMenuOpen(!reactMenuOpen);
   };
 
   return (
@@ -76,13 +90,29 @@ const CardFooter = ({
               </div>
               <PostSaveModal post={post} setSavePostOpen={setSavePostOpen} savePostOpen={savePostOpen}/>
               <div
+                ref={reactRef}
+                onClick={toggleReactMenu}
                 className={
-                  "flex flex-row items-center cursor-pointer w-[18px] h-[16px] ml-[14px]"
+                  "flex flex-row relative items-center cursor-pointer w-[18px] h-[16px] ml-[14px]"
                 }
               >
                 <span
                   className={
                     "icon-fi-rs-heart text-white transition duration-150 text-[16px]"
+                  }
+                />
+                <DropDown
+                  className="absolute cursor-auto h-[40px] w-[182px] drop-shadow bottom-[28px] -left-[81px]"
+                  open={reactMenuOpen}
+                  onToggle={toggleReactMenu}
+                  content={
+                      <div className='flex flex-row items-center h-full justify-evenly'> 
+                          <img alt="" src={LoveIcon} className="w-[30px] h-[30px] cursor-pointer"/>
+                          <img alt="" src={HahaIcon} className="w-[30px] h-[30px] cursor-pointer"/>
+                          <img alt="" src={WowIcon} className="w-[30px] h-[30px] cursor-pointer"/>
+                          <img alt="" src={CryIcon} className="w-[30px] h-[30px] cursor-pointer"/>
+                          <img alt="" src={AngerIcon} className="w-[30px] h-[30px] cursor-pointer"/>
+                      </div>
                   }
                 />
               </div>
@@ -207,13 +237,29 @@ const CardFooter = ({
               </div>
               <PostSaveModal post={post} setSavePostOpen={setSavePostOpen} savePostOpen={savePostOpen}/>
               <div
+                ref={reactRef}
+                onClick={toggleReactMenu}
                 className={
-                  "flex flex-row items-center cursor-pointer w-[18px] h-[16px] ml-[14px]"
+                  "flex flex-row items-center relative cursor-pointer w-[18px] h-[16px] ml-[14px]"
                 }
               >
                 <span
                   className={
                     "icon-fi-rs-heart text-[#909090] transition duration-150 text-[16px]"
+                  }
+                />
+                <DropDown
+                  className="absolute cursor-auto h-[40px] w-[182px] drop-shadow bottom-[28px] -left-[81px]"
+                  open={reactMenuOpen}
+                  onToggle={toggleReactMenu}
+                  content={
+                      <div className='flex flex-row items-center h-full justify-evenly'> 
+                          <img alt="" src={LoveIcon} className="w-[30px] caak-button shake h-[30px] cursor-pointer"/>
+                          <img alt="" src={HahaIcon} className="w-[30px] h-[30px] cursor-pointer"/>
+                          <img alt="" src={WowIcon} className="w-[30px] h-[30px] cursor-pointer"/>
+                          <img alt="" src={CryIcon} className="w-[30px] h-[30px] cursor-pointer"/>
+                          <img alt="" src={AngerIcon} className="w-[30px] h-[30px] cursor-pointer"/>
+                      </div>
                   }
                 />
               </div>

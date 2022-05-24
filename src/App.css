@@ -113,6 +113,30 @@ background: transparent
   animation-delay: -0.16s;
 }
 
+@-webkit-keyframes sk-bouncedelay {
+  0%,
+  80%,
+  100% {
+    -webkit-transform: scale(0);
+  }
+  40% {
+    -webkit-transform: scale(1);
+  }
+}
+
+@keyframes sk-bouncedelay {
+  0%,
+  80%,
+  100% {
+    -webkit-transform: scale(0);
+    transform: scale(0);
+  }
+  40% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+}
+
 .popup_modal {
   top: 0;
   left: 0;
@@ -143,4 +167,23 @@ background: transparent
   height: 100vh;
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
+}
+
+.caak-button.shake {
+  animation: shake 0.5s;
+}
+
+@keyframes shake {
+  0% {
+    transform: scale(1.2) rotate(10deg);
+  }
+  25% {
+    transform: scale(1.2) rotate(-10deg);
+  }
+  50% {
+    transform: rotate(10deg);
+  }
+  100% {
+    transform: scale(1);
+  }
 }

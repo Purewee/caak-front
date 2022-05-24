@@ -1,0 +1,15 @@
+<svg id="fi-rs-react-anger" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="30" height="30" viewBox="0 0 30 30">
+  <defs>
+    <linearGradient id="linear-gradient" x1="0.5" x2="0.5" y2="1" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#f53757"/>
+      <stop offset="1" stop-color="#ffd54f"/>
+    </linearGradient>
+  </defs>
+  <rect id="Cover" width="30" height="30" fill="none"/>
+  <circle id="Ellipse_52" data-name="Ellipse 52" cx="14" cy="14" r="14" transform="translate(1.25 1.25)" fill="url(#linear-gradient)"/>
+  <circle id="Ellipse_53" data-name="Ellipse 53" cx="2.292" cy="2.292" r="2.292" transform="translate(6.979 12.917)" fill="#4d332b"/>
+  <circle id="Ellipse_54" data-name="Ellipse 54" cx="2.292" cy="2.292" r="2.292" transform="translate(18.438 12.917)" fill="#4d332b"/>
+  <path id="Path_462" data-name="Path 462" d="M9.724,7.795a.86.86,0,0,1-.477-.144L6.383,5.74a.859.859,0,1,1,.953-1.43L10.2,6.221a.859.859,0,0,1-.477,1.574Z" transform="translate(2.125 4.357)" fill="#4d332b"/>
+  <path id="Path_463" data-name="Path 463" d="M14.86,7.795a.859.859,0,0,1-.478-1.574l2.865-1.91A.859.859,0,0,1,18.2,5.74l-2.865,1.91a.842.842,0,0,1-.476.144Z" transform="translate(3.291 4.357)" fill="#4d332b"/>
+  <ellipse id="Ellipse_55" data-name="Ellipse 55" cx="3.438" cy="1.089" rx="3.438" ry="1.089" transform="translate(11.563 19.849)" fill="#e53935"/>
+</svg>

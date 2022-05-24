@@ -50,6 +50,8 @@ export default function Profile() {
   const { data, loading } = useQuery(USER, { variables: { id } })
   const author = data?.user || {};
 
+  console.log(author)
+
   useEffect(() => {
     context.setStore('default');
     const es = new ESService('caak');
