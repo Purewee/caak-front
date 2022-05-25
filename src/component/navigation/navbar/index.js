@@ -13,8 +13,9 @@ export default function NavbarNew() {
   const [isShown, setIsShown] = useState(false);;
   const [navBarStyle, setNavBarStyle] = useState(true);;
   const [ isMobileMenuOpen, setIsMobileMenuOpen ] = useState(false)
-  const isLaptop = useMediaQuery("screen and (max-device-width: 1100px)");
-  const isTablet = useMediaQuery("(max-width: 767px)");
+  const isLaptop = useMediaQuery("(min-width: 1001px) and (max-width: 1920px)");
+  const isTablet = useMediaQuery("(min-width: 401px) and (max-width: 1000px)");
+  const isMobile = useMediaQuery("screen and (max-width: 767px)");
   const { isAuth } = useAuth();
 
   useEffect(() => {
@@ -29,7 +30,7 @@ export default function NavbarNew() {
     }
   }, [context.store])
 
-  return (
+  return isLaptop && (
     loaded && (
       <nav
         className={`${navBarStyle ? 'bg-transparent absolute z-[2] top-0' : 'border-b'} w-full px-[40px] flex items-center h-[70px]`}
@@ -80,7 +81,7 @@ export default function NavbarNew() {
               />
             </div>
             <Logo navBarStyle={navBarStyle} />
-            {!isLaptop && <MenuItems navBarStyle={navBarStyle} />}
+            {isLaptop && <MenuItems navBarStyle={navBarStyle} />}
           </div>
           {isAuth ? <UserInfo />
             :

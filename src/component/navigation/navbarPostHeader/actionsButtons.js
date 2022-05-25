@@ -65,11 +65,11 @@ const ActionButtons = ({post}) => {
           onToggle={toggleReactMenu}
           content={
               <div className='flex flex-row items-center h-full justify-evenly'> 
-                  <img alt="" src={LoveIcon} className="w-[30px] h-[30px] cursor-pointer"/>
-                  <img alt="" src={HahaIcon} className="w-[30px] h-[30px] cursor-pointer"/>
-                  <img alt="" src={WowIcon} className="w-[30px] h-[30px] cursor-pointer"/>
-                  <img alt="" src={CryIcon} className="w-[30px] h-[30px] cursor-pointer"/>
-                  <img alt="" src={AngerIcon} className="w-[30px] h-[30px] cursor-pointer"/>
+                  <img alt="" src={LoveIcon} className="w-[30px] h-[30px] cursor-pointer rounded-full"/>
+                  <img alt="" src={HahaIcon} className="w-[30px] h-[30px] cursor-pointer rounded-full"/>
+                  <img alt="" src={WowIcon} className="w-[30px] h-[30px] cursor-pointer rounded-full"/>
+                  <img alt="" src={CryIcon} className="w-[30px] h-[30px] cursor-pointer rounded-full"/>
+                  <img alt="" src={AngerIcon} className="w-[30px] h-[30px] cursor-pointer rounded-full"/>
               </div>
           }
         />

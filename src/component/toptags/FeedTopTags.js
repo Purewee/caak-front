@@ -105,7 +105,7 @@ const FeedTopTags = () => {
             }
           >
             <span
-              className={"icon-fi-rs-next text-[#555555] text-[18px]"}
+              className={"icon-fi-rs-down-chevron text-[#555555] text-[18px] -rotate-90"}
             />
           </div>
         )}

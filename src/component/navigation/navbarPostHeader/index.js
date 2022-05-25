@@ -1,16 +1,20 @@
 import { useState, useEffect } from "react";
 import NavbarPostHeaderCard from "./NavbarPostHeaderCard";
 import {ESService} from "../../../lib/esService";
+import useMediaQuery from "../useMediaQuery";
 
 const NavbarPostHeader = () => {
   const [posts, setPosts] = useState([]);
+  const isLaptop = useMediaQuery("(min-width: 1001px) and (max-width: 1920px)");
+  const isTablet = useMediaQuery("(min-width: 401px) and (max-width: 1000px)");
+  const isMobile = useMediaQuery("screen and (max-width: 767px)");
 
   useEffect(() => {
     const es = new ESService('caak');
     es.boostedPosts().then(setPosts);
   }, []);
 
-  return (
+  return isLaptop && (
     <div
       className={
         "relative flex flex-col lg:flex-row items-center justify-center h-full min-h-[436px] bg-blue-500 w-full"

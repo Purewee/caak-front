@@ -7,6 +7,7 @@ import Post from './pages/post/view';
 import Profile from './pages/profile';
 import Magazine from './pages/magazine';
 import TopTags from './pages/topTags';
+import Channel from './pages/channel';
 import { WithApolloProvider } from './utility/WithApolloProvider';
 import {AuthProvider} from "./context/AuthContext";
 
@@ -32,6 +33,7 @@ function App() {
                 <Route path='/profile/:id' element={<Profile/>}/>
                 <Route path='/magazine/:id' element={<Magazine/>}/>
                 <Route path='/tags/:slug' element={<TopTags/>}/>
+                <Route path='/channel/:id' element={<Channel/>}/>
               </Routes>
             </BrowserRouter>
           </div>

@@ -10,6 +10,12 @@
   grid-gap: 40px 22px;
 }
 
+.mobileFeedGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(358px, 1px));
+  grid-gap: 16px;
+}
+
 .trendPostsCardWrapper {
   overflow: hidden;
 }
@@ -23,8 +29,6 @@
 .hideScrollbar {
   overflow: hidden;
 }
-
-
 
 .truncate-3 {
 display: -webkit-box;
@@ -167,23 +171,4 @@ background: transparent
   height: 100vh;
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
-}
-
-.caak-button.shake {
-  animation: shake 0.5s;
-}
-
-@keyframes shake {
-  0% {
-    transform: scale(1.2) rotate(10deg);
-  }
-  25% {
-    transform: scale(1.2) rotate(-10deg);
-  }
-  50% {
-    transform: rotate(10deg);
-  }
-  100% {
-    transform: scale(1);
-  }
 }
