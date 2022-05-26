@@ -74,6 +74,12 @@ background: transparent
 .storyLinear {
 background: transparent
   linear-gradient(180deg,  #00000067 0%, #00000000 100%) 0% 0% no-repeat;
+  opacity: 20;
+}
+
+.storyLinearBig {
+  background: transparent
+    linear-gradient(180deg, #00000000 0%, #000000 100%) 0% 0% no-repeat padding-box
 }
 
 .storyLinearBorder {

@@ -14,7 +14,7 @@ export default function StoryItem({story, border }) {
         />
         <div className='absolute bottom-0 rounded-[8px] storyLinear h-full w-full py-[30px] px-[20px] flex flex-col items-start justify-end'>
           { story?.categories.map((x) => <p key={x.name} className="bg-[#FF6600] px-[8px] py-[4px] text-white text-[12px] font-bold uppercase">#{x.name}</p>) }
-          <Link to={`/post/view/${story.id}`}>
+          <Link to={`/story`}>
               <p className='truncate-3 text-white text-[24px] font-bold mt-[10px]'>{story?.title}</p>
           </Link>
           <p className='text-white text-[14px] font-medium mt-[10px]'>{generateTimeAgo(story?.publish_date)}</p>

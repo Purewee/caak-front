@@ -27,10 +27,14 @@ export default function NavbarNew() {
       setNavBarStyle(false)
     }else if(context.store === 'transparent'){
       setNavBarStyle(true)
+    }else if(context.store === null){
+      setNavBarStyle(null)
     }
   }, [context.store])
 
-  return isLaptop && (
+  return navBarStyle === null ?
+  null : 
+  isLaptop && (
     loaded && (
       <nav
         className={`${navBarStyle ? 'bg-transparent absolute z-[2] top-0' : 'border-b'} w-full px-[40px] flex items-center h-[70px]`}

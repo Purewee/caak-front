@@ -2,11 +2,11 @@ import { Link } from "react-router-dom";
 import logoIconLight from "../../images/New-Logo-Light.svg";
 import logoIcon from "../../images/New-Logo.svg";
 
-const Logo = ({ navBarStyle }) => {
+const Logo = ({ navBarStyle, className }) => {
 
     return (
         <div
-            className={`relative flex flex-shrink-0 flex-row items-center`}
+            className={`relative flex flex-shrink-0 flex-row items-center ${className}`}
         >
             <Link to={'/'}>
                 <div
