@@ -97,10 +97,10 @@ const FeedMagazine = () => {
   };
 
   return  (
-    <div className="w-full py-[50px] bg-[#F5F5F5] flex justify-center">
+    <div className="w-full py-[28px] xl:py-[50px] bg-[#F5F5F5] flex justify-center px-[17px] xl:px-0">
       <div
         className={
-          "flex flex-col w-full relative max-w-[400px] sm:max-w-[600px] md:max-w-[700px] lg:max-w-[950px] xl:max-w-[1200px] 2xl:max-w-[1310px]"
+          "flex flex-col w-full relative sm:max-w-[600px] md:max-w-[700px] lg:max-w-[950px] xl:max-w-[1200px] 2xl:max-w-[1310px]"
         }
       >
         {activeIndex + 1 < trendingPostsByCategory.length - 1 && (
@@ -113,7 +113,7 @@ const FeedMagazine = () => {
               nextItem();
             }}
             className={
-              "cursor-pointer z-30 w-[40px] h-[40px] flex items-center justify-center bg-white border-[#D4D8D8] drop-shadow-md rounded-full absolute right-[-20px] top-1/2"
+              "cursor-pointer z-30 w-[40px] h-[40px] hidden xl:flex items-center justify-center bg-white border-[#D4D8D8] drop-shadow-md rounded-full absolute right-[-20px] top-1/2"
             }
           >
             <span
@@ -132,7 +132,7 @@ const FeedMagazine = () => {
               prevItem();
             }}
             className={
-              "cursor-pointer z-30 w-[40px] h-[40px] flex items-center justify-center bg-white border-[#D4D8D8] drop-shadow-md rounded-full absolute left-[-20px] top-1/2 rotate-180"
+              "cursor-pointer z-30 w-[40px] h-[40px] hidden xl:flex items-center justify-center bg-white border-[#D4D8D8] drop-shadow-md rounded-full absolute left-[-20px] top-1/2 rotate-180"
             }
           >
             <span
@@ -142,13 +142,16 @@ const FeedMagazine = () => {
         )}
         <div className="flex flex-row items-center mb-[21px]">
           <span className="icon-fi-rs-jor text-[20px] text-[#FF6600]"/>
-          <p
+          <div
             className={
-              "font-bold text-[#000000] ml-[8px] text-[24px] leading-[28px]"
+              "font-bold text-[#000000] inline-flex items-center ml-[8px] text-[24px] leading-[28px]"
             }
           >
-            АЛДАРТАЙ ЖОРНУУД
-          </p>
+            <p>АЛДАРТАЙ</p>&nbsp;<p className="font-normal">ЖОРНУУД</p>
+            <div className="w-[18px] h-[18px] flex justify-center items-center ml-[8px] md:hidden">
+              <span className="icon-fi-rs-down-chevron -rotate-90 text-[15px]"/>
+            </div>
+          </div>
         </div>
         <div
           ref={trendPostsRef}
@@ -156,7 +159,7 @@ const FeedMagazine = () => {
         >
           <div
             className={
-              " flex flex-row flex-nowrap w-full h-full gap-[21px] transition-all duration-300"
+              " flex flex-row flex-nowrap w-full h-full gap-[17px] xl:gap-[21px] transition-all duration-300"
             }
           >
             {trendingPostsByCategory.map((item, index) => {

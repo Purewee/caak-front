@@ -40,10 +40,10 @@ export default function Home() {
 
   return (
     < >
-      <div className={`relative bg-white flex flex-col items-center pb-[100px] px-[16px] sm:px-0`}>
+      <div className={`relative bg-white flex flex-col items-center pb-[100px]`}>
         <NavbarPostHeader/>
         <Story />
-        <div className='flex flex-row items-center justify-center gap-[50px] pb-[1px] max-w-[1310px] w-full border-b border-[#EFEEEF]'>
+        <div className='hidden xl:flex flex-row items-center justify-center gap-[50px] pb-[1px] max-w-[1310px] w-full border-b border-[#EFEEEF]'>
           {
               menu.map((data, index) => {
               return(
@@ -55,10 +55,10 @@ export default function Home() {
         {
           selected === 0
           ?
-          <div>
+          <div className='w-full flex flex-col items-center'>
             <div
               className={
-                `relative max-w-[1310px] w-full justify-items-center mt-[50px] ${isMobile && 'mobileFeedGrid' || 'newFeedGrid'} justify-center`
+                `relative max-w-[1310px] w-full justify-items-center pt-[18px] border-t-[8px] xl:border-none border-[#EFEEEF] xl:mt-[50px] ${isMobile ? 'mobileFeedGrid' : 'newFeedGrid'} justify-center`
               }
             >
               {
@@ -68,8 +68,12 @@ export default function Home() {
                   )
                 })
               }
-              <div className='bg-gray-200 w-full sm:w-[424px] h-[220px] sm:h-[524px]'>
-                <p>banner</p>
+              <div className='w-full flex flex-col'>
+                <div className=' w-full sm:w-[424px] h-[220px] bg-gray-200 sm:h-[524px]'></div>
+                <div className='flex md:hidden flex-row items-center pr-[6px] justify-end w-full text-[#909090] mt-[8px] border-b border-[#EFEEEF] pb-[13px]'>
+                  <span className='icon-fi-rs-megaphone text-[13px]' />
+                  <p className='text-[14px] font-condensed ml-[4px]'>Сурталчилгаа</p>
+                </div>
               </div>
               {
                 articles.slice(5, 8).map((data, index) => {
@@ -81,7 +85,7 @@ export default function Home() {
             </div>
             <div
               className={
-                `relative max-w-[1310px] w-full justify-items-center ${isMobile && 'mobileFeedGrid' || 'HighlightFeedGrid'} justify-center sm:pt-[44px] sm:pb-[40px]`
+                `relative max-w-[1310px] w-full justify-items-center ${isMobile ? 'mobileFeedGrid' : 'HighlightFeedGrid'} justify-center sm:pt-[44px] sm:pb-[40px]`
               }
             >
               {
@@ -100,7 +104,7 @@ export default function Home() {
             </div>
             <div
               className={
-                `relative max-w-[1310px] w-full justify-items-center ${isMobile && 'mobileFeedGrid' || 'newFeedGrid'} justify-center`
+                `relative max-w-[1310px] w-full justify-items-center ${isMobile ? 'mobileFeedGrid' : 'newFeedGrid'} justify-center`
               }
             >
               {
@@ -110,8 +114,12 @@ export default function Home() {
                   )
                 })
               }
-              <div className='bg-gray-200 w-full sm:w-[424px] h-[220px] sm:h-[524px]'>
-                <p>banner</p>
+              <div className='w-full flex flex-col'>
+                <div className=' w-full sm:w-[424px] h-[220px] bg-gray-200 sm:h-[524px]'></div>
+                <div className='flex md:hidden flex-row items-center pr-[6px] justify-end w-full text-[#909090] mt-[8px] border-b border-[#EFEEEF] pb-[13px]'>
+                  <span className='icon-fi-rs-megaphone text-[13px]' />
+                  <p className='text-[14px] font-condensed ml-[4px]'>Сурталчилгаа</p>
+                </div>
               </div>
               {
                 articles.slice(14, 18).map((data, index) => {
@@ -121,12 +129,12 @@ export default function Home() {
                 })
               }
             </div>
-            <div className='xl:py-[50px] w-full'>
+            <div className='xl:py-[50px] hidden md:flex w-full'>
               <FeedTopTags/>
             </div>
             <div
               className={
-                `relative max-w-[1310px] w-full justify-items-center ${isMobile && 'mobileFeedGrid' || 'newFeedGrid'} justify-center`
+                `relative max-w-[1310px] w-full justify-items-center mt-[16px] md:mt-0 ${isMobile ? 'mobileFeedGrid' : 'newFeedGrid'} justify-center`
               }
             >
               {
@@ -142,7 +150,7 @@ export default function Home() {
             </div>
             <div
               className={
-                `relative max-w-[1310px] w-full justify-items-center ${isMobile && 'mobileFeedGrid' || 'HighlightFeedGrid'} justify-center sm:pt-[50px] sm:pb-[40px]`
+                `relative max-w-[1310px] w-full pt-[24px] justify-items-center ${isMobile ? 'mobileFeedGrid' : 'HighlightFeedGrid'} justify-center sm:pt-[50px] sm:pb-[40px]`
               }
             >
               {
@@ -161,7 +169,7 @@ export default function Home() {
             </div>
             <div
               className={
-                `relative max-w-[1310px] w-full justify-items-center ${isMobile && 'mobileFeedGrid' || 'newFeedGrid'} justify-center`
+                `relative max-w-[1310px] w-full justify-items-center ${isMobile ? 'mobileFeedGrid' : 'newFeedGrid'} justify-center`
               }
             >
               {

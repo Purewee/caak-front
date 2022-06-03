@@ -7,11 +7,55 @@ import SignInUpController from "../../modal//SignInUpController";
 import {useAuth} from "../../../context/AuthContext";
 import UserInfo from "./UserInfo";
 
+
+const subMenu = [
+  {
+    title: 'Хөгжилтэй'
+  },
+  {
+    title: 'Кино'
+  },
+  {
+    title: 'Загвар'
+  },
+  {
+    title: 'Гэрэл зураг'
+  },
+  {
+    title: 'Спорт'
+  },
+  {
+    title: 'Тоглоом'
+  },
+  {
+    title: 'Шинжлэх ухаан'
+  },
+  {
+    title: 'Гэр бүл'
+  },
+  {
+    title: 'Гоо сайхан'
+  },
+  {
+    title: 'Аялал'
+  },
+  {
+    title: 'Амьтад'
+  },
+  {
+    title: 'Энтэртайнмент'
+  },
+  {
+    title: 'Хоол'
+  },
+]
+
 export default function NavbarNew() {
 	const context = useContext(AppContext);
-  const [loaded, setLoaded] = useState(false);;
-  const [isShown, setIsShown] = useState(false);;
-  const [navBarStyle, setNavBarStyle] = useState(true);;
+  const [loaded, setLoaded] = useState(false);
+  const [navBarSticky, setNavBarSticky] = useState(true);
+  const [isShown, setIsShown] = useState(false);
+  const [navBarStyle, setNavBarStyle] = useState(true);
   const [ isMobileMenuOpen, setIsMobileMenuOpen ] = useState(false)
   const isLaptop = useMediaQuery("(min-width: 1001px) and (max-width: 1920px)");
   const isTablet = useMediaQuery("(min-width: 401px) and (max-width: 1000px)");
@@ -32,9 +76,24 @@ export default function NavbarNew() {
     }
   }, [context.store])
 
+  useEffect(() => {
+    const listener = () => {
+      const scrolled = document.scrollingElement.scrollTop;
+      if (scrolled > 40) {
+        setNavBarSticky(false);
+      } else {
+        setNavBarSticky(true);
+      }
+    };
+    document.addEventListener("scroll", listener);
+    return () => {
+      document.removeEventListener("scroll", listener);
+    };
+  }, [setNavBarSticky]);
+
   return navBarStyle === null ?
   null : 
-  isLaptop && (
+  isLaptop ? (
     loaded && (
       <nav
         className={`${navBarStyle ? 'bg-transparent absolute z-[2] top-0' : 'border-b'} w-full px-[40px] flex items-center h-[70px]`}
@@ -44,7 +103,6 @@ export default function NavbarNew() {
         >
           <div className={"flex flex-row items-center"}>
             {/*Mobile Menu Icon*/}
-            {isLaptop && (
               <div
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                 // ref={mobileMenuRef}
@@ -57,7 +115,6 @@ export default function NavbarNew() {
               >
                 {/* <MobileSideMenu setOpen={setIsMobileMenuOpen} /> */}
               </div>
-            )}
             {/* {isLaptop && (
               <div
                 onClick={() => setIsMobileMenuOpen(true)}
@@ -121,5 +178,27 @@ export default function NavbarNew() {
         <SignInUpController isShown={isShown} setIsShown={setIsShown}/>
       </nav>
     )
-  );
+  )
+  :
+  <nav className="pt-[13px] flex flex-col">
+    <div className="w-full flex flex-row justify-between pl-[16px] pr-[17px]">
+      <Logo className={''} mobile navBarStyle={false}/>
+      <span className="icon-fi-rs-user text-[#555555] text-[27.5px]"/>
+    </div>
+    <div className="sticky top-0 z-50">
+      <div className="w-full border-b-[3px] border-[#EFEEEF] h-[36px] mt-[21.7px] relative">
+        <div className="pr-[25px] absolute left-0 wrapper w-full"> 
+          <p className={`border-b-[3px] border-[#FF6600] ml-[16px] text-[21px] font-bold text-[#111111] uppercase whitespace-nowrap`}>ШИНЭ</p>
+          <p className={`ml-[16px] text-[21px] font-bold text-[#111111] uppercase whitespace-nowrap`}>ТРЭНД</p>
+          {
+            subMenu.map((data, index) => {
+              return( 
+                <p key={index} className={`ml-[16px] text-[21px] font-bold text-[#111111] uppercase whitespace-nowrap`}>{data.title}</p>
+              )
+            })
+          }
+        </div>
+      </div>
+    </div>
+  </nav>
 }

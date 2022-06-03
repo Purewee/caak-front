@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import logoIconLight from "../../images/New-Logo-Light.svg";
 import logoIcon from "../../images/New-Logo.svg";
 
-const Logo = ({ navBarStyle, className }) => {
+const Logo = ({ navBarStyle, className, mobile }) => {
 
     return (
         <div
@@ -11,15 +11,13 @@ const Logo = ({ navBarStyle, className }) => {
             <Link to={'/'}>
                 <div
                     className={
-                    "w-[112px] flex flex-shrink-0 flex-row items-center pr-[12px]"
+                    `${mobile ? 'w-[110px] h-[33px]' : 'w-[140px] h-[42px]'} flex flex-shrink-0 flex-row items-center`
                     }
                 >
                     <img
                         src={navBarStyle ? logoIconLight : logoIcon}
-                        className="cursor-pointer object-contain"
+                        className="cursor-pointer h-full w-full object-contain"
                         alt="Caak Logo"
-                        width={112}
-                        height={34}
                     />
                 </div>
             </Link>

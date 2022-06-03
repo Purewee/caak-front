@@ -113,7 +113,7 @@ const Magazine = () => {
               nextItem();
             }}
             className={
-              "cursor-pointer z-30 w-[40px] h-[40px] flex items-center justify-center bg-white border-[#D4D8D8] drop-shadow-md rounded-full absolute right-[-20px] top-1/2"
+              "cursor-pointer z-30 w-[40px] h-[40px] hidden xl:flex items-center justify-center bg-white border-[#D4D8D8] drop-shadow-md rounded-full absolute right-[-20px] top-1/2"
             }
           >
             <span
@@ -132,7 +132,7 @@ const Magazine = () => {
               prevItem();
             }}
             className={
-              "cursor-pointer z-30 w-[40px] h-[40px] flex items-center justify-center bg-white border-[#D4D8D8] drop-shadow-md rounded-full absolute left-[-20px] top-1/2 rotate-180"
+              "cursor-pointer z-30 w-[40px] h-[40px] hiddden xl:flex items-center justify-center bg-white border-[#D4D8D8] drop-shadow-md rounded-full absolute left-[-20px] top-1/2 rotate-180"
             }
           >
             <span

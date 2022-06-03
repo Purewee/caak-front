@@ -28,7 +28,7 @@ const StoryFeed = () => {
   return stories?.length > 0 ? (
     <div
       className={
-        "flex overflow-hidden flex-col max-w-[300px] sm:max-w-[600px] md:max-w-[750px] lg:max-w-[900px] xl:max-w-[1100px] 2xl:max-w-[1502px] w-full justify-center relative py-[80px]"
+        "flex flex-col max-w-[1502px] px-[10px] xl:px-0 w-full justify-center relative mt-[22px] md:py-[80px]"
       }
     >
       {activeIndex + 1 < stories.length - 1 && (
@@ -41,7 +41,7 @@ const StoryFeed = () => {
             nextItem();
           }}
           className={
-            "cursor-pointer z-40 w-[52px] h-[52px] flex items-center justify-center bg-white border-[#D4D8D8] drop-shadow-md rounded-full absolute right-[-26px] top-1/2"
+            "cursor-pointer hidden md:flex z-40 w-[52px] h-[52px] items-center justify-center bg-white border-[#D4D8D8] drop-shadow-md rounded-full absolute right-[-26px] top-1/2"
           }
         >
           <span
@@ -60,7 +60,7 @@ const StoryFeed = () => {
             prevItem();
           }}
           className={
-            "cursor-pointer z-40 w-[52px] h-[52px] flex items-center justify-center bg-white border-[#D4D8D8] drop-shadow-md rounded-full absolute left-[-26px] top-1/2 rotate-180"
+            "cursor-pointer hidden md:flex z-40 w-[52px] h-[52px] items-center justify-center bg-white border-[#D4D8D8] drop-shadow-md rounded-full absolute left-[-26px] top-1/2 rotate-180"
           }
         >
           <span
@@ -71,24 +71,20 @@ const StoryFeed = () => {
 
       <p
         className={
-          "font-bold text-[#111111] text-[38px] text-center leading-[42px]"
+          "font-medium md:font-bold text-[#111111] text-[17px] md:text-[38px] md:text-center leading-[20px] md:leading-[42px]"
         }
       >
         СТОРИ МЭДЭЭ
       </p>
       <div
         ref={trendPostsRef}
-        className={"trendPostsCardWrapper z-0 relative mt-[39px] overflow-x-scroll"}
+        className={
+          "w-full wrapper gap-[13px] transition-all pb-[26px] md:pb-0 duration-300 mt-[14px] md:mt-[39px]"
+        }
       >
-        <div
-          className={
-            " flex flex-row flex-nowrap w-full gap-[13px] h-full transition-all duration-300"
-          }
-        >
-          {stories.map((item, index) => {
-            return <StoryItem border={index === 0 && true} story={item} key={index} />;
-          })}
-        </div>
+        {stories.map((item, index) => {
+          return <StoryItem border={index === 0 && true} story={item} key={index} />;
+        })}
       </div>
     </div>
   ) : null;

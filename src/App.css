@@ -102,6 +102,16 @@ background: transparent
   text-align: center;
 }
 
+.wrapper {
+  display: flex;
+  overflow-y: auto;
+}
+
+.wrapper::-webkit-scrollbar{
+  width: 0px;
+  height: 0px;
+}
+
 .spinner > div {
   width: 9px;
   height: 9px;

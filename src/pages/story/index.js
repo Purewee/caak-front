@@ -12,8 +12,6 @@ export default function Story() {
     const [indexOfStory, setIndexOfStory] = useState(0) 
     const [shownStory, setShownStory] = useState(null)
 
-    console.log(indexOfStory)
-
     useEffect(() => {
         const es = new ESService('caak');
         es.stories().then(res => {
@@ -28,7 +26,7 @@ export default function Story() {
 
     useEffect(() => {
         setShownStory(stories[indexOfStory])
-    },[indexOfStory, stories.length])
+    },[indexOfStory, stories])
 
     const handlers = useSwipeable({
         onSwipedLeft: () => setIndexOfStory(indexOfStory + 1 === stories.length ? 'done' : indexOfStory + 1),
@@ -54,11 +52,13 @@ export default function Story() {
     :
     <div {...handlers} className='w-full relative'>
         <div>
-            <img className='w-full h-screen object-cover' src={`http://graph.caak.mn${shownStory?.image}`}/>
+            <img alt='' className='w-full h-screen object-cover' src={`http://graph.caak.mn${shownStory?.image}`}/>
         </div>
         <div className='w-full h-full absolute top-0 flex flex-col items-center justify-between'>
             <div className='flex flex-row items-center w-full justify-between px-[19px] mt-[16px]'>
-                <div></div>
+                <div>
+                    <Logo/>
+                </div>
                 <div className='flex flex-row items-center'>
                     <span className='icon-fi-rs-volume text-[22px] text-white'/>
                     <span className='icon-fi-rs-play text-[18px] text-white ml-[27px]'/>
