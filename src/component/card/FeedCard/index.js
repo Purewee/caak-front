@@ -83,7 +83,7 @@ const FeedCard = ({
       <div
         className={`${
           className ?? ""
-        } relative w-full h-[370px] sm:w-[422px] sm:h-[523px] bg-white ${!sponsored && 'border-b border-[#EFEEEF]'}`}
+        } relative w-full h-[370px] sm:w-[422px] sm:h-[523px] bg-white border-b border-[#EFEEEF]`}
       >
         <div className=" flex flex-col">
           <Link to={`/post/view/${post.id}`}>
@@ -91,7 +91,7 @@ const FeedCard = ({
           </Link>
           <div className={`relative flex flex-col bg-[#463146] px-[16px] pt-[14px] md:pt-[22px] pb-[19px] md:h-[223px]`}>
             <Link className="min-h-[85px]" to={`/post/view/${post.id}`}>
-              <p className={`${sponsored ? 'text-white xl:text-center' : 'text-[#111111]'} cursor-pointer text-[22px] sm:leading-[28px] truncate-4 xl:truncate-3`}>{post.title}</p>
+              <p className={`text-white xl:text-center' cursor-pointer text-[22px] sm:leading-[28px] truncate-4 xl:truncate-3`}>{post.title}</p>
             </Link>
             {
               isMobile ? 
@@ -225,13 +225,10 @@ const FeedCard = ({
             }
           </div>
         </div>
-        {
-          sponsored && 
-          <div className="absolute top-[14px] pl-[10px] pr-[12px] pt-[5.3px] pb-[4.3px] left-[14px] bg-black bg-opacity-40 rounded-[2px] flex flex-row items-center">
-            <span className="text-[11.8px] text-white icon-fi-rs-megaphone" />
-            <p className="text-white text-[13px] leading-[15px] font-roboto ml-[8px]">ОНЦЛОХ МЭДЭЭ</p>
-          </div>
-        }
+        <div className="absolute top-[14px] pl-[10px] pr-[12px] pt-[5.3px] pb-[4.3px] left-[14px] bg-black bg-opacity-40 rounded-[2px] flex flex-row items-center">
+          <span className="text-[11.8px] text-white icon-fi-rs-megaphone" />
+          <p className="text-white text-[13px] leading-[15px] font-roboto ml-[8px]">ОНЦЛОХ МЭДЭЭ</p>
+        </div>
       </div>
       :
       <div
@@ -239,7 +236,7 @@ const FeedCard = ({
           className ?? ""
         } relative w-full h-[150px] sm:w-[422px] sm:h-[523px] bg-white border-b border-[#EFEEEF]`}
       >
-        <div className="flex flex-row xl:flex-col">
+        <div className="flex flex-row sm:flex-col">
           <Link to={`/post/view/${post.id}`}>
             <img alt="" src={`http://graph.caak.mn${post.image}`} className="min-h-[105px] max-h-[105px] sm:min-h-[300px] sm:max-h-[300px] sm:min-w-full min-w-[130px] max-w-[130px] object-cover" />
           </Link>
@@ -423,13 +420,6 @@ const FeedCard = ({
             </div>
           </div>
         </div>
-        {
-          sponsored && 
-          <div className="absolute top-[14px] pl-[10px] pr-[12px] pt-[5.3px] pb-[4.3px] left-[14px] bg-black bg-opacity-40 rounded-[2px] flex flex-row items-center">
-            <span className="text-[11.8px] text-white icon-fi-rs-bolt" />
-            <p className="text-white text-[13px] leading-[15px] font-roboto ml-[8px]">ОНЦЛОХ МЭДЭЭ</p>
-          </div>
-        }
       </div>
     )
   );

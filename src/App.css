@@ -4,9 +4,21 @@
   grid-gap: 40px 18px;
 }
 
+.trendGridBig {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(808, 1px));
+  grid-gap: 40px 18px;
+}
+
 .newFeedGrid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(422px, 1px));
+  grid-gap: 40px 22px;
+}
+
+.trendGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(311px, 1px));
   grid-gap: 40px 22px;
 }
 
@@ -187,4 +199,9 @@ background: transparent
   height: 100vh;
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
+}
+
+.emoji {
+  width: 30px;
+  height: 30px;
 }

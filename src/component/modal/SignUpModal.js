@@ -1,9 +1,15 @@
 import React, {useState} from 'react'
 import logoIcon from "../../images/New-Logo.svg";
+import OtpInput from 'react-otp-input';
 
 export default function SignUpModal({setIsShown}) {
     const [step, setStep] = useState('default')
     const [isPasswordShown, setIsPasswordShown] = useState(false)
+    const [code, setCode] = useState("");
+
+    console.log(code)
+  
+    const handleChange = (code) => setCode(code);
     return (
         <div className='popup_modal'>
             {
@@ -64,13 +70,13 @@ export default function SignUpModal({setIsShown}) {
                                 </div>
                                 <p className="mt-[40px] w-full font-inter text-13px text-[#909090]">
                                     Та энэ алхамын үргэлжлүүлснээр, сайтын{" "}
-                                    <a target="_blank" rel="noopener noreferrer">
+                                    <a href='/' target="_blank" rel="noopener noreferrer">
                                         <span className="text-[#111111]">
                                         Үйлчилгээний нөхцөл
                                         </span>{" "}
                                     </a>
                                     болон{" "}
-                                    <a target="_blank" rel="noopener noreferrer">
+                                    <a href='/' target="_blank" rel="noopener noreferrer">
                                         <span className="text-[#111111]">
                                         Нууцлалын бодлогыг
                                         </span>{" "}
@@ -112,13 +118,13 @@ export default function SignUpModal({setIsShown}) {
                             </div>
                             <p className="mt-[24px] w-full font-inter text-[13px] text-[#909090]">
                                 Та энэ алхамын үргэлжлүүлснээр, сайтын{" "}
-                                <a target="_blank" rel="noopener noreferrer">
+                                <a href='/' target="_blank" rel="noopener noreferrer">
                                     <span className="text-[#111111]">
                                     Үйлчилгээний нөхцөл
                                     </span>{" "}
                                 </a>
                                 болон{" "}
-                                <a target="_blank" rel="noopener noreferrer">
+                                <a href='/' target="_blank" rel="noopener noreferrer">
                                     <span className="text-[#111111]">
                                     Нууцлалын бодлогыг
                                     </span>{" "}
@@ -134,86 +140,43 @@ export default function SignUpModal({setIsShown}) {
                 ?
                 <div className='popup_modal-content w-[440px] rounded-[6px] relative'>
                     <div className='px-[40px] relative w-full flex flex-col items-center'>
-                        <p className='mt-[60px] text-[32px] font-condensed text-[#111111] leading-[38px] font-bold'>Бүртгүүлэх</p>
+                        <p className='mt-[60px] text-[32px] font-condensed text-[#111111] leading-[38px] font-bold'>Баталгаажуулалт</p>
                         <p className='text-[#555555] text-[15px] leading-[18px] mt-[30px] text-center'>Таны утасны дугаар болох ** ** ** 47 руу баталгаажуулах код илгээгдлээ!</p>
                         <div className='flex flex-row gap-[12px] mt-[34px]'>
-                            <input
-                                name='otp1'
-                                type='text'
-                                autoComplete='off'
-                                className='w-[50px] text-[26px] text-center hover:bg-[#FBFAFB] h-[64px] bg-[#EFEEEF] border border-[#D4D8D8] rounded-[4px]'
-                                tabIndex={1}
-                                maxLength={1}
-                            />
-                            <input
-                                name='otp2'
-                                type='text'
-                                autoComplete='off'
-                                className='w-[50px] text-[26px] text-center h-[64px] bg-[#EFEEEF] border border-[#D4D8D8] rounded-[4px]'
-                                tabIndex={2}
-                                maxLength={1}
-                            />
-                            <input
-                                name='otp3'
-                                type='text'
-                                autoComplete='off'
-                                className='w-[50px] text-[26px] text-center h-[64px] bg-[#EFEEEF] border border-[#D4D8D8] rounded-[4px]'
-                                tabIndex={3}
-                                maxLength={1}
-                            />
-                            <input
-                                name='otp4'
-                                type='text'
-                                autoComplete='off'
-                                className='w-[50px] text-[26px] text-center h-[64px] bg-[#EFEEEF] border border-[#D4D8D8] rounded-[4px]'
-                                tabIndex={4}
-                                maxLength={1}
-                            />
-                            <input
-                                name='otp5'
-                                type='text'
-                                autoComplete='off'
-                                className='w-[50px] text-[26px] text-center h-[64px] bg-[#EFEEEF] border border-[#D4D8D8] rounded-[4px]'
-                                tabIndex={5}
-                                maxLength={1}
-                            />
-                            <input
-                                name='otp6'
-                                type='text'
-                                autoComplete='off'
-                                className='w-[50px] text-[26px] text-center h-[64px] bg-[#EFEEEF] border border-[#D4D8D8] rounded-[4px]'
-                                tabIndex={6}
-                                maxLength={1}
-                            />
+                        <OtpInput
+                            value={code}
+                            onChange={handleChange}
+                            numInputs={6}
+                            separator={<span style={{ width: "8px" }}></span>}
+                            isInputNum={true}
+                            shouldAutoFocus={true}
+                            focusStyle={{
+                                backgroundColor: 'white',
+                                border: "1px solid #257CEE",
+                            }}
+                            inputStyle={{
+                                border: "1px solid #D4D8D8",
+                                borderRadius: "4px",
+                                width: "50px",
+                                height: "64px",
+                                fontSize: "26px",
+                                color: "#000",
+                                fontWeight: "400",
+                                backgroundColor: '#EFEEEF',
+                              }}
+                        />
                         </div>
                         <button className='bg-[#FF6600] w-full flex flex-row items-center justify-center rounded-[4px] h-[44px] text-[16px] text-white mt-[22px] relative'>
                             Бүртгүүлэх
                         </button>
                     </div>
                     {/* footer */}
-                    <div className='border-t border-[#E0E0E1] mt-[30px] pb-[33px]'>
-                        <div className='px-[40px] flex flex-col items-center'>
-                            <div className="text-[#555555] text-[15px] mt-[21px]">
-                                <span className='font-inter'>Бүртгэлтэй хэрэглэгч бол </span>
-                                <span onClick={() => setIsShown('signup')} className="text-caak-primary text-[15px] font-bold cursor-pointer">
-                                    Нэвтрэх
-                                </span>
-                            </div>
-                            <p className="mt-[24px] w-full font-inter text-[13px] text-[#909090]">
-                                Та энэ алхамын үргэлжлүүлснээр, сайтын{" "}
-                                <a target="_blank" rel="noopener noreferrer">
-                                    <span className="text-[#111111]">
-                                    Үйлчилгээний нөхцөл
-                                    </span>{" "}
-                                </a>
-                                болон{" "}
-                                <a target="_blank" rel="noopener noreferrer">
-                                    <span className="text-[#111111]">
-                                    Нууцлалын бодлогыг
-                                    </span>{" "}
-                                </a>
-                                зөвшөөрсөнд тооцно.
-                            </p>
+                    <div className='border-t border-[#E0E0E1] mt-[30px] flex w-full justify-center pb-[33px]'>
+                        <div className="text-[#555555] text-[15px] mt-[21px]">
+                            <span>Бүртгэлтэй хэрэглэгч бол </span>
+                            <span onClick={() => setIsShown('signup')} className="text-caak-primary text-[15px] font-bold cursor-pointer">
+                                Нэвтрэх
+                            </span>
                         </div>
                     </div>
                     <span onClick={() => setIsShown(false)} className='absolute top-[14px] right-[14px] icon-fi-rs-close text-[#909090] text-[18px] cursor-pointer w-[24px] h-[24px] flex items-center justify-center'/>

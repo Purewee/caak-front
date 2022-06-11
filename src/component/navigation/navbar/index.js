@@ -7,49 +7,6 @@ import SignInUpController from "../../modal//SignInUpController";
 import {useAuth} from "../../../context/AuthContext";
 import UserInfo from "./UserInfo";
 
-
-const subMenu = [
-  {
-    title: 'Хөгжилтэй'
-  },
-  {
-    title: 'Кино'
-  },
-  {
-    title: 'Загвар'
-  },
-  {
-    title: 'Гэрэл зураг'
-  },
-  {
-    title: 'Спорт'
-  },
-  {
-    title: 'Тоглоом'
-  },
-  {
-    title: 'Шинжлэх ухаан'
-  },
-  {
-    title: 'Гэр бүл'
-  },
-  {
-    title: 'Гоо сайхан'
-  },
-  {
-    title: 'Аялал'
-  },
-  {
-    title: 'Амьтад'
-  },
-  {
-    title: 'Энтэртайнмент'
-  },
-  {
-    title: 'Хоол'
-  },
-]
-
 export default function NavbarNew() {
 	const context = useContext(AppContext);
   const [loaded, setLoaded] = useState(false);
@@ -184,21 +141,6 @@ export default function NavbarNew() {
     <div className="w-full flex flex-row justify-between pl-[16px] pr-[17px]">
       <Logo className={''} mobile navBarStyle={false}/>
       <span className="icon-fi-rs-user text-[#555555] text-[27.5px]"/>
-    </div>
-    <div className="sticky top-0 z-50">
-      <div className="w-full border-b-[3px] border-[#EFEEEF] h-[36px] mt-[21.7px] relative">
-        <div className="pr-[25px] absolute left-0 wrapper w-full"> 
-          <p className={`border-b-[3px] border-[#FF6600] ml-[16px] text-[21px] font-bold text-[#111111] uppercase whitespace-nowrap`}>ШИНЭ</p>
-          <p className={`ml-[16px] text-[21px] font-bold text-[#111111] uppercase whitespace-nowrap`}>ТРЭНД</p>
-          {
-            subMenu.map((data, index) => {
-              return( 
-                <p key={index} className={`ml-[16px] text-[21px] font-bold text-[#111111] uppercase whitespace-nowrap`}>{data.title}</p>
-              )
-            })
-          }
-        </div>
-      </div>
     </div>
   </nav>
 }
