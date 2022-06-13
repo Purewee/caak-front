@@ -28,7 +28,7 @@ const StoryFeed = () => {
   return stories?.length > 0 ? (
     <div
       className={
-        "flex flex-col max-w-[1502px] px-[10px] xl:px-0 w-full justify-center relative mt-[22px] md:py-[80px]"
+        "flex flex-col max-w-[1000px] 2xl:max-w-[1502px] px-[10px] xl:px-0 w-full justify-center relative mt-[22px] md:py-[80px]"
       }
     >
       {activeIndex + 1 < stories.length - 1 && (
@@ -69,13 +69,19 @@ const StoryFeed = () => {
         </div>
       )}
 
+     <div className="flex flex-row items-center w-full relative">
       <p
         className={
-          "font-medium md:font-bold text-[#111111] text-[17px] md:text-[38px] md:text-center leading-[20px] md:leading-[42px]"
+          "font-medium md:font-bold text-[#111111] text-[17px] md:text-[38px] md:text-center w-full leading-[20px] md:leading-[42px]"
         }
       >
         СТОРИ МЭДЭЭ
       </p>
+      <div className="flex flex-row absolute right-[121px]">
+        <p className="text-[16px] text-[#111111]">Бүх сторинууд</p>
+        <span className="icon-fi-rs-stories-o text-[#FF6600]"/>
+      </div>
+     </div>
       <div
         ref={trendPostsRef}
         className={
@@ -83,7 +89,7 @@ const StoryFeed = () => {
         }
       >
         {stories.map((item, index) => {
-          return <StoryItem border={index === 0 && true} story={item} key={index} />;
+          return <StoryItem story={item} key={index} />;
         })}
       </div>
     </div>
