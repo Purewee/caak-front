@@ -1,9 +1,10 @@
-import Consts from "./Consts";
-import { DateTime } from "luxon";
-import {useEffect, useRef, useState} from "react";
+import Consts from './Consts';
+import { DateTime } from 'luxon';
+import { useEffect, useRef, useState } from 'react';
+import Configure from '../component/configure';
 
-const regexEmail = "^[a-zA-Z0-9._:$!%-]+@[a-zA-Z0-9.-]+.[a-zA-Z]$";
-const regexNumber = "^[0-9]{8}$";
+const regexEmail = '^[a-zA-Z0-9._:$!%-]+@[a-zA-Z0-9.-]+.[a-zA-Z]$';
+const regexNumber = '^[0-9]{8}$';
 
 export function shuffleArray(array) {
   let currentIndex = array.length,
@@ -16,10 +17,7 @@ export function shuffleArray(array) {
     currentIndex--;
 
     // And swap it with the current element.
-    [array[currentIndex], array[randomIndex]] = [
-      array[randomIndex],
-      array[currentIndex],
-    ];
+    [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
   }
 
   return array;
@@ -67,17 +65,17 @@ export function useDebounce(value, delay) {
         clearTimeout(handler);
       };
     },
-    [value, delay] // Only re-call effect if value or delay changes
+    [value, delay], // Only re-call effect if value or delay changes
   );
   return debouncedValue;
 }
 
 export const getFileExt = (fileName) => {
-  return fileName.substring(fileName.lastIndexOf(".") + 1);
+  return fileName.substring(fileName.lastIndexOf('.') + 1);
 };
 
 export const getFileName = (fileName) => {
-  return fileName.replace("." + getFileExt(fileName), "");
+  return fileName.replace('.' + getFileExt(fileName), '');
 };
 
 export const useClickOutSide = (handler) => {
@@ -89,9 +87,9 @@ export const useClickOutSide = (handler) => {
         handler();
       }
     };
-    document.addEventListener("click", checkIfClickedOutside);
+    document.addEventListener('click', checkIfClickedOutside);
     return () => {
-      document.removeEventListener("click", checkIfClickedOutside);
+      document.removeEventListener('click', checkIfClickedOutside);
     };
 
     // eslint-disable-next-line
@@ -101,23 +99,23 @@ export const useClickOutSide = (handler) => {
 
 export function mailNumber(mailNumber) {
   if (mailNumber.match(regexEmail)) {
-    let arry = mailNumber.split("@");
-    let name = arry[0].split("");
+    let arry = mailNumber.split('@');
+    let name = arry[0].split('');
     for (let i = 2; i < name.length - 1; i++) {
-      name[i] = "*";
+      name[i] = '*';
     }
-    arry[0] = name.join("");
-    mailNumber = arry[0] + "@" + arry[1];
+    arry[0] = name.join('');
+    mailNumber = arry[0] + '@' + arry[1];
     return mailNumber;
   } else if (mailNumber.match(regexNumber)) {
-    let arry = mailNumber.split("");
+    let arry = mailNumber.split('');
     for (let i = 2; i < arry.length - 3; i++) {
-      arry[i] = "*";
+      arry[i] = '*';
     }
-    mailNumber = arry.join("");
+    mailNumber = arry.join('');
     return mailNumber;
   } else {
-    return "Мэйл эсвэл утасны дугаар оруулна уу";
+    return 'Мэйл эсвэл утасны дугаар оруулна уу';
   }
 }
 
@@ -132,11 +130,11 @@ export function checkUsernameType(mailNumber) {
 }
 
 export function number(number) {
-  let regexNumber = "^[0-9]+$";
+  let regexNumber = '^[0-9]+$';
   if (number.match(regexNumber)) {
     return number;
   } else {
-    return alert("Зөвхөн тоо бичнэ үү");
+    return alert('Зөвхөн тоо бичнэ үү');
   }
 }
 
@@ -145,23 +143,23 @@ export function name(name) {
   if (name.match(regexName)) {
     return name;
   } else {
-    return alert("Хэрэглэгчийн нэр зөвхөн том жижиг үсгээс бүрдсэн");
+    return alert('Хэрэглэгчийн нэр зөвхөн том жижиг үсгээс бүрдсэн');
   }
 }
 
 export function mergeDate(year, month, day) {
-  return year + "-" + month + "-" + day;
+  return year + '-' + month + '-' + day;
 }
 
 export function unmergeDate(date) {
   let returnDate = {
-    year: "",
-    month: "",
-    day: "",
+    year: '',
+    month: '',
+    day: '',
   };
 
   if (date) {
-    let splitedDate = date.split("-");
+    let splitedDate = date.split('-');
 
     returnDate = {
       year: splitedDate[0],
@@ -183,19 +181,10 @@ export function getRandomInt(max) {
 
 export function generateFileUrl(file) {
   if (file) {
-    if (file.bucket.includes("dev")) {
-      return (
-        "https://bucket-dev.caak.mn/" +
-        file.level +
-        "/" +
-        file.id +
-        "." +
-        file.ext
-      );
+    if (file.bucket.includes('dev')) {
+      return 'https://bucket-dev.caak.mn/' + file.level + '/' + file.id + '.' + file.ext;
     } else {
-      return (
-        "https://bucket.caak.mn/" + file.level + "/" + file.id + "." + file.ext
-      );
+      return 'https://bucket.caak.mn/' + file.level + '/' + file.id + '.' + file.ext;
     }
     // return (
     //   "https://" +
@@ -215,8 +204,8 @@ export function generateFileUrl(file) {
 }
 
 export const extractDate = (date) => {
-  const {year, month, day} = DateTime.fromISO(date);
-  return {year, month, day};
+  const { year, month, day } = DateTime.fromISO(date);
+  return { year, month, day };
 };
 
 // Postiin uussen ognoog ni stringeer avch heden second/minute/tsagiin/odriin omno uussniig stringeer butsaadag funkts
@@ -248,33 +237,29 @@ export const extractDate = (date) => {
 //     return diff.minutes + " мин";
 //   } else if (diff.seconds !== 0) {
 //     return diff.seconds + " сек";
-//   } else {  
+//   } else {
 //     return "Сая";
 //   }
 // }
 
 export function generateTimeAgo(date) {
-  const time = new Date(date).getTime()
-  const now = new Date().getTime()
-  const diff = now - time
+  const time = new Date(date).getTime();
+  const now = new Date().getTime();
+  const diff = now - time;
   // if ((diff / 1000 / 60 / 60 / 24 / 30 / 12) > 1) {
   //   return Math.floor(diff / 1000 / 60 / 60 / 24 / 30 / 12) + ' жил'
-  // } 
-  if ((diff / 1000 / 60 / 60 / 24 / 30) > 1) {
-    return (new Date(date).getFullYear() + '-' + (new Date(date).getMonth() + 1) + '-' + new Date(date).getDate())
-  } 
-  else if ((diff / 1000 / 60 / 60 / 24) > 1) {
-    return Math.floor(diff / 1000 / 60 / 60 / 24) + ' хоног'
-  } 
-  else if ((diff / 1000 / 60 / 60) > 1) {
-    return Math.floor(diff / 1000 / 60 / 60) + ' цаг'
-  } 
-  else if ((diff / 1000 / 60) > 1) {
-    return Math.floor(diff / 1000 / 60) + ' мин'
-  }  
-  else if ((diff / 1000) > 1) {
-    return Math.floor(diff / 1000) + ' секунд'
-  } 
+  // }
+  if (diff / 1000 / 60 / 60 / 24 / 30 > 1) {
+    return new Date(date).getFullYear() + '-' + (new Date(date).getMonth() + 1) + '-' + new Date(date).getDate();
+  } else if (diff / 1000 / 60 / 60 / 24 > 1) {
+    return Math.floor(diff / 1000 / 60 / 60 / 24) + ' хоног';
+  } else if (diff / 1000 / 60 / 60 > 1) {
+    return Math.floor(diff / 1000 / 60 / 60) + ' цаг';
+  } else if (diff / 1000 / 60 > 1) {
+    return Math.floor(diff / 1000 / 60) + ' мин';
+  } else if (diff / 1000 > 1) {
+    return Math.floor(diff / 1000) + ' секунд';
+  }
 }
 
 export function getDate(date) {
@@ -298,7 +283,7 @@ export function closeModal(history, state) {
   if (state && state.background) {
     history.goBack();
   } else {
-    history.replace("/");
+    history.replace('/');
   }
 }
 
@@ -306,7 +291,7 @@ export function checkUsername(username) {
   let usrname = username;
 
   if (checkUsernameType(usrname) === Consts.typePhoneNumber) {
-    usrname = "+976" + usrname;
+    usrname = '+976' + usrname;
   }
 
   return usrname;
@@ -318,9 +303,9 @@ export function getFileUrl(file) {
   if (file) {
     if (file.url) {
       retUrl = file.url;
-    } else if (file.isExternal === "TRUE") {
-      if (file.type === "EMBED") {
-        if (file.provider === "youtube") {
+    } else if (file.isExternal === 'TRUE') {
+      if (file.type === 'EMBED') {
+        if (file.provider === 'youtube') {
           retUrl = `https://youtube.com/watch?v=${file.provided_item}`;
         }
       } else {
@@ -355,8 +340,8 @@ export function getReturnData(data, isSubscription) {
 }
 
 export const checkAdminModerator = (role) => {
-  if (role === "ADMIN") return true;
-  return role === "MODERATOR";
+  if (role === 'ADMIN') return true;
+  return role === 'MODERATOR';
 };
 
 export function _objectWithoutKeys(obj, keys) {
@@ -395,11 +380,11 @@ export function getURLUserName(url, type) {
 
     // Parse username
     matches = url.match(
-      /(?:https?:\/\/)?(?:www.)?(?:twitter|tiktok|medium|facebook|vimeo|instagram)(?:.com\/)?([@a-zA-Z0-9-_]+)/im
+      /(?:https?:\/\/)?(?:www.)?(?:twitter|tiktok|medium|facebook|vimeo|instagram)(?:.com\/)?([@a-zA-Z0-9-_]+)/im,
     );
 
     // Set output
-    if (type === "CHECK") {
+    if (type === 'CHECK') {
       output = matches ? true : false;
     } else {
       output = matches && matches.length ? matches[1] : output;
@@ -416,22 +401,21 @@ export const getDiffDays = (start, end) => {
 
 export const convertDateTime = (date) => {
   const Date = DateTime.fromISO(date);
-  const fullDate = Date.toFormat("yyyy/MM/dd");
-  const fullTime = Date.toFormat("HH:mm:ss");
+  const fullDate = Date.toFormat('yyyy/MM/dd');
+  const fullTime = Date.toFormat('HH:mm:ss');
   return `${fullDate} ${fullTime}`;
 };
 
 export const kFormatter = (num) => {
   return Math.abs(num) > 999
-    ? Math.sign(num) * (Math.abs(num) / 1000).toFixed(1) + "k"
+    ? Math.sign(num) * (Math.abs(num) / 1000).toFixed(1) + 'k'
     : Math.sign(num) * Math.abs(num);
 };
 
 export function numberWithCommas(x, separator) {
   if (x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, separator);
-  }
-  else return x
+  } else return x;
 }
 
 export const addDays = (date, days) => {
@@ -450,6 +434,12 @@ export const differenceDate = (date1, date2) => {
   }
 
   return diffDays;
+};
+
+export const imagePath = (src) => {
+  // return `http://graph.caak.mn${src}`;
+  if (!src) return false;
+  return `${Configure.host}/${src}`;
 };
 
 const object = {
@@ -474,6 +464,6 @@ const object = {
   numberWithCommas,
   addDays,
   differenceDate,
-  generateTimeAgo
+  generateTimeAgo,
 };
 export default object;

@@ -1,61 +1,55 @@
-import { AES , enc } from "crypto-js"
-import Configure from "../configure"
+import { AES, enc } from 'crypto-js';
+import Configure from '../configure';
 
 const useLocalStorage = (type) => {
+  const passOnSSR = () => {
+    return false;
+  };
 
+  const retFuncs = {
+    lsGet: passOnSSR,
+    lsSet: passOnSSR,
+    lsRemove: passOnSSR,
+  };
 
-    const passOnSSR = () => {
-        return false
+  if (typeof window === 'undefined') {
+    return retFuncs;
+  }
+
+  const storage = type === 'local' ? localStorage : sessionStorage;
+
+  const get = (key) => {
+    try {
+      const stored = storage.getItem(key);
+
+      if (!stored || stored === 'undefined') {
+        return false;
+      } else {
+        const decrypted = AES.decrypt(stored, Configure.AESKey);
+        return JSON.parse(decrypted.toString(enc.Utf8));
+      }
+    } catch (ex) {
+      console.log(ex);
+      storage.removeItem(key);
     }
+  };
 
-    const retFuncs = {
-        lsGet: passOnSSR,
-        lsSet: passOnSSR,
-        lsRemove: passOnSSR
-    }
+  const set = (key, value) => {
+    const encrypted = AES.encrypt(JSON.stringify(value), Configure.AESKey);
+    storage.setItem(key, encrypted.toString());
+    return true;
+  };
 
-    if(typeof window === "undefined"){
-        return retFuncs
-    }
+  const remove = (key) => {
+    storage.removeItem(key);
+    return true;
+  };
 
-    const storage = type === "local" ? localStorage : sessionStorage
+  retFuncs.lsGet = get;
+  retFuncs.lsSet = set;
+  retFuncs.lsRemove = remove;
 
-    const get = (key) => {
-        try{
-            const stored = storage.getItem(key);
-            
-            if (!stored || stored === "undefined") {
-               
-                return false;
-            }
-            else {
-                const decrypted = AES.decrypt(stored, Configure.AESKey)
-                return JSON.parse(decrypted.toString(enc.Utf8));
-            }
-            
-        }catch(ex){
-            console.log(ex)
-            storage.removeItem(key)
-        }
-    } 
+  return retFuncs;
+};
 
-    const set = (key, value) => {
-            const encrypted = AES.encrypt(JSON.stringify(value), Configure.AESKey)
-            storage.setItem(key, encrypted.toString())
-            return true
-    }
-        
-
-    const remove = (key) => {
-        storage.removeItem(key)
-        return true
-    }
-
-    retFuncs.lsGet = get
-    retFuncs.lsSet = set
-    retFuncs.lsRemove = remove
-
-    return retFuncs
-}
-
-export default useLocalStorage
+export default useLocalStorage;

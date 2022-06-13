@@ -1,4 +1,4 @@
-import Configure from "../component/configure";
+import Configure from '../component/configure';
 
 export class ESService {
   constructor(index) {
@@ -20,23 +20,23 @@ export class ESService {
       },
       redirect: 'follow',
       referrerPolicy: 'no-referrer',
-      body: JSON.stringify(data)
+      body: JSON.stringify(data),
     })
       .then((response) => response.json().then((json) => ({ json, ok: response.ok })))
       .then(({ json, ok }) => ({ ok, data: json }))
-      .catch((e) => ({ ok: false, data: e }))
+      .catch((e) => ({ ok: false, data: e }));
   }
 
   home_articles() {
     return this.post({
       query: {
         bool: {
-          must: defaultFilters
-        }
+          must: defaultFilters,
+        },
       },
-      sort: { 'publish_date': 'desc' },
+      sort: { publish_date: 'desc' },
       size: 34,
-    }).then(convertHits)
+    }).then(convertHits);
   }
 
   stories() {
@@ -45,27 +45,29 @@ export class ESService {
         bool: {
           must: [
             ...defaultFilters,
-            { nested: { path: 'categories', query: { term: { 'categories.slug': 'travel' }}}},
-          ]
-        }
+            {
+              nested: {
+                path: 'categories',
+                query: { term: { 'categories.slug': 'travel' } },
+              },
+            },
+          ],
+        },
       },
       size: 10,
-    }).then(convertHits)
+    }).then(convertHits);
   }
 
   boostedPosts() {
     return this.post({
       query: {
         bool: {
-          must: [
-            ...defaultFilters,
-            { term: { 'data.is_featured': true }},
-          ]
-        }
+          must: [...defaultFilters, { term: { 'data.is_featured': true } }],
+        },
       },
       sort: { views_count: 'desc' },
       size: 3,
-    }).then(convertHits)
+    }).then(convertHits);
   }
 
   categoryPosts(slug, rest) {
@@ -74,33 +76,31 @@ export class ESService {
         bool: {
           must: [
             ...defaultFilters,
-            { nested: { path: 'categories', query: { term: { 'categories.slug': slug }}}},
-          ]
-        }
+            {
+              nested: {
+                path: 'categories',
+                query: { term: { 'categories.slug': slug } },
+              },
+            },
+          ],
+        },
       },
-      ...rest
-    }).then(convertHits)
+      ...rest,
+    }).then(convertHits);
   }
 
   authorPosts(authorId) {
     return this.post({
       query: {
         bool: {
-          must: [
-            ...defaultFilters,
-            { term: { 'author.id': authorId }},
-          ]
-        }
-      }
-    }).then(convertHits)
+          must: [...defaultFilters, { term: { 'author.id': authorId } }],
+        },
+      },
+    }).then(convertHits);
   }
 }
 
-
-export const defaultFilters = [
-    { range: { publish_date: { lte: 'now' } } },
-    { exists: { field: 'image' } },
-];
+export const defaultFilters = [{ range: { publish_date: { lte: 'now' } } }, { exists: { field: 'image' } }];
 
 export function convertHits(response) {
   if (!response?.ok) return [];

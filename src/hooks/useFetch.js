@@ -1,5 +1,5 @@
-import { useEffect, useRef } from "react";
-import useObserver from "./useObserver";
+import { useEffect, useRef } from 'react';
+import useObserver from './useObserver';
 
 const useInfiniteScroll = (data, setData, itemRef) => {
   const callbackRef = useRef();

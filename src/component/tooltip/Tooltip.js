@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { useDebounce } from "../../utility/Util";
+import React, { useState } from 'react';
+import { useDebounce } from '../../utility/Util';
 
 const Tooltip = ({ children, content, className, style, debounceValue }) => {
   const [active, setActive] = useState(false);
@@ -32,10 +32,10 @@ const Tooltip = ({ children, content, className, style, debounceValue }) => {
             const windowHeight = window.screen.height;
 
             if (windowHeight - itemClientRect.bottom < itemClientRect.height) {
-              el.style.top = "-11.6rem";
+              el.style.top = '-11.6rem';
             }
           }}
-          className={`Tooltip-Tip ${className ? className : ""}`}
+          className={`Tooltip-Tip ${className ? className : ''}`}
           style={style}
         >
           {/* Content */}

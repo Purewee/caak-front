@@ -1,12 +1,11 @@
-import { useRef } from "react";
+import { useRef } from 'react';
 /**
  * Usage:
  * const [blockScroll, allowScroll] = useScrollBlock();
  */
-const useScrollBlock =  () => {
-
-  const safeDocument = typeof document !== "undefined" ? document : {}
-  const root = typeof document !== "undefined" ? document.getElementById("__next") : {}
+const useScrollBlock = () => {
+  const safeDocument = typeof document !== 'undefined' ? document : {};
+  const root = typeof document !== 'undefined' ? document.getElementById('__next') : {};
 
   const scrollBlocked = useRef();
   const html = safeDocument.documentElement;
@@ -16,10 +15,7 @@ const useScrollBlock =  () => {
     if (!body || !body.style || scrollBlocked.current) return;
 
     const scrollBarWidth = window.innerWidth - html.clientWidth;
-    const bodyPaddingRight =
-      parseInt(
-        window.getComputedStyle(body).getPropertyValue("padding-right")
-      ) || 0;
+    const bodyPaddingRight = parseInt(window.getComputedStyle(body).getPropertyValue('padding-right')) || 0;
 
     /**
      * 1. Fixes a bug in iOS and desktop Safari whereby setting
@@ -27,10 +23,10 @@ const useScrollBlock =  () => {
      * 2. Fixes a bug in desktop Safari where `overflowY` does not prevent
      *    scroll if an `overflow-x` style is also applied to the body.
      */
-    html.style.position = "relative"; /* [1] */
-    html.style.overflow = "hidden"; /* [2] */
-    root.style.position = "relative"; /* [1] */
-    root.style.overflow = "hidden"; /* [2] */
+    html.style.position = 'relative'; /* [1] */
+    html.style.overflow = 'hidden'; /* [2] */
+    root.style.position = 'relative'; /* [1] */
+    root.style.overflow = 'hidden'; /* [2] */
     root.style.paddingRight = `${bodyPaddingRight + scrollBarWidth}px`;
 
     scrollBlocked.current = true;
@@ -39,11 +35,11 @@ const useScrollBlock =  () => {
   const allowScroll = () => {
     if (!body || !body.style || !scrollBlocked.current) return;
 
-    html.style.position = "";
-    html.style.overflow = "";
-    root.style.position = "";
-    root.style.overflow = "";
-    root.style.paddingRight = "";
+    html.style.position = '';
+    html.style.overflow = '';
+    root.style.position = '';
+    root.style.overflow = '';
+    root.style.paddingRight = '';
 
     scrollBlocked.current = false;
   };
@@ -51,4 +47,4 @@ const useScrollBlock =  () => {
   return [blockScroll, allowScroll];
 };
 
-export default useScrollBlock
+export default useScrollBlock;

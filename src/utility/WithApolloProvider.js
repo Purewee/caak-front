@@ -9,11 +9,10 @@ import {
 } from '@apollo/client';
 import { createUploadLink } from 'apollo-upload-client';
 import { setContext } from '@apollo/client/link/context';
-import Configure from "../component/configure";
+import Configure from '../component/configure';
 import { JSOAuth2, CredentialsFlow, OwnerFlow, AssertionFLow } from '@shoppymn/js-oauth2';
 import { relayStylePagination } from '@apollo/client/utilities';
 import { onError } from '@apollo/client/link/error';
-
 
 const oauth = new JSOAuth2({
   clientId: Configure.cid,
@@ -79,7 +78,9 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
 
 const authLink = setContext((_, { headers }) =>
   rotateToken()
-    .then((t) => ({ headers: { ...headers, authorization: `Bearer ${t?.accessToken}` } }))
+    .then((t) => ({
+      headers: { ...headers, authorization: `Bearer ${t?.accessToken}` },
+    }))
     .catch(),
 );
 
@@ -121,10 +122,6 @@ export function loginWithAssertion(assertion, provider) {
   return assertionFlow.getToken(assertion, provider).then((tkn) => saveToken(tkn));
 }
 
-export function WithApolloProvider({ children }) {
-  return (
-    <ApolloProvider client={apolloClient}>
-      {children}
-    </ApolloProvider>
-  );
+export default function WithApolloProvider({ children }) {
+  return <ApolloProvider client={apolloClient}>{children}</ApolloProvider>;
 }

@@ -1,11 +1,11 @@
-import DefaultGroupLayout from "../components/layouts/group";
+import DefaultGroupLayout from '../components/layouts/group';
 
 const layouts = {
   default: DefaultGroupLayout,
 };
 
 const useGroupLayout = (props) => {
-  const layoutName = props && props.layoutName ? props.layoutName : "default";
+  const layoutName = props && props.layoutName ? props.layoutName : 'default';
   const layout = layouts[layoutName];
 
   if (!layout) {

@@ -1,7 +1,7 @@
 @font-face {
   font-family: 'caakmoon';
-  src:  url('../assets/fonts/caakmoon.eot?5sctdk');
-  src:  url('../assets/fonts/caakmoon.eot?5sctdk#iefix') format('embedded-opentype'),
+  src: url('../assets/fonts/caakmoon.eot?5sctdk');
+  src: url('../assets/fonts/caakmoon.eot?5sctdk#iefix') format('embedded-opentype'),
     url('../assets/fonts/caakmoon.ttf?5sctdk') format('truetype'),
     url('../assets/fonts/caakmoon.woff?5sctdk') format('woff'),
     url('../assets/fonts/caakmoon.svg?5sctdk#caakmoon') format('svg');
@@ -10,7 +10,8 @@
   font-display: block;
 }
 
-[class^="icon-"], [class*=" icon-"] {
+[class^='icon-'],
+[class*=' icon-'] {
   /* use !important to prevent issues with browser extensions that change fonts */
   font-family: 'caakmoon' !important;
   speak: never;
@@ -25,183 +26,182 @@
   -moz-osx-font-smoothing: grayscale;
 }
 .icon-fi-rs-list-f:before {
-  content: "\e937";
+  content: '\e937';
 }
 .icon-fi-rs-mail-f:before {
-  content: "\e938";
+  content: '\e938';
 }
 .icon-fi-rs-editor-f:before {
-  content: "\e939";
+  content: '\e939';
 }
 .icon-fi-rs-editor-o:before {
-  content: "\e93a";
+  content: '\e93a';
 }
 .icon-fi-rs-resend:before {
-  content: "\e93b";
+  content: '\e93b';
 }
 .icon-fi-rs-blind:before {
-  content: "\e933";
+  content: '\e933';
 }
 .icon-fi-rs-eye:before {
-  content: "\e934";
+  content: '\e934';
 }
 .icon-fi-rs-filter-f:before {
-  content: "\e935";
+  content: '\e935';
 }
 .icon-fi-rs-network:before {
-  content: "\e936";
+  content: '\e936';
 }
 .icon-fi-rs-add-news:before {
-  content: "\e924";
+  content: '\e924';
 }
-.icon-fi-rs-article-f:before { 
-  content: "\e925";
+.icon-fi-rs-article-f:before {
+  content: '\e925';
 }
 .icon-fi-rs-check:before {
-  content: "\e926";
+  content: '\e926';
 }
 .icon-fi-rs-delete:before {
-  content: "\e927";
+  content: '\e927';
 }
 .icon-fi-rs-direction:before {
-  content: "\e928";
+  content: '\e928';
 }
 .icon-fi-rs-image-f:before {
-  content: "\e929";
+  content: '\e929';
 }
 .icon-fi-rs-link:before {
-  content: "\e92a";
+  content: '\e92a';
 }
 .icon-fi-rs-play-button:before {
-  content: "\e92b";
+  content: '\e92b';
 }
 .icon-fi-rs-save:before {
-  content: "\e92c";
+  content: '\e92c';
 }
 .icon-fi-rs-slideshow:before {
-  content: "\e92d";
+  content: '\e92d';
 }
 .icon-fi-rs-star-f:before {
-  content: "\e92e";
+  content: '\e92e';
 }
 .icon-fi-rs-star-o:before {
-  content: "\e92f";
+  content: '\e92f';
 }
 .icon-fi-rs-text-f:before {
-  content: "\e930";
+  content: '\e930';
 }
 .icon-fi-rs-upload:before {
-  content: "\e931";
+  content: '\e931';
 }
 .icon-fi-rs-view:before {
-  content: "\e932";
+  content: '\e932';
 }
 .icon-fi-rs-mute:before {
-  content: "\e920";
+  content: '\e920';
 }
 .icon-fi-rs-pause:before {
-  content: "\e921";
+  content: '\e921';
 }
 .icon-fi-rs-play:before {
-  content: "\e922";
+  content: '\e922';
 }
 .icon-fi-rs-volume:before {
-  content: "\e923";
+  content: '\e923';
 }
 .icon-fi-rs-camera-f:before {
-  content: "\e91e";
+  content: '\e91e';
 }
 .icon-fi-rs-camera-o:before {
-  content: "\e91f";
+  content: '\e91f';
 }
 .icon-fi-rs-ads:before {
-  content: "\e900";
+  content: '\e900';
 }
 .icon-fi-rs-bolt:before {
-  content: "\e901";
+  content: '\e901';
 }
 .icon-fi-rs-bookmark:before {
-  content: "\e902";
+  content: '\e902';
 }
 .icon-fi-rs-close:before {
-  content: "\e903";
+  content: '\e903';
 }
 .icon-fi-rs-down-chevron:before {
-  content: "\e904";
+  content: '\e904';
 }
 .icon-fi-rs-edit:before {
-  content: "\e905";
+  content: '\e905';
 }
 .icon-fi-rs-editor:before {
-  content: "\e906";
+  content: '\e906';
 }
 .icon-fi-rs-exit:before {
-  content: "\e907";
+  content: '\e907';
 }
 .icon-fi-rs-fb:before {
-  content: "\e908";
+  content: '\e908';
 }
 .icon-fi-rs-flag:before {
-  content: "\e909";
+  content: '\e909';
 }
 .icon-fi-rs-hamburger-menu:before {
-  content: "\e90a";
+  content: '\e90a';
 }
 .icon-fi-rs-heart:before {
-  content: "\e90b";
+  content: '\e90b';
 }
 .icon-fi-rs-ig:before {
-  content: "\e90c";
+  content: '\e90c';
 }
 .icon-fi-rs-jor:before {
-  content: "\e90d";
+  content: '\e90d';
 }
 .icon-fi-rs-megaphone:before {
-  content: "\e90e";
+  content: '\e90e';
 }
 .icon-fi-rs-mic:before {
-  content: "\e90f";
+  content: '\e90f';
 }
 .icon-fi-rs-more-ver:before {
-  content: "\e910";
+  content: '\e910';
 }
 .icon-fi-rs-notification:before {
-  content: "\e911";
+  content: '\e911';
 }
 .icon-fi-rs-phone:before {
-  content: "\e912";
+  content: '\e912';
 }
 .icon-fi-rs-plus:before {
-  content: "\e913";
+  content: '\e913';
 }
 .icon-fi-rs-search:before {
-  content: "\e914";
+  content: '\e914';
 }
 .icon-fi-rs-settings:before {
-  content: "\e915";
+  content: '\e915';
 }
 .icon-fi-rs-share:before {
-  content: "\e916";
+  content: '\e916';
 }
 .icon-fi-rs-statistic:before {
-  content: "\e917";
+  content: '\e917';
 }
 .icon-fi-rs-tag:before {
-  content: "\e918";
+  content: '\e918';
 }
 .icon-fi-rs-tw:before {
-  content: "\e919";
+  content: '\e919';
 }
 .icon-fi-rs-user:before {
-  content: "\e91a";
+  content: '\e91a';
 }
 .icon-fi-rs-verified:before {
-  content: "\e91b";
+  content: '\e91b';
 }
 .icon-fi-rs-wave:before {
-  content: "\e91c";
+  content: '\e91c';
 }
 .icon-fi-rs-yt:before {
-  content: "\e91d";
+  content: '\e91d';
 }
-
