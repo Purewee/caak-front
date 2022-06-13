@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import PostShareModal from '../../modal/PostShareModal';
@@ -15,11 +16,23 @@ export default function HighlightCard({ post }) {
   const [reactMenuOpen, setReactMenuOpen] = useState(false);
   const [sharePostOpen, setSharePostOpen] = useState(false);
   const [savePostOpen, setSavePostOpen] = useState(false);
+=======
+import React, {useState} from 'react'
+import { Link } from 'react-router-dom'
+import PostSaveModal from '../../modal/PostSaveModal';
+import DropDown from '../../navigation/DropDown';
+import { useClickOutSide } from '../../../utility/Util';
+
+export default function HighlightCard({post}) {
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [savePostOpen, setSavePostOpen] = useState(false);
+>>>>>>> 3ad4f850a4484e2668ebc5621cfd739b77f4dd35
 
   const menuRef = useClickOutSide(() => {
     setIsMenuOpen(false);
   });
 
+<<<<<<< HEAD
   const reactRef = useClickOutSide(() => {
     setReactMenuOpen(false);
   });
@@ -27,6 +40,11 @@ export default function HighlightCard({ post }) {
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
+=======
+    const toggleMenu = () => {
+        setIsMenuOpen(!isMenuOpen);
+    };
+>>>>>>> 3ad4f850a4484e2668ebc5621cfd739b77f4dd35
 
   const toggleReactMenu = () => {
     setReactMenuOpen(!reactMenuOpen);
@@ -127,8 +145,51 @@ export default function HighlightCard({ post }) {
                 content={
                   <div className="flex flex-col justify-center h-full pl-[14px]">
                     <div className="flex flex-row items-center">
+<<<<<<< HEAD
                       <span className="text-[#555555] text-[16px] mr-[11px] w-[22px] h-[22px] flex items-center justify-center icon-fi-rs-bookmark" />
                       <p className="text-[#555555] text-[15px] leading-[18px]">Жорд нэмэх</p>
+=======
+                        <div
+                            onClick={() => setSavePostOpen(true)}
+                            className={
+                            "flex flex-row items-center cursor-pointer w-[14px] h-[16.8px] ml-[12px]"
+                            }
+                        >
+                            <span
+                            className={
+                                "icon-fi-rs-bookmark text-white transition duration-150 text-[16px]"
+                            }
+                            />
+                        </div>
+                        <PostSaveModal post={post} setSavePostOpen={setSavePostOpen} savePostOpen={savePostOpen}/>
+                        <div
+                            ref={menuRef}
+                            onClick={toggleMenu}
+                            className={
+                            "flex flex-row  relative items-center cursor-pointer w-[20px] h-[20px] ml-[10px]"
+                            }
+                        >
+                            <span className={"icon-fi-rs-more-ver text-white transition duration-150 text-[16px]"}/>
+                            <DropDown
+                                arrow={"topRight"}
+                                className="absolute border border-[#D4D8D8] drop-shadow-[0_2px_2px_rgba(0,0,0,0.06)] top-[28px] -left-[128px] w-[166px] h-[97px]"
+                                open={isMenuOpen}
+                                onToggle={toggleMenu}
+                                content={
+                                    <div className='flex flex-col justify-center h-full pl-[14px]'>
+                                        <div className='flex flex-row items-center'>
+                                            <span className='text-[#555555] text-[16px] mr-[11px] w-[22px] h-[22px] flex items-center justify-center icon-fi-rs-bookmark'/>
+                                            <p className='text-[#555555] text-[15px] leading-[18px]'>Жорд нэмэх</p>
+                                        </div>
+                                        <div className='flex flex-row items-center mt-[12px]'>
+                                            <span className='text-[#555555] text-[15px] mr-[11px] w-[22px] h-[22px] flex items-center justify-center icon-fi-rs-flag'/>
+                                            <p className='text-[#555555] text-[15px] leading-[18px]'>Репорт</p>
+                                        </div>
+                                    </div>
+                                }
+                            />
+                        </div>
+>>>>>>> 3ad4f850a4484e2668ebc5621cfd739b77f4dd35
                     </div>
                     <div className="flex flex-row items-center mt-[12px]">
                       <span className="text-[#555555] text-[15px] mr-[11px] w-[22px] h-[22px] flex items-center justify-center icon-fi-rs-flag" />

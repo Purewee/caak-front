@@ -73,9 +73,15 @@ const FeedCard = ({ post, loading, className, sponsored }) => {
     post &&
     (sponsored ? (
       <div
+<<<<<<< HEAD
         className={`${className ?? ''} relative w-full h-[370px] sm:w-[422px] sm:h-[523px] bg-white ${
           !sponsored && 'border-b border-[#EFEEEF]'
         }`}
+=======
+        className={`${
+          className ?? ""
+        } relative w-full h-[370px] sm:w-[422px] sm:h-[523px] bg-white border-b border-[#EFEEEF]`}
+>>>>>>> 3ad4f850a4484e2668ebc5621cfd739b77f4dd35
       >
         <div className=" flex flex-col">
           <Link to={`/post/view/${post.id}`}>
@@ -89,6 +95,7 @@ const FeedCard = ({ post, loading, className, sponsored }) => {
             className={`relative flex flex-col bg-[#463146] px-[16px] pt-[14px] md:pt-[22px] pb-[19px] md:h-[223px]`}
           >
             <Link className="min-h-[85px]" to={`/post/view/${post.id}`}>
+<<<<<<< HEAD
               <p
                 className={`${
                   sponsored ? 'text-white xl:text-center' : 'text-[#111111]'
@@ -96,6 +103,9 @@ const FeedCard = ({ post, loading, className, sponsored }) => {
               >
                 {post.title}
               </p>
+=======
+              <p className={`text-white xl:text-center' cursor-pointer text-[22px] sm:leading-[28px] truncate-4 xl:truncate-3`}>{post.title}</p>
+>>>>>>> 3ad4f850a4484e2668ebc5621cfd739b77f4dd35
             </Link>
             {isMobile ? (
               <div className="flex flex-row items-center justify-between mt-[16px]">
@@ -210,12 +220,19 @@ const FeedCard = ({ post, loading, className, sponsored }) => {
             )}
           </div>
         </div>
+<<<<<<< HEAD
         {sponsored && (
           <div className="absolute top-[14px] pl-[10px] pr-[12px] pt-[5.3px] pb-[4.3px] left-[14px] bg-black bg-opacity-40 rounded-[2px] flex flex-row items-center">
             <span className="text-[11.8px] text-white icon-fi-rs-megaphone" />
             <p className="text-white text-[13px] leading-[15px] font-roboto ml-[8px]">ОНЦЛОХ МЭДЭЭ</p>
           </div>
         )}
+=======
+        <div className="absolute top-[14px] pl-[10px] pr-[12px] pt-[5.3px] pb-[4.3px] left-[14px] bg-black bg-opacity-40 rounded-[2px] flex flex-row items-center">
+          <span className="text-[11.8px] text-white icon-fi-rs-megaphone" />
+          <p className="text-white text-[13px] leading-[15px] font-roboto ml-[8px]">ОНЦЛОХ МЭДЭЭ</p>
+        </div>
+>>>>>>> 3ad4f850a4484e2668ebc5621cfd739b77f4dd35
       </div>
     ) : (
       <div
@@ -223,7 +240,7 @@ const FeedCard = ({ post, loading, className, sponsored }) => {
           className ?? ''
         } relative w-full h-[150px] sm:w-[422px] sm:h-[523px] bg-white border-b border-[#EFEEEF]`}
       >
-        <div className="flex flex-row xl:flex-col">
+        <div className="flex flex-row sm:flex-col">
           <Link to={`/post/view/${post.id}`}>
             <img
               alt=""
@@ -406,12 +423,15 @@ const FeedCard = ({ post, loading, className, sponsored }) => {
             </div>
           </div>
         </div>
+<<<<<<< HEAD
         {sponsored && (
           <div className="absolute top-[14px] pl-[10px] pr-[12px] pt-[5.3px] pb-[4.3px] left-[14px] bg-black bg-opacity-40 rounded-[2px] flex flex-row items-center">
             <span className="text-[11.8px] text-white icon-fi-rs-bolt" />
             <p className="text-white text-[13px] leading-[15px] font-roboto ml-[8px]">ОНЦЛОХ МЭДЭЭ</p>
           </div>
         )}
+=======
+>>>>>>> 3ad4f850a4484e2668ebc5621cfd739b77f4dd35
       </div>
     ))
   );

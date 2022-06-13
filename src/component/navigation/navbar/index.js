@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { useEffect, useState, useContext } from 'react';
 import MenuItems from './MenuItem';
 import useMediaQuery from '../useMediaQuery';
@@ -48,6 +49,16 @@ const subMenu = [
     title: 'Хоол',
   },
 ];
+=======
+import { useEffect, useState, useContext } from "react";
+import MenuItems from "./MenuItem";
+import useMediaQuery from "../useMediaQuery";
+import Logo from "../../logo";
+import { AppContext } from "../../../App";
+import SignInUpController from "../../modal//SignInUpController";
+import {useAuth} from "../../../context/AuthContext";
+import UserInfo from "./UserInfo";
+>>>>>>> 3ad4f850a4484e2668ebc5621cfd739b77f4dd35
 
 export default function NavbarNew() {
   const context = useContext(AppContext);
@@ -170,6 +181,7 @@ export default function NavbarNew() {
         <SignInUpController isShown={isShown} setIsShown={setIsShown} />
       </nav>
     )
+<<<<<<< HEAD
   ) : (
     <nav className="pt-[13px] flex flex-col">
       <div className="w-full flex flex-row justify-between pl-[16px] pr-[17px]">
@@ -197,4 +209,14 @@ export default function NavbarNew() {
       </div>
     </nav>
   );
+=======
+  )
+  :
+  <nav className="pt-[13px] flex flex-col">
+    <div className="w-full flex flex-row justify-between pl-[16px] pr-[17px]">
+      <Logo className={''} mobile navBarStyle={false}/>
+      <span className="icon-fi-rs-user text-[#555555] text-[27.5px]"/>
+    </div>
+  </nav>
+>>>>>>> 3ad4f850a4484e2668ebc5621cfd739b77f4dd35
 }
