@@ -1,9 +1,9 @@
-import DefaultModalLayout from "../components/layouts/modal/default";
-import StepModalLayout from "../components/layouts/modal/stepLayout";
-import ViewPostModalLayout from "../components/layouts/modal/viewPostModalLayout";
-import DefaultUserProfileLayout from "../components/layouts/profile";
-import ViewPostItemModalLayout from "../components/layouts/modal/viewPostItemModalLayout";
-import DefaultBoostModalLayout from "../components/layouts/modal/boostModalLayout";
+import DefaultModalLayout from '../components/layouts/modal/default';
+import StepModalLayout from '../components/layouts/modal/stepLayout';
+import ViewPostModalLayout from '../components/layouts/modal/viewPostModalLayout';
+import DefaultUserProfileLayout from '../components/layouts/profile';
+import ViewPostItemModalLayout from '../components/layouts/modal/viewPostItemModalLayout';
+import DefaultBoostModalLayout from '../components/layouts/modal/boostModalLayout';
 
 const layouts = {
   default: DefaultModalLayout,
@@ -11,11 +11,11 @@ const layouts = {
   viewpost: ViewPostModalLayout,
   viewPostItem: ViewPostItemModalLayout,
   userProfile: DefaultUserProfileLayout,
-  boostModal: DefaultBoostModalLayout
+  boostModal: DefaultBoostModalLayout,
 };
 
 const useModalLayout = (props) => {
-  const layoutName = props && props.layoutName ? props.layoutName : "default";
+  const layoutName = props && props.layoutName ? props.layoutName : 'default';
   const layout = layouts[layoutName];
 
   if (!layout) {

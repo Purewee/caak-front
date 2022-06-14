@@ -1,41 +1,42 @@
+.button {
+  @apply: transition duration-100 inline-flex items-center text-sm justify-center text-15px tracking-0.23px
+    rounded-square font-medium;
+  height: 34px;
+  border-radius: 8px;
+  padding: 9px 24px;
+}
 
-  .button {
-    @apply: transition duration-100 inline-flex items-center text-sm justify-center text-15px tracking-0.23px rounded-square font-medium;
-    height: 34px;
-    border-radius: 8px;
-    padding: 9px 24px;
-  }
+.button.primary {
+  background-color: #ff6600;
+  color: #fff;
+}
 
-  .button.primary {
-    background-color : #FF6600;
-    color: #fff;
-  }
+.button.secondary {
+  /* @apply: text-caak-generalblack bg-gray-200 hover:bg-gray-300 focus:outline-none; */
+  color: #111111;
+  background: gray 20%;
+}
 
-  .button.secondary {
-    /* @apply: text-caak-generalblack bg-gray-200 hover:bg-gray-300 focus:outline-none; */
-    color: #111111;
-    background: gray 20%;
-  }
+.button.round {
+  @apply: rounded-square;
+}
 
-  .button.round {
-    @apply: rounded-square;
-  }
+.button.white {
+  @apply: bg-white text-caak-primary font-bold justify-start shadow-button;
+}
 
-  .button.white {
-    @apply: bg-white text-caak-primary font-bold justify-start shadow-button;
-  }
+.button.transparent {
+  @apply: text-caak-generalblack font-bold justify-start border-transparent shadow-none hover: bg-caak-titaniumwhite
+    bg-transparent;
+}
 
-  .button.transparent {
-    @apply: text-caak-generalblack font-bold justify-start border-transparent shadow-none hover:bg-caak-titaniumwhite bg-transparent;
-  }
+.button.circular {
+  @apply: rounded-full;
+}
 
-  .button.circular {
-    @apply: rounded-full;
-  }
-
-  .button.small {
-    height: 34px;
-    padding: 7px 24px;
-    @apply: font-bold text-15px tracking-0.23px;
-    border-radius: 8px;
-  }
+.button.small {
+  height: 34px;
+  padding: 7px 24px;
+  @apply: font-bold text-15px tracking-0.23px;
+  border-radius: 8px;
+}

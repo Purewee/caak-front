@@ -2,7 +2,11 @@ import React from 'react';
 import Configure from '../component/configure';
 import { useApolloClient } from '@apollo/client';
 
-export const AuthContext = React.createContext({ isAuth: false, login: () => {}, logout: () => {} });
+export const AuthContext = React.createContext({
+  isAuth: false,
+  login: () => {},
+  logout: () => {},
+});
 
 export const useAuth = () => React.useContext(AuthContext);
 

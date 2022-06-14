@@ -1,15 +1,15 @@
-import { useEffect, useRef, useState } from "react";
-import ReactPlayer from "react-player";
-import Router, { useRouter } from "next/router";
-import ItemsCounterCard from "../card/ItemsCounterCard";
-import { useWrapper } from "../../context/wrapperContext";
-import { useInView } from "react-intersection-observer";
-import { useUser } from "../../context/userContext";
-import Tooltip from "../tooltip/Tooltip";
-import Loader from "../loader";
-import useLocalStorage from "../../hooks/useLocalStorage";
-import { getFileName } from "../../utility/Util";
-import useUpdateEffect from "../../hooks/useUpdateEffect";
+import { useEffect, useRef, useState } from 'react';
+import ReactPlayer from 'react-player';
+import Router, { useRouter } from 'next/router';
+import ItemsCounterCard from '../card/ItemsCounterCard';
+import { useWrapper } from '../../context/wrapperContext';
+import { useInView } from 'react-intersection-observer';
+import { useUser } from '../../context/userContext';
+import Tooltip from '../tooltip/Tooltip';
+import Loader from '../loader';
+import useLocalStorage from '../../hooks/useLocalStorage';
+import { getFileName } from '../../utility/Util';
+import useUpdateEffect from '../../hooks/useUpdateEffect';
 
 const dblTouchTapMaxDelay = 300;
 let latestTouchTap = {
@@ -23,8 +23,7 @@ export function isDblTouchTap(event) {
     target: event.currentTarget,
   };
   const isFastDblTouchTap =
-    touchTap.target === latestTouchTap.target &&
-    touchTap.time - latestTouchTap.time < dblTouchTapMaxDelay;
+    touchTap.target === latestTouchTap.target && touchTap.time - latestTouchTap.time < dblTouchTapMaxDelay;
   latestTouchTap = touchTap;
   return isFastDblTouchTap;
 }
@@ -56,15 +55,14 @@ const Video = ({
   // const [isPlaying, setIsPlaying] = useState(false);
   const [lightMode, setLightMode] = useState(props.light);
   const [isAutoPlayEnabled] = useState(
-    typeof initialAutoPlay === "boolean"
+    typeof initialAutoPlay === 'boolean'
       ? initialAutoPlay
-      : isLogged &&
-        typeof JSON.parse(user.meta)?.settings?.autoPlay === "boolean"
+      : isLogged && typeof JSON.parse(user.meta)?.settings?.autoPlay === 'boolean'
       ? JSON.parse(user.meta)?.settings?.autoPlay
-      : true
+      : true,
   );
-  const { lsGet, lsSet } = useLocalStorage("local");
-  const localStorageIsVideoMuted = lsGet("isVideoMuted");
+  const { lsGet, lsSet } = useLocalStorage('local');
+  const localStorageIsVideoMuted = lsGet('isVideoMuted');
   const [isMuted, setIsMuted] = useState(true);
   const videoRef = useRef(null);
   const router = useRouter();
@@ -77,16 +75,9 @@ const Video = ({
   const [volumeSliderActive, setVolumeSliderActive] = useState(false);
   const [seeking, setSeeking] = useState(false);
   const canvasRef = useRef();
-  const {
-    setCurrentPlayingVideoId,
-    loadedVideos,
-    setLoadedVideos,
-    isPlaying,
-    play,
-    pause,
-  } = useWrapper();
+  const { setCurrentPlayingVideoId, loadedVideos, setLoadedVideos, isPlaying, play, pause } = useWrapper();
   const [ref, inView, entry] = useInView({
-    rootMargin: "-54px",
+    rootMargin: '-54px',
     threshold: 0.5,
   });
   const handleSeekChange = (e) => {
@@ -114,9 +105,7 @@ const Video = ({
   };
   const onReadyHandler = (e) => {
     if (videoRef.current) {
-      const videoIndex = loadedVideos.findIndex(
-        (video) => video === videoRef.current
-      );
+      const videoIndex = loadedVideos.findIndex((video) => video === videoRef.current);
       if (videoIndex === -1) {
         setLoadedVideos([videoRef.current, ...loadedVideos]);
       }
@@ -129,18 +118,10 @@ const Video = ({
     //   play(videoFileId);
     // }
     if (canvasRef.current && videoRef.current) {
-      canvasRef.current.width =
-        videoRef.current.player?.player.player.videoWidth;
-      canvasRef.current.height =
-        videoRef.current.player?.player.player.videoHeight;
-      const ctx = canvasRef.current.getContext("2d");
-      ctx.drawImage(
-        videoRef.current.player?.player.player,
-        0,
-        0,
-        canvasRef.current.width,
-        canvasRef.current.height
-      );
+      canvasRef.current.width = videoRef.current.player?.player.player.videoWidth;
+      canvasRef.current.height = videoRef.current.player?.player.player.videoHeight;
+      const ctx = canvasRef.current.getContext('2d');
+      ctx.drawImage(videoRef.current.player?.player.player, 0, 0, canvasRef.current.width, canvasRef.current.height);
       if (generateThumbnail) {
         const thumbnailImageBase64 = canvasRef.current.toDataURL();
         const tempPostArr = post;
@@ -149,17 +130,13 @@ const Video = ({
         fetch(thumbnailImageBase64)
           .then((res) => res.blob())
           .then((blob) => {
-            const file = new File(
-              [blob],
-              `${currentPostItem.file.name}_thumbnail`,
-              {
-                type: "image/png",
-              }
-            );
+            const file = new File([blob], `${currentPostItem.file.name}_thumbnail`, {
+              type: 'image/png',
+            });
 
             currentPostItem.thumbnail = {
               ...currentPostItem.thumbnail,
-              ext: "png",
+              ext: 'png',
               name: getFileName(file.name),
               key: `${file.name}.png`,
               type: file.type,
@@ -177,34 +154,34 @@ const Video = ({
     e.stopPropagation();
     setVolume(parseFloat(e.target.value));
     if (parseFloat(e.target.value) === 0) {
-      setIsMuted(localStorageIsVideoMuted === "TRUE");
-      lsSet("isVideoMuted", "TRUE");
+      setIsMuted(localStorageIsVideoMuted === 'TRUE');
+      lsSet('isVideoMuted', 'TRUE');
     } else {
       setIsMuted(false);
-      lsSet("isVideoMuted", "FALSE");
+      lsSet('isVideoMuted', 'FALSE');
     }
   };
 
   function secondsToTime(e) {
     const m = Math.floor((e % 3600) / 60)
         .toString()
-        .padStart(2, "0"),
+        .padStart(2, '0'),
       s = Math.floor(e % 60)
         .toString()
-        .padStart(2, "0");
+        .padStart(2, '0');
     return `${m}:${s}`;
   }
 
   useEffect(() => {
     if (!localStorageIsVideoMuted) {
-      lsSet("isVideoMuted", "TRUE");
+      lsSet('isVideoMuted', 'TRUE');
     }
     //eslint-disable-next-line
   }, []);
 
   useEffect(() => {
-    setIsMuted(localStorageIsVideoMuted === "TRUE");
-    setVolume(localStorageIsVideoMuted === "TRUE" ? 0 : 0.8);
+    setIsMuted(localStorageIsVideoMuted === 'TRUE');
+    setVolume(localStorageIsVideoMuted === 'TRUE' ? 0 : 0.8);
   }, [localStorageIsVideoMuted]);
 
   //Buggy when 2 videos visible on viewport at the same time
@@ -232,26 +209,26 @@ const Video = ({
       pause(videoFileId);
       setCurrentPlayingVideoId(null);
     };
-    window.addEventListener("blur", onBlur);
+    window.addEventListener('blur', onBlur);
     return () => {
-      window.addEventListener("blur", onBlur);
+      window.addEventListener('blur', onBlur);
     };
   });
   useEffect(() => {
     setLightMode(props.light);
   }, [props.light]);
-  Router.events.on("routeChangeStart", () => pause(videoFileId));
+  Router.events.on('routeChangeStart', () => pause(videoFileId));
   return (
     <div
       className={`flex items-center justify-center relative w-full h-full group bg-black ${
-        containerClassname ? containerClassname : ""
+        containerClassname ? containerClassname : ''
       }`}
     >
       <canvas
         style={{
-          filter: "blur(4px)",
+          filter: 'blur(4px)',
 
-          opacity: "0.3",
+          opacity: '0.3',
         }}
         className={`top-0 absolute w-full h-full z-[1]`}
         ref={canvasRef}
@@ -283,19 +260,13 @@ const Video = ({
                   pathname: router.pathname,
                   query: {
                     ...router.query,
-                    ...(postItemId
-                      ? { viewItemPost: "postItem", itemId: postItemId }
-                      : { viewPost: "post" }),
+                    ...(postItemId ? { viewItemPost: 'postItem', itemId: postItemId } : { viewPost: 'post' }),
                     id: postId,
                     prevPath: router.asPath,
                     isModal: true,
                   },
                 },
-                `${
-                  postItemId
-                    ? `/post/view/${postId}/${postItemId}`
-                    : `/post/view/${postId}`
-                }`,
+                `${postItemId ? `/post/view/${postId}/${postItemId}` : `/post/view/${postId}`}`,
               );
             }
           }
@@ -312,21 +283,17 @@ const Video = ({
                     ...router.query,
                     ...(postItemId
                       ? {
-                          viewItemPost: "postItem",
+                          viewItemPost: 'postItem',
                           itemId: postItemId,
                           itemIndex: itemIndex,
                         }
-                      : { viewPost: "post" }),
+                      : { viewPost: 'post' }),
                     id: postId,
                     prevPath: router.asPath,
                     isModal: true,
                   },
                 },
-                `${
-                  postItemId
-                    ? `/post/view/${postId}/${postItemId}`
-                    : `/post/view/${postId}`
-                }`,
+                `${postItemId ? `/post/view/${postId}/${postItemId}` : `/post/view/${postId}`}`,
               );
             }
           } else {
@@ -344,10 +311,7 @@ const Video = ({
         }}
         className={`flex items-center justify-center relative w-full h-full group z-[2]`}
       >
-        <div
-          className={"w-full h-full flex items-center justify-center relative"}
-          ref={ref}
-        >
+        <div className={'w-full h-full flex items-center justify-center relative'} ref={ref}>
           {inView || loaded ? (
             <ReactPlayer
               // config={{
@@ -384,7 +348,7 @@ const Video = ({
                 setIsVideoLoaded(true);
                 play(videoFileId);
                 setCurrentPlayingVideoId(videoFileId);
-                setLightMode("");
+                setLightMode('');
               }}
               ref={videoRef}
               playing={isPlaying(videoFileId)}
@@ -397,21 +361,17 @@ const Video = ({
               }}
               onReady={onReadyHandler}
               onProgress={handleProgress}
-              className={`${videoClassname ? videoClassname : ""} react-player`}
-              width={"100%"}
-              height={"100%"}
-              url={`${src}${generateThumbnail ? `#t=1` : ""}`}
+              className={`${videoClassname ? videoClassname : ''} react-player`}
+              width={'100%'}
+              height={'100%'}
+              url={`${src}${generateThumbnail ? `#t=1` : ''}`}
               {...props}
             />
           ) : null}
         </div>
         {lightMode && !isVideoLoaded && (
-          <div
-            className={
-              "absolute top-0 left-0 flex items-center justify-center w-full h-full"
-            }
-          >
-            <Loader className={"bg-caak-primary"} />
+          <div className={'absolute top-0 left-0 flex items-center justify-center w-full h-full'}>
+            <Loader className={'bg-caak-primary'} />
           </div>
         )}
 
@@ -428,24 +388,16 @@ const Video = ({
                   }
                 }}
                 className={
-                  "cursor-pointer flex items-center justify-center w-[60px] h-[60px] rounded-full bg-[#0000004D] border-[2px] border-white absolute top-1/2 -translate-y-1/2 right-1/2 translate-x-1/2"
+                  'cursor-pointer flex items-center justify-center w-[60px] h-[60px] rounded-full bg-[#0000004D] border-[2px] border-white absolute top-1/2 -translate-y-1/2 right-1/2 translate-x-1/2'
                 }
               >
-                <div
-                  className={"w-[28px] h-[28px] flex items-center justify-end"}
-                >
-                  <span
-                    className={"icon-fi-rs-play-button text-[23px] text-white"}
-                  />
+                <div className={'w-[28px] h-[28px] flex items-center justify-end'}>
+                  <span className={'icon-fi-rs-play-button text-[23px] text-white'} />
                 </div>
               </div>
             ) : (
-              <div
-                className={
-                  "absolute z-[-1] top-0 left-0 flex items-center justify-center w-full h-full"
-                }
-              >
-                <Loader className={"bg-caak-primary"} />
+              <div className={'absolute z-[-1] top-0 left-0 flex items-center justify-center w-full h-full'}>
+                <Loader className={'bg-caak-primary'} />
               </div>
             )}
           </div>
@@ -454,43 +406,34 @@ const Video = ({
         {!lightMode && smallIndicator && !isPlaying(videoFileId) && (
           <div
             className={
-              "flex cursor-pointer items-center justify-center w-[20px] h-[20px] rounded-full absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2"
+              'flex cursor-pointer items-center justify-center w-[20px] h-[20px] rounded-full absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2'
             }
           >
-            <span
-              className={"icon-fi-rs-play-button text-[14px] text-white "}
-            />
+            <span className={'icon-fi-rs-play-button text-[14px] text-white '} />
           </div>
         )}
 
         {durationIndicator && videoDuration <= 60 && (
-          <ItemsCounterCard
-            containerClassname={"left-[10px]"}
-            duration={videoDuration}
-          />
+          <ItemsCounterCard containerClassname={'left-[10px]'} duration={videoDuration} />
         )}
       </div>
       {!hideControls && (
         <div
           className={
-            "transition-all duration-300 opacity-100 group-hover:opacity-0 cursor-pointer w-[22px] h-[22px] absolute bottom-[21px] right-[22px] right-0 z-[2]"
+            'transition-all duration-300 opacity-100 group-hover:opacity-0 cursor-pointer w-[22px] h-[22px] absolute bottom-[21px] right-[22px] right-0 z-[2]'
           }
         >
-          <span
-            className={`${
-              isMuted ? "icon-fi-rs-mute" : "icon-fi-rs-volume"
-            } text-[22px] text-white`}
-          />
+          <span className={`${isMuted ? 'icon-fi-rs-mute' : 'icon-fi-rs-volume'} text-[22px] text-white`} />
         </div>
       )}
 
       {!hideControls && (
         <div
           className={
-            "videoPlayerGradient z-[2] w-full absolute bottom-[-1px] pb-[21px] pt-[11px] px-[21px] transition-all duration-300 opacity-0 group-hover:opacity-100"
+            'videoPlayerGradient z-[2] w-full absolute bottom-[-1px] pb-[21px] pt-[11px] px-[21px] transition-all duration-300 opacity-0 group-hover:opacity-100'
           }
         >
-          <div className={"flex flex-row items-center"}>
+          <div className={'flex flex-row items-center'}>
             <div
               onClick={(e) => {
                 e.stopPropagation();
@@ -505,31 +448,23 @@ const Video = ({
                 }
                 // setIsPlaying(!isPlaying);
               }}
-              className={
-                "w-[24px] h-[24px] flex items-center justify-center cursor-pointer flex-shrink-0"
-              }
+              className={'w-[24px] h-[24px] flex items-center justify-center cursor-pointer flex-shrink-0'}
             >
               {isPlaying(videoFileId) ? (
-                <span className={"icon-fi-rs-pause text-[18px] text-white"} />
+                <span className={'icon-fi-rs-pause text-[18px] text-white'} />
               ) : (
-                <span
-                  className={"icon-fi-rs-play-button text-[14px] text-white"}
-                />
+                <span className={'icon-fi-rs-play-button text-[14px] text-white'} />
               )}
             </div>
-            <div className={"ml-[8px] w-[44px]"}>
-              <p className={"text-[14px] font-bold text-white w-[44px]"}>
+            <div className={'ml-[8px] w-[44px]'}>
+              <p className={'text-[14px] font-bold text-white w-[44px]'}>
                 {secondsToTime(videoDuration - playedSeconds)}
               </p>
             </div>
 
-            <div
-              className={
-                "flex items-center w-full h-[2px] relative bg-white bg-opacity-40 mx-[18px]"
-              }
-            >
+            <div className={'flex items-center w-full h-[2px] relative bg-white bg-opacity-40 mx-[18px]'}>
               <input
-                className={"videoPlayerSeek w-full h-[2px]"}
+                className={'videoPlayerSeek w-full h-[2px]'}
                 type="range"
                 min={0}
                 max={0.999999}
@@ -546,26 +481,20 @@ const Video = ({
               onClick={(e) => {
                 handleFullscreen(e);
               }}
-              className={
-                "w-[24px] h-[24px] flex items-center justify-center relative cursor-pointer mr-[8px]"
-              }
+              className={'w-[24px] h-[24px] flex items-center justify-center relative cursor-pointer mr-[8px]'}
             >
-              <span
-                className={"icon-fi-rs-full-screen text-white text-[22px]"}
-              />
+              <span className={'icon-fi-rs-full-screen text-white text-[22px]'} />
             </div>
             <Tooltip
               debounceValue={0.1}
-              className={"right-1/2 translate-x-1/2"}
+              className={'right-1/2 translate-x-1/2'}
               content={
                 <div
                   className={
-                    "flex items-center justify-center bg-transparent pt-[4px] rounded-[4px] w-[26px] h-[68px] relative bottom-[90px]"
+                    'flex items-center justify-center bg-transparent pt-[4px] rounded-[4px] w-[26px] h-[68px] relative bottom-[90px]'
                   }
                 >
-                  <div
-                    className={`transition-all duration-300 items-center justify-center rounded-[4px]`}
-                  >
+                  <div className={`transition-all duration-300 items-center justify-center rounded-[4px]`}>
                     <input
                       orient="vertical"
                       onClick={(e) => e.stopPropagation()}
@@ -585,23 +514,17 @@ const Video = ({
                   e.stopPropagation();
                   if (isMuted && volume === 0) {
                     setVolume(0.8);
-                    lsSet("isVideoMuted", "FALSE");
+                    lsSet('isVideoMuted', 'FALSE');
                   } else {
                     setVolume(0);
                     setIsMuted(!isMuted);
-                    lsSet("isVideoMuted", isMuted ? "FALSE" : "TRUE");
+                    lsSet('isVideoMuted', isMuted ? 'FALSE' : 'TRUE');
                   }
                   setVolumeSliderActive(!volumeSliderActive);
                 }}
-                className={
-                  "w-[24px] h-[24px] flex items-center justify-center relative cursor-pointer"
-                }
+                className={'w-[24px] h-[24px] flex items-center justify-center relative cursor-pointer'}
               >
-                <span
-                  className={`${
-                    isMuted ? "icon-fi-rs-mute" : "icon-fi-rs-volume"
-                  } text-white text-[22px]`}
-                />
+                <span className={`${isMuted ? 'icon-fi-rs-mute' : 'icon-fi-rs-volume'} text-white text-[22px]`} />
               </div>
             </Tooltip>
           </div>

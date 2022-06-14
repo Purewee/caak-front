@@ -1,0 +1,33 @@
+.caak_article input,
+.caak_article textarea,
+.caak_article .ck-editor__editable,
+.caak_article input,
+.caak_article textarea,
+.caak_article .ant-select {
+  font-size: 13px;
+}
+.caak_article input + span,
+.caak_article textarea + span {
+  font-size: 12px;
+}
+
+.caak_block .ant-card .ant-card-head,
+.caak_block .ant-card .ant-card-extra {
+  padding: 0;
+  min-height: 12px;
+}
+.caak_block .ant-card .ant-card-body {
+  padding: 8px;
+}
+
+.caak_block .ant-card .ant-card-extra .ant-btn-group {
+  position: absolute;
+  top: -16px;
+  left: -16px;
+  border-radius: 16px;
+  background: #fff;
+}
+
+.caak_block .ant-card .ant-card-extra .ant-btn-group .ant-btn {
+  //padding: 0;
+}

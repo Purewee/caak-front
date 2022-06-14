@@ -1,86 +1,86 @@
-import { useRef, useState } from "react";
-import MagazineItem from "./MagazineItem";
+import { useRef, useState } from 'react';
+import MagazineItem from './MagazineItem';
 
 const trendingPostsByCategory = [
   {
     id: 1,
-    title: "ФОТО: Мөнгөн мод 2021 ёслолын арга хэмжээ",
+    title: 'ФОТО: Мөнгөн мод 2021 ёслолын арга хэмжээ',
     category: {
-      name: 'cateName'
+      name: 'cateName',
     },
     group: {
-      name: 'groupName'
+      name: 'groupName',
     },
     user: {
-      nickname: 'userName'
-    }
+      nickname: 'userName',
+    },
   },
   {
     id: 2,
-    title: "Насанд хүрэгчид 19, хүүхдүүд зургаан төрлийн үзлэг оношилгоонд хамрагдана",
+    title: 'Насанд хүрэгчид 19, хүүхдүүд зургаан төрлийн үзлэг оношилгоонд хамрагдана',
     category: {
-      name: 'cateName'
+      name: 'cateName',
     },
     group: {
-      name: 'groupName'
+      name: 'groupName',
     },
     user: {
-      nickname: 'userName'
-    }
+      nickname: 'userName',
+    },
   },
   {
     id: 3,
-    title: "Б.Барслхагва: Энэ шагнал бол минийх биш ханийн минь шагнал юм шүү",
+    title: 'Б.Барслхагва: Энэ шагнал бол минийх биш ханийн минь шагнал юм шүү',
     category: {
-      name: 'cateName'
+      name: 'cateName',
     },
     group: {
-      name: 'groupName'
+      name: 'groupName',
     },
     user: {
-      nickname: 'userName'
-    }
+      nickname: 'userName',
+    },
   },
   {
     id: 4,
-    title: "hellooo",
+    title: 'hellooo',
     category: {
-      name: 'cateName'
+      name: 'cateName',
     },
     group: {
-      name: 'groupName'
+      name: 'groupName',
     },
     user: {
-      nickname: 'userName'
-    }
+      nickname: 'userName',
+    },
   },
   {
     id: 5,
-    title: "hellooo",
+    title: 'hellooo',
     category: {
-      name: 'cateName'
+      name: 'cateName',
     },
     group: {
-      name: 'groupName'
+      name: 'groupName',
     },
     user: {
-      nickname: 'userName'
-    }
+      nickname: 'userName',
+    },
   },
   {
     id: 6,
-    title: "hellooo",
+    title: 'hellooo',
     category: {
-      name: 'cateName'
+      name: 'cateName',
     },
     group: {
-      name: 'groupName'
+      name: 'groupName',
     },
     user: {
-      nickname: 'userName'
-    }
+      nickname: 'userName',
+    },
   },
-]
+];
 
 const FeedMagazine = () => {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -96,11 +96,11 @@ const FeedMagazine = () => {
     }
   };
 
-  return  (
+  return (
     <div className="w-full py-[28px] xl:py-[50px] bg-[#F5F5F5] flex justify-center px-[17px] xl:px-0">
       <div
         className={
-          "flex flex-col w-full relative sm:max-w-[600px] md:max-w-[700px] lg:max-w-[950px] xl:max-w-[1200px] 2xl:max-w-[1310px]"
+          'flex flex-col w-full relative sm:max-w-[600px] md:max-w-[700px] lg:max-w-[950px] xl:max-w-[1200px] 2xl:max-w-[1310px]'
         }
       >
         {activeIndex + 1 < trendingPostsByCategory.length - 1 && (
@@ -108,17 +108,15 @@ const FeedMagazine = () => {
             onClick={() => {
               trendPostsRef.current.scrollTo({
                 left: (1 + activeIndex) * 350,
-                behavior: "smooth",
+                behavior: 'smooth',
               });
               nextItem();
             }}
             className={
-              "cursor-pointer z-30 w-[40px] h-[40px] hidden xl:flex items-center justify-center bg-white border-[#D4D8D8] drop-shadow-md rounded-full absolute right-[-20px] top-1/2"
+              'cursor-pointer z-30 w-[40px] h-[40px] hidden xl:flex items-center justify-center bg-white border-[#D4D8D8] drop-shadow-md rounded-full absolute right-[-20px] top-1/2'
             }
           >
-            <span
-              className={"icon-fi-rs-down-chevron text-[#555555] text-[18px] -rotate-90"}
-            />
+            <span className={'icon-fi-rs-down-chevron text-[#555555] text-[18px] -rotate-90'} />
           </div>
         )}
 
@@ -127,40 +125,29 @@ const FeedMagazine = () => {
             onClick={() => {
               trendPostsRef.current.scrollTo({
                 left: (activeIndex - 1) * 350,
-                behavior: "smooth",
+                behavior: 'smooth',
               });
               prevItem();
             }}
             className={
-              "cursor-pointer z-30 w-[40px] h-[40px] hidden xl:flex items-center justify-center bg-white border-[#D4D8D8] drop-shadow-md rounded-full absolute left-[-20px] top-1/2 rotate-180"
+              'cursor-pointer z-30 w-[40px] h-[40px] hidden xl:flex items-center justify-center bg-white border-[#D4D8D8] drop-shadow-md rounded-full absolute left-[-20px] top-1/2 rotate-180'
             }
           >
-            <span
-              className={"icon-fi-rs-down-chevron text-[#555555] text-[18px] -rotate-90"}
-            />
+            <span className={'icon-fi-rs-down-chevron text-[#555555] text-[18px] -rotate-90'} />
           </div>
         )}
         <div className="flex flex-row items-center mb-[21px]">
-          <span className="icon-fi-rs-jor text-[20px] text-[#FF6600]"/>
-          <div
-            className={
-              "font-bold text-[#000000] inline-flex items-center ml-[8px] text-[24px] leading-[28px]"
-            }
-          >
+          <span className="icon-fi-rs-jor text-[20px] text-[#FF6600]" />
+          <div className={'font-bold text-[#000000] inline-flex items-center ml-[8px] text-[24px] leading-[28px]'}>
             <p>АЛДАРТАЙ</p>&nbsp;<p className="font-normal">ЖОРНУУД</p>
             <div className="w-[18px] h-[18px] flex justify-center items-center ml-[8px] md:hidden">
-              <span className="icon-fi-rs-down-chevron -rotate-90 text-[15px]"/>
+              <span className="icon-fi-rs-down-chevron -rotate-90 text-[15px]" />
             </div>
           </div>
         </div>
-        <div
-          ref={trendPostsRef}
-          className={"trendPostsCardWrapper relative overflow-x-scroll"}
-        >
+        <div ref={trendPostsRef} className={'trendPostsCardWrapper relative overflow-x-scroll'}>
           <div
-            className={
-              " flex flex-row flex-nowrap w-full h-full gap-[17px] xl:gap-[21px] transition-all duration-300"
-            }
+            className={' flex flex-row flex-nowrap w-full h-full gap-[17px] xl:gap-[21px] transition-all duration-300'}
           >
             {trendingPostsByCategory.map((item, index) => {
               return <MagazineItem data={item} key={index} />;
@@ -169,7 +156,7 @@ const FeedMagazine = () => {
         </div>
       </div>
     </div>
-  )
+  );
 };
 
 export default FeedMagazine;
