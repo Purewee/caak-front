@@ -19,6 +19,10 @@ export default function Channel() {
     context.setStore('default');
   }, []);
 
+  useEffect(() => {
+    context.setShown(true);
+  }, []);
+
   return (
     <div className="flex flex-col w-full items-center">
       <img

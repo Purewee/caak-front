@@ -63,6 +63,7 @@ const menu = [
 ];
 
 export default function Home() {
+  // prettier-ignore
   const [articles, setArticles] = useState([]);
   const [selected, setSelected] = useState(0);
   const context = useContext(AppContext);
@@ -77,11 +78,16 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
+    context.setShown(true);
+  }, []);
+
+  useEffect(() => {
     const es = new ESService('caak');
     es.home_articles().then(setArticles);
     // eslint-disable-next-line
   }, []);
 
+  // prettier-ignore
   return (
     <>
       <div className={`relative bg-white flex flex-col items-center pb-[100px]`}>
@@ -249,6 +255,9 @@ export default function Home() {
               return <FeedCard key={index} post={data} />;
             })}
           </div>
+        </div>
+        <div className='mt-[60px] max-w-[1310px] cursor-pointer w-full border border-[#FF6600] h-[74px] rounded-[4px] flex items-center justify-center'>
+          <p className='text-[#FF6600] text-[18px] leading-[21px] font-medium'>Бусад мэдээ</p>
         </div>
       </div>
     </>

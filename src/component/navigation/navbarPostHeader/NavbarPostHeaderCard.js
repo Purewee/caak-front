@@ -49,8 +49,8 @@ const NavbarPostHeaderCard = ({ type, item }) => {
           <p className={'text-[14px] font-roboto text-white font-medium tracking-[0.21px] leading-[16px] mt-[14px]'}>
             {generateTimeAgo(item.publish_date)}
           </p>
-          <div className={'flex flex-col 2xl:flex-row flex-wrap justify-between mt-[30px] items-center'}>
-            <div className={'flex text-white flex-row flex-wrap items-center self-start'}>
+          <div className={'flex flex-wrap justify-between w-full mt-[30px] items-center'}>
+            <div className={'flex text-white flex-row items-center self-start'}>
               <img
                 alt=""
                 src={
@@ -66,7 +66,7 @@ const NavbarPostHeaderCard = ({ type, item }) => {
                 </p>
               </Link>
             </div>
-            <div className={'flex items-center mt-[10px] w-full 2xl:w-[116px] 2xl:mt-0 self-end md:self-center'}>
+            <div className={'flex items-center mt-[10px] sm:mt-0 self-end md:self-center'}>
               <ActionButtons post={item} />
             </div>
           </div>

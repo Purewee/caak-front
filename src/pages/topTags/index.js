@@ -43,6 +43,10 @@ export default function TopTags() {
   }, []);
 
   useEffect(() => {
+    context.setShown(true);
+  }, []);
+
+  useEffect(() => {
     const es = new ESService('caak');
     es.categoryPosts(slug, { size: 20 }).then(setArticles);
   }, [slug]);

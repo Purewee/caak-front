@@ -22,6 +22,10 @@ export default function Magazine({ owned }) {
   }, []);
 
   useEffect(() => {
+    context.setShown(true);
+  }, []);
+
+  useEffect(() => {
     const es = new ESService('caak');
     es.home_articles().then(setArticles);
   }, []);

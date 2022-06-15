@@ -56,6 +56,10 @@ export default function Profile() {
     es.authorPosts(id).then(setArticles);
   }, [id]);
 
+  useEffect(() => {
+    context.setShown(true);
+  }, []);
+
   if (loading)
     return (
       <div className={'w-full flex justify-center'}>

@@ -5,6 +5,7 @@ import StoryImage from '../../assets/images/story-news.svg';
 import Logo from '../../component/logo';
 import { Link, useParams } from 'react-router-dom';
 import { useSwipeable } from 'react-swipeable';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 
 export default function Story() {
   // prettier-ignore
@@ -37,6 +38,10 @@ export default function Story() {
     setShownStory(stories[indexOfStory]);
   }, [indexOfStory, stories]);
 
+  useEffect(() => {
+    context.setShown(false);
+  }, []);
+
   const handlers = useSwipeable({
     onSwipedLeft: () => setIndexOfStory(indexOfStory + 1 === stories.length ? 'done' : indexOfStory + 1),
     onSwipedRight: () => setIndexOfStory(indexOfStory === 0 ? 0 : indexOfStory - 1),
@@ -65,7 +70,11 @@ export default function Story() {
   ) : (
     <div {...handlers} className="w-full relative">
       <div>
-        <img alt="" className="w-full h-screen object-cover" src={`http://graph.caak.mn${shownStory?.image}`} />
+        <LazyLoadImage
+          className="w-full h-screen object-cover"
+          alt=""
+          src={`http://graph.caak.mn${shownStory?.image}`}
+        />
       </div>
       <div className="w-full h-full absolute top-0 flex flex-col items-center justify-between">
         <div className="flex flex-row items-center w-full justify-between px-[19px] mt-[16px]">
@@ -91,7 +100,7 @@ export default function Story() {
           )} */}
           <div className="border-l-[6px] border-white w-full h-[340px] pl-[40px]">
             <div className="flex flex-row justify-start mt-[12px]">
-              {shownStory.categories?.map((x) => (
+              {shownStory?.categories?.map((x) => (
                 <div className="bg-[#FF6600] h-[22px] flex items-center px-[8px]">
                   <p key={x.id} className=" text-white text-[12px] font-bold leading-[14px]">
                     #{x.name}

@@ -1,6 +1,7 @@
 import { useRef, useState, useEffect } from 'react';
 import StoryItem from './Story';
 import { ESService } from '../../lib/esService';
+import { Link } from 'react-router-dom';
 
 const StoryFeed = () => {
   // prettier-ignore
@@ -33,7 +34,7 @@ const StoryFeed = () => {
   return stories?.length > 0 ? (
     <div
       className={
-        "flex flex-col max-w-[1000px] 2xl:max-w-[1502px] px-[10px] xl:px-0 w-full justify-center relative mt-[22px] md:py-[80px]"
+        "flex flex-col max-w-[400px] sm:max-w-[600px] md:max-w-[700px] lg:max-w-[1002px] xl:max-w-[1202px] 2xl:max-w-[1502px] px-[10px] xl:px-0 w-full justify-center relative mt-[22px] md:py-[80px]"
       }
     >
       {activeIndex + 1 < stories.length - 1 && (
@@ -78,10 +79,12 @@ const StoryFeed = () => {
       >
         СТОРИ МЭДЭЭ
       </p>
-      <div className="flex flex-row absolute right-[121px]">
-        <p className="text-[16px] text-[#111111]">Бүх сторинууд</p>
-        <span className="icon-fi-rs-stories-o text-[#FF6600]"/>
-      </div>
+      <Link to={'/stories'}>
+        <div className="hidden xl:flex flex-row absolute items-center right-[121px]">
+          <p className="text-[16px] text-[#111111]">Бүх сторинууд</p>
+          <span className="icon-fi-rs-stories-o text-[#FF6600] text-[18px] ml-[6px]"/>
+        </div>
+      </Link>
      </div>
       <div
         ref={trendPostsRef}
@@ -90,6 +93,15 @@ const StoryFeed = () => {
         {stories.map((item, index) => {
           return <StoryItem story={item} key={index} index={index} />;
         })}
+        <div className='min-w-[106px] sm:min-w-[290px] relative flex items-center justify-center max-w-[290px] rounded-[8px] min-h-[160px] sm:min-h-[435px] max-h-[435px]'>
+          <img className='w-full h-full' src={require('../../assets/images/all-stories.png')}/>
+          <div className='bg-black rounded-[8px] bg-opacity-70 px-[47px] h-full w-full absolute flex justify-center items-center'>
+            <div className='h-[34px] rounded-[4px] cursor-pointer bg-white w-full flex flex-row items-center justify-center'>
+              <span className="icon-fi-rs-stories-o text-[#FF6600] text-[14.6px] mr-[10px]"/>
+              <p>Бүх сторинууд үзэх</p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   ) : null;

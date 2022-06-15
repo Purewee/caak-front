@@ -1,6 +1,6 @@
 import './App.css';
 import './ant.less';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, createContext } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import NavbarNew from './component/navigation/navbar';
 import Home from './pages/home';
@@ -14,18 +14,17 @@ import Add from './pages/add';
 import WithApolloProvider from './utility/WithApolloProvider';
 import WithThemeProvider from './utility/WithThemeProvider';
 import { AuthProvider } from './context/AuthContext';
+import AllStories from './pages/allstories';
+import Footer from './component/footer';
 
-export const AppContext = React.createContext(null);
+export const AppContext = createContext(null);
 
 function App() {
   const [store, setStore] = useState('default');
-
-  useEffect(() => {
-    document.title = 'Саак';
-  }, []);
+  const [shown, setShown] = useState(true);
 
   return (
-    <AppContext.Provider value={{ store, setStore }}>
+    <AppContext.Provider value={{ store, setStore, shown, setShown }}>
       <WithThemeProvider>
         <WithApolloProvider>
           <AuthProvider>
@@ -40,9 +39,11 @@ function App() {
                   <Route path="/tags/:slug" element={<TopTags />} />
                   <Route path="/channel/:id" element={<Channel />} />
                   <Route path="/story/:id" element={<Story />} />
+                  <Route path="/stories" element={<AllStories />} />
                   <Route path="/add" element={<Add />} />
                   <Route path="/add/:id" element={<Add />} />
                 </Routes>
+                <Footer />
               </BrowserRouter>
             </div>
           </AuthProvider>

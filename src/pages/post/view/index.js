@@ -10,6 +10,7 @@ import Configure from '../../../component/configure';
 import Loader from '../../../component/loader';
 import Lottie from 'react-lottie';
 import Love from '../../../component/reactions/love.json';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 
 const ARTICLE = gql`
   query GetArticle($id: ID!) {
@@ -108,6 +109,10 @@ const Post = () => {
     context.setStore('default');
   }, []);
 
+  useEffect(() => {
+    context.setShown(true);
+  }, []);
+
   const options = {
     loop: false,
     autoplay: true,
@@ -129,6 +134,7 @@ const Post = () => {
   //use before imageUrl
   // ${Configure.host}
 
+  // prettier-ignore
   return (
     <Layout post={article}>
       <div className="pt-[81px] flex flex-col items-center w-[960px]">
@@ -168,7 +174,11 @@ const Post = () => {
           {article.blocks.map((b) => {
             return (
               <div key={b.id} className="flex flex-col items-center mb-[60px] w-full">
-                <img src={`${b.imageUrl}`} alt="" className="w-full max-h-[640px] object-cover" />
+                <LazyLoadImage
+                  src={`${b.imageUrl}`}
+                  alt=""
+                  className="w-full max-h-[640px] object-cover"
+                />
                 {b.title && (
                   <p className="mt-[60px] text-[#111111] text-[26px] font-bold font-roboto max-w-[760px]">{b.title}</p>
                 )}

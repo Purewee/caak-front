@@ -25,6 +25,37 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+.icon-fi-rs-hashtag:before {
+  content: "\e93c";
+}
+.icon-fi-rs-heart-f:before {
+  content: "\e93d";
+}
+.icon-fi-rs-info:before {
+  content: "\e93e";
+}
+.icon-fi-rs-list-o:before {
+  content: "\e93f";
+}
+.icon-fi-rs-minus:before {
+  content: "\e940";
+}
+.icon-fi-rs-shield:before {
+  content: "\e941";
+}
+.icon-fi-rs-stories-o:before {
+  content: "\e942";
+}
+.icon-fi-rs-time-f:before {
+  content: "\e943";
+}
+.icon-fi-rs-time-o:before {
+  content: "\e944";
+}
+.icon-fi-rs-tv:before {
+  content: "\e945";
+}
 .icon-fi-rs-list-f:before {
   content: '\e937';
 }
