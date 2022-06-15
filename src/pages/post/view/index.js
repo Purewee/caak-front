@@ -50,55 +50,55 @@ const ARTICLE = gql`
 
 const Post = () => {
   const { id } = useParams();
-  // const { data, loading } = useQuery(ARTICLE, { variables: { id } })
+  const { data, loading } = useQuery(ARTICLE, { variables: { id } });
   const context = useContext(AppContext);
-  // const article = data?.article || {};
+  const article = data?.article || {};
 
   const ref = useRef(null);
 
-  const article = {
-    id: 1,
-    title: 'asdasd asd asd asd asd asd sad',
-    slug: 54654654,
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/5/59/Rose_from_BLACKPINK_PUBG_210321_%28cropped%29_2.jpg',
-    description: 'desc desc desc desc descdescdesc descdesc desc desc desc v',
-    createdAt: new Date(),
-    data: {
-      like_count: 120,
-    },
-    categories: {
-      nodes: [
-        {
-          id: 1,
-          name: 'Улс төр',
-        },
-        {
-          id: 2,
-          name: 'Спорт',
-        },
-      ],
-    },
-    viewCount: 2500,
-    author: {
-      id: 1,
-      firstName: 'name',
-      lastName: 'lastName',
-    },
-    blocks: [
-      {
-        title: 'title title block title',
-        imageUrl:
-          'https://upload.wikimedia.org/wikipedia/commons/5/59/Rose_from_BLACKPINK_PUBG_210321_%28cropped%29_2.jpg',
-        content: 'Anim duis consequat exercitation in ullamco aliqua aute non laboris cupidatat sunt irure dolor amet.',
-      },
-      {
-        title: 'title title block title 2',
-        imageUrl:
-          'https://upload.wikimedia.org/wikipedia/commons/5/59/Rose_from_BLACKPINK_PUBG_210321_%28cropped%29_2.jpg',
-        content: 'Anim duis consequat exercitation in ullamco aliqua aute non laboris cupidatat sunt irure dolor amet.',
-      },
-    ],
-  };
+  // const article = {
+  //   id: 1,
+  //   title: 'asdasd asd asd asd asd asd sad',
+  //   slug: 54654654,
+  //   imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/5/59/Rose_from_BLACKPINK_PUBG_210321_%28cropped%29_2.jpg',
+  //   description: 'desc desc desc desc descdescdesc descdesc desc desc desc v',
+  //   createdAt: new Date(),
+  //   data: {
+  //     like_count: 120,
+  //   },
+  //   categories: {
+  //     nodes: [
+  //       {
+  //         id: 1,
+  //         name: 'Улс төр',
+  //       },
+  //       {
+  //         id: 2,
+  //         name: 'Спорт',
+  //       },
+  //     ],
+  //   },
+  //   viewCount: 2500,
+  //   author: {
+  //     id: 1,
+  //     firstName: 'name',
+  //     lastName: 'lastName',
+  //   },
+  //   blocks: [
+  //     {
+  //       title: 'title title block title',
+  //       imageUrl:
+  //         'https://upload.wikimedia.org/wikipedia/commons/5/59/Rose_from_BLACKPINK_PUBG_210321_%28cropped%29_2.jpg',
+  //       content: 'Anim duis consequat exercitation in ullamco aliqua aute non laboris cupidatat sunt irure dolor amet.',
+  //     },
+  //     {
+  //       title: 'title title block title 2',
+  //       imageUrl:
+  //         'https://upload.wikimedia.org/wikipedia/commons/5/59/Rose_from_BLACKPINK_PUBG_210321_%28cropped%29_2.jpg',
+  //       content: 'Anim duis consequat exercitation in ullamco aliqua aute non laboris cupidatat sunt irure dolor amet.',
+  //     },
+  //   ],
+  // };
 
   function createMarkup(e) {
     return { __html: e };

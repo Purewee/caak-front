@@ -3,13 +3,15 @@ import { ESService } from '../../lib/esService';
 import { AppContext } from '../../App';
 import StoryImage from '../../assets/images/story-news.svg';
 import Logo from '../../component/logo';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useSwipeable } from 'react-swipeable';
 
 export default function Story() {
+  // prettier-ignore
+  const {id} = useParams();
   const context = useContext(AppContext);
   const [stories, setStories] = useState([]);
-  const [indexOfStory, setIndexOfStory] = useState(0);
+  const [indexOfStory, setIndexOfStory] = useState(JSON.parse(id));
   const [shownStory, setShownStory] = useState(null);
 
   useEffect(() => {
@@ -23,6 +25,13 @@ export default function Story() {
     context.setStore(null);
     // eslint-disable-next-line
   }, []);
+
+  // prettier-ignore
+  // useEffect(() => {
+  //   setTimeout(( )=> {
+  //     setIndexOfStory(indexOfStory + 1)
+  //   }, 5000)
+  // },[indexOfStory])
 
   useEffect(() => {
     setShownStory(stories[indexOfStory]);
@@ -50,6 +59,7 @@ export default function Story() {
             ОНЦЛОХ СТОРИ <p className="font-normal">&nbsp; МЭДЭЭНҮҮД</p>
           </span>
         </div>
+        <p>Өнөөдөр Улаанбаатарт өдөртөө +20 градус дулаан</p>
       </div>
     </div>
   ) : (
@@ -73,20 +83,36 @@ export default function Story() {
             </Link>
           </div>
         </div>
-        <div className="pb-[60px] pt-[104px] storyLinearBig w-full flex flex-col items-center">
-          {indexOfStory === 0 && (
+        <div className="pt-[104px] px-[150px] storyLinearBig w-full flex flex-col items-center">
+          {/* {indexOfStory === 0 && (
             <div className="w-[246px] h-[60px] border-t border-b border-white flex items-center justify-center">
               <img src={StoryImage} alt="" />
             </div>
-          )}
-          <p className="text-white text-[28px] xl:text-[60px] font-bold leading-[37px] xl:leading-[70px] mt-[67px] font-merri max-w-[1032px] text-center">
-            {shownStory?.title}
-          </p>
-          <div className="flex flex-row items-center mt-[24px]">
-            <p className="hidden xl:block font-medium text-white opacity-80 text-[16px] leading-[19px] mr-[25px]">
-              Редактор: {shownStory?.author.name}
+          )} */}
+          <div className="border-l-[6px] border-white w-full h-[340px] pl-[40px]">
+            <div className="flex flex-row justify-start mt-[12px]">
+              {shownStory.categories?.map((x) => (
+                <div className="bg-[#FF6600] h-[22px] flex items-center px-[8px]">
+                  <p key={x.id} className=" text-white text-[12px] font-bold leading-[14px]">
+                    #{x.name}
+                  </p>
+                </div>
+              ))}
+            </div>
+            <p className="text-white mt-[12px] text-[28px] xl:text-[54px] font-condensed font-bold leading-[63px] truncate-2 xl:leading-[70px] max-w-[1032px]">
+              {shownStory?.title}
             </p>
-            <p className="font-medium text-white opacity-80 text-[16px] leading-[19px]">2022.04.28, 22:05</p>
+            <div className="flex flex-row items-center mt-[12px]">
+              <p className="hidden xl:block font-medium text-white border-r border-[#FFFFFF] border-opacity-80 opacity-80 text-[16px] leading-[19px] pr-[12px]">
+                Редактор: {shownStory?.author.name}
+              </p>
+              <p className="font-medium text-white opacity-80 text-[16px] leading-[19px] pl-[12px]">
+                2022.04.28, 22:05
+              </p>
+            </div>
+            <button className="bg-[#00000019] mt-[30px] text-white h-[44px] w-[190px] border border-[#FFFFFF80] rounded-[4px]">
+              Дэлгэрэнгүй унших
+            </button>
           </div>
         </div>
       </div>

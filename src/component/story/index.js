@@ -3,9 +3,11 @@ import StoryItem from './Story';
 import { ESService } from '../../lib/esService';
 
 const StoryFeed = () => {
+  // prettier-ignore
   const [activeIndex, setActiveIndex] = useState(0);
   const [stories, setStories] = useState([]);
   const trendPostsRef = useRef(null);
+  // prettier-ignore
 
   useEffect(() => {
     const es = new ESService('caak');
@@ -13,21 +15,26 @@ const StoryFeed = () => {
       setStories(res);
     });
   }, []);
+  // prettier-ignore
 
   const nextItem = () => {
     if (activeIndex < stories.length - 1) {
       setActiveIndex(activeIndex + 1);
     }
   };
+  // prettier-ignore
   const prevItem = () => {
     if (activeIndex > 0) {
       setActiveIndex(activeIndex - 1);
     }
   };
+  // prettier-ignore
 
   return stories?.length > 0 ? (
     <div
-      className={'flex flex-col max-w-[1502px] px-[10px] xl:px-0 w-full justify-center relative mt-[22px] md:py-[80px]'}
+      className={
+        "flex flex-col max-w-[1000px] 2xl:max-w-[1502px] px-[10px] xl:px-0 w-full justify-center relative mt-[22px] md:py-[80px]"
+      }
     >
       {activeIndex + 1 < stories.length - 1 && (
         <div
@@ -63,19 +70,25 @@ const StoryFeed = () => {
         </div>
       )}
 
+     <div className="flex flex-row items-center w-full relative">
       <p
         className={
-          'font-medium md:font-bold text-[#111111] text-[17px] md:text-[38px] md:text-center leading-[20px] md:leading-[42px]'
+          "font-medium md:font-bold text-[#111111] text-[17px] md:text-[38px] md:text-center w-full leading-[20px] md:leading-[42px]"
         }
       >
         СТОРИ МЭДЭЭ
       </p>
+      <div className="flex flex-row absolute right-[121px]">
+        <p className="text-[16px] text-[#111111]">Бүх сторинууд</p>
+        <span className="icon-fi-rs-stories-o text-[#FF6600]"/>
+      </div>
+     </div>
       <div
         ref={trendPostsRef}
         className={'w-full wrapper gap-[13px] transition-all pb-[26px] md:pb-0 duration-300 mt-[14px] md:mt-[39px]'}
       >
         {stories.map((item, index) => {
-          return <StoryItem border={index === 0 && true} story={item} key={index} />;
+          return <StoryItem story={item} key={index} index={index} />;
         })}
       </div>
     </div>

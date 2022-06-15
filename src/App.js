@@ -39,7 +39,7 @@ function App() {
                   <Route path="/magazine/:id" element={<Magazine />} />
                   <Route path="/tags/:slug" element={<TopTags />} />
                   <Route path="/channel/:id" element={<Channel />} />
-                  <Route path="/story" element={<Story />} />
+                  <Route path="/story/:id" element={<Story />} />
                   <Route path="/add" element={<Add />} />
                   <Route path="/add/:id" element={<Add />} />
                 </Routes>

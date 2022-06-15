@@ -3,7 +3,7 @@ import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { generateTimeAgo } from '../../utility/Util';
 import { Link } from 'react-router-dom';
 
-export default function StoryItem({ story, border }) {
+export default function StoryItem({ story, border, index }) {
   return (
     <div
       className={`min-w-[106px] sm:min-w-[290px] ${
@@ -25,7 +25,7 @@ export default function StoryItem({ story, border }) {
               #{x.name}
             </p>
           ))}
-          <Link to={`/story`}>
+          <Link to={`/story/${index}`}>
             <p className="truncate-3 text-white text-[12px] xl:text-[24px] font-medium xl:font-bold mt-[10px]">
               {story?.title}
             </p>

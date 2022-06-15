@@ -24,7 +24,7 @@ export default function TrendCard({ post, index }) {
           </div>
           <div className="flex flex-row items-center ml-[15px]">
             <span className="icon-fi-rs-heart text-[16px]" />
-            <p className="text-[15px] leading-[18px]">{post.views_count}</p>
+            <p className="text-[15px] leading-[18px] ml-[6px]">{post.views_count}</p>
           </div>
           <p className="text-[14px] leading-[16px] ml-[4px]">&nbsp;•&nbsp;{generateTimeAgo(post.publish_date)}</p>
         </div>
