@@ -52,9 +52,9 @@ export const CREATE = gql`
     $publishDate: ISO8601DateTime
     $acceptComment: Boolean
     $featured: Boolean
-    $blocks: [JSON!]
+    $blocks: [BlockInput!]
     $categoryIds: [ID!]
-    $tagIds: [ID!]
+    $tags: [String!]
   ) {
     addArticle(
       input: {
@@ -65,7 +65,7 @@ export const CREATE = gql`
         featured: $featured
         blocks: $blocks
         categoryIds: $categoryIds
-        tagIds: $tagIds
+        tags: $tags
       }
     ) {
       id
@@ -81,9 +81,9 @@ export const UPDATE = gql`
     $publishDate: ISO8601DateTime
     $acceptComment: Boolean
     $featured: Boolean
-    $blocks: [JSON!]
+    $blocks: [BlockInput!]
     $categoryIds: [ID!]
-    $tagIds: [ID!]
+    $tags: [String!]
   ) {
     updateArticle(
       input: {
@@ -95,10 +95,22 @@ export const UPDATE = gql`
         featured: $featured
         blocks: $blocks
         categoryIds: $categoryIds
-        tagIds: $tagIds
+        tags: $tags
       }
     ) {
       id
+    }
+  }
+`;
+
+export const TAGS = gql`
+  query Tags($filter: String) {
+    tags(first: 20, filter: { nameOrSlug: { cont: $filter } }) {
+      nodes {
+        id
+        name
+        slug
+      }
     }
   }
 `;
