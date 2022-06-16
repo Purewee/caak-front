@@ -224,11 +224,9 @@ function ImageBlock({ block, idx }) {
               maxCount={1}
               showUploadList={false}
               customRequest={({ file, onSuccess }) => {
-                imageCompress(file, { maxWidth: 1024, maxHeight: 1024 }).then((result) => {
-                  getDataFromBlob(result).then((base64) => {
-                    setImage({ src: base64, file: result });
-                    onSuccess('ok');
-                  });
+                getDataFromBlob(file).then((base64) => {
+                  setImage({ src: base64, file: file });
+                  onSuccess('ok');
                 });
               }}
             >
