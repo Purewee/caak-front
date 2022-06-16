@@ -27,7 +27,7 @@ export default function HighlightCard({ post }) {
             </Link>
           ))}
           <Link to={`/post/view/${post.id}`}>
-            <p className={`text-white font-bold text-[36px] leading-[40px] truncate-3 font-merri`}>{post.title}</p>
+            <p className={`text-white font-bold text-[36px] leading-[40px] truncate-3 font-condensed`}>{post.title}</p>
           </Link>
           {
             <p className="text-white text-[14px] mt-[14px] font-medium leading-[16px]">

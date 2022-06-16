@@ -1,4 +1,5 @@
 import React from 'react';
+import { imagePath } from '../../utility/Util';
 
 export default function PostSaveModal({ savePostOpen, setSavePostOpen, post }) {
   return (
@@ -10,13 +11,13 @@ export default function PostSaveModal({ savePostOpen, setSavePostOpen, post }) {
             <img
               alt=""
               className="min-w-[100px] max-w-[100px] h-[100px] object-cover truncate-3"
-              src={`http://graph.caak.mn${post.image}`}
+              src={imagePath(post.imageUrl)}
             />
             <div className="ml-[16px]">
               <p className="font-merri text-[16px] h-[64px]">{post.title}</p>
               <div className="text-[#555555] mt-[10px] flex flex-row items-center leading-[18px] text-[15px]">
                 <p>gogo.mn</p>
-                <p className="ml-[6px]">• {post.author.name}</p>
+                <p className="ml-[6px]">• {post.author.firstName}</p>
               </div>
             </div>
           </div>
