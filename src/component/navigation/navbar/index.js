@@ -6,14 +6,58 @@ import { AppContext } from '../../../App';
 import SignInUpController from '../../modal//SignInUpController';
 import { useAuth } from '../../../context/AuthContext';
 import UserInfo from './UserInfo';
+import logoIcon from '../../../images/New-Logo.svg';
+
+const subMenu = [
+  {
+    title: 'Хөгжилтэй',
+  },
+  {
+    title: 'Кино',
+  },
+  {
+    title: 'Загвар',
+  },
+  {
+    title: 'Гэрэл зураг',
+  },
+  {
+    title: 'Спорт',
+  },
+  {
+    title: 'Тоглоом',
+  },
+  {
+    title: 'Шинжлэх ухаан',
+  },
+  {
+    title: 'Гэр бүл',
+  },
+  {
+    title: 'Гоо сайхан',
+  },
+  {
+    title: 'Аялал',
+  },
+  {
+    title: 'Амьтад',
+  },
+  {
+    title: 'Энтэртайнмент',
+  },
+  {
+    title: 'Хоол',
+  },
+];
 
 export default function NavbarNew() {
   const context = useContext(AppContext);
   const [loaded, setLoaded] = useState(false);
+  const [subMenuShown, setSubMenuShown] = useState(false);
   const [navBarSticky, setNavBarSticky] = useState(true);
   const [isShown, setIsShown] = useState(false);
   const [navBarStyle, setNavBarStyle] = useState(true);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [sideMenuOpen, setSideMenuOpen] = useState(false);
   const isLaptop = useMediaQuery('(min-width: 1001px) and (max-width: 1920px)');
   const isTablet = useMediaQuery('(min-width: 401px) and (max-width: 1000px)');
   const isMobile = useMediaQuery('screen and (max-width: 767px)');
@@ -48,6 +92,7 @@ export default function NavbarNew() {
     };
   }, [setNavBarSticky]);
 
+  //prettier-ignore
   return navBarStyle === null ? null : isLaptop ? (
     loaded && (
       <nav
@@ -59,31 +104,7 @@ export default function NavbarNew() {
           <div className={'flex flex-row items-center'}>
             {/*Mobile Menu Icon*/}
             <div
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              // ref={mobileMenuRef}
-              className={`block md:hidden w-full z-50 bg-transparent justify-start fixed left-0 top-0 transition ease-linear duration-300 ${
-                isMobileMenuOpen ? 'transform translate-x-0' : 'transform -translate-x-full'
-              }`}
-              id="mobile-menu"
-            >
-              {/* <MobileSideMenu setOpen={setIsMobileMenuOpen} /> */}
-            </div>
-            {/* {isLaptop && (
-              <div
-                onClick={() => setIsMobileMenuOpen(true)}
-                className={
-                  "mr-[30px] cursor-pointer w-[24px] h-[24px] flex items-center justify-center"
-                }
-              >
-                <span
-                  className={
-                    `icon-fi-rs-hamburger-menu text-[22px] ${navBarStyle ? 'text-white' : 'text-black'}`
-                  }
-                />
-              </div>
-            )} */}
-            <div
-              onClick={() => setIsMobileMenuOpen(true)}
+              onClick={() => setSideMenuOpen(true)}
               className={'mr-[30px] cursor-pointer w-[24px] h-[24px] flex items-center justify-center'}
             >
               <span className={`icon-fi-rs-hamburger-menu text-[22px] ${navBarStyle ? 'text-white' : 'text-black'}`} />
@@ -126,6 +147,65 @@ export default function NavbarNew() {
           )}
         </div>
         <SignInUpController isShown={isShown} setIsShown={setIsShown} />
+        {
+          sideMenuOpen && 
+          <div className='absolute left-0 top-0 w-[410px] bg-white z-[3] px-[50px] pt-[50px] pb-[55px]'>
+            <div className='flex flex-row items-center justify-between w-full'>
+                <span className='icon-fi-rs-search text-[20px] text-[#111111]' />
+                <img
+                    src={logoIcon}
+                    className="cursor-pointer w-[130px] object-contain"
+                    alt="Caak Logo"
+                />
+                <span onClick={() => setSideMenuOpen(false)} className='icon-fi-rs-close cursor-pointer text-[18px] w-[24px] h-[24px] flex items-center justify-center text-[#111111]' />
+            </div>
+            <div onClick={() => setSubMenuShown(!subMenuShown)} className='mt-[75px] flex flex-row items-center cursor-pointer'>
+                <span className={`${subMenuShown ? 'icon-fi-rs-minus' : 'icon-fi-rs-plus'} w-[24px] h-[24px] flex items-center justify-center text-[20px] text-[#FF6600] mr-[26px]`} />
+                <p className='text-[18px] font-medium leading-[21px] hover:text-[#555555]'>МЭДЭЭНИЙ ТӨРӨЛ</p>
+            </div>
+            {
+              subMenuShown && 
+              <div className='ml-[50px] mt-[30px] flex flex-col gap-[20px]'>
+                {subMenu.map((data, index) => {
+                  return(
+                    <p className='text-[#111111] leading-[20px] text-[17px]' key={index}>{data.title}</p>
+                  )
+                })}
+              </div>
+            }
+            <div className='mt-[40px] flex flex-row items-center cursor-pointer'>
+                <span className='icon-fi-rs-hashtag w-[24px] h-[24px] flex items-center justify-center text-[20px] text-[#111111] mr-[26px]' />
+                <p className='text-[18px] font-medium leading-[21px] text-[#111111]'>ТАГУУД</p>
+            </div>
+            <div className='mt-[40px] flex flex-row items-center cursor-pointer'>
+                <span className='icon-fi-rs-tv w-[24px] h-[24px] flex items-center justify-center text-[20px] text-[#111111] mr-[26px]' />
+                <p className='text-[18px] font-medium leading-[21px] text-[#111111]'>ВИДЕО</p>
+            </div>
+            <div className='mt-[40px] flex flex-row items-center cursor-pointer'>
+                <span className='icon-fi-rs-mic w-[24px] h-[24px] flex items-center justify-center text-[20px] text-[#111111] mr-[26px]' />
+                <p className='text-[18px] font-medium leading-[21px] text-[#111111]'>ПОДКАСТ</p>
+            </div>
+            <div className='mt-[40px] flex flex-row items-center cursor-pointer'>
+                <span className='icon-fi-rs-wave w-[24px] h-[24px] flex items-center justify-center text-[20px] text-[#111111] mr-[26px]' />
+                <p className='text-[18px] font-medium leading-[21px] text-[#111111]'>РАДИО</p>
+            </div>
+            <div className='mt-[40px] flex flex-row items-center cursor-pointer'>
+                <span className='icon-fi-rs-ads w-[24px] h-[24px] flex items-center justify-center text-[20px] text-[#111111] mr-[26px]' />
+                <p className='text-[18px] font-medium leading-[21px] text-[#111111]'>СУРТАЛЧИЛГАА</p>
+            </div>
+            <div className='mt-[40px] flex flex-row items-center cursor-pointer'>
+                <span className='icon-fi-rs-phone w-[24px] h-[24px] flex items-center justify-center text-[20px] text-[#111111] mr-[26px]' />
+                <p className='text-[18px] font-medium leading-[21px] text-[#111111]'>ХОЛБОО БАРИХ</p>
+            </div>
+            <div className='border-t border-b w-full border-[#D4D8D8] flex flex-row items-center justify-center gap-[19px] py-[30px] mt-[137px]'>
+              <span className='icon-fi-rs-fb text-[22px]' />
+              <span className='icon-fi-rs-ig text-[22px]' />
+              <span className='icon-fi-rs-tw text-[22px]' />
+              <span className='icon-fi-rs-yt text-[22px]' />
+            </div>
+            <p className='text-[#555555] text-[15px] mt-[30px] text-center'>©2022 “Саак Холдинг” ХХК</p>
+        </div>
+        }
       </nav>
     )
   ) : (

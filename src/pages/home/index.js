@@ -124,7 +124,9 @@ export default function Home() {
           </div>
         </div>
         <NavbarPostHeader />
-        <Story />
+        <div className='sm:px-[30px] w-full'>
+          <Story />
+        </div>
         <div className="hidden xl:flex flex-row items-center justify-center gap-[50px] pb-[1px] max-w-[1310px] w-full border-b border-[#EFEEEF]">
           {menu.map((data, index) => {
             return (
@@ -173,17 +175,17 @@ export default function Home() {
             } ${isMobile ? 'mobileFeedGrid' : 'newFeedGrid'} justify-center`}
           >
             {articles.slice(0, 5).map((data, index) => {
-              return <FeedCard sponsored={index === 3 && true} key={index} post={data} />;
+              return <FeedCard trend={selected === 1 && true} sponsored={index === 3 && true} key={index} post={data} />;
             })}
             <div className="w-full flex flex-col">
-              <div className=" w-full sm:w-[424px] h-[220px] bg-gray-200 sm:h-[524px]"></div>
+              <div className=" w-full sm:w-[424px] h-[220px] bg-gray-200 sm:h-[475px]"></div>
               <div className="flex md:hidden flex-row items-center pr-[6px] justify-end w-full text-[#909090] mt-[8px] border-b border-[#EFEEEF] pb-[13px]">
                 <span className="icon-fi-rs-megaphone text-[13px]" />
                 <p className="text-[14px] font-condensed ml-[4px]">Сурталчилгаа</p>
               </div>
             </div>
             {articles.slice(5, 8).map((data, index) => {
-              return <FeedCard sponsored={index === 3 && true} key={index} post={data} />;
+              return <FeedCard trend={selected === 1 && true} sponsored={index === 3 && true} key={index} post={data} />;
             })}
           </div>
           <div
@@ -193,7 +195,7 @@ export default function Home() {
           >
             {articles.slice(8, 10).map((data, index) => {
               if (isLaptop) {
-                return <HighlightCard key={index} post={data} />;
+                return <BigTrendCard key={index} post={data} />;
               } else {
                 return <FeedCard key={index} post={data} />;
               }
@@ -205,17 +207,17 @@ export default function Home() {
             } justify-center`}
           >
             {articles.slice(10, 14).map((data, index) => {
-              return <FeedCard sponsored={index === 2 && true} key={index} post={data} />;
+              return <FeedCard trend={selected === 1 && true} sponsored={index === 2 && true} key={index} post={data} />;
             })}
             <div className="w-full flex flex-col">
-              <div className=" w-full sm:w-[424px] h-[220px] bg-gray-200 sm:h-[524px]"></div>
+              <div className=" w-full sm:w-[424px] h-[220px] bg-gray-200 sm:h-[475px]"></div>
               <div className="flex md:hidden flex-row items-center pr-[6px] justify-end w-full text-[#909090] mt-[8px] border-b border-[#EFEEEF] pb-[13px]">
                 <span className="icon-fi-rs-megaphone text-[13px]" />
                 <p className="text-[14px] font-condensed ml-[4px]">Сурталчилгаа</p>
               </div>
             </div>
             {articles.slice(14, 18).map((data, index) => {
-              return <FeedCard key={index} post={data} />;
+              return <FeedCard trend={selected === 1 && true} key={index} post={data} />;
             })}
           </div>
           <div className="xl:py-[50px] hidden md:flex w-full">
@@ -227,7 +229,7 @@ export default function Home() {
             } justify-center`}
           >
             {articles.slice(18, 24).map((data, index) => {
-              return <FeedCard sponsored={index === 5 && true} key={index} post={data} />;
+              return <FeedCard trend={selected === 1 && true} sponsored={index === 5 && true} key={index} post={data} />;
             })}
           </div>
           <div className="pt-[57px] w-full">
@@ -240,7 +242,7 @@ export default function Home() {
           >
             {articles.slice(24, 26).map((data, index) => {
               if (isLaptop) {
-                return <HighlightCard key={index} post={data} />;
+                return <BigTrendCard key={index} post={data} />;
               } else {
                 return <FeedCard key={index} post={data} />;
               }
@@ -252,7 +254,7 @@ export default function Home() {
             } justify-center`}
           >
             {articles.slice(26, 32).map((data, index) => {
-              return <FeedCard key={index} post={data} />;
+              return <FeedCard trend={selected === 1 && true} key={index} post={data} />;
             })}
           </div>
         </div>
