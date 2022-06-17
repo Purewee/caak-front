@@ -81,7 +81,7 @@ const Post = () => {
             <div className="flex flex-col items-center w-[60px] h-[226px]">
               <p className="text-[#555555] text-[15px] leading-[18px] font-bold">{article.data.like_count}</p>
               <span className="mt-[6px] cursor-pointer icon-fi-rs-heart text-[26px] text-[#555555] flex items-center justify-center border border-[#D4D8D8] w-[60px] h-[60px] rounded-full" />
-              <span className="text-[#909090] cursor-pointer text-[20px] icon-fi-rs-bookmark mt-[22px]" />
+              <span onClick={() => setSavePostOpen(true)}  className="text-[#909090] cursor-pointer text-[20px] icon-fi-rs-bookmark mt-[22px]" />
               <span className="text-[#909090] cursor-pointer text-[19px] icon-fi-rs-share mt-[24.5px]" />
               <span className="text-[#909090] cursor-pointer text-[20px] icon-fi-rs-more-ver mt-[21px] rotate-90" />
             </div>

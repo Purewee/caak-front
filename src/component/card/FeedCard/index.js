@@ -63,7 +63,7 @@ const FeedCard = ({ post, loading, className, sponsored, trend }) => {
       <div
         className={`${
           className ?? ''
-        } relative w-full h-[370px] sm:w-[422px] sm:h-[523px] bg-white border-b border-[#EFEEEF]`}
+        } relative w-full h-[370px] sm:w-[422px] sm:h-[526px] bg-white border-b border-[#EFEEEF]`}
       >
         <div className=" flex flex-col">
           <Link to={`/post/view/${post.id}`}>
@@ -74,7 +74,7 @@ const FeedCard = ({ post, loading, className, sponsored, trend }) => {
             />
           </Link>
           <div
-            className={`relative flex flex-col bg-[#463146] px-[16px] pt-[14px] md:pt-[22px] pb-[19px] md:h-[223px]`}
+            className={`relative flex flex-col bg-[#463146] px-[16px] pt-[14px] md:pt-[22px] pb-[19px] md:h-[226px]`}
           >
             <Link className="min-h-[85px]" to={`/post/view/${post.id}`}>
               <p
@@ -206,7 +206,7 @@ const FeedCard = ({ post, loading, className, sponsored, trend }) => {
       <div
         className={`${
           className ?? ''
-        } relative w-full h-[150px] sm:w-[422px] sm:h-[523px] bg-white border-b border-[#EFEEEF]`}
+        } relative w-full h-[150px] sm:w-[422px] sm:h-[526px] bg-white border-b border-[#EFEEEF]`}
       >
         <div className="flex flex-row sm:flex-col">
           <Link to={`/post/view/${post.id}`}>
@@ -216,12 +216,12 @@ const FeedCard = ({ post, loading, className, sponsored, trend }) => {
               className="min-h-[105px] max-h-[105px] sm:min-h-[300px] sm:max-h-[300px] sm:min-w-full min-w-[130px] max-w-[130px] object-cover"
             />
           </Link>
-          <div className={`relative flex flex-col pt-[6px] justify-between md:pb-[21px] md:h-[223px]`}>
+          <div className={`relative flex flex-col pt-[20px] justify-between md:pb-[21px] md:h-[226px]`}>
             <div className="flex flex-col w-full">
               {isLaptop &&
                 post.categories.map((x) => (
                   <Link key={x.id} to={`tags/${x.slug}`}>
-                    <p className="text-[#FF6600] mb-[10px] text-[13px] uppercase">#{x.name}</p>
+                    <p className="text-[#FF6600] mb-[10px] text-[13px] uppercase leading-[15px] font-medium">#{x.name}</p>
                   </Link>
                 ))}
               <Link to={`/post/view/${post.id}`}>
@@ -268,19 +268,6 @@ const FeedCard = ({ post, loading, className, sponsored, trend }) => {
                 </div>
               </div>
               <div className="hidden md:flex flex-row items-center">
-                {/* <div
-                    onClick={() => setSharePostOpen(true)}
-                    className={
-                      "flex flex-row items-center cursor-pointer w-[14px] h-[16.8px] ml-[12px]"
-                    }
-                  >
-                    <span
-                      className={
-                        "icon-fi-rs-share text-[#909090] transition duration-150 text-[16px]"
-                      }
-                    />
-                </div>
-                <PostShareModal post={post} setSharePostOpen={setSharePostOpen} sharePostOpen={sharePostOpen}/> */}
                 <div
                   onClick={() => setSavePostOpen(true)}
                   className={'flex flex-row items-center cursor-pointer w-[14px] h-[16.8px] ml-[12px]'}

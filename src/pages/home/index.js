@@ -178,7 +178,7 @@ export default function Home() {
               return <FeedCard trend={selected === 1 && true} sponsored={index === 3 && true} key={index} post={data} />;
             })}
             <div className="w-full flex flex-col">
-              <div className=" w-full sm:w-[424px] h-[220px] bg-gray-200 sm:h-[475px]"></div>
+              <div className={`w-full sm:w-[424px] h-[220px] bg-gray-200 ${selected === 0 ? 'sm:h-[527px]' : 'sm:h-[475px]'}`}></div>
               <div className="flex md:hidden flex-row items-center pr-[6px] justify-end w-full text-[#909090] mt-[8px] border-b border-[#EFEEEF] pb-[13px]">
                 <span className="icon-fi-rs-megaphone text-[13px]" />
                 <p className="text-[14px] font-condensed ml-[4px]">Сурталчилгаа</p>
@@ -195,7 +195,7 @@ export default function Home() {
           >
             {articles.slice(8, 10).map((data, index) => {
               if (isLaptop) {
-                return <BigTrendCard key={index} post={data} />;
+                return selected === 0 ? <HighlightCard key={index} post={data} /> : <BigTrendCard key={index} post={data} />;
               } else {
                 return <FeedCard key={index} post={data} />;
               }
@@ -210,7 +210,7 @@ export default function Home() {
               return <FeedCard trend={selected === 1 && true} sponsored={index === 2 && true} key={index} post={data} />;
             })}
             <div className="w-full flex flex-col">
-              <div className=" w-full sm:w-[424px] h-[220px] bg-gray-200 sm:h-[475px]"></div>
+              <div className={`w-full sm:w-[424px] h-[220px] bg-gray-200 ${selected === 0 ? 'sm:h-[527px]' : 'sm:h-[475px]'}`}></div>
               <div className="flex md:hidden flex-row items-center pr-[6px] justify-end w-full text-[#909090] mt-[8px] border-b border-[#EFEEEF] pb-[13px]">
                 <span className="icon-fi-rs-megaphone text-[13px]" />
                 <p className="text-[14px] font-condensed ml-[4px]">Сурталчилгаа</p>
@@ -242,7 +242,7 @@ export default function Home() {
           >
             {articles.slice(24, 26).map((data, index) => {
               if (isLaptop) {
-                return <BigTrendCard key={index} post={data} />;
+                return selected === 0 ? <HighlightCard key={index} post={data} /> : <BigTrendCard key={index} post={data} />;
               } else {
                 return <FeedCard key={index} post={data} />;
               }
