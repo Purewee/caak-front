@@ -206,7 +206,7 @@ export default function AllStories() {
                         left: (activeIndexWeek - 1) * 310,
                         behavior: 'smooth',
                         });
-                        prevItemYes();
+                        prevItemWeek();
                     }}
                     className={
                         'cursor-pointer hidden md:flex z-40 w-[52px] h-[52px] items-center justify-center bg-white border-[#D4D8D8] drop-shadow-md rounded-full absolute left-[-26px] top-1/2 rotate-180'

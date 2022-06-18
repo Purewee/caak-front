@@ -8,6 +8,7 @@ import { useAuth } from '../../../context/AuthContext';
 import UserInfo from './UserInfo';
 import logoIcon from '../../../images/New-Logo.svg';
 import { useClickOutSide } from '../../../utility/Util';
+import { useNavigate } from 'react-router-dom';
 
 const subMenu = [
   {
@@ -67,9 +68,18 @@ export default function NavbarNew() {
   const isMobile = useMediaQuery('screen and (max-width: 767px)');
   const { isAuth } = useAuth();
 
+  const navigate = useNavigate();
+
   function handleChange(event) {
     setSearchValue(event.target.value);
   }
+  //prettier-ignore
+  const onPressEnter = (e) => {
+    if (e.key === 'Enter') {
+      navigate("/search", { replace: true, state: {value: searchValue} });
+      setSearchShown(false)
+    }
+  };
 
   //prettier-ignore
   function useOutsideAlerter(ref) {
@@ -243,7 +253,7 @@ export default function NavbarNew() {
           <div className='search_modal w-full'>
             <div ref={searchRef} className='w-full flex justify-center items-center bg-white h-[70px] z-50'>
               <div className='relative max-w-[600px] w-full'>
-                <input value={searchValue} onChange={handleChange} placeholder='Хайлт хийх...' className={`h-[54px] text-[17px] text-[#555555] w-full border px-[50px] border-[#BBBEBE] rounded-[4px]`} />
+                <input onKeyDown={onPressEnter} value={searchValue} onChange={handleChange} placeholder='Хайлт хийх...' className={`h-[54px] text-[17px] text-[#555555] w-full border px-[50px] border-[#BBBEBE] rounded-[4px]`} />
                 <span className='icon-fi-rs-search absolute left-[16px] top-[16px] text-[18px] w-[22px] h-[22px] flex justify-center items-center text-[#555555]' />
                 {
                   searchValue && <span onClick={() => setSearchValue('')} className='icon-fi-rs-close cursor-pointer absolute right-[16px] top-[16px] text-[16.5px] w-[22px] h-[22px] flex justify-center items-center text-[#555555]' />

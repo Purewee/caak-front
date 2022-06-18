@@ -16,6 +16,7 @@ import WithThemeProvider from './utility/WithThemeProvider';
 import { AuthProvider } from './context/AuthContext';
 import AllStories from './pages/allstories';
 import Footer from './component/footer';
+import Search from './pages/search';
 
 export const AppContext = createContext(null);
 
@@ -41,6 +42,7 @@ function App() {
                   <Route path="/story/:id" element={<Story />} />
                   <Route path="/stories" element={<AllStories />} />
                   <Route path="/add" element={<Add />} />
+                  <Route path="/search" element={<Search />} />
                   <Route path="/add/:id" element={<Add />} />
                 </Routes>
                 <Footer />
