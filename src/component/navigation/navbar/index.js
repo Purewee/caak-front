@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext } from 'react';
+import { useEffect, useState, useContext, useRef } from 'react';
 import MenuItems from './MenuItem';
 import useMediaQuery from '../useMediaQuery';
 import Logo from '../../logo';
@@ -7,6 +7,7 @@ import SignInUpController from '../../modal//SignInUpController';
 import { useAuth } from '../../../context/AuthContext';
 import UserInfo from './UserInfo';
 import logoIcon from '../../../images/New-Logo.svg';
+import { useClickOutSide } from '../../../utility/Util';
 
 const subMenu = [
   {
@@ -51,10 +52,13 @@ const subMenu = [
 ];
 
 export default function NavbarNew() {
+  //prettier-ignore
   const context = useContext(AppContext);
   const [loaded, setLoaded] = useState(false);
   const [subMenuShown, setSubMenuShown] = useState(false);
+  const [searchShown, setSearchShown] = useState(false);
   const [navBarSticky, setNavBarSticky] = useState(true);
+  const [searchValue, setSearchValue] = useState('');
   const [isShown, setIsShown] = useState(false);
   const [navBarStyle, setNavBarStyle] = useState(true);
   const [sideMenuOpen, setSideMenuOpen] = useState(false);
@@ -62,6 +66,33 @@ export default function NavbarNew() {
   const isTablet = useMediaQuery('(min-width: 401px) and (max-width: 1000px)');
   const isMobile = useMediaQuery('screen and (max-width: 767px)');
   const { isAuth } = useAuth();
+
+  function handleChange(event) {
+    setSearchValue(event.target.value);
+  }
+
+  //prettier-ignore
+  function useOutsideAlerter(ref) {
+    useEffect(() => {
+      /**
+       * Alert if clicked on outside of element
+       */
+      function handleClickOutside(event) {
+        if (ref.current && !ref.current.contains(event.target)) {
+          setSearchShown(false)
+        }
+      }
+      // Bind the event listener
+      document.addEventListener("mousedown", handleClickOutside);
+      return () => {
+        // Unbind the event listener on clean up
+        document.removeEventListener("mousedown", handleClickOutside);
+      };
+    }, [ref]);
+  }
+
+  const searchRef = useRef(null);
+  useOutsideAlerter(searchRef);
 
   useEffect(() => {
     setLoaded(true);
@@ -117,6 +148,7 @@ export default function NavbarNew() {
           ) : (
             <div className={'flex flex-row items-center'}>
               <div
+                onClick={() => setSearchShown(true)}
                 className={`${
                   isTablet ? 'mr-0' : 'mr-[22px]'
                 } flex w-[22px] h-[22px] items-center justify-center cursor-pointer`}
@@ -205,6 +237,20 @@ export default function NavbarNew() {
             </div>
             <p className='text-[#555555] text-[15px] mt-[30px] text-center'>©2022 “Саак Холдинг” ХХК</p>
         </div>
+        }
+        {
+          searchShown && 
+          <div className='search_modal w-full'>
+            <div ref={searchRef} className='w-full flex justify-center items-center bg-white h-[70px] z-50'>
+              <div className='relative max-w-[600px] w-full'>
+                <input value={searchValue} onChange={handleChange} placeholder='Хайлт хийх...' className={`h-[54px] text-[17px] text-[#555555] w-full border px-[50px] border-[#BBBEBE] rounded-[4px]`} />
+                <span className='icon-fi-rs-search absolute left-[16px] top-[16px] text-[18px] w-[22px] h-[22px] flex justify-center items-center text-[#555555]' />
+                {
+                  searchValue && <span onClick={() => setSearchValue('')} className='icon-fi-rs-close cursor-pointer absolute right-[16px] top-[16px] text-[16.5px] w-[22px] h-[22px] flex justify-center items-center text-[#555555]' />
+                }
+              </div>
+            </div>
+          </div>
         }
       </nav>
     )

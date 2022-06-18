@@ -28,8 +28,6 @@ const Post = () => {
   const context = useContext(AppContext);
   const article = data?.article || {};
 
-  console.log(article);
-
   function createMarkup(e) {
     return { __html: e };
   }
@@ -106,7 +104,7 @@ const Post = () => {
               <div className="flex flex-row items-center">
                 <span className="icon-fi-rs-fb cursor-pointer text-[#909090] text-[20px]" />
                 <span className="icon-fi-rs-tw cursor-pointer text-[#909090] text-[20px] ml-[24px]" />
-                <span className="icon-fi-rs-bookmark cursor-pointer text-[#909090] text-[17px] ml-[25px]" />
+                <span onClick={() => setSavePostOpen(true)} className="icon-fi-rs-bookmark cursor-pointer text-[#909090] text-[17px] ml-[25px]" />
               </div>
             </div>
             <img src={imagePath(article.imageUrl)} alt="" className="w-full h-[530px] mt-[30px] object-cover" />

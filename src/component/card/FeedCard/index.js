@@ -2,7 +2,6 @@ import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { useClickOutSide } from '../../../utility/Util';
 import PostSaveModal from '../../modal/PostSaveModal';
-import PostShareModal from '../../modal/PostShareModal';
 import DropDown from '../../navigation/DropDown';
 import { generateTimeAgo } from '../../../utility/Util';
 import useMediaQuery from '../../navigation/useMediaQuery';
@@ -36,7 +35,6 @@ const postColors = [
 
 const FeedCard = ({ post, loading, className, sponsored, trend }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [sharePostOpen, setSharePostOpen] = useState(false);
   const [savePostOpen, setSavePostOpen] = useState(false);
   const [randomColorIndex, setRandomColorIndex] = useState(false);
 
@@ -98,13 +96,6 @@ const FeedCard = ({ post, loading, className, sponsored, trend }) => {
                   </Link>
                 </div>
                 <div className="flex flex-row items-center justify-end">
-                  <div
-                    onClick={() => setSharePostOpen(true)}
-                    className={'flex flex-row items-center cursor-pointer w-[14px] h-[16.8px] ml-[12px]'}
-                  >
-                    <span className={'icon-fi-rs-share text-white transition duration-150 text-[16px]'} />
-                  </div>
-                  <PostShareModal post={post} setSharePostOpen={setSharePostOpen} sharePostOpen={sharePostOpen} />
                   <div
                     onClick={() => setSavePostOpen(true)}
                     className={'flex flex-row items-center cursor-pointer w-[14px] h-[16.8px] ml-[12px]'}
@@ -310,13 +301,6 @@ const FeedCard = ({ post, loading, className, sponsored, trend }) => {
             <p className="ml-[4px]">• 5 мин</p>
           </div>
           <div className="flex flex-row items-center">
-            <div
-              onClick={() => setSharePostOpen(true)}
-              className={'flex flex-row items-center cursor-pointer w-[14px] h-[16.8px] ml-[12px]'}
-            >
-              <span className={'icon-fi-rs-share text-[#909090] transition duration-150 text-[16px]'} />
-            </div>
-            <PostShareModal post={post} setSharePostOpen={setSharePostOpen} sharePostOpen={sharePostOpen} />
             <div
               onClick={() => setSavePostOpen(true)}
               className={'flex flex-row items-center cursor-pointer w-[14px] h-[16.8px] ml-[12px]'}
