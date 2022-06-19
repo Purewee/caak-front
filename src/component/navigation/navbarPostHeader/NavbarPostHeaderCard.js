@@ -1,6 +1,6 @@
 import ActionButtons from './actionsButtons';
 import { Link } from 'react-router-dom';
-import { generateTimeAgo } from '../../../utility/Util';
+import { generateTimeAgo, imagePath } from '../../../utility/Util';
 
 const NavbarPostHeaderCard = ({ type, item }) => {
   return (
@@ -9,7 +9,7 @@ const NavbarPostHeaderCard = ({ type, item }) => {
         <img
           className={'object-cover w-full h-full absolute top-0'}
           alt=""
-          src={`http://graph.caak.mn${item.image}`}
+          src={imagePath(item.image)}
           // onClick={() => router.push({
           //   pathname: `/post/view/${item.id}`,
           //   query: item

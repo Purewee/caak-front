@@ -22,19 +22,25 @@ type Article {
         "Returns the last _n_ elements from the list."
         last: Int,
         "Returns the elements skipping _n_ from the list."
-        offset: Int
+        offset: Int,
+        "Sorting functionality"
+        sort: SortFilter
     ): CategoryConnection!
+    categoryIds: [ID!]!
     comments(
         "Returns the elements in the list that come after the specified cursor."
         after: String,
         "Returns the elements in the list that come before the specified cursor."
         before: String,
+        filter: CommentFilter,
         "Returns the first _n_ elements from the list."
         first: Int,
         "Returns the last _n_ elements from the list."
         last: Int,
         "Returns the elements skipping _n_ from the list."
-        offset: Int
+        offset: Int,
+        "Sorting functionality"
+        sort: SortFilter
     ): CommentConnection!
     createdAt: ISO8601DateTime
     data: JSON
@@ -53,7 +59,9 @@ type Article {
         "Returns the last _n_ elements from the list."
         last: Int,
         "Returns the elements skipping _n_ from the list."
-        offset: Int
+        offset: Int,
+        "Sorting functionality"
+        sort: SortFilter
     ): ReactionConnection!
     slug: String
     source: Source
@@ -68,7 +76,7 @@ type ArticleBlock {
     article: Article!
     content: String
     createdAt: ISO8601DateTime
-    data: JSON!
+    data: JSON
     id: ID!
     imageUrl: String
     kind: String
@@ -108,7 +116,9 @@ type Category {
         "Returns the last _n_ elements from the list."
         last: Int,
         "Returns the elements skipping _n_ from the list."
-        offset: Int
+        offset: Int,
+        "Sorting functionality"
+        sort: SortFilter
     ): ArticleConnection!
     articlesCount: Int!
     childs(
@@ -121,7 +131,9 @@ type Category {
         "Returns the last _n_ elements from the list."
         last: Int,
         "Returns the elements skipping _n_ from the list."
-        offset: Int
+        offset: Int,
+        "Sorting functionality"
+        sort: SortFilter
     ): CategoryConnection!
     createdAt: ISO8601DateTime
     data: JSON
@@ -159,15 +171,19 @@ type Comment {
         after: String,
         "Returns the elements in the list that come before the specified cursor."
         before: String,
+        filter: CommentFilter,
         "Returns the first _n_ elements from the list."
         first: Int,
         "Returns the last _n_ elements from the list."
         last: Int,
         "Returns the elements skipping _n_ from the list."
-        offset: Int
+        offset: Int,
+        "Sorting functionality"
+        sort: SortFilter
     ): CommentConnection
     comment: String
     createdAt: ISO8601DateTime
+    data: JSON!
     id: ID!
     parent: Comment
     status: String!
@@ -296,7 +312,9 @@ type Query {
         "Returns the last _n_ elements from the list."
         last: Int,
         "Returns the elements skipping _n_ from the list."
-        offset: Int
+        offset: Int,
+        "Sorting functionality"
+        sort: SortFilter
     ): ArticleConnection
     categories(
         "Returns the elements in the list that come after the specified cursor."
@@ -308,7 +326,9 @@ type Query {
         "Returns the last _n_ elements from the list."
         last: Int,
         "Returns the elements skipping _n_ from the list."
-        offset: Int
+        offset: Int,
+        "Sorting functionality"
+        sort: SortFilter
     ): CategoryConnection
     category(id: ID, slug: String): Category!
     me: User
@@ -323,7 +343,9 @@ type Query {
         "Returns the last _n_ elements from the list."
         last: Int,
         "Returns the elements skipping _n_ from the list."
-        offset: Int
+        offset: Int,
+        "Sorting functionality"
+        sort: SortFilter
     ): SourceConnection
     tag(slug: String): Tag!
     tags(
@@ -337,7 +359,9 @@ type Query {
         "Returns the last _n_ elements from the list."
         last: Int,
         "Returns the elements skipping _n_ from the list."
-        offset: Int
+        offset: Int,
+        "Sorting functionality"
+        sort: SortFilter
     ): TagConnection
     user(id: ID!): User!
 }
@@ -380,7 +404,9 @@ type Recipe {
         "Returns the last _n_ elements from the list."
         last: Int,
         "Returns the elements skipping _n_ from the list."
-        offset: Int
+        offset: Int,
+        "Sorting functionality"
+        sort: SortFilter
     ): ArticleConnection!
     createdAt: ISO8601DateTime
     description: String
@@ -402,7 +428,9 @@ type Source {
         "Returns the last _n_ elements from the list."
         last: Int,
         "Returns the elements skipping _n_ from the list."
-        offset: Int
+        offset: Int,
+        "Sorting functionality"
+        sort: SortFilter
     ): ArticleConnection!
     articlesCount: Int
     createdAt: ISO8601DateTime
@@ -444,7 +472,9 @@ type Tag {
         "Returns the last _n_ elements from the list."
         last: Int,
         "Returns the elements skipping _n_ from the list."
-        offset: Int
+        offset: Int,
+        "Sorting functionality"
+        sort: SortFilter
     ): ArticleConnection!
     articlesCount: Int
     createdAt: ISO8601DateTime
@@ -486,7 +516,9 @@ type User {
         "Returns the last _n_ elements from the list."
         last: Int,
         "Returns the elements skipping _n_ from the list."
-        offset: Int
+        offset: Int,
+        "Sorting functionality"
+        sort: SortFilter
     ): ArticleConnection!
     createdAt: ISO8601DateTime
     email: String
@@ -519,6 +551,14 @@ enum ReactionTarget {
     comment
 }
 
+"Sort Direction"
+enum SortDirection {
+    "Ascending"
+    asc
+    "Descending"
+    desc
+}
+
 "An ISO 8601-encoded date"
 scalar ISO8601Date
 
@@ -540,6 +580,15 @@ input BlockInput {
     kind: String
     position: Int
     title: String
+}
+
+"Comments filter"
+input CommentFilter {
+    articleId: IntFilter
+    comment: StringFilter
+    createdAt: DateFilter
+    id: IDFilter
+    updatedAt: DateFilter
 }
 
 input DateFilter {
@@ -582,6 +631,34 @@ input IDFilter {
     notIn: [ID!]
     "Starts with"
     start: Int
+}
+
+input IntFilter {
+    "is blank ?"
+    blank: Boolean
+    "equals to"
+    eq: Float
+    "Greater than"
+    gt: Float
+    "Greater than or equals"
+    gteq: Float
+    "in: Matches none of values in giver array"
+    in: [Float!]
+    "Less than"
+    lt: Float
+    "Less than or equals"
+    lteq: Float
+    "not equals to"
+    notEq: Float
+    "in: Matches none of values in giver array"
+    notIn: [Float!]
+    "is null ?"
+    null: Boolean
+}
+
+input SortFilter {
+    direction: SortDirection
+    field: String!
 }
 
 input StringFilter {
@@ -648,6 +725,7 @@ input addCommentInput {
     "A unique identifier for the client performing the mutation."
     clientMutationId: String
     comment: String
+    name: String
     parentId: ID
     targetId: ID!
     targetType: String!

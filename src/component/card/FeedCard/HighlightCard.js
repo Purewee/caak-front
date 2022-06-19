@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import PostSaveModal from '../../modal/PostSaveModal';
 import DropDown from '../../navigation/DropDown';
 import { imagePath, useClickOutSide } from '../../../utility/Util';
+import moment from 'moment';
 
 export default function HighlightCard({ post }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -31,15 +32,7 @@ export default function HighlightCard({ post }) {
           </Link>
           {
             <p className="text-white text-[14px] mt-[14px] font-medium leading-[16px]">
-              {new Date(post.publish_date).getFullYear() +
-                '.' +
-                (new Date(post.publish_date).getMonth() + 1) +
-                '.' +
-                new Date(post.publish_date).getDate() +
-                ', ' +
-                new Date(post.publish_date).getHours() +
-                ':' +
-                new Date(post.publish_date).getMinutes()}
+              {moment(post.publish_date).format('YYYY-MM-DD, hh:mm')}
             </p>
           }
         </div>

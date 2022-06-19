@@ -49,9 +49,9 @@ export const ARTICLE = gql`
 `;
 
 export const COMMENTS = gql`
-  query GetComment($articleId: ID!) {
+  query GetComment($articleId: ID!, $sort: SortFilter) {
     article(id: $articleId) {
-      comments {
+      comments(first: 10, sort: $sort) {
         totalCount
         pageInfo {
           hasNextPage
@@ -61,6 +61,7 @@ export const COMMENTS = gql`
           node {
             id
             comment
+            data
             status
             createdAt
             user {
@@ -77,8 +78,8 @@ export const COMMENTS = gql`
 `;
 
 export const ADD_COMMENT = gql`
-  mutation AddComment($articleId: ID!, $comment: String) {
-    addComment(input: { targetType: "article", targetId: $articleId, comment: $comment }) {
+  mutation AddComment($articleId: ID!, $name: String, $comment: String) {
+    addComment(input: { targetType: "article", targetId: $articleId, name: $name, comment: $comment }) {
       id
       comment
       status
@@ -89,6 +90,7 @@ export const ADD_COMMENT = gql`
         firstName
         lastName
       }
+      data
     }
   }
 `;

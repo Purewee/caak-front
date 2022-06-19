@@ -10,6 +10,9 @@ import HighlightCard from '../../component/card/FeedCard/HighlightCard';
 import useMediaQuery from '../../component/navigation/useMediaQuery';
 import TrendCard from '../../component/card/TrendCard';
 import BigTrendCard from '../../component/card/TrendCard/BigTrendCard';
+import { Tabs, Row, Col } from 'antd';
+import { BlockTitle } from '../post/view/wrapper';
+import PostCard from '../../component/card/Post';
 
 const subMenu = [
   {
@@ -114,7 +117,7 @@ export default function Home() {
                 return (
                   <p
                     key={index}
-                    className={`ml-[16px] text-[21px] font-bold text-[#111111] uppercase whitespace-nowrap`}
+                    className={`ml-[16px] text-[18px] text-[#111111] uppercase whitespace-nowrap leading-[18px] tracking-[0.23px]`}
                   >
                     {data.title}
                   </p>
@@ -125,140 +128,19 @@ export default function Home() {
         </div>
         <NavbarPostHeader />
         <Story />
-        <div className="hidden xl:flex flex-row items-center justify-center gap-[50px] pb-[1px] max-w-[1310px] w-full border-b border-[#EFEEEF]">
-          {menu.map((data, index) => {
-            return (
-              <p
-                key={index}
-                onClick={() => setSelected(index)}
-                className={`text-[20px] font-bold cursor-pointer text-center leading-[24px] ${
-                  selected === index ? 'border-b-[3px] border-[#FF6600] pb-[12px]' : 'border-none pb-[15px]'
-                } ${selected === index ? 'text-[#111111]' : 'text-[#555555]'}`}
-              >
-                {data.title}
-              </p>
-            );
-          })}
+        <div className="hidden xl:flex flex-row items-center justify-center gap-[50px] pb-[1px] max-w-[1310px] w-full ">
+          <Tabs size="large" onChange={(e) => console.log(e)} className="w-full" centered>
+            <Tabs.TabPane key="recent" tab={<span className="text-[20px] font-bold cursor-pointer text-center leading-[20px] uppercase">Шинэ</span>}></Tabs.TabPane>
+            <Tabs.TabPane key="trend" tab={<span className="text-[20px] font-bold cursor-pointer text-center leading-[20px] uppercase">Трэнд</span>}></Tabs.TabPane>
+          </Tabs>
         </div>
-        <div className="w-full flex flex-col items-center">
-          {selected === 1 && (
-            <div className="w-full flex flex-col items-center">
-              <div
-                className={`relative max-w-[1310px] w-full pt-[18px] xl:pt-[50px] justify-items-center ${
-                  isMobile ? 'mobileFeedGrid' : 'HighlightFeedGrid'
-                } justify-center`}
-              >
-                {articles.slice(0, 2).map((data, index) => {
-                  if (isLaptop) {
-                    return <BigTrendCard key={index} post={data} index={index} />;
-                  } else {
-                    return <FeedCard key={index} post={data} />;
-                  }
-                })}
-              </div>
-              <div
-                className={`relative max-w-[1310px] w-full justify-items-center pt-[18px] xl:pt-[40px] ${
-                  isMobile ? 'mobileFeedGrid' : 'trendGrid'
-                } justify-center`}
-              >
-                {articles.slice(2, 10).map((data, index) => {
-                  return <TrendCard key={index} post={data} index={index} />;
-                })}
-              </div>
-            </div>
+        <Row gutter={22} className="max-w-[1240px]">
+          { articles.map((post) =>
+            <Col span={8}>
+              <PostCard post={post} />
+            </Col>
           )}
-          <div
-            className={`relative max-w-[1310px] w-full justify-items-center pt-[18px] border-t-[8px] xl:border-none border-[#EFEEEF] ${
-              selected === 1 ? 'xl:pt-[60px]' : 'xl:pt-[50px]'
-            } ${isMobile ? 'mobileFeedGrid' : 'newFeedGrid'} justify-center`}
-          >
-            {articles.slice(0, 5).map((data, index) => {
-              return <FeedCard sponsored={index === 3 && true} key={index} post={data} />;
-            })}
-            <div className="w-full flex flex-col">
-              <div className=" w-full sm:w-[424px] h-[220px] bg-gray-200 sm:h-[524px]"></div>
-              <div className="flex md:hidden flex-row items-center pr-[6px] justify-end w-full text-[#909090] mt-[8px] border-b border-[#EFEEEF] pb-[13px]">
-                <span className="icon-fi-rs-megaphone text-[13px]" />
-                <p className="text-[14px] font-condensed ml-[4px]">Сурталчилгаа</p>
-              </div>
-            </div>
-            {articles.slice(5, 8).map((data, index) => {
-              return <FeedCard sponsored={index === 3 && true} key={index} post={data} />;
-            })}
-          </div>
-          <div
-            className={`relative max-w-[1310px] w-full justify-items-center ${
-              isMobile ? 'mobileFeedGrid' : 'HighlightFeedGrid'
-            } justify-center sm:pt-[44px] sm:pb-[40px]`}
-          >
-            {articles.slice(8, 10).map((data, index) => {
-              if (isLaptop) {
-                return <HighlightCard key={index} post={data} />;
-              } else {
-                return <FeedCard key={index} post={data} />;
-              }
-            })}
-          </div>
-          <div
-            className={`relative max-w-[1310px] w-full justify-items-center ${
-              isMobile ? 'mobileFeedGrid' : 'newFeedGrid'
-            } justify-center`}
-          >
-            {articles.slice(10, 14).map((data, index) => {
-              return <FeedCard sponsored={index === 2 && true} key={index} post={data} />;
-            })}
-            <div className="w-full flex flex-col">
-              <div className=" w-full sm:w-[424px] h-[220px] bg-gray-200 sm:h-[524px]"></div>
-              <div className="flex md:hidden flex-row items-center pr-[6px] justify-end w-full text-[#909090] mt-[8px] border-b border-[#EFEEEF] pb-[13px]">
-                <span className="icon-fi-rs-megaphone text-[13px]" />
-                <p className="text-[14px] font-condensed ml-[4px]">Сурталчилгаа</p>
-              </div>
-            </div>
-            {articles.slice(14, 18).map((data, index) => {
-              return <FeedCard key={index} post={data} />;
-            })}
-          </div>
-          <div className="xl:py-[50px] hidden md:flex w-full">
-            <FeedTopTags />
-          </div>
-          <div
-            className={`relative max-w-[1310px] w-full justify-items-center mt-[16px] md:mt-0 ${
-              isMobile ? 'mobileFeedGrid' : 'newFeedGrid'
-            } justify-center`}
-          >
-            {articles.slice(18, 24).map((data, index) => {
-              return <FeedCard sponsored={index === 5 && true} key={index} post={data} />;
-            })}
-          </div>
-          <div className="pt-[57px] w-full">
-            <FeedMagazine />
-          </div>
-          <div
-            className={`relative max-w-[1310px] w-full pt-[24px] justify-items-center ${
-              isMobile ? 'mobileFeedGrid' : 'HighlightFeedGrid'
-            } justify-center sm:pt-[50px] sm:pb-[40px]`}
-          >
-            {articles.slice(24, 26).map((data, index) => {
-              if (isLaptop) {
-                return <HighlightCard key={index} post={data} />;
-              } else {
-                return <FeedCard key={index} post={data} />;
-              }
-            })}
-          </div>
-          <div
-            className={`relative max-w-[1310px] w-full justify-items-center ${
-              isMobile ? 'mobileFeedGrid' : 'newFeedGrid'
-            } justify-center`}
-          >
-            {articles.slice(26, 32).map((data, index) => {
-              return <FeedCard key={index} post={data} />;
-            })}
-          </div>
-        </div>
-        <div className='mt-[60px] max-w-[1310px] cursor-pointer w-full border border-[#FF6600] h-[74px] rounded-[4px] flex items-center justify-center'>
-          <p className='text-[#FF6600] text-[18px] leading-[21px] font-medium'>Бусад мэдээ</p>
-        </div>
+        </Row>
       </div>
     </>
   );

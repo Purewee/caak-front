@@ -47,7 +47,7 @@ function AddPost() {
         saveArticle({ variables: { id: id, ...values } }).then(message.success('Saved'));
       }}
       className="caak_article"
-      initialValues={article}
+      initialValues={{ ...article, tags: article.tags.map((x) => x.slug) }}
     >
       <Row gutter={12}>
         <Col span={16} className="w-full mx-[50px]">
@@ -343,12 +343,17 @@ function VideoBlock({ block, idx }) {
         </Button.Group>,
       ]}
     >
-      <Form.Item name={['blocks', idx, 'data', 'url']}>
-        <Input onChange={(e) => setUrl(e.target.value)} placeholder="Video Link" />
-      </Form.Item>
-      <Form.Item name={['blocks', idx, 'title']}>
-        <Input />
-      </Form.Item>
+      <Row gutter={12}>
+        <Col span={8}></Col>
+        <Col span={16}>
+          <Form.Item name={['blocks', idx, 'data', 'url']}>
+            <Input onChange={(e) => setUrl(e.target.value)} placeholder="Video Link" />
+          </Form.Item>
+          <Form.Item name={['blocks', idx, 'title']}>
+            <Input />
+          </Form.Item>
+        </Col>
+      </Row>
     </Card>
   );
 }

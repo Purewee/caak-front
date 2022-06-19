@@ -73,9 +73,8 @@ const StoryFeed = () => {
 
      <div className="flex flex-row items-center w-full relative">
       <p
-        className={
-          "font-medium md:font-bold text-[#111111] text-[17px] md:text-[38px] md:text-center w-full leading-[20px] md:leading-[42px]"
-        }
+        className="font-medium md:font-bold text-[#111111] text-[17px] md:text-[38px] md:text-center w-full leading-[20px] md:leading-[42px] font-merri"
+
       >
         СТОРИ МЭДЭЭ
       </p>

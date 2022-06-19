@@ -1,6 +1,6 @@
 import React from 'react';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
-import { generateTimeAgo } from '../../utility/Util';
+import { generateTimeAgo, imagePath } from '../../utility/Util';
 import { Link } from 'react-router-dom';
 
 export default function StoryItem({ story, border, index }) {
@@ -11,13 +11,9 @@ export default function StoryItem({ story, border, index }) {
       } max-w-[290px] rounded-[8px] min-h-[160px] sm:min-h-[435px] max-h-[435px]`}
     >
       <div className="relative h-full w-full">
-        <LazyLoadImage
-          alt=""
-          className={`object-cover h-full w-full rounded-[8px]`}
-          src={`http://graph.caak.mn${story?.image}`}
-        />
+        <LazyLoadImage alt="" className={`object-cover h-full w-full rounded-[8px]`} src={imagePath(story?.image)} />
         <div className="absolute bottom-0 rounded-[8px] storyLinear h-full w-full py-[14px] xl:py-[30px] px-[10px] xl:px-[20px] flex flex-col items-start justify-end">
-          {story?.categories.map((x) => (
+          {story?.categories?.map((x) => (
             <p
               key={x.name}
               className="bg-[#FF6600] hidden xl:flex px-[8px] py-[4px] text-white text-[12px] font-bold uppercase"
@@ -26,7 +22,7 @@ export default function StoryItem({ story, border, index }) {
             </p>
           ))}
           <Link to={`/story/${index}`}>
-            <p className="truncate-3 text-white text-[12px] xl:text-[24px] font-medium xl:font-bold mt-[10px]">
+            <p className="truncate-3 text-white text-[12px] xl:text-[22px] font-medium xl:font-bold mt-[10px] tracking-[0.36px] leading-[28px] font-condensed">
               {story?.title}
             </p>
           </Link>

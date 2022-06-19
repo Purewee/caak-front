@@ -17,6 +17,7 @@ export const POST = gql`
     article(id: $id) {
       id
       title
+      description
       imageUrl
       author {
         id
@@ -34,6 +35,7 @@ export const POST = gql`
         name
         slug
       }
+      categoryIds
       categories {
         nodes {
           id

@@ -6,13 +6,7 @@ const antdConfig = {
   theme: {
     primaryColor: '#FF6600',
   },
-  form: {
-    validateMessages: {
-      // eslint-disable-next-line no-template-curly-in-string
-      required: '"${label}" заавал бөглөх',
-    },
-  },
 };
 export default function WithThemeProvider({ children }) {
-  return <ConfigProvider {...antdConfig}>{children}</ConfigProvider>;
+  return <ConfigProvider theme={{ primaryColor: '#FF6600' }}>{children}</ConfigProvider>;
 }

@@ -2,6 +2,7 @@ import Consts from './Consts';
 import { DateTime } from 'luxon';
 import { useEffect, useRef, useState } from 'react';
 import Configure from '../component/configure';
+import moment from 'moment';
 
 const regexEmail = '^[a-zA-Z0-9._:$!%-]+@[a-zA-Z0-9.-]+.[a-zA-Z]$';
 const regexNumber = '^[0-9]{8}$';
@@ -250,7 +251,7 @@ export function generateTimeAgo(date) {
   //   return Math.floor(diff / 1000 / 60 / 60 / 24 / 30 / 12) + ' жил'
   // }
   if (diff / 1000 / 60 / 60 / 24 / 30 > 1) {
-    return new Date(date).getFullYear() + '-' + (new Date(date).getMonth() + 1) + '-' + new Date(date).getDate();
+    return moment(date).format('YYYY-MM-DD');
   } else if (diff / 1000 / 60 / 60 / 24 > 1) {
     return Math.floor(diff / 1000 / 60 / 60 / 24) + ' хоног';
   } else if (diff / 1000 / 60 / 60 > 1) {

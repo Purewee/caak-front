@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import { useClickOutSide } from '../../../utility/Util';
+import { imagePath, useClickOutSide } from '../../../utility/Util';
 import PostSaveModal from '../../modal/PostSaveModal';
 import PostShareModal from '../../modal/PostShareModal';
 import DropDown from '../../navigation/DropDown';
@@ -81,7 +81,7 @@ const FeedCard = ({ post, loading, className, sponsored }) => {
           <Link to={`/post/view/${post.id}`}>
             <img
               alt=""
-              src={`http://graph.caak.mn${post.image}`}
+              src={imagePath(post.image)}
               className="min-h-[220px] max-h-[220px] sm:min-h-[300px] sm:max-h-[300px] w-full object-cover"
             />
           </Link>
@@ -106,7 +106,7 @@ const FeedCard = ({ post, loading, className, sponsored }) => {
                     className="w-[22px] h-[22px] rounded-full"
                   />
                   <Link to={'/channel/4'}>
-                    <p className="text-white leading-[18px] text-[15px] ml-[6px]">gogo.mn</p>
+                    <p className="text-white leading-[18px] text-[15px] ml-[6px]">{post.source.name}</p>
                   </Link>
                 </div>
                 <div className="flex flex-row items-center justify-end">

@@ -19,7 +19,6 @@ import { useClickOutSide } from '../../../utility/Util';
 import PostSaveModal from '../../../component/modal/PostSaveModal';
 
 const Post = () => {
-  // prettier-ignore
   const { id } = useParams();
   const [leftMenuSticky, setLeftMenuSticky] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -79,7 +78,7 @@ const Post = () => {
         <div className="w-full max-w-[250px]">
           <div className={`hidden md:flex ${leftMenuSticky ? 'sticky top-[80px]' : 'mt-[200px]'} w-full flex-col items-end`}>
             <div className="flex flex-col items-center w-[60px] h-[226px]">
-              <p className="text-[#555555] text-[15px] leading-[18px] font-bold">{article.data.like_count}</p>
+              <p className="text-[#555555] text-[15px] leading-[18px] font-bold">{article.data?.like_count}</p>
               <span className="mt-[6px] cursor-pointer icon-fi-rs-heart text-[26px] text-[#555555] flex items-center justify-center border border-[#D4D8D8] w-[60px] h-[60px] rounded-full" />
               <span className="text-[#909090] cursor-pointer text-[20px] icon-fi-rs-bookmark mt-[22px]" />
               <span className="text-[#909090] cursor-pointer text-[19px] icon-fi-rs-share mt-[24.5px]" />
