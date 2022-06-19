@@ -27,8 +27,6 @@ const Post = () => {
   const context = useContext(AppContext);
   const article = data?.article || {};
 
-  console.log(article);
-
   function createMarkup(e) {
     return { __html: e };
   }
@@ -80,7 +78,7 @@ const Post = () => {
             <div className="flex flex-col items-center w-[60px] h-[226px]">
               <p className="text-[#555555] text-[15px] leading-[18px] font-bold">{article.data?.like_count}</p>
               <span className="mt-[6px] cursor-pointer icon-fi-rs-heart text-[26px] text-[#555555] flex items-center justify-center border border-[#D4D8D8] w-[60px] h-[60px] rounded-full" />
-              <span className="text-[#909090] cursor-pointer text-[20px] icon-fi-rs-bookmark mt-[22px]" />
+              <span onClick={() => setSavePostOpen(true)}  className="text-[#909090] cursor-pointer text-[20px] icon-fi-rs-bookmark mt-[22px]" />
               <span className="text-[#909090] cursor-pointer text-[19px] icon-fi-rs-share mt-[24.5px]" />
               <span className="text-[#909090] cursor-pointer text-[20px] icon-fi-rs-more-ver mt-[21px] rotate-90" />
             </div>
@@ -105,7 +103,7 @@ const Post = () => {
               <div className="flex flex-row items-center">
                 <span className="icon-fi-rs-fb cursor-pointer text-[#909090] text-[20px]" />
                 <span className="icon-fi-rs-tw cursor-pointer text-[#909090] text-[20px] ml-[24px]" />
-                <span className="icon-fi-rs-bookmark cursor-pointer text-[#909090] text-[17px] ml-[25px]" />
+                <span onClick={() => setSavePostOpen(true)} className="icon-fi-rs-bookmark cursor-pointer text-[#909090] text-[17px] ml-[25px]" />
               </div>
             </div>
             <img src={imagePath(article.imageUrl)} alt="" className="w-full h-[530px] mt-[30px] object-cover" />

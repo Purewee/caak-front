@@ -15,6 +15,7 @@ import WithApolloProvider from './utility/WithApolloProvider';
 import { AuthProvider } from './context/AuthContext';
 import AllStories from './pages/allstories';
 import Footer from './component/footer';
+import Search from './pages/search';
 
 export const AppContext = createContext(null);
 
@@ -40,6 +41,7 @@ function App() {
                 <Route path="/stories" element={<AllStories />} />
                 <Route path="/add" element={<Add />} />
                 <Route path="/add/:id" element={<Add />} />
+                <Route path="/search" element={<Search />} />
               </Routes>
               <Footer />
             </BrowserRouter>

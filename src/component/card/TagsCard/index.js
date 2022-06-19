@@ -1,16 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useClickOutSide } from '../../../utility/Util';
-import DropDown from '../../navigation/DropDown';
 
 export default function TagsCard({ middle, data }) {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
-  };
-  const menuRef = useClickOutSide(() => {
-    setIsMenuOpen(false);
-  });
   return (
     <div className={`${middle ? 'w-[640px] h-[528px]' : 'w-[290px] h-[434px]'}`}>
       <img
@@ -52,42 +43,8 @@ export default function TagsCard({ middle, data }) {
           </div>
         </div>
         <div className={`flex flex-row items-center justify-end ${!middle && 'mt-[16px]'}`}>
-          <div
-            ref={menuRef}
-            onClick={toggleMenu}
-            className={'flex flex-row items-center cursor-pointer w-[13.6px] h-[16.6px]'}
-          >
-            <span className={'icon-fi-rs-share text-[#909090] transition duration-150 text-[16px]'} />
-            <DropDown
-              arrow={'centerBottom'}
-              className="absolute right-0 bottom-12"
-              open={isMenuOpen}
-              onToggle={toggleMenu}
-              content={
-                <div className={'flex flex-row items-center'}>
-                  <div className={'flex flex-col  justify-start  z-1'}>
-                    <div className="hover:bg-caak-liquidnitrogen w-full px-c6">
-                      <div className={'flex items-center  rounded-full cursor-pointer h-[36px]'}>
-                        <div
-                          className={
-                            'flex justify-center items-center p-[5px] w-[22px] h-[22px] rounded-full bg-caak-red'
-                          }
-                        >
-                          <span className={'icon-fi-rs-link text-white text-[11px]'} />
-                        </div>
-                        <p className="text-14px text-caak-extraBlack ml-px-12">Линк хуулах</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              }
-            />
-          </div>
           <div className={'flex flex-row items-center cursor-pointer w-[14px] h-[16.8px] ml-[12px]'}>
             <span className={'icon-fi-rs-bookmark text-[#909090] transition duration-150 text-[16px]'} />
-          </div>
-          <div className={'flex flex-row items-center cursor-pointer w-[18px] h-[16px] ml-[14px]'}>
-            <span className={'icon-fi-rs-heart text-[#909090] transition duration-150 text-[16px]'} />
           </div>
           <div className={'flex flex-row items-center cursor-pointer w-[20px] h-[20px] ml-[10px]'}>
             <span className={'icon-fi-rs-more-ver text-[#909090] transition duration-150 text-[16px]'} />

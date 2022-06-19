@@ -133,6 +133,7 @@ export default function Home() {
             <Tabs.TabPane key="recent" tab={<span className="text-[20px] font-bold cursor-pointer text-center leading-[20px] uppercase">Шинэ</span>}></Tabs.TabPane>
             <Tabs.TabPane key="trend" tab={<span className="text-[20px] font-bold cursor-pointer text-center leading-[20px] uppercase">Трэнд</span>}></Tabs.TabPane>
           </Tabs>
+
         </div>
         <Row gutter={22} className="max-w-[1240px]">
           { articles.map((post) =>

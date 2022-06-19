@@ -66,7 +66,7 @@ export default function AllStories() {
   return (
     <div className='flex flex-col items-center w-full'>
         <p className='text-[36px] leading-[42px] text-[#111111] font-merri font-bold mt-[101px]'>БҮХ СТОРИ МЭДЭЭНҮҮД</p>
-        <div>
+        <div className='w-full sm:px-[30px]'>
             <div className='flex flex-row items-center ml-[96px]'>
                 <span className='icon-fi-rs-star-f text-[#FF6600] text-[20px] mr-[10px]' />
                 <p className='font-condensed text-[26px] leading-[30px] font-bold'>ӨНӨӨДӨР</p>
@@ -119,7 +119,7 @@ export default function AllStories() {
                 </div>
             </div>
         </div>
-        <div className='mt-[80px]'>
+        <div className='mt-[80px] w-full sm:px-[30px]'>
             <div className='flex flex-row items-center ml-[96px]'>
                 <span className='icon-fi-rs-time-f text-[#909090] text-[20px] mr-[10px]' />
                 <p className='font-condensed text-[26px] leading-[30px] font-bold'>ӨЧИГДӨР</p>
@@ -172,7 +172,7 @@ export default function AllStories() {
                 </div>
             </div>
         </div>
-        <div className='mt-[80px]'>
+        <div className='mt-[80px] w-full sm:px-[30px]'>
             <div className='flex flex-row items-center ml-[96px]'>
                 <span className='icon-fi-rs-time-f text-[#909090] text-[20px] mr-[10px]' />
                 <p className='font-condensed text-[26px] leading-[30px] font-bold'>ЭНЭ ДОЛОО ХОНОГ</p>
@@ -206,7 +206,7 @@ export default function AllStories() {
                         left: (activeIndexWeek - 1) * 310,
                         behavior: 'smooth',
                         });
-                        prevItemYes();
+                        prevItemWeek();
                     }}
                     className={
                         'cursor-pointer hidden md:flex z-40 w-[52px] h-[52px] items-center justify-center bg-white border-[#D4D8D8] drop-shadow-md rounded-full absolute left-[-26px] top-1/2 rotate-180'

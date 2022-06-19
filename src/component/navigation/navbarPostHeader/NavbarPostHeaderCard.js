@@ -61,7 +61,7 @@ const NavbarPostHeaderCard = ({ type, item }) => {
               <p className="text-[15px] font-medium font-roboto ml-[6px]">gogo.mn</p>
               &nbsp;
               <Link to={`/profile/${item.author.id}`}>
-                <p className={'text-[14px] font-roboto font-medium tracking-[0.21px] leading-[16px]'}>
+                <p className={'text-[14px] text-white font-roboto font-medium tracking-[0.21px] leading-[16px]'}>
                   • {item.author?.name.split(' ').slice(0, -1)}
                 </p>
               </Link>
