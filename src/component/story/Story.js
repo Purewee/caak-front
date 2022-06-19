@@ -26,7 +26,7 @@ export default function StoryItem({ story, border, index }) {
               {story?.title}
             </p>
           </Link>
-          <p className="text-white text-[14px] font-medium mt-[10px] hidden xl:flex">
+          <p className="text-white text-[14px] font-medium mt-[10px] hidden xl:flex font-condensed">
             {generateTimeAgo(story?.publish_date)}
           </p>
         </div>

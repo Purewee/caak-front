@@ -6,8 +6,8 @@ import { HashTag, MetaTag } from '../../pages/post/view/wrapper';
 import moment from 'moment';
 import { LinkOutlined } from '@ant-design/icons';
 
-// Ene bol medeenii jagsaalt deer haragdah Card. Dooroo Garchigtai Merri fonttoi.
-export default function PostCard({ post, ...rest }) {
+// Ene bol medeenii jagsaalt deer haragdah Card. Zuragan deeree garchig ni bh. Robotoi fonttoi.
+export default function FetPost({ post, ...rest }) {
   const postURL = `/post/view/${post.id}`;
   return (
     <Card
@@ -45,7 +45,7 @@ export default function PostCard({ post, ...rest }) {
         </div>
         <div className="flex justify-between items-center ">
           <div>
-            <Avatar src={imagePath(post.source?.icon)} />
+            <Avatar src={<span className="icon-fi-rs-bookmark text-[16px]" />} icon={<LinkOutlined />} />
             <MetaTag>{post?.source?.name}</MetaTag>
             <MetaTag>{post.author?.name}</MetaTag>
           </div>

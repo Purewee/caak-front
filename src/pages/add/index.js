@@ -55,8 +55,16 @@ function AddPost() {
             <Form.Item name="title" className="font-merri">
               <Input placeholder="Гарчиг" maxLength={200} showCount />
             </Form.Item>
-            <Form.Item name="description" className="font-merri mb-[40px]">
-              <Input.TextArea placeholder="Мэдээний тайлбар" rows={4} maxLength={500} showCount />
+            <Form.Item
+              name="description"
+              style={{ background: '#fff', border: '1px solid #ccc' }}
+              valuePropName="data"
+              className="font-merri"
+              getValueFromEvent={(event, editor) => {
+                return editor.getData();
+              }}
+            >
+              <CKEditor editor={InlineEditor} config={ckConfig} />
             </Form.Item>
             <div className="flex flex-wrap">
               {blocks.map((block) => {
