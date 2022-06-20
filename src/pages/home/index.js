@@ -68,7 +68,7 @@ const menu = [
 export default function Home() {
   // prettier-ignore
   const [articles, setArticles] = useState([]);
-  const [selected, setSelected] = useState(0);
+  const [selected, setSelected] = useState('recent');
   const context = useContext(AppContext);
 
   const isLaptop = useMediaQuery('(min-width: 1001px) and (max-width: 1920px)');
@@ -94,50 +94,19 @@ export default function Home() {
   return (
     <>
       <div className={`relative bg-white flex flex-col items-center pb-[100px]`}>
-        <div className="sticky md:hidden top-0 z-50 w-full bg-white">
-          <div className="w-full border-b-[3px] border-[#EFEEEF] h-[36px] mt-[21.7px] relative">
-            <div className="pr-[25px] absolute left-0 wrapper w-full">
-              <p
-                onClick={() => setSelected(0)}
-                className={`${
-                  selected === 0 && 'border-b-[3px] border-[#FF6600]'
-                } ml-[16px] text-[21px] font-bold text-[#111111] uppercase whitespace-nowrap`}
-              >
-                ШИНЭ
-              </p>
-              <p
-                onClick={() => setSelected(1)}
-                className={`ml-[16px] text-[21px] ${
-                  selected === 1 && 'border-b-[3px] border-[#FF6600]'
-                } font-bold text-[#111111] uppercase whitespace-nowrap`}
-              >
-                ТРЭНД
-              </p>
-              {subMenu.map((data, index) => {
-                return (
-                  <p
-                    key={index}
-                    className={`ml-[16px] text-[18px] text-[#111111] uppercase whitespace-nowrap leading-[18px] tracking-[0.23px]`}
-                  >
-                    {data.title}
-                  </p>
-                );
-              })}
-            </div>
-          </div>
-        </div>
         <NavbarPostHeader />
-        <Story />
+        <div className='px-[30px] w-full'>
+          <Story />
+        </div>
         <div className="hidden xl:flex flex-row items-center justify-center gap-[50px] pb-[1px] max-w-[1310px] w-full ">
-          <Tabs size="large" onChange={(e) => console.log(e)} className="w-full" centered>
-            <Tabs.TabPane key="recent" tab={<span className="text-[20px] font-bold cursor-pointer text-center leading-[20px] uppercase">Шинэ</span>}></Tabs.TabPane>
-            <Tabs.TabPane key="trend" tab={<span className="text-[20px] font-bold cursor-pointer text-center leading-[20px] uppercase">Трэнд</span>}></Tabs.TabPane>
+          <Tabs size="large" onChange={(e) => setSelected(e)} className="w-full" centered>
+            <Tabs.TabPane key="recent" tab={<span className={`text-[20px] font-bold cursor-pointer text-center leading-[20px] uppercase ${selected === 'recent' ? 'text-[#111111]' : 'text-[#555555]'}`}>Шинэ</span>}></Tabs.TabPane>
+            <Tabs.TabPane key="trend" tab={<span className={`text-[20px] font-bold cursor-pointer text-center leading-[20px] uppercase  ${selected === 'trend' ? 'text-[#111111]' : 'text-[#555555]'}`}>Трэнд</span>}></Tabs.TabPane>
           </Tabs>
-
         </div>
         <Row gutter={22} className="max-w-[1240px]">
           { articles.map((post) =>
-            <Col span={8}>
+            <Col key={post.id} span={8}>
               <PostCard post={post} />
             </Col>
           )}

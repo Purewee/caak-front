@@ -137,7 +137,7 @@ const Post = () => {
               ЖИРГЭХ
             </button>
             <span onClick={() => setSavePostOpen(true)} className="icon-fi-rs-bookmark text-[#555555] text-[23.5px] w-[50px] h-[50px] rounded-full bg-[#F7F7F7] flex justify-center items-center cursor-pointer ml-[20px]" />
-            <PostSaveModal post={article} setSavePostOpen={setSavePostOpen} savePostOpen={savePostOpen} />
+            <PostSaveModal post={article} setSavePostOpen={setSavePostOpen} savePostOpen={savePostOpen} image={imagePath(article.imageUrl)}/>
             <div ref={ref} className='relative ml-[14px] flex justify-center'>
               <span onClick={() => toggleMenu()} className="icon-fi-rs-more-ver rotate-90 text-[#555555] text-[23.5px] w-[50px] h-[50px] rounded-full bg-[#F7F7F7] flex justify-center items-center cursor-pointer" />
               <DropDown

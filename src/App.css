@@ -267,3 +267,5 @@
     opacity: 1;
   }
 }
+
+.ant-popover-inner-content { padding: 0; }

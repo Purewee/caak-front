@@ -2,12 +2,8 @@ import React, { useState } from 'react';
 import PostShareModal from '../../modal/PostShareModal';
 import PostSaveModal from '../../modal/PostSaveModal';
 import DropDown from '../DropDown';
-import LoveIcon from '../../../assets/images/fi-rs-react-love.svg';
-import CryIcon from '../../../assets/images/fi-rs-react-cry.svg';
-import AngerIcon from '../../../assets/images/fi-rs-react-anger.svg';
-import HahaIcon from '../../../assets/images/fi-rs-react-haha.svg';
-import WowIcon from '../../../assets/images/fi-rs-react-wow.svg';
 import { useClickOutSide } from '../../../utility/Util';
+import { imagePath } from '../../../utility/Util';
 
 const ActionButtons = ({ post }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -40,7 +36,12 @@ const ActionButtons = ({ post }) => {
       >
         <span className={'icon-fi-rs-bookmark text-white text-[17px]'} />
       </div>
-      <PostSaveModal post={post} setSavePostOpen={setSavePostOpen} savePostOpen={savePostOpen} />
+      <PostSaveModal
+        post={post}
+        setSavePostOpen={setSavePostOpen}
+        savePostOpen={savePostOpen}
+        image={imagePath(post.image)}
+      />
       <div
         ref={menuRef}
         onClick={toggleMenu}
@@ -54,11 +55,11 @@ const ActionButtons = ({ post }) => {
           onToggle={toggleMenu}
           content={
             <div className="flex flex-col justify-center h-full pl-[14px]">
-              <div className="flex flex-row items-center">
-                <span className="text-[#555555] text-[16px] mr-[11px] w-[22px] h-[22px] flex items-center justify-center icon-fi-rs-bookmark" />
-                <p className="text-[#555555] text-[15px] leading-[18px]">Жорд нэмэх</p>
+              <div onClick={() => setSharePostOpen(true)} className="flex flex-row items-center cursor-pointer">
+                <span className="text-[#555555] text-[16px] mr-[11px] w-[22px] h-[22px] flex items-center justify-center icon-fi-rs-share" />
+                <p className="text-[#555555] text-[15px] leading-[18px]">Хуваалцах</p>
               </div>
-              <div className="flex flex-row items-center mt-[12px]">
+              <div className="flex flex-row items-center mt-[12px] cursor-pointer">
                 <span className="text-[#555555] text-[15px] mr-[11px] w-[22px] h-[22px] flex items-center justify-center icon-fi-rs-flag" />
                 <p className="text-[#555555] text-[15px] leading-[18px]">Репорт</p>
               </div>

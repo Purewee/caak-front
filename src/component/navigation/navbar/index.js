@@ -1,14 +1,29 @@
 import { useEffect, useState, useContext, useRef } from 'react';
 import MenuItems from './MenuItem';
 import useMediaQuery from '../useMediaQuery';
+import { gql, useQuery } from '@apollo/client';
 import Logo from '../../logo';
 import { AppContext } from '../../../App';
 import SignInUpController from '../../modal//SignInUpController';
 import { useAuth } from '../../../context/AuthContext';
 import UserInfo from './UserInfo';
 import logoIcon from '../../../images/New-Logo.svg';
-import { useClickOutSide } from '../../../utility/Util';
 import { useNavigate } from 'react-router-dom';
+import { Skeleton } from 'antd';
+import { Link } from 'react-router-dom';
+
+const CATEGORIES = gql`
+  query GetCategories {
+    categories(sort: { direction: asc, field: "position" }) {
+      nodes {
+        id
+        name
+        slug
+        position
+      }
+    }
+  }
+`;
 
 const subMenu = [
   {
@@ -55,6 +70,8 @@ const subMenu = [
 export default function NavbarNew() {
   //prettier-ignore
   const context = useContext(AppContext);
+  const { data, loading } = useQuery(CATEGORIES);
+  const categories = data?.categories?.nodes || [];
   const [loaded, setLoaded] = useState(false);
   const [subMenuShown, setSubMenuShown] = useState(false);
   const [searchShown, setSearchShown] = useState(false);
@@ -133,6 +150,10 @@ export default function NavbarNew() {
     };
   }, [setNavBarSticky]);
 
+  if (loading) {
+    return <Skeleton />;
+  }
+
   //prettier-ignore
   return navBarStyle === null ? null : isLaptop ? (
     loaded && (
@@ -153,18 +174,18 @@ export default function NavbarNew() {
             <Logo navBarStyle={navBarStyle} />
             {isLaptop && <MenuItems navBarStyle={navBarStyle} />}
           </div>
-          {isAuth ? (
-            <UserInfo />
-          ) : (
             <div className={'flex flex-row items-center'}>
               <div
                 onClick={() => setSearchShown(true)}
                 className={`${
-                  isTablet ? 'mr-0' : 'mr-[22px]'
+                  isTablet ? 'mr-0' : isAuth ? 'mr-[20px]' : 'mr-[22px]'
                 } flex w-[22px] h-[22px] items-center justify-center cursor-pointer`}
               >
-                <span className={'icon-fi-rs-search text-white text-[22px]'} />
+                <span className={'icon-fi-rs-search text-white text-[19px]'} />
               </div>
+              {isAuth ? (
+                <UserInfo />
+              ) : (
               <div className={'hidden md:flex flex-row items-center'}>
                 <button
                   className={`mr-[12px] h-[34px] font-roboto rounded-[4px] w-[92px] text-[15px] ${
@@ -185,8 +206,8 @@ export default function NavbarNew() {
                   Бүртгүүлэх
                 </button>
               </div>
-            </div>
-          )}
+              )}
+          </div>
         </div>
         <SignInUpController isShown={isShown} setIsShown={setIsShown} />
         {
@@ -208,9 +229,11 @@ export default function NavbarNew() {
             {
               subMenuShown && 
               <div className='ml-[50px] mt-[30px] flex flex-col gap-[20px]'>
-                {subMenu.map((data, index) => {
+                {categories.map((data, index) => {
                   return(
-                    <p className='text-[#111111] leading-[20px] text-[17px]' key={index}>{data.title}</p>
+                    <Link key={index} to={`/tags/${data.slug}`}>
+                      <p className='text-[#111111] leading-[20px] text-[17px]'>{data.name}</p>
+                    </Link>
                   )
                 })}
               </div>

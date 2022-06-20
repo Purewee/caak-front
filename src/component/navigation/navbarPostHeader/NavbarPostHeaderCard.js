@@ -1,6 +1,8 @@
 import ActionButtons from './actionsButtons';
 import { Link } from 'react-router-dom';
 import { generateTimeAgo, imagePath } from '../../../utility/Util';
+import { Avatar } from 'antd';
+import { MetaTag } from '../../../pages/post/view/wrapper';
 
 const NavbarPostHeaderCard = ({ type, item }) => {
   return (
@@ -41,7 +43,7 @@ const NavbarPostHeaderCard = ({ type, item }) => {
                 type === 'wide'
                   ? 'text-[40px] md:text-[50px] tracking-[0.4px] md:tracking-[0.5px] leading-[46px] md:leading-[56px]'
                   : 'text-[24px] md:text-[32px] tracking-[0.2px] md:tracking-[0.32px] truncate-3 leading-[28px] md:leading-[36px]'
-              } text-white font-bold font-robotoCondensed mt-[10px]`}
+              } text-white font-medium font-robotoCondensed mt-[10px]`}
             >
               {item.title}
             </p>
@@ -51,20 +53,11 @@ const NavbarPostHeaderCard = ({ type, item }) => {
           </p>
           <div className={'flex flex-wrap justify-between w-full mt-[30px] items-center'}>
             <div className={'flex text-white flex-row items-center self-start'}>
-              <img
-                alt=""
-                src={
-                  'https://scontent.fuln2-2.fna.fbcdn.net/v/t1.18169-9/16388375_1258991760846780_6001512035944932012_n.png?_nc_cat=107&ccb=1-5&_nc_sid=174925&_nc_ohc=9pNL5ldMQ0kAX_yAKha&_nc_ht=scontent.fuln2-2.fna&oh=00_AT_3pSN5nwhS6wQvQERY95zTkiYmS9VjFARKCE684yYu1w&oe=6298F67B'
-                }
-                className="w-[22px] h-[22px] rounded-full"
-              />
-              <p className="text-[15px] font-medium font-roboto ml-[6px]">gogo.mn</p>
-              &nbsp;
-              <Link to={`/profile/${item.author.id}`}>
-                <p className={'text-[14px] text-white font-roboto font-medium tracking-[0.21px] leading-[16px]'}>
-                  • {item.author?.name.split(' ').slice(0, -1)}
-                </p>
-              </Link>
+              <div>
+                <Avatar className="w-[22px] h-[22px]" src={imagePath(item.source?.icon)} />
+                <MetaTag className="ml-[6px] text-[#FFFFFF]">{item?.source?.name}</MetaTag>
+                <MetaTag className="ml-[6px] text-[#FFFFFF]">• {(item.author?.name).split(' ')[0]}</MetaTag>
+              </div>
             </div>
             <div className={'flex items-center mt-[10px] sm:mt-0 self-end md:self-center'}>
               <ActionButtons post={item} />

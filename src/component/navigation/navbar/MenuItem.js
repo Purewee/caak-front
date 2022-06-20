@@ -57,7 +57,7 @@ const MenuItems = ({ navBarStyle }) => {
                   <Row gutter={24} className="p-[12px]">
                     {categories?.map((x) => {
                       return (
-                        <Col span={8} className="mt-[12px]">
+                        <Col key={x.id} span={8} className="mt-[12px]">
                           <Link to={`/tags/${x.slug}`} key={x.id}>
                             <span className="text-[#111111] p-[8px] leading-[18px] tracking-[0.23px] font-roboto font-normal text-[15px]">
                               {x.name}

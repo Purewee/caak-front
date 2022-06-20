@@ -46,7 +46,7 @@ export default function Story() {
     onSwipedLeft: () => setIndexOfStory(indexOfStory + 1 === stories.length ? 'done' : indexOfStory + 1),
     onSwipedRight: () => setIndexOfStory(indexOfStory === 0 ? 0 : indexOfStory - 1),
   });
-
+  //prettier-ignore
   return indexOfStory === 'done' ? (
     <div {...handlers} className="w-full h-screen relative bg-black bg-opacity-60">
       <div className="w-full h-full absolute top-0 flex flex-col items-center">
@@ -101,8 +101,8 @@ export default function Story() {
           <div className="border-l-[6px] border-white w-full h-[340px] pl-[40px]">
             <div className="flex flex-row justify-start mt-[12px]">
               {shownStory?.categories?.map((x) => (
-                <div className="bg-[#FF6600] h-[22px] flex items-center px-[8px]">
-                  <p key={x.id} className=" text-white text-[12px] font-bold leading-[14px]">
+                <div key={x.id} className="bg-[#FF6600] h-[22px] flex items-center px-[8px]">
+                  <p className="text-white text-[12px] font-bold leading-[14px]">
                     #{x.name}
                   </p>
                 </div>
