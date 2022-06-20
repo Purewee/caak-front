@@ -31,7 +31,7 @@ export default function PostCard({ post, ...rest }) {
       <div className="h-[220px] border-b border-[#EFEFEF] flex flex-col justify-between py-[8px]">
         <div>
           {post?.categories?.map((x, index) => (
-            <HashTag key={index} primary className="font-normal text-[13px]">
+            <HashTag key={index} className="font-normal text-[13px]">
               {`#${x.name}`}
             </HashTag>
           ))}

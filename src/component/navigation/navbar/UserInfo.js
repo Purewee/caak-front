@@ -59,7 +59,7 @@ export default function UserInfo() {
             <div className="p-[18px] flex flex-col gap-[16px] border-b">
               {Settings.map((data, index) => {
                 return (
-                  <div className="flex flex-row items-center cursor-pointer">
+                  <div key={index} className="flex flex-row items-center cursor-pointer">
                     <span className={`${data.icon} text-[20px]`} />
                     <p className="text-[15px] ml-[12px] -mt-[3px] leading-[18px]">{data.title}</p>
                   </div>
