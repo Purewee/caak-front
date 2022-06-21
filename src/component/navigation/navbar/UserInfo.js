@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useQuery, gql } from '@apollo/client';
 import Avatar from 'antd/lib/avatar';
 import { Popover } from 'antd';
 import { useAuth } from '../../../context/AuthContext';
+import { AppContext } from '../../../App';
 
 const ME = gql`
   query Me {
@@ -32,14 +33,27 @@ const Settings = [
 ];
 
 export default function UserInfo() {
+  const context = useContext(AppContext);
   const { data, loading } = useQuery(ME);
   const { logout } = useAuth();
   if (loading) return <span>Loading ...</span>;
   return (
     <div className="flex flex-row items-center">
-      <span className="icon-fi-rs-edit text-[20px] w-[22px] h-[22px] flex justify-center items-center text-white" />
-      <span className="icon-fi-rs-list-o text-[20px] w-[24px] h-[24px] flex justify-center items-center text-white ml-[20px]" />
-      <span className="icon-fi-rs-notification text-[20px] w-[22px] h-[22px] flex justify-center items-center text-white ml-[20px]" />
+      <span
+        className={`icon-fi-rs-edit text-[20px] w-[22px] h-[22px] flex justify-center items-center cursor-pointer
+        ${context.store === 'default' ? 'text-[#555555]' : 'text-white'}
+      `}
+      />
+      <span
+        className={`icon-fi-rs-list-o text-[20px] w-[24px] h-[24px] flex justify-center items-center ml-[20px] cursor-pointer
+        ${context.store === 'default' ? 'text-[#555555]' : 'text-white'}
+      `}
+      />
+      <span
+        className={`icon-fi-rs-notification text-[20px] w-[22px] h-[22px] flex justify-center items-center ml-[20px] cursor-pointer
+        ${context.store === 'default' ? 'text-[#555555]' : 'text-white'}
+      `}
+      />
       <Popover
         placement="topRight"
         trigger="click"
@@ -75,7 +89,7 @@ export default function UserInfo() {
           </div>
         }
       >
-        <Avatar className="w-[34px] h-[34px] ml-[20px]" />
+        <Avatar className="w-[34px] h-[34px] ml-[20px] cursor-pointer" />
       </Popover>
     </div>
   );
