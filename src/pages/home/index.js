@@ -104,7 +104,7 @@ export default function Home() {
             <Tabs.TabPane key="trend" tab={<span className={`text-[20px] font-bold cursor-pointer text-center leading-[20px] uppercase  ${selected === 'trend' ? 'text-[#111111]' : 'text-[#555555]'}`}>Трэнд</span>}></Tabs.TabPane>
           </Tabs>
         </div>
-        <Row gutter={22} className="max-w-[1240px]">
+        <Row gutter={22} className="max-w-[1310px]">
           { articles.map((post) =>
             <Col key={post.id} span={8}>
               <PostCard post={post} />
