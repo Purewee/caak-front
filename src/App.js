@@ -16,6 +16,7 @@ import { AuthProvider } from './context/AuthContext';
 import AllStories from './pages/allstories';
 import Footer from './component/footer';
 import Search from './pages/search';
+import Help from './pages/help';
 
 export const AppContext = createContext(null);
 
@@ -42,6 +43,7 @@ function App() {
                 <Route path="/add" element={<Add />} />
                 <Route path="/add/:id" element={<Add />} />
                 <Route path="/search" element={<Search />} />
+                <Route path="/help" element={<Help />} />
               </Routes>
               <Footer />
             </BrowserRouter>
