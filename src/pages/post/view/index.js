@@ -84,7 +84,7 @@ const Post = () => {
             </div>
           </div>
         </div>
-        <div className="pt-[81px] flex flex-col w-[960px] font-roboto mx-[50px]">
+        <div className="pt-[81px] flex flex-col w-[760px] font-roboto mx-[100px]">
           {article.categories?.nodes?.map((x) => (
             <HashTag key={x.id} className="text-center">
               #{x.name}
@@ -107,12 +107,12 @@ const Post = () => {
               </div>
             </div>
             <img src={imagePath(article.imageUrl)} alt="" className="w-full h-[530px] mt-[30px] object-cover" />
-            <div className='pt-[30px] pb-[60px]'>
+            <div className='pt-[20px] pb-[50px]'>
               <Paragraph dangerouslySetInnerHTML={createMarkup(article.description)} />
             </div>
             {article.blocks.map((b) => {
               return (
-                <div key={b.id} className="flex flex-col items-center mb-[60px] w-full">
+                <div key={b.id} className="flex flex-col items-center mb-[50px] w-full">
                   <LazyLoadImage src={imagePath(b.imageUrl)} alt="" className="w-full max-h-[640px] object-cover" />
                   {b.title && <BlockTitle>{b.title}</BlockTitle>}
                   {b.content && <Paragraph dangerouslySetInnerHTML={createMarkup(b.content)} />}

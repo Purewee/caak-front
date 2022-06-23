@@ -27,20 +27,26 @@ export default function Footer() {
                 <div>
                     <p className='text-white text-[14px] font-bold leading-[16px]'>CAAK КОНТЕНТ</p>
                     <div className='h-[120px] flex flex-col justify-between text-[15px] text-[#838383] mt-[20px]'>
-                        <p>Саак мэдээ</p>
-                        <p>Видео</p>
-                        <p>Подкаст</p>
-                        <p>Радио</p>
+                        <a className='h-[20px]' href='https://www.caaknews.mn/' target={'_blank'}>
+                            <p>Саак мэдээ</p>
+                        </a>
+                        <a className='h-[20px]' href='https://www.youtube.com/c/CaakVideo' target={'_blank'}>
+                            <p>Видео</p>
+                        </a>
+                        <a className='h-[20px]' href='https://soundcloud.com/caak-podcast' target={'_blank'}>
+                            <p>Подкаст</p>
+                        </a>
+                        <a className='h-[20px]' href='https://www.caak.mn/radio/' target={'_blank'}>
+                            <p>Радио</p>
+                        </a>
                     </div>
                 </div>
                 <div>
                     <p className='text-white text-[14px] font-bold leading-[16px]'>ТУСЛАМЖ</p>
-                    <div className='h-[154px] flex flex-col justify-between text-[15px] text-[#838383] mt-[20px]'>
+                    <div className='h-[86px] flex flex-col justify-between text-[15px] text-[#838383] mt-[20px]'>
                         <p className='cursor-pointer' onClick={() => navigate("/help", { state: 0 })}>Бидний тухай</p>
                         <p className='cursor-pointer' onClick={() => navigate("/help", { state: 1 })}>Контент нийлүүлэх</p>
                         <p className='cursor-pointer' onClick={() => navigate("/help", { state: 2 })}>Холбоо барих</p>
-                        <p>Ажлын байр</p>
-                        <p>Сурталчилгаа байршуулах</p>
                     </div>
                 </div>
                 <div>
@@ -58,9 +64,11 @@ export default function Footer() {
                         </a>
                         <a className='h-[20px]' href='https://www.instagram.com/caak.mn' target={'_blank'}>
                             <span className='icon-fi-rs-ig text-[20px]' />
-                        </a><a className='h-[20px]' href='https://twitter.com/caaktwt' target={'_blank'}>
+                        </a>
+                        <a className='h-[20px]' href='https://twitter.com/caaktwt' target={'_blank'}>
                             <span className='icon-fi-rs-tw text-[20px]' />
-                        </a><a className='h-[20px]' href='https://www.youtube.com/c/CaakVideo' target={'_blank'}>
+                        </a>
+                        <a className='h-[20px]' href='https://www.youtube.com/c/CaakVideo' target={'_blank'}>
                             <span className='icon-fi-rs-yt text-[20px]' />
                         </a>
                     </div>

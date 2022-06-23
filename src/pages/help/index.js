@@ -386,7 +386,7 @@ export default function Help() {
                         <span className='w-full h-[7px] bg-[#F5F5F5] mt-[50px]' />
                         <p className='text-[38px] font-condensed font-bold leading-[44px] mt-[50px]'>Тѳлбѳртэй мэдээ</p>
                         <p className='text-caak-primary text-[18px] leading-[21px] mt-[12px]'>/ Нэг удаа /</p>
-                        <div className='flex flex-wrap gap-[28px] w-full'>
+                        <div className='flex flex-wrap gap-[28px] w-full mt-[31px]'>
                             {
                                 moneyNews.map((data, index) => {
                                     return(
