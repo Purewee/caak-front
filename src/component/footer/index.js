@@ -1,12 +1,13 @@
 import React, { useEffect, useState, useContext } from 'react';
 import Logo from '../../images/New-Logo-Light.svg';
 import { AppContext } from '../../App';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 export default function Footer() {
   // prettier-ignore
   const [isFooter, setIsFooter] = useState(true)
   const context = useContext(AppContext);
+  const navigate = useNavigate();
   // prettier-ignore
   useEffect(() => {
     if (context.shown === true) {
@@ -35,11 +36,9 @@ export default function Footer() {
                 <div>
                     <p className='text-white text-[14px] font-bold leading-[16px]'>ТУСЛАМЖ</p>
                     <div className='h-[154px] flex flex-col justify-between text-[15px] text-[#838383] mt-[20px]'>
-                        <Link to={'/help'}>
-                            <p>Бидний тухай</p>
-                        </Link>
-                        <p>Контент нийлүүлэх</p>
-                        <p>Холбоо барих</p>
+                        <p className='cursor-pointer' onClick={() => navigate("/help", { state: 0 })}>Бидний тухай</p>
+                        <p className='cursor-pointer' onClick={() => navigate("/help", { state: 1 })}>Контент нийлүүлэх</p>
+                        <p className='cursor-pointer' onClick={() => navigate("/help", { state: 2 })}>Холбоо барих</p>
                         <p>Ажлын байр</p>
                         <p>Сурталчилгаа байршуулах</p>
                     </div>
@@ -47,8 +46,8 @@ export default function Footer() {
                 <div>
                     <p className='text-white text-[14px] font-bold leading-[16px]'>БУСАД</p>
                     <div className='h-[52px] flex flex-col justify-between text-[15px] text-[#838383] mt-[20px]'>
-                        <p>Үйлчилгээний нөхцөл</p>
-                        <p>Нууцлалын бодлого</p>
+                        <p className='cursor-pointer' onClick={() => navigate("/help", { state: 4 })}>Үйлчилгээний нөхцөл</p>
+                        <p className='cursor-pointer' onClick={() => navigate("/help", {  state: 3 })}>Нууцлалын бодлого</p>
                     </div> 
                 </div>
                 <div>

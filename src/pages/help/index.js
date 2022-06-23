@@ -5,6 +5,7 @@ import CaakPodcast from '../../images/caak-podcast.png';
 import CaakRadio from '../../images/Caak-radio.png';
 import CaakEnt from '../../images/caak-entertainment.png';
 import Caak from '../../images/New-Logo.svg';
+import { useLocation } from 'react-router-dom';
 
 //prettier-ignore
 const Tabs = [
@@ -128,9 +129,64 @@ const security = [
 ]
 
 //prettier-ignore
+const caakAds = [
+    {
+        pos: 'A1',
+        size: '990x160',
+        desc: 'Нүүр хуудасны толгойд болон мэдээ үзэхэд хамгийн дээр нь харагдана.'
+    },
+    {
+        pos: 'A2',
+        size: '340x400',
+        desc: 'Нүүр хуудас болон мэдээг үзэх үед баруун дээр харагдах бөгөөд гүйлгэхэд тогтож дагана.'
+    },
+    {
+        pos: 'A3',
+        size: '790x500',
+        desc: 'Дурын мэдээг дэлгэрэнгүй үзэх үед мэдээн дунд харагдана.'
+    },
+    {
+        pos: 'A4',
+        size: '150x150, 500x500',
+        desc: 'Нүүр хуудас болон мэдээ үзэж байхад зүүн доод булангаас хөдөлгөөнт хэлбэрээр гарч ирдэг pop-up баннер.'
+    },
+]
+
+//prettier-ignore
+const moneyNews = [
+    {
+        pos: 'ВИДЕО КОНТЕНТ',
+        desc: 'Тухайн байгууллагын үйлчилгээ, бүтээгдэхүүнийг далд хэлбэрээр сурталчилсан сонирхолтой видео контент бүтээж өгнө. Түгээх суваг: facebook, Youtube, Instagram'
+    },
+    {
+        pos: 'ОНЦЛОХ МЭДЭЭ',
+        desc: 'Нүүр хуудасны хамгийн эхэнд 24 цаг онцлогдоно. Мөн мэдээний жагсаалт дунд ялгарч харагдана. Сайтын баруунд доод хэсгээс pop-up хэлбэрээр хэрэглэгчид санал болгоно. Сайтын сошиал (facebook, twitter) сувгуудаар давхар шэйр хийгдэнэ'
+    },
+    {
+        pos: 'МЭДЭЭ, НИЙТЛЭЛ БЭЛТГЭХ',
+        desc: 'Тухайн үйлчилгээ, бүтээгдэхүүнийг далд хэлбэрээр сурталчилсан сонирхолтой мэдээ бэлтгэж өгнө. Мөн дараах сувгуудаар түгээж өгнө: Caak.mn, фэйсбүүк, Твиттер'
+    },
+]
+
+//prettier-ignore
 export default function Help() {
-    const [selected, setSelected] = useState(0)
+    const location = useLocation();
+    const [selected, setSelected] = useState(location.state ? location.state : 0)
+    const [hovered, setHovered] = useState(false)
+    const [hoveredNews, setHoveredNews] = useState(false)
     const context = useContext(AppContext);
+
+    // useEffect(() => {
+    //     window.scrollTo(0, 0)
+    // }, [])
+
+    const toggleHover = (e) => {
+        setHovered(e)
+    }
+
+    const toggleHoverNews = (e) => {
+        setHoveredNews(e)
+    }
 
     useEffect(() => {
         context.setStore('default');
@@ -308,8 +364,57 @@ export default function Help() {
                         </div>
                         <p className='mt-[40px] font-condensed font-bold text-[38px] leading-[44px]'>Баннер байршуулах</p>
                         <p className='text-caak-primary text-[18px] leading-[21px] mt-[12px]'>/ Үнэ өдрөөр /</p>
-                        <div className='mt-[30px]'>
-
+                        <div className='mt-[30px] flex flex-wrap gap-[23px] w-full'>
+                            {
+                                caakAds.map((data, index) => {
+                                    return(
+                                        <div onMouseEnter={() => toggleHover(index)} onMouseLeave={() => setHovered(false)} key={index} style={{boxShadow: hovered === index ? '0px 2px 16px #00000033' : '0px 2px 2px #0000000F'}} className='w-[310px] h-[304px] border border-[#D4D8D8] rounded-[4px] p-[20px] flex flex-col justify-between'>
+                                            <div>
+                                                <p className='w-[40px] h-[40px] rounded-[2px] bg-caak-primary bg-opacity-10 flex justify-center items-center text-caak-primary text-[22px] font-bold leading-[25px]'>{data.pos}</p>
+                                                <p className='text-[20px] leading-[24px] mt-[18px]'>{data.size}</p>
+                                                <p className='text-caak-darkGray mt-[4px] text-[15px] leading-[18px]'>Хэмжээ</p>
+                                                <p className='text-caak-darkGray text-[15px] leading-[19px] mt-[14px]'>{data.desc}</p>
+                                            </div>
+                                            <button className='bg-[#3B4491] text-white text-[16px] font-medium w-full h-[44px] rounded-[4px]'>
+                                                Жишээ үзэх
+                                            </button>
+                                        </div>
+                                    )
+                                })
+                            }
+                        </div>
+                        <span className='w-full h-[7px] bg-[#F5F5F5] mt-[50px]' />
+                        <p className='text-[38px] font-condensed font-bold leading-[44px] mt-[50px]'>Тѳлбѳртэй мэдээ</p>
+                        <p className='text-caak-primary text-[18px] leading-[21px] mt-[12px]'>/ Нэг удаа /</p>
+                        <div className='flex flex-wrap gap-[28px] w-full'>
+                            {
+                                moneyNews.map((data, index) => {
+                                    return(
+                                        <div onMouseEnter={() => toggleHoverNews(index)} onMouseLeave={() => setHoveredNews(false)} key={index} style={{boxShadow: hoveredNews === index ? '0px 2px 16px #00000033' : '0px 2px 2px #0000000F'}} className='w-[418px] h-[316px] border border-[#D4D8D8] rounded-[4px]'>
+                                            <img className=' w-full h-[113px]' />
+                                            <div className='flex flex-col justify-between h-[203px] p-[20px]'>
+                                                <p className='text-caak-darkGray text-[15px] leading-[20px]'>{data.desc}</p>
+                                                <button className='bg-[#363946] text-white text-[16px] font-medium w-full h-[44px] rounded-[4px]'>
+                                                    Жишээ үзэх
+                                                </button>
+                                            </div>
+                                        </div>
+                                    )
+                                })
+                            }
+                        </div>
+                        <div className='w-full mt-[50px] pb-[100px]'>
+                            <div className='text-[#F53757] flex flex-row items-center'>
+                                <span className='icon-fi-rs-info w-[24px] h-[24px] flex flex-row items-center text-[22px]' />
+                                <p className='ml-[6px] font-bold text-[16px]'>Анхаарах зүйлс:</p>
+                            </div>
+                            <ul className='list-disc list-inside text-caak-darkGray mt-[22px]'>
+                                <li>Эдгээр үнэнд НӨАТ орсон болно!</li>
+                                <li>Сурталчилгааны агуулга нь Монгол Улсын хууль журмыг зөрчөөгүй байх </li>
+                                <li>Зар, сурталчилгааны үнэн, бодит байдлыг зарлуулагч байгууллага хариуцна</li>
+                                <li> Баннер солигдох бөгөөд нэг байршилд 4-өөс дээш баннер солигдохгүй </li>
+                                <li>Улс төрийн агуулгатай, шууд болон шууд бус сурталчилгаанд энэ үнийг мөрдөхгүй</li>
+                            </ul>
                         </div>
                     </div>
                 </div>

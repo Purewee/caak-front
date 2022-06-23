@@ -26,6 +26,30 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-fi-rs-devices:before {
+  content: "\e946";
+}
+.icon-fi-rs-discount:before {
+  content: "\e947";
+}
+.icon-fi-rs-handshake:before {
+  content: "\e948";
+}
+.icon-fi-rs-location-o:before {
+  content: "\e949";
+}
+.icon-fi-rs-mail-o:before {
+  content: "\e94a";
+}
+.icon-fi-rs-multimedia:before {
+  content: "\e94b";
+}
+.icon-fi-rs-user-f:before {
+  content: "\e94c";
+}
+.icon-fi-rs-visible:before {
+  content: "\e94d";
+}
 .icon-fi-rs-hashtag:before {
   content: "\e93c";
 }
