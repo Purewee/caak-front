@@ -7,7 +7,6 @@ import { imagePath } from '../../../utility/Util';
 
 const ActionButtons = ({ post }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [reactMenuOpen, setReactMenuOpen] = useState(false);
   const [sharePostOpen, setSharePostOpen] = useState(false);
   const [savePostOpen, setSavePostOpen] = useState(false);
 
@@ -15,21 +14,17 @@ const ActionButtons = ({ post }) => {
     setIsMenuOpen(false);
   });
 
-  const reactRef = useClickOutSide(() => {
-    setReactMenuOpen(false);
-  });
-
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
-
-  const toggleReactMenu = () => {
-    setReactMenuOpen(!reactMenuOpen);
-  };
-
   return (
     <div className={'flex flex-row items-center justify-between'}>
-      <PostShareModal post={post} setSharePostOpen={setSharePostOpen} sharePostOpen={sharePostOpen} />
+      <PostShareModal
+        post={post}
+        setSharePostOpen={setSharePostOpen}
+        sharePostOpen={sharePostOpen}
+        image={imagePath(post.image)}
+      />
       <div
         onClick={() => setSavePostOpen(true)}
         className={'w-[20px] h-[20px] flex items-center justify-center cursor-pointer'}

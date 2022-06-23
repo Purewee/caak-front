@@ -17,12 +17,14 @@ import WowIcon from '../../../assets/images/fi-rs-react-wow.svg';
 import DropDown from '../../../component/navigation/DropDown';
 import { useClickOutSide } from '../../../utility/Util';
 import PostSaveModal from '../../../component/modal/PostSaveModal';
+import PostShareModal from '../../../component/modal/PostShareModal';
 
 const Post = () => {
   const { id } = useParams();
   const [leftMenuSticky, setLeftMenuSticky] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [savePostOpen, setSavePostOpen] = useState(false);
+  const [sharePostOpen, setSharePostOpen] = useState(false);
   const { data, loading } = useQuery(ARTICLE, { variables: { id } });
   const context = useContext(AppContext);
   const article = data?.article || {};
@@ -79,7 +81,7 @@ const Post = () => {
               <p className="text-[#555555] text-[15px] leading-[18px] font-bold">{article.data?.like_count}</p>
               <span className="mt-[6px] cursor-pointer icon-fi-rs-heart text-[26px] text-[#555555] flex items-center justify-center border border-[#D4D8D8] w-[60px] h-[60px] rounded-full" />
               <span onClick={() => setSavePostOpen(true)}  className="text-[#909090] cursor-pointer text-[20px] icon-fi-rs-bookmark mt-[22px]" />
-              <span className="text-[#909090] cursor-pointer text-[19px] icon-fi-rs-share mt-[24.5px]" />
+              <span onClick={() => setSharePostOpen(true)} className="text-[#909090] cursor-pointer text-[19px] icon-fi-rs-share mt-[24.5px]" />
               <span className="text-[#909090] cursor-pointer text-[20px] icon-fi-rs-more-ver mt-[21px] rotate-90" />
             </div>
           </div>
@@ -101,9 +103,9 @@ const Post = () => {
                 </MetaTag>
               </div>
               <div className="flex flex-row items-center">
-                <span className="icon-fi-rs-fb cursor-pointer text-[#909090] text-[20px]" />
-                <span className="icon-fi-rs-tw cursor-pointer text-[#909090] text-[20px] ml-[24px]" />
-                <span onClick={() => setSavePostOpen(true)} className="icon-fi-rs-bookmark cursor-pointer text-[#909090] text-[17px] ml-[25px]" />
+                <span className="icon-fi-rs-fb hover:text-[#1877F2] cursor-pointer text-[#909090] text-[20px]" />
+                <span className="icon-fi-rs-tw hover:text-[#1D9BF1] cursor-pointer text-[#909090] text-[20px] ml-[24px]" />
+                <span onClick={() => setSavePostOpen(true)} className="icon-fi-rs-bookmark cursor-pointer hover:text-[#111111] w-[32px] h-[32px] flex justify-center items-center rounded-[2px] hover:bg-[#EFEEEF] border border-[#EFEEEF] text-[#909090] text-[20px] ml-[17px]" />
               </div>
             </div>
             <img src={imagePath(article.imageUrl)} alt="" className="w-full h-[530px] mt-[30px] object-cover" />
@@ -138,15 +140,16 @@ const Post = () => {
             </button>
             <span onClick={() => setSavePostOpen(true)} className="icon-fi-rs-bookmark text-[#555555] text-[23.5px] w-[50px] h-[50px] rounded-full bg-[#F7F7F7] flex justify-center items-center cursor-pointer ml-[20px]" />
             <PostSaveModal post={article} setSavePostOpen={setSavePostOpen} savePostOpen={savePostOpen} image={imagePath(article.imageUrl)}/>
+            <PostShareModal post={article} setSharePostOpen={setSharePostOpen} sharePostOpen={sharePostOpen} image={imagePath(article.imageUrl)}/>
             <div ref={ref} className='relative ml-[14px] flex justify-center'>
               <span onClick={() => toggleMenu()} className="icon-fi-rs-more-ver rotate-90 text-[#555555] text-[23.5px] w-[50px] h-[50px] rounded-full bg-[#F7F7F7] flex justify-center items-center cursor-pointer" />
               <DropDown
                 arrow={'centerBottom'}
-                className="absolute border border-[#D4D8D8] drop-shadow-[0_2px_2px_rgba(0,0,0,0.06)] bottom-[57px] w-[166px] h-[179px]"
+                className="absolute border border-[#D4D8D8] drop-shadow-[0_2px_2px_rgba(0,0,0,0.06)] bottom-[57px] w-[166px]"
                 open={isMenuOpen}
                 onToggle={toggleMenu}
                 content={
-                  <div className="flex flex-col h-full justify-between p-[18px]">
+                  <div className="flex flex-col gap-[15px] h-full justify-between p-[18px]">
                     <div className="flex flex-row items-center cursor-pointer">
                       <span className="text-[#555555] text-[20px] mr-[8px] w-[22px] h-[22px] flex items-center justify-center icon-fi-rs-editor-o" />
                       <p className="text-[#555555] text-[15px] leading-[18px]">Засах</p>
@@ -155,10 +158,10 @@ const Post = () => {
                       <span className="text-[#555555] text-[20px] mr-[8px] w-[22px] h-[22px] flex items-center justify-center icon-fi-rs-delete" />
                       <p className="text-[#555555] text-[15px] leading-[18px]">Устгах</p>
                     </div>
-                    <div className="flex flex-row items-center cursor-pointer">
+                    {/* <div onClick={() => setSharePostOpen(true)} className="flex flex-row items-center cursor-pointer">
                       <span className="text-[#555555] text-[18px] mr-[8px] w-[22px] h-[22px] flex items-center justify-center icon-fi-rs-share" />
                       <p className="text-[#555555] text-[15px] leading-[18px]">Хуваалцах</p>
-                    </div>
+                    </div> */}
                     <div className="flex flex-row items-center cursor-pointer">
                       <span className="text-[#555555] text-[18px] mr-[8px] w-[22px] h-[22px] flex items-center justify-center icon-fi-rs-flag" />
                       <p className="text-[#555555] text-[15px] leading-[18px]">Репорт</p>
