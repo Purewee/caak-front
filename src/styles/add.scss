@@ -12,22 +12,16 @@
 }
 
 .caak_block .ant-card .ant-card-head,
+.caak_block .ant-card .ant-card-head-title,
 .caak_block .ant-card .ant-card-extra {
-  padding: 0;
   min-height: 12px;
+  padding: 0;
 }
 .caak_block .ant-card .ant-card-body {
   padding: 8px;
 }
 
-.caak_block .ant-card .ant-card-extra .ant-btn-group {
-  position: absolute;
-  top: -16px;
-  left: -16px;
-  border-radius: 16px;
-  background: #fff;
-}
-
 .ck-editor__editable_inline {
   min-height: 72px;
 }
+

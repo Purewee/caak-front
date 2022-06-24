@@ -12,3 +12,16 @@
 @import 'dropdown.css';
 @import 'add.scss';
 @import '~antd/dist/antd.variable.css';
+
+.ant-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ant-btn .anticon {
+  margin: 0;
+}
+.ant-btn-primary {
+  background: var(--ant-primary-color);
+}

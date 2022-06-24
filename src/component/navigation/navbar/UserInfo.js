@@ -3,6 +3,8 @@ import { useQuery, gql } from '@apollo/client';
 import Avatar from 'antd/lib/avatar';
 import { Popover } from 'antd';
 import { useAuth } from '../../../context/AuthContext';
+import { UserOutlined } from '@ant-design/icons';
+import { FIcon } from '../../icon';
 import { AppContext } from '../../../App';
 import { Link } from 'react-router-dom';
 
@@ -22,6 +24,7 @@ export default function UserInfo() {
   const context = useContext(AppContext);
   const { data, loading } = useQuery(ME);
   const { logout } = useAuth();
+  const textColor = context.store === 'default' ? 'text-[#555555]' : 'text-white';
   if (loading) return <span>Loading ...</span>;
 
   const Settings = [
@@ -44,21 +47,9 @@ export default function UserInfo() {
 
   return (
     <div className="flex flex-row items-center">
-      <span
-        className={`icon-fi-rs-edit text-[20px] w-[22px] h-[22px] flex justify-center items-center cursor-pointer
-        ${context.store === 'default' ? 'text-[#555555]' : 'text-white'}
-      `}
-      />
-      <span
-        className={`icon-fi-rs-list-o text-[20px] w-[24px] h-[24px] flex justify-center items-center ml-[20px] cursor-pointer
-        ${context.store === 'default' ? 'text-[#555555]' : 'text-white'}
-      `}
-      />
-      <span
-        className={`icon-fi-rs-notification text-[20px] w-[22px] h-[22px] flex justify-center items-center ml-[20px] cursor-pointer
-        ${context.store === 'default' ? 'text-[#555555]' : 'text-white'}
-      `}
-      />
+      <FIcon className={`icon-fi-rs-edit mr-[6px] ${textColor}`} />
+      <FIcon className={`icon-fi-rs-list-o mx-[6px] ${textColor}`} />
+      <FIcon className={`icon-fi-rs-notification mx-[6px] ${textColor}`} />
       <Popover
         placement="topRight"
         trigger="click"
@@ -67,7 +58,7 @@ export default function UserInfo() {
         content={
           <div className="w-full text-[#555555]">
             <div className="border-b w-full py-[17px] flex flex-row items-center pl-[18px]">
-              <Avatar className="w-[38px] h-[38px] mr-[10px]" />
+              <Avatar className="w-[38px] h-[38px] mr-[10px]" icon={<UserOutlined />} />
               <div>
                 <p className="font-condensed text-[18px] font-bold leading-[21px] text-[#111111]">
                   {data?.me?.firstName}

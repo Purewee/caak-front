@@ -19,6 +19,7 @@ export const POST = gql`
       title
       description
       imageUrl
+      data
       author {
         id
       }
@@ -29,6 +30,7 @@ export const POST = gql`
         title
         content
         imageUrl
+        data
       }
       tags {
         id
