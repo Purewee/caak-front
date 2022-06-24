@@ -18,28 +18,30 @@ const ME = gql`
   }
 `;
 
-const Settings = [
-  {
-    title: 'Профайл',
-    icon: 'icon-fi-rs-user',
-  },
-  {
-    title: 'Дашбоард',
-    icon: 'icon-fi-rs-statistic',
-    link: '/dashboard',
-  },
-  {
-    title: 'Тохиргоо',
-    icon: 'icon-fi-rs-settings',
-    link: '/settings',
-  },
-];
-
 export default function UserInfo() {
   const context = useContext(AppContext);
   const { data, loading } = useQuery(ME);
   const { logout } = useAuth();
   if (loading) return <span>Loading ...</span>;
+
+  const Settings = [
+    {
+      title: 'Профайл',
+      icon: 'icon-fi-rs-user',
+      link: `/profile/${data?.me?.id}`,
+    },
+    {
+      title: 'Дашбоард',
+      icon: 'icon-fi-rs-statistic',
+      link: `/dashboard/${data?.me?.id}`,
+    },
+    {
+      title: 'Тохиргоо',
+      icon: 'icon-fi-rs-settings',
+      link: `/settings/${data?.me?.id}`,
+    },
+  ];
+
   return (
     <div className="flex flex-row items-center">
       <span

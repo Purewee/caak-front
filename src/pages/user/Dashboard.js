@@ -1,19 +1,35 @@
-import { Table } from 'antd';
 import React, { useEffect, useContext, useState } from 'react';
+import { gql, useQuery } from '@apollo/client';
 import { AppContext } from '../../App';
 import SignInUpController from '../../component/modal/SignInUpController';
 import { useAuth } from '../../context/AuthContext';
 import HahaIcon from '../../assets/images/fi-rs-react-haha.svg';
 import LoveIcon from '../../assets/images/fi-rs-react-love.png';
+import { useParams } from 'react-router-dom';
+import { ESService } from '../../lib/esService';
+import { imagePath } from '../../utility/Util';
+import { Link } from 'react-router-dom';
+
+const ME = gql`
+  query Me {
+    me {
+      id
+      mobile
+      email
+      firstName
+      lastName
+    }
+  }
+`;
 
 //prettier-ignore
 const menu = [
     {
         title: 'МЭДЭЭ',
     },
-    {
-        title: 'ЖОР',
-    },
+    // {
+    //     title: 'ЖОР',
+    // },
     {
         title: 'ДАГАГЧИД',
     },
@@ -25,8 +41,11 @@ const menu = [
 //prettier-ignore
 export default function Dashboard() {
     const context = useContext(AppContext);
+    const { id } = useParams()
     const [ selected, setSelected ] = useState(0)
+    const [ articles, setArticles ] = useState([])
     const [isShown, setIsShown] = useState(false);
+    const { data, loading } = useQuery(ME);
     const { isAuth } = useAuth();
 
     useEffect(() => {
@@ -34,10 +53,15 @@ export default function Dashboard() {
     },[]);
 
     useEffect(() => {
+        const es = new ESService('caak');
+        es.authorPosts(id).then(setArticles);
+    }, [id]);
+
+    useEffect(() => {
         context.setStore('default');
       }, []);
     //prettier-ignore
-    return isAuth ? (
+    return isAuth && data?.me?.id === id ? (
         <div className='flex w-full justify-center bg-white'>
             <div className='max-w-[1140px] w-full mt-[50px]'>
                 <p className='text-[28px] leading-[33px] font-medium'>Дашбоард</p>
@@ -85,60 +109,43 @@ export default function Dashboard() {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr className="border-b">
-                            <td>
-                                <div className='flex flex-row pl-[20px] h-[57px] paddinTop'>
-                                    <img className='w-[44px] h-[44px] object-cover' />
-                                    <div className='ml-[12px]'>
-                                        <p className='truncate-1 text-[17px] leading-[20px] font-medium'>“Сүрьеэ өвчнөөс сэргийлье” өдөрлөг маргааш Сүхбаатарын талбайд болно</p>
-                                        <p className='text-[#909090] leading-[16px] mt-[8px]'>Жор: Миний дуртай мэдээнүүд</p>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>
-                                <p className='text-[15px] font-medium text-center'>44</p>
-                            </td>
-                            <td>
-                                <p className='text-[15px] font-medium text-center'>35</p>
-                            </td>
-                            <td>
-                                <div className='flex flex-row items-center justify-center'>
-                                    <img className='w-[20px]'  src={LoveIcon}/>
-                                    <img className='w-[20px]'  src={HahaIcon}/>
-                                    <p className='ml-[6px] text-[15px]'>23</p>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr className="border-b">
-                            <td>
-                                <div className='flex flex-row pl-[20px] h-[57px] paddinTop'>
-                                    <img className='w-[44px] h-[44px] object-cover' />
-                                    <div className='ml-[12px]'>
-                                        <p className='truncate-1 text-[17px] leading-[20px] font-medium'>“Сүрьеэ өвчнөөс сэргийлье” өдөрлөг маргааш Сүхбаатарын талбайд болно</p>
-                                        <p className='text-[#909090] leading-[16px] mt-[8px]'>Жор: Миний дуртай мэдээнүүд</p>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>
-                                <p className='text-[15px] font-medium text-center'>44</p>
-                            </td>
-                            <td>
-                                <p className='text-[15px] font-medium text-center'>35</p>
-                            </td>
-                            <td>
-                                <div className='flex flex-row items-center justify-center'>
-                                    <img className='w-[20px]'  src={LoveIcon}/>
-                                    <img className='w-[20px]'  src={HahaIcon}/>
-                                    <p className='ml-[6px] text-[15px]'>23</p>
-                                </div>
-                            </td>
-                        </tr>
+                        {
+                            articles.map((data, index) => {
+                                return(
+                                    <tr key={index} className="border-b">
+                                        <td>
+                                            <div className='flex flex-row items-center pl-[20px] h-[57px] paddinTop'>
+                                                <img className='w-[44px] h-[44px] object-cover' src={imagePath(data.image)} />
+                                                <div className='ml-[12px]'>
+                                                    <Link to={`/post/view/${data.id}`}>
+                                                        <p className='truncate-1 text-[17px] leading-[20px] font-medium'>{data.title}</p>
+                                                    </Link>
+                                                    {/* <p className='text-[#909090] leading-[16px] mt-[8px]'>Жор: Миний дуртай мэдээнүүд</p> */}
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <p className='text-[15px] font-medium text-center'>44</p>
+                                        </td>
+                                        <td>
+                                            <p className='text-[15px] font-medium text-center'>35</p>
+                                        </td>
+                                        <td>
+                                            <div className='flex flex-row items-center justify-center'>
+                                                <img className='w-[20px]'  src={LoveIcon}/>
+                                                <img className='w-[20px]'  src={HahaIcon}/>
+                                                <p className='ml-[6px] text-[15px]'>{data.data?.like_count}</p>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                )
+                            })
+                        }
                     </tbody>
                 </table>
             </div>
         </div>
     )
     :
-    
     <SignInUpController isShown={isShown} setIsShown={setIsShown}/>
 }
