@@ -269,3 +269,21 @@
 }
 
 .ant-popover-inner-content { padding: 0; }
+
+.ant-notification-notice {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.ant-notification-notice-close-icon {
+  color: #fff;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.ant-notification-notice-message {
+  color: #fff;
+}
+

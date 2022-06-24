@@ -1,17 +1,13 @@
 import React from 'react';
 
-export default function PostShareModal({ sharePostOpen, setSharePostOpen, post }) {
+export default function PostShareModal({ sharePostOpen, setSharePostOpen, post, image }) {
   return (
     sharePostOpen && (
       <div className="popup_modal">
         <div className="popup_modal-content w-[480px] rounded-[4px] pt-[22px] pb-[20px]">
           <p className="text-[26px] font-condensed font-bold leading-[30px] ml-[24px]">Түгээх</p>
           <div className="bg-[#FBFAFB] w-full h-[132px] mt-[13px] border-t border-b border-[#D4D8D8] px-[24px] py-[16px] flex flex-row">
-            <img
-              alt=""
-              className="min-w-[100px] max-w-[100px] h-[100px] object-cover truncate-3"
-              src={`http://graph.caak.mn${post.image}`}
-            />
+            <img alt="" className="min-w-[100px] max-w-[100px] h-[100px] object-cover truncate-3" src={image} />
             <div className="ml-[16px]">
               <p className="font-merri text-[16px] h-[64px]">{post.title}</p>
               <div className="text-[#555555] mt-[10px] flex flex-row items-center leading-[18px] text-[15px]">
@@ -33,12 +29,12 @@ export default function PostShareModal({ sharePostOpen, setSharePostOpen, post }
             <div className="bg-[#FBFAFB] w-full h-[44px] mt-[8px] border flex flex-row items-center justify-between border-[#EFEEEF] py-[12px] pl-[12px] pr-[16px]">
               <div className="flex flex-row items-center text-[#555555]">
                 <span className="icon-fi-rs-link" />
-                <p className="text-[15px] ml-[10px]">{`${window.location.href}post/view/${post.id}`}</p>
+                <p className="text-[15px] ml-[10px]">{`http://caak.mn/post/view/${post.id}`}</p>
               </div>
               <p
                 className="cursor-pointer text-[#FF6600] font-medium text-[15px] leading-[18px]"
                 onClick={() => {
-                  navigator.clipboard.writeText(`${window.location.href}post/view/${post.id}`);
+                  navigator.clipboard.writeText(`http://caak.mn/post/view/${post.id}`);
                 }}
               >
                 Хуулах

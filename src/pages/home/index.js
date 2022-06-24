@@ -1,4 +1,3 @@
-import FeedCard from '../../component/card/FeedCard';
 import NavbarPostHeader from '../../component/navigation/navbarPostHeader';
 import Story from '../../component/story';
 import { ESService } from '../../lib/esService';
@@ -6,64 +5,9 @@ import React, { useEffect, useState, useContext } from 'react';
 import FeedMagazine from '../../component/magazine/FeedMagazine';
 import FeedTopTags from '../../component/toptags/FeedTopTags';
 import { AppContext } from '../../App';
-import HighlightCard from '../../component/card/FeedCard/HighlightCard';
 import useMediaQuery from '../../component/navigation/useMediaQuery';
-import TrendCard from '../../component/card/TrendCard';
-import BigTrendCard from '../../component/card/TrendCard/BigTrendCard';
 import { Tabs, Row, Col } from 'antd';
-import { BlockTitle } from '../post/view/wrapper';
 import PostCard from '../../component/card/Post';
-
-const subMenu = [
-  {
-    title: 'Хөгжилтэй',
-  },
-  {
-    title: 'Кино',
-  },
-  {
-    title: 'Загвар',
-  },
-  {
-    title: 'Гэрэл зураг',
-  },
-  {
-    title: 'Спорт',
-  },
-  {
-    title: 'Тоглоом',
-  },
-  {
-    title: 'Шинжлэх ухаан',
-  },
-  {
-    title: 'Гэр бүл',
-  },
-  {
-    title: 'Гоо сайхан',
-  },
-  {
-    title: 'Аялал',
-  },
-  {
-    title: 'Амьтад',
-  },
-  {
-    title: 'Энтэртайнмент',
-  },
-  {
-    title: 'Хоол',
-  },
-];
-
-const menu = [
-  {
-    title: 'ШИНЭ',
-  },
-  {
-    title: 'ТРЭНД',
-  },
-];
 
 export default function Home() {
   // prettier-ignore
@@ -104,7 +48,7 @@ export default function Home() {
             <Tabs.TabPane key="trend" tab={<span className={`text-[20px] font-bold cursor-pointer text-center leading-[20px] uppercase  ${selected === 'trend' ? 'text-[#111111]' : 'text-[#555555]'}`}>Трэнд</span>}></Tabs.TabPane>
           </Tabs>
         </div>
-        <Row gutter={22} className="max-w-[1240px]">
+        <Row gutter={22} className="max-w-[1310px]">
           { articles.map((post) =>
             <Col key={post.id} span={8}>
               <PostCard post={post} />

@@ -16,9 +16,9 @@ export default function PostCard({ post, ...rest }) {
       bordered={false}
       {...rest}
       bodyStyle={{ padding: 0 }}
-      className="mb-[20px] h-[520px]"
+      className="h-[523px] max-w-[422px] mb-[40px]"
       cover={
-        <Link to={postURL}>
+        <Link className="h-[300px]" to={postURL}>
           <Image
             preview={false}
             alt={post.title}
@@ -28,7 +28,7 @@ export default function PostCard({ post, ...rest }) {
         </Link>
       }
     >
-      <div className="h-[220px] border-b border-[#EFEFEF] flex flex-col justify-between py-[8px]">
+      <div className="h-[223px] border-b border-[#EFEFEF] flex flex-col justify-between pt-[20px] pb-[19px]">
         <div>
           {post?.categories?.map((x, index) => (
             <HashTag key={index} className="font-normal text-[13px]">
@@ -41,7 +41,7 @@ export default function PostCard({ post, ...rest }) {
           >
             {post.title}
           </Link>
-          <div className="text-[12px] text-[#909090] tracking-[0.21px] leading-[16px] mt-[10px]">
+          <div className="text-[14px] text-[#909090] tracking-[0.21px] leading-[16px] mt-[10px]">
             {moment(post.publish_date).format('YYYY-MM-DD, hh:mm')}
           </div>
         </div>

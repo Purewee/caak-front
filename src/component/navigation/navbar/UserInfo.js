@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useQuery, gql } from '@apollo/client';
 import Avatar from 'antd/lib/avatar';
 import { Popover } from 'antd';
 import { useAuth } from '../../../context/AuthContext';
 import { UserOutlined } from '@ant-design/icons';
 import { FIcon } from '../../icon';
+import { AppContext } from '../../../App';
 
 const ME = gql`
   query Me {
@@ -34,14 +35,16 @@ const Settings = [
 ];
 
 export default function UserInfo() {
+  const context = useContext(AppContext);
   const { data, loading } = useQuery(ME);
   const { logout } = useAuth();
+  const textColor = context.store === 'default' ? 'text-[#555555]' : 'text-white';
   if (loading) return <span>Loading ...</span>;
   return (
     <div className="flex flex-row items-center">
-      <FIcon className="icon-fi-rs-edit text-white mr-[6px]" />
-      <FIcon className="icon-fi-rs-list-o text-white mx-[6px]" />
-      <FIcon className="icon-fi-rs-notification text-white mx-[6px]" />
+      <FIcon className={`icon-fi-rs-edit mr-[6px] ${textColor}`} />
+      <FIcon className={`icon-fi-rs-list-o mx-[6px] ${textColor}`} />
+      <FIcon className={`icon-fi-rs-notification mx-[6px] ${textColor}`} />
       <Popover
         placement="topRight"
         trigger="click"
@@ -77,7 +80,7 @@ export default function UserInfo() {
           </div>
         }
       >
-        <Avatar size="large" className="mx-[6px]" icon={<UserOutlined />} />
+        <Avatar className="w-[34px] h-[34px] ml-[20px] cursor-pointer" />
       </Popover>
     </div>
   );
