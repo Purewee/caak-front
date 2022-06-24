@@ -17,6 +17,7 @@ import AllStories from './pages/allstories';
 import Footer from './component/footer';
 import Search from './pages/search';
 import Help from './pages/help';
+import Dashboard from './pages/user/Dashboard';
 
 export const AppContext = createContext(null);
 
@@ -44,6 +45,7 @@ function App() {
                 <Route path="/add/:id" element={<Add />} />
                 <Route path="/search" element={<Search />} />
                 <Route path="/help" element={<Help />} />
+                <Route path="/dashboard" element={<Dashboard />} />
               </Routes>
               <Footer />
             </BrowserRouter>

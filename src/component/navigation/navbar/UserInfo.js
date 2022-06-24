@@ -4,6 +4,7 @@ import Avatar from 'antd/lib/avatar';
 import { Popover } from 'antd';
 import { useAuth } from '../../../context/AuthContext';
 import { AppContext } from '../../../App';
+import { Link } from 'react-router-dom';
 
 const ME = gql`
   query Me {
@@ -25,10 +26,12 @@ const Settings = [
   {
     title: 'Дашбоард',
     icon: 'icon-fi-rs-statistic',
+    link: '/dashboard',
   },
   {
     title: 'Тохиргоо',
     icon: 'icon-fi-rs-settings',
+    link: '/settings',
   },
 ];
 
@@ -73,10 +76,12 @@ export default function UserInfo() {
             <div className="p-[18px] flex flex-col gap-[16px] border-b">
               {Settings.map((data, index) => {
                 return (
-                  <div key={index} className="flex flex-row items-center cursor-pointer">
-                    <span className={`${data.icon} text-[20px]`} />
-                    <p className="text-[15px] ml-[12px] -mt-[3px] leading-[18px]">{data.title}</p>
-                  </div>
+                  <Link key={index} to={{ pathname: data.link }}>
+                    <div className="flex flex-row items-center cursor-pointer">
+                      <span className={`${data.icon} text-[20px]`} />
+                      <p className="text-[15px] ml-[12px] -mt-[3px] leading-[18px]">{data.title}</p>
+                    </div>
+                  </Link>
                 );
               })}
             </div>
