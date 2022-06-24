@@ -5,7 +5,13 @@ import reportWebVitals from './reportWebVitals';
 import { ConfigProvider } from 'antd';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
-ConfigProvider.config({ prefixCls: 'ant', iconPrefixCls: 'anticon', theme: { primaryColor: '#FF6600' } });
+ConfigProvider.config({
+  prefixCls: 'ant',
+  iconPrefixCls: 'anticon',
+  theme: {
+    primaryColor: '#FF6600',
+  },
+});
 root.render(
   <React.StrictMode>
     <ConfigProvider>

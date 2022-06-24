@@ -3,6 +3,8 @@ import { useQuery, gql } from '@apollo/client';
 import Avatar from 'antd/lib/avatar';
 import { Popover } from 'antd';
 import { useAuth } from '../../../context/AuthContext';
+import { UserOutlined } from '@ant-design/icons';
+import { FIcon } from '../../icon';
 
 const ME = gql`
   query Me {
@@ -37,9 +39,9 @@ export default function UserInfo() {
   if (loading) return <span>Loading ...</span>;
   return (
     <div className="flex flex-row items-center">
-      <span className="icon-fi-rs-edit text-[20px] w-[22px] h-[22px] flex justify-center items-center text-white" />
-      <span className="icon-fi-rs-list-o text-[20px] w-[24px] h-[24px] flex justify-center items-center text-white ml-[20px]" />
-      <span className="icon-fi-rs-notification text-[20px] w-[22px] h-[22px] flex justify-center items-center text-white ml-[20px]" />
+      <FIcon className="icon-fi-rs-edit text-white mr-[6px]" />
+      <FIcon className="icon-fi-rs-list-o text-white mx-[6px]" />
+      <FIcon className="icon-fi-rs-notification text-white mx-[6px]" />
       <Popover
         placement="topRight"
         trigger="click"
@@ -48,7 +50,7 @@ export default function UserInfo() {
         content={
           <div className="w-full text-[#555555]">
             <div className="border-b w-full py-[17px] flex flex-row items-center pl-[18px]">
-              <Avatar className="w-[38px] h-[38px] mr-[10px]" />
+              <Avatar className="w-[38px] h-[38px] mr-[10px]" icon={<UserOutlined />} />
               <div>
                 <p className="font-condensed text-[18px] font-bold leading-[21px] text-[#111111]">
                   {data?.me?.firstName}
@@ -75,7 +77,7 @@ export default function UserInfo() {
           </div>
         }
       >
-        <Avatar className="w-[34px] h-[34px] ml-[20px]" />
+        <Avatar size="large" className="mx-[6px]" icon={<UserOutlined />} />
       </Popover>
     </div>
   );

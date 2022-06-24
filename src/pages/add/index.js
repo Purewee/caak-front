@@ -1,22 +1,16 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useMutation, useQuery } from '@apollo/client';
 import { CATEGORIES, POST, CREATE, UPDATE, TAGS } from './_gql';
 import { sortBy } from 'lodash';
 import { Affix, Button, Card, Checkbox, Col, Form, Image, Input, Row, Select, Skeleton, Upload, message } from 'antd';
-import {
-  CameraFilled,
-  DeleteOutlined,
-  FontSizeOutlined,
-  SaveOutlined,
-  SearchOutlined,
-  UploadOutlined,
-  YoutubeFilled,
-} from '@ant-design/icons';
+import { DeleteOutlined, FontSizeOutlined, SaveOutlined, SearchOutlined, YoutubeFilled } from '@ant-design/icons';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import InlineEditor from '@ckeditor/ckeditor5-build-inline';
 import { imagePath } from '../../utility/Util';
 import { useParams } from 'react-router-dom';
 import { getDataFromBlob, imageCompress } from '../../lib/imageCompress';
+import AddBlock from './AddBlock';
+import SortableContainer from './SortableContainer';
 
 const fallback =
   'data:image/png;base64,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';
@@ -29,13 +23,14 @@ function AddPost() {
   const { id } = useParams();
   const { data } = useQuery(CATEGORIES);
   const { data: post, loading } = useQuery(POST, { variables: { id }, skip: !id });
-  const [blocks, setBlocks] = useState([]);
   const categories = data?.categories?.nodes || [];
   const article = post?.article;
+  const [blocks, setBlocks] = useState([]);
   const [saveArticle, { loading: saving }] = useMutation(id ? UPDATE : CREATE, { context: { upload: true } });
+
   useEffect(() => {
     setBlocks(sortBy(article?.blocks, 'position') || []);
-  }, [post]);
+  }, [article]);
 
   if (loading) {
     return <Skeleton />;
@@ -44,12 +39,26 @@ function AddPost() {
     <Form
       onFinish={(values) => {
         console.log({ values });
-        saveArticle({ variables: { id: id, ...values } }).then(message.success('Saved'));
+        saveArticle({
+          variables: {
+            id: id,
+            ...values,
+            blocks: values.blocks.map((x) => ({
+              id: x.id,
+              kind: x.kind,
+              position: x.position,
+              title: x.title,
+              image: x.image,
+              content: x.content,
+              data: x.data,
+            })),
+          },
+        }).then(message.success('Saved'));
       }}
       className="caak_article"
-      initialValues={{ ...article, tags: article.tags.map((x) => x.slug) }}
+      initialValues={{ ...article, tags: article.tags.map((x) => x.slug), blocks: sortBy(article.blocks, 'position') }}
     >
-      <Row gutter={12}>
+      <Row gutter={12} className="mb-[400px]">
         <Col span={16} className="w-full mx-[50px]">
           <Card bordered={false} className="max-w-[920px] mx-auto">
             <Form.Item name="title" className="font-merri">
@@ -66,126 +75,81 @@ function AddPost() {
             >
               <CKEditor editor={InlineEditor} config={ckConfig} />
             </Form.Item>
+
             <div className="flex flex-wrap">
-              {blocks.map((block) => {
-                return (
-                  <span>
-                    {block.kind === 'image' && (
-                      <Image
-                        height={90}
-                        src={imagePath(block.imageUrl || fallback)}
-                        rootClassName="mx-[6px]"
-                        fallback={fallback}
-                      />
-                    )}
-                    {block.kind === 'text' && (
-                      <span
-                        style={{ height: 90, width: 90 }}
-                        className="flex items-center justify-center bg-[#EFEFEF] mx-[4px]"
-                      >
-                        <FontSizeOutlined style={{ fontSize: '50px' }} />
-                      </span>
-                    )}
-                    {block.kind === 'video' && (
-                      <span
-                        style={{ height: 90, width: 90 }}
-                        className="flex items-center justify-center bg-[#EFEFEF] mx-[4px]"
-                      >
-                        <YoutubeFilled style={{ fontSize: '50px' }} />
-                      </span>
-                    )}
-                  </span>
-                );
-              })}
+              <SortableContainer items={blocks} setItems={setBlocks} />
             </div>
-            <div className="w-full flex justify-evenly my-[40px]">
-              <Button
-                icon={<CameraFilled />}
-                className="w-[200px]"
-                onClick={() => {
-                  setBlocks([...blocks, { kind: 'image', position: blocks.length + 1 }]);
-                }}
-              >
-                Зураг
-              </Button>
-              <Button
-                icon={<YoutubeFilled />}
-                className="w-[200px]"
-                onClick={() => {
-                  setBlocks([...blocks, { kind: 'video', position: blocks.length + 1 }]);
-                }}
-              >
-                Видео
-              </Button>
-              <Button
-                icon={<FontSizeOutlined />}
-                className="w-[200px]"
-                onClick={() => {
-                  setBlocks([...blocks, { kind: 'text', position: blocks.length + 1 }]);
-                }}
-              >
-                Текст
-              </Button>
-            </div>
+            <AddBlock items={blocks} setItems={setBlocks} />
             <h3 className="font-merri text-[18px]">
               Мэдээний агуулга (<span>{blocks.length}</span>)
             </h3>
-            {blocks.map((block, idx) => {
-              return (
-                <div className="caak_block" key={idx}>
-                  <Form.Item name={['blocks', idx, 'id']} hidden>
-                    <Input />
-                  </Form.Item>
-                  <Form.Item name={['blocks', idx, 'position']} hidden>
-                    <Input />
-                  </Form.Item>
-                  <Form.Item name={['blocks', idx, 'kind']} hidden>
-                    <Input />
-                  </Form.Item>
-                  {block?.kind === 'image' && <ImageBlock block={block} idx={idx} />}
-                  {block?.kind === 'text' && <TextBlock block={block} idx={idx} />}
-                  {block?.kind === 'video' && <VideoBlock block={block} idx={idx} />}
-                </div>
-              );
-            })}
+            <Form.List name="blocks">
+              {(fields, { add, remove }, { errors }) => (
+                <>
+                  {fields.map((field, idx) => {
+                    const block = blocks[idx];
+                    return (
+                      <div className="caak_block" key={idx}>
+                        <Form.Item name={[idx, 'id']} hidden>
+                          <Input />
+                        </Form.Item>
+                        <Form.Item name={[idx, 'position']} hidden>
+                          <Input />
+                        </Form.Item>
+                        <Form.Item name={[idx, 'kind']} hidden>
+                          <Input />
+                        </Form.Item>
+                        {block?.kind === 'image' && <ImageBlock block={block} idx={idx} />}
+                        {block?.kind === 'text' && <TextBlock block={block} idx={idx} />}
+                        {block?.kind === 'video' && <VideoBlock block={block} idx={idx} />}
+                      </div>
+                    );
+                  })}
+                </>
+              )}
+            </Form.List>
           </Card>
         </Col>
-        <Col span={6} style={{ borderLeft: '1px solid #efefef', padding: 24 }}>
-          <Affix offsetTop={24}>
-            <h3 className="font-merri">Мэдээний төрөл</h3>
-            <hr className="mb-[24px] mt-[8px]" />
-            <Form.Item name="categoryIds" className="font-merri">
-              <Select
-                mode="multiple"
-                placeholder="Categories"
-                options={categories.map((x) => ({ value: x.id, label: x.name, key: x.id }))}
-              />
-            </Form.Item>
-            <Form.Item name="tags" className="font-merri">
-              <TagsField mode="tags" placeholder="Tags" />
-            </Form.Item>
-            <Form.Item name="acceptComment" className="font-merri mb-[0px]">
-              <Checkbox checked>Сэтгэгдэл зөвшөөрөх</Checkbox>
-            </Form.Item>
-            <Form.Item name="featured" className="font-merri">
-              <Checkbox>Мэдээг онцлох</Checkbox>
-            </Form.Item>
-            <hr className="my-[20px]" />
-            <div className="flex justify-between">
-              <Button title="Save" size="large" icon={<SearchOutlined />} loading={saving}>
-                Preview
-              </Button>
-              <Button
-                title="Save"
-                size="large"
-                icon={<SaveOutlined />}
-                htmlType="submit"
-                loading={saving}
-                type="primary"
-                ghost
-              >
-                Save
-              </Button>
+        <Col span={6} className="border-l border-[#efefef] bg-[#ffffff]" style={{ padding: 12 }}>
+          <Affix offsetTop={12}>
+            <div className="h-screen">
+              <h3 className="font-merri font-bold text-[16px]">Мэдээний төрөл</h3>
+              <hr className="mb-[24px] mt-[8px]" />
+              <Form.Item name="categoryIds" className="font-merri">
+                <Select
+                  mode="multiple"
+                  placeholder="Categories"
+                  options={categories.map((x) => ({ value: x.id, label: x.name, key: x.id }))}
+                />
+              </Form.Item>
+              <Form.Item name="tags" className="font-merri">
+                <TagsField mode="tags" placeholder="Tags" />
+              </Form.Item>
+              <Form.Item name="acceptComment" className="font-merri mb-[0px]">
+                <Checkbox checked>Сэтгэгдэл зөвшөөрөх</Checkbox>
+              </Form.Item>
+              <Form.Item name="featured" className="font-merri">
+                <Checkbox>Мэдээг онцлох</Checkbox>
+              </Form.Item>
+
+              <hr className="my-[20px]" />
+              <Button.Group className="w-full">
+                <Button title="Save" size="large" icon={<SearchOutlined />} loading={saving} shape="round" block>
+                  Preview
+                </Button>
+                <Button
+                  title="Save"
+                  size="large"
+                  icon={<SaveOutlined />}
+                  htmlType="submit"
+                  loading={saving}
+                  type="primary"
+                  shape="round"
+                  block
+                >
+                  Save
+                </Button>
+              </Button.Group>
             </div>
           </Affix>
         </Col>
@@ -195,35 +159,25 @@ function AddPost() {
 }
 
 function ImageBlock({ block, idx }) {
-  const [image, setImage] = useState({ src: imagePath(block.imageUrl) || fallback, file: null });
+  const [image64, setImage64] = useState(null);
   return (
     <Card
-      className="my-[24px] bg-[#EFEFEF] font-merri"
-      key={block}
-      actions={[]}
-      extra={[
-        <Button.Group>
-          <Button
-            icon={<DeleteOutlined />}
-            style={{ borderTopLeftRadius: 16, borderBottomLeftRadius: 16 }}
-            key="delete"
-            size="small"
-          />
-          <Button icon={<CameraFilled />} key="type" size="small" />
-          <Button
-            icon={block.position}
-            style={{ borderTopRightRadius: 16, borderBottomRightRadius: 16 }}
-            key="position"
-            size="small"
-          />
-        </Button.Group>,
-      ]}
+      className="my-[24px] bg-[#EFEFEF] font-merri shadow-md"
+      key={idx}
+      bordered={false}
+      title={
+        <>
+          <Button key="position" type="link" className="bg-[#ff2689] text-white">
+            {block.position}
+          </Button>
+        </>
+      }
+      extra={[<Button icon={<DeleteOutlined />} key="delete" type="link" className="bg-[#F53757] text-white" />]}
     >
-      <Row gutter={12}>
-        <Col span={8}>
-          <Image src={image.src} fallback={fallback} className="w-full" />
+      <Row gutter={14}>
+        <Col span={6}>
           <Form.Item
-            name={['blocks', idx, 'image']}
+            name={[idx, 'image']}
             getValueFromEvent={(e) => {
               return e?.fileList[0].originFileObj;
             }}
@@ -233,24 +187,26 @@ function ImageBlock({ block, idx }) {
               showUploadList={false}
               customRequest={({ file, onSuccess }) => {
                 getDataFromBlob(file).then((base64) => {
-                  setImage({ src: base64, file: file });
+                  setImage64(base64);
                   onSuccess('ok');
                 });
               }}
             >
-              <Button size="small" icon={<UploadOutlined />}>
-                Change
-              </Button>
+              <Image
+                src={image64 || imagePath(block?.imageUrl) || fallback}
+                className="w-full object-cover rounded"
+                preview={false}
+              />
             </Upload>
           </Form.Item>
         </Col>
-        <Col span={16}>
-          <Form.Item name={['blocks', idx, 'title']}>
+        <Col span={18}>
+          <Form.Item name={[idx, 'title']}>
             <Input placeholder="Гарчиг" maxLength={200} showCount />
           </Form.Item>
           <Form.Item
-            name={['blocks', idx, 'content']}
-            style={{ background: '#fff', border: '1px solid #ccc' }}
+            name={[idx, 'content']}
+            className="bg-white border-1 border-[#cccccc]"
             valuePropName="data"
             getValueFromEvent={(event, editor) => {
               return editor.getData();
@@ -258,7 +214,7 @@ function ImageBlock({ block, idx }) {
           >
             <CKEditor editor={InlineEditor} config={ckConfig} />
           </Form.Item>
-          <Form.Item name={['blocks', idx, 'data']}>
+          <Form.Item name={[idx, 'data', 'comment']}>
             <Input placeholder="Богино тайлбар" maxLength={200} showCount />
           </Form.Item>
         </Col>
@@ -268,37 +224,23 @@ function ImageBlock({ block, idx }) {
 }
 
 export function TextBlock({ block, idx }) {
-  const TextTypes = [
-    { value: 'default', label: 'Энгийн' },
-    { value: 'quote', label: 'Ишлэл' },
-    { value: 'big_quote', label: 'Том ишлэл' },
-  ];
   return (
     <Card
-      className="my-[24px] bg-[#EFEFEF] font-merri"
-      key={block}
-      actions={[]}
-      extra={[
-        <Button.Group>
-          <Button
-            icon={<DeleteOutlined />}
-            style={{ borderTopLeftRadius: 16, borderBottomLeftRadius: 16 }}
-            key="delete"
-            size="small"
-          />
-          <Button icon={<FontSizeOutlined />} key="type" size="small" />
-          <Button
-            icon={block.position}
-            style={{ borderTopRightRadius: 16, borderBottomRightRadius: 16 }}
-            key="position"
-            size="small"
-          />
-        </Button.Group>,
-      ]}
+      className="my-[24px] bg-[#EFEFEF] font-merri shadow-md"
+      key={idx}
+      bordered={false}
+      title={
+        <>
+          <Button key="position" type="link" className="bg-[#ff2689] text-white">
+            {block.position}
+          </Button>
+        </>
+      }
+      extra={[<Button icon={<DeleteOutlined />} key="delete" type="link" className="bg-[#F53757] text-white" />]}
     >
       <Form.Item
-        name={['blocks', idx, 'content']}
-        style={{ background: '#fff', border: '1px solid #ccc' }}
+        name={[idx, 'content']}
+        className="bg-white border-1 border-[#cccccc]"
         valuePropName="data"
         getValueFromEvent={(event, editor) => {
           return editor.getData();
@@ -306,15 +248,15 @@ export function TextBlock({ block, idx }) {
       >
         <CKEditor editor={InlineEditor} config={ckConfig} />
       </Form.Item>
-      <Form.Item name={['blocks', idx, 'data', 'type']}>
-        <Select options={TextTypes} placeholder="Текстийн төрөл" />
-      </Form.Item>
     </Card>
   );
 }
 
 function VideoBlock({ block, idx }) {
-  const [url, setUrl] = useState(null);
+  const [url, setUrl] = useState(block.data.url);
+  const [image, setImage] = useState(null);
+  const [title, setTitle] = useState('');
+
   useEffect(() => {
     if (!url) return;
     const parsed = parseVideoURL(url);
@@ -324,41 +266,42 @@ function VideoBlock({ block, idx }) {
       )
         .then((response) => response.json())
         .then((data) => {
-          console.log(data.items[0].snippet.title);
+          setTitle(data.items[0].snippet.title);
+          setImage(`https://img.youtube.com/vi/${parsed.id}/hqdefault.jpg`);
         });
     }
   }, [url]);
   return (
     <Card
-      className="my-[24px] bg-[#EFEFEF] font-merri"
-      key={block}
-      actions={[]}
-      extra={[
-        <Button.Group>
-          <Button
-            icon={<DeleteOutlined />}
-            style={{ borderTopLeftRadius: 16, borderBottomLeftRadius: 16 }}
-            key="delete"
-            size="small"
-          />
-          <Button icon={<YoutubeFilled />} key="type" size="small" />
-          <Button
-            icon={block.position}
-            style={{ borderTopRightRadius: 16, borderBottomRightRadius: 16 }}
-            key="position"
-            size="small"
-          />
-        </Button.Group>,
-      ]}
+      className="my-[24px] bg-[#EFEFEF] font-merri shadow-md"
+      key={idx}
+      bordered={false}
+      title={
+        <>
+          <Button key="position" type="link" className="bg-[#ff2689] text-white">
+            {block.position}
+          </Button>
+        </>
+      }
+      extra={[<Button icon={<DeleteOutlined />} key="delete" type="link" className="bg-[#F53757] text-white" />]}
     >
       <Row gutter={12}>
-        <Col span={8}></Col>
-        <Col span={16}>
-          <Form.Item name={['blocks', idx, 'data', 'url']}>
+        <Col span={6}>
+          <Image src={image || fallback} className="w-full object-cover rounded" preview={false} />
+        </Col>
+        <Col span={18}>
+          <Form.Item name={[idx, 'data', 'url']} help={<small className="text-[10px]">{title}</small>}>
             <Input onChange={(e) => setUrl(e.target.value)} placeholder="Video Link" />
           </Form.Item>
-          <Form.Item name={['blocks', idx, 'title']}>
-            <Input />
+          <Form.Item
+            name={[idx, 'content']}
+            className="bg-white border-1 border-[#cccccc] mt-[20px]"
+            valuePropName="data"
+            getValueFromEvent={(event, editor) => {
+              return editor.getData();
+            }}
+          >
+            <CKEditor editor={InlineEditor} config={ckConfig} />
           </Form.Item>
         </Col>
       </Row>
@@ -385,4 +328,5 @@ function parseVideoURL(url) {
     }
   );
 }
+
 export default AddPost;
