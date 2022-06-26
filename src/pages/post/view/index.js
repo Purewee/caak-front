@@ -122,7 +122,7 @@ const Post = () => {
         <div className="pt-[81px] flex flex-col w-[760px] font-roboto mx-[100px]">
           {article.categories?.nodes?.map((x) => (
             <HashTag key={x.id} className="text-center">
-              #{x.name}
+              {x.name}
             </HashTag>
           ))}
           <Wrapper>
@@ -130,7 +130,7 @@ const Post = () => {
             <div className="flex flex-row items-center">
               <img className='w-[20px]' src={LoveIcon} alt=''/>
               <img className='w-[20px]' src={HahaIcon} alt=''/>
-              <p className='ml-[6px] text-[15px] text-caak-primary leading-[16px]'></p>
+              <p className='ml-[6px] text-[15px] text-caak-primary leading-[16px]'>{article.data.like_count}</p>
             </div>
             <div className="flex flex-row justify-between w-full h-[32px] mt-[30px]">
               <div className="flex flex-row items-center">
@@ -218,7 +218,7 @@ const Post = () => {
               />
               <MetaTag className="ml-[8px]">{article.source.name}</MetaTag>
               <MetaTag className="ml-0">&nbsp;• {`${article.author.firstName}`}</MetaTag>
-              <MetaTag className="text-[#909090]">{moment(article.createdAt).format('YYYY.MM.DD, hh:mm')}</MetaTag>
+              {/* <MetaTag className="text-[#909090]">{moment(article.createdAt).format('YYYY.MM.DD, hh:mm')}</MetaTag> */}
             </div>
             <button className="bg-caak-primary rounded-[4px] text-white font-bold text-[15px] w-[90px] h-[34px]">
               Дагах

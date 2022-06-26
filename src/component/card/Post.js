@@ -11,6 +11,7 @@ import PostSaveModal from '../modal/PostSaveModal';
 export default function PostCard({ post, ...rest }) {
   const [savePostOpen, setSavePostOpen] = useState(false);
   const postURL = `/post/view/${post.id}`;
+
   return (
     <Card
       bordered={false}
@@ -31,9 +32,9 @@ export default function PostCard({ post, ...rest }) {
       <div className="h-[223px] border-b border-[#EFEFEF] flex flex-col justify-between pt-[20px] pb-[19px]">
         <div>
           {post?.categories?.map((x, index) => (
-            <HashTag key={index} className="font-normal text-[13px]">
-              {`#${x.name}`}
-            </HashTag>
+            <Link key={index} to={`/category/${x.slug}`}>
+              <HashTag className="font-normal text-[13px]">{`${x.name}`}</HashTag>
+            </Link>
           ))}
           <Link
             className="text-[#111111] hover:text-[#111111] text-[18px] font-medium leading-[27px] tracking-[0.32px] font-merri truncate-3"
@@ -49,7 +50,9 @@ export default function PostCard({ post, ...rest }) {
           <div>
             <Avatar className="w-[22px] h-[22px]" src={imagePath(post.source?.icon)} />
             <MetaTag className="ml-[6px]">{post?.source?.name}</MetaTag>
-            <MetaTag className="ml-[6px]">• {post.author?.name}</MetaTag>
+            <Link to={`/profile/${post.author?.id}`}>
+              <MetaTag className="ml-[6px]">• {post.author?.name}</MetaTag>
+            </Link>
           </div>
           <div className="flex">
             <Button

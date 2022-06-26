@@ -107,6 +107,7 @@ export default function NavbarNew() {
       function handleClickOutside(event) {
         if (ref.current && !ref.current.contains(event.target)) {
           setSearchShown(false)
+          setSideMenuOpen(false)
         }
       }
       // Bind the event listener
@@ -119,7 +120,9 @@ export default function NavbarNew() {
   }
 
   const searchRef = useRef(null);
+  const sideMenuRef = useRef(null);
   useOutsideAlerter(searchRef);
+  useOutsideAlerter(sideMenuRef);
 
   useEffect(() => {
     setLoaded(true);
@@ -213,7 +216,7 @@ export default function NavbarNew() {
         {
           sideMenuOpen && 
           <div className='absolute left-0 top-0 w-[410px] bg-white z-[3] px-[50px] pt-[50px] pb-[55px]'>
-            <div className='flex flex-row items-center justify-between w-full'>
+            <div ref={sideMenuRef} className='flex flex-row items-center justify-between w-full'>
                 <span className='icon-fi-rs-search text-[20px] text-[#111111]' />
                 <img
                     src={logoIcon}
@@ -274,7 +277,7 @@ export default function NavbarNew() {
         {
           searchShown && 
           <div className='search_modal w-full'>
-            <div ref={searchRef} className='w-full flex justify-center items-center bg-white h-[70px] z-50'>
+            <div className='w-full flex justify-center items-center bg-white h-[70px] z-50'>
               <div className='relative max-w-[600px] w-full'>
                 <input onKeyDown={onPressEnter} value={searchValue} onChange={handleChange} placeholder='Хайлт хийх...' className={`h-[54px] text-[17px] text-[#555555] w-full border px-[50px] border-[#BBBEBE] rounded-[4px]`} />
                 <span className='icon-fi-rs-search absolute left-[16px] top-[16px] text-[18px] w-[22px] h-[22px] flex justify-center items-center text-[#555555]' />

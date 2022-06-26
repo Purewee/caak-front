@@ -27,6 +27,18 @@ const USER = gql`
   }
 `;
 
+const ME = gql`
+  query Me {
+    me {
+      id
+      mobile
+      email
+      firstName
+      lastName
+    }
+  }
+`;
+
 const menu = [
   {
     title: 'НҮҮР',
@@ -99,9 +111,15 @@ export default function Profile() {
             </div>
           </div>
           <div className="flex flex-row">
-            <div className="cursor-pointer w-[151px] h-[34px] border-[1px] border-[#FF6600] rounded-[4px] flex justify-center items-center">
-              <p className="text-[15px] leading-[18px] font-medium text-[#FF6600]">Мэдээллээ засах</p>
-            </div>
+            {id ? (
+              <div className="cursor-pointer w-[151px] h-[34px] border-[1px] border-[#FF6600] rounded-[4px] flex justify-center items-center">
+                <p className="text-[15px] leading-[18px] font-medium text-[#FF6600]">Мэдээллээ засах</p>
+              </div>
+            ) : (
+              <button className="w-[90px] h-[34px] bg-caak-primary rounded-[4px] text-white text-[15px] font-bold">
+                Дагах
+              </button>
+            )}
             <div className=" border-[1px] border-[#D4D8D8] w-[42px] h-[34px] flex justify-center items-center rounded-[4px] ml-[10px]">
               <span className="icon-fi-rs-more-ver cursor-pointer rotate-90 text-[#111111] text-[18px]" />
             </div>

@@ -19,6 +19,7 @@ import Search from './pages/search';
 import Help from './pages/help';
 import Dashboard from './pages/user/Dashboard';
 import Settings from './pages/user/Settings';
+import Category from './pages/newsCategory';
 
 export const AppContext = createContext(null);
 
@@ -46,6 +47,7 @@ function App() {
                 <Route path="/add/:id" element={<Add />} />
                 <Route path="/search" element={<Search />} />
                 <Route path="/help" element={<Help />} />
+                <Route path="/category/:slug" element={<Category />} />
                 <Route path="/dashboard/:id" element={<Dashboard />} />
                 <Route path="/settings/:id" element={<Settings />} />
               </Routes>

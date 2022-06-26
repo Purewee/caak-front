@@ -131,7 +131,7 @@ export default function Dashboard() {
                                             <p className='text-[15px] font-medium text-center'>35</p>
                                         </td>
                                         <td>
-                                            <div className='flex flex-row items-center justify-center'>
+                                            <div className='flex flex-row items-center pl-[40px]'>
                                                 <img className='w-[20px]'  src={LoveIcon}/>
                                                 <img className='w-[20px]'  src={HahaIcon}/>
                                                 <p className='ml-[6px] text-[15px]'>{data.data?.like_count}</p>
