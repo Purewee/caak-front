@@ -82,7 +82,7 @@ export default function NavbarNew() {
   const [sideMenuOpen, setSideMenuOpen] = useState(false);
   const isLaptop = useMediaQuery('(min-width: 1001px) and (max-width: 1920px)');
   const isTablet = useMediaQuery('(min-width: 401px) and (max-width: 1000px)');
-  const isMobile = useMediaQuery('screen and (max-width: 767px)');
+  const isMobile = useMediaQuery('screen and (max-width: 400)');
   const { isAuth } = useAuth();
 
   const navigate = useNavigate();
@@ -215,8 +215,8 @@ export default function NavbarNew() {
         <SignInUpController isShown={isShown} setIsShown={setIsShown} />
         {
           sideMenuOpen && 
-          <div className='absolute left-0 top-0 w-[410px] bg-white z-[3] px-[50px] pt-[50px] pb-[55px]'>
-            <div ref={sideMenuRef} className='flex flex-row items-center justify-between w-full'>
+          <div ref={sideMenuRef} className='absolute left-0 top-0 w-[410px] bg-white z-[3] px-[50px] pt-[50px] pb-[55px]'>
+            <div className='flex flex-row items-center justify-between w-full'>
                 <span className='icon-fi-rs-search text-[20px] text-[#111111]' />
                 <img
                     src={logoIcon}
@@ -291,7 +291,7 @@ export default function NavbarNew() {
       </nav>
     )
   ) : (
-    <nav className="pt-[13px] flex flex-col">
+    <nav className="py-[13px] flex flex-col border-b">
       <div className="w-full flex flex-row justify-between pl-[16px] pr-[17px]">
         <Logo className={''} mobile navBarStyle={false} />
         <span className="icon-fi-rs-user text-[#555555] text-[27.5px]" />

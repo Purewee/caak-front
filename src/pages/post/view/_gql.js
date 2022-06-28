@@ -94,3 +94,35 @@ export const ADD_COMMENT = gql`
     }
   }
 `;
+
+export const ME = gql`
+  query Me {
+    me {
+      id
+      mobile
+      email
+      firstName
+      lastName
+    }
+  }
+`;
+
+export const USER = gql`
+  query GetAuthor($id: ID!) {
+    user(id: $id) {
+      id
+      firstName
+      lastName
+      email
+      articles {
+        totalCount
+      }
+      status
+      recipes {
+        id
+        name
+        createdAt
+      }
+    }
+  }
+`;

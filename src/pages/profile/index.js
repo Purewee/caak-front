@@ -6,46 +6,17 @@ import { useParams } from 'react-router-dom';
 import Loader from '../../component/loader';
 import { ESService } from '../../lib/esService';
 import FeedCard from '../../component/card/FeedCard';
-
-const USER = gql`
-  query GetAuthor($id: ID!) {
-    user(id: $id) {
-      id
-      firstName
-      lastName
-      email
-      articles {
-        totalCount
-      }
-      status
-      recipes {
-        id
-        name
-        createdAt
-      }
-    }
-  }
-`;
-
-const ME = gql`
-  query Me {
-    me {
-      id
-      mobile
-      email
-      firstName
-      lastName
-    }
-  }
-`;
+import { ME, USER } from '../post/view/_gql';
+import { Avatar } from 'antd';
+import PostSaveModal from '../../component/modal/PostSaveModal';
 
 const menu = [
   {
     title: 'НҮҮР',
   },
-  {
-    title: 'ЖОР',
-  },
+  // {
+  //   title: 'ЖОР',
+  // },
   {
     title: 'ПОСТ',
   },
@@ -58,9 +29,12 @@ export default function Profile() {
   const context = useContext(AppContext);
   const [selected, setSelected] = useState(0);
   const [articles, setArticles] = useState([]);
+  const [savePostOpen, setSavePostOpen] = useState(false);
   const { id } = useParams();
   const { data, loading } = useQuery(USER, { variables: { id } });
   const author = data?.user || {};
+  const { data: me, loading: me_loading } = useQuery(ME);
+  const loggedUser = me?.me;
 
   useEffect(() => {
     context.setStore('default');
@@ -80,38 +54,34 @@ export default function Profile() {
     );
 
   return (
-    <div className="flex justify-center">
+    <div className="flex justify-center px-[16px] md:px-0">
       <div className="max-w-[1310px] w-full flex flex-col">
-        <div className="pt-[71px] pb-[50px] flex flex-row justify-between w-full items-center">
-          <div className="flex flex-row">
-            <img
-              alt=""
-              src="https://lh3.googleusercontent.com/iZiNP57j33Ds2vQrdLiMldv1Jd61QAfU2MIo5kJhtKkysyDkOdGc0LUNDnMQKeZ6uOuZ_CWenRzwYRLpYAiKfn-rMd44Aavy=w960-rj-nu-e365"
-              className="w-[82px] object-cover h-[82px] rounded-full"
-            />
-            <div className="ml-[16px]">
-              <p className="text-[30px] font-bold text-black leading-[35px]">{`${author?.firstName} ${author?.lastName}`}</p>
-              <p className="mt-[12px] text-[15px] text-[#555555] leading-[18px] max-w-[600px]">
+        <div className="pt-[17px] md:pt-[71px] pb-[17px] md:pb-[50px] flex flex-col md:flex-row justify-between w-full items-center">
+          <div className="flex flex-col md:flex-row">
+            <Avatar className="w-[57px] h-[57px] md:w-[82px] md:h-[82px] object-cover" />
+            <div className="md:ml-[16px] mt-[15px] md:mt-0">
+              <p className="text-[20px] md:text-[30px] font-condensed font-bold text-black leading-[24px] md:leading-[35px]">{`${author?.firstName} ${author?.lastName}`}</p>
+              <p className="mt-[9px] md:mt-[12px] text-[15px] text-[#555555] leading-[18px] max-w-[600px]">
                 Өөрийн дуртай график дизайны мэдээллээ авдаг сайтнаас хүргэх болно.
               </p>
-              <div className="flex flex-row text-[#555555] mt-[18px] text-[15px] leading-[18px]">
+              <div className="flex flex-row text-[#555555] gap-[23px] mt-[18px] text-[15px] leading-[18px]">
                 <p>
                   <span className="text-[#111111] font-medium">{author?.articles?.totalCount}</span> Пост
                 </p>
                 <p>
-                  <span className="text-[#111111] font-medium ml-[28px]">{author?.recipes?.length}</span> Жор
+                  <span className="text-[#111111] font-medium md:ml-[28px]">{author?.recipes?.length}</span> Жор
                 </p>
                 <p>
-                  <span className="text-[#111111] font-medium ml-[28px]">30</span> Дагагчид
+                  <span className="text-[#111111] font-medium md:ml-[28px]">30</span> Дагагчид
                 </p>
                 <p>
-                  <span className="text-[#111111] font-medium ml-[28px]">1460</span> Аура
+                  <span className="text-[#111111] font-medium md:ml-[28px]">1460</span> Аура
                 </p>
               </div>
             </div>
           </div>
-          <div className="flex flex-row">
-            {id ? (
+          <div className="flex flex-row mt-[20px] md:mt-0">
+            {loggedUser?.id === id ? (
               <div className="cursor-pointer w-[151px] h-[34px] border-[1px] border-[#FF6600] rounded-[4px] flex justify-center items-center">
                 <p className="text-[15px] leading-[18px] font-medium text-[#FF6600]">Мэдээллээ засах</p>
               </div>
@@ -142,13 +112,13 @@ export default function Profile() {
         </div>
         {selected === 0 ? (
           <div>
-            <div className="pt-[50px] text-[#111111] font-bold text-[20px] leading-[24px]">
+            {/* <div className="pt-[50px] text-[#111111] font-bold text-[20px] leading-[24px]">
               <p>Жор</p>
               <MagazineFeed />
-            </div>
+            </div> */}
             <div className="mt-[50px]">
               <p className="text-[#111111] font-bold text-[20px] leading-6">ПОСТ</p>
-              <div className={'relative mt-[20px] w-full justify-items-center newFeedGrid justify-center'}>
+              <div className={'mt-[20px] flex flex-wrap gap-[22px] w-full justify-center'}>
                 {articles.map((data, index) => {
                   return <FeedCard key={index} post={data} />;
                 })}

@@ -20,10 +20,10 @@ export default function Footer() {
   }, [context.shown]);
   // prettier-ignore
   return isFooter ? (
-    <div className='w-full h-[429px] bg-[#111111] flex flex-col items-center justify-between'>
-        <div className='flex flex-row w-full items-start max-w-[1310px]'>
-            <img src={Logo} className='mr-[193px] mt-[41px]'/>
-            <div className='w-full flex flex-row justify-between mt-[60px]'>
+    <div className='w-full md:h-[429px] bg-[#111111] flex flex-col items-center justify-between'>
+        <div className='flex flex-col md:flex-row w-full items-start max-w-[1310px] px-[16px] md:px-0'>
+            <img src={Logo} className='mr-[193px] mt-[41px] hidden md:block'/>
+            <div className='w-full flex flex-col md:flex-row gap-[16px] justify-between mt-[30px] md:mt-[60px]'>
                 <div>
                     <p className='text-white text-[14px] font-bold leading-[16px]'>CAAK КОНТЕНТ</p>
                     <div className='h-[120px] flex flex-col justify-between text-[15px] text-[#838383] mt-[20px]'>
@@ -56,9 +56,9 @@ export default function Footer() {
                         <p className='cursor-pointer' onClick={() => navigate("/help", {  state: 3 })}>Нууцлалын бодлого</p>
                     </div> 
                 </div>
-                <div>
+                <div className='pb-[30px]'>
                     <p className='text-white text-[14px] font-bold leading-[16px]'>БИДНИЙГ ДАГАХ</p>
-                    <div className='h-[120px] flex flex-row w-[136px] justify-between text-[15px] text-white mt-[20px]'>
+                    <div className='flex flex-row w-[136px] justify-between text-[15px] text-white mt-[20px]'>
                         <a className='h-[20px]' href='https://www.facebook.com/caakweb' target={'_blank'}>
                             <span className='icon-fi-rs-fb text-[20px]' />
                         </a>

@@ -8,6 +8,7 @@ import Loader from '../../component/loader';
 import FeedCard from '../../component/card/FeedCard';
 import useMediaQuery from '../../component/navigation/useMediaQuery';
 import HighlightCard from '../../component/card/FeedCard/HighlightCard';
+import PostCard from '../../component/card/Post';
 
 const menu = [
   {
@@ -66,13 +67,13 @@ export default function Category() {
     );
   //prettier-ignore
   return (
-    <div className="flex justify-center pt-[51px] pb-[100px]">
+    <div className="flex justify-center pt-[20px] md:pt-[51px] pb-[100px] px-[16px]">
       <div className="max-w-[1310px] w-full flex flex-col items-center">
         <p className='text-[13px] font-medium text-caak-primary leading-[15px]'>Мэдээний төрөл</p>
-        <div className="flex flex-row justify-between items-center w-full mt-[10px]">
-          <div className="w-[142px]"></div>
+        <div className="flex flex-col md:flex-row justify-between items-center w-full mt-[10px]">
+          <div className="w-[142px] hidden md:block"></div>
           <p className="text-black text-[38px] font-roboto leading-[44px] font-bold">{category?.name}</p>
-          <div className="flex flex-row items-center">
+          <div className="flex flex-row items-center mt-[19px] md:mt-0">
             <button className="bg-caak-primary text-white text-[15px] font-bold font-roboto w-[90px] h-[34px] rounded-[4px] border border-caak-primary">
               Дагах
             </button>
@@ -81,7 +82,7 @@ export default function Category() {
             </div>
           </div>
         </div>
-        <div className="flex flex-row items-center mt-[10px]">
+        <div className="flex flex-row items-center mt-[20px] md:mt-[10px]">
           <p className="text-[#555555] text-[15px] leading-[18px]">
             <span className="text-[#111111] font-medium">{category?.articles?.totalCount}</span> Пост
           </p>
@@ -89,7 +90,7 @@ export default function Category() {
             <span className="text-[#111111] font-medium">30 </span>Дагагчид
           </p>
         </div>
-        <div className=" mt-[40px] flex flex-row items-center border-[#EFEEEF] border-b border-t w-full justify-center gap-[50px] pb-[1px] pt-[17px]">
+        <div className="mt-[20px] md:mt-[40px] flex flex-row items-center border-[#EFEEEF] border-b border-t w-full justify-center gap-[50px] pb-[1px] pt-[17px]">
           {menu.map((data, index) => {
             return (
               <p
@@ -104,9 +105,13 @@ export default function Category() {
             );
           })}
         </div>
-        <div className="flex flex-row items-center justify-between w-full mt-[50px] pb-[60px]">
+        <div className="flex flex-wrap items-center justify-between w-full mt-[50px] pb-[60px]">
           {articles.slice(0, 3).map((data, index) => {
-            return <TagsCard key={index} data={data} middle={index === 1 && true} />;
+            if (isMobile) {
+              return <FeedCard key={index} post={data} />
+            } else {
+              return <TagsCard key={index} data={data} middle={index === 1 && true} />
+            }
           })}
         </div>
         <div

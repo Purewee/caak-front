@@ -1,5 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { AppContext } from '../../App';
+import { useQuery } from '@apollo/client';
+import { useParams } from 'react-router-dom';
 
 const menu = [
   {
@@ -11,6 +13,7 @@ const menu = [
 ];
 
 export default function Channel() {
+  const { id } = useParams();
   const [selected, setSelected] = useState(0);
 
   const context = useContext(AppContext);
@@ -26,7 +29,7 @@ export default function Channel() {
   return (
     <div className="flex flex-col w-full items-center">
       <img
-        className="w-[94px] h-[94px] rounded-full mt-[51px]"
+        className="w-[94px] h-[94px] rounded-full mt-[30px] md:mt-[51px]"
         alt=""
         src="https://cdna.artstation.com/p/assets/images/images/049/505/328/large/constantine-sekeris-konshu-03b.jpg?1652671392"
       />

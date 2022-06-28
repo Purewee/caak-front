@@ -7,15 +7,15 @@ export const Wrapper = tw.div`
 `;
 
 export const Title = tw.h1`
-  text-[#111111] text-[38px] mt-[20px] text-center font-merri
+  text-[#111111] text-[21px] md:text-[38px] mt-[20px] md:text-center font-merri
 `;
 
 export const BlockTitle = tw.h2`
-  text-[#111111] text-[26px] font-semibold mt-[50px]
+  text-[#111111] text-[20px] md:text-[26px] font-bold md:font-semibold mt-[26px] md:mt-[50px]
 `;
 
 export const Paragraph = tw.p`
-  text-[#555555] text-[18px] leading-[36px] tracking-[0.54px] pt-[30px] font-merri
+  text-[#303030] md:text-[#555555] text-[18px] md:leading-[36px] tracking-[0.54px] md:pt-[30px] font-merri
 `;
 
 export const HashTag = tw.span`
@@ -23,5 +23,5 @@ export const HashTag = tw.span`
 `;
 
 export const MetaTag = tw.span`
-  text-[#555555] text-[14px] ml-[12px]
+  text-[#555555] text-[14px] ml-[12px] leading-[16px]
 `;

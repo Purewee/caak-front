@@ -102,7 +102,6 @@ const FeedCard = ({ post, loading, className, sponsored, trend }) => {
                   >
                     <span className={'icon-fi-rs-bookmark text-white transition duration-150 text-[16px]'} />
                   </div>
-                  <PostSaveModal post={post} setSavePostOpen={setSavePostOpen} savePostOpen={savePostOpen} />
                   <div
                     ref={menuRef}
                     onClick={toggleMenu}
@@ -156,7 +155,6 @@ const FeedCard = ({ post, loading, className, sponsored, trend }) => {
                   >
                     <span className={'icon-fi-rs-bookmark text-white transition duration-150 text-[16px]'} />
                   </div>
-                  <PostSaveModal post={post} setSavePostOpen={setSavePostOpen} savePostOpen={savePostOpen} />
                   <div
                     ref={menuRef}
                     onClick={toggleMenu}
@@ -265,7 +263,6 @@ const FeedCard = ({ post, loading, className, sponsored, trend }) => {
                 >
                   <span className={'icon-fi-rs-bookmark text-[#909090] transition duration-150 text-[16px]'} />
                 </div>
-                <PostSaveModal post={post} setSavePostOpen={setSavePostOpen} savePostOpen={savePostOpen}/>
                 <div
                   ref={menuRef}
                   onClick={toggleMenu}
@@ -297,8 +294,8 @@ const FeedCard = ({ post, loading, className, sponsored, trend }) => {
         </div>
         <div className="flex md:hidden flex-row items-center justify-between mt-[10px]">
           <div className="flex flex-row items-center text-[14px] text-[#909090]">
-            <p>Sharsonin.mn </p>
-            <p className="ml-[4px]">• 5 мин</p>
+            <p>{post.source?.name}</p>
+            <p>&nbsp;•&nbsp;{generateTimeAgo(post.publish_date)}</p>
           </div>
           <div className="flex flex-row items-center">
             <div
@@ -307,7 +304,6 @@ const FeedCard = ({ post, loading, className, sponsored, trend }) => {
             >
               <span className={'icon-fi-rs-bookmark text-[#909090] transition duration-150 text-[16px]'} />
             </div>
-            <PostSaveModal post={post} setSavePostOpen={setSavePostOpen} savePostOpen={savePostOpen} />
             <div
               ref={menuRef}
               onClick={toggleMenu}
@@ -322,8 +318,8 @@ const FeedCard = ({ post, loading, className, sponsored, trend }) => {
                 content={
                   <div className="flex flex-col justify-center h-full pl-[14px]">
                     <div className="flex flex-row items-center">
-                      <span className="text-[#555555] text-[16px] mr-[11px] w-[22px] h-[22px] flex items-center justify-center icon-fi-rs-bookmark" />
-                      <p className="text-[#555555] text-[15px] leading-[18px]">Жорд нэмэх</p>
+                      <span className="text-[#555555] text-[16px] mr-[11px] w-[22px] h-[22px] flex items-center justify-center icon-fi-rs-share" />
+                      <p className="text-[#555555] text-[15px] leading-[18px]">Хуцаалцах</p>
                     </div>
                     <div className="flex flex-row items-center mt-[12px]">
                       <span className="text-[#555555] text-[15px] mr-[11px] w-[22px] h-[22px] flex items-center justify-center icon-fi-rs-flag" />
@@ -335,6 +331,7 @@ const FeedCard = ({ post, loading, className, sponsored, trend }) => {
             </div>
           </div>
         </div>
+        <PostSaveModal post={post} image={imagePath(post.image)} setSavePostOpen={setSavePostOpen} savePostOpen={savePostOpen} />
       </div>
     ))
   )
@@ -387,7 +384,6 @@ const FeedCard = ({ post, loading, className, sponsored, trend }) => {
           >
             <span className={'icon-fi-rs-bookmark text-[#555555] transition duration-150 text-[16px]'} />
           </div>
-          <PostSaveModal post={post} setSavePostOpen={setSavePostOpen} savePostOpen={savePostOpen} />
           <div
             ref={menuRef}
             onClick={toggleMenu}
@@ -416,6 +412,7 @@ const FeedCard = ({ post, loading, className, sponsored, trend }) => {
         </div>
       </div>
     </div>
+    <PostSaveModal post={post} image={imagePath(post.image)} setSavePostOpen={setSavePostOpen} savePostOpen={savePostOpen} />
   </div>
 };
 

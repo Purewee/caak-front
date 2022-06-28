@@ -1,16 +1,24 @@
 import { Checkbox, notification } from 'antd';
-import React from 'react';
+import React, { useState } from 'react';
+import SignInUpController from './SignInUpController';
+import { useAuth } from '../../context/AuthContext';
 
 export default function PostSaveModal({ savePostOpen, setSavePostOpen, post, image }) {
+  const [isShown, setIsShown] = useState(false);
+  const { isAuth } = useAuth();
   const openNotification = () => {
-    const args = {
-      message: 'Та мэдээ ажилттай хадгалагдлаа.',
-      duration: 4,
-      placement: 'bottom',
-      className: 'h-[50px] bg-[#12805C]',
-    };
-    notification.open(args);
-    setSavePostOpen(false);
+    if (isAuth) {
+      const args = {
+        message: 'Та мэдээ ажилттай хадгалагдлаа.',
+        duration: 4,
+        placement: 'bottom',
+        className: 'h-[50px] bg-[#12805C]',
+      };
+      notification.open(args);
+      setSavePostOpen(false);
+    } else {
+      setIsShown('signin');
+    }
   };
 
   return (
@@ -58,6 +66,7 @@ export default function PostSaveModal({ savePostOpen, setSavePostOpen, post, ima
             </div>
           </div>
         </div>
+        <SignInUpController isShown={isShown} setIsShown={setIsShown} />
       </div>
     )
   );

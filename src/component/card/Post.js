@@ -4,7 +4,6 @@ import { Card, Image, Avatar, Button } from 'antd';
 import { imagePath } from '../../utility/Util';
 import { HashTag, MetaTag } from '../../pages/post/view/wrapper';
 import moment from 'moment';
-import { LinkOutlined } from '@ant-design/icons';
 import PostSaveModal from '../modal/PostSaveModal';
 
 // Ene bol medeenii jagsaalt deer haragdah Card. Dooroo Garchigtai Merri fonttoi.
@@ -47,11 +46,13 @@ export default function PostCard({ post, ...rest }) {
           </div>
         </div>
         <div className="flex justify-between items-center ">
-          <div>
-            <Avatar className="w-[22px] h-[22px]" src={imagePath(post.source?.icon)} />
-            <MetaTag className="ml-[6px]">{post?.source?.name}</MetaTag>
+          <div className="flex flex-row items-center">
+            <Link to={`/channel/${post.source?.id}`} className="flex flex-row items-center">
+              <Avatar className="w-[22px] h-[22px]" src={imagePath(post.source?.icon)} />
+              <MetaTag className="ml-[6px]">{post?.source?.name}</MetaTag>
+            </Link>
             <Link to={`/profile/${post.author?.id}`}>
-              <MetaTag className="ml-[6px]">• {post.author?.name}</MetaTag>
+              <MetaTag className="ml-0">&nbsp;•&nbsp;{post.author?.name}</MetaTag>
             </Link>
           </div>
           <div className="flex">

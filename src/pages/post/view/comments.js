@@ -19,7 +19,7 @@ export default function Comments({ articleId }) {
   return (
     <>
       <Form
-        className="mt-[50px] w-full flex flex-row"
+        className="mt-[37px] md:mt-[50px] w-full flex flex-row"
         onFinish={(values) => {
           addComment({ variables: values }).then(() => {
             refetch();
@@ -53,8 +53,10 @@ export default function Comments({ articleId }) {
         </div>
       </Form>
       <div className="flex flex-col justify-start w-full">
-        <BlockTitle className="text-left px-[0px] text-[22px]">Нийт сэтгэгдэл ({comments?.totalCount})</BlockTitle>
-        <Tabs size="small" defaultActiveKey="tab-1" onChange={(e) => setSort(e)}>
+        <BlockTitle className="text-left px-[0px] font-medium md:font-bold text-[17px] md:text-[22px]">
+          Нийт сэтгэгдэл ({comments?.totalCount})
+        </BlockTitle>
+        <Tabs className="hidden md:flex" size="small" defaultActiveKey="tab-1" onChange={(e) => setSort(e)}>
           <Tabs.TabPane tab="Их таалагдсан" key="liked" />
           <Tabs.TabPane tab="Сүүлд нэмэгдсэн" key="recent" />
           <Tabs.TabPane tab="Их хариулсан" key="replied" />

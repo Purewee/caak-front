@@ -1,6 +1,16 @@
 import React from 'react';
+import { notification } from 'antd';
 
 export default function PostShareModal({ sharePostOpen, setSharePostOpen, post, image }) {
+  const openNotification = () => {
+    const args = {
+      message: 'Линк хуулагдлаа',
+      duration: 4,
+      placement: 'bottom',
+      className: 'h-[50px] bg-[#12805C] w-[200px]',
+    };
+    notification.open(args);
+  };
   return (
     sharePostOpen && (
       <div className="popup_modal">
@@ -35,6 +45,7 @@ export default function PostShareModal({ sharePostOpen, setSharePostOpen, post, 
                 className="cursor-pointer text-[#FF6600] font-medium text-[15px] leading-[18px]"
                 onClick={() => {
                   navigator.clipboard.writeText(`http://caak.mn/post/view/${post.id}`);
+                  openNotification();
                 }}
               >
                 Хуулах
