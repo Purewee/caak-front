@@ -1,15 +1,25 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Card, Image, Avatar, Button } from 'antd';
+import { Card, Image, Avatar, Button, Popover } from 'antd';
 import { imagePath } from '../../utility/Util';
 import { HashTag, MetaTag } from '../../pages/post/view/wrapper';
 import moment from 'moment';
 import PostSaveModal from '../modal/PostSaveModal';
+import PostShareModal from '../modal/PostShareModal';
+import ReportModal from '../modal/ReportModal';
 
 // Ene bol medeenii jagsaalt deer haragdah Card. Dooroo Garchigtai Merri fonttoi.
 export default function PostCard({ post, ...rest }) {
   const [savePostOpen, setSavePostOpen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isReportOpen, setIsReportOpen] = useState(false);
+  const [sharePostOpen, setSharePostOpen] = useState(false);
   const postURL = `/post/view/${post.id}`;
+
+  //content dotor baigaa buttong darhad modal tsonh garaad popover alga bolohgv bsan uchir hiiw.
+  const handleMenu = (show) => {
+    setIsMenuOpen(show);
+  };
 
   return (
     <Card
@@ -61,7 +71,41 @@ export default function PostCard({ post, ...rest }) {
               type="link"
               icon={<span className="icon-fi-rs-bookmark text-[#909090] text-[17px]" />}
             />
-            <Button type="link" icon={<span className="icon-fi-rs-more-ver text-[#909090] text-[17px]" />} />
+            <Popover
+              placement="bottom"
+              trigger="click"
+              className="font-bold text-[14px] leading-[16px] tracking-[0px]"
+              overlayStyle={{ width: 166 }}
+              overlayInnerStyle={{ borderRadius: 8 }}
+              visible={isMenuOpen}
+              onVisibleChange={handleMenu}
+              content={
+                <div className="flex flex-col justify-center h-full pl-[14px] py-[18px]">
+                  <div
+                    onClick={() => {
+                      setIsMenuOpen(false);
+                      setSharePostOpen(true);
+                    }}
+                    className="flex flex-row items-center cursor-pointer"
+                  >
+                    <span className="text-[#555555] text-[16px] mr-[11px] w-[22px] h-[22px] flex items-center justify-center icon-fi-rs-share" />
+                    <p className="text-[#555555] text-[15px] leading-[18px]">Хуваалцах</p>
+                  </div>
+                  <div
+                    onClick={() => {
+                      setIsMenuOpen(false);
+                      setIsReportOpen(true);
+                    }}
+                    className="flex flex-row items-center mt-[12px] cursor-pointer"
+                  >
+                    <span className="text-[#555555] text-[15px] mr-[11px] w-[22px] h-[22px] flex items-center justify-center icon-fi-rs-flag" />
+                    <p className="text-[#555555] text-[15px] leading-[18px]">Репорт</p>
+                  </div>
+                </div>
+              }
+            >
+              <Button type="link" icon={<span className="icon-fi-rs-more-ver text-[#909090] text-[17px]" />} />
+            </Popover>
           </div>
         </div>
       </div>
@@ -71,6 +115,13 @@ export default function PostCard({ post, ...rest }) {
         savePostOpen={savePostOpen}
         image={imagePath(post.image)}
       />
+      <PostShareModal
+        post={post}
+        setSharePostOpen={setSharePostOpen}
+        sharePostOpen={sharePostOpen}
+        image={imagePath(post.image)}
+      />
+      <ReportModal isOpen={isReportOpen} setIsOpen={setIsReportOpen} />
     </Card>
   );
 }

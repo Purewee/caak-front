@@ -319,7 +319,7 @@ const FeedCard = ({ post, loading, className, sponsored, trend }) => {
                   <div className="flex flex-col justify-center h-full pl-[14px]">
                     <div className="flex flex-row items-center">
                       <span className="text-[#555555] text-[16px] mr-[11px] w-[22px] h-[22px] flex items-center justify-center icon-fi-rs-share" />
-                      <p className="text-[#555555] text-[15px] leading-[18px]">Хуцаалцах</p>
+                      <p className="text-[#555555] text-[15px] leading-[18px]">Хуваалцах</p>
                     </div>
                     <div className="flex flex-row items-center mt-[12px]">
                       <span className="text-[#555555] text-[15px] mr-[11px] w-[22px] h-[22px] flex items-center justify-center icon-fi-rs-flag" />
