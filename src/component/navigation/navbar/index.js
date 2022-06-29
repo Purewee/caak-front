@@ -9,8 +9,10 @@ import { useAuth } from '../../../context/AuthContext';
 import UserInfo from './UserInfo';
 import logoIcon from '../../../images/New-Logo.svg';
 import { useNavigate } from 'react-router-dom';
-import { Skeleton } from 'antd';
+import { Avatar, Skeleton } from 'antd';
 import { Link } from 'react-router-dom';
+import { FIcon } from '../../../component/icon';
+import { ME } from '../../../pages/post/view/_gql';
 
 const CATEGORIES = gql`
   query GetCategories {
@@ -25,45 +27,18 @@ const CATEGORIES = gql`
   }
 `;
 
-const subMenu = [
+const mobileItems = [
   {
-    title: 'Хөгжилтэй',
+    title: 'Радио',
+    icon: 'icon-fi-rs-wave',
   },
   {
-    title: 'Кино',
+    title: 'Подкаст',
+    icon: 'icon-fi-rs-mic',
   },
   {
-    title: 'Загвар',
-  },
-  {
-    title: 'Гэрэл зураг',
-  },
-  {
-    title: 'Спорт',
-  },
-  {
-    title: 'Тоглоом',
-  },
-  {
-    title: 'Шинжлэх ухаан',
-  },
-  {
-    title: 'Гэр бүл',
-  },
-  {
-    title: 'Гоо сайхан',
-  },
-  {
-    title: 'Аялал',
-  },
-  {
-    title: 'Амьтад',
-  },
-  {
-    title: 'Энтэртайнмент',
-  },
-  {
-    title: 'Хоол',
+    title: 'Саак мэдээ',
+    icon: 'icon-fi-rs-caak-news',
   },
 ];
 
@@ -71,9 +46,11 @@ export default function NavbarNew() {
   //prettier-ignore
   const context = useContext(AppContext);
   const { data, loading } = useQuery(CATEGORIES);
+  const { data: me, loading: me_loading } = useQuery(ME);
   const categories = data?.categories?.nodes || [];
   const [loaded, setLoaded] = useState(false);
   const [subMenuShown, setSubMenuShown] = useState(false);
+  const [mobileSideMenu, setMobileSideMenu] = useState(false);
   const [searchShown, setSearchShown] = useState(false);
   const [navBarSticky, setNavBarSticky] = useState(true);
   const [searchValue, setSearchValue] = useState('');
@@ -83,7 +60,25 @@ export default function NavbarNew() {
   const isLaptop = useMediaQuery('(min-width: 1001px) and (max-width: 1920px)');
   const isTablet = useMediaQuery('(min-width: 401px) and (max-width: 1000px)');
   const isMobile = useMediaQuery('screen and (max-width: 400)');
-  const { isAuth } = useAuth();
+  const { isAuth, logout } = useAuth();
+
+  const Settings = [
+    {
+      title: 'Профайл',
+      icon: 'icon-fi-rs-user',
+      link: `/profile/${me?.me?.id}`,
+    },
+    {
+      title: 'Дашбоард',
+      icon: 'icon-fi-rs-statistic',
+      link: `/dashboard/${me?.me?.id}`,
+    },
+    {
+      title: 'Тохиргоо',
+      icon: 'icon-fi-rs-settings',
+      link: `/settings/${me?.me?.id}`,
+    },
+  ];
 
   const navigate = useNavigate();
 
@@ -108,6 +103,7 @@ export default function NavbarNew() {
         if (ref.current && !ref.current.contains(event.target)) {
           setSearchShown(false)
           setSideMenuOpen(false)
+          setMobileSideMenu(false)
         }
       }
       // Bind the event listener
@@ -120,8 +116,10 @@ export default function NavbarNew() {
   }
 
   const searchRef = useRef(null);
+  const mobileRef = useRef(null);
   const sideMenuRef = useRef(null);
   useOutsideAlerter(searchRef);
+  useOutsideAlerter(mobileRef);
   useOutsideAlerter(sideMenuRef);
 
   useEffect(() => {
@@ -291,11 +289,89 @@ export default function NavbarNew() {
       </nav>
     )
   ) : (
-    <nav className="py-[13px] flex flex-col border-b">
+    <nav className="py-[13px] flex flex-col border-b relative">
       <div className="w-full flex flex-row justify-between pl-[16px] pr-[17px]">
         <Logo className={''} mobile navBarStyle={false} />
-        <span className="icon-fi-rs-user text-[#555555] text-[27.5px]" />
+        <span onClick={() => setMobileSideMenu(!mobileSideMenu)} className="icon-fi-rs-user text-[#555555] text-[27.5px]" />
       </div>
+      {
+        mobileSideMenu &&
+        <div ref={mobileRef} className='w-3/4 bg-white absolute z-50 top-0 right-0 pt-[26px]'>
+          {
+            isAuth
+            ?
+            <div>
+              <div className='flex flex-row items-center'>
+                <Avatar className='w-[50px] h-[50px] mr-[20px] ml-[16px]' />
+                <p className='text-[20px] font-condensed font-bold'>{me?.me.firstName}</p>
+              </div>
+              <div className='w-full border-t mt-[20px]'>
+                <div className='px-[16px] flex flex-col gap-[24px] mt-[20px]'>
+                  {Settings.map((data, index) => {
+                    return (
+                      <Link key={index} to={{ pathname: data.link }}>
+                        <div className="flex flex-row items-center cursor-pointer">
+                          <FIcon className={`${data.icon} mr-[18px] text-[24px] w-[26px] h-[26px]`} />
+                          <p className='text-[18px]'>{data.title}</p>
+                        </div>
+                      </Link>
+                    );
+                  })}
+                  <button onClick={() => logout()} className='w-full h-[58px] text-[16px] font-medium text-caak-black border rounded-[4px]'>
+                    Гарах
+                  </button>
+                </div>
+              </div>
+            </div>
+            :
+            <div>
+              <div className='w-[56px] h-[56px] rounded-full bg-[#EFEEEF] flex items-center justify-center ml-[16px]'>
+                <span onClick={() => setMobileSideMenu(!mobileSideMenu)} className="icon-fi-rs-user-f text-[#BBBEBE] text-[35px]" />
+              </div>
+              <div className='px-[16px]'>
+                <p className='font-bold text-[28px] font-condensed w-[233px] leading-[32px] mt-[30px]'>Та бүртгэл үүсгэн мэдээллийг өөрийн болгоорой!</p>
+                <button onClick={() => setIsShown('signup')} className='w-full h-[58px] text-[16px] font-medium text-white mt-[20px] bg-caak-primary rounded-[4px]'>
+                  Бүртгүүлэх
+                </button>
+                <button onClick={() => setIsShown('signin')} className='w-full h-[58px] text-[16px] font-medium text-caak-black mt-[20px] border rounded-[4px]'>
+                  Нэвтрэх
+                </button>
+              </div>
+            </div>
+          }
+          <div className='w-full border-t border-b mt-[30px] py-[25px] flex flex-col gap-[24px]'>
+            {
+              mobileItems.map((data, index) => {
+                return(
+                  <div key={index} className='flex flex-row items-center ml-[24px]'>
+                    <FIcon className={`${data.icon} mr-[18px] text-[24px] w-[26px] h-[26px]`} />
+                    <p className='text-[18px]'>{data.title}</p>
+                  </div>
+                )
+              })
+            }
+          </div>
+          <div className='flex flex-row items-center ml-[24px] mt-[24px]'>
+            <FIcon className={`icon-fi-rs-ads mr-[18px] text-[24px] w-[26px] h-[26px]`} />
+            <p className='text-[18px]'>Сурталчилгаа</p>
+          </div>
+          <div className='flex flex-row items-center ml-[24px] mt-[24px]'>
+            <FIcon className={`icon-fi-rs-phone mr-[18px] text-[24px] w-[26px] h-[26px]`} />
+            <p className='text-[18px]'>Холбоо барих</p>
+          </div>
+          <div className='w-full border-t border-b mt-[30px] py-[25px] flex flex-col gap-[24px]'>
+            <div className='flex flex-row items-center ml-[24px]'>
+              <FIcon className={`icon-fi-rs-ads mr-[18px] text-[24px] w-[26px] h-[26px]`} />
+              <p className='text-[18px]'>Нууцлалын бодлого</p>
+            </div>
+            <div className='flex flex-row items-center ml-[24px]'>
+              <FIcon className={`icon-fi-rs-phone mr-[18px] text-[24px] w-[26px] h-[26px]`} />
+              <p className='text-[18px]'>Үйлчилгээний нөхцөл</p>
+            </div>
+          </div>
+        </div>
+      }
+      <SignInUpController isShown={isShown} setIsShown={setIsShown} />
     </nav>
   );
 }
