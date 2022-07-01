@@ -44,14 +44,15 @@ export default function Footer() {
                 <div>
                     <p className='text-white text-[14px] font-bold leading-[16px]'>ТУСЛАМЖ</p>
                     <div className='h-[86px] flex flex-col justify-between text-[15px] text-[#838383] mt-[20px]'>
-                        <p className='cursor-pointer' onClick={() => navigate("/help", { state: 0 })}>Бидний тухай</p>
-                        <p className='cursor-pointer' onClick={() => navigate("/help", { state: 1 })}>Контент нийлүүлэх</p>
                         <p className='cursor-pointer' onClick={() => navigate("/help", { state: 2 })}>Холбоо барих</p>
+                        <p className='cursor-pointer' onClick={() => navigate("/help", { state: 1 })}>Сурталчилгаа</p>
+                        <p className='cursor-pointer' onClick={() => navigate("/help", { state: 2 })}>Контент нийлүүлэх</p>
                     </div>
                 </div>
                 <div>
                     <p className='text-white text-[14px] font-bold leading-[16px]'>БУСАД</p>
-                    <div className='h-[52px] flex flex-col justify-between text-[15px] text-[#838383] mt-[20px]'>
+                    <div className='h-[86px] flex flex-col justify-between text-[15px] text-[#838383] mt-[20px]'>
+                        <p className='cursor-pointer' onClick={() => navigate("/help", { state: 0 })}>Бидний тухай</p>
                         <p className='cursor-pointer' onClick={() => navigate("/help", { state: 4 })}>Үйлчилгээний нөхцөл</p>
                         <p className='cursor-pointer' onClick={() => navigate("/help", {  state: 3 })}>Нууцлалын бодлого</p>
                     </div> 

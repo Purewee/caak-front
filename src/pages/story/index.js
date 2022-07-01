@@ -9,10 +9,10 @@ import { LazyLoadImage } from 'react-lazy-load-image-component';
 
 export default function Story() {
   // prettier-ignore
-  const {id} = useParams();
+  const { id } = useParams();
   const context = useContext(AppContext);
   const [stories, setStories] = useState([]);
-  const [indexOfStory, setIndexOfStory] = useState(JSON.parse(id));
+  const [indexOfStory, setIndexOfStory] = useState(id === 'done' ? 'done' : JSON.parse(id));
   const [shownStory, setShownStory] = useState(null);
 
   useEffect(() => {
@@ -126,20 +126,24 @@ export default function Story() {
         </div>
       </div>
       {indexOfStory > 0 && (
-        <div
-          onClick={() => setIndexOfStory(indexOfStory - 1)}
-          className="absolute hidden top-1/2 left-[20px] w-[54px] h-[54px] rounded-full bg-[#000000] bg-opacity-20 xl:flex items-center justify-center cursor-pointer"
-        >
-          <span className="icon-fi-rs-down-chevron text-white text-[20px] rotate-90" />
-        </div>
+        <Link to={`/story/${indexOfStory - 1}`}>
+          <div
+            onClick={() => setIndexOfStory(indexOfStory - 1)}
+            className="absolute hidden top-1/2 left-[20px] w-[54px] h-[54px] rounded-full bg-[#000000] bg-opacity-20 xl:flex items-center justify-center cursor-pointer"
+          >
+            <span className="icon-fi-rs-down-chevron text-white text-[20px] rotate-90" />
+          </div>
+        </Link>
       )}
       {
-        <div
-          onClick={() => setIndexOfStory(indexOfStory + 1 === stories.length ? 'done' : indexOfStory + 1)}
-          className="absolute top-1/2 right-[20px] w-[54px] h-[54px] rounded-full bg-[#000000] bg-opacity-20 hidden xl:flex items-center justify-center cursor-pointer"
-        >
-          <span className="icon-fi-rs-down-chevron text-white text-[20px] -rotate-90" />
-        </div>
+        <Link to={`/story/${indexOfStory + 1 === stories.length ? 'done' : indexOfStory + 1}`}>
+          <div
+            onClick={() => setIndexOfStory(indexOfStory + 1 === stories.length ? 'done' : indexOfStory + 1)}
+            className="absolute top-1/2 right-[20px] w-[54px] h-[54px] rounded-full bg-[#000000] bg-opacity-20 hidden xl:flex items-center justify-center cursor-pointer"
+          >
+            <span className="icon-fi-rs-down-chevron text-white text-[20px] -rotate-90" />
+          </div>
+        </Link>
       }
     </div>
   );

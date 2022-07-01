@@ -152,7 +152,7 @@ const Post = () => {
         <div className="pt-0 md:pt-[81px] flex flex-col max-w-[760px] w-full font-roboto md:mx-[100px] px-[16px] md:px-0">
           <img src={imagePath(article.imageUrl)} alt="" className="w-full h-[210px] flex md:hidden mt-[20px] object-cover" />
           {article.categories?.nodes?.map((x) => (
-            <HashTag key={x.id} className="text-center hidden md:flex">
+            <HashTag key={x.id} className="text-center hidden md:block">
               {x.name}
             </HashTag>
           ))}

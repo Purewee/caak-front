@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { HashTag } from '../../../pages/post/view/wrapper';
 
 export default function TagsCard({ middle, data }) {
   return (
@@ -10,10 +11,10 @@ export default function TagsCard({ middle, data }) {
         src={`http://graph.caak.mn${data.image}`}
       />
       <div className="flex flex-row mt-[10px]">
-        {data.categories.map((x) => (
-          <p key={x.id} className="text-[#FF6600] leading-[15px] text-[13px] uppercase">
-            #{x.name}
-          </p>
+        {data?.categories?.map((x, index) => (
+          <Link key={index} to={`/category/${x.slug}`}>
+            <HashTag className="font-normal text-[13px]">{`${x.name}`}</HashTag>
+          </Link>
         ))}
         <p className="text-[14px] font-roboto leading-[16px] text-[#555555] ml-[10px]">5 мин</p>
       </div>

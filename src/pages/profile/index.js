@@ -3,9 +3,11 @@ import { useQuery } from '@apollo/client';
 import { useParams } from 'react-router-dom';
 import { ESService } from '../../lib/esService';
 import { ME, USER } from '../post/view/_gql';
-import { Avatar, Col, Statistic, Row, Tabs, Skeleton, Button } from 'antd';
+import { Avatar, Col, Statistic, Row, Tabs, Skeleton, Button, notification } from 'antd';
 import PostCard from '../../component/card/Post';
 import { Title } from '../post/view/wrapper';
+import SignInUpController from '../../component/modal/SignInUpController';
+import { useAuth } from '../../context/AuthContext';
 
 export default function Profile() {
   const es = new ESService('caak');
@@ -18,6 +20,18 @@ export default function Profile() {
   const user = data?.user || {};
   const { data: me } = useQuery(ME);
   const loggedUser = me?.me;
+  const { isAuth } = useAuth();
+  const [isShown, setIsShown] = useState(false);
+
+  const openNotification = () => {
+    const args = {
+      message: `Та ${data?.user.firstName}-г дагалаа`,
+      duration: 4,
+      placement: 'bottom',
+      className: 'h-[50px] bg-[#12805C] w-[470px]',
+    };
+    notification.open(args);
+  };
 
   useEffect(() => {
     setLoading(true);
@@ -48,16 +62,21 @@ export default function Profile() {
           </div>
           <div className="flex flex-row mt-[20px] md:mt-0">
             {loggedUser?.id === id ? (
-              <div className="cursor-pointer w-[151px] h-[34px] border-[1px] border-[#FF6600] rounded-[4px] flex justify-center items-center">
-                <p className="text-[15px] leading-[18px] font-medium text-[#FF6600]">Мэдээллээ засах</p>
-              </div>
+              <Link to={`/settings/${loggedUser.id}`}>
+                <div className="cursor-pointer w-[151px] h-[34px] border-[1px] border-[#FF6600] rounded-[4px] flex justify-center items-center">
+                  <p className="text-[15px] leading-[18px] font-medium text-[#FF6600]">Мэдээллээ засах</p>
+                </div>
+              </Link>
             ) : (
-              <button className="w-[90px] h-[34px] bg-caak-primary rounded-[4px] text-white text-[15px] font-bold">
+              <button
+                onClick={() => (isAuth ? openNotification() : setIsShown('signin'))}
+                className="w-[90px] h-[34px] bg-caak-primary rounded-[4px] text-white text-[15px] font-bold"
+              >
                 Дагах
               </button>
             )}
-            <div className=" border-[1px] border-[#D4D8D8] w-[42px] h-[34px] flex justify-center items-center rounded-[4px] ml-[10px]">
-              <span className="icon-fi-rs-more-ver cursor-pointer rotate-90 text-[#111111] text-[18px]" />
+            <div className=" border-[1px] cursor-pointer border-[#D4D8D8] w-[42px] h-[34px] flex justify-center items-center rounded-[4px] ml-[10px]">
+              <span className="icon-fi-rs-more-ver rotate-90 text-[#111111] text-[18px]" />
             </div>
           </div>
         </div>
@@ -90,6 +109,7 @@ export default function Profile() {
           <Tabs.TabPane key="history" tab="Үзсэн түүх" />
         </Tabs>
       </div>
+      <SignInUpController isShown={isShown} setIsShown={setIsShown} />
     </div>
   );
 }
