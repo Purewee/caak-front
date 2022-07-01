@@ -424,7 +424,7 @@ export default function Help() {
                 <div className='w-full h-[276px] bg-[#FF6600] flex justify-center'> 
                     <div className='max-w-[1310px] w-full flex flex-row items-center'>
                         <p className='text-[#F5F5F5] font-medium text-[48px] leading-[59px] max-w-[645px]'>Өөрийн мэдээг үнэ цэнэтэй болгомоор байна уу?</p>
-                        <div onClick={() => navigate("/help", { state: 2 })} className='w-[280px] cursor-pointer h-[64px] bg-white flex flex-row items-center justify-center rounded-[4px] ml-[210px]'>
+                        <div onClick={() => setSelected(2)} className='w-[280px] cursor-pointer h-[64px] bg-white flex flex-row items-center justify-center rounded-[4px] ml-[210px]'>
                             <p className='text-[20px] text-[#111111] font-medium'>Холбоо барих</p>
                             <span className='icon-fi-rs-down-chevron -rotate-90 text-[20px] ml-[20px] w-[24px] h-[24px] flex justify-center items-center' />
                         </div>
