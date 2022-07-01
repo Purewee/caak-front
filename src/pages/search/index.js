@@ -1,31 +1,68 @@
-import React, { useContext, useEffect } from 'react';
-import { AppContext } from '../../App';
-import { useLocation } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useLocation, useSearchParams } from 'react-router-dom';
+import { Col, Input, Row, Button, Skeleton } from 'antd';
+import { FIcon } from '../../component/icon';
+import { ESService } from '../../lib/esService';
+import PostCard from '../../component/card/Post';
 
 export default function Search() {
-  //prettier-ignore
-  const context = useContext(AppContext);
-
-  const location = useLocation();
+  const es = new ESService('caak');
+  const [searchParams, setSearchParams] = useSearchParams();
+  const q = searchParams.get('q');
+  const [page, setPage] = useState(0);
+  const [loading, setLoading] = useState(false);
+  const [articles, setArticles] = useState([]);
+  const [totalResult, setTotalResult] = useState(0);
 
   useEffect(() => {
-    context.setStore('default');
-    // eslint-disable-next-line
-  }, []);
-  //prettier-ignore
+    setLoading(true);
+    es.search(q, page).then(({ hits, total }) => {
+      setArticles([...articles, ...hits]);
+      setTotalResult(total);
+      setLoading(false);
+    });
+  }, [q, page]);
+
   return (
-    <div>
-        <div className='w-full h-[208px] bg-[#F5F5F5] flex justify-center'>
-            <div className='w-full max-w-[980px]'>
-                <p className='text-[#555555] text-[16px] leading-[19px] mt-[40px]'>Хайлтын илэрц: 550 мэдээ</p>
-                <div className='relative w-full mt-[20px]'>
-                    <input placeholder={location.state === null && 'Хайлт хийх...'} value={location.state === null ? '' : location.state.value} className={`h-[55px] bg-[#F5F5F5] text-[38px] text-[#111111] font-condensed w-full px-[44px]`} />
-                    <span className='icon-fi-rs-search absolute left-0 top-[8px] text-[22px] w-[28px] h-[28px] flex justify-center items-center text-[#555555]' />
-                    <span className='icon-fi-rs-close cursor-pointer absolute right-0 top-[8px] text-[21px] w-[28px] h-[28px] flex justify-center items-center text-[#555555]' />
-                </div>
-            </div>
+    <div className="flex flex-col items-center mb-[100px]">
+      <div className="w-full h-[208px] bg-[#F5F5F5] flex justify-center">
+        <div className="w-full max-w-[980px]">
+          <div className="relative w-full mt-[20px]">
+            <Input.Search
+              placeholder="Хайлт хийх..."
+              defaultValue={q}
+              allowClear
+              enterButton={<FIcon className="icon-fi-rs-search text-[22px]" />}
+              onSearch={(filter) => setSearchParams({ q: filter })}
+              size="large"
+            />
+          </div>
+          <p className="text-[#555555] text-[16px] leading-[19px] mt-[40px]">Хайлтын илэрц: {totalResult} мэдээ</p>
         </div>
-        <div className='mt-[70px]'></div>
+      </div>
+      <Row gutter={22} className="max-w-[1310px]">
+        {articles.map((post) => (
+          <Col key={post.id} span={8}>
+            <PostCard post={post} />
+          </Col>
+        ))}
+        {loading && <Skeleton />}
+        {totalResult > 24 * (page + 1) && (
+          <Col span={24}>
+            <Button
+              block
+              size="large"
+              type="primary"
+              ghost
+              className="font-roboto"
+              onClick={() => setPage(page + 1)}
+              loading={loading}
+            >
+              Цааш үзэх
+            </Button>
+          </Col>
+        )}
+      </Row>
     </div>
-  )
+  );
 }

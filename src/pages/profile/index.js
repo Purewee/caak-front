@@ -1,57 +1,32 @@
-import { useState, useContext, useEffect } from 'react';
-import MagazineFeed from '../../../src/component/magazine';
-import { AppContext } from '../../App';
-import { gql, useQuery } from '@apollo/client';
+import React, { useState, useEffect } from 'react';
+import { useQuery } from '@apollo/client';
 import { useParams } from 'react-router-dom';
-import Loader from '../../component/loader';
 import { ESService } from '../../lib/esService';
-import FeedCard from '../../component/card/FeedCard';
 import { ME, USER } from '../post/view/_gql';
-import { Avatar } from 'antd';
-import PostSaveModal from '../../component/modal/PostSaveModal';
-
-const menu = [
-  {
-    title: 'НҮҮР',
-  },
-  // {
-  //   title: 'ЖОР',
-  // },
-  {
-    title: 'ПОСТ',
-  },
-  {
-    title: 'ҮЗСЭН ТҮҮХ',
-  },
-];
+import { Avatar, Col, Statistic, Row, Tabs, Skeleton, Button } from 'antd';
+import PostCard from '../../component/card/Post';
+import { Title } from '../post/view/wrapper';
 
 export default function Profile() {
-  const context = useContext(AppContext);
-  const [selected, setSelected] = useState(0);
+  const es = new ESService('caak');
   const [articles, setArticles] = useState([]);
-  const [savePostOpen, setSavePostOpen] = useState(false);
+  const [count, setCount] = useState(0);
+  const [page, setPage] = useState(0);
+  const [loading, setLoading] = useState(false);
   const { id } = useParams();
-  const { data, loading } = useQuery(USER, { variables: { id } });
-  const author = data?.user || {};
-  const { data: me, loading: me_loading } = useQuery(ME);
+  const { data } = useQuery(USER, { variables: { id } });
+  const user = data?.user || {};
+  const { data: me } = useQuery(ME);
   const loggedUser = me?.me;
 
   useEffect(() => {
-    context.setStore('default');
-    const es = new ESService('caak');
-    es.authorPosts(id).then(setArticles);
-  }, [id]);
-
-  useEffect(() => {
-    context.setShown(true);
-  }, []);
-
-  if (loading)
-    return (
-      <div className={'w-full flex justify-center'}>
-        <Loader className={`bg-caak-primary self-center`} />
-      </div>
-    );
+    setLoading(true);
+    es.authorPosts(id).then(({ hits, total }) => {
+      setLoading(false);
+      setArticles([...articles, ...hits]);
+      setCount(total);
+    });
+  }, [id, page]);
 
   return (
     <div className="flex justify-center px-[16px] md:px-0">
@@ -60,23 +35,14 @@ export default function Profile() {
           <div className="flex flex-col md:flex-row">
             <Avatar className="w-[57px] h-[57px] md:w-[82px] md:h-[82px] object-cover" />
             <div className="md:ml-[16px] mt-[15px] md:mt-0">
-              <p className="text-[20px] md:text-[30px] font-condensed font-bold text-black leading-[24px] md:leading-[35px]">{`${author?.firstName} ${author?.lastName}`}</p>
+              <Title className="font-condensed">{`${user?.firstName} ${user?.lastName}`}</Title>
               <p className="mt-[9px] md:mt-[12px] text-[15px] text-[#555555] leading-[18px] max-w-[600px]">
                 Өөрийн дуртай график дизайны мэдээллээ авдаг сайтнаас хүргэх болно.
               </p>
-              <div className="flex flex-row text-[#555555] gap-[23px] mt-[18px] text-[15px] leading-[18px]">
-                <p>
-                  <span className="text-[#111111] font-medium">{author?.articles?.totalCount}</span> Пост
-                </p>
-                <p>
-                  <span className="text-[#111111] font-medium md:ml-[28px]">{author?.recipes?.length}</span> Жор
-                </p>
-                <p>
-                  <span className="text-[#111111] font-medium md:ml-[28px]">30</span> Дагагчид
-                </p>
-                <p>
-                  <span className="text-[#111111] font-medium md:ml-[28px]">1460</span> Аура
-                </p>
+              <div className="flex flex-row text-[#555555] gap-[23px] mt-[18px] text-[15px] leading-[18px] font-merri text-center">
+                <Statistic title="Пост" value={user?.articles?.totalCount} />
+                <Statistic title="Дагагчид" value={30} />
+                <Statistic title="Аура" value={1500} />
               </div>
             </div>
           </div>
@@ -95,37 +61,34 @@ export default function Profile() {
             </div>
           </div>
         </div>
-        <div className="flex flex-row items-center pb-[1px] gap-[36px] border-b border-t border-[#EFEEEF] pt-[16px]">
-          {menu.map((data, index) => {
-            return (
-              <p
-                key={index}
-                onClick={() => setSelected(index)}
-                className={`text-[18px] px-[7px] font-bold cursor-pointer text-center leading-[21px] ${
-                  selected === index ? 'border-b-[3px] border-[#FF6600] pb-[12px]' : 'border-none pb-[15px]'
-                } ${selected === index ? 'text-[#111111]' : 'text-[#555555]'}`}
-              >
-                {data.title}
-              </p>
-            );
-          })}
-        </div>
-        {selected === 0 ? (
-          <div>
-            {/* <div className="pt-[50px] text-[#111111] font-bold text-[20px] leading-[24px]">
-              <p>Жор</p>
-              <MagazineFeed />
-            </div> */}
-            <div className="mt-[50px]">
-              <p className="text-[#111111] font-bold text-[20px] leading-6">ПОСТ</p>
-              <div className={'mt-[20px] flex flex-wrap gap-[22px] w-full justify-center'}>
-                {articles.map((data, index) => {
-                  return <FeedCard key={index} post={data} />;
-                })}
-              </div>
-            </div>
-          </div>
-        ) : null}
+        <Tabs size="large">
+          <Tabs.TabPane key="posts" tab="Оруулсан мэдээ">
+            <Row gutter={22} className="max-w-[1310px] my-[24px]">
+              {articles.map((post) => (
+                <Col key={post.id} span={8}>
+                  <PostCard post={post} />
+                </Col>
+              ))}
+              {loading && <Skeleton />}
+              {count > 24 * (page + 1) && (
+                <Col span={24}>
+                  <Button
+                    block
+                    size="large"
+                    type="primary"
+                    ghost
+                    className="font-roboto"
+                    onClick={() => setPage(page + 1)}
+                    loading={loading}
+                  >
+                    Цааш үзэх
+                  </Button>
+                </Col>
+              )}
+            </Row>
+          </Tabs.TabPane>
+          <Tabs.TabPane key="history" tab="Үзсэн түүх" />
+        </Tabs>
       </div>
     </div>
   );

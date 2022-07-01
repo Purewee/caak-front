@@ -8,7 +8,7 @@ import SignInUpController from '../../modal//SignInUpController';
 import { useAuth } from '../../../context/AuthContext';
 import UserInfo from './UserInfo';
 import logoIcon from '../../../images/New-Logo.svg';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Avatar, Skeleton } from 'antd';
 import { Link } from 'react-router-dom';
 import { FIcon } from '../../../component/icon';
@@ -88,7 +88,7 @@ export default function NavbarNew() {
   //prettier-ignore
   const onPressEnter = (e) => {
     if (e.key === 'Enter') {
-      navigate("/search", { replace: true, state: {value: searchValue} });
+      navigate(`/search`, { state: { q: e.target.value }});
       setSearchShown(false)
     }
   };

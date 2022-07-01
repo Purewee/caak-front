@@ -126,3 +126,25 @@ export const USER = gql`
     }
   }
 `;
+
+export const ADD_REACTION = gql`
+  mutation AddReaction($articleId: ID!, $action: ActionKind!) {
+    createReaction(input: { targetId: $articleId, targetType: article, action: $action }) {
+      id
+    }
+  }
+`;
+
+export const REACTIONS = gql`
+  query GetReactions($articleId: ID!) {
+    article(id: $articleId) {
+      reactions {
+        totalCount
+        nodes {
+          id
+          action
+        }
+      }
+    }
+  }
+`;

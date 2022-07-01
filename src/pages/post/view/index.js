@@ -10,10 +10,7 @@ import { Wrapper, Title, BlockTitle, Paragraph, HashTag, MetaTag } from './wrapp
 import Comments from './comments';
 import { ARTICLE, ME } from './_gql';
 import LoveIcon from '../../../assets/images/fi-rs-react-love.png';
-import CryIcon from '../../../assets/images/fi-rs-react-cry.svg';
-import AngerIcon from '../../../assets/images/fi-rs-react-anger.svg';
 import HahaIcon from '../../../assets/images/fi-rs-react-haha.svg';
-import WowIcon from '../../../assets/images/fi-rs-react-wow.svg';
 import DropDown from '../../../component/navigation/DropDown';
 import { useClickOutSide } from '../../../utility/Util';
 import PostSaveModal from '../../../component/modal/PostSaveModal';
@@ -23,6 +20,7 @@ import { useAuth } from '../../../context/AuthContext';
 import SignInUpController from '../../../component/modal/SignInUpController';
 import { Link } from 'react-router-dom';
 import { FacebookShareButton, TwitterShareButton } from 'react-share';
+import Reaction from './reaction';
 
 const Post = () => {
   const context = useContext(AppContext);
@@ -274,29 +272,8 @@ const Post = () => {
               Дагах
             </button>
           </div>
-          <div className="max-w-[760px] w-full flex flex-col items-center">
-            <p className="text-[#111111] text-[18px] font-bold leading-[21px] mt-[36px] max-w-[190px] md:max-w-full md:mt-[50px]">
-              ЭНЭ МЭДЭЭНД ӨГӨХ ТАНЫ СЭТГЭГДЭЛ?
-            </p>
-            <div className='flex flex-row items-center gap-[7px] md:gap-[24px] mt-[14px]'>
-              <span className='rounded-full border w-[60px] h-[60px] flex items-center justify-center'>
-                <img className='w-[38px]' src={LoveIcon} alt=''/>
-              </span>
-              <span className='rounded-full border w-[60px] h-[60px] flex items-center justify-center'>
-                <img className='w-[38px]' src={AngerIcon} alt=''/>
-              </span>
-              <span className='rounded-full border w-[60px] h-[60px] flex items-center justify-center'>
-                <img className='w-[38px]' src={CryIcon} alt=''/>
-              </span>
-              <span className='rounded-full border w-[60px] h-[60px] flex items-center justify-center'>
-                <img className='w-[38px]' src={HahaIcon} alt=''/>
-              </span>
-              <span className='rounded-full border w-[60px] h-[60px] flex items-center justify-center'>
-                <img className='w-[38px]' src={WowIcon} alt=''/>
-              </span>
-            </div>
-            <Comments articleId={article?.id} />
-          </div>
+          <Reaction articleId={article?.id} />
+          <Comments articleId={article?.id} />
         </div>
         <div className='w-[270px] hidden md:block'>
           <div className={`w-[250px] h-[392px] bg-orange-300 ${leftMenuSticky ? 'sticky top-[80px] fade-in-banner' : 'hidden'}`}></div>

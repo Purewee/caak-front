@@ -1,23 +1,10 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { AppContext } from '../../App';
-import TagsCard from '../../component/card/TagsCard';
+import React, { useEffect, useState } from 'react';
+import { Tabs, Statistic, Button, Row, Col, Skeleton } from 'antd';
 import { ESService } from '../../lib/esService';
 import { gql, useQuery } from '@apollo/client';
 import { useParams } from 'react-router-dom';
-import Loader from '../../component/loader';
-import FeedCard from '../../component/card/FeedCard';
-import useMediaQuery from '../../component/navigation/useMediaQuery';
-import HighlightCard from '../../component/card/FeedCard/HighlightCard';
 import PostCard from '../../component/card/Post';
-
-const menu = [
-  {
-    title: 'ШИНЭ',
-  },
-  {
-    title: 'ШИЛДЭГ',
-  },
-];
+import { HashTag, Title } from '../post/view/wrapper';
 
 const CATEGORY = gql`
   query GetCategory($slug: String) {
@@ -26,150 +13,86 @@ const CATEGORY = gql`
       name
       slug
       status
-      articles {
-        totalCount
-      }
     }
   }
 `;
 
+const sortMap = {
+  recent: { publish_date: 'desc' },
+  top: { views_count: 'desc' },
+};
+
 export default function Category() {
-  const context = useContext(AppContext);
+  const es = new ESService('caak');
   const { slug } = useParams();
-  const [selected, setSelected] = useState(0);
-  const [articles, setArticles] = useState([]);
-  const { data, loading } = useQuery(CATEGORY, { variables: { slug } });
+  const { data } = useQuery(CATEGORY, { variables: { slug } });
   const category = data?.category || {};
-
-  const isLaptop = useMediaQuery('(min-width: 1001px) and (max-width: 1920px)');
-  const isTablet = useMediaQuery('(min-width: 401px) and (max-width: 1000px)');
-  const isMobile = useMediaQuery('screen and (max-width: 767px)');
-
-  useEffect(() => {
-    context.setStore('default');
-    // eslint-disable-next-line
-  }, []);
+  const [sort, setSort] = useState('recent');
+  const [count, setCount] = useState(0);
+  const [articles, setArticles] = useState([]);
+  const [page, setPage] = useState(0);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    context.setShown(true);
-  }, []);
+    setLoading(true);
+    es.categoryPosts(slug, { size: 24, sort: sortMap[sort] }).then(({ hits, total }) => {
+      setArticles(hits);
+      setCount(total);
+      setLoading(false);
+    });
+  }, [slug, sort]);
 
   useEffect(() => {
-    const es = new ESService('caak');
-    es.categoryPosts(slug, { size: 24 }).then(setArticles);
-  }, [slug]);
+    if (page === 0) return;
+    setLoading(true);
+    es.categoryPosts(slug, { from: 24 * page, size: 24, sort: sortMap[sort] }).then(({ hits }) => {
+      setArticles([...articles, ...hits]);
+      setLoading(false);
+    });
+  }, [page]);
 
-  if (loading)
-    return (
-      <div className={'w-full flex justify-center'}>
-        <Loader className={`bg-caak-primary self-center`} />
-      </div>
-    );
-  //prettier-ignore
   return (
     <div className="flex justify-center pt-[20px] md:pt-[51px] pb-[100px] px-[16px]">
       <div className="max-w-[1310px] w-full flex flex-col items-center">
-        <p className='text-[13px] font-medium text-caak-primary leading-[15px]'>Мэдээний төрөл</p>
-        <div className="flex flex-col md:flex-row justify-between items-center w-full mt-[10px]">
-          <div className="w-[142px] hidden md:block"></div>
-          <p className="text-black text-[38px] font-roboto leading-[44px] font-bold">{category?.name}</p>
-          <div className="flex flex-row items-center mt-[19px] md:mt-0">
-            <button className="bg-caak-primary text-white text-[15px] font-bold font-roboto w-[90px] h-[34px] rounded-[4px] border border-caak-primary">
-              Дагах
-            </button>
-            <div className=' border border-[#D4D8D8] rounded-[4px] w-[42px] h-[34px] flex justify-center items-center ml-[10px] cursor-pointer'>
-              <span className="icon-fi-rs-more-ver text-[#111111] text-[18px] rotate-90" />
-            </div>
-          </div>
+        <HashTag className="uppercase">Мэдээний төрөл</HashTag>
+        <Title>{category.name}</Title>
+        <div className="flex">
+          <Statistic title="Нийт мэдээлэл" value={count} className="mx-[24px] text-center" />
+          <Statistic title="Дагагчид" value={count} className="text-center" />
         </div>
-        <div className="flex flex-row items-center mt-[20px] md:mt-[10px]">
-          <p className="text-[#555555] text-[15px] leading-[18px]">
-            <span className="text-[#111111] font-medium">{category?.articles?.totalCount}</span> Пост
-          </p>
-          <p className="text-[#555555] text-[15px] leading-[18px] ml-[20px]">
-            <span className="text-[#111111] font-medium">30 </span>Дагагчид
-          </p>
-        </div>
-        <div className="mt-[20px] md:mt-[40px] flex flex-row items-center border-[#EFEEEF] border-b border-t w-full justify-center gap-[50px] pb-[1px] pt-[17px]">
-          {menu.map((data, index) => {
-            return (
-              <p
-                key={index}
-                onClick={() => setSelected(index)}
-                className={`text-[18px] font-bold cursor-pointer text-center leading-[21px] ${
-                  selected === index ? 'border-b-[3px] border-[#FF6600] pb-[12px]' : 'border-none pb-[15px]'
-                } ${selected === index ? 'text-[#111111]' : 'text-[#555555]'}`}
+        <Tabs
+          defaultActiveKey="recent"
+          onChange={(e) => {
+            setSort(e);
+          }}
+          clasName="my-[48px]"
+        >
+          <Tabs.TabPane tab={<span className="text-[24px] font-normal font-merri">ШИНЭ</span>} key="recent" />
+          <Tabs.TabPane tab={<span className="text-[24px] font-normal font-merri">ШИЛДЭГ</span>} key="top" />
+        </Tabs>
+        <Row gutter={22} className="max-w-[1310px] my-[24px]">
+          {articles.map((post) => (
+            <Col key={post.id} span={8}>
+              <PostCard post={post} />
+            </Col>
+          ))}
+          {loading && <Skeleton />}
+          {count > 24 * (page + 1) && (
+            <Col span={24}>
+              <Button
+                block
+                size="large"
+                type="primary"
+                ghost
+                className="font-roboto"
+                onClick={() => setPage(page + 1)}
+                loading={loading}
               >
-                {data.title}
-              </p>
-            );
-          })}
-        </div>
-        <div className="flex flex-wrap items-center justify-between w-full mt-[50px] pb-[60px]">
-          {articles.slice(0, 3).map((data, index) => {
-            if (isMobile) {
-              return <FeedCard key={index} post={data} />
-            } else {
-              return <TagsCard key={index} data={data} middle={index === 1 && true} />
-            }
-          })}
-        </div>
-        <div
-          className={`relative max-w-[1310px] w-full justify-items-center border-t-[8px] xl:border-none border-[#EFEEEF] ${isMobile ? 'mobileFeedGrid' : 'newFeedGrid'} justify-center`}
-        >
-          {articles.slice(3, 8).map((data, index) => {
-            return <FeedCard trend={selected === 1 && true} sponsored={index === 4 && true} key={index} post={data} />;
-          })}
-          {
-            articles.length > 8 && 
-            <div className="w-full flex flex-col">
-              <div className={`w-full sm:w-[424px] h-[220px] bg-gray-200 ${selected === 0 ? 'sm:h-[527px]' : 'sm:h-[475px]'}`}></div>
-              <div className="flex md:hidden flex-row items-center pr-[6px] justify-end w-full text-[#909090] mt-[8px] border-b border-[#EFEEEF] pb-[13px]">
-                <span className="icon-fi-rs-megaphone text-[13px]" />
-                <p className="text-[14px] font-condensed ml-[4px]">Сурталчилгаа</p>
-              </div>
-            </div>
-          }
-          {articles.slice(8, 11).map((data, index) => {
-            return <FeedCard trend={selected === 1 && true} key={index} post={data} />;
-          })}
-          {articles.slice(11, 14).map((data, index) => {
-            return <FeedCard trend={selected === 1 && true} key={index} post={data} />;
-          })}
-        </div>
-        <div
-          className={`relative max-w-[1310px] w-full justify-items-center ${
-            isMobile ? 'mobileFeedGrid' : 'HighlightFeedGrid'
-          } justify-center ${articles.length > 14 && 'sm:pt-[44px] sm:pb-[40px]'}`}
-        >
-          {articles.slice(14, 16).map((data, index) => {
-            if (isLaptop) {
-              return <HighlightCard key={index} post={data} />;
-            } else {
-              return <FeedCard key={index} post={data} />;
-            }
-          })}
-        </div>
-        <div
-          className={`relative max-w-[1310px] w-full justify-items-center border-t-[8px] xl:border-none border-[#EFEEEF] ${isMobile ? 'mobileFeedGrid' : 'newFeedGrid'} justify-center`}
-        >
-          {articles.slice(16, 20).map((data, index) => {
-            return <FeedCard trend={selected === 1 && true} sponsored={index === 4 && true} key={index} post={data} />;
-          })}
-          {
-            articles.length > 20 &&
-            <div className="w-full flex flex-col">
-              <div className={`w-full sm:w-[424px] h-[220px] bg-gray-200 ${selected === 0 ? 'sm:h-[527px]' : 'sm:h-[475px]'}`}></div>
-              <div className="flex md:hidden flex-row items-center pr-[6px] justify-end w-full text-[#909090] mt-[8px] border-b border-[#EFEEEF] pb-[13px]">
-                <span className="icon-fi-rs-megaphone text-[13px]" />
-                <p className="text-[14px] font-condensed ml-[4px]">Сурталчилгаа</p>
-              </div>
-            </div>
-          }
-          {articles.slice(20).map((data, index) => {
-            return <FeedCard trend={selected === 1 && true} key={index} post={data} />;
-          })}
-        </div>
+                Цааш үзэх
+              </Button>
+            </Col>
+          )}
+        </Row>
       </div>
     </div>
   );
