@@ -4,6 +4,7 @@ import PostSaveModal from '../../modal/PostSaveModal';
 import DropDown from '../../navigation/DropDown';
 import { imagePath, useClickOutSide } from '../../../utility/Util';
 import moment from 'moment';
+import { HashTag } from '../../../pages/post/view/wrapper';
 
 export default function HighlightCard({ post }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -22,9 +23,9 @@ export default function HighlightCard({ post }) {
       <img alt="" src={imagePath(post.image)} className="h-full w-full object-cover" />
       <div className="absolute left-0 bottom-0 highlightLinear flex flex-col justify-end h-[316px] w-full p-[30px]">
         <div className="flex flex-col w-full">
-          {post.categories.map((x) => (
-            <Link key={x.id} to={`tags/${x.id}`}>
-              <p className="text-white font-medium mb-[10px] text-[14px] leading-[16px] uppercase">#{x.name}</p>
+          {post?.categories?.map((x, index) => (
+            <Link key={index} to={`/category/${x.slug}`}>
+              <HashTag className="font-normal text-[13px]">{`${x.name}`}</HashTag>
             </Link>
           ))}
           <Link to={`/post/view/${post.id}`}>
