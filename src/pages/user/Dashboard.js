@@ -110,7 +110,7 @@ export default function Dashboard() {
                     </thead>
                     <tbody>
                         {
-                            articles.map((data, index) => {
+                            articles.hits.map((data, index) => {
                                 return(
                                     <tr key={index} className="border-b">
                                         <td>

@@ -7,6 +7,7 @@ import moment from 'moment';
 import PostSaveModal from '../modal/PostSaveModal';
 import PostShareModal from '../modal/PostShareModal';
 import ReportModal from '../modal/ReportModal';
+import { FIcon } from '../icon';
 
 // Ene bol medeenii jagsaalt deer haragdah Card. Dooroo Garchigtai Merri fonttoi.
 export default function PostCard({ post, ...rest }) {
@@ -46,7 +47,7 @@ export default function PostCard({ post, ...rest }) {
             </Link>
           ))}
           <Link
-            className="text-[#111111] hover:text-[#111111] text-[18px] font-medium leading-[27px] tracking-[0.32px] font-merri truncate-3"
+            className="text-[#111111] hover:text-[#111111] text-[21px] font-medium mt-[10px] leading-[27px] tracking-[0.32px] font-merri truncate-3"
             to={postURL}
           >
             {post.title}
@@ -59,17 +60,16 @@ export default function PostCard({ post, ...rest }) {
           <div className="flex flex-row items-center">
             <Link to={`/channel/${post.source?.id}`} className="flex flex-row items-center">
               <Avatar className="w-[22px] h-[22px]" src={imagePath(post.source?.icon)} />
-              <MetaTag className="ml-[6px]">{post?.source?.name}</MetaTag>
+              <MetaTag className="ml-[6px] text-[15px]">{post?.source?.name}</MetaTag>
             </Link>
             <Link to={`/profile/${post.author?.id}`}>
               <MetaTag className="ml-0">&nbsp;•&nbsp;{post.author?.name}</MetaTag>
             </Link>
           </div>
-          <div className="flex">
-            <Button
+          <div className="flex flex-row items-center">
+            <FIcon
               onClick={() => setSavePostOpen(true)}
-              type="link"
-              icon={<span className="icon-fi-rs-bookmark text-[#909090] text-[17px]" />}
+              className="h-[22px] text-[#909090] icon-fi-rs-bookmark text-[22px]"
             />
             <Popover
               placement="bottom"
@@ -104,7 +104,7 @@ export default function PostCard({ post, ...rest }) {
                 </div>
               }
             >
-              <Button type="link" icon={<span className="icon-fi-rs-more-ver text-[#909090] text-[17px]" />} />
+              <span className="text-[#909090] cursor-pointer text-[22px] w-[22px] h-[22px] flex justify-center items-center icon-fi-rs-more-ver ml-[10px]" />
             </Popover>
           </div>
         </div>
