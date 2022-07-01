@@ -7,8 +7,11 @@ import Loader from '../../component/loader';
 import { ESService } from '../../lib/esService';
 import FeedCard from '../../component/card/FeedCard';
 import { ME, USER } from '../post/view/_gql';
-import { Avatar } from 'antd';
+import { Avatar, notification } from 'antd';
 import PostSaveModal from '../../component/modal/PostSaveModal';
+import { Link } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext';
+import SignInUpController from '../../component/modal/SignInUpController';
 
 const menu = [
   {
@@ -29,12 +32,24 @@ export default function Profile() {
   const context = useContext(AppContext);
   const [selected, setSelected] = useState(0);
   const [articles, setArticles] = useState([]);
+  const [isShown, setIsShown] = useState(false);
   const [savePostOpen, setSavePostOpen] = useState(false);
   const { id } = useParams();
   const { data, loading } = useQuery(USER, { variables: { id } });
   const author = data?.user || {};
   const { data: me, loading: me_loading } = useQuery(ME);
   const loggedUser = me?.me;
+  const { isAuth } = useAuth();
+
+  const openNotification = () => {
+    const args = {
+      message: `Та ${data?.user.firstName}-г дагалаа`,
+      duration: 4,
+      placement: 'bottom',
+      className: 'h-[50px] bg-[#12805C] w-[470px]',
+    };
+    notification.open(args);
+  };
 
   useEffect(() => {
     context.setStore('default');
@@ -82,16 +97,21 @@ export default function Profile() {
           </div>
           <div className="flex flex-row mt-[20px] md:mt-0">
             {loggedUser?.id === id ? (
-              <div className="cursor-pointer w-[151px] h-[34px] border-[1px] border-[#FF6600] rounded-[4px] flex justify-center items-center">
-                <p className="text-[15px] leading-[18px] font-medium text-[#FF6600]">Мэдээллээ засах</p>
-              </div>
+              <Link to={`/settings/${loggedUser.id}`}>
+                <div className="cursor-pointer w-[151px] h-[34px] border-[1px] border-[#FF6600] rounded-[4px] flex justify-center items-center">
+                  <p className="text-[15px] leading-[18px] font-medium text-[#FF6600]">Мэдээллээ засах</p>
+                </div>
+              </Link>
             ) : (
-              <button className="w-[90px] h-[34px] bg-caak-primary rounded-[4px] text-white text-[15px] font-bold">
+              <button
+                onClick={() => (isAuth ? openNotification() : setIsShown('signin'))}
+                className="w-[90px] h-[34px] bg-caak-primary rounded-[4px] text-white text-[15px] font-bold"
+              >
                 Дагах
               </button>
             )}
-            <div className=" border-[1px] border-[#D4D8D8] w-[42px] h-[34px] flex justify-center items-center rounded-[4px] ml-[10px]">
-              <span className="icon-fi-rs-more-ver cursor-pointer rotate-90 text-[#111111] text-[18px]" />
+            <div className=" border-[1px] cursor-pointer border-[#D4D8D8] w-[42px] h-[34px] flex justify-center items-center rounded-[4px] ml-[10px]">
+              <span className="icon-fi-rs-more-ver rotate-90 text-[#111111] text-[18px]" />
             </div>
           </div>
         </div>
@@ -118,7 +138,7 @@ export default function Profile() {
             </div> */}
             <div className="mt-[50px]">
               <p className="text-[#111111] font-bold text-[20px] leading-6">ПОСТ</p>
-              <div className={'mt-[20px] flex flex-wrap gap-[22px] w-full justify-center'}>
+              <div className={'mt-[20px] flex flex-wrap gap-[22px] w-full justify-center md:justify-start'}>
                 {articles.map((data, index) => {
                   return <FeedCard key={index} post={data} />;
                 })}
@@ -127,6 +147,7 @@ export default function Profile() {
           </div>
         ) : null}
       </div>
+      <SignInUpController isShown={isShown} setIsShown={setIsShown} />
     </div>
   );
 }

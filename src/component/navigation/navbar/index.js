@@ -160,7 +160,7 @@ export default function NavbarNew() {
     loaded && (
       <nav
         className={`${
-          navBarStyle ? 'bg-transparent absolute z-[2] top-0' : 'border-b'
+          navBarStyle ? 'navbarLinear absolute z-[2] top-0' : 'border-b'
         } w-full px-[40px] flex items-center h-[70px]`}
       >
         <div className={'h-[42.33px] flex flex-row items-center justify-between w-full'}>

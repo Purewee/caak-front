@@ -98,6 +98,10 @@
   background: transparent linear-gradient(180deg, #11111100 0%, #11111199 100%) 0% 0% no-repeat padding-box;
 }
 
+.navbarLinear {
+  background:  transparent linear-gradient(180deg, #1111119A 0%, #00000000 100%) 0% 0% no-repeat padding-box;;
+}
+
 .caak-main-wrapper {
   max-width: 1920px;
   margin-right: auto;

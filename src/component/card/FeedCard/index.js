@@ -5,6 +5,7 @@ import PostSaveModal from '../../modal/PostSaveModal';
 import DropDown from '../../navigation/DropDown';
 import { generateTimeAgo } from '../../../utility/Util';
 import useMediaQuery from '../../navigation/useMediaQuery';
+import { HashTag } from '../../../pages/post/view/wrapper';
 
 const postColors = [
   {
@@ -208,9 +209,9 @@ const FeedCard = ({ post, loading, className, sponsored, trend }) => {
           <div className={`relative flex flex-col pt-[20px] justify-between md:pb-[21px] md:h-[226px]`}>
             <div className="flex flex-col w-full">
               {isLaptop &&
-                post.categories.map((x) => (
-                  <Link key={x.id} to={`tags/${x.slug}`}>
-                    <p className="text-[#FF6600] mb-[10px] text-[13px] uppercase leading-[15px] font-medium">#{x.name}</p>
+                post?.categories?.map((x, index) => (
+                  <Link key={index} to={`/category/${x.slug}`}>
+                    <HashTag className="font-normal text-[13px]">{`${x.name}`}</HashTag>
                   </Link>
                 ))}
               <Link to={`/post/view/${post.id}`}>

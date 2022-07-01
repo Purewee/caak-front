@@ -4,10 +4,11 @@ import { generateTimeAgo, imagePath } from '../../../utility/Util';
 import { Avatar } from 'antd';
 import { MetaTag } from '../../../pages/post/view/wrapper';
 
+//prettier-ignore
 const NavbarPostHeaderCard = ({ type, item }) => {
   return (
     item && (
-      <div className={'w-full h-full relative  min-h-[436px]'}>
+      <div className={'w-full h-full relative  min-h-[560px]'}>
         <img
           className={'object-cover w-full h-full absolute top-0'}
           alt=""
@@ -17,10 +18,10 @@ const NavbarPostHeaderCard = ({ type, item }) => {
           //   query: item
           // }, `/post/view/${item.id}`)}
         />
-        <div className={'absolute bottom-0 h-full w-full navBarPostHeaderCardGradient'} />
+        <div className={'absolute bottom-0 h-full w-full'} />
 
         <div
-          className={`flex flex-col w-full absolute bottom-0 ${type === 'wide' ? 'px-[40px]' : 'px-[30px]'}  py-[30px]`}
+          className={`flex flex-col w-full absolute z-20 bottom-0 ${type === 'wide' ? 'px-[40px]' : 'px-[30px]'} py-[30px]`}
         >
           <div className={'uppercase text-[14px] font-roboto font-medium tracking-[0.2px] leading-[15px]'}>
             {item.categories?.map((x) => {
@@ -53,10 +54,14 @@ const NavbarPostHeaderCard = ({ type, item }) => {
           </p>
           <div className={'flex flex-wrap justify-between w-full mt-[30px] items-center'}>
             <div className={'flex text-white flex-row items-center self-start'}>
-              <div>
-                <Avatar className="w-[22px] h-[22px]" src={imagePath(item.source?.icon)} />
-                <MetaTag className="ml-[6px] text-[#FFFFFF]">{item?.source?.name}</MetaTag>
-                <MetaTag className="ml-[6px] text-[#FFFFFF]">• {(item.author?.name).split(' ')[0]}</MetaTag>
+              <div className='flex flex-row items-center'>
+                <Link to={`/channel/${item.source?.id}`} className="flex flex-row items-center">
+                  <Avatar className="w-[22px] h-[22px]" src={imagePath(item.source?.icon)} />
+                  <MetaTag className="ml-[6px] text-[#FFFFFF]">{item?.source?.name}</MetaTag>
+                </Link>
+                <Link to={`/profile/${item.author?.id}`}>
+                  <MetaTag className="ml-[6px] text-[#FFFFFF]">• {(item.author?.name).split(' ')[0]}</MetaTag>
+                </Link>
               </div>
             </div>
             <div className={'flex items-center mt-[10px] sm:mt-0 self-end md:self-center'}>
