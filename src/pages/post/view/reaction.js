@@ -10,7 +10,7 @@ import { ADD_REACTION, REACTIONS } from './_gql';
 import { Button } from 'antd';
 
 export default function Reaction({ articleId }) {
-  const { data, loading: fetching } = useQuery(REACTIONS, { variables: { articleId } });
+  const { data, loading: fetching, refetch } = useQuery(REACTIONS, { variables: { articleId } });
   const [add, { loading }] = useMutation(ADD_REACTION, { variables: { articleId } });
   const ACTIONS = [
     { action: 'like', icon: LoveIcon },
@@ -36,7 +36,7 @@ export default function Reaction({ articleId }) {
               shape="circle"
               type="link"
               key={idx}
-              onClick={() => add({ variables: { action: x.action } })}
+              onClick={() => add({ variables: { action: x.action } }).then(() => refetch())}
             >
               <span className="rounded-full border p-[12px]">
                 <img className="w-[38px]" src={x.icon} alt={x.action} />
