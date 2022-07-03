@@ -17,11 +17,17 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  border-radius: 4px;
 }
 
 .ant-btn .anticon {
   margin: 0;
 }
 .ant-btn-primary {
-  background: var(--ant-primary-color);
+  background-color: var(--ant-primary-color) !important;
+}
+
+.ant-modal-footer{
+  display: flex;
+  justify-content: right;
 }

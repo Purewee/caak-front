@@ -56,7 +56,11 @@ function AddPost() {
         }).then(message.success('Saved'));
       }}
       className="caak_article"
-      initialValues={{ ...article, tags: article.tags.map((x) => x.slug), blocks: sortBy(article.blocks, 'position') }}
+      initialValues={{
+        ...article,
+        tags: article?.tags.map((x) => x.slug),
+        blocks: sortBy(article?.blocks, 'position'),
+      }}
     >
       <Row gutter={12} className="mb-[400px]">
         <Col span={16} className="w-full mx-[50px]">

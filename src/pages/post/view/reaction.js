@@ -32,7 +32,7 @@ export default function Reaction({ articleId }) {
           <div key={idx} className="flex flex-col items-center">
             <div className="font-bold mb-[20px]">{reactions?.nodes.filter((r) => r.action === x.action).length}</div>
             <Button
-              loading={loading}
+              disabled={loading}
               shape="circle"
               type="link"
               key={idx}

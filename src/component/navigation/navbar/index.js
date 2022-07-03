@@ -214,7 +214,7 @@ export default function NavbarNew() {
         <SignInUpController isShown={isShown} setIsShown={setIsShown} />
         {
           sideMenuOpen && 
-          <div ref={sideMenuRef} className='absolute left-0 top-0 w-[410px] bg-white z-[3] px-[50px] pt-[50px] pb-[55px]'>
+          <div ref={sideMenuRef} className='absolute left-0 top-0 w-[410px] bg-white z-[3] px-[50px] pt-[50px] pb-[55px] font-condensed'>
             <div className='flex flex-row items-center justify-between w-full'>
                 <span className='icon-fi-rs-search text-[20px] text-[#111111]' />
                 <img
@@ -234,7 +234,7 @@ export default function NavbarNew() {
                 {categories.map((data, index) => {
                   return(
                     <Link key={index} to={`/tags/${data.slug}`}>
-                      <p className='text-[#111111] leading-[20px] text-[17px]'>{data.name}</p>
+                      <p className='text-[#111111] leading-[20px] text-[14px] font-condensed'>{data.name}</p>
                     </Link>
                   )
                 })}

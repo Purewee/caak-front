@@ -64,7 +64,7 @@ export default function Category() {
         <Title>{category.name}</Title>
         <div className="flex">
           <Statistic title="Нийт мэдээлэл" value={count} className="mx-[24px] text-center" />
-          <Statistic title="Дагагчид" value={count} className="text-center" />
+          <Statistic title="Дагагчид" value={count} className="text-center font-condensed" />
         </div>
         <Tabs
           defaultActiveKey="recent"
@@ -88,9 +88,7 @@ export default function Category() {
               <Button
                 block
                 size="large"
-                type="primary"
-                ghost
-                className="font-roboto"
+                className="font-roboto mt-[24px] text-caak-primary border-caak-primary"
                 onClick={() => setPage(page + 1)}
                 loading={loading}
               >

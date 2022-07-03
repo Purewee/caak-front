@@ -72,7 +72,7 @@ export default function Home() {
             ></Tabs.TabPane>
           </Tabs>
         </div>
-        <Space size={[22, 40]} wrap className="max-w-[1310px]">
+        <Row gutter={40} className="max-w-[1310px]">
           {articles.map((post) => (
             <Col key={post.id} span={8}>
               <PostCard post={post} />
@@ -83,16 +83,14 @@ export default function Home() {
             <Button
               block
               size="large"
-              type="primary"
-              ghost
-              className="font-roboto"
+              className="font-roboto border-caak-primary text-caak-primary mt-[20px]"
               onClick={() => setPage(page + 1)}
               loading={loading}
             >
               Цааш үзэх
             </Button>
           </Col>
-        </Space>
+        </Row>
       </div>
     </>
   );

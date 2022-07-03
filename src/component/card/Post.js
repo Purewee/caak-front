@@ -112,8 +112,8 @@ export default function PostCard({ post, ...rest }) {
       </div>
       <PostSaveModal
         post={post}
-        setSavePostOpen={setSavePostOpen}
-        savePostOpen={savePostOpen}
+        onClose={() => setSavePostOpen(false)}
+        open={savePostOpen}
         image={imagePath(post.image)}
       />
       <PostShareModal

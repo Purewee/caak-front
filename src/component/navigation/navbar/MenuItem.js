@@ -41,7 +41,7 @@ const MenuItems = ({ navBarStyle }) => {
           >
             {item.link && (
               <a rel="noreferrer" href={item.link} target="_blank">
-                <p className="hover:text-caak-primary font-bold text-[14px] leading-[16px] tracking-[0px]">
+                <p className="hover:text-caak-primary font-bold text-[14px] leading-[16px] tracking-[0px] font-condensed">
                   {item.title}
                 </p>
               </a>
@@ -59,7 +59,7 @@ const MenuItems = ({ navBarStyle }) => {
                       return (
                         <Col key={x.id} span={8} className="mt-[12px]">
                           <Link to={`/category/${x.slug}`} key={x.id}>
-                            <span className="text-[#111111] p-[8px] leading-[18px] tracking-[0.23px] font-condensed font-normal text-[15px]">
+                            <span className="text-[#111111] p-[8px] leading-[18px] tracking-[0.23px] font-condensed font-bolder text-[14px]">
                               {x.name}
                             </span>
                           </Link>
@@ -69,9 +69,9 @@ const MenuItems = ({ navBarStyle }) => {
                   </Row>
                 }
               >
-                <p className="hover:text-caak-primary">
+                <p className="hover:text-caak-primary font-condensed">
                   <span>{item.title}</span>
-                  <span className={'icon-fi-rs-down-chevron text-[12px] text-caak-primary px-[8px]'} />
+                  <span className="icon-fi-rs-down-chevron text-[12px] text-caak-primary px-[8px]" />
                 </p>
               </Popover>
             )}

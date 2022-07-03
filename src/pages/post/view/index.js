@@ -11,8 +11,6 @@ import Comments from './comments';
 import { ARTICLE, ME } from './_gql';
 import LoveIcon from '../../../assets/images/fi-rs-react-love.png';
 import HahaIcon from '../../../assets/images/fi-rs-react-haha.svg';
-import DropDown from '../../../component/navigation/DropDown';
-import { useClickOutSide } from '../../../utility/Util';
 import PostSaveModal from '../../../component/modal/PostSaveModal';
 import PostShareModal from '../../../component/modal/PostShareModal';
 import { Avatar, Popover, notification } from 'antd';
@@ -293,7 +291,7 @@ const Post = () => {
         <div className='w-[270px] hidden md:block'>
           <div className={`w-[250px] h-[392px] bg-orange-300 ${leftMenuSticky ? 'sticky top-[80px] fade-in-banner' : 'hidden'}`}></div>
         </div>
-        <PostSaveModal post={article} setSavePostOpen={setSavePostOpen} savePostOpen={savePostOpen} image={imagePath(article.imageUrl)}/>
+        <PostSaveModal post={article} onClose={() => setSavePostOpen(false)} open={savePostOpen} image={imagePath(article.imageUrl)}/>
         <PostShareModal post={article} setSharePostOpen={setSharePostOpen} sharePostOpen={sharePostOpen} image={imagePath(article.imageUrl)}/>
         <SignInUpController isShown={isShown} setIsShown={setIsShown} />
         <ReportModal isOpen={isReportOpen} setIsOpen={setIsReportOpen} />

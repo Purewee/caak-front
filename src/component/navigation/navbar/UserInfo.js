@@ -1,12 +1,13 @@
 import React, { useContext } from 'react';
 import { useQuery, gql } from '@apollo/client';
-import Avatar from 'antd/lib/avatar';
-import { Popover } from 'antd';
+import { Popover, Badge, List, Button, Avatar } from 'antd';
 import { useAuth } from '../../../context/AuthContext';
-import { UserOutlined } from '@ant-design/icons';
+import { CloseOutlined, UserOutlined } from '@ant-design/icons';
 import { FIcon } from '../../icon';
 import { AppContext } from '../../../App';
 import { Link } from 'react-router-dom';
+import { imagePath } from '../../../utility/Util';
+import AvatarSvg from '../../../assets/images/avatar.svg';
 
 const ME = gql`
   query Me {
@@ -16,6 +17,15 @@ const ME = gql`
       email
       firstName
       lastName
+      recipes {
+        articles {
+          nodes {
+            id
+            title
+            imageUrl
+          }
+        }
+      }
     }
   }
 `;
@@ -25,6 +35,12 @@ export default function UserInfo() {
   const { data, loading } = useQuery(ME);
   const { logout } = useAuth();
   const textColor = context.store === 'default' ? 'text-[#555555]' : 'text-white';
+  const saved_articles = data?.me?.recipes.map((x) => x?.articles.nodes).flat() || [];
+  // const saved_articles = [
+  //   { title: 'asdsada', id: 1 },
+  //   { title: '123123123123', id: 1 },
+  // ];
+  console.log({ saved_articles });
   if (loading) return <span>Loading ...</span>;
 
   const Settings = [
@@ -47,9 +63,36 @@ export default function UserInfo() {
 
   return (
     <div className="flex flex-row items-center">
-      <FIcon className={`icon-fi-rs-edit mr-[6px] ${textColor}`} />
-      <FIcon className={`icon-fi-rs-list-o mx-[6px] ${textColor}`} />
-      <FIcon className={`icon-fi-rs-notification mx-[6px] ${textColor}`} />
+      <Link to="/add">
+        <FIcon className={`icon-fi-rs-edit mr-[6px] ${textColor}`} />
+      </Link>
+      <Popover
+        placement="topRight"
+        trigger="click"
+        content={
+          <List
+            style={{ width: 400 }}
+            dataSource={saved_articles}
+            size="small"
+            renderItem={(x) => (
+              <List.Item
+                className="font-condensed"
+                actions={[<Button size="small" icon={<CloseOutlined />} type="link" />]}
+              >
+                <List.Item.Meta
+                  avatar={<Avatar src={imagePath(x.imageUrl)} shape="square" />}
+                  title={<Link to={`/post/view/${x.id}`}>{x.title}</Link>}
+                />
+              </List.Item>
+            )}
+          />
+        }
+      >
+        <Badge count={saved_articles.length} size="small" showZero={false} overflowCount={10}>
+          <FIcon className={`icon-fi-rs-list-o mx-[6px] ${textColor}`} />
+        </Badge>
+      </Popover>
+      {/*<FIcon className={`icon-fi-rs-notification mx-[6px] ${textColor}`} />*/}
       <Popover
         placement="topRight"
         trigger="click"
@@ -58,7 +101,7 @@ export default function UserInfo() {
         content={
           <div className="w-full text-[#555555]">
             <div className="border-b w-full py-[17px] flex flex-row items-center pl-[18px]">
-              <Avatar className="w-[38px] h-[38px] mr-[10px]" icon={<UserOutlined />} />
+              <Avatar className="mr-[12px] flex items-center justify-center" src={AvatarSvg} size={38} />
               <div>
                 <p className="font-condensed text-[18px] font-bold leading-[21px] text-[#111111]">
                   {data?.me?.firstName}
@@ -87,7 +130,7 @@ export default function UserInfo() {
           </div>
         }
       >
-        <Avatar className="w-[34px] h-[34px] ml-[20px] cursor-pointer" />
+        <Avatar src={AvatarSvg} className="ml-[16px] flex justify-center items-center " shape="circle" />
       </Popover>
     </div>
   );
