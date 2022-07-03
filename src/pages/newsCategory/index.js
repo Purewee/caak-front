@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { Tabs, Statistic, Button, Row, Col, Skeleton } from 'antd';
 import { ESService } from '../../lib/esService';
 import { gql, useQuery } from '@apollo/client';
 import { useParams } from 'react-router-dom';
 import PostCard from '../../component/card/Post';
 import { HashTag, Title } from '../post/view/wrapper';
+import { AppContext } from '../../App';
 
 const CATEGORY = gql`
   query GetCategory($slug: String) {
@@ -23,6 +24,7 @@ const sortMap = {
 };
 
 export default function Category() {
+  const context = useContext(AppContext);
   const es = new ESService('caak');
   const { slug } = useParams();
   const { data } = useQuery(CATEGORY, { variables: { slug } });
@@ -51,6 +53,10 @@ export default function Category() {
     });
   }, [page]);
 
+  useEffect(() => {
+    context.setStore('default');
+  }, []);
+
   return (
     <div className="flex justify-center pt-[20px] md:pt-[51px] pb-[100px] px-[16px]">
       <div className="max-w-[1310px] w-full flex flex-col items-center">
@@ -65,7 +71,7 @@ export default function Category() {
           onChange={(e) => {
             setSort(e);
           }}
-          clasName="my-[48px]"
+          className="my-[48px]"
         >
           <Tabs.TabPane tab={<span className="text-[24px] font-normal font-merri">ШИНЭ</span>} key="recent" />
           <Tabs.TabPane tab={<span className="text-[24px] font-normal font-merri">ШИЛДЭГ</span>} key="top" />

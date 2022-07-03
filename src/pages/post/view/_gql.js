@@ -16,6 +16,7 @@ export const ARTICLE = gql`
         nodes {
           id
           name
+          slug
         }
       }
       tags {

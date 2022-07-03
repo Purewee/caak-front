@@ -29,7 +29,7 @@ export default function Reaction({ articleId }) {
       </p>
       <div className="flex flex-row items-center gap-[7px] md:gap-[24px] mt-[14px]">
         {ACTIONS.map((x, idx) => (
-          <div className="flex flex-col items-center">
+          <div key={idx} className="flex flex-col items-center">
             <div className="font-bold mb-[20px]">{reactions?.nodes.filter((r) => r.action === x.action).length}</div>
             <Button
               loading={loading}

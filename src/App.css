@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 .HighlightFeedGrid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(646px, 1px));
@@ -317,5 +321,27 @@
   .reportModalItem {
     border-right: 0;
   }
+}
+
+/*test*/
+.ant-statistic{
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+}
+
+.ant-statistic-title{
+  margin-bottom: 0;
+  font-size: 15px;
+  font-family: 'Roboto', sans-serif;
+  color: #555555;
+  margin-left: 3px;
+}
+
+.ant-statistic-content{
+  font-family: 'Roboto', sans-serif;
+  font-size: 15px;
+  color: #111111;
+  font-weight: 500;
 }
 

@@ -13,6 +13,7 @@ import { Avatar, Skeleton } from 'antd';
 import { Link } from 'react-router-dom';
 import { FIcon } from '../../../component/icon';
 import { ME } from '../../../pages/post/view/_gql';
+import MobileBottomMenu from '../../footer/mobileBottomMenu';
 
 const CATEGORIES = gql`
   query GetCategories {
@@ -179,10 +180,10 @@ export default function NavbarNew() {
               <div
                 onClick={() => setSearchShown(true)}
                 className={`${
-                  isTablet ? 'mr-0' : isAuth ? 'mr-[20px]' : 'mr-[22px]'
+                  isTablet ? 'mr-0' : isAuth ? 'mr-[15px]' : 'mr-[22px]'
                 } flex w-[22px] h-[22px] items-center justify-center cursor-pointer`}
               >
-                <span className={'icon-fi-rs-search text-white text-[19px]'} />
+                <span className={`icon-fi-rs-search ${context.store === 'default' ? 'text-[#555555]' : 'text-white'} text-[19px]`} />
               </div>
               {isAuth ? (
                 <UserInfo />
@@ -275,7 +276,7 @@ export default function NavbarNew() {
         {
           searchShown && 
           <div className='search_modal w-full'>
-            <div className='w-full flex justify-center items-center bg-white h-[70px] z-50'>
+            <div ref={searchRef} className='w-full flex justify-center items-center bg-white h-[70px] z-50'>
               <div className='relative max-w-[600px] w-full'>
                 <input onKeyDown={onPressEnter} value={searchValue} onChange={handleChange} placeholder='Хайлт хийх...' className={`h-[54px] text-[17px] text-[#555555] w-full border px-[50px] border-[#BBBEBE] rounded-[4px]`} />
                 <span className='icon-fi-rs-search absolute left-[16px] top-[16px] text-[18px] w-[22px] h-[22px] flex justify-center items-center text-[#555555]' />
@@ -296,82 +297,85 @@ export default function NavbarNew() {
       </div>
       {
         mobileSideMenu &&
-        <div ref={mobileRef} className='w-3/4 bg-white absolute z-50 top-0 right-0 pt-[26px]'>
-          {
-            isAuth
-            ?
-            <div>
-              <div className='flex flex-row items-center'>
-                <Avatar className='w-[50px] h-[50px] mr-[20px] ml-[16px]' />
-                <p className='text-[20px] font-condensed font-bold'>{me?.me.firstName}</p>
+        <div className='w-full bg-black bg-opacity-40 absolute z-50 top-0 right-0 flex justify-end'>
+          <div ref={mobileRef} className='w-3/4 h-screen overflow-hidden overflow-y-scroll bg-white pt-[26px]'>
+            {
+              isAuth
+              ?
+              <div>
+                <div className='flex flex-row items-center'>
+                  <Avatar className='w-[50px] h-[50px] mr-[20px] ml-[16px]' />
+                  <p className='text-[20px] font-condensed font-bold'>{me?.me.firstName}</p>
+                </div>
+                <div className='w-full border-t mt-[20px]'>
+                  <div className='px-[16px] flex flex-col gap-[24px] mt-[20px]'>
+                    {Settings.map((data, index) => {
+                      return (
+                        <Link key={index} to={{ pathname: data.link }}>
+                          <div className="flex flex-row items-center cursor-pointer">
+                            <FIcon className={`${data.icon} mr-[18px] text-[24px] w-[26px] h-[26px]`} />
+                            <p className='text-[18px]'>{data.title}</p>
+                          </div>
+                        </Link>
+                      );
+                    })}
+                    <button onClick={() => logout()} className='w-full h-[58px] text-[16px] font-medium text-caak-black border rounded-[4px]'>
+                      Гарах
+                    </button>
+                  </div>
+                </div>
               </div>
-              <div className='w-full border-t mt-[20px]'>
-                <div className='px-[16px] flex flex-col gap-[24px] mt-[20px]'>
-                  {Settings.map((data, index) => {
-                    return (
-                      <Link key={index} to={{ pathname: data.link }}>
-                        <div className="flex flex-row items-center cursor-pointer">
-                          <FIcon className={`${data.icon} mr-[18px] text-[24px] w-[26px] h-[26px]`} />
-                          <p className='text-[18px]'>{data.title}</p>
-                        </div>
-                      </Link>
-                    );
-                  })}
-                  <button onClick={() => logout()} className='w-full h-[58px] text-[16px] font-medium text-caak-black border rounded-[4px]'>
-                    Гарах
+              :
+              <div>
+                <div className='w-[56px] h-[56px] rounded-full bg-[#EFEEEF] flex items-center justify-center ml-[16px]'>
+                  <span onClick={() => setMobileSideMenu(!mobileSideMenu)} className="icon-fi-rs-user-f text-[#BBBEBE] text-[35px]" />
+                </div>
+                <div className='px-[16px]'>
+                  <p className='font-bold text-[28px] font-condensed w-[233px] leading-[32px] mt-[30px]'>Та бүртгэл үүсгэн мэдээллийг өөрийн болгоорой!</p>
+                  <button onClick={() => setIsShown('signup')} className='w-full h-[58px] text-[16px] font-medium text-white mt-[20px] bg-caak-primary rounded-[4px]'>
+                    Бүртгүүлэх
+                  </button>
+                  <button onClick={() => setIsShown('signin')} className='w-full h-[58px] text-[16px] font-medium text-caak-black mt-[20px] border rounded-[4px]'>
+                    Нэвтрэх
                   </button>
                 </div>
               </div>
-            </div>
-            :
-            <div>
-              <div className='w-[56px] h-[56px] rounded-full bg-[#EFEEEF] flex items-center justify-center ml-[16px]'>
-                <span onClick={() => setMobileSideMenu(!mobileSideMenu)} className="icon-fi-rs-user-f text-[#BBBEBE] text-[35px]" />
-              </div>
-              <div className='px-[16px]'>
-                <p className='font-bold text-[28px] font-condensed w-[233px] leading-[32px] mt-[30px]'>Та бүртгэл үүсгэн мэдээллийг өөрийн болгоорой!</p>
-                <button onClick={() => setIsShown('signup')} className='w-full h-[58px] text-[16px] font-medium text-white mt-[20px] bg-caak-primary rounded-[4px]'>
-                  Бүртгүүлэх
-                </button>
-                <button onClick={() => setIsShown('signin')} className='w-full h-[58px] text-[16px] font-medium text-caak-black mt-[20px] border rounded-[4px]'>
-                  Нэвтрэх
-                </button>
-              </div>
-            </div>
-          }
-          <div className='w-full border-t border-b mt-[30px] py-[25px] flex flex-col gap-[24px]'>
-            {
-              mobileItems.map((data, index) => {
-                return(
-                  <div key={index} className='flex flex-row items-center ml-[24px]'>
-                    <FIcon className={`${data.icon} mr-[18px] text-[24px] w-[26px] h-[26px]`} />
-                    <p className='text-[18px]'>{data.title}</p>
-                  </div>
-                )
-              })
             }
-          </div>
-          <div className='flex flex-row items-center ml-[24px] mt-[24px]'>
-            <FIcon className={`icon-fi-rs-ads mr-[18px] text-[24px] w-[26px] h-[26px]`} />
-            <p className='text-[18px]'>Сурталчилгаа</p>
-          </div>
-          <div className='flex flex-row items-center ml-[24px] mt-[24px]'>
-            <FIcon className={`icon-fi-rs-phone mr-[18px] text-[24px] w-[26px] h-[26px]`} />
-            <p className='text-[18px]'>Холбоо барих</p>
-          </div>
-          <div className='w-full border-t border-b mt-[30px] py-[25px] flex flex-col gap-[24px]'>
-            <div className='flex flex-row items-center ml-[24px]'>
-              <FIcon className={`icon-fi-rs-ads mr-[18px] text-[24px] w-[26px] h-[26px]`} />
-              <p className='text-[18px]'>Нууцлалын бодлого</p>
+            <div className='w-full border-t border-b mt-[30px] py-[25px] flex flex-col gap-[24px]'>
+              {
+                mobileItems.map((data, index) => {
+                  return(
+                    <div key={index} className='flex flex-row items-center ml-[24px]'>
+                      <FIcon className={`${data.icon} mr-[18px] text-[24px] w-[26px] h-[26px]`} />
+                      <p className='text-[18px]'>{data.title}</p>
+                    </div>
+                  )
+                })
+              }
             </div>
-            <div className='flex flex-row items-center ml-[24px]'>
+            <div className='flex flex-row items-center ml-[24px] mt-[24px]'>
+              <FIcon className={`icon-fi-rs-ads mr-[18px] text-[24px] w-[26px] h-[26px]`} />
+              <p className='text-[18px]'>Сурталчилгаа</p>
+            </div>
+            <div className='flex flex-row items-center ml-[24px] mt-[24px]'>
               <FIcon className={`icon-fi-rs-phone mr-[18px] text-[24px] w-[26px] h-[26px]`} />
-              <p className='text-[18px]'>Үйлчилгээний нөхцөл</p>
+              <p className='text-[18px]'>Холбоо барих</p>
+            </div>
+            <div className='w-full border-t border-b mt-[30px] py-[25px] flex flex-col gap-[24px]'>
+              <div className='flex flex-row items-center ml-[24px]'>
+                <FIcon className={`icon-fi-rs-ads mr-[18px] text-[24px] w-[26px] h-[26px]`} />
+                <p className='text-[18px]'>Нууцлалын бодлого</p>
+              </div>
+              <div className='flex flex-row items-center ml-[24px]'>
+                <FIcon className={`icon-fi-rs-phone mr-[18px] text-[24px] w-[26px] h-[26px]`} />
+                <p className='text-[18px]'>Үйлчилгээний нөхцөл</p>
+              </div>
             </div>
           </div>
         </div>
       }
       <SignInUpController isShown={isShown} setIsShown={setIsShown} />
+      <MobileBottomMenu />
     </nav>
   );
 }

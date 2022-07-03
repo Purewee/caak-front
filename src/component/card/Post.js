@@ -27,7 +27,7 @@ export default function PostCard({ post, ...rest }) {
       bordered={false}
       {...rest}
       bodyStyle={{ padding: 0 }}
-      className="h-[523px] max-w-[422px] mb-[40px]"
+      className="h-[523px] w-[422px]"
       cover={
         <Link className="h-[300px]" to={postURL}>
           <Image
@@ -62,8 +62,9 @@ export default function PostCard({ post, ...rest }) {
               <Avatar className="w-[22px] h-[22px]" src={imagePath(post.source?.icon)} />
               <MetaTag className="ml-[6px] text-[15px]">{post?.source?.name}</MetaTag>
             </Link>
+            &nbsp;•&nbsp;
             <Link to={`/profile/${post.author?.id}`}>
-              <MetaTag className="ml-0">&nbsp;•&nbsp;{post.author?.name}</MetaTag>
+              <MetaTag className="ml-0">{post.author?.name}</MetaTag>
             </Link>
           </div>
           <div className="flex flex-row items-center">

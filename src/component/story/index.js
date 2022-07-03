@@ -34,7 +34,7 @@ const StoryFeed = () => {
   return stories?.length > 0 ? (
     <div
       className={
-        "flex flex-col max-w-[400px] sm:max-w-[600px] md:max-w-[700px] lg:max-w-[1002px] xl:max-w-[1202px] 2xl:max-w-[1502px] px-[10px] xl:px-0 w-full justify-center relative md:py-[80px]"
+        "flex flex-col max-w-[400px] sm:max-w-[600px] md:max-w-[700px] lg:max-w-[1002px] xl:max-w-[1202px] 2xl:max-w-[1502px] xl:px-0 w-full justify-center relative md:py-[80px]"
       }
     >
       {activeIndex + 1 < stories.length - 1 && (
@@ -71,8 +71,8 @@ const StoryFeed = () => {
         </div>
       )}
 
-     <div className="flex flex-row items-center w-full relative justify-center">
-      <img className='h-[42px] w-[324px]' src={require('../../assets/images/feed_story.svg').default} />
+     <div className="flex flex-row items-center w-full relative md:justify-center">
+      <img className='h-[20px] md:h-[42px] md:w-[324px] mt-[30px] md:mt-0' src={require('../../assets/images/feed_story.svg').default} />
       <Link to={'/stories'}>
         <div className="hidden xl:flex flex-row absolute items-center right-[121px]">
           <p className="text-[16px] text-[#111111]">Бүх сторинууд</p>
@@ -89,11 +89,11 @@ const StoryFeed = () => {
         })}
         <div className='min-w-[106px] sm:min-w-[290px] relative flex items-center justify-center max-w-[290px] rounded-[8px] min-h-[160px] sm:min-h-[435px] max-h-[435px]'>
           <img className='w-full h-full' src={require('../../assets/images/all-stories.png')}/>
-          <div className='bg-black rounded-[8px] bg-opacity-70 px-[47px] h-full w-full absolute flex justify-center items-center'>
+          <div className='bg-black rounded-[8px] bg-opacity-70 px-[10px] md:px-[47px] h-full w-full absolute flex justify-center items-center'>
             <Link to={'/stories'} className="w-full">
-              <div className='h-[34px] rounded-[4px] cursor-pointer bg-white w-full flex flex-row items-center justify-center'>
-                <span className="icon-fi-rs-stories-o text-[#FF6600] text-[14.6px] mr-[10px]"/>
-                <p className='text-[#111111]'>Бүх сторинууд үзэх</p>
+              <div className='md:h-[34px] rounded-[4px] cursor-pointer bg-white w-full flex flex-row items-center justify-center'>
+                <span className="icon-fi-rs-stories-o hidden md:block text-[#FF6600] text-[14.6px] mr-[10px]"/>
+                <p className='text-[#111111] text-center'>Бүх сторинууд үзэх</p>
               </div>
             </Link>
           </div>

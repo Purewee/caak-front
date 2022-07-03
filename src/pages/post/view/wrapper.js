@@ -7,7 +7,7 @@ export const Wrapper = tw.div`
 `;
 
 export const Title = tw.h1`
-  text-[#111111] text-[21px] md:text-[38px] mt-[20px] md:text-center font-merri
+  text-[#111111] text-[21px] md:text-[38px] mt-[20px] font-merri
 `;
 
 export const BlockTitle = tw.h2`

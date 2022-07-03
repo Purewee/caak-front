@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import PostShareModal from '../../modal/PostShareModal';
 import PostSaveModal from '../../modal/PostSaveModal';
 import DropDown from '../DropDown';
+import ReportModal from '../../modal/ReportModal';
 import { useClickOutSide } from '../../../utility/Util';
 import { imagePath } from '../../../utility/Util';
 
@@ -9,6 +10,7 @@ const ActionButtons = ({ post }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [sharePostOpen, setSharePostOpen] = useState(false);
   const [savePostOpen, setSavePostOpen] = useState(false);
+  const [reportOpen, setReportOpen] = useState(false);
 
   const menuRef = useClickOutSide(() => {
     setIsMenuOpen(false);
@@ -19,24 +21,12 @@ const ActionButtons = ({ post }) => {
   };
   return (
     <div className={'flex flex-row items-center justify-between'}>
-      <PostShareModal
-        post={post}
-        setSharePostOpen={setSharePostOpen}
-        sharePostOpen={sharePostOpen}
-        image={imagePath(post.image)}
-      />
       <div
         onClick={() => setSavePostOpen(true)}
         className={'w-[20px] h-[20px] flex items-center justify-center cursor-pointer'}
       >
         <span className={'icon-fi-rs-bookmark text-white text-[17px]'} />
       </div>
-      <PostSaveModal
-        post={post}
-        setSavePostOpen={setSavePostOpen}
-        savePostOpen={savePostOpen}
-        image={imagePath(post.image)}
-      />
       <div
         ref={menuRef}
         onClick={toggleMenu}
@@ -54,7 +44,7 @@ const ActionButtons = ({ post }) => {
                 <span className="text-[#555555] text-[16px] mr-[11px] w-[22px] h-[22px] flex items-center justify-center icon-fi-rs-share" />
                 <p className="text-[#555555] text-[15px] leading-[18px]">Хуваалцах</p>
               </div>
-              <div className="flex flex-row items-center mt-[12px] cursor-pointer">
+              <div onClick={() => setReportOpen(true)} className="flex flex-row items-center mt-[12px] cursor-pointer">
                 <span className="text-[#555555] text-[15px] mr-[11px] w-[22px] h-[22px] flex items-center justify-center icon-fi-rs-flag" />
                 <p className="text-[#555555] text-[15px] leading-[18px]">Репорт</p>
               </div>
@@ -62,6 +52,19 @@ const ActionButtons = ({ post }) => {
           }
         />
       </div>
+      <PostShareModal
+        post={post}
+        setSharePostOpen={setSharePostOpen}
+        sharePostOpen={sharePostOpen}
+        image={imagePath(post.image)}
+      />
+      <PostSaveModal
+        post={post}
+        setSavePostOpen={setSavePostOpen}
+        savePostOpen={savePostOpen}
+        image={imagePath(post.image)}
+      />
+      <ReportModal isOpen={reportOpen} setIsOpen={setReportOpen} />
     </div>
   );
 };

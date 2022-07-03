@@ -1,13 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { useLocation, useSearchParams } from 'react-router-dom';
 import { Col, Input, Row, Button, Skeleton } from 'antd';
 import { FIcon } from '../../component/icon';
 import { ESService } from '../../lib/esService';
 import PostCard from '../../component/card/Post';
+import { AppContext } from '../../App';
 
 export default function Search() {
+  const context = useContext(AppContext);
+  const location = useLocation();
   const es = new ESService('caak');
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams(location.state === null ? '' : location.state);
   const q = searchParams.get('q');
   const [page, setPage] = useState(0);
   const [loading, setLoading] = useState(false);
@@ -17,11 +20,15 @@ export default function Search() {
   useEffect(() => {
     setLoading(true);
     es.search(q, page).then(({ hits, total }) => {
-      setArticles([...articles, ...hits]);
+      setArticles([...hits]);
       setTotalResult(total);
       setLoading(false);
     });
   }, [q, page]);
+
+  useEffect(() => {
+    context.setStore('default');
+  }, []);
 
   return (
     <div className="flex flex-col items-center mb-[100px]">
@@ -41,8 +48,8 @@ export default function Search() {
         </div>
       </div>
       <Row gutter={22} className="max-w-[1310px]">
-        {articles.map((post) => (
-          <Col key={post.id} span={8}>
+        {articles.map((post, index) => (
+          <Col key={index} span={8}>
             <PostCard post={post} />
           </Col>
         ))}
