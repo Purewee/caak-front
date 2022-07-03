@@ -1,5 +1,6 @@
 import React from 'react';
 import { notification } from 'antd';
+import { FacebookShareButton, TwitterShareButton } from 'react-share';
 
 export default function PostShareModal({ sharePostOpen, setSharePostOpen, post, image }) {
   const openNotification = () => {
@@ -10,6 +11,7 @@ export default function PostShareModal({ sharePostOpen, setSharePostOpen, post, 
       className: 'h-[50px] bg-[#12805C] w-[200px]',
     };
     notification.open(args);
+    navigator.clipboard.writeText(`http://caak.mn/post/view/${post.id}`);
   };
   return (
     sharePostOpen && (
@@ -27,14 +29,18 @@ export default function PostShareModal({ sharePostOpen, setSharePostOpen, post, 
             </div>
           </div>
           <div className="w-full px-[24px]">
-            <div className="cursor-pointer w-full rounded-[4px] h-[44px] bg-[#1877F2] mt-[20px] flex items-center justify-center relative">
-              <p className="text-[16px] text-white font-medium leading-[19px]">Хуваалцах</p>
-              <span className="absolute top-[10px] left-[20px] w-[24px] h-[24px] icon-fi-rs-fb text-white text-[23px] flex items-center justify-center" />
-            </div>
-            <div className="cursor-pointer w-full rounded-[4px] h-[44px] bg-[#1D9BF1] mt-[8px] flex items-center justify-center relative">
-              <p className="text-[16px] text-white font-medium leading-[19px]">Жиргэх</p>
-              <span className="absolute top-[10px] left-[20px] w-[24px] h-[24px] icon-fi-rs-tw text-white text-[22px] flex items-center justify-center" />
-            </div>
+            <FacebookShareButton className="w-full" url={`http://front.caak.mn/post/view/${post.id}`}>
+              <div className="cursor-pointer w-full rounded-[4px] h-[44px] bg-[#1877F2] mt-[20px] flex items-center justify-center relative">
+                <p className="text-[16px] text-white font-medium leading-[19px]">Хуваалцах</p>
+                <span className="absolute top-[10px] left-[20px] w-[24px] h-[24px] icon-fi-rs-fb text-white text-[23px] flex items-center justify-center" />
+              </div>
+            </FacebookShareButton>
+            <TwitterShareButton className="mt-[8px] w-full" url={`http://front.caak.mn/post/view/${post.id}`}>
+              <div className="cursor-pointer w-full rounded-[4px] h-[44px] bg-[#1D9BF1] flex items-center justify-center relative">
+                <p className="text-[16px] text-white font-medium leading-[19px]">Жиргэх</p>
+                <span className="absolute top-[10px] left-[20px] w-[24px] h-[24px] icon-fi-rs-tw text-white text-[22px] flex items-center justify-center" />
+              </div>
+            </TwitterShareButton>
             <p className="text-[16px] font-roboto leading-[19px] mt-[16px]">Эвлэл мэдээний линк хуулж авах</p>
             <div className="bg-[#FBFAFB] w-full h-[44px] mt-[8px] border flex flex-row items-center justify-between border-[#EFEEEF] py-[12px] pl-[12px] pr-[16px]">
               <div className="flex flex-row items-center text-[#555555]">
@@ -43,10 +49,7 @@ export default function PostShareModal({ sharePostOpen, setSharePostOpen, post, 
               </div>
               <p
                 className="cursor-pointer text-[#FF6600] font-medium text-[15px] leading-[18px]"
-                onClick={() => {
-                  navigator.clipboard.writeText(`http://caak.mn/post/view/${post.id}`);
-                  openNotification();
-                }}
+                onClick={() => openNotification()}
               >
                 Хуулах
               </p>

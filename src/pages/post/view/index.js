@@ -15,18 +15,21 @@ import DropDown from '../../../component/navigation/DropDown';
 import { useClickOutSide } from '../../../utility/Util';
 import PostSaveModal from '../../../component/modal/PostSaveModal';
 import PostShareModal from '../../../component/modal/PostShareModal';
-import { Avatar, Popover } from 'antd';
+import { Avatar, Popover, notification } from 'antd';
 import { useAuth } from '../../../context/AuthContext';
 import SignInUpController from '../../../component/modal/SignInUpController';
 import { Link } from 'react-router-dom';
 import { FacebookShareButton, TwitterShareButton } from 'react-share';
 import Reaction from './reaction';
+import ReportModal from '../../../component/modal/ReportModal';
 
 const Post = () => {
   const context = useContext(AppContext);
   const { id } = useParams();
   const [leftMenuSticky, setLeftMenuSticky] = useState(false);
+  const [isReportOpen, setIsReportOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isBottomMenu, setIsBottomMenu] = useState(false);
   const [savePostOpen, setSavePostOpen] = useState(false);
   const [sharePostOpen, setSharePostOpen] = useState(false);
   const [isShown, setIsShown] = useState(false);
@@ -35,17 +38,27 @@ const Post = () => {
   const article = data?.article || {};
   const { isAuth } = useAuth();
 
+  const openNotification = () => {
+    const args = {
+      message: `Та ${article?.author.firstName}-г дагалаа`,
+      duration: 4,
+      placement: 'bottom',
+      className: 'h-[50px] bg-[#12805C] w-[470px]',
+    };
+    notification.open(args);
+  };
+
   function createMarkup(e) {
     return { __html: e };
   }
 
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
+  const handleMenu = (show) => {
+    setIsMenuOpen(show);
   };
 
-  const ref = useClickOutSide(() => {
-    setIsMenuOpen(false);
-  });
+  const handleBottomMenu = (show) => {
+    setIsBottomMenu(show);
+  };
 
   useEffect(() => {
     context.setStore('default');
@@ -81,29 +94,6 @@ const Post = () => {
   // prettier-ignore
   return (
     <div className="flex flex-row pb-[100px] justify-center">
-      {/* <HeadProvider>
-        <Meta
-          name="description"
-          content={article.description}
-        />
-        <Meta
-          property="og:description"
-          content={article.description}
-        />
-        <Meta property="og:title" content={article.title} />
-        <Meta property="og:type" content="website" />
-        <Meta
-          name="og:url"
-          content={`https://front.caak.mn/post/view/${article.id}`}
-        />
-        <Meta
-          property="og:image"
-          content={imagePath(article.imageUrl)}
-        />
-        <Title>
-          {article.title}
-        </Title>
-      </HeadProvider> */}
         <div className="w-full hidden md:block max-w-[250px]">
           <div className={`hidden md:flex ${leftMenuSticky ? 'sticky top-[80px]' : 'mt-[200px]'} w-full flex-col items-end`}>
             <div className="flex flex-col items-center w-[60px] h-[226px]">
@@ -117,6 +107,8 @@ const Post = () => {
                 className="font-bold text-[14px] leading-[16px] tracking-[0px]"
                 overlayStyle={{ width: 166 }}
                 overlayInnerStyle={{ borderRadius: 8 }}
+                visible={isMenuOpen}
+                onVisibleChange={handleMenu}
                 content={
                   <div className="flex flex-col gap-[15px] h-full justify-between p-[18px]">
                     {
@@ -139,7 +131,15 @@ const Post = () => {
                     }
                     <div className="flex flex-row items-center cursor-pointer">
                       <span className="text-[#555555] text-[18px] mr-[8px] w-[22px] h-[22px] flex items-center justify-center icon-fi-rs-flag" />
-                      <p className="text-[#555555] text-[15px] leading-[18px]">Репорт</p>
+                      <p 
+                        onClick={() => {
+                          setIsMenuOpen(false);
+                          setIsReportOpen(true);
+                        }}
+                        className="text-[#555555] text-[15px] leading-[18px]"
+                      >
+                        Репорт
+                      </p>
                     </div>
                   </div>
                 }
@@ -152,9 +152,11 @@ const Post = () => {
         <div className="pt-0 md:pt-[81px] flex flex-col max-w-[760px] w-full font-roboto md:mx-[100px] px-[16px] md:px-0">
           <img src={imagePath(article.imageUrl)} alt="" className="w-full h-[210px] flex md:hidden mt-[20px] object-cover" />
           {article.categories?.nodes?.map((x) => (
-            <HashTag key={x.id} className="text-center hidden md:block">
-              {x.name}
-            </HashTag>
+            <Link key={x.id} to={`/category/${x.slug}`}>
+              <HashTag className="text-center hidden md:block">
+                {x.name}
+              </HashTag>
+            </Link>
           ))}
           <Wrapper>
             <Title>{article.title}</Title>
@@ -170,19 +172,21 @@ const Post = () => {
                   src={imagePath(article.source?.icon)}
                 />
                 <div className='ml-[8px] h-full flex flex-col justify-between'>
+                <Link to={`/channel/${article.source?.id}`} className="flex flex-row items-center">
                   <p className="text-caak-black text-[14px] leading-[16px]">{article?.source?.name}</p>
+                </Link>
                   <div className='text-[12px] text-[#909090] flex flex-row items-center leading-[14px]'>
                     <p>{moment(article.createdAt).format('YYYY.MM.DD, hh:mm')}</p>
-                    <p className='underline ml-[6px]'>ДАГАХ</p>
+                    <p onClick={() => (isAuth ? openNotification() : setIsShown('signin'))} className='underline cursor-pointer ml-[6px]'>ДАГАХ</p>
                   </div>
                 </div>
               </div>
               <div className="hidden md:flex flex-row items-center">
-                <FacebookShareButton url={`http://front.caak.mn/post/view/${article.id}`}>
+                <FacebookShareButton className='h-[20px]' url={`http://front.caak.mn/post/view/${article.id}`}>
                   <span className="icon-fi-rs-fb hover:text-[#1877F2] cursor-pointer text-[#909090] text-[20px]" />
                 </FacebookShareButton>
-                <TwitterShareButton url={`http://front.caak.mn/post/view/${article.id}`}>
-                  <span className="icon-fi-rs-tw hover:text-[#1D9BF1] cursor-pointer text-[#909090] text-[20px] ml-[24px]" />
+                <TwitterShareButton className='h-[20px] ml-[24px]' url={`http://front.caak.mn/post/view/${article.id}`}>
+                  <span className="icon-fi-rs-tw hover:text-[#1D9BF1] cursor-pointer text-[#909090] text-[20px]" />
                 </TwitterShareButton>
                 <span onClick={() => setSavePostOpen(true)} className="icon-fi-rs-bookmark cursor-pointer hover:text-[#111111] w-[32px] h-[32px] flex justify-center items-center rounded-[2px] hover:bg-[#EFEEEF] border border-[#EFEEEF] text-[#909090] text-[20px] ml-[17px]" />
               </div>
@@ -222,41 +226,48 @@ const Post = () => {
               </div>
             </TwitterShareButton>
             <span onClick={() => setSavePostOpen(true)} className="icon-fi-rs-bookmark text-[#555555] text-[23.5px] w-[50px] h-[50px] rounded-full bg-[#F7F7F7] flex justify-center items-center cursor-pointer ml-[20px]" />
-            <div ref={ref} className='relative ml-[14px] flex justify-center'>
-              <span onClick={() => toggleMenu()} className="icon-fi-rs-more-ver rotate-90 text-[#555555] text-[23.5px] w-[50px] h-[50px] rounded-full bg-[#F7F7F7] flex justify-center items-center cursor-pointer" />
-              <DropDown
-                arrow={'centerBottom'}
-                className="absolute border border-[#D4D8D8] drop-shadow-[0_2px_2px_rgba(0,0,0,0.06)] bottom-[57px] w-[166px]"
-                open={isMenuOpen}
-                onToggle={toggleMenu}
-                content={
-                  <div className="flex flex-col gap-[15px] h-full justify-between p-[18px]">
-                    {
-                      me?.me.id === article.author.id
-                      &&
-                      <Link to={`/add/${article.id}`} target="_blank">
-                        <div className="flex flex-row items-center cursor-pointer">
-                          <span className="text-[#555555] text-[20px] mr-[8px] w-[22px] h-[22px] flex items-center justify-center icon-fi-rs-editor-o" />
-                          <p className="text-[#555555] text-[15px] leading-[18px]">Засах</p>
-                        </div>
-                      </Link>
-                    }
-                    {
-                      me?.me.id === article.author.id
-                      &&
+            <Popover
+              placement="bottom"
+              trigger="click"
+              className="font-bold text-[14px] leading-[16px] tracking-[0px] ml-[14px]"
+              overlayStyle={{ width: 166 }}
+              overlayInnerStyle={{ borderRadius: 8 }}
+              visible={isBottomMenu}
+              onVisibleChange={handleBottomMenu}
+              content={
+                <div className="flex flex-col gap-[15px] h-full justify-between p-[18px]">
+                  {
+                    me?.me.id === article.author.id
+                    &&
+                    <Link to={`/add/${article.id}`} target="_blank">
                       <div className="flex flex-row items-center cursor-pointer">
-                        <span className="text-[#555555] text-[20px] mr-[8px] w-[22px] h-[22px] flex items-center justify-center icon-fi-rs-delete" />
-                        <p className="text-[#555555] text-[15px] leading-[18px]">Устгах</p>
+                        <span className="text-[#555555] text-[20px] mr-[8px] w-[22px] h-[22px] flex items-center justify-center icon-fi-rs-editor-o" />
+                        <p className="text-[#555555] text-[15px] leading-[18px]">Засах</p>
                       </div>
-                    }
+                    </Link>
+                  }
+                  {
+                    me?.me.id === article.author.id
+                    &&
                     <div className="flex flex-row items-center cursor-pointer">
-                      <span className="text-[#555555] text-[18px] mr-[8px] w-[22px] h-[22px] flex items-center justify-center icon-fi-rs-flag" />
-                      <p className="text-[#555555] text-[15px] leading-[18px]">Репорт</p>
+                      <span className="text-[#555555] text-[20px] mr-[8px] w-[22px] h-[22px] flex items-center justify-center icon-fi-rs-delete" />
+                      <p className="text-[#555555] text-[15px] leading-[18px]">Устгах</p>
                     </div>
+                  }
+                  <div onClick={() => {
+                        setIsBottomMenu(false);
+                        setIsReportOpen(true);
+                      }} className="flex flex-row items-center cursor-pointer">
+                    <span className="text-[#555555] text-[18px] mr-[8px] w-[22px] h-[22px] flex items-center justify-center icon-fi-rs-flag" />
+                    <p className="text-[#555555] text-[15px] leading-[18px]">
+                      Репорт
+                    </p>
                   </div>
-                }
-              />
-            </div>
+                </div>
+              }
+            >
+              <span className="icon-fi-rs-more-ver rotate-90 text-[#555555] text-[23.5px] w-[50px] h-[50px] rounded-full bg-[#F7F7F7] flex justify-center items-center cursor-pointer" />
+            </Popover>
           </div>
           <div className="flex flex-row mt-[19px] md:mt-[38px] justify-between w-full md:border-t py-[17px] border-b border-[#EFEEEF]">
             <div className="flex flex-row items-center">
@@ -264,11 +275,15 @@ const Post = () => {
                 src={imagePath(article.source.icon)}
                 className="w-[36px] h-[36px]"
               />
-              <MetaTag className="ml-[8px]">{article.source.name}</MetaTag>
-              <MetaTag className="ml-0">&nbsp;• {`${article.author.firstName}`}</MetaTag>
+              <Link to={`/channel/${article.source?.id}`} className="flex flex-row items-center">
+                <MetaTag className="ml-[8px] text-[15px]">{article.source.name}</MetaTag>
+              </Link>
+              <Link className=' leading-[16px]' to={`/profile/${article.author?.id}`}>
+                <MetaTag className="ml-0">&nbsp;• {`${article.author.firstName}`}</MetaTag>
+              </Link>
               {/* <MetaTag className="text-[#909090]">{moment(article.createdAt).format('YYYY.MM.DD, hh:mm')}</MetaTag> */}
             </div>
-            <button className="bg-caak-primary rounded-[4px] text-white font-bold text-[15px] w-[90px] h-[34px]">
+            <button onClick={() => (isAuth ? openNotification() : setIsShown('signin'))} className="bg-caak-primary rounded-[4px] text-white font-bold text-[15px] w-[90px] h-[34px]">
               Дагах
             </button>
           </div>
@@ -281,6 +296,7 @@ const Post = () => {
         <PostSaveModal post={article} setSavePostOpen={setSavePostOpen} savePostOpen={savePostOpen} image={imagePath(article.imageUrl)}/>
         <PostShareModal post={article} setSharePostOpen={setSharePostOpen} sharePostOpen={sharePostOpen} image={imagePath(article.imageUrl)}/>
         <SignInUpController isShown={isShown} setIsShown={setIsShown} />
+        <ReportModal isOpen={isReportOpen} setIsOpen={setIsReportOpen} />
       </div>
   );
 };

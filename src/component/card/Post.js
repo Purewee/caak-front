@@ -62,8 +62,9 @@ export default function PostCard({ post, ...rest }) {
               <Avatar className="w-[22px] h-[22px]" src={imagePath(post.source?.icon)} />
               <MetaTag className="ml-[6px] text-[15px]">{post?.source?.name}</MetaTag>
             </Link>
+            &nbsp;•&nbsp;
             <Link to={`/profile/${post.author?.id}`}>
-              <MetaTag className="ml-0">&nbsp;•&nbsp;{post.author?.name}</MetaTag>
+              <MetaTag className="ml-0">{post.author?.name}</MetaTag>
             </Link>
           </div>
           <div className="flex flex-row items-center">

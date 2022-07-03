@@ -64,10 +64,10 @@ export default function AllStories() {
   };
   // prettier-ignore
   return (
-    <div className='flex flex-col items-center w-full'>
-        <p className='text-[36px] leading-[42px] text-[#111111] font-merri font-bold mt-[101px]'>БҮХ СТОРИ МЭДЭЭНҮҮД</p>
-        <div className='w-full sm:px-[30px]'>
-            <div className='flex flex-row items-center ml-[96px]'>
+    <div className='flex flex-col items-center w-full px-[16px]'>
+        <p className='text-[20px] md:text-[36px] md:leading-[42px] text-[#111111] font-merri font-bold mt-[30px] md:mt-[101px]'>БҮХ СТОРИ МЭДЭЭНҮҮД</p>
+        <div className='w-full sm:px-[30px] mt-[20px]'>
+            <div className='flex flex-row items-center md:ml-[96px]'>
                 <span className='icon-fi-rs-star-f text-[#FF6600] text-[20px] mr-[10px]' />
                 <p className='font-condensed text-[26px] leading-[30px] font-bold'>ӨНӨӨДӨР</p>
             </div>
@@ -119,8 +119,8 @@ export default function AllStories() {
                 </div>
             </div>
         </div>
-        <div className='mt-[80px] w-full sm:px-[30px]'>
-            <div className='flex flex-row items-center ml-[96px]'>
+        <div className='mt-[20px] md:mt-[80px] w-full sm:px-[30px]'>
+            <div className='flex flex-row items-center md:ml-[96px]'>
                 <span className='icon-fi-rs-time-f text-[#909090] text-[20px] mr-[10px]' />
                 <p className='font-condensed text-[26px] leading-[30px] font-bold'>ӨЧИГДӨР</p>
             </div>
@@ -172,8 +172,8 @@ export default function AllStories() {
                 </div>
             </div>
         </div>
-        <div className='mt-[80px] w-full sm:px-[30px]'>
-            <div className='flex flex-row items-center ml-[96px]'>
+        <div className='mt-[20px] md:mt-[80px] w-full sm:px-[30px]'>
+            <div className='flex flex-row items-center md:ml-[96px]'>
                 <span className='icon-fi-rs-time-f text-[#909090] text-[20px] mr-[10px]' />
                 <p className='font-condensed text-[26px] leading-[30px] font-bold'>ЭНЭ ДОЛОО ХОНОГ</p>
             </div>

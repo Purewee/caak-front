@@ -39,9 +39,9 @@ export default function Home() {
 
   return (
     <>
-      <div className={`relative bg-white flex flex-col items-center pb-[100px]`}>
+      <div className={`relative bg-white flex flex-col items-center pb-[100px] px-[16px] sm:px-0`}>
         <NavbarPostHeader />
-        <div className="px-[30px] w-full">
+        <div className="md:px-[30px] w-full">
           <Story />
         </div>
         <div className="hidden xl:flex flex-row items-center justify-center gap-[50px] pb-[1px] max-w-[1310px] w-full ">

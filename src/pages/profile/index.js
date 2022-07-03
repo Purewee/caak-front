@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useQuery } from '@apollo/client';
 import { useParams } from 'react-router-dom';
 import { ESService } from '../../lib/esService';
@@ -9,8 +9,10 @@ import { Title } from '../post/view/wrapper';
 import SignInUpController from '../../component/modal/SignInUpController';
 import { useAuth } from '../../context/AuthContext';
 import { Link } from 'react-router-dom';
+import { AppContext } from '../../App';
 
 export default function Profile() {
+  const context = useContext(AppContext);
   const es = new ESService('caak');
   const [articles, setArticles] = useState([]);
   const [count, setCount] = useState(0);
@@ -43,6 +45,10 @@ export default function Profile() {
     });
   }, [id, page]);
 
+  useEffect(() => {
+    context.setStore('default');
+  }, []);
+
   return (
     <div className="flex justify-center px-[16px] md:px-0">
       <div className="max-w-[1310px] w-full flex flex-col">
@@ -50,14 +56,13 @@ export default function Profile() {
           <div className="flex flex-col md:flex-row">
             <Avatar className="w-[57px] h-[57px] md:w-[82px] md:h-[82px] object-cover" />
             <div className="md:ml-[16px] mt-[15px] md:mt-0">
-              <Title className="font-condensed">{`${user?.firstName} ${user?.lastName}`}</Title>
+              <Title className="font-condensed mt-0 font-bold text-[30px] leading-[35px]">{`${user?.firstName} ${user?.lastName}`}</Title>
               <p className="mt-[9px] md:mt-[12px] text-[15px] text-[#555555] leading-[18px] max-w-[600px]">
                 Өөрийн дуртай график дизайны мэдээллээ авдаг сайтнаас хүргэх болно.
               </p>
               <div className="flex flex-row text-[#555555] gap-[23px] mt-[18px] text-[15px] leading-[18px] font-merri text-center">
                 <Statistic title="Пост" value={user?.articles?.totalCount} />
-                <Statistic title="Дагагчид" value={30} />
-                <Statistic title="Аура" value={1500} />
+                <Statistic title="Дагагчид" value={0} />
               </div>
             </div>
           </div>
