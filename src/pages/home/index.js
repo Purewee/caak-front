@@ -6,7 +6,7 @@ import FeedMagazine from '../../component/magazine/FeedMagazine';
 import FeedTopTags from '../../component/toptags/FeedTopTags';
 import { AppContext } from '../../App';
 import useMediaQuery from '../../component/navigation/useMediaQuery';
-import { Tabs, Row, Col, Button, Skeleton } from 'antd';
+import { Tabs, Row, Col, Button, Skeleton, Space } from 'antd';
 import PostCard from '../../component/card/Post';
 
 export default function Home() {
@@ -72,7 +72,7 @@ export default function Home() {
             ></Tabs.TabPane>
           </Tabs>
         </div>
-        <Row gutter={22} className="max-w-[1310px]">
+        <Space size={[22, 40]} wrap className="max-w-[1310px]">
           {articles.map((post) => (
             <Col key={post.id} span={8}>
               <PostCard post={post} />
@@ -92,7 +92,7 @@ export default function Home() {
               Цааш үзэх
             </Button>
           </Col>
-        </Row>
+        </Space>
       </div>
     </>
   );

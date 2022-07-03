@@ -27,7 +27,7 @@ export default function PostCard({ post, ...rest }) {
       bordered={false}
       {...rest}
       bodyStyle={{ padding: 0 }}
-      className="h-[523px] max-w-[422px] mb-[40px]"
+      className="h-[523px] w-[422px]"
       cover={
         <Link className="h-[300px]" to={postURL}>
           <Image
