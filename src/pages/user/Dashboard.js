@@ -54,7 +54,9 @@ export default function Dashboard() {
 
     useEffect(() => {
         const es = new ESService('caak');
-        es.authorPosts(id).then(setArticles);
+        es.authorPosts(id).then((res) => {
+            setArticles(res?.hits)
+        });
     }, [id]);
 
     useEffect(() => {
@@ -110,7 +112,7 @@ export default function Dashboard() {
                     </thead>
                     <tbody>
                         {
-                            articles.hits.map((data, index) => {
+                            articles.map((data, index) => {
                                 return(
                                     <tr key={index} className="border-b">
                                         <td>

@@ -25,11 +25,16 @@ const CATEGORIES = gql`
 `;
 
 const MenuItems = ({ navBarStyle }) => {
+  const [isShown, setIsShown] = useState(false);
   const { data, loading } = useQuery(CATEGORIES);
   const categories = data?.categories?.nodes || [];
   if (loading) {
     return <Skeleton />;
   }
+
+  const handleMenu = (show) => {
+    setIsShown(show);
+  };
 
   return (
     <ul className={`${navBarStyle ? 'text-white' : 'text-[#555555]'} font-bold text-[14px] p-0 ml-[40px]`}>
@@ -53,12 +58,14 @@ const MenuItems = ({ navBarStyle }) => {
                 className="font-bold text-[14px] leading-[16px] tracking-[0px]"
                 overlayStyle={{ width: 800 }}
                 overlayInnerStyle={{ borderRadius: 8 }}
+                visible={isShown}
+                onVisibleChange={handleMenu}
                 content={
                   <Row gutter={24} className="p-[12px]">
                     {categories?.map((x) => {
                       return (
                         <Col key={x.id} span={8} className="mt-[12px]">
-                          <Link to={`/category/${x.slug}`} key={x.id}>
+                          <Link onClick={() => setIsShown(false)} to={`/category/${x.slug}`} key={x.id}>
                             <span className="text-[#111111] p-[8px] leading-[18px] tracking-[0.23px] font-condensed font-bolder text-[14px]">
                               {x.name}
                             </span>

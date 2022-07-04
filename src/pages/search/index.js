@@ -32,7 +32,7 @@ export default function Search() {
 
   return (
     <div className="flex flex-col items-center mb-[100px]">
-      <div className="w-full h-[208px] bg-[#F5F5F5] flex justify-center">
+      <div className="w-full h-[208px] bg-[#F5F5F5] flex justify-center px-[16px] sm:px-0">
         <div className="w-full max-w-[980px]">
           <div className="relative w-full mt-[20px]">
             <Input.Search

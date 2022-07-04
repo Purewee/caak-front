@@ -40,7 +40,7 @@ export default function UserInfo() {
   //   { title: 'asdsada', id: 1 },
   //   { title: '123123123123', id: 1 },
   // ];
-  console.log({ saved_articles });
+  // console.log({ saved_articles });
   if (loading) return <span>Loading ...</span>;
 
   const Settings = [
@@ -72,6 +72,7 @@ export default function UserInfo() {
         content={
           <List
             style={{ width: 400 }}
+            className="h-screen overflow-hidden overflow-y-scroll"
             dataSource={saved_articles}
             size="small"
             renderItem={(x) => (
@@ -130,7 +131,7 @@ export default function UserInfo() {
           </div>
         }
       >
-        <Avatar src={AvatarSvg} className="ml-[16px] flex justify-center items-center " shape="circle" />
+        <Avatar src={AvatarSvg} className="ml-[16px] cursor-pointer flex justify-center items-center " shape="circle" />
       </Popover>
     </div>
   );

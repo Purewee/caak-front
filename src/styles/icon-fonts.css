@@ -26,6 +26,60 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-fi-rs-adjust:before {
+  content: "\e94e";
+}
+.icon-fi-rs-caak-news:before {
+  content: "\e94f";
+}
+.icon-fi-rs-comment-f:before {
+  content: "\e950";
+}
+.icon-fi-rs-comment-o:before {
+  content: "\e951";
+}
+.icon-fi-rs-copy:before {
+  content: "\e952";
+}
+.icon-fi-rs-expand:before {
+  content: "\e953";
+}
+.icon-fi-rs-grid-f:before {
+  content: "\e954";
+}
+.icon-fi-rs-grid-o:before {
+  content: "\e955";
+}
+.icon-fi-rs-history:before {
+  content: "\e956";
+}
+.icon-fi-rs-home-f:before {
+  content: "\e957";
+}
+.icon-fi-rs-home-o:before {
+  content: "\e958";
+}
+.icon-fi-rs-lock-f:before {
+  content: "\e959";
+}
+.icon-fi-rs-notification-f:before {
+  content: "\e95a";
+}
+.icon-fi-rs-reply:before {
+  content: "\e95b";
+}
+.icon-fi-rs-search-f:before {
+  content: "\e95c";
+}
+.icon-fi-rs-search-o:before {
+  content: "\e95d";
+}
+.icon-fi-rs-user-o:before {
+  content: "\e95e";
+}
+.icon-fi-rs-web:before {
+  content: "\e95f";
+}
 .icon-fi-rs-devices:before {
   content: "\e946";
 }

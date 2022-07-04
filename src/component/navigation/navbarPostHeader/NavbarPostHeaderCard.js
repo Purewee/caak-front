@@ -8,7 +8,7 @@ import { MetaTag } from '../../../pages/post/view/wrapper';
 const NavbarPostHeaderCard = ({ type, item }) => {
   return (
     item && (
-      <div className={'w-full h-full relative  min-h-[560px]'}>
+      <div className={'w-full h-full relative min-h-[560px]'}>
         <img
           className={'object-cover w-full h-full absolute top-0'}
           alt=""
@@ -18,10 +18,8 @@ const NavbarPostHeaderCard = ({ type, item }) => {
           //   query: item
           // }, `/post/view/${item.id}`)}
         />
-        <div className={'absolute bottom-0 h-full w-full'} />
-
         <div
-          className={`flex flex-col w-full absolute z-20 bottom-0 ${type === 'wide' ? 'px-[40px]' : 'px-[30px]'} py-[30px]`}
+          className={`flex flex-col w-full absolute z-[1] bottom-0 ${type === 'wide' ? 'px-[40px]' : 'px-[30px]'} py-[30px]`}
         >
           <div className={'uppercase text-[14px] font-roboto font-medium tracking-[0.2px] leading-[15px]'}>
             {item.categories?.map((x) => {

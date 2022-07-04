@@ -41,7 +41,7 @@ export default function Home() {
     <>
       <div className={`relative bg-white flex flex-col items-center pb-[100px] px-[16px] sm:px-0`}>
         <NavbarPostHeader />
-        <div className="md:px-[30px] w-full">
+        <div className="md:px-[30px] w-full flex justify-center">
           <Story />
         </div>
         <div className="hidden xl:flex flex-row items-center justify-center gap-[50px] pb-[1px] max-w-[1310px] w-full ">
@@ -72,7 +72,7 @@ export default function Home() {
             ></Tabs.TabPane>
           </Tabs>
         </div>
-        <Row gutter={40} className="max-w-[1310px]">
+        <Row gutter={[22, 40]} className="max-w-[1310px]">
           {articles.map((post) => (
             <Col key={post.id} span={8}>
               <PostCard post={post} />

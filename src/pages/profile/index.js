@@ -13,12 +13,12 @@ import { AppContext } from '../../App';
 
 export default function Profile() {
   const context = useContext(AppContext);
+  const { id } = useParams();
   const es = new ESService('caak');
   const [articles, setArticles] = useState([]);
   const [count, setCount] = useState(0);
   const [page, setPage] = useState(0);
   const [loading, setLoading] = useState(false);
-  const { id } = useParams();
   const { data } = useQuery(USER, { variables: { id } });
   const user = data?.user || {};
   const { data: me } = useQuery(ME);

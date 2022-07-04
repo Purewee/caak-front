@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { notification, Modal } from 'antd';
 import { gql, useMutation } from '@apollo/client';
 import { MetaTag } from '../../pages/post/view/wrapper';
+import { useAuth } from '../../context/AuthContext';
+import SignInUpController from './SignInUpController';
 
 const SAVEPOST = gql`
   mutation SavePost($articleId: ID!) {
@@ -11,7 +13,10 @@ const SAVEPOST = gql`
   }
 `;
 export default function PostSaveModal({ open, onClose, post, image }) {
+  const [isShown, setIsShown] = useState(false);
   const [save, { loading }] = useMutation(SAVEPOST, { variables: { articleId: post.id } });
+  const { isAuth } = useAuth();
+
   const openNotification = () => {
     const args = {
       message: 'Амжилттай хадгалагдлаа.',
@@ -26,12 +31,15 @@ export default function PostSaveModal({ open, onClose, post, image }) {
     open && (
       <Modal
         visible
-        onOk={() => {
-          save().then((e) => {
-            openNotification();
-            onClose();
-          });
-        }}
+        width={480}
+        onOk={() =>
+          isAuth
+            ? save().then((e) => {
+                openNotification();
+                onClose();
+              })
+            : setIsShown('signin')
+        }
         onCancel={onClose}
         title={<span className="text-[26px] font-condensed font-bold leading-[30px]">Мэдээ хадгалах</span>}
         bodyStyle={{ padding: 0 }}
@@ -41,7 +49,7 @@ export default function PostSaveModal({ open, onClose, post, image }) {
         okType="primary"
         confirmLoading={loading}
       >
-        <div className="bg-[#FBFAFB] w-full h-[132px] px-[24px] py-[16px] flex flex-row">
+        <div className="bg-[#FBFAFB] h-[132px] px-[24px] py-[16px] flex flex-row">
           <img alt={post.title} className="min-w-[100px] max-w-[100px] h-[100px] object-cover truncate-3" src={image} />
           <div className="ml-[16px]">
             <p className="font-merri text-[16px] leading-[21px] h-[64px]">{post.title}</p>
@@ -51,6 +59,7 @@ export default function PostSaveModal({ open, onClose, post, image }) {
             </div>
           </div>
         </div>
+        <SignInUpController isShown={isShown} setIsShown={setIsShown} />
       </Modal>
     )
   );

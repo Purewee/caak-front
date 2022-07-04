@@ -4,6 +4,7 @@ import React, { useEffect, useState, createContext } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import NavbarNew from './component/navigation/navbar';
 import Home from './pages/home';
+import { Helmet } from 'react-helmet';
 import Post from './pages/post/view';
 import Profile from './pages/profile';
 import Magazine from './pages/magazine';
@@ -33,6 +34,12 @@ function App() {
         <AuthProvider>
           <div className="caak-main-wrapper font-roboto text-[#111111]">
             <BrowserRouter>
+              <Helmet>
+                <meta
+                  name="viewport"
+                  content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, viewport-fit=cover"
+                />
+              </Helmet>
               <NavbarNew />
               <Routes>
                 <Route exact path="/" element={<Home />} />

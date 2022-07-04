@@ -3,6 +3,11 @@ import { notification } from 'antd';
 import { FacebookShareButton, TwitterShareButton } from 'react-share';
 
 export default function PostShareModal({ sharePostOpen, setSharePostOpen, post, image }) {
+  function copyText(e) {
+    if (!navigator.clipboard) return;
+    navigator.clipboard.writeText(e);
+  }
+
   const openNotification = () => {
     const args = {
       message: 'Линк хуулагдлаа',
@@ -11,7 +16,7 @@ export default function PostShareModal({ sharePostOpen, setSharePostOpen, post, 
       className: 'h-[50px] bg-[#12805C] w-[200px]',
     };
     notification.open(args);
-    navigator.clipboard.writeText(`http://caak.mn/post/view/${post.id}`);
+    copyText(`http://caak.mn/post/view/${post.id}`);
   };
   return (
     sharePostOpen && (
@@ -45,7 +50,7 @@ export default function PostShareModal({ sharePostOpen, setSharePostOpen, post, 
             <div className="bg-[#FBFAFB] w-full h-[44px] mt-[8px] border flex flex-row items-center justify-between border-[#EFEEEF] py-[12px] pl-[12px] pr-[16px]">
               <div className="flex flex-row items-center text-[#555555]">
                 <span className="icon-fi-rs-link" />
-                <p className="text-[15px] ml-[10px]">{`http://caak.mn/post/view/${post.id}`}</p>
+                <p id="myInput" className="text-[15px] ml-[10px]">{`http://caak.mn/post/view/${post.id}`}</p>
               </div>
               <p
                 className="cursor-pointer text-[#FF6600] font-medium text-[15px] leading-[18px]"

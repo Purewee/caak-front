@@ -20,6 +20,7 @@ import { Link } from 'react-router-dom';
 import { FacebookShareButton, TwitterShareButton } from 'react-share';
 import Reaction from './reaction';
 import ReportModal from '../../../component/modal/ReportModal';
+import { Helmet } from 'react-helmet';
 
 const Post = () => {
   const context = useContext(AppContext);
@@ -36,12 +37,15 @@ const Post = () => {
   const article = data?.article || {};
   const { isAuth } = useAuth();
 
+  const title = article?.title;
+  const metaDescription = 'defaul tdescription';
+
   const openNotification = () => {
     const args = {
-      message: `Та ${article?.author.firstName}-г дагалаа`,
+      message: `Та ${article?.source.name}-г дагалаа`,
       duration: 4,
       placement: 'bottom',
-      className: 'h-[50px] bg-[#12805C] w-[470px]',
+      className: 'h-[50px] bg-[#12805C] w-[250px]',
     };
     notification.open(args);
   };
@@ -92,6 +96,27 @@ const Post = () => {
   // prettier-ignore
   return (
     <div className="flex flex-row pb-[100px] justify-center">
+      <Helmet>
+        <title>{title}</title>
+        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+        <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" key="description" content={metaDescription} />
+        <meta name="title" key="title" content={title} />
+        <meta property="og:title" key="og:title" content={title} />
+        <meta property="og:locale" key="og:locale" content="en_US" />
+        <meta charSet="utf-8" />
+        <meta property="og:type" key="og:type" content="website" />
+        <meta
+          property="og:description"
+          key="og:description"
+          content={metaDescription}
+        />
+        <meta
+          property="og:image"
+          key="og:image"
+          content={imagePath(article.imageUrl)}
+        />
+      </Helmet>
         <div className="w-full hidden md:block max-w-[250px]">
           <div className={`hidden md:flex ${leftMenuSticky ? 'sticky top-[80px]' : 'mt-[200px]'} w-full flex-col items-end`}>
             <div className="flex flex-col items-center w-[60px] h-[226px]">
