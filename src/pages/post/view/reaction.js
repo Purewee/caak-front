@@ -1,23 +1,25 @@
-import React from 'react';
-
+import React, { useState } from 'react';
 import { useMutation, useQuery } from '@apollo/client';
-import LoveIcon from '../../../assets/images/fi-rs-react-love.png';
-import AngerIcon from '../../../assets/images/fi-rs-react-anger.svg';
-import CryIcon from '../../../assets/images/fi-rs-react-cry.svg';
-import HahaIcon from '../../../assets/images/fi-rs-react-haha.svg';
-import WowIcon from '../../../assets/images/fi-rs-react-wow.svg';
 import { ADD_REACTION, REACTIONS } from './_gql';
 import { Button } from 'antd';
+import * as love from '../../../assets/json/love-js.json';
+import * as angry from '../../../assets/json/anry-js.json';
+import * as cry from '../../../assets/json/cry-js.json';
+import * as haha from '../../../assets/json/haha-js.json';
+import * as wow from '../../../assets/json/wow-js.json';
+import Lottie from 'react-lottie';
 
 export default function Reaction({ articleId }) {
+  const [isStopped, setIsStopped] = useState(false);
+  const [isPaused, setIsPaused] = useState(false);
   const { data, loading: fetching, refetch } = useQuery(REACTIONS, { variables: { articleId } });
   const [add, { loading }] = useMutation(ADD_REACTION, { variables: { articleId } });
   const ACTIONS = [
-    { action: 'like', icon: LoveIcon },
-    { action: 'anger', icon: AngerIcon },
-    { action: 'cry', icon: CryIcon },
-    { action: 'haha', icon: HahaIcon },
-    { action: 'wow', icon: WowIcon },
+    { action: 'like', icon: love },
+    { action: 'haha', icon: haha },
+    { action: 'wow', icon: wow },
+    { action: 'cry', icon: cry },
+    { action: 'anger', icon: angry },
   ];
 
   const reactions = data?.article?.reactions;
@@ -39,7 +41,20 @@ export default function Reaction({ articleId }) {
               onClick={() => add({ variables: { action: x.action } }).then(() => refetch())}
             >
               <span className="rounded-full border p-[12px]">
-                <img className="w-[38px]" src={x.icon} alt={x.action} />
+                <Lottie
+                  options={{
+                    animationData: x.icon,
+                    loop: false,
+                    autoplay: true,
+                    rendererSettings: {
+                      preserveAspectRatio: 'xMidYMid slice',
+                    },
+                  }}
+                  height={38}
+                  width={38}
+                  isStopped={isStopped}
+                  isPaused={isPaused}
+                />
               </span>
             </Button>
           </div>

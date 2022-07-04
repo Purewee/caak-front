@@ -21,10 +21,28 @@ import { FacebookShareButton, TwitterShareButton } from 'react-share';
 import Reaction from './reaction';
 import ReportModal from '../../../component/modal/ReportModal';
 import { Helmet } from 'react-helmet';
+import * as love from '../../../assets/json/love-js.json';
+import * as angry from '../../../assets/json/anry-js.json';
+import * as cry from '../../../assets/json/cry-js.json';
+import * as haha from '../../../assets/json/haha-js.json';
+import * as wow from '../../../assets/json/wow-js.json';
+import Lottie from 'react-lottie';
+import { FIcon } from '../../../component/icon';
+
+// prettier-ignore
+const ACTIONS = [
+  { icon: love },
+  { icon: haha },
+  { icon: wow },
+  { icon: cry },
+  { icon: angry },
+];
 
 const Post = () => {
   const context = useContext(AppContext);
   const { id } = useParams();
+  const [isStopped, setIsStopped] = useState(false);
+  const [isPaused, setIsPaused] = useState(false);
   const [leftMenuSticky, setLeftMenuSticky] = useState(false);
   const [isReportOpen, setIsReportOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -121,7 +139,36 @@ const Post = () => {
           <div className={`hidden md:flex ${leftMenuSticky ? 'sticky top-[80px]' : 'mt-[200px]'} w-full flex-col items-end`}>
             <div className="flex flex-col items-center w-[60px] h-[226px]">
               <p className="text-[#555555] text-[15px] leading-[18px] font-bold">{article.data?.like_count}</p>
-              <span onClick={() => isAuth ? '' : setIsShown('signin')} className="mt-[6px] cursor-pointer icon-fi-rs-heart text-[26px] text-[#555555] flex items-center justify-center border border-[#D4D8D8] w-[60px] h-[60px] rounded-full" />
+              <Popover
+                placement='top'
+                trigger="hover"
+                overlayStyle={{ width: 230, borderRadius: 8 }}
+                content={
+                  <div className="flex flex-row gap-[8px] h-full justify-center py-[4px]">
+                    {
+                      ACTIONS.map((data, index) => (
+                        <Lottie
+                          key={index}
+                          options={{
+                            animationData: data.icon,
+                            loop: false,
+                            autoplay: true,
+                            rendererSettings: {
+                              preserveAspectRatio: 'xMidYMid slice',
+                            },
+                          }}
+                          height={38}
+                          width={38}
+                          isStopped={isStopped}
+                          isPaused={isPaused}
+                        />
+                      ))
+                    }
+                  </div>
+                }
+              >
+                <FIcon className="mt-[6px] icon-fi-rs-heart text-[26px] text-[#F53757] border border-[#D4D8D8] w-[60px] h-[60px] rounded-full" />
+              </Popover>
               <span onClick={() => setSavePostOpen(true)}  className="text-[#909090] cursor-pointer text-[20px] icon-fi-rs-bookmark mt-[22px]" />
               <span onClick={() => setSharePostOpen(true)} className="text-[#909090] cursor-pointer text-[19px] icon-fi-rs-share mt-[24.5px]" />
               <Popover

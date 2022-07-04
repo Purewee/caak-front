@@ -34,6 +34,7 @@ export default function Search() {
     <div className="flex flex-col items-center mb-[100px]">
       <div className="w-full h-[208px] bg-[#F5F5F5] flex justify-center px-[16px] sm:px-0">
         <div className="w-full max-w-[980px]">
+          <p className="text-[#555555] text-[16px] leading-[19px] mt-[40px]">Хайлтын илэрц: {totalResult} мэдээ</p>
           <div className="relative w-full mt-[20px]">
             <Input.Search
               placeholder="Хайлт хийх..."
@@ -44,10 +45,9 @@ export default function Search() {
               size="large"
             />
           </div>
-          <p className="text-[#555555] text-[16px] leading-[19px] mt-[40px]">Хайлтын илэрц: {totalResult} мэдээ</p>
         </div>
       </div>
-      <Row gutter={22} className="max-w-[1310px]">
+      <Row gutter={22} className="max-w-[1310px] pt-[70px]">
         {articles.map((post, index) => (
           <Col key={index} span={8}>
             <PostCard post={post} />
