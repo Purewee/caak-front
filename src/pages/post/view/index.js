@@ -151,7 +151,7 @@ const Post = () => {
                           key={index}
                           options={{
                             animationData: data.icon,
-                            loop: false,
+                            loop: true,
                             autoplay: true,
                             rendererSettings: {
                               preserveAspectRatio: 'xMidYMid slice',

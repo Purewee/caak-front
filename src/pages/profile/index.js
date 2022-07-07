@@ -10,6 +10,7 @@ import SignInUpController from '../../component/modal/SignInUpController';
 import { useAuth } from '../../context/AuthContext';
 import { Link } from 'react-router-dom';
 import { AppContext } from '../../App';
+import useMediaQuery from '../../component/navigation/useMediaQuery';
 
 export default function Profile() {
   const context = useContext(AppContext);
@@ -25,6 +26,10 @@ export default function Profile() {
   const loggedUser = me?.me;
   const { isAuth } = useAuth();
   const [isShown, setIsShown] = useState(false);
+
+  const isLaptop = useMediaQuery('(min-width: 1001px) and (max-width: 1920px)');
+  const isTablet = useMediaQuery('(min-width: 401px) and (max-width: 1000px)');
+  const isMobile = useMediaQuery('screen and (max-width: 767px)');
 
   const openNotification = () => {
     const args = {
@@ -88,9 +93,9 @@ export default function Profile() {
         </div>
         <Tabs size="large">
           <Tabs.TabPane key="posts" tab="Оруулсан мэдээ">
-            <Row gutter={22} className="max-w-[1310px] my-[24px]">
+            <Row gutter={[22, 40]} className="max-w-[1310px] my-[24px]">
               {articles.map((post) => (
-                <Col key={post.id} span={8}>
+                <Col key={post.id} span={isLaptop && 8}>
                   <PostCard post={post} />
                 </Col>
               ))}
