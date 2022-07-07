@@ -64,7 +64,7 @@ export default function Dashboard() {
       }, []);
     //prettier-ignore
     return isAuth && data?.me?.id === id ? (
-        <div className='flex w-full justify-center bg-white'>
+        <div className='flex w-full justify-center bg-white px-[16px] md:px-0'>
             <div className='max-w-[1140px] w-full mt-[50px]'>
                 <p className='text-[28px] leading-[33px] font-medium'>Дашбоард</p>
                 <div className='w-full relative border-[#EFEEEF] border-b-[2px] h-[28px] mt-[42px]'>
