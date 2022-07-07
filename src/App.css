@@ -122,6 +122,11 @@
   overflow-y: auto;
 }
 
+.mobileWrapper {
+  display: flex;
+  flex-wrap: wrap;
+}
+
 .wrapper::-webkit-scrollbar {
   width: 0px;
   height: 0px;

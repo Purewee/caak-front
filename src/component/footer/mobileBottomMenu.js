@@ -22,12 +22,12 @@ const menu = [
     {
         icon: 'icon-fi-rs-notification-f',
         icon1: 'icon-fi-rs-notification',
-        route: '/'
+        route: '/notification'
     },
     {
         icon: 'icon-fi-rs-list-f',
         icon1: 'icon-fi-rs-list-o',
-        route: '/'
+        route: '/post/saved'
     },
 ]
 

@@ -21,6 +21,8 @@ import Help from './pages/help';
 import Dashboard from './pages/user/Dashboard';
 import Settings from './pages/user/Settings';
 import Category from './pages/newsCategory';
+import PostSaved from './pages/user/saved';
+import Notification from './pages/user/notification';
 
 export const AppContext = createContext(null);
 
@@ -44,6 +46,7 @@ function App() {
               <Routes>
                 <Route exact path="/" element={<Home />} />
                 <Route path="/post/view/:id" element={<Post />} />
+                <Route path="/post/saved" element={<PostSaved />} />
                 <Route path="/profile/:id" element={<Profile />} />
                 <Route path="/magazine/:id" element={<Magazine />} />
                 <Route path="/tags/:slug" element={<TopTags />} />
@@ -57,6 +60,7 @@ function App() {
                 <Route path="/category/:slug" element={<Category />} />
                 <Route path="/dashboard/:id" element={<Dashboard />} />
                 <Route path="/settings/:id" element={<Settings />} />
+                <Route path="/notification" element={<Notification />} />
               </Routes>
               <Footer />
             </BrowserRouter>

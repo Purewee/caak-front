@@ -32,14 +32,17 @@ const mobileItems = [
   {
     title: 'Радио',
     icon: 'icon-fi-rs-wave',
+    url: 'https://www.caak.mn/radio/',
   },
   {
     title: 'Подкаст',
     icon: 'icon-fi-rs-mic',
+    url: 'https://soundcloud.com/caak-podcast',
   },
   {
     title: 'Саак мэдээ',
     icon: 'icon-fi-rs-caak-news',
+    url: 'https://www.caak.mn/',
   },
 ];
 
@@ -214,7 +217,7 @@ export default function NavbarNew() {
         <SignInUpController isShown={isShown} setIsShown={setIsShown} />
         {
           sideMenuOpen && 
-          <div ref={sideMenuRef} className='absolute left-0 top-0 w-[410px] bg-white px-[50px] pt-[50px] pb-[55px] font-condensed'>
+          <div ref={sideMenuRef} className='absolute left-0 top-0 w-[410px] bg-white px-[50px] pt-[50px] pb-[55px] font-condensed z-[1]'>
             <div className='flex flex-row items-center justify-between w-full'>
                 <span className='icon-fi-rs-search text-[20px] text-[#111111]' />
                 <img
@@ -311,7 +314,7 @@ export default function NavbarNew() {
                   <div className='px-[16px] flex flex-col gap-[24px] mt-[20px]'>
                     {Settings.map((data, index) => {
                       return (
-                        <Link key={index} to={{ pathname: data.link }}>
+                        <Link onClick={() => setMobileSideMenu(false)} key={index} to={{ pathname: data.link }}>
                           <div className="flex flex-row items-center cursor-pointer">
                             <FIcon className={`${data.icon} mr-[18px] text-[24px] w-[26px] h-[26px]`} />
                             <p className='text-[18px]'>{data.title}</p>
@@ -319,7 +322,13 @@ export default function NavbarNew() {
                         </Link>
                       );
                     })}
-                    <button onClick={() => logout()} className='w-full h-[58px] text-[16px] font-medium text-caak-black border rounded-[4px]'>
+                    <button
+                      onClick={() => {
+                        logout();
+                        setMobileSideMenu(false)
+                      }}
+                      className='w-full h-[58px] text-[16px] font-medium text-caak-black border rounded-[4px]'
+                    >
                       Гарах
                     </button>
                   </div>
@@ -332,10 +341,22 @@ export default function NavbarNew() {
                 </div>
                 <div className='px-[16px]'>
                   <p className='font-bold text-[28px] font-condensed w-[233px] leading-[32px] mt-[30px]'>Та бүртгэл үүсгэн мэдээллийг өөрийн болгоорой!</p>
-                  <button onClick={() => setIsShown('signup')} className='w-full h-[58px] text-[16px] font-medium text-white mt-[20px] bg-caak-primary rounded-[4px]'>
+                  <button
+                    onClick={() => {
+                      setIsShown('signup');
+                      setMobileSideMenu(false)
+                    }}
+                    className='w-full h-[58px] text-[16px] font-medium text-white mt-[20px] bg-caak-primary rounded-[4px]'
+                  >
                     Бүртгүүлэх
                   </button>
-                  <button onClick={() => setIsShown('signin')} className='w-full h-[58px] text-[16px] font-medium text-caak-black mt-[20px] border rounded-[4px]'>
+                  <button
+                    onClick={() => {
+                      setIsShown('signin');
+                      setMobileSideMenu(false)
+                    }}
+                    className='w-full h-[58px] text-[16px] font-medium text-caak-black mt-[20px] border rounded-[4px]'
+                  >
                     Нэвтрэх
                   </button>
                 </div>
@@ -345,10 +366,10 @@ export default function NavbarNew() {
               {
                 mobileItems.map((data, index) => {
                   return(
-                    <div key={index} className='flex flex-row items-center ml-[24px]'>
+                    <Link to={data.url} target="_blank" key={index} className='flex flex-row items-center ml-[24px]'>
                       <FIcon className={`${data.icon} mr-[18px] text-[24px] w-[26px] h-[26px]`} />
                       <p className='text-[18px]'>{data.title}</p>
-                    </div>
+                    </Link>
                   )
                 })
               }

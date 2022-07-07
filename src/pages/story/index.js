@@ -6,6 +6,7 @@ import Logo from '../../component/logo';
 import { Link, useParams } from 'react-router-dom';
 import { useSwipeable } from 'react-swipeable';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
+import StoryItem from '../../component/story/Story';
 
 export default function Story() {
   // prettier-ignore
@@ -14,6 +15,8 @@ export default function Story() {
   const [stories, setStories] = useState([]);
   const [indexOfStory, setIndexOfStory] = useState(id === 'done' ? 'done' : JSON.parse(id));
   const [shownStory, setShownStory] = useState(null);
+
+  console.log(stories);
 
   useEffect(() => {
     const es = new ESService('caak');
@@ -48,23 +51,28 @@ export default function Story() {
   });
   //prettier-ignore
   return indexOfStory === 'done' ? (
-    <div {...handlers} className="w-full h-screen relative bg-black bg-opacity-60">
-      <div className="w-full h-full absolute top-0 flex flex-col items-center">
-        <div className="flex flex-row items-center w-full justify-between px-[19px] mt-[16px]">
-          <div></div>
-          <Link to={'/'}>
-            <div className="w-[34px] h-[34px] bg-white rounded-full flex justify-center items-center ml-[33.8px]">
-              <span className="icon-fi-rs-close text-[13.5px] text-white xl:text-[#555555] " />
-            </div>
-          </Link>
-        </div>
-        <div className="max-w-[1574px] w-full mt-[106px]">
+    <div {...handlers} className="w-full h-screen relative bg-black px-[16px] sm:px-0 pt-[16px]">
+      <div className="flex w-full justify-end px-[19px]">
+        <Link to={'/'}>
+          <div className="w-[34px] h-[34px] md:bg-white rounded-full flex justify-center items-center ml-[33.8px]">
+            <span className="icon-fi-rs-close text-[15px] text-white xl:text-[#555555] " />
+          </div>
+        </Link>
+      </div>
+      <div className="w-full h-full flex flex-col items-center">
+        <div className="max-w-[1310px] w-full">
           <span className="text-[15px] font-bold leading-[18px] inline-flex text-white">
             <span className="icon-fi-rs-bolt text-[22px] w-[24px] text-[#FF6600]" />
-            ОНЦЛОХ СТОРИ <p className="font-normal">&nbsp; МЭДЭЭНҮҮД</p>
+            ОНЦЛОХ СТОРИ <p className="font-normal">&nbsp;МЭДЭЭНҮҮД</p>
           </span>
         </div>
-        <p>Өнөөдөр Улаанбаатарт өдөртөө +20 градус дулаан</p>
+        <div className="w-full wrapper gap-[13px] transition-all pb-[26px] md:pb-0 duration-300 mt-[14px] md:mt-[39px] max-w-[1310px]">
+          {
+            stories.map((data, index) => (
+              <StoryItem key={index} story={data} index={index}/>
+            ))
+          }
+        </div>
       </div>
     </div>
   ) : (
@@ -92,23 +100,23 @@ export default function Story() {
             </Link>
           </div>
         </div>
-        <div className="pt-[104px] px-[150px] storyLinearBig w-full flex flex-col items-center">
+        <div className="md:pt-[104px] px-[16px] md:px-[150px] storyLinearBig w-full flex flex-col items-center">
           {/* {indexOfStory === 0 && (
             <div className="w-[246px] h-[60px] border-t border-b border-white flex items-center justify-center">
               <img src={StoryImage} alt="" />
             </div>
           )} */}
-          <div className="border-l-[6px] border-white w-full h-[340px] pl-[40px]">
+          <div className="border-l-[6px] border-white w-full h-[286px] md:h-[340px] pl-[16px] md:pl-[40px]">
             <div className="flex flex-row justify-start mt-[12px]">
               {shownStory?.categories?.map((x) => (
                 <div key={x.id} className="bg-[#FF6600] h-[22px] flex items-center px-[8px]">
                   <p className="text-white text-[12px] font-bold leading-[14px]">
-                    #{x.name}
+                    {x.name}
                   </p>
                 </div>
               ))}
             </div>
-            <p className="text-white mt-[12px] text-[28px] xl:text-[54px] font-condensed font-bold leading-[63px] truncate-2 xl:leading-[70px] max-w-[1032px]">
+            <p className="text-white mt-[12px] text-[28px] xl:text-[54px] font-condensed font-bold leading-[34px] truncate-3 md:truncate-2 xl:leading-[70px] max-w-[1032px]">
               {shownStory?.title}
             </p>
             <div className="flex flex-row items-center mt-[12px]">
