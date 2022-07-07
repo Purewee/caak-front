@@ -44,7 +44,7 @@ export default function Reaction({ articleId }) {
                 <Lottie
                   options={{
                     animationData: x.icon,
-                    loop: false,
+                    loop: true,
                     autoplay: true,
                     rendererSettings: {
                       preserveAspectRatio: 'xMidYMid slice',

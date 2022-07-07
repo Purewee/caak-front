@@ -10,16 +10,13 @@ const NavbarPostHeaderCard = ({ type, item }) => {
     item && (
       <div className={'w-full h-full relative min-h-[560px]'}>
         <img
-          className={'object-cover w-full h-full absolute top-0'}
+          className={'object-cover w-full h-[560px]'}
           alt=""
           src={imagePath(item.image)}
-          // onClick={() => router.push({
-          //   pathname: `/post/view/${item.id}`,
-          //   query: item
-          // }, `/post/view/${item.id}`)}
         />
+        <div className="min-h-[480px] w-full navBarPostHeaderCardGradient absolute bottom-0" />
         <div
-          className={`flex flex-col w-full absolute z-[1] bottom-0 ${type === 'wide' ? 'px-[40px]' : 'px-[30px]'} py-[30px]`}
+          className={`flex flex-col w-full absolute bottom-0 ${type === 'wide' ? 'px-[40px]' : 'px-[30px]'} py-[30px]`}
         >
           <div className={'uppercase text-[14px] font-roboto font-medium tracking-[0.2px] leading-[15px]'}>
             {item.categories?.map((x) => {

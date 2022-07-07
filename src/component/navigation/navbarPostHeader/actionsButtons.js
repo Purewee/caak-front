@@ -60,8 +60,8 @@ const ActionButtons = ({ post }) => {
       />
       <PostSaveModal
         post={post}
-        setSavePostOpen={setSavePostOpen}
-        savePostOpen={savePostOpen}
+        onClose={() => setSavePostOpen(false)}
+        open={savePostOpen}
         image={imagePath(post.image)}
       />
       <ReportModal isOpen={reportOpen} setIsOpen={setReportOpen} />

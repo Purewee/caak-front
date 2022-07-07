@@ -17,7 +17,6 @@ const NavbarPostHeader = () => {
   return (
     isLaptop && (
       <div className={`relative flex flex-col lg:flex-row items-center justify-center h-full min-h-[560px] w-full`}>
-        <div className="min-h-[480px] w-full navBarPostHeaderCardGradient absolute bottom-0 z-[1]" />
         {posts.length > 0 && (
           <div style={{ flex: 1 }} className={'h-full w-full'}>
             <NavbarPostHeaderCard type={'wide'} item={posts[0]} />

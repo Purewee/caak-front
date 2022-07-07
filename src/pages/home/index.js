@@ -72,9 +72,9 @@ export default function Home() {
             ></Tabs.TabPane>
           </Tabs>
         </div>
-        <Row gutter={[22, 40]} className="max-w-[1310px]">
+        {/* <Row gutter={[22, 40]} className="max-w-[1310px]">
           {articles.map((post) => (
-            <Col key={post.id} span={8}>
+            <Col key={post.id} span={24}>
               <PostCard post={post} />
             </Col>
           ))}
@@ -90,7 +90,29 @@ export default function Home() {
               Цааш үзэх
             </Button>
           </Col>
-        </Row>
+        </Row> */}
+
+        {/* ingeed hiichvvl mobile deer ewdrehgv zvgeer bn */}
+
+        <div className="max-w-[1310px] w-full flex flex-wrap justify-center gap-x-[22px] gap-y-[40px]">
+          {articles.map((post) => (
+            <Col key={post.id}>
+              <PostCard post={post} />
+            </Col>
+          ))}
+          {loading && <Skeleton />}
+          <Col span={24}>
+            <Button
+              block
+              size="large"
+              className="font-roboto border-caak-primary text-caak-primary mt-[20px]"
+              onClick={() => setPage(page + 1)}
+              loading={loading}
+            >
+              Цааш үзэх
+            </Button>
+          </Col>
+        </div>
       </div>
     </>
   );

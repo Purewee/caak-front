@@ -52,7 +52,7 @@ export default function ReportModal({ isOpen, setIsOpen }) {
   return (
     isOpen && (
     <div className="popup_modal">
-        <div className="popup_modal-content w-[480px] rounded-[4px] py-[18px]">
+        <div className="popup_modal-content w-[480px] rounded-[4px] py-[18px] z-[3]">
             <p className="text-[26px] font-condensed font-bold leading-[30px] ml-[24px]">Репорт</p>
             <div className='reportModalItemsContainer border-t mt-[14px]'>
                 {reports.map((report, index) => {

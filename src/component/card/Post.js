@@ -23,38 +23,31 @@ export default function PostCard({ post, ...rest }) {
   };
 
   return (
-    <Card
-      bordered={false}
-      {...rest}
-      bodyStyle={{ padding: 0 }}
-      className="h-[523px] w-[422px]"
-      cover={
-        <Link className="h-[300px]" to={postURL}>
+    <div className="h-[150px] sm:h-[523px] flex flex-col sm:w-[422px]">
+      <div className="flex flex-row md:flex-col">
+        <Link className="sm:h-[300px]" to={postURL}>
           <Image
             preview={false}
             alt={post.title}
             src={imagePath(post.image)}
-            className="w-full object-cover h-[300px] "
+            className="object-cover h-[105px] min-w-[130px] sm:w-full sm:h-[300px] "
           />
         </Link>
-      }
-    >
-      <div className="h-[223px] border-b border-[#EFEFEF] flex flex-col justify-between pt-[20px] pb-[19px]">
-        <div>
-          {post?.categories?.map((x, index) => (
-            <Link key={index} to={`/category/${x.slug}`}>
-              <HashTag className="font-normal text-[13px]">{`${x.name}`}</HashTag>
-            </Link>
-          ))}
-          <Link
-            className="text-[#111111] hover:text-[#111111] text-[21px] font-medium mt-[10px] leading-[27px] tracking-[0.32px] font-merri truncate-3"
-            to={postURL}
-          >
-            {post.title}
+        {post?.categories?.map((x, index) => (
+          <Link className="mt-[20px] hidden sm:block" key={index} to={`/category/${x.slug}`}>
+            <HashTag className="font-normal text-[13px]">{`${x.name}`}</HashTag>
           </Link>
-          <div className="text-[14px] text-[#909090] tracking-[0.21px] leading-[16px] mt-[10px]">
-            {moment(post.publish_date).format('YYYY-MM-DD, hh:mm')}
-          </div>
+        ))}
+        <Link
+          className="text-[#111111] ml-[16px] sm:ml-0 sm:mt-[10px] hover:text-[#111111] text-[16px] sm:text-[21px] font-medium leading-[20px] sm:leading-[27px] tracking-[0.32px] font-merri"
+          to={postURL}
+        >
+          <p className="truncate-3">{post.title}</p>
+        </Link>
+      </div>
+      <div className="border-b border-[#EFEFEF] mt-[10px] h-full flex flex-col justify-between pb-[16px] sm:pb-[19px]">
+        <div className="text-[14px] text-[#909090] hidden sm:block tracking-[0.21px] leading-[16px]">
+          {moment(post.publish_date).format('YYYY-MM-DD, hh:mm')}
         </div>
         <div className="flex justify-between items-center ">
           <div className="flex flex-row items-center">
@@ -123,6 +116,6 @@ export default function PostCard({ post, ...rest }) {
         image={imagePath(post.image)}
       />
       <ReportModal isOpen={isReportOpen} setIsOpen={setIsReportOpen} />
-    </Card>
+    </div>
   );
 }
