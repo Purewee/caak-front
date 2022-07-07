@@ -91,7 +91,7 @@ function AddPost() {
         ...article,
         tags: article?.tags.map((x) => x.slug),
         blocks: sortBy(article?.blocks, 'position'),
-        featuredDates: [article.featuredFrom, article.featuredTo],
+        featuredDates: [article?.featuredFrom, article?.featuredTo],
       }}
     >
       <Row gutter={12} className="mb-[400px]">
