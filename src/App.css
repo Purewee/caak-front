@@ -276,7 +276,10 @@
   }
 }
 
-.ant-popover-inner-content { padding: 0; }
+/*.ant-popover-inner-content { padding: 0; }*/
+.ant-popover-buttons {
+  display: flex;
+}
 
 .ant-notification-notice {
   display: flex;

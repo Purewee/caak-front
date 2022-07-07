@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { arrayMove, horizontalListSortingStrategy, SortableContext, useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
-import { Form, Image, Skeleton } from 'antd';
+import { Form, Image, Skeleton, Badge } from 'antd';
 import { imagePath } from '../../utility/Util';
 import { FontSizeOutlined, YoutubeFilled } from '@ant-design/icons';
 import { closestCenter, DndContext, DragOverlay } from '@dnd-kit/core';
@@ -54,8 +54,6 @@ function SortableBlock({ block }) {
     transition,
     height: 90,
     margin: 4,
-    borderRadius: 4,
-    overflow: 'hidden',
     width: 90,
     touchAction: 'none',
   };
@@ -63,20 +61,26 @@ function SortableBlock({ block }) {
     <span ref={setNodeRef} style={style} {...attributes} {...listeners} key={block.position}>
       {block.kind === 'image' && (
         <Image
-          src={imagePath(block.imageUrl) || block.base64 || fallback}
+          src={block.image64 || imagePath(block.imageUrl) || fallback}
           preview={false}
-          className="object-cover w-[90px] h-[90px]"
+          className="object-cover w-[90px] h-[90px] rounded"
         />
       )}
       {block.kind === 'text' && (
-        <span className="w-[90px] h-[90px] p-[8px] flex items-start justify-between bg-[#EFEFEF]">
+        <span className="w-[90px] h-[90px] p-[8px] flex items-start justify-between bg-[#EFEFEF] rounded">
           <FontSizeOutlined className="text-[40px]" />
           <span className="self-end">{block.position}</span>
         </span>
       )}
       {block.kind === 'video' && (
-        <span style={{ height: 90, width: 90 }} className="flex items-center justify-center bg-[#EFEFEF]">
-          <YoutubeFilled className="text-[40px]" />
+        <span style={{ height: 90, width: 90 }} className="flex items-center justify-center bg-[#EFEFEF] rounded">
+          {block.imageUrl ? (
+            <Badge.Ribbon placement="start" text="VIDEO" className="text-[10px] h-[16px] leading-[16px]">
+              <Image src={block.imageUrl} preview={false} className="object-cover w-[90px] rounded" />
+            </Badge.Ribbon>
+          ) : (
+            <YoutubeFilled className="text-[40px]" />
+          )}
         </span>
       )}
     </span>

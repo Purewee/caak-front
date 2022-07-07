@@ -1,16 +1,32 @@
 import React, { useEffect, useState } from 'react';
 import { useMutation, useQuery } from '@apollo/client';
-import { CATEGORIES, POST, CREATE, UPDATE, TAGS } from './_gql';
+import { CATEGORIES, CREATE, POST, TAGS, UPDATE } from './_gql';
 import { sortBy } from 'lodash';
-import { Affix, Button, Card, Checkbox, Col, Form, Image, Input, Row, Select, Skeleton, Upload, message } from 'antd';
-import { DeleteOutlined, FontSizeOutlined, SaveOutlined, SearchOutlined, YoutubeFilled } from '@ant-design/icons';
+import {
+  Affix,
+  Button,
+  Card,
+  Checkbox,
+  Col,
+  Form,
+  Image,
+  Input,
+  message,
+  Popconfirm,
+  Row,
+  Select,
+  Skeleton,
+  Upload,
+} from 'antd';
+import { DeleteOutlined, SaveOutlined, SearchOutlined } from '@ant-design/icons';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import InlineEditor from '@ckeditor/ckeditor5-build-inline';
 import { imagePath } from '../../utility/Util';
-import { useParams } from 'react-router-dom';
-import { getDataFromBlob, imageCompress } from '../../lib/imageCompress';
+import { useNavigate, useParams } from 'react-router-dom';
+import { getDataFromBlob } from '../../lib/imageCompress';
 import AddBlock from './AddBlock';
 import SortableContainer from './SortableContainer';
+import { DatePicker } from 'antd/es';
 
 const fallback =
   'data:image/png;base64,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';
@@ -21,11 +37,13 @@ const ckConfig = {
 
 function AddPost() {
   const { id } = useParams();
-  const { data } = useQuery(CATEGORIES);
+  const navigate = useNavigate();
+  const { data, refetch } = useQuery(CATEGORIES);
   const { data: post, loading } = useQuery(POST, { variables: { id }, skip: !id });
   const categories = data?.categories?.nodes || [];
   const article = post?.article;
   const [blocks, setBlocks] = useState([]);
+  const [featured, setFeatured] = useState(article?.data?.featured || false);
   const [saveArticle, { loading: saving }] = useMutation(id ? UPDATE : CREATE, { context: { upload: true } });
 
   useEffect(() => {
@@ -38,10 +56,11 @@ function AddPost() {
   return (
     <Form
       onFinish={(values) => {
-        console.log({ values });
         saveArticle({
           variables: {
             id: id,
+            featuredFrom: values.featuredDates?.[0],
+            featuredTo: values.featuredDates?.[1],
             ...values,
             blocks: values.blocks.map((x) => ({
               id: x.id,
@@ -53,13 +72,26 @@ function AddPost() {
               data: x.data,
             })),
           },
-        }).then(message.success('Saved'));
+        })
+          .then((res) => {
+            message.success('Амжилттай хадгаллаа');
+            if (id) {
+              refetch().then();
+            } else {
+              navigate(`/add/${res?.data?.article.id}`);
+            }
+          })
+          .catch((e) => {
+            message.error(JSON.stringify(e.message));
+          });
       }}
+      layout="vertical"
       className="caak_article"
       initialValues={{
         ...article,
         tags: article?.tags.map((x) => x.slug),
         blocks: sortBy(article?.blocks, 'position'),
+        featuredDates: [article.featuredFrom, article.featuredTo],
       }}
     >
       <Row gutter={12} className="mb-[400px]">
@@ -103,9 +135,9 @@ function AddPost() {
                         <Form.Item name={[idx, 'kind']} hidden>
                           <Input />
                         </Form.Item>
-                        {block?.kind === 'image' && <ImageBlock block={block} idx={idx} />}
-                        {block?.kind === 'text' && <TextBlock block={block} idx={idx} />}
-                        {block?.kind === 'video' && <VideoBlock block={block} idx={idx} />}
+                        {block?.kind === 'image' && <ImageBlock block={block} idx={idx} setBlocks={setBlocks} />}
+                        {block?.kind === 'text' && <TextBlock block={block} idx={idx} setBlocks={setBlocks} />}
+                        {block?.kind === 'video' && <VideoBlock block={block} idx={idx} setBlocks={setBlocks} />}
                       </div>
                     );
                   })}
@@ -133,9 +165,15 @@ function AddPost() {
                 <Checkbox checked>Сэтгэгдэл зөвшөөрөх</Checkbox>
               </Form.Item>
               <Form.Item name="featured" className="font-merri">
-                <Checkbox>Мэдээг онцлох</Checkbox>
+                <Checkbox onChange={(e) => setFeatured(e.target.checked)}>Мэдээг онцлох</Checkbox>
               </Form.Item>
-
+              {featured && (
+                <div className="flex justify-between">
+                  <Form.Item name="featuredDates" className="font-merri text-[12px]" label="Онцлох огноо">
+                    <DatePicker.RangePicker showTime format="YYYY-MM-DD HH:mm" />
+                  </Form.Item>
+                </div>
+              )}
               <hr className="my-[20px]" />
               <Button.Group className="w-full">
                 <Button title="Save" size="large" icon={<SearchOutlined />} loading={saving} shape="round" block>
@@ -162,8 +200,16 @@ function AddPost() {
   );
 }
 
-function ImageBlock({ block, idx }) {
+function ImageBlock({ block, idx, setBlocks }) {
   const [image64, setImage64] = useState(null);
+  useEffect(() => {
+    if (image64 === null) return;
+    setBlocks((blocks) => {
+      const index = blocks.findIndex((x) => x.position === block.position);
+      return blocks.map((x, idx) => (idx === index ? { ...block, image64: image64 } : x));
+    });
+  }, [image64]);
+
   return (
     <Card
       className="my-[24px] bg-[#EFEFEF] font-merri shadow-md"
@@ -176,7 +222,7 @@ function ImageBlock({ block, idx }) {
           </Button>
         </>
       }
-      extra={[<Button icon={<DeleteOutlined />} key="delete" type="link" className="bg-[#F53757] text-white" />]}
+      extra={[<RemoveBlock position={block.position} setBlocks={setBlocks} />]}
     >
       <Row gutter={14}>
         <Col span={6}>
@@ -227,7 +273,7 @@ function ImageBlock({ block, idx }) {
   );
 }
 
-export function TextBlock({ block, idx }) {
+export function TextBlock({ block, idx, setBlocks }) {
   return (
     <Card
       className="my-[24px] bg-[#EFEFEF] font-merri shadow-md"
@@ -240,7 +286,7 @@ export function TextBlock({ block, idx }) {
           </Button>
         </>
       }
-      extra={[<Button icon={<DeleteOutlined />} key="delete" type="link" className="bg-[#F53757] text-white" />]}
+      extra={[<RemoveBlock position={block.position} setBlocks={setBlocks} />]}
     >
       <Form.Item
         name={[idx, 'content']}
@@ -256,15 +302,22 @@ export function TextBlock({ block, idx }) {
   );
 }
 
-function VideoBlock({ block, idx }) {
-  const [url, setUrl] = useState(block.data.url);
+function VideoBlock({ block, idx, setBlocks }) {
+  const [url, setUrl] = useState(block?.data?.url);
   const [image, setImage] = useState(null);
   const [title, setTitle] = useState('');
 
   useEffect(() => {
+    setBlocks((blocks) => {
+      const index = blocks.findIndex((x) => x.position === block.position);
+      return blocks.map((x, idx) => (idx === index ? { ...block, imageUrl: image } : x));
+    });
+  }, [image, title]);
+
+  useEffect(() => {
     if (!url) return;
     const parsed = parseVideoURL(url);
-    if (parsed.provider === 'youtube') {
+    if (parsed?.provider === 'youtube') {
       fetch(
         `https://www.googleapis.com/youtube/v3/videos?id=${parsed.id}&key=AIzaSyCdT6cNcu3-5fOz8QunPi786ToSbbyXrbo&fields=items(snippet(title))&part=snippet`,
       )
@@ -287,7 +340,7 @@ function VideoBlock({ block, idx }) {
           </Button>
         </>
       }
-      extra={[<Button icon={<DeleteOutlined />} key="delete" type="link" className="bg-[#F53757] text-white" />]}
+      extra={[<RemoveBlock position={block.position} setBlocks={setBlocks} />]}
     >
       <Row gutter={12}>
         <Col span={6}>
@@ -330,6 +383,22 @@ function parseVideoURL(url) {
       provider: match[3],
       id: match[7],
     }
+  );
+}
+
+function RemoveBlock({ position, setBlocks }) {
+  return (
+    <Popconfirm
+      title="Үнэхээр устгах уу?"
+      onConfirm={() => {
+        setBlocks((blocks) => {
+          const index = blocks.findIndex((x) => x.position === position);
+          return blocks.filter((x, idx) => idx !== index);
+        });
+      }}
+    >
+      <Button icon={<DeleteOutlined />} key="delete" type="link" className="bg-[#F53757] text-white" />
+    </Popconfirm>
   );
 }
 

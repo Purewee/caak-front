@@ -20,6 +20,9 @@ export const POST = gql`
       description
       imageUrl
       data
+      featured
+      featuredFrom
+      featuredTo
       author {
         id
       }
@@ -60,7 +63,7 @@ export const CREATE = gql`
     $categoryIds: [ID!]
     $tags: [String!]
   ) {
-    addArticle(
+    article: addArticle(
       input: {
         title: $title
         description: $description
@@ -89,7 +92,7 @@ export const UPDATE = gql`
     $categoryIds: [ID!]
     $tags: [String!]
   ) {
-    updateArticle(
+    article: updateArticle(
       input: {
         id: $id
         title: $title
