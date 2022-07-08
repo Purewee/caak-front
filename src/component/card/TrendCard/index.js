@@ -13,7 +13,7 @@ export default function TrendCard({ post }) {
       <div className="flex flex-row mt-[14px]">
         {/* <p className='h-[30px] min-w-[30px] rounded-[2px] bg-[#909090] text-[20px] font-merri text-center text-[#FBFAFB]'>{index + 3}</p> */}
         <Link to={`/post/view/${post.id}`}>
-          <p style={{ fontWeight: 600 }} className="text-[20px] font-condensed font-medium leading-[24px] text-[#111111] truncate-3">
+          <p style={{ fontWeight: 600 }} className="text-[20px] condMedium leading-[24px] text-[#111111] truncate-3">
             {post.title}
           </p>
         </Link>

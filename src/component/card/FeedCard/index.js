@@ -345,7 +345,7 @@ const FeedCard = ({ post, loading, className, sponsored, trend }) => {
       <div>
         <div className="flex flex-row mt-[20px]">
           <Link to={`/post/view/${post.id}`}>
-            <p style={{ fontWeight: 600 }} className="text-[21px] font-condensed font-medium leading-[27px] text-[#111111] truncate-2">
+            <p style={{ fontWeight: 600 }} className="text-[21px] condMedium leading-[27px] text-[#111111] truncate-2">
               {post.title}
             </p>
           </Link>

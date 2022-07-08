@@ -22,10 +22,10 @@ export default function StoryItem({ story, border, index }) {
                 #{x.name}
               </p>
             ))}
-            <p className="truncate-3 text-white text-[12px] xl:text-[22px] font-medium xl:font-bold mt-[10px] tracking-[0.36px] leading-[15px] xl:leading-[28px] font-condensed">
+            <p className="truncate-3 text-white text-[12px] xl:text-[22px] condMedium xl:font-bold mt-[10px] tracking-[0.36px] leading-[15px] xl:leading-[28px] xl:font-condensed">
               {story?.title}
             </p>
-            <p className="text-white text-[14px] font-medium mt-[10px] hidden xl:flex font-condensed">
+            <p className="text-white text-[14px] font-medium mt-[10px] hidden xl:flex condMedium">
               {generateTimeAgo(story?.publish_date)}
             </p>
           </div>
