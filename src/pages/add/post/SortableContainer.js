@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { arrayMove, horizontalListSortingStrategy, SortableContext, useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { Form, Image, Skeleton, Badge } from 'antd';
-import { imagePath } from '../../utility/Util';
+import { imagePath } from '../../../utility/Util';
 import { FontSizeOutlined, YoutubeFilled } from '@ant-design/icons';
 import { closestCenter, DndContext, DragOverlay } from '@dnd-kit/core';
 

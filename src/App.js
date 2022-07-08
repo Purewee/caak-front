@@ -12,6 +12,7 @@ import TopTags from './pages/topTags';
 import Channel from './pages/channel';
 import Story from './pages/story';
 import Add from './pages/add';
+import AddPost from './pages/add/post';
 import WithApolloProvider from './utility/WithApolloProvider';
 import { AuthProvider } from './context/AuthContext';
 import AllStories from './pages/allstories';
@@ -51,7 +52,9 @@ function App() {
                 <Route path="/story/:id" element={<Story />} />
                 <Route path="/stories" element={<AllStories />} />
                 <Route path="/add" element={<Add />} />
-                <Route path="/add/:id" element={<Add />} />
+                <Route path="/add/post" element={<AddPost />} />
+                <Route path="/edit/:id" element={<AddPost />} />
+                <Route path="/add/:id" element={<AddPost />} />
                 <Route path="/search" element={<Search />} />
                 <Route path="/help" element={<Help />} />
                 <Route path="/category/:slug" element={<Category />} />
