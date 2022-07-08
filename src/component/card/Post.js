@@ -159,7 +159,7 @@ export default function PostCard({ isMobile, post, ...rest }) {
                 </div>
               </div>
             </div>
-            <div className="h-[80px] bg-black w-full">
+            <div className="bg-black w-full">
               <p onClick={() => setFixedMenu(false)} className="text-[#909090] text-center text-[17px] p-[10px]">
                 Хаах
               </p>
