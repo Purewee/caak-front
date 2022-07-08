@@ -46,7 +46,7 @@ const MenuItems = ({ navBarStyle }) => {
           >
             {item.link && (
               <a rel="noreferrer" href={item.link} target="_blank">
-                <p className="hover:text-caak-primary font-bold text-[14px] leading-[16px] tracking-[0px] font-condensed">
+                <p className="hover:text-caak-primary font-bold text-[14px] leading-[16px] tracking-[0px]">
                   {item.title}
                 </p>
               </a>
