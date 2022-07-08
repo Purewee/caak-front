@@ -36,7 +36,7 @@ export default function MobileBottomMenu() {
     const [selected, setSelected] = useState(0)
 
     return (
-        <div className="h-[82px] sm:hidden flex pb-[35px] fixed bottom-0 w-full bg-black z-30">
+        <div className="h-[82px] sm:hidden flex pb-[35px] fixed bottom-0 w-full bg-black z-[3]">
             {
                 menu.map((data, index) => {
                     return(
