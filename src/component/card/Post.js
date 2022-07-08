@@ -74,13 +74,13 @@ export default function PostCard({ isMobile, post, ...rest }) {
               <Popover
                 placement="bottom"
                 trigger="click"
-                className="font-bold text-[14px] leading-[16px] tracking-[0px]"
+                className="text-[14px] leading-[16px] tracking-[0px]"
                 overlayStyle={{ width: 166 }}
                 overlayInnerStyle={{ borderRadius: 8 }}
                 visible={isMenuOpen}
                 onVisibleChange={handleMenu}
                 content={
-                  <div className="flex flex-col justify-center h-full pl-[14px] py-[18px]">
+                  <div className="flex flex-col justify-center h-full">
                     <div
                       onClick={() => {
                         setIsMenuOpen(false);

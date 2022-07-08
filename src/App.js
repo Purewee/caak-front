@@ -23,6 +23,7 @@ import Settings from './pages/user/Settings';
 import Category from './pages/newsCategory';
 import PostSaved from './pages/user/saved';
 import Notification from './pages/user/notification';
+import './assets/fonts/Roboto-Medium.ttf';
 
 export const AppContext = createContext(null);
 

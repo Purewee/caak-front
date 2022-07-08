@@ -91,7 +91,7 @@ const Post = () => {
   useEffect(() => {
     const listener = () => {
       const scrolled = document.scrollingElement.scrollTop;
-      if (scrolled > 180) {
+      if (scrolled > 260) {
         setLeftMenuSticky(true);
       } else {
         setLeftMenuSticky(false);
@@ -136,7 +136,7 @@ const Post = () => {
         />
       </Helmet>
         <div className="w-full hidden md:block max-w-[250px]">
-          <div className={`hidden md:flex ${leftMenuSticky ? 'sticky top-[80px]' : 'mt-[200px]'} w-full flex-col items-end`}>
+          <div className={`hidden md:flex ${leftMenuSticky ? 'sticky top-[180px]' : 'mt-[380px]'} w-full flex-col items-end`}>
             <div className="flex flex-col items-center w-[60px] h-[226px]">
               <p className="text-[#555555] text-[15px] leading-[18px] font-bold">{article.data?.like_count}</p>
               <Popover
@@ -219,7 +219,7 @@ const Post = () => {
             </div>
           </div>
         </div>
-        <div className="pt-0 md:pt-[81px] flex flex-col max-w-[760px] w-full font-roboto md:mx-[100px] px-[16px] md:px-0">
+        <div className="pt-0 md:pt-[61px] flex flex-col max-w-[760px] w-full font-roboto md:mx-[100px] px-[16px] md:px-0">
           <img src={imagePath(article.imageUrl)} alt="" className="w-full h-[210px] flex md:hidden mt-[20px] object-cover" />
           {article.categories?.nodes?.map((x) => (
             <Link key={x.id} to={`/category/${x.slug}`}>
@@ -229,7 +229,7 @@ const Post = () => {
             </Link>
           ))}
           <Wrapper>
-            <Title>{article.title}</Title>
+            <Title className="text-center">{article.title}</Title>
             <div className="flex flex-row items-center mt-[30px]">
               <img className='w-[20px]' src={LoveIcon} alt=''/>
               <img className='w-[20px]' src={HahaIcon} alt=''/>
