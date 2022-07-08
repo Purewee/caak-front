@@ -52,7 +52,7 @@ export default function PostSaveModal({ open, onClose, post, image }) {
         <div className="bg-[#FBFAFB] h-[132px] px-[24px] py-[16px] flex flex-row">
           <img alt={post.title} className="min-w-[100px] max-w-[100px] h-[100px] object-cover truncate-3" src={image} />
           <div className="ml-[16px]">
-            <p className="font-merri text-[16px] leading-[21px] h-[64px]">{post.title}</p>
+            <p className="font-merri text-[16px] leading-[21px] h-[64px] truncate-3">{post.title}</p>
             <div className="text-[#555555] mt-[10px] flex flex-row items-center leading-[18px] text-[12px]">
               <MetaTag>{post.source?.name}</MetaTag>
               <MetaTag className="ml-[6px]">• {post.author.firstName || post.author.name}</MetaTag>
