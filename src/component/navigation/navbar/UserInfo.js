@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { useQuery, gql } from '@apollo/client';
 import { Popover, Badge, List, Button, Avatar } from 'antd';
 import { useAuth } from '../../../context/AuthContext';
@@ -33,9 +33,15 @@ const ME = gql`
 export default function UserInfo() {
   const context = useContext(AppContext);
   const { data, loading } = useQuery(ME);
+  const [isShown, setIsShown] = useState(false);
   const { logout } = useAuth();
   const textColor = context.store === 'default' ? 'text-[#555555]' : 'text-white';
   const saved_articles = data?.me?.recipes.map((x) => x?.articles.nodes).flat() || [];
+
+  const handleMenu = (show) => {
+    setIsShown(show);
+  };
+
   // const saved_articles = [
   //   { title: 'asdsada', id: 1 },
   //   { title: '123123123123', id: 1 },
@@ -99,6 +105,8 @@ export default function UserInfo() {
         trigger="click"
         overlayStyle={{ width: 220, shadow: '0px 2px 2px #00000010' }}
         overlayInnerStyle={{ borderRadius: 4 }}
+        visible={isShown}
+        onVisibleChange={handleMenu}
         content={
           <div className="w-full text-[#555555]">
             <div className="border-b w-full py-[17px] flex flex-row items-center pl-[18px]">
@@ -113,7 +121,7 @@ export default function UserInfo() {
             <div className="p-[18px] flex flex-col gap-[16px] border-b">
               {Settings.map((data, index) => {
                 return (
-                  <Link key={index} to={{ pathname: data.link }}>
+                  <Link onClick={() => setIsShown(false)} key={index} to={{ pathname: data.link }}>
                     <div className="flex flex-row items-center cursor-pointer">
                       <span className={`${data.icon} text-[20px]`} />
                       <p className="text-[15px] ml-[12px] -mt-[3px] leading-[18px]">{data.title}</p>

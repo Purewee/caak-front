@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Card, Image, Avatar, Button, Popover } from 'antd';
+import { Image, Avatar, Popover } from 'antd';
 import { imagePath } from '../../utility/Util';
 import { HashTag, MetaTag } from '../../pages/post/view/wrapper';
 import moment from 'moment';
@@ -11,8 +11,9 @@ import { FIcon } from '../icon';
 
 const colors = ['#163943', '#463146', '#131D1C', '#1E1642', '#854D0E', '#233C6A', '#813333'];
 
-export default function PostCard({ post, ...rest }) {
+export default function PostCard({ isMobile, post, ...rest }) {
   const [savePostOpen, setSavePostOpen] = useState(false);
+  const [fixedMenu, setFixedMenu] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isReportOpen, setIsReportOpen] = useState(false);
   const [sharePostOpen, setSharePostOpen] = useState(false);
@@ -124,6 +125,50 @@ export default function PostCard({ post, ...rest }) {
         image={imagePath(post.image)}
       />
       <ReportModal isOpen={isReportOpen} setIsOpen={setIsReportOpen} />
+      {fixedMenu && (
+        <div className="left-0 right-0 bottom-0 top-0 z-[5] overflow-auto fixed flex justify-center items-end bg-black bg-opacity-70">
+          <div className="w-full">
+            <div className="w-full bg-white min-h-[300px] px-[16px]">
+              <div className="flex flex-row pt-[20px] pb-[25px] border-b">
+                <img
+                  style={{ boxShadow: '0px 3px 6px #00000029' }}
+                  className="w-[90px] h-[74px] object-cover"
+                  alt=""
+                  src={imagePath(post.image)}
+                />
+                <p className="text-[#555555] text-[16px] leading-[19px] font-medium ml-[18px]">{post.title}</p>
+              </div>
+              <div className="flex flex-col justify-center h-full pl-[14px] pt-[24px]">
+                <div
+                  onClick={() => {
+                    setFixedMenu(false);
+                    setSharePostOpen(true);
+                  }}
+                  className="flex flex-row items-center cursor-pointer"
+                >
+                  <FIcon className="text-[#555555] text-[20px] mr-[20px] w-[24px] h-[24px] icon-fi-rs-share" />
+                  <p className="text-[17px] leading-[20px]">Хуваалцах</p>
+                </div>
+                <div
+                  onClick={() => {
+                    setFixedMenu(false);
+                    setIsReportOpen(true);
+                  }}
+                  className="flex flex-row items-center mt-[24px] cursor-pointer"
+                >
+                  <FIcon className="text-[#555555] text-[20px] mr-[20px] w-[24px] h-[24px] icon-fi-rs-flag" />
+                  <p className="text-[17px] leading-[20px]">Репорт</p>
+                </div>
+              </div>
+            </div>
+            <div className="bg-black w-full">
+              <p onClick={() => setFixedMenu(false)} className="text-[#909090] text-center text-[17px] p-[10px]">
+                Хаах
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

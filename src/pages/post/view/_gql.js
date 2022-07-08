@@ -104,6 +104,15 @@ export const ME = gql`
       email
       firstName
       lastName
+      recipes {
+        articles {
+          nodes {
+            id
+            title
+            imageUrl
+          }
+        }
+      }
     }
   }
 `;

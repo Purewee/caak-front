@@ -66,11 +66,11 @@ export default function Settings() {
         context.setStore('default');
       }, []);
     return isAuth ? (
-        <div className='flex justify-center w-full pb-[100px]'>
+        <div className='flex justify-center w-full pb-[100px] px-[16px] md:px-0'>
             <div className='max-w-[1140px] w-full mt-[51px]'>
                 <p className='text-[28px] font-medium leading-[24px]'>Тохиргоо</p>
-                <div className='flex flex-row gap-[60px] mt-[22px]'>
-                    <div className='w-[290px] border h-[170px] sticky top-[106px] border-[#EFEEEF] rounded-[4px] p-[10px]'>
+                <div className='flex flex-col md:flex-row gap-[20px] md:gap-[60px] mt-[22px]'>
+                    <div className='w-[290px] border h-[170px] md:sticky top-[106px] border-[#EFEEEF] rounded-[4px] p-[10px]'>
                         {
                             menu.map((data, index) => {
                                 return(
@@ -82,7 +82,7 @@ export default function Settings() {
                             })
                         }
                     </div>
-                    <div className='w-[790px]'>
+                    <div className='w-full md:w-[790px]'>
                         <div className='border-[#EFEEEF] border rounded-[4px] w-full p-[30px]'>
                             <p className='text-[22px] font-bold leading-[25px] w-full border-b border-[#D4D8D8] pb-[14px]'>Профайл</p>
                             <div className='mt-[24px]'>

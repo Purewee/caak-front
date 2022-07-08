@@ -22,12 +22,12 @@ const menu = [
     {
         icon: 'icon-fi-rs-notification-f',
         icon1: 'icon-fi-rs-notification',
-        route: '/'
+        route: '/notification'
     },
     {
         icon: 'icon-fi-rs-list-f',
         icon1: 'icon-fi-rs-list-o',
-        route: '/'
+        route: '/post/saved'
     },
 ]
 
@@ -36,7 +36,7 @@ export default function MobileBottomMenu() {
     const [selected, setSelected] = useState(0)
 
     return (
-        <div className="h-[82px] sm:hidden flex pb-[35px] fixed bottom-0 w-full bg-black z-30">
+        <div className="sm:hidden flex fixed bottom-0 w-full bg-black z-[3]">
             {
                 menu.map((data, index) => {
                     return(

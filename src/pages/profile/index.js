@@ -43,7 +43,7 @@ export default function Profile() {
 
   useEffect(() => {
     setLoading(true);
-    es.authorPosts(id).then(({ hits, total }) => {
+    es.authorPosts(id, page).then(({ hits, total }) => {
       setLoading(false);
       setArticles([...articles, ...hits]);
       setCount(total);
@@ -105,9 +105,7 @@ export default function Profile() {
                   <Button
                     block
                     size="large"
-                    type="primary"
-                    ghost
-                    className="font-roboto"
+                    className="font-roboto border-caak-primary text-caak-primary mt-[20px]"
                     onClick={() => setPage(page + 1)}
                     loading={loading}
                   >

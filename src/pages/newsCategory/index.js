@@ -58,7 +58,7 @@ export default function Category() {
   }, []);
 
   return (
-    <div className="flex justify-center pt-[20px] md:pt-[51px] pb-[100px] px-[16px]">
+    <div className="flex justify-center pt-[20px] md:pt-[51px] pb-[100px] px-[16px] md:px-[0px]">
       <div className="max-w-[1310px] w-full flex flex-col items-center">
         <HashTag className="uppercase">Мэдээний төрөл</HashTag>
         <Title>{category.name}</Title>
@@ -76,9 +76,9 @@ export default function Category() {
           <Tabs.TabPane tab={<span className="text-[24px] font-normal font-merri">ШИНЭ</span>} key="recent" />
           <Tabs.TabPane tab={<span className="text-[24px] font-normal font-merri">ШИЛДЭГ</span>} key="top" />
         </Tabs>
-        <Row gutter={22} className="max-w-[1310px] my-[24px]">
+        <div className="max-w-[1310px] w-full flex flex-wrap justify-center gap-x-[22px] gap-y-[40px] pt-[30px] md:pt-[70px]">
           {articles.map((post) => (
-            <Col key={post.id} span={8}>
+            <Col key={post.id}>
               <PostCard post={post} />
             </Col>
           ))}
@@ -96,7 +96,7 @@ export default function Category() {
               </Button>
             </Col>
           )}
-        </Row>
+        </div>
       </div>
     </div>
   );
