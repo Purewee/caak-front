@@ -55,7 +55,7 @@ const MenuItems = ({ navBarStyle }) => {
               <Popover
                 placement="bottom"
                 trigger="click"
-                className="font-bold text-[14px] leading-[16px] tracking-[0px]"
+                className="text-[14px] leading-[16px] tracking-[0px]"
                 overlayStyle={{ width: 800 }}
                 overlayInnerStyle={{ borderRadius: 8 }}
                 visible={isShown}
@@ -66,7 +66,7 @@ const MenuItems = ({ navBarStyle }) => {
                       return (
                         <Col key={x.id} span={8} className="mt-[12px]">
                           <Link onClick={() => setIsShown(false)} to={`/category/${x.slug}`} key={x.id}>
-                            <span className="text-[#111111] p-[8px] leading-[18px] tracking-[0.23px] font-condensed font-bolder text-[14px]">
+                            <span className="text-[#111111] font-roboto p-[8px] leading-[18px] tracking-[0.23px] text-[14px]">
                               {x.name}
                             </span>
                           </Link>
@@ -76,7 +76,7 @@ const MenuItems = ({ navBarStyle }) => {
                   </Row>
                 }
               >
-                <p className="hover:text-caak-primary font-condensed">
+                <p className="hover:text-caak-primary font-bold">
                   <span>{item.title}</span>
                   <span className="icon-fi-rs-down-chevron text-[12px] text-caak-primary px-[8px]" />
                 </p>

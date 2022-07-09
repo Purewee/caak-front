@@ -7,7 +7,7 @@ import { MetaTag } from '../../../pages/post/view/wrapper';
 const NavbarPostHeaderCard = ({ type, item }) => {
   return (
     item && (
-      <div className="w-full h-full relative min-h-[560px] font-condensed">
+      <div className="w-full h-full relative min-h-[560px]">
         <img className="object-cover w-full h-[560px]" alt="" src={imagePath(item.image)} />
         <div className="min-h-[480px] w-full navBarPostHeaderCardGradient absolute bottom-0" />
         <div
@@ -30,7 +30,7 @@ const NavbarPostHeaderCard = ({ type, item }) => {
                 type === 'wide'
                   ? 'text-[40px] md:text-[50px] tracking-[0.4px] md:tracking-[0.5px] leading-[46px] md:leading-[56px]'
                   : 'text-[24px] md:text-[30px] tracking-[0.2px] md:tracking-[0.32px] truncate-3 leading-[28px] md:leading-[36px]'
-              } text-white font-bold mt-[10px]`}
+              } text-white font-medium mt-[10px] condMedium`}
             >
               {item.title}
             </p>
@@ -40,7 +40,7 @@ const NavbarPostHeaderCard = ({ type, item }) => {
           </p>
           <div className="flex flex-wrap justify-between w-full mt-[30px] items-center">
             <div className="flex text-white flex-row items-center self-start">
-              <div className="flex flex-row items-center">
+              <div className="flex flex-row items-center font-medium">
                 <Link to={`/channel/${item.source?.id}`} className="flex flex-row items-center">
                   <Avatar className="w-[22px] h-[22px]" src={imagePath(item.source?.icon)} />
                   <MetaTag className="ml-[6px] text-[#FFFFFF]">{item?.source?.name}</MetaTag>
