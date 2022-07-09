@@ -21,3 +21,9 @@ export const getDataFromBlob = (myBlob) =>
     reader.onerror = reject;
     reader.readAsDataURL(myBlob);
   });
+
+export function parse64(myBlob) {
+  const reader = new FileReader();
+  reader.onload = () => reader.result;
+  return reader.readAsDataURL(myBlob);
+}
