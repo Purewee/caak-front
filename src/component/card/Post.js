@@ -22,7 +22,7 @@ export default function PostCard({ isMobile, post, ...rest }) {
   const random = Math.floor(Math.random() * colors.length);
 
   const color = sponsored ? { backgroundColor: colors[random] } : {};
-  const text = sponsored ? 'text-[#ffffff] text-center hover:text-[#ffffff]' : 'hover:text-[#111111]';
+  const text = sponsored ? 'text-[#ffffff] sm:text-center hover:text-[#ffffff]' : 'hover:text-[#111111]';
 
   const handleMenu = (show) => {
     setIsMenuOpen(show);
@@ -54,55 +54,62 @@ export default function PostCard({ isMobile, post, ...rest }) {
           <img
             alt={post.title}
             src={imagePath(post.image)}
-            className={`object-cover ${sponsored ? 'h-[220px]' : 'h-[105px] min-w-[130px]'} sm:w-full sm:h-[300px]`}
+            className={`${
+              sponsored ? 'h-[220px] w-full' : 'h-[105px] min-w-[130px] sm:w-full'
+            } sm:h-[300px] object-cover`}
           />
         </Link>
-        <div className="ml-[16px] sm:ml-0">
-          {!sponsored &&
-            post?.categories?.map((x, index) => (
-              <Link className="hidden sm:block mt-[20px]" key={index} to={`/category/${x.slug}`}>
-                <HashTag>{x.name}</HashTag>
-              </Link>
-            ))}
-          <Link
-            to={postURL}
+        {!sponsored &&
+          post?.categories?.map((x, index) => (
+            <Link className="hidden sm:block mt-[20px]" key={index} to={`/category/${x.slug}`}>
+              <HashTag>{x.name}</HashTag>
+            </Link>
+          ))}
+        <Link to={postURL}>
+          <p
             className={`${
-              sponsored ? 'md:px-[16px] sm:mt-[22px] h-[85px]' : 'sm:mt-[10px]'
-            } text-[16px] font-medium sm:text-[21px] leading-[20px] sm:leading-[27px] tracking-[0.32px] font-roboto sm:font-merri truncate-3 ${text}`}
+              sponsored
+                ? 'px-[16px] mt-[22px] h-[85px] truncate-4 sm:truncate-3 text-[22px] sm:text-[21px] leading-[30px] sm:leading-[29px] font-bold sm:font-normal'
+                : 'sm:mt-[10px] truncate-3 font-medium sm:font-normal text-[16px] sm:text-[21px] leading-[20px] sm:leading-[29px] ml-[16px] sm:ml-0'
+            } font-roboto sm:font-merri ${text}`}
           >
             {post.title}
-          </Link>
-          {sponsored && (
-            <div className="flex flex-row items-center justify-between w-full mt-[18px] px-[16px]">
-              <Link to={`/channel/${post.source?.id}`} className="flex flex-row items-center">
-                <div className="flex justify-center items-center w-[40px] h-[40px] rounded-full bg-white bg-opacity-20">
-                  <Avatar className={`w-[34px] h-[34px]`} src={imagePath(post.source?.icon)} />
-                </div>
-                <MetaTag className={`ml-[6px] text-[15px] text-white`}>{post?.source?.name}</MetaTag>
-              </Link>
-              <button className="w-[90px] rounded-[4px] text-[15px] font-bold bg-white bg-opacity-10 text-white h-[34px]">
-                Дагах
-              </button>
-            </div>
-          )}
-          {!sponsored && (
-            <div className={`text-[14px] text-[#909090] hidden sm:block tracking-[0.21px] leading-[16px] mt-[12px]`}>
-              {moment(post.publish_date).format('YYYY-MM-DD, hh:mm')}
-            </div>
-          )}
-        </div>
+          </p>
+        </Link>
+        {sponsored && (
+          <div className="hidden sm:flex flex-row items-center justify-between w-full mt-[18px] px-[16px]">
+            <Link to={`/channel/${post.source?.id}`} className="flex flex-row items-center">
+              <div className="flex justify-center items-center w-[40px] h-[40px] rounded-full bg-white bg-opacity-20">
+                <Avatar className={`w-[34px] h-[34px]`} src={imagePath(post.source?.icon)} />
+              </div>
+              <MetaTag className={`ml-[6px] text-[15px] text-white`}>{post?.source?.name}</MetaTag>
+            </Link>
+            <button className="w-[90px] rounded-[4px] text-[15px] font-bold bg-white bg-opacity-10 text-white h-[34px]">
+              Дагах
+            </button>
+          </div>
+        )}
+        {!sponsored && (
+          <div className={`text-[14px] text-[#909090] hidden sm:block tracking-[0.21px] leading-[16px] mt-[12px]`}>
+            {moment(post.publish_date).format('YYYY-MM-DD, hh:mm')}
+          </div>
+        )}
       </div>
-      <div className="flex flex-col justify-between px-[8px] py-[20px]">
-        <div className={`flex ${sponsored ? 'justify-end' : 'justify-between'} items-center`}>
-          <div className={`${sponsored ? 'hidden' : 'flex flex-row items-end text-[#555555]'}`}>
+      <div className="flex flex-col justify-between px-[8px] pb-[13px] sm:pb-[15px]">
+        <div className={`flex ${sponsored ? 'justify-between sm:justify-end' : 'justify-between'} items-center`}>
+          <div className={`${sponsored ? 'flex sm:hidden' : 'flex'} flex-row items-end`}>
             <Link to={`/channel/${post.source?.id}`} className="flex flex-row items-center">
               <Avatar className={`w-[22px] h-[22px]`} src={imagePath(post.source?.icon)} />
-              <MetaTag className={`ml-[6px] text-[15px]`}>{post?.source?.name}</MetaTag>
+              <MetaTag className={`ml-[6px] text-[15px] ${sponsored ? 'text-white' : 'text-[#555555]'}`}>
+                {post?.source?.name}
+              </MetaTag>
             </Link>
-            &nbsp;•&nbsp;
-            <Link to={`/profile/${post.author?.id}`}>
-              <MetaTag className={`ml-0`}>{post.author?.name}</MetaTag>
-            </Link>
+            <div className="hidden sm:block">
+              &nbsp;•&nbsp;
+              <Link to={`/profile/${post.author?.id}`}>
+                <MetaTag className={`ml-0`}>{post.author?.name}</MetaTag>
+              </Link>
+            </div>
           </div>
           <div className="flex flex-row items-center">
             <FIcon

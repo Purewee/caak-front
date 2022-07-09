@@ -300,7 +300,7 @@ export default function NavbarNew() {
       </div>
       {
         mobileSideMenu &&
-        <div className='w-full bg-black bg-opacity-40 absolute z-50 top-0 right-0 flex justify-end'>
+        <div className="left-0 right-0 bottom-0 top-0 z-[5] overflow-auto fixed flex justify-end bg-black bg-opacity-70">
           <div ref={mobileRef} className='w-3/4 h-screen overflow-hidden overflow-y-scroll bg-white pt-[26px]'>
             {
               isAuth
@@ -366,10 +366,10 @@ export default function NavbarNew() {
               {
                 mobileItems.map((data, index) => {
                   return(
-                    <Link to={data.url} target="_blank" key={index} className='flex flex-row items-center ml-[24px]'>
+                    <a href={data.url} target="_blank" key={index} className='flex flex-row items-center ml-[24px]'>
                       <FIcon className={`${data.icon} mr-[18px] text-[24px] w-[26px] h-[26px]`} />
                       <p className='text-[18px]'>{data.title}</p>
-                    </Link>
+                    </a>
                   )
                 })
               }
