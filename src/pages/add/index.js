@@ -1,10 +1,17 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Avatar, Button } from 'antd';
 import { CameraOutlined, FormOutlined, LinkOutlined } from '@ant-design/icons';
+import { AppContext } from '../../App';
 
 export default function Add() {
+  const context = useContext(AppContext);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    context.setStore('default');
+  }, []);
+
   return (
     <div className="h-[600px] flex items-center justify-center">
       <div className="mx-[30px] border-[1px] flex flex-col justify-around items-center h-[240px] w-[240px]">
