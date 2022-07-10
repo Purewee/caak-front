@@ -167,10 +167,10 @@ function AddPost() {
               <Form.Item name="tags" className="font-merri">
                 <TagsField mode="tags" placeholder="Tags" />
               </Form.Item>
-              <Form.Item name="acceptComment" className="font-merri mb-[0px]">
+              <Form.Item name="acceptComment" className="font-merri mb-[0px]" valuePropName="checked">
                 <Checkbox checked>Сэтгэгдэл зөвшөөрөх</Checkbox>
               </Form.Item>
-              <Form.Item name="featured" className="font-merri">
+              <Form.Item name="featured" className="font-merri" valuePropName="checked">
                 <Checkbox onChange={(e) => setFeatured(e.target.checked)}>Мэдээг онцлох</Checkbox>
               </Form.Item>
               {featured && (
@@ -207,7 +207,7 @@ function AddPost() {
 }
 
 function ImageBlock({ block, idx, setBlocks }) {
-  const [image64, setImage64] = useState(null);
+  const [image64, setImage64] = useState(block.image64);
   useEffect(() => {
     if (image64 === null) return;
     setBlocks((blocks) => {
@@ -228,7 +228,7 @@ function ImageBlock({ block, idx, setBlocks }) {
           </Button>
         </>
       }
-      extra={[<RemoveBlock position={block.position} setBlocks={setBlocks} />]}
+      extra={[<RemoveBlock key="remove" position={block.position} setBlocks={setBlocks} />]}
     >
       <Row gutter={14}>
         <Col span={6}>
@@ -241,6 +241,7 @@ function ImageBlock({ block, idx, setBlocks }) {
             <Upload
               maxCount={1}
               showUploadList={false}
+              valuePropName="fileList"
               customRequest={({ file, onSuccess }) => {
                 getDataFromBlob(file).then((base64) => {
                   setImage64(base64);
@@ -292,7 +293,7 @@ export function TextBlock({ block, idx, setBlocks }) {
           </Button>
         </>
       }
-      extra={[<RemoveBlock position={block.position} setBlocks={setBlocks} />]}
+      extra={[<RemoveBlock key="remove" position={block.position} setBlocks={setBlocks} />]}
     >
       <Form.Item
         name={[idx, 'content']}
@@ -346,7 +347,7 @@ function VideoBlock({ block, idx, setBlocks }) {
           </Button>
         </>
       }
-      extra={[<RemoveBlock position={block.position} setBlocks={setBlocks} />]}
+      extra={[<RemoveBlock key="remove" position={block.position} setBlocks={setBlocks} />]}
     >
       <Row gutter={12}>
         <Col span={6}>
