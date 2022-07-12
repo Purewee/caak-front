@@ -60,7 +60,7 @@ const Post = () => {
 
   const openNotification = () => {
     const args = {
-      message: `Та ${article?.source.name}-г дагалаа`,
+      message: `Та ${article?.source?.name}-г дагалаа`,
       duration: 4,
       placement: 'bottom',
       className: 'h-[50px] bg-[#12805C] w-[250px]',
@@ -150,7 +150,7 @@ const Post = () => {
                         <Lottie
                           key={index}
                           options={{
-                            animationData: data.icon,
+                            animationData: data?.icon,
                             loop: true,
                             autoplay: true,
                             rendererSettings: {
@@ -233,7 +233,7 @@ const Post = () => {
             <div className="flex flex-row items-center mt-[30px]">
               <img className='w-[20px]' src={LoveIcon} alt=''/>
               <img className='w-[20px]' src={HahaIcon} alt=''/>
-              <p className='ml-[6px] text-[15px] text-caak-primary leading-[16px]'>{article.data.like_count}</p>
+              <p className='ml-[6px] text-[15px] text-caak-primary leading-[16px]'>{article.data?.like_count}</p>
             </div>
             <div className="flex flex-row justify-between w-full h-[32px] mt-[21px]">
               <div className="flex flex-row items-center h-[32px]">
@@ -342,11 +342,11 @@ const Post = () => {
           <div className="flex flex-row mt-[19px] md:mt-[38px] justify-between w-full md:border-t py-[17px] border-b border-[#EFEEEF]">
             <div className="flex flex-row items-center">
               <Avatar
-                src={imagePath(article.source.icon)}
+                src={imagePath(article.source?.icon)}
                 className="w-[36px] h-[36px]"
               />
               <Link to={`/channel/${article.source?.id}`} className="flex flex-row items-center">
-                <MetaTag className="ml-[8px] text-[15px]">{article.source.name}</MetaTag>
+                <MetaTag className="ml-[8px] text-[15px]">{article.source?.name}</MetaTag>
               </Link>
               <Link className=' leading-[16px]' to={`/profile/${article.author?.id}`}>
                 <MetaTag className="ml-0">&nbsp;• {`${article.author.firstName}`}</MetaTag>
