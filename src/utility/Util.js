@@ -251,7 +251,7 @@ export function generateTimeAgo(date) {
   //   return Math.floor(diff / 1000 / 60 / 60 / 24 / 30 / 12) + ' жил'
   // }
   if (diff / 1000 / 60 / 60 / 24 / 30 > 1) {
-    return moment(date).format('YYYY-MM-DD');
+    return Math.floor(diff / 1000 / 60 / 60 / 24 / 30) + ' сар';
   } else if (diff / 1000 / 60 / 60 / 24 > 1) {
     return Math.floor(diff / 1000 / 60 / 60 / 24) + ' хоног';
   } else if (diff / 1000 / 60 / 60 > 1) {

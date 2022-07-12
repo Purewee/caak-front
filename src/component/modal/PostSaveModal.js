@@ -54,7 +54,7 @@ export default function PostSaveModal({ open, onClose, post, image }) {
           <div className="ml-[16px]">
             <p className="font-merri text-[16px] leading-[21px] h-[64px] truncate-3">{post.title}</p>
             <div className="text-[#555555] mt-[10px] flex flex-row items-center leading-[18px] text-[12px]">
-              <MetaTag>{post.source?.name}</MetaTag>
+              <MetaTag className="ml-0">{post.source?.name}</MetaTag>
               <MetaTag className="ml-[6px]">• {post.author.firstName || post.author.name}</MetaTag>
             </div>
           </div>

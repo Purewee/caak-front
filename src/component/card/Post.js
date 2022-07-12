@@ -119,7 +119,7 @@ export default function PostCard({ isMobile, post, ...rest }) {
             <Popover
               placement="bottom"
               trigger="click"
-              className="text-[14px] leading-[16px] tracking-[0px]"
+              className="leading-[16px] tracking-[0px]"
               overlayStyle={{ width: 166 }}
               overlayInnerStyle={{ borderRadius: 8 }}
               visible={isMenuOpen}
@@ -149,10 +149,10 @@ export default function PostCard({ isMobile, post, ...rest }) {
                 </div>
               }
             >
-              <span
+              <FIcon
                 className={`${
                   sponsored ? 'text-white' : 'text-[#909090]'
-                } cursor-pointer text-[22px] w-[22px] h-[22px] flex justify-center items-center icon-fi-rs-more-ver ml-[10px]`}
+                } cursor-pointer text-[22px] w-[22px] h-[22px] icon-fi-rs-more-ver ml-[10px]`}
               />
             </Popover>
           </div>

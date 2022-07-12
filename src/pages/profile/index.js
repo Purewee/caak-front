@@ -61,7 +61,9 @@ export default function Profile() {
           <div className="flex flex-col md:flex-row">
             <Avatar className="w-[57px] h-[57px] md:w-[82px] md:h-[82px] object-cover" />
             <div className="md:ml-[16px] mt-[15px] md:mt-0">
-              <Title className="font-condensed mt-0 font-bold text-[30px] leading-[35px]">{`${user?.firstName} ${user?.lastName}`}</Title>
+              <Title className="font-condensed mt-0 font-bold text-[30px] leading-[35px]">
+                {`${user?.firstName || null} ${user?.lastName || null}`}
+              </Title>
               <p className="mt-[9px] md:mt-[12px] text-[15px] text-[#555555] leading-[18px] max-w-[600px]">
                 Өөрийн дуртай график дизайны мэдээллээ авдаг сайтнаас хүргэх болно.
               </p>
