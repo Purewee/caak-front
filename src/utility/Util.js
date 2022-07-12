@@ -247,11 +247,8 @@ export function generateTimeAgo(date) {
   const time = new Date(date).getTime();
   const now = new Date().getTime();
   const diff = now - time;
-  // if ((diff / 1000 / 60 / 60 / 24 / 30 / 12) > 1) {
-  //   return Math.floor(diff / 1000 / 60 / 60 / 24 / 30 / 12) + ' жил'
-  // }
   if (diff / 1000 / 60 / 60 / 24 / 30 > 1) {
-    return Math.floor(diff / 1000 / 60 / 60 / 24 / 30) + ' сар';
+    return moment(date).format('YYYY-MM-DD');
   } else if (diff / 1000 / 60 / 60 / 24 > 1) {
     return Math.floor(diff / 1000 / 60 / 60 / 24) + ' хоног';
   } else if (diff / 1000 / 60 / 60 > 1) {

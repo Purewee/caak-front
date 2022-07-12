@@ -1,7 +1,17 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { AppContext } from '../../App';
-import { useQuery } from '@apollo/client';
 import { useParams } from 'react-router-dom';
+import { useQuery, gql } from '@apollo/client';
+
+const Source = gql`
+  query GetSource($slug: String) {
+    source(slug: $slug) {
+      id
+      name
+      slug
+    }
+  }
+`;
 
 const menu = [
   {
@@ -13,8 +23,10 @@ const menu = [
 ];
 
 export default function Channel() {
-  const { id } = useParams();
+  const { slug } = useParams();
   const [selected, setSelected] = useState(0);
+  const { data } = useQuery(Source, { variables: { slug } });
+  console.log(data);
 
   const context = useContext(AppContext);
 

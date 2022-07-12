@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Image, Avatar, Popover } from 'antd';
-import { imagePath } from '../../utility/Util';
+import { generateTimeAgo, imagePath } from '../../utility/Util';
 import { HashTag, MetaTag } from '../../pages/post/view/wrapper';
 import moment from 'moment';
 import PostSaveModal from '../modal/PostSaveModal';
@@ -55,7 +55,7 @@ export default function PostCard({ isMobile, post, ...rest }) {
             alt={post.title}
             src={imagePath(post.image)}
             className={`${
-              sponsored ? 'h-[220px] w-full' : 'h-[105px] min-w-[130px] sm:w-full'
+              sponsored ? 'h-[220px] w-full' : 'h-[105px] min-w-[130px] max-w-[130px] sm:max-w-[422px]'
             } sm:h-[300px] object-cover`}
           />
         </Link>
@@ -78,12 +78,16 @@ export default function PostCard({ isMobile, post, ...rest }) {
         </Link>
         {sponsored && (
           <div className="hidden sm:flex flex-row items-center justify-between w-full mt-[18px] px-[16px]">
-            <Link to={`/channel/${post.source?.id}`} className="flex flex-row items-center">
-              <div className="flex justify-center items-center w-[40px] h-[40px] rounded-full bg-white bg-opacity-20">
-                <Avatar className={`w-[34px] h-[34px]`} src={imagePath(post.source?.icon)} />
-              </div>
-              <MetaTag className={`ml-[6px] text-[15px] text-white`}>{post?.source?.name}</MetaTag>
-            </Link>
+            <div className="flex flex-row items-center">
+              <Link to={`/channel/${post.source?.slug}`} className="flex flex-row items-center">
+                <div className="flex justify-center items-center w-[40px] h-[40px] rounded-full bg-white bg-opacity-20">
+                  <Avatar className={`w-[34px] h-[34px]`} src={imagePath(post.source?.icon)} />
+                </div>
+                <MetaTag className={`ml-[6px] text-[15px] text-white`}>{post?.source?.name}</MetaTag>
+              </Link>
+              &nbsp;•&nbsp;
+              <p className=""></p>
+            </div>
             <button className="w-[90px] rounded-[4px] text-[15px] font-bold bg-white bg-opacity-10 text-white h-[34px]">
               Дагах
             </button>
@@ -98,12 +102,20 @@ export default function PostCard({ isMobile, post, ...rest }) {
       <div className="flex flex-col justify-between px-[8px] pb-[13px] sm:pb-[15px]">
         <div className={`flex ${sponsored ? 'justify-between sm:justify-end' : 'justify-between'} items-center`}>
           <div className={`${sponsored ? 'flex sm:hidden' : 'flex'} flex-row items-end`}>
-            <Link to={`/channel/${post.source?.id}`} className="flex flex-row items-center">
-              <Avatar className={`w-[22px] h-[22px]`} src={imagePath(post.source?.icon)} />
-              <MetaTag className={`ml-[6px] text-[15px] ${sponsored ? 'text-white' : 'text-[#555555]'}`}>
-                {post?.source?.name}
-              </MetaTag>
-            </Link>
+            <div className="flex flex-row items-center">
+              <Link to={`/channel/${post.source?.slug}`} className="flex flex-row items-center">
+                <Avatar className={`w-[22px] h-[22px]`} src={imagePath(post.source?.icon)} />
+                <MetaTag className={`ml-[6px] text-[14px] ${sponsored ? 'text-white' : 'text-[#555555]'}`}>
+                  {post?.source?.name}
+                </MetaTag>
+              </Link>
+              {!sponsored && (
+                <div className="flex sm:hidden flex-row items-center text-[#555555]">
+                  &nbsp;•&nbsp;
+                  <p className="text-[14px]">{generateTimeAgo(post.publish_date)}</p>
+                </div>
+              )}
+            </div>
             <div className="hidden sm:block">
               &nbsp;•&nbsp;
               <Link to={`/profile/${post.author?.id}`}>

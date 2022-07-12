@@ -41,7 +41,7 @@ const NavbarPostHeaderCard = ({ type, item }) => {
           <div className="flex flex-wrap justify-between w-full mt-[30px] items-center">
             <div className="flex text-white flex-row items-center self-start">
               <div className="flex flex-row items-center font-medium">
-                <Link to={`/channel/${item.source?.id}`} className="flex flex-row items-center">
+                <Link to={`/channel/${item.source?.slug}`} className="flex flex-row items-center">
                   <Avatar className="w-[22px] h-[22px]" src={imagePath(item.source?.icon)} />
                   <MetaTag className="ml-[6px] text-[#FFFFFF]">{item?.source?.name}</MetaTag>
                 </Link>

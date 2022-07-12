@@ -96,7 +96,7 @@ export default function Home() {
 
         <div className="max-w-[1310px] w-full flex flex-wrap justify-center gap-x-[22px] gap-y-[40px]">
           {articles.map((post) => (
-            <Col key={post.id}>
+            <Col className="w-full sm:w-[422px]" key={post.id}>
               <PostCard isMobile={isMobile} post={post} />
             </Col>
           ))}
