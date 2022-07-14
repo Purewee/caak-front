@@ -64,7 +64,19 @@ const interest = [
 export default function SignInModal({ setIsShown }) {
   const [isPasswordShown, setIsPasswordShown] = useState(false);
   const [hovered, setHovered] = useState(false);
+  const [selected, setSelected] = useState([]);
   const [step, setStep] = useState('default');
+  const minCategories = 3;
+
+  const selectHandler = (id) => {
+    if (selected.length === 0) setSelected([...selected, id]);
+
+    if (selected.includes(id)) {
+      setSelected(selected.filter((item) => item !== id));
+    } else {
+      setSelected([...selected, id]);
+    }
+  };
 
   return (
     <div className="popup_modal">
@@ -150,15 +162,17 @@ export default function SignInModal({ setIsShown }) {
           <p className="mt-[20px] text-[#555555] text-[15px] leading-[18px]">
             Таны дуртай төрлөөр мэдээг шүүцгээе! Хамгийн багадаа 3 төрөл сонгоно уу.
           </p>
-          <div className="flex flex-wrap gap-[14px] h-[380px] w-[730px] overflow-y-auto mt-[33px]">
+          <div className="flex flex-wrap gap-[14px] h-[380px] wrapper w-[730px] mt-[33px]">
             {interest.map((data, index) => {
-              return index === hovered ? (
+              return (
                 <div
                   key={index}
-                  onMouseLeave={() => setHovered(false)}
-                  className="cursor-pointer w-[172px] h-[100px] flex justify-center items-center"
+                  onClick={() => selectHandler(index)}
+                  className={`${
+                    selected.find((item) => item === index) && 'border border-caak-primary p-[5px]'
+                  } cursor-pointer w-[172px] h-[100px] zoom flex justify-center items-center rounded-[6px]`}
                 >
-                  <div key={index} className="w-[164px] h-[94px] rounded-[6px] relative">
+                  <div key={index} className="w-full h-full rounded-[6px] relative">
                     <img
                       className="w-full h-full object-cover rounded-[6px]"
                       alt=""
@@ -169,25 +183,16 @@ export default function SignInModal({ setIsShown }) {
                     </p>
                   </div>
                 </div>
-              ) : (
-                <div
-                  key={index}
-                  onMouseEnter={() => setHovered(index)}
-                  className="cursor-pointer w-[172px] h-[100px] rounded-[6px] relative"
-                >
-                  <img
-                    className="w-full h-full object-cover rounded-[6px]"
-                    alt=""
-                    src="https://i.scdn.co/image/ab67616d0000b273ede9f246191d55e7a5c95111"
-                  />
-                  <p className="w-full h-full bg-black bg-opacity-50 absolute top-0 flex justify-center items-center rounded-[6px] text-white text-[16px] font-medium">
-                    {data.title}
-                  </p>
-                </div>
               );
             })}
           </div>
-          <button>Дуусгах {'(3)'}</button>
+          <button
+            disabled={minCategories - selected.length > 0}
+            className="mt-[30px] w-[300px] h-[44px] rounded-[4px] bg-[#EFEEEF] text-[#909090] text-[16px]"
+          >
+            Дуусгах
+            {minCategories - selected.length > 0 && `(${minCategories - selected.length})`}
+          </button>
         </div>
       ) : null}
     </div>
@@ -260,4 +265,54 @@ function LoginWithMail({ onSuccess, setIsShown }) {
       />
     </div>
   );
+}
+
+{
+  /* <div className="flex flex-wrap gap-[14px] h-[380px] wrapper w-[730px] mt-[33px]">
+            {interest.map((data, index) => {
+              return index === hovered ? (
+                <div
+                  key={index}
+                  onMouseLeave={() => setHovered(false)}
+                  onClick={() => selectHandler(index)}
+                  className={`${
+                    selected.find((item) => item === index)
+                      ? 'cursor-pointer w-[172px] h-[100px] flex justify-center items-center border border-caak-primary'
+                      : 'cursor-pointer w-[172px] h-[100px] flex justify-center items-center'
+                  }`}
+                >
+                  <div key={index} className="w-[164px] h-[94px] rounded-[6px] relative">
+                    <img
+                      className="w-full h-full object-cover rounded-[6px]"
+                      alt=""
+                      src="https://i.scdn.co/image/ab67616d0000b273ede9f246191d55e7a5c95111"
+                    />
+                    <p className="w-full h-full bg-black bg-opacity-50 absolute top-0 flex justify-center items-center rounded-[6px] text-white text-[16px] font-medium">
+                      {data.title}
+                    </p>
+                  </div>
+                </div>
+              ) : (
+                <div
+                  key={index}
+                  onMouseEnter={() => setHovered(index)}
+                  onClick={() => selectHandler(index)}
+                  className={`${
+                    selected.find((item) => item === index)
+                      ? 'cursor-pointer w-[172px] h-[100px] rounded-[6px] relative border-[2px] border-caak-primary'
+                      : 'cursor-pointer w-[172px] h-[100px] rounded-[6px] relative'
+                  }`}
+                >
+                  <img
+                    className="w-full h-full object-cover rounded-[6px]"
+                    alt=""
+                    src="https://i.scdn.co/image/ab67616d0000b273ede9f246191d55e7a5c95111"
+                  />
+                  <p className="w-full h-full bg-black bg-opacity-50 absolute top-0 flex justify-center items-center rounded-[6px] text-white text-[16px] font-medium">
+                    {data.title}
+                  </p>
+                </div>
+              );
+            })}
+          </div> */
 }

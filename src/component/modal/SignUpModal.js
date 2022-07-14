@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
 import logoIcon from '../../images/New-Logo.svg';
 import OtpInput from 'react-otp-input';
+import { FIcon } from '../icon';
+import { useNavigate } from 'react-router-dom';
 
 export default function SignUpModal({ setIsShown }) {
   const [step, setStep] = useState('default');
   const [isPasswordShown, setIsPasswordShown] = useState(false);
   const [code, setCode] = useState('');
+  const navigate = useNavigate();
 
   console.log(code);
 
@@ -13,8 +16,8 @@ export default function SignUpModal({ setIsShown }) {
   return (
     <div className="popup_modal">
       {step === 'default' ? (
-        <div className="popup_modal-content w-[720px] h-[620px] rounded-[6px] relative flex flex-row">
-          <div className="w-[290px] h-full bg-[#F7F7F7] rounded-l rounded-[6px] flex flex-col items-center justify-center">
+        <div className="popup_modal-content w-full md:w-[720px] h-[620px] rounded-[6px] relative flex flex-col sm:flex-row">
+          <div className="w-[290px] hidden h-full bg-[#F7F7F7] rounded-l rounded-[6px] sm:flex flex-col items-center justify-center">
             <img src={logoIcon} className="cursor-pointer object-contain" alt="Caak Logo" width={157} height={47} />
             <p className="mt-[22px] text-[18px] font-medium text-[#111111]">Мэдээ мэдээллийн төв цэг!</p>
             <div className="flex flex-row mt-[58px]">
@@ -36,7 +39,7 @@ export default function SignUpModal({ setIsShown }) {
               </p>
             </div>
           </div>
-          <div className="w-[430px] relative">
+          <div className="w-full sm:w-[430px] relative">
             <div className="px-[40px] relative w-full flex flex-col items-center">
               <p className="mt-[70px] text-[32px] text-[#111111] leading-[38px] font-bold">
                 Бүртгэл үүсгэн мэдээллийг өөрийн болгоорой!
@@ -54,13 +57,13 @@ export default function SignUpModal({ setIsShown }) {
                 <p className="text-[#AFAFAF] text-[14px] leading-[16px] mx-[18px]">Эсвэл</p>
                 <span className="h-[1px] w-full bg-[#E0E0E1]" />
               </div>
-              <button
+              <div
                 onClick={() => setStep('register')}
-                className="bg-[#FF6600] w-full rounded-[4px] h-[44px] text-[16px] text-white mt-[20px] relative"
+                className="bg-[#FF6600] w-full rounded-[4px] h-[44px] text-[16px] cursor-pointer flex flex-row items-center justify-center text-white mt-[20px]"
               >
-                <span className="icon-fi-rs-mail-f text-white" />
+                <FIcon className="icon-fi-rs-mail-f mr-[27px] text-[24px] w-[26px] h-[26px]" />
                 Имэйл хаяг/Утасны дугаар
-              </button>
+              </div>
             </div>
             {/* footer */}
             <div className="border-t border-[#E0E0E1] mt-[30px]">
@@ -76,13 +79,25 @@ export default function SignUpModal({ setIsShown }) {
                 </div>
                 <p className="mt-[40px] w-full font-inter text-13px text-[#909090]">
                   Та энэ алхамын үргэлжлүүлснээр, сайтын{' '}
-                  <a href="/" target="_blank" rel="noopener noreferrer">
-                    <span className="text-[#111111]">Үйлчилгээний нөхцөл</span>{' '}
-                  </a>
+                  <span
+                    onClick={() => {
+                      navigate('/help', { state: 4 });
+                      setIsShown(false);
+                    }}
+                    className="text-[#111111] cursor-pointer"
+                  >
+                    Үйлчилгээний нөхцөл
+                  </span>{' '}
                   болон{' '}
-                  <a href="/" target="_blank" rel="noopener noreferrer">
-                    <span className="text-[#111111]">Нууцлалын бодлогыг</span>{' '}
-                  </a>
+                  <span
+                    onClick={() => {
+                      navigate('/help', { state: 3 });
+                      setIsShown(false);
+                    }}
+                    className="text-[#111111] cursor-pointer"
+                  >
+                    Нууцлалын бодлогыг
+                  </span>{' '}
                   зөвшөөрсөнд тооцно.
                 </p>
               </div>
@@ -140,7 +155,7 @@ export default function SignUpModal({ setIsShown }) {
               <div className="text-[#555555] text-[15px] mt-[21px]">
                 <span className="font-inter">Бүртгэлтэй хэрэглэгч бол </span>
                 <span
-                  onClick={() => setIsShown('signup')}
+                  onClick={() => setIsShown('signin')}
                   className="text-caak-primary text-[15px] font-bold cursor-pointer"
                 >
                   Нэвтрэх
@@ -148,13 +163,25 @@ export default function SignUpModal({ setIsShown }) {
               </div>
               <p className="mt-[24px] w-full font-inter text-[13px] text-[#909090]">
                 Та энэ алхамын үргэлжлүүлснээр, сайтын{' '}
-                <a href="/" target="_blank" rel="noopener noreferrer">
-                  <span className="text-[#111111]">Үйлчилгээний нөхцөл</span>{' '}
-                </a>
+                <span
+                  onClick={() => {
+                    navigate('/help', { state: 4 });
+                    setIsShown(false);
+                  }}
+                  className="text-[#111111] cursor-pointer"
+                >
+                  Үйлчилгээний нөхцөл
+                </span>{' '}
                 болон{' '}
-                <a href="/" target="_blank" rel="noopener noreferrer">
-                  <span className="text-[#111111]">Нууцлалын бодлогыг</span>{' '}
-                </a>
+                <span
+                  onClick={() => {
+                    navigate('/help', { state: 3 });
+                    setIsShown(false);
+                  }}
+                  className="text-[#111111] cursor-pointer"
+                >
+                  Нууцлалын бодлогыг
+                </span>
                 зөвшөөрсөнд тооцно.
               </p>
             </div>
@@ -218,7 +245,6 @@ export default function SignUpModal({ setIsShown }) {
             className="absolute top-[14px] right-[14px] icon-fi-rs-close text-[#909090] text-[18px] cursor-pointer w-[24px] h-[24px] flex items-center justify-center"
           />
         </div>
-      ) : null}
       ) : null}
     </div>
   );

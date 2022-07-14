@@ -103,6 +103,10 @@ const Post = () => {
     };
   }, [setLeftMenuSticky]);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   if (loading) {
     return (
       <div className="w-full flex justify-center p-[200px]">

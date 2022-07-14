@@ -171,7 +171,7 @@ const moneyNews = [
 //prettier-ignore
 export default function Help() {
     const location = useLocation();
-    const [selected, setSelected] = useState(location.state ? location.state : 0)
+    const [selected, setSelected] = useState(0)
     const [hovered, setHovered] = useState(false)
     const [hoveredNews, setHoveredNews] = useState(false)
     const context = useContext(AppContext);
@@ -191,6 +191,11 @@ export default function Help() {
     useEffect(() => {
         context.setStore('default');
     }, []);
+
+    useEffect(() => {
+        setSelected(location.state || 0)
+        window.scrollTo(0, 0)
+      }, [location.state])
     return (
         //prettier-ignore
         <div className='w-full flex flex-col items-center bg-[#F5F5F5]'>
@@ -203,7 +208,7 @@ export default function Help() {
                     <img className='w-[604px] h-[271px]' alt='' src={require('../../assets/images/help2x.png')} />
                 </div>
             </div>
-            <div className='max-w-[1310px] w-full flex flex-row mt-[60px] justify-between mb-[87px]'>
+            <div className='max-w-[1310px] w-full flex flex-col sm:flex-row mt-[30px] sm:mt-[60px] justify-between mb-[87px] px-[16px] md:px-0'>
                 <div style={{boxShadow: '0px 2px 2px #00000010'}} className='w-[290px] bg-[#FFFFFF] border border-[#EFEEEF] h-[270px] rounded-[4px] p-[10px]'>
                     {
                         Tabs.map((data, index) => {
@@ -221,8 +226,8 @@ export default function Help() {
                         selected === 0
                         ?
                         <div>
-                            <p className='font-condensed font-bold text-[32px] text-[#111111] leading-[38px]'>Бидний тухай</p>
-                            <div className='h-[68px] flex flex-col justify-between mt-[20px] text-[#555555]'>
+                            <p className='font-condensed font-bold text-[32px] text-[#111111] leading-[38px] mt-[20px] sm:mt-0'>Бидний тухай</p>
+                            <div className='sm:h-[68px] flex flex-col justify-between mt-[20px] text-[#555555]'>
                                 <p className='text-[15px] leading-[20px]'>Саак.мн сайт нь 2006 оны 1-р сарын 23-аас эхэлж үйл ажиллагаагаа явуулж эхэлсэн бөгөөд Дэлхийн болон дотоодын сонин содон, сонирхолтой, сургамжтай, гэрэл гэгээтэй мэдээллийг цаг алдалгүй хүргэдэг Монголын анхны энтертаймент сайт билээ.</p>
                                 <span className='inline-flex'><p className='font-bold'>Бидний зорилго: &nbsp;</p> Монголын нийгэмд гэрэл гэгээ түгээж, хүмүүст урам зориг, мэдлэг түгээх юм.</span>
                             </div>
@@ -245,7 +250,7 @@ export default function Help() {
                         selected === 1
                         ?
                         <div>
-                            <p className='font-condensed font-bold text-[32px] text-[#111111] leading-[38px]'>Сурталчилгаа байршуулах</p>
+                            <p className='font-condensed font-bold text-[32px] text-[#111111] leading-[38px] mt-[20px] sm:mt-0'>Сурталчилгаа байршуулах</p>
                             <p className='text-[15px] text-[#555555] leading-[20px] mt-[23px]'>Та манай 13 жилийн түүхтэй CAAK.MN сайт дээр Мэдээ, Пост, Контент бэлтгүүлэх болон Сурталчилгаа байршуулснаар дараах давуу талуудыг хүртэх боломжтой.</p>
                             <p className='text-[#363946] text-[20px] font-bold leading-[24px] mt-[40px]'>Давуу талууд</p>
                             <div className='flex flex-wrap justify-between gap-[20px] mt-[20px]'>
@@ -265,7 +270,7 @@ export default function Help() {
                         selected === 2
                         ?
                         <div>
-                            <p className='font-condensed font-bold text-[32px] text-[#111111] leading-[38px]'>Холбоо барих</p>
+                            <p className='font-condensed font-bold text-[32px] text-[#111111] leading-[38px] mt-[20px] sm:mt-0'>Холбоо барих</p>
                             <div className={`flex flex-row items-center text-[#555555] mt-[20px]`}>
                                 <span className={`icon-fi-rs-mail-o w-[24px] h-[24px] text-[22px] flex justify-center items-center`} />
                                 <p className='ml-[10px] text-[15px] leading-[18px]'>marketing@caak.mn</p>
@@ -283,7 +288,7 @@ export default function Help() {
                         selected === 3
                         ?
                         <div>
-                            <p className='font-condensed font-bold text-[32px] text-[#111111] leading-[38px]'>Нууцлалын баталгаа</p>
+                            <p className='font-condensed font-bold text-[32px] text-[#111111] leading-[38px] mt-[20px] sm:mt-0'>Нууцлалын баталгаа</p>
                             <p className='mt-[20px] text-[15px] leading-[21px] text-[#555555]'>Caak.mn нь үйлчүүлэгчдийнхээ мэдээллийн нууцлалыг нэн тэргүүнд чухалчлан үзэж халдашгүй байдлыг бүхий л сүлжээний харилцаанд бүрэн хангадаг. Бид манайд харьяалагддаггүй бусад компани хувь хүмүүсийн үйлчилгээнд ямар нэгэн баталгаа өгөхгүй. Та манай цахим хуудсаар үйлчлүүлж манай үйлчлүүлэгч болох нь дараах нууцлалын баталгааг хүлээн зөвшөөрсний илрэл юм.</p>
                             {
                                 security.map((data, index) => {
@@ -300,7 +305,7 @@ export default function Help() {
                         selected === 4
                         ?
                         <div>
-                            <p className='font-condensed font-bold text-[32px] text-[#111111] leading-[38px]'>Үйлчилгээний нѳхцѳл</p>
+                            <p className='font-condensed font-bold text-[32px] text-[#111111] leading-[38px] mt-[20px] sm:mt-0'>Үйлчилгээний нѳхцѳл</p>
                             <ol className='mt-[20px]'>
                                 <li className='text-[#363946] text-[20px] font-bold'>Ерөнхий зүйл
                                     <ol className='mt-[20px] text-[15px] text-[#555555] leading-[22px] font-normal'>    
@@ -350,25 +355,25 @@ export default function Help() {
             {
                 selected === 1 
                 &&
-                <div className='bg-white pt-[50px] flex justify-center w-full'>
+                <div className='bg-white pt-[50px] flex justify-center w-full px-[16px] md:px-0'>
                     <div className='max-w-[1310px] w-full flex flex-col items-center'>
                         <div style={{boxShadow: '0px 3px 8px #0000001A'}} className='w-full h-[68px] border border-[#D4D8D8] flex flex-row justify-center items-center rounded-[4px]'>
-                            <div className='flex flex-row items-center'>
+                            <div className='flex flex-col sm:flex-row items-center'>
                                 <span className='w-[32px] h-[32px] flex justify-center items-center rounded-full bg-caak-primary text-white icon-fi-rs-mail-o text-[18px]' />
-                                <p className='ml-[16px] text-[15px] leading-[18px] text-caak-black'>marketing@caak.mn</p>
+                                <p className='sm:ml-[16px] text-[15px] leading-[18px] text-caak-black'>marketing@caak.mn</p>
                             </div>
-                            <div className='flex flex-row items-center ml-[30px]'>
+                            <div className='flex flex-col sm:flex-row items-center ml-[30px]'>
                                 <span className='w-[32px] h-[32px] flex justify-center items-center rounded-full bg-caak-primary text-white icon-fi-rs-phone text-[17px]' />
                                 <p className='ml-[10px] text-[15px] leading-[18px] text-caak-black'>99093445, 99108661</p>
                             </div>
                         </div>
                         <p className='mt-[40px] font-condensed font-bold text-[38px] leading-[44px]'>Баннер байршуулах</p>
                         <p className='text-caak-primary text-[18px] leading-[21px] mt-[12px]'>/ Үнэ өдрөөр /</p>
-                        <div className='mt-[30px] flex flex-wrap gap-[23px] w-full'>
+                        <div className='mt-[30px] flex flex-wrap justify-center gap-[23px] w-full'>
                             {
                                 caakAds.map((data, index) => {
                                     return(
-                                        <div onMouseEnter={() => toggleHover(index)} onMouseLeave={() => setHovered(false)} key={index} style={{boxShadow: hovered === index ? '0px 2px 16px #00000033' : '0px 2px 2px #0000000F'}} className='w-[310px] h-[304px] border border-[#D4D8D8] rounded-[4px] p-[20px] flex flex-col justify-between'>
+                                        <div onMouseEnter={() => toggleHover(index)} onMouseLeave={() => setHovered(false)} key={index} style={{boxShadow: hovered === index ? '0px 2px 16px #00000033' : '0px 2px 2px #0000000F'}} className='w-full sm:w-[310px] h-[304px] border border-[#D4D8D8] rounded-[4px] p-[20px] flex flex-col justify-between'>
                                             <div>
                                                 <p className='w-[40px] h-[40px] rounded-[2px] bg-caak-primary bg-opacity-10 flex justify-center items-center text-caak-primary text-[22px] font-bold leading-[25px]'>{data.pos}</p>
                                                 <p className='text-[20px] leading-[24px] mt-[18px]'>{data.size}</p>
@@ -390,7 +395,7 @@ export default function Help() {
                             {
                                 moneyNews.map((data, index) => {
                                     return(
-                                        <div onMouseEnter={() => toggleHoverNews(index)} onMouseLeave={() => setHoveredNews(false)} key={index} style={{boxShadow: hoveredNews === index ? '0px 2px 16px #00000033' : '0px 2px 2px #0000000F'}} className='w-[418px] h-[316px] border border-[#D4D8D8] rounded-[4px]'>
+                                        <div onMouseEnter={() => toggleHoverNews(index)} onMouseLeave={() => setHoveredNews(false)} key={index} style={{boxShadow: hoveredNews === index ? '0px 2px 16px #00000033' : '0px 2px 2px #0000000F'}} className='w-full sm:w-[418px] h-[316px] border border-[#D4D8D8] rounded-[4px]'>
                                             <img className=' w-full h-[113px]' />
                                             <div className='flex flex-col justify-between h-[203px] p-[20px]'>
                                                 <p className='text-caak-darkGray text-[15px] leading-[20px]'>{data.desc}</p>
@@ -420,11 +425,11 @@ export default function Help() {
                 </div>
             }
             {
-                ((selected === 0) || (selected === 1) || (selected === 2)) &&
+                ((selected === 1) || (selected === 2)) &&
                 <div className='w-full h-[276px] bg-[#FF6600] flex justify-center'> 
-                    <div className='max-w-[1310px] w-full flex flex-row items-center'>
-                        <p className='text-[#F5F5F5] font-medium text-[48px] leading-[59px] max-w-[645px]'>Өөрийн мэдээг үнэ цэнэтэй болгомоор байна уу?</p>
-                        <div onClick={() => setSelected(2)} className='w-[280px] cursor-pointer h-[64px] bg-white flex flex-row items-center justify-center rounded-[4px] ml-[210px]'>
+                    <div className='max-w-[1310px] w-full flex flex-col sm:flex-row sm:items-center px-[16px] sm:px-0 pt-[20px] sm:pt-0'>
+                        <p className='text-[#F5F5F5] font-medium text-[30px] leading-[40px] sm:text-[48px] sm:leading-[59px] max-w-[645px]'>Өөрийн мэдээг үнэ цэнэтэй болгомоор байна уу?</p>
+                        <div onClick={() => setSelected(2)} className='w-[280px] cursor-pointer h-[64px] bg-white flex flex-row items-center justify-center rounded-[4px] mt-[20px] sm:mt-0 sm:ml-[210px]'>
                             <p className='text-[20px] text-[#111111] font-medium'>Холбоо барих</p>
                             <span className='icon-fi-rs-down-chevron -rotate-90 text-[20px] ml-[20px] w-[24px] h-[24px] flex justify-center items-center' />
                         </div>
