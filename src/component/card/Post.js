@@ -65,12 +65,12 @@ export default function PostCard({ isMobile, post, ...rest }) {
               <HashTag>{x.name}</HashTag>
             </Link>
           ))}
-        <Link to={postURL}>
+        <Link className={`${sponsored ? 'mt-[22px]' : 'sm:mt-[10px]'} ${text}`} to={postURL}>
           <p
             className={`${
               sponsored
-                ? 'px-[16px] mt-[22px] h-[85px] truncate-4 sm:truncate-3 text-[22px] sm:text-[21px] leading-[30px] sm:leading-[29px] font-bold sm:font-normal'
-                : 'sm:mt-[10px] truncate-3 font-medium sm:font-normal text-[16px] sm:text-[21px] leading-[20px] sm:leading-[29px] ml-[16px] sm:ml-0'
+                ? 'px-[16px] h-[85px] truncate-4 sm:truncate-3 text-[22px] sm:text-[21px] leading-[30px] sm:leading-[29px] font-bold sm:font-normal'
+                : 'truncate-3 font-medium sm:font-normal text-[16px] sm:text-[21px] leading-[20px] sm:leading-[29px] ml-[16px] sm:ml-0'
             } font-roboto sm:font-merri ${text}`}
           >
             {post.title}
@@ -99,7 +99,7 @@ export default function PostCard({ isMobile, post, ...rest }) {
           </div>
         )}
       </div>
-      <div className="flex flex-col justify-between px-[8px] pb-[13px] sm:pb-[15px]">
+      <div className="flex flex-col justify-between px-[8px] sm:px-0 pb-[13px] sm:pb-[15px]">
         <div className={`flex ${sponsored ? 'justify-between sm:justify-end' : 'justify-between'} items-center`}>
           <div className={`${sponsored ? 'flex sm:hidden' : 'flex'} flex-row items-end`}>
             <div className="flex flex-row items-center">
@@ -124,6 +124,12 @@ export default function PostCard({ isMobile, post, ...rest }) {
             </div>
           </div>
           <div className="flex flex-row items-center">
+            <FIcon
+              onClick={() => setSharePostOpen(true)}
+              className={`${
+                sponsored ? 'text-white' : 'text-[#909090]'
+              } h-[22px] icon-fi-rs-share sm:hidden text-[22px] mr-[20px]`}
+            />
             <FIcon
               onClick={() => setSavePostOpen(true)}
               className={`h-[22px] ${sponsored ? 'text-white' : 'text-[#909090]'} icon-fi-rs-bookmark text-[22px]`}

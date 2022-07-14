@@ -21,6 +21,8 @@ export default function Home() {
   const isTablet = useMediaQuery('(min-width: 401px) and (max-width: 1000px)');
   const isMobile = useMediaQuery('screen and (max-width: 767px)');
 
+  document.title = 'Саак';
+
   useEffect(() => {
     context.setStore('transparent');
   }, []);

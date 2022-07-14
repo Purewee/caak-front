@@ -396,7 +396,7 @@ export default function NavbarNew() {
         </div>
       }
       <SignInUpController isShown={isShown} setIsShown={setIsShown} />
-      {/* <MobileBottomMenu /> */}
+      <MobileBottomMenu />
     </nav>
   );
 }
