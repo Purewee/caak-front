@@ -272,8 +272,8 @@ const Post = () => {
             {article.blocks.map((b) => {
               return (
                 <div key={b.id} className="flex flex-col md:items-center mb-[26px] md:mb-[50px] w-full">
-                  <LazyLoadImage src={imagePath(b.imageUrl)} alt="" className="w-full md:max-h-[640px] object-cover" />
                   {b.title && <BlockTitle>{b.title}</BlockTitle>}
+                  <LazyLoadImage src={imagePath(b.imageUrl)} alt="" className="w-full md:max-h-[640px] object-cover" />
                   {b.content && <Paragraph className="mt-[16px] md:mt-0" dangerouslySetInnerHTML={createMarkup(b.content)} />}
                 </div>
               );
