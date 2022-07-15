@@ -41,8 +41,8 @@ const ACTIONS = [
 const Post = () => {
   const context = useContext(AppContext);
   const { id } = useParams();
-  const [isStopped, setIsStopped] = useState(false);
-  const [isPaused, setIsPaused] = useState(false);
+  const [isStopped, setIsStopped] = useState(true);
+  const [isPaused, setIsPaused] = useState(true);
   const [leftMenuSticky, setLeftMenuSticky] = useState(false);
   const [isReportOpen, setIsReportOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -54,6 +54,8 @@ const Post = () => {
   const { data: me, loading: me_loading } = useQuery(ME);
   const article = data?.article || {};
   const { isAuth } = useAuth();
+
+  console.log(article);
 
   const title = article?.title;
   const metaDescription = 'defaul tdescription';
@@ -136,7 +138,7 @@ const Post = () => {
         <meta
           property="og:image"
           key="og:image"
-          content={imagePath(article.imageUrl)}
+          content={imagePath(article.image)}
         />
       </Helmet>
         <div className="w-full hidden md:block max-w-[250px]">
@@ -281,9 +283,11 @@ const Post = () => {
           </Wrapper>
           <div className="flex flex-row gap-[8px] w-full mt-[29px] md:mt-[82px]">
             {article.tags?.map((x) => (
-              <HashTag key={x.id} className="border border-[#D4D8D8] rounded-[3px]">
-                #{x.name}
-              </HashTag>
+              <Link to={`/tags/${x.slug}`}>
+                <p key={x.id} className="border border-[#D4D8D8] hover:border-caak-primary hover:text-caak-primary rounded-[3px] h-[30px] flex items-center text-[14px] leading-[16px] px-[12px]">
+                  #{x.name}
+                </p>
+              </Link>
             ))}
           </div>
           <div className="hidden md:flex flex-row  w-full justify-end items-center">
@@ -344,16 +348,17 @@ const Post = () => {
             </Popover>
           </div>
           <div className="flex flex-row mt-[19px] md:mt-[38px] justify-between w-full md:border-t py-[17px] border-b border-[#EFEEEF]">
-            <div className="flex flex-row items-center">
-              <Avatar
-                src={imagePath(article.source?.icon)}
-                className="w-[36px] h-[36px]"
-              />
+            <div className="flex flex-row items-center text-[#555555]">
               <Link to={`/channel/${article.source?.id}`} className="flex flex-row items-center">
+                <Avatar
+                  src={imagePath(article.source?.icon)}
+                  className="w-[36px] h-[36px]"
+                />
                 <MetaTag className="ml-[8px] text-[15px]">{article.source?.name}</MetaTag>
               </Link>
+              &nbsp;•&nbsp;
               <Link className=' leading-[16px]' to={`/profile/${article.author?.id}`}>
-                <MetaTag className="ml-0">&nbsp;• {`${article.author.firstName}`}</MetaTag>
+                <MetaTag className="ml-0">{`${article.author.firstName}`}</MetaTag>
               </Link>
               {/* <MetaTag className="text-[#909090]">{moment(article.createdAt).format('YYYY.MM.DD, hh:mm')}</MetaTag> */}
             </div>

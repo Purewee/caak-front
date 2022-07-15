@@ -10,8 +10,8 @@ import * as wow from '../../../assets/json/wow-js.json';
 import Lottie from 'react-lottie';
 
 export default function Reaction({ articleId }) {
-  const [isStopped, setIsStopped] = useState(false);
-  const [isPaused, setIsPaused] = useState(false);
+  const [isStopped, setIsStopped] = useState(true);
+  const [isPaused, setIsPaused] = useState(true);
   const { data, loading: fetching, refetch } = useQuery(REACTIONS, { variables: { articleId } });
   const [add, { loading }] = useMutation(ADD_REACTION, { variables: { articleId } });
   const ACTIONS = [
@@ -31,7 +31,7 @@ export default function Reaction({ articleId }) {
       </p>
       <div className="flex flex-row items-center gap-[7px] md:gap-[24px] mt-[14px]">
         {ACTIONS.map((x, idx) => (
-          <div key={idx} className="flex flex-col items-center">
+          <div key={idx} className={`flex flex-col items-center`}>
             <div className="font-bold mb-[20px]">{reactions?.nodes.filter((r) => r.action === x.action).length}</div>
             <Button
               disabled={loading}
@@ -40,7 +40,7 @@ export default function Reaction({ articleId }) {
               key={idx}
               onClick={() => add({ variables: { action: x.action } }).then(() => refetch())}
             >
-              <span className="rounded-full border p-[12px]">
+              <span className={`rounded-full border p-[12px]`}>
                 <Lottie
                   options={{
                     animationData: x.icon,

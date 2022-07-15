@@ -63,7 +63,6 @@ const interest = [
 
 export default function SignInModal({ setIsShown }) {
   const [isPasswordShown, setIsPasswordShown] = useState(false);
-  const [hovered, setHovered] = useState(false);
   const [selected, setSelected] = useState([]);
   const [step, setStep] = useState('default');
   const minCategories = 3;

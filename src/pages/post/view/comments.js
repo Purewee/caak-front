@@ -5,6 +5,7 @@ import { useMutation, useQuery } from '@apollo/client';
 import { ADD_COMMENT, COMMENTS } from './_gql';
 import { BlockTitle } from './wrapper';
 import moment from 'moment';
+import { FIcon } from '../../../component/icon';
 
 const SORTS = {
   recent: { direction: 'desc', field: 'createdAt' },
@@ -68,24 +69,48 @@ export default function Comments({ articleId }) {
             <Comment
               key={comment.id}
               content={
-                <div className="bg-[#F7F7F7] rounded-[10px] p-[20px] rounded-t-[0px] rounded-r-[10px]">
-                  {comment.comment}
+                <div className="bg-[#F7F7F7] mt-[10px] rounded-[10px] p-[20px] rounded-t-[0px] rounded-r-[10px]">
+                  <p className="text-[#555555] text-[15px] leading-[21px]">{comment.comment}</p>
+                  <div className="flex flex-row items-center mt-[17px]">
+                    <div className="flex flex-row items-center cursor-pointer">
+                      <FIcon className="text-[#37AF37] text-[13px] w-[16px] h-[16px] icon-fi-rs-down-chevron rotate-180" />
+                      <p className="text-caak-darkGray text-[13px] font-medium ml-[3px]">5</p>
+                    </div>
+                    <div className="flex flex-row items-center ml-[12px] cursor-pointer">
+                      <FIcon className="text-[#F53757] text-[13px] w-[16px] h-[16px] icon-fi-rs-down-chevron" />
+                      <p className="text-caak-darkGray text-[13px] font-medium ml-[3px]">0</p>
+                    </div>
+                    <p className="text-caak-darkGray text-[13px] font-medium ml-[20px] cursor-pointer">Хариулах</p>
+                  </div>
                 </div>
               }
               author={
-                (comment.data?.name || `${comment.user.firstName} ${comment.user.lastName}`) +
-                `[${comment.data?.ip || ''}]`
+                <div className="flex flex-row items-center">
+                  <p className="text-caak-black text-[15px] font-medium leading-[18px]">
+                    {comment.data?.name || `${comment.user.firstName} ${comment.user.lastName}`}
+                  </p>
+                  <p className="ml-[8px] text-[#BBBEBE] text-[14px] leading-[16px]">{`[${comment.data?.ip || ''}]`}</p>
+                </div>
               }
               avatar={
                 <Avatar
                   shape="circle"
                   size={40}
-                  style={{ color: '#FF6600', backgroundColor: 'rgba(255, 102, 0, 0.1)' }}
+                  style={{
+                    color: '#FF6600',
+                    backgroundColor: 'rgba(255, 102, 0, 0.1)',
+                    fontSize: 20,
+                    fontWeight: 'bold',
+                  }}
                 >
                   {(comment.data?.name || comment.user.firstName)[0]}
                 </Avatar>
               }
-              datetime={moment(x.node.createdAt).format('YYYY.MM.DD, hh:mm')}
+              datetime={
+                <p className="text-[13px] leading-[15px] text-caak-darkGray">
+                  {moment(x.node.createdAt).format('YYYY.MM.DD, hh:mm')}
+                </p>
+              }
             />
           );
         })}

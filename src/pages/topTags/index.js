@@ -8,6 +8,7 @@ import Loader from '../../component/loader';
 import FeedCard from '../../component/card/FeedCard';
 import useMediaQuery from '../../component/navigation/useMediaQuery';
 import HighlightCard from '../../component/card/FeedCard/HighlightCard';
+import { Tabs, Row, Col, Button, Skeleton, Space } from 'antd';
 
 const menu = [
   {
@@ -53,10 +54,10 @@ export default function TopTags() {
     context.setShown(true);
   }, []);
 
-  useEffect(() => {
-    const es = new ESService('caak');
-    es.categoryPosts(slug, { size: 24 }).then(setArticles);
-  }, [slug]);
+  // useEffect(() => {
+  //   const es = new ESService('caak');
+  //   es.categoryPosts(slug, { size: 24 }).then(setArticles);
+  // }, [slug]);
 
   if (loading)
     return (
@@ -88,81 +89,52 @@ export default function TopTags() {
             <span className="text-[#111111] font-medium">30 </span>Дагагчид
           </p>
         </div>
-        <div className=" mt-[40px] flex flex-row items-center border-[#EFEEEF] border-b border-t w-full justify-center gap-[50px] pb-[1px] pt-[17px]">
-          {menu.map((data, index) => {
-            return (
-              <p
-                key={index}
-                onClick={() => setSelected(index)}
-                className={`text-[18px] font-bold cursor-pointer text-center leading-[21px] ${
-                  selected === index ? 'border-b-[3px] border-[#FF6600] pb-[12px]' : 'border-none pb-[15px]'
-                } ${selected === index ? 'text-[#111111]' : 'text-[#555555]'}`}
-              >
-                {data.title}
-              </p>
-            );
-          })}
+        <div className="hidden xl:flex flex-row items-center justify-center gap-[50px] pb-[1px] max-w-[1310px] w-full ">
+          <Tabs size="large" onChange={(e) => setSelected(e)} className="w-full" centered>
+            <Tabs.TabPane
+              key="recent"
+              tab={
+                <span
+                  className={`text-[20px] font-bold cursor-pointer text-center leading-[20px] uppercase font-merri ${
+                    selected === 'recent' ? 'text-[#111111]' : 'text-[#555555]'
+                  }`}
+                >
+                  Шинэ
+                </span>
+              }
+            ></Tabs.TabPane>
+            <Tabs.TabPane
+              key="trend"
+              tab={
+                <span
+                  className={`text-[20px] font-bold cursor-pointer text-center leading-[20px] uppercase font-merri  ${
+                    selected === 'trend' ? 'text-[#111111]' : 'text-[#555555]'
+                  }`}
+                >
+                  Трэнд
+                </span>
+              }
+            ></Tabs.TabPane>
+          </Tabs>
         </div>
-        <div className="flex flex-row items-center justify-between w-full mt-[50px] pb-[60px]">
-          {articles.slice(0, 3).map((data, index) => {
-            return <TagsCard key={index} data={data} middle={index === 1 && true} />;
-          })}
-        </div>
-        <div
-          className={`relative max-w-[1310px] w-full justify-items-center border-t-[8px] xl:border-none border-[#EFEEEF] ${isMobile ? 'mobileFeedGrid' : 'newFeedGrid'} justify-center`}
-        >
-          {articles.slice(3, 8).map((data, index) => {
-            return <FeedCard trend={selected === 1 && true} sponsored={index === 4 && true} key={index} post={data} />;
-          })}
-          {
-            articles.length > 8 && 
-            <div className="w-full flex flex-col">
-              <div className={`w-full sm:w-[424px] h-[220px] bg-gray-200 ${selected === 0 ? 'sm:h-[527px]' : 'sm:h-[475px]'}`}></div>
-              <div className="flex md:hidden flex-row items-center pr-[6px] justify-end w-full text-[#909090] mt-[8px] border-b border-[#EFEEEF] pb-[13px]">
-                <span className="icon-fi-rs-megaphone text-[13px]" />
-                <p className="text-[14px] font-condensed ml-[4px]">Сурталчилгаа</p>
-              </div>
-            </div>
-          }
-          {articles.slice(8, 11).map((data, index) => {
-            return <FeedCard trend={selected === 1 && true} key={index} post={data} />;
-          })}
-          {articles.slice(11, 14).map((data, index) => {
-            return <FeedCard trend={selected === 1 && true} key={index} post={data} />;
-          })}
-        </div>
-        <div
-          className={`relative max-w-[1310px] w-full justify-items-center ${
-            isMobile ? 'mobileFeedGrid' : 'HighlightFeedGrid'
-          } justify-center ${articles.length > 14 && 'sm:pt-[44px] sm:pb-[40px]'}`}
-        >
-          {articles.slice(14, 16).map((data, index) => {
-            if (isLaptop) {
-              return <HighlightCard key={index} post={data} />;
-            } else {
-              return <FeedCard key={index} post={data} />;
-            }
-          })}
-        </div>
-        <div
-          className={`relative max-w-[1310px] w-full justify-items-center border-t-[8px] xl:border-none border-[#EFEEEF] ${isMobile ? 'mobileFeedGrid' : 'newFeedGrid'} justify-center`}
-        >
-          {articles.slice(16, 20).map((data, index) => {
-            return <FeedCard trend={selected === 1 && true} sponsored={index === 4 && true} key={index} post={data} />;
-          })}
-          {
-            articles.length > 20 &&
-            <div className="w-full flex flex-col">
-              <div className={`w-full sm:w-[424px] h-[220px] bg-gray-200 ${selected === 0 ? 'sm:h-[527px]' : 'sm:h-[475px]'}`}></div>
-              <div className="flex md:hidden flex-row items-center pr-[6px] justify-end w-full text-[#909090] mt-[8px] border-b border-[#EFEEEF] pb-[13px]">
-                <span className="icon-fi-rs-megaphone text-[13px]" />
-                <p className="text-[14px] font-condensed ml-[4px]">Сурталчилгаа</p>
-              </div>
-            </div>
-          }
-          {articles.slice(20).map((data, index) => {
-            return <FeedCard trend={selected === 1 && true} key={index} post={data} />;
-          })}
+        <div className="max-w-[1310px] w-full flex flex-wrap justify-center gap-x-[22px] gap-y-[40px]">
+          {articles?.map((post) => (
+            <Col className="w-full sm:w-[422px]" key={post.id}>
+              <PostCard isMobile={isMobile} post={post} />
+            </Col>
+          ))}
+          {loading && <Skeleton />}
+          <Col span={24}>
+            <Button
+              block
+              size="large"
+              className="font-roboto border-caak-primary text-caak-primary mt-[20px]"
+              onClick={() => setPage(page + 1)}
+              loading={loading}
+            >
+              Цааш үзэх
+            </Button>
+          </Col>
         </div>
       </div>
     </div>
