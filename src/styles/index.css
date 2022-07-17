@@ -32,3 +32,10 @@
   display: flex;
   justify-content: right;
 }
+
+.caak-saved-articles .ant-list-item{
+  padding: 4px 8px;
+}
+.caak-saved-articles .ant-list-item-action{
+  margin: 0;
+}

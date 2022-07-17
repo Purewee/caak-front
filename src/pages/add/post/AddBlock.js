@@ -5,7 +5,7 @@ import { getDataFromBlob } from '../../../lib/imageCompress';
 import { useDebounce } from '../../../utility/Util';
 import { uniqBy } from 'lodash/array';
 
-export default function AddBlock({ items, setItems }) {
+export default function AddBlock({ items, setItems, top = false }) {
   const form = Form.useFormInstance();
   let images = [];
   return (
@@ -22,10 +22,10 @@ export default function AddBlock({ items, setItems }) {
               const base64 = await getDataFromBlob(f);
               images.push({ kind: 'image', position: items.length + idx + 1, image64: base64, image: f });
             }
-            console.log({ images });
-            const newList = [...items, ...uniqBy(images)];
-            setItems(newList);
-            form.setFieldsValue({ blocks: newList });
+            const newList = top ? [...uniqBy(images), ...items] : [...items, ...uniqBy(images)];
+            const sortedList = newList.map((x, idx) => ({ ...x, position: idx + 1 }));
+            setItems(sortedList);
+            form.setFieldsValue({ blocks: sortedList });
           }
           return false;
         }}
@@ -37,7 +37,7 @@ export default function AddBlock({ items, setItems }) {
       <Button
         icon={<YoutubeFilled />}
         onClick={() => {
-          Add({ kind: 'video', position: items.length + 1 });
+          Add({ kind: 'video', position: items.length + 1 }, top);
         }}
         size="large"
         block
@@ -47,7 +47,7 @@ export default function AddBlock({ items, setItems }) {
       <Button
         icon={<FontSizeOutlined />}
         onClick={() => {
-          Add({ kind: 'text', position: items.length + 1 });
+          Add({ kind: 'text', position: items.length + 1 }, top);
         }}
         size="large"
         block
@@ -57,10 +57,11 @@ export default function AddBlock({ items, setItems }) {
     </Button.Group>
   );
 
-  function Add(item) {
-    const newList = [...items, item];
-    setItems(newList);
-    form.setFieldsValue({ blocks: newList });
+  function Add(item, top) {
+    const newList = top ? [item, ...items] : [...items, item];
+    const sortedList = newList.map((x, idx) => ({ ...x, position: idx + 1 }));
+    setItems(sortedList);
+    form.setFieldsValue({ blocks: sortedList });
   }
 }
 const sleep = (milliseconds) => {

@@ -14,12 +14,13 @@ const colors = ['#163943', '#463146', '#131D1C', '#1E1642', '#854D0E', '#233C6A'
 export default function PostCard({ isMobile, post, ...rest }) {
   const [savePostOpen, setSavePostOpen] = useState(false);
   const [fixedMenu, setFixedMenu] = useState(false);
-  const [sponsored, setSponsored] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isReportOpen, setIsReportOpen] = useState(false);
   const [sharePostOpen, setSharePostOpen] = useState(false);
+  const [random] = useState(Math.floor(Math.random() * colors.length));
+
   const postURL = `/post/view/${post.id}`;
-  const random = Math.floor(Math.random() * colors.length);
+  const sponsored = post.is_featured && moment().isBetween(moment(post.featured_from), moment(post.featured_to));
 
   const color = sponsored ? { backgroundColor: colors[random] } : {};
   const text = sponsored ? 'text-[#ffffff] sm:text-center hover:text-[#ffffff]' : 'hover:text-[#111111]';
@@ -27,15 +28,6 @@ export default function PostCard({ isMobile, post, ...rest }) {
   const handleMenu = (show) => {
     setIsMenuOpen(show);
   };
-
-  useEffect(() => {
-    if (parseInt(post.id) % 4 === 0) {
-      setSponsored(true);
-    } else {
-      setSponsored(false);
-    }
-  }, []);
-
   return (
     <div
       className={`${

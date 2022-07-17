@@ -2,6 +2,7 @@ import React, { useEffect, useState, useContext } from 'react';
 import { useMutation, useQuery } from '@apollo/client';
 import { CATEGORIES, CREATE, POST, TAGS, UPDATE } from './_gql';
 import { sortBy } from 'lodash';
+import moment from 'moment';
 import {
   Affix,
   Button,
@@ -34,6 +35,23 @@ const fallback =
 const ckConfig = {
   placeholder: 'Тайлбар',
   rows: 2,
+  toolbar: [
+    'bold',
+    'italic',
+    'link',
+    '|',
+    'alignment:left',
+    'alignment:center',
+    'alignment:right',
+    'alignment:justify',
+    '|',
+    'blockQuote',
+    'bulletedList',
+    'numberedList',
+    '|',
+    'undo',
+    'redo',
+  ],
 };
 
 function AddPost() {
@@ -45,11 +63,12 @@ function AddPost() {
   const categories = data?.categories?.nodes || [];
   const article = post?.article;
   const [blocks, setBlocks] = useState([]);
-  const [featured, setFeatured] = useState(article?.data?.featured || false);
+  const [featured, setFeatured] = useState(false);
   const [saveArticle, { loading: saving }] = useMutation(id ? UPDATE : CREATE, { context: { upload: true } });
 
   useEffect(() => {
     setBlocks(sortBy(article?.blocks, 'position') || []);
+    setFeatured(article?.featured);
   }, [article]);
 
   useEffect(() => {
@@ -97,7 +116,7 @@ function AddPost() {
         ...article,
         tags: article?.tags.map((x) => x.slug),
         blocks: sortBy(article?.blocks, 'position'),
-        featuredDates: [article?.featuredFrom, article?.featuredTo],
+        featuredDates: [moment(article?.featuredFrom), moment(article?.featuredTo)],
       }}
     >
       <Row gutter={12} className="mb-[400px]">
@@ -121,7 +140,7 @@ function AddPost() {
             <div className="flex flex-wrap">
               <SortableContainer items={blocks} setItems={setBlocks} />
             </div>
-            <AddBlock items={blocks} setItems={setBlocks} />
+            <AddBlock items={blocks} setItems={setBlocks} top={true} />
             <h3 className="font-merri text-[18px]">
               Мэдээний агуулга (<span>{blocks.length}</span>)
             </h3>
@@ -141,15 +160,22 @@ function AddPost() {
                         <Form.Item name={[idx, 'kind']} hidden>
                           <Input />
                         </Form.Item>
-                        {block?.kind === 'image' && <ImageBlock block={block} idx={idx} setBlocks={setBlocks} />}
-                        {block?.kind === 'text' && <TextBlock block={block} idx={idx} setBlocks={setBlocks} />}
-                        {block?.kind === 'video' && <VideoBlock block={block} idx={idx} setBlocks={setBlocks} />}
+                        {block?.kind === 'image' && (
+                          <ImageBlock block={block} idx={idx} setBlocks={setBlocks} onRemove={() => remove(idx)} />
+                        )}
+                        {block?.kind === 'text' && (
+                          <TextBlock block={block} idx={idx} setBlocks={setBlocks} onRemove={() => remove(idx)} />
+                        )}
+                        {block?.kind === 'video' && (
+                          <VideoBlock block={block} idx={idx} setBlocks={setBlocks} onRemove={() => remove(idx)} />
+                        )}
                       </div>
                     );
                   })}
                 </>
               )}
             </Form.List>
+            <AddBlock items={blocks} setItems={setBlocks} />
           </Card>
         </Col>
         <Col span={6} className="border-l border-[#efefef] bg-[#ffffff]" style={{ padding: 12 }}>
@@ -206,7 +232,7 @@ function AddPost() {
   );
 }
 
-function ImageBlock({ block, idx, setBlocks }) {
+function ImageBlock({ block, idx, setBlocks, onRemove }) {
   const [image64, setImage64] = useState(block.image64);
   useEffect(() => {
     if (image64 === null) return;
@@ -228,7 +254,7 @@ function ImageBlock({ block, idx, setBlocks }) {
           </Button>
         </>
       }
-      extra={[<RemoveBlock key="remove" position={block.position} setBlocks={setBlocks} />]}
+      extra={[<RemoveBlock key="remove" position={block.position} setBlocks={setBlocks} onRemove={onRemove} />]}
     >
       <Row gutter={14}>
         <Col span={6}>
@@ -280,7 +306,7 @@ function ImageBlock({ block, idx, setBlocks }) {
   );
 }
 
-export function TextBlock({ block, idx, setBlocks }) {
+export function TextBlock({ block, idx, setBlocks, onRemove }) {
   return (
     <Card
       className="my-[24px] bg-[#EFEFEF] font-merri shadow-md"
@@ -293,7 +319,7 @@ export function TextBlock({ block, idx, setBlocks }) {
           </Button>
         </>
       }
-      extra={[<RemoveBlock key="remove" position={block.position} setBlocks={setBlocks} />]}
+      extra={[<RemoveBlock key="remove" position={block.position} setBlocks={setBlocks} onRemove={onRemove} />]}
     >
       <Form.Item
         name={[idx, 'content']}
@@ -309,7 +335,7 @@ export function TextBlock({ block, idx, setBlocks }) {
   );
 }
 
-function VideoBlock({ block, idx, setBlocks }) {
+function VideoBlock({ block, idx, setBlocks, onRemove }) {
   const [url, setUrl] = useState(block?.data?.url);
   const [image, setImage] = useState(null);
   const [title, setTitle] = useState('');
@@ -393,14 +419,16 @@ function parseVideoURL(url) {
   );
 }
 
-function RemoveBlock({ position, setBlocks }) {
+function RemoveBlock({ position, setBlocks, onRemove }) {
   return (
     <Popconfirm
       title="Үнэхээр устгах уу?"
       onConfirm={() => {
         setBlocks((blocks) => {
           const index = blocks.findIndex((x) => x.position === position);
-          return blocks.filter((x, idx) => idx !== index);
+          const newList = blocks.filter((x, idx) => idx !== index).map((x, idx) => ({ ...x, position: idx + 1 }));
+          onRemove();
+          return newList;
         });
       }}
     >

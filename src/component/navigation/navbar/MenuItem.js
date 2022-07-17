@@ -13,7 +13,7 @@ const menuItems = [
 
 const CATEGORIES = gql`
   query GetCategories {
-    categories(sort: { direction: asc, field: "position" }) {
+    categories(sort: { direction: asc, field: "position" }, filter: { status: { eq: "active" } }) {
       nodes {
         id
         name

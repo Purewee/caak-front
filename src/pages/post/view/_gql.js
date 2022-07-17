@@ -12,6 +12,7 @@ export const ARTICLE = gql`
       publishDate
       description
       createdAt
+      acceptComment
       categories {
         nodes {
           id
