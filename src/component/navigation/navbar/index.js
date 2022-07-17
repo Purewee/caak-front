@@ -293,7 +293,7 @@ export default function NavbarNew() {
       </nav>
     )
   ) : (
-    <nav className="py-[13px] flex flex-col border-b relative">
+    <nav className="pt-[13px] flex flex-col sticky top-0 z-[2] bg-white">
       <div className="w-full flex flex-row justify-between pl-[16px] pr-[17px]">
         <Logo className={''} mobile navBarStyle={false} />
         <span onClick={() => setMobileSideMenu(!mobileSideMenu)} className="icon-fi-rs-user text-[#555555] text-[27.5px]" />

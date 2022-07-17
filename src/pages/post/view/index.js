@@ -55,8 +55,6 @@ const Post = () => {
   const article = data?.article || {};
   const { isAuth } = useAuth();
 
-  console.log(article);
-
   const title = article?.title;
   const metaDescription = 'defaul tdescription';
 
@@ -148,9 +146,9 @@ const Post = () => {
               <Popover
                 placement='top'
                 trigger="hover"
-                overlayStyle={{ width: 230, borderRadius: 8 }}
+                overlayStyle={{ width: 262, borderRadius: 8 }}
                 content={
-                  <div className="flex flex-row gap-[8px] h-full justify-center py-[4px]">
+                  <div className="flex flex-row gap-[8px] h-full justify-center">
                     {
                       ACTIONS.map((data, index) => (
                         <Lottie
@@ -186,7 +184,7 @@ const Post = () => {
                 visible={isMenuOpen}
                 onVisibleChange={handleMenu}
                 content={
-                  <div className="flex flex-col gap-[15px] h-full justify-between p-[18px]">
+                  <div className="flex flex-col gap-[15px] h-full justify-between">
                     {
                       me?.me?.id === article.author.id 
                       &&
@@ -313,7 +311,7 @@ const Post = () => {
               visible={isBottomMenu}
               onVisibleChange={handleBottomMenu}
               content={
-                <div className="flex flex-col gap-[15px] h-full justify-between p-[18px]">
+                <div className="flex flex-col gap-[15px] h-full justify-between">
                   {
                     me?.me.id === article.author.id
                     &&

@@ -54,6 +54,10 @@ export default function Profile() {
     context.setStore('default');
   }, []);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [user]);
+
   return (
     <div className="flex justify-center px-[16px] md:px-0">
       <div className="max-w-[1310px] w-full flex flex-col">

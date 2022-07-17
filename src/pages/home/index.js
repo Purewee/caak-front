@@ -41,12 +41,32 @@ export default function Home() {
 
   return (
     <>
-      <div className={`relative bg-white flex flex-col items-center pb-[100px] px-[16px] sm:px-0`}>
+      <div className={`relative bg-white flex flex-col items-center pb-[100px]`}>
+        <div className="h-[57px] border-b-[3px] md:hidden border-[#EFEEEF] bg-white z-[2] w-full sticky top-[46px] pl-[16px]">
+          <div className="absolute -bottom-[3px] h-[36px] flex flex-row items-center gap-[16px]">
+            <p
+              onClick={() => setSelected('recent')}
+              className={`${
+                selected === 'recent' ? 'text-[#111111] border-caak-primary' : 'text-[#555555]'
+              } text-[21px] leading-[24px] pb-[9px] border-b-[3px] font-condensed font-bold`}
+            >
+              ШИНЭ
+            </p>
+            <p
+              onClick={() => setSelected('trend')}
+              className={`${
+                selected === 'trend' ? 'text-[#111111] border-caak-primary' : 'text-[#555555]'
+              } text-[21px] leading-[24px] pb-[9px] border-b-[3px] font-condensed font-bold`}
+            >
+              ТРЭНД
+            </p>
+          </div>
+        </div>
         <NavbarPostHeader />
-        <div className="md:px-[30px] w-full flex justify-center">
+        <div className="md:px-[30px] w-full flex justify-center px-[16px] sm:px-0">
           <Story />
         </div>
-        <div className="hidden xl:flex flex-row items-center justify-center gap-[50px] pb-[1px] max-w-[1310px] w-full ">
+        <div className="hidden xl:flex flex-row items-center justify-center gap-[50px] pb-[1px] max-w-[1310px] w-full px-[16px] sm:px-0">
           <Tabs size="large" onChange={(e) => setSelected(e)} className="w-full" centered>
             <Tabs.TabPane
               key="recent"
@@ -96,7 +116,7 @@ export default function Home() {
 
         {/* ingeed hiichvvl mobile deer ewdrehgv zvgeer bn */}
 
-        <div className="max-w-[1310px] w-full flex flex-wrap justify-center gap-x-[22px] gap-y-[40px]">
+        <div className="max-w-[1310px] w-full flex flex-wrap justify-center gap-x-[22px] gap-y-[40px] px-[16px] sm:px-0">
           {articles.map((post) => (
             <Col className="w-full sm:w-[422px]" key={post.id}>
               <PostCard isMobile={isMobile} post={post} />

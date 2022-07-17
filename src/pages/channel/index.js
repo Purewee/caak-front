@@ -38,6 +38,10 @@ export default function Channel() {
     context.setShown(true);
   }, []);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <div className="flex flex-col w-full items-center">
       <img

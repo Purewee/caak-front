@@ -58,9 +58,9 @@ export default function Comments({ articleId }) {
           Нийт сэтгэгдэл ({comments?.totalCount})
         </BlockTitle>
         <Tabs className="hidden md:flex" size="small" defaultActiveKey="tab-1" onChange={(e) => setSort(e)}>
-          <Tabs.TabPane tab="Их таалагдсан" key="liked" />
-          <Tabs.TabPane tab="Сүүлд нэмэгдсэн" key="recent" />
-          <Tabs.TabPane tab="Их хариулсан" key="replied" />
+          <Tabs.TabPane tab="ИХ ХАНДАЛТТАЙ" key="liked" />
+          <Tabs.TabPane tab="СҮҮЛД НЭМЭГДСЭН" key="recent" />
+          <Tabs.TabPane tab="ИХ ХАРИУЛСАН" key="replied" />
         </Tabs>
         {loading && <Skeleton />}
         {comments?.edges?.map((x) => {

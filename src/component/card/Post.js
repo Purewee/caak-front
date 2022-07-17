@@ -100,7 +100,11 @@ export default function PostCard({ isMobile, post, ...rest }) {
         )}
       </div>
       <div className="flex flex-col justify-between px-[8px] sm:px-0 pb-[13px] sm:pb-[15px]">
-        <div className={`flex ${sponsored ? 'justify-between sm:justify-end' : 'justify-between'} items-center`}>
+        <div
+          className={`${
+            sponsored ? 'justify-between sm:justify-end sm:pr-[16px]' : 'justify-between'
+          } flex items-center`}
+        >
           <div className={`${sponsored ? 'flex sm:hidden' : 'flex'} flex-row items-end`}>
             <div className="flex flex-row items-center">
               <Link to={`/channel/${post.source?.slug}`} className="flex flex-row items-center">
