@@ -17,7 +17,7 @@ import MobileBottomMenu from '../../footer/mobileBottomMenu';
 
 const CATEGORIES = gql`
   query GetCategories {
-    categories(sort: { direction: asc, field: "position" }) {
+    categories(sort: { direction: asc, field: "position" }, filter: { status: { eq: "active" } }) {
       nodes {
         id
         name
@@ -47,7 +47,6 @@ const mobileItems = [
 ];
 
 export default function NavbarNew() {
-  //prettier-ignore
   const context = useContext(AppContext);
   const { data, loading } = useQuery(CATEGORIES);
   const { data: me, loading: me_loading } = useQuery(ME);
@@ -159,7 +158,6 @@ export default function NavbarNew() {
     return <Skeleton />;
   }
 
-  //prettier-ignore
   return navBarStyle === null ? null : isLaptop ? (
     loaded && (
       <nav
@@ -179,18 +177,22 @@ export default function NavbarNew() {
             <Logo navBarStyle={navBarStyle} />
             {isLaptop && <MenuItems navBarStyle={navBarStyle} />}
           </div>
-            <div className={'flex flex-row items-center'}>
-              <div
-                onClick={() => setSearchShown(true)}
-                className={`${
-                  isTablet ? 'mr-0' : isAuth ? 'mr-[15px]' : 'mr-[22px]'
-                } flex w-[22px] h-[22px] items-center justify-center cursor-pointer`}
-              >
-                <span className={`icon-fi-rs-search ${context.store === 'default' ? 'text-[#555555]' : 'text-white'} text-[19px]`} />
-              </div>
-              {isAuth ? (
-                <UserInfo />
-              ) : (
+          <div className={'flex flex-row items-center'}>
+            <div
+              onClick={() => setSearchShown(true)}
+              className={`${
+                isTablet ? 'mr-0' : isAuth ? 'mr-[15px]' : 'mr-[22px]'
+              } flex w-[22px] h-[22px] items-center justify-center cursor-pointer`}
+            >
+              <span
+                className={`icon-fi-rs-search ${
+                  context.store === 'default' ? 'text-[#555555]' : 'text-white'
+                } text-[19px]`}
+              />
+            </div>
+            {isAuth ? (
+              <UserInfo />
+            ) : (
               <div className={'hidden md:flex flex-row items-center'}>
                 <button
                   className={`mr-[12px] h-[34px] font-roboto rounded-[4px] w-[92px] text-[15px] ${
@@ -211,113 +213,128 @@ export default function NavbarNew() {
                   Бүртгүүлэх
                 </button>
               </div>
-              )}
+            )}
           </div>
         </div>
         <SignInUpController isShown={isShown} setIsShown={setIsShown} />
-        {
-          sideMenuOpen && 
-          <div ref={sideMenuRef} className='absolute left-0 top-0 w-[410px] bg-white px-[50px] pt-[50px] pb-[55px] font-condensed z-[1]'>
-            <div className='flex flex-row items-center justify-between w-full'>
-                <span className='icon-fi-rs-search text-[20px] text-[#111111]' />
-                <img
-                    src={logoIcon}
-                    className="cursor-pointer w-[130px] object-contain"
-                    alt="Caak Logo"
-                />
-                <span onClick={() => setSideMenuOpen(false)} className='icon-fi-rs-close cursor-pointer text-[18px] w-[24px] h-[24px] flex items-center justify-center text-[#111111]' />
+        {sideMenuOpen && (
+          <div
+            ref={sideMenuRef}
+            className="absolute left-0 top-0 w-[410px] bg-white px-[50px] pt-[50px] pb-[55px] font-condensed z-[1]"
+          >
+            <div className="flex flex-row items-center justify-between w-full">
+              <span className="icon-fi-rs-search text-[20px] text-[#111111]" />
+              <img src={logoIcon} className="cursor-pointer w-[130px] object-contain" alt="Caak Logo" />
+              <span
+                onClick={() => setSideMenuOpen(false)}
+                className="icon-fi-rs-close cursor-pointer text-[18px] w-[24px] h-[24px] flex items-center justify-center text-[#111111]"
+              />
             </div>
-            <div onClick={() => setSubMenuShown(!subMenuShown)} className='mt-[75px] flex flex-row items-center cursor-pointer'>
-                <span className={`${subMenuShown ? 'icon-fi-rs-minus' : 'icon-fi-rs-plus'} w-[24px] h-[24px] flex items-center justify-center text-[20px] text-[#FF6600] mr-[26px]`} />
-                <p className='text-[18px] font-medium leading-[21px] hover:text-[#555555]'>МЭДЭЭНИЙ ТӨРӨЛ</p>
+            <div
+              onClick={() => setSubMenuShown(!subMenuShown)}
+              className="mt-[75px] flex flex-row items-center cursor-pointer"
+            >
+              <span
+                className={`${
+                  subMenuShown ? 'icon-fi-rs-minus' : 'icon-fi-rs-plus'
+                } w-[24px] h-[24px] flex items-center justify-center text-[20px] text-[#FF6600] mr-[26px]`}
+              />
+              <p className="text-[18px] font-medium leading-[21px] hover:text-[#555555]">МЭДЭЭНИЙ ТӨРӨЛ</p>
             </div>
-            {
-              subMenuShown && 
-              <div className='ml-[50px] mt-[30px] flex flex-col gap-[20px]'>
+            {subMenuShown && (
+              <div className="ml-[50px] mt-[30px] flex flex-col gap-[20px]">
                 {categories.map((data, index) => {
-                  return(
+                  return (
                     <Link key={index} to={`/tags/${data.slug}`}>
-                      <p className='text-[#111111] leading-[20px] text-[14px] font-condensed'>{data.name}</p>
+                      <p className="text-[#111111] leading-[20px] text-[14px] font-condensed">{data.name}</p>
                     </Link>
-                  )
+                  );
                 })}
               </div>
-            }
-            <div className='mt-[40px] flex flex-row items-center cursor-pointer'>
-                <span className='icon-fi-rs-hashtag w-[24px] h-[24px] flex items-center justify-center text-[20px] text-[#111111] mr-[26px]' />
-                <p className='text-[18px] font-medium leading-[21px] text-[#111111]'>ТАГУУД</p>
+            )}
+            <div className="mt-[40px] flex flex-row items-center cursor-pointer">
+              <span className="icon-fi-rs-hashtag w-[24px] h-[24px] flex items-center justify-center text-[20px] text-[#111111] mr-[26px]" />
+              <p className="text-[18px] font-medium leading-[21px] text-[#111111]">ТАГУУД</p>
             </div>
-            <div className='mt-[40px] flex flex-row items-center cursor-pointer'>
-                <span className='icon-fi-rs-tv w-[24px] h-[24px] flex items-center justify-center text-[20px] text-[#111111] mr-[26px]' />
-                <p className='text-[18px] font-medium leading-[21px] text-[#111111]'>ВИДЕО</p>
+            <div className="mt-[40px] flex flex-row items-center cursor-pointer">
+              <span className="icon-fi-rs-tv w-[24px] h-[24px] flex items-center justify-center text-[20px] text-[#111111] mr-[26px]" />
+              <p className="text-[18px] font-medium leading-[21px] text-[#111111]">ВИДЕО</p>
             </div>
-            <div className='mt-[40px] flex flex-row items-center cursor-pointer'>
-                <span className='icon-fi-rs-mic w-[24px] h-[24px] flex items-center justify-center text-[20px] text-[#111111] mr-[26px]' />
-                <p className='text-[18px] font-medium leading-[21px] text-[#111111]'>ПОДКАСТ</p>
+            <div className="mt-[40px] flex flex-row items-center cursor-pointer">
+              <span className="icon-fi-rs-mic w-[24px] h-[24px] flex items-center justify-center text-[20px] text-[#111111] mr-[26px]" />
+              <p className="text-[18px] font-medium leading-[21px] text-[#111111]">ПОДКАСТ</p>
             </div>
-            <div className='mt-[40px] flex flex-row items-center cursor-pointer'>
-                <span className='icon-fi-rs-wave w-[24px] h-[24px] flex items-center justify-center text-[20px] text-[#111111] mr-[26px]' />
-                <p className='text-[18px] font-medium leading-[21px] text-[#111111]'>РАДИО</p>
+            <div className="mt-[40px] flex flex-row items-center cursor-pointer">
+              <span className="icon-fi-rs-wave w-[24px] h-[24px] flex items-center justify-center text-[20px] text-[#111111] mr-[26px]" />
+              <p className="text-[18px] font-medium leading-[21px] text-[#111111]">РАДИО</p>
             </div>
-            <div className='mt-[40px] flex flex-row items-center cursor-pointer'>
-                <span className='icon-fi-rs-ads w-[24px] h-[24px] flex items-center justify-center text-[20px] text-[#111111] mr-[26px]' />
-                <p className='text-[18px] font-medium leading-[21px] text-[#111111]'>СУРТАЛЧИЛГАА</p>
+            <div className="mt-[40px] flex flex-row items-center cursor-pointer">
+              <span className="icon-fi-rs-ads w-[24px] h-[24px] flex items-center justify-center text-[20px] text-[#111111] mr-[26px]" />
+              <p className="text-[18px] font-medium leading-[21px] text-[#111111]">СУРТАЛЧИЛГАА</p>
             </div>
-            <div className='mt-[40px] flex flex-row items-center cursor-pointer'>
-                <span className='icon-fi-rs-phone w-[24px] h-[24px] flex items-center justify-center text-[20px] text-[#111111] mr-[26px]' />
-                <p className='text-[18px] font-medium leading-[21px] text-[#111111]'>ХОЛБОО БАРИХ</p>
+            <div className="mt-[40px] flex flex-row items-center cursor-pointer">
+              <span className="icon-fi-rs-phone w-[24px] h-[24px] flex items-center justify-center text-[20px] text-[#111111] mr-[26px]" />
+              <p className="text-[18px] font-medium leading-[21px] text-[#111111]">ХОЛБОО БАРИХ</p>
             </div>
-            <div className='border-t border-b w-full border-[#D4D8D8] flex flex-row items-center justify-center gap-[19px] py-[30px] mt-[137px]'>
-              <span className='icon-fi-rs-fb text-[22px]' />
-              <span className='icon-fi-rs-ig text-[22px]' />
-              <span className='icon-fi-rs-tw text-[22px]' />
-              <span className='icon-fi-rs-yt text-[22px]' />
+            <div className="border-t border-b w-full border-[#D4D8D8] flex flex-row items-center justify-center gap-[19px] py-[30px] mt-[137px]">
+              <span className="icon-fi-rs-fb text-[22px]" />
+              <span className="icon-fi-rs-ig text-[22px]" />
+              <span className="icon-fi-rs-tw text-[22px]" />
+              <span className="icon-fi-rs-yt text-[22px]" />
             </div>
-            <p className='text-[#555555] text-[15px] mt-[30px] text-center'>©2022 “Саак Холдинг” ХХК</p>
-        </div>
-        }
-        {
-          searchShown && 
-          <div className='search_modal w-full'>
-            <div ref={searchRef} className='w-full flex justify-center items-center bg-white h-[70px] z-50'>
-              <div className='relative max-w-[600px] w-full'>
-                <input onKeyDown={onPressEnter} value={searchValue} onChange={handleChange} placeholder='Хайлт хийх...' className={`h-[54px] text-[17px] text-[#555555] w-full border px-[50px] border-[#BBBEBE] rounded-[4px]`} />
-                <span className='icon-fi-rs-search absolute left-[16px] top-[16px] text-[18px] w-[22px] h-[22px] flex justify-center items-center text-[#555555]' />
-                {
-                  searchValue && <span onClick={() => setSearchValue('')} className='icon-fi-rs-close cursor-pointer absolute right-[16px] top-[16px] text-[16.5px] w-[22px] h-[22px] flex justify-center items-center text-[#555555]' />
-                }
+            <p className="text-[#555555] text-[15px] mt-[30px] text-center">©2022 “Саак Холдинг” ХХК</p>
+          </div>
+        )}
+        {searchShown && (
+          <div className="search_modal w-full">
+            <div ref={searchRef} className="w-full flex justify-center items-center bg-white h-[70px] z-50">
+              <div className="relative max-w-[600px] w-full">
+                <input
+                  onKeyDown={onPressEnter}
+                  value={searchValue}
+                  onChange={handleChange}
+                  placeholder="Хайлт хийх..."
+                  className={`h-[54px] text-[17px] text-[#555555] w-full border px-[50px] border-[#BBBEBE] rounded-[4px]`}
+                />
+                <span className="icon-fi-rs-search absolute left-[16px] top-[16px] text-[18px] w-[22px] h-[22px] flex justify-center items-center text-[#555555]" />
+                {searchValue && (
+                  <span
+                    onClick={() => setSearchValue('')}
+                    className="icon-fi-rs-close cursor-pointer absolute right-[16px] top-[16px] text-[16.5px] w-[22px] h-[22px] flex justify-center items-center text-[#555555]"
+                  />
+                )}
               </div>
             </div>
           </div>
-        }
+        )}
       </nav>
     )
   ) : (
     <nav className="pt-[13px] flex flex-col sticky top-0 z-[2] bg-white">
       <div className="w-full flex flex-row justify-between pl-[16px] pr-[17px]">
         <Logo className={''} mobile navBarStyle={false} />
-        <span onClick={() => setMobileSideMenu(!mobileSideMenu)} className="icon-fi-rs-user text-[#555555] text-[27.5px]" />
+        <span
+          onClick={() => setMobileSideMenu(!mobileSideMenu)}
+          className="icon-fi-rs-user text-[#555555] text-[27.5px]"
+        />
       </div>
-      {
-        mobileSideMenu &&
+      {mobileSideMenu && (
         <div className="left-0 right-0 bottom-0 top-0 z-[5] overflow-auto fixed flex justify-end bg-black bg-opacity-70">
-          <div ref={mobileRef} className='w-3/4 h-screen overflow-hidden overflow-y-scroll bg-white pt-[26px]'>
-            {
-              isAuth
-              ?
+          <div ref={mobileRef} className="w-3/4 h-screen overflow-hidden overflow-y-scroll bg-white pt-[26px]">
+            {isAuth ? (
               <div>
-                <div className='flex flex-row items-center'>
-                  <Avatar className='w-[50px] h-[50px] mr-[20px] ml-[16px]' />
-                  <p className='text-[20px] font-condensed font-bold'>{me?.me.firstName}</p>
+                <div className="flex flex-row items-center">
+                  <Avatar className="w-[50px] h-[50px] mr-[20px] ml-[16px]" />
+                  <p className="text-[20px] font-condensed font-bold">{me?.me?.firstName}</p>
                 </div>
-                <div className='w-full border-t mt-[20px]'>
-                  <div className='px-[16px] flex flex-col gap-[24px] mt-[20px]'>
+                <div className="w-full border-t mt-[20px]">
+                  <div className="px-[16px] flex flex-col gap-[24px] mt-[20px]">
                     {Settings.map((data, index) => {
                       return (
                         <Link onClick={() => setMobileSideMenu(false)} key={index} to={{ pathname: data.link }}>
                           <div className="flex flex-row items-center cursor-pointer">
                             <FIcon className={`${data.icon} mr-[18px] text-[24px] w-[26px] h-[26px]`} />
-                            <p className='text-[18px]'>{data.title}</p>
+                            <p className="text-[18px]">{data.title}</p>
                           </div>
                         </Link>
                       );
@@ -325,76 +342,79 @@ export default function NavbarNew() {
                     <button
                       onClick={() => {
                         logout();
-                        setMobileSideMenu(false)
+                        setMobileSideMenu(false);
                       }}
-                      className='w-full h-[58px] text-[16px] font-medium text-caak-black border rounded-[4px]'
+                      className="w-full h-[58px] text-[16px] font-medium text-caak-black border rounded-[4px]"
                     >
                       Гарах
                     </button>
                   </div>
                 </div>
               </div>
-              :
+            ) : (
               <div>
-                <div className='w-[56px] h-[56px] rounded-full bg-[#EFEEEF] flex items-center justify-center ml-[16px]'>
-                  <span onClick={() => setMobileSideMenu(!mobileSideMenu)} className="icon-fi-rs-user-f text-[#BBBEBE] text-[35px]" />
+                <div className="w-[56px] h-[56px] rounded-full bg-[#EFEEEF] flex items-center justify-center ml-[16px]">
+                  <span
+                    onClick={() => setMobileSideMenu(!mobileSideMenu)}
+                    className="icon-fi-rs-user-f text-[#BBBEBE] text-[35px]"
+                  />
                 </div>
-                <div className='px-[16px]'>
-                  <p className='font-bold text-[28px] font-condensed w-[233px] leading-[32px] mt-[30px]'>Та бүртгэл үүсгэн мэдээллийг өөрийн болгоорой!</p>
+                <div className="px-[16px]">
+                  <p className="font-bold text-[28px] font-condensed w-[233px] leading-[32px] mt-[30px]">
+                    Та бүртгэл үүсгэн мэдээллийг өөрийн болгоорой!
+                  </p>
                   <button
                     onClick={() => {
                       setIsShown('signup');
-                      setMobileSideMenu(false)
+                      setMobileSideMenu(false);
                     }}
-                    className='w-full h-[58px] text-[16px] font-medium text-white mt-[20px] bg-caak-primary rounded-[4px]'
+                    className="w-full h-[58px] text-[16px] font-medium text-white mt-[20px] bg-caak-primary rounded-[4px]"
                   >
                     Бүртгүүлэх
                   </button>
                   <button
                     onClick={() => {
                       setIsShown('signin');
-                      setMobileSideMenu(false)
+                      setMobileSideMenu(false);
                     }}
-                    className='w-full h-[58px] text-[16px] font-medium text-caak-black mt-[20px] border rounded-[4px]'
+                    className="w-full h-[58px] text-[16px] font-medium text-caak-black mt-[20px] border rounded-[4px]"
                   >
                     Нэвтрэх
                   </button>
                 </div>
               </div>
-            }
-            <div className='w-full border-t border-b mt-[30px] py-[25px] flex flex-col gap-[24px]'>
-              {
-                mobileItems.map((data, index) => {
-                  return(
-                    <a href={data.url} target="_blank" key={index} className='flex flex-row items-center ml-[24px]'>
-                      <FIcon className={`${data.icon} mr-[18px] text-[24px] w-[26px] h-[26px]`} />
-                      <p className='text-[18px]'>{data.title}</p>
-                    </a>
-                  )
-                })
-              }
+            )}
+            <div className="w-full border-t border-b mt-[30px] py-[25px] flex flex-col gap-[24px]">
+              {mobileItems.map((data, index) => {
+                return (
+                  <a href={data.url} target="_blank" key={index} className="flex flex-row items-center ml-[24px]">
+                    <FIcon className={`${data.icon} mr-[18px] text-[24px] w-[26px] h-[26px]`} />
+                    <p className="text-[18px]">{data.title}</p>
+                  </a>
+                );
+              })}
             </div>
-            <div className='flex flex-row items-center ml-[24px] mt-[24px]'>
+            <div className="flex flex-row items-center ml-[24px] mt-[24px]">
               <FIcon className={`icon-fi-rs-ads mr-[18px] text-[24px] w-[26px] h-[26px]`} />
-              <p className='text-[18px]'>Сурталчилгаа</p>
+              <p className="text-[18px]">Сурталчилгаа</p>
             </div>
-            <div className='flex flex-row items-center ml-[24px] mt-[24px]'>
+            <div className="flex flex-row items-center ml-[24px] mt-[24px]">
               <FIcon className={`icon-fi-rs-phone mr-[18px] text-[24px] w-[26px] h-[26px]`} />
-              <p className='text-[18px]'>Холбоо барих</p>
+              <p className="text-[18px]">Холбоо барих</p>
             </div>
-            <div className='w-full border-t border-b mt-[30px] py-[25px] flex flex-col gap-[24px]'>
-              <div className='flex flex-row items-center ml-[24px]'>
+            <div className="w-full border-t border-b mt-[30px] py-[25px] flex flex-col gap-[24px]">
+              <div className="flex flex-row items-center ml-[24px]">
                 <FIcon className={`icon-fi-rs-ads mr-[18px] text-[24px] w-[26px] h-[26px]`} />
-                <p className='text-[18px]'>Нууцлалын бодлого</p>
+                <p className="text-[18px]">Нууцлалын бодлого</p>
               </div>
-              <div className='flex flex-row items-center ml-[24px]'>
+              <div className="flex flex-row items-center ml-[24px]">
                 <FIcon className={`icon-fi-rs-phone mr-[18px] text-[24px] w-[26px] h-[26px]`} />
-                <p className='text-[18px]'>Үйлчилгээний нөхцөл</p>
+                <p className="text-[18px]">Үйлчилгээний нөхцөл</p>
               </div>
             </div>
           </div>
         </div>
-      }
+      )}
       <SignInUpController isShown={isShown} setIsShown={setIsShown} />
       <MobileBottomMenu />
     </nav>

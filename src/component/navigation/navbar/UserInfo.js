@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
-import { useQuery, gql } from '@apollo/client';
-import { Popover, Badge, List, Button, Avatar } from 'antd';
+import { useQuery, gql, useMutation } from '@apollo/client';
+import { Popover, Badge, List, Button, Avatar, message } from 'antd';
 import { useAuth } from '../../../context/AuthContext';
 import { CloseOutlined, UserOutlined } from '@ant-design/icons';
 import { FIcon } from '../../icon';
@@ -30,23 +30,27 @@ const ME = gql`
   }
 `;
 
+const REMOVE_SAVED = gql`
+  mutation RemoveSavedArticle($id: ID, $articleId: ID!) {
+    removeRecipeItem(input: { id: $id, articleId: $articleId }) {
+      id
+    }
+  }
+`;
+
 export default function UserInfo() {
   const context = useContext(AppContext);
-  const { data, loading } = useQuery(ME);
+  const { data, loading, refetch } = useQuery(ME);
   const [isShown, setIsShown] = useState(false);
   const { logout } = useAuth();
   const textColor = context.store === 'default' ? 'text-[#555555]' : 'text-white';
   const saved_articles = data?.me?.recipes.map((x) => x?.articles.nodes).flat() || [];
+  const [remove, { loading: removing }] = useMutation(REMOVE_SAVED);
 
   const handleMenu = (show) => {
     setIsShown(show);
   };
 
-  // const saved_articles = [
-  //   { title: 'asdsada', id: 1 },
-  //   { title: '123123123123', id: 1 },
-  // ];
-  // console.log({ saved_articles });
   if (loading) return <span>Loading ...</span>;
 
   const Settings = [
@@ -77,18 +81,35 @@ export default function UserInfo() {
         trigger="click"
         content={
           <List
-            style={{ width: 400 }}
-            className="h-screen overflow-hidden overflow-y-scroll"
+            style={{ width: 300 }}
+            className="caak-saved-articles max-h-screen overflow-hidden overflow-y-scroll"
             dataSource={saved_articles}
             size="small"
             renderItem={(x) => (
               <List.Item
                 className="font-condensed"
-                actions={[<Button size="small" icon={<CloseOutlined />} type="link" />]}
+                actions={[
+                  <Button
+                    size="small"
+                    icon={<CloseOutlined />}
+                    type="link"
+                    onClick={() => {
+                      remove({ variables: { articleId: x.id } }).then(() => {
+                        refetch();
+                        message.success('Амжилттай устгалаа');
+                      });
+                    }}
+                    loading={removing}
+                  />,
+                ]}
               >
                 <List.Item.Meta
                   avatar={<Avatar src={imagePath(x.imageUrl)} shape="square" />}
-                  title={<Link to={`/post/view/${x.id}`}>{x.title}</Link>}
+                  title={
+                    <Link to={`/post/view/${x.id}`} className="truncate-3 text-[13px]">
+                      {x.title}
+                    </Link>
+                  }
                 />
               </List.Item>
             )}
@@ -103,13 +124,12 @@ export default function UserInfo() {
       <Popover
         placement="topRight"
         trigger="click"
-        overlayStyle={{ width: 220, shadow: '0px 2px 2px #00000010' }}
         overlayInnerStyle={{ borderRadius: 4 }}
         visible={isShown}
         onVisibleChange={handleMenu}
         content={
           <div className="w-full text-[#555555]">
-            <div className="border-b w-full py-[17px] flex flex-row items-center pl-[18px]">
+            <div className="border-b w-full pb-[16px] flex flex-row items-center pl-[8px]">
               <Avatar className="mr-[12px] flex items-center justify-center" src={AvatarSvg} size={38} />
               <div>
                 <p className="font-condensed text-[18px] font-bold leading-[21px] text-[#111111]">
@@ -118,7 +138,7 @@ export default function UserInfo() {
                 <p className="text-[14px] leading-[16px] mt-[3px]">Мэдээллээ засах</p>
               </div>
             </div>
-            <div className="p-[18px] flex flex-col gap-[16px] border-b">
+            <div className="p-[16px] flex flex-col gap-[16px] border-b">
               {Settings.map((data, index) => {
                 return (
                   <Link onClick={() => setIsShown(false)} key={index} to={{ pathname: data.link }}>
@@ -130,7 +150,7 @@ export default function UserInfo() {
                 );
               })}
             </div>
-            <div className="p-[18px] flex flex-col gap-[16px]">
+            <div className="px-[18px] pt-[18px] pb-[8px] flex flex-col gap-[16px]">
               <div onClick={() => logout()} className="flex flex-row items-center cursor-pointer">
                 <span className={`icon-fi-rs-exit text-[20px]`} />
                 <p className="text-[15px] ml-[12px] leading-[18px]">Гарах</p>

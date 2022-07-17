@@ -23,6 +23,7 @@ export const POST = gql`
       featured
       featuredFrom
       featuredTo
+      acceptComment
       author {
         id
       }
@@ -59,6 +60,8 @@ export const CREATE = gql`
     $publishDate: ISO8601DateTime
     $acceptComment: Boolean
     $featured: Boolean
+    $featuredFrom: ISO8601DateTime
+    $featuredTo: ISO8601DateTime
     $blocks: [BlockInput!]
     $categoryIds: [ID!]
     $tags: [String!]
@@ -70,6 +73,8 @@ export const CREATE = gql`
         publishDate: $publishDate
         acceptComment: $acceptComment
         featured: $featured
+        featuredFrom: $featuredFrom
+        featuredTo: $featuredTo
         blocks: $blocks
         categoryIds: $categoryIds
         tags: $tags
@@ -88,6 +93,8 @@ export const UPDATE = gql`
     $publishDate: ISO8601DateTime
     $acceptComment: Boolean
     $featured: Boolean
+    $featuredFrom: ISO8601DateTime
+    $featuredTo: ISO8601DateTime
     $blocks: [BlockInput!]
     $categoryIds: [ID!]
     $tags: [String!]
@@ -100,6 +107,8 @@ export const UPDATE = gql`
         publishDate: $publishDate
         acceptComment: $acceptComment
         featured: $featured
+        featuredFrom: $featuredFrom
+        featuredTo: $featuredTo
         blocks: $blocks
         categoryIds: $categoryIds
         tags: $tags

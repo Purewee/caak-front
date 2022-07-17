@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { notification, Modal } from 'antd';
+import { notification, Modal, message } from 'antd';
 import { gql, useMutation } from '@apollo/client';
 import { MetaTag } from '../../pages/post/view/wrapper';
 import { useAuth } from '../../context/AuthContext';
@@ -35,7 +35,7 @@ export default function PostSaveModal({ open, onClose, post, image }) {
         onOk={() =>
           isAuth
             ? save().then((e) => {
-                openNotification();
+                message.success('Амжилттай хадгалагдлаа');
                 onClose();
               })
             : setIsShown('signin')

@@ -299,7 +299,10 @@
   }
 }
 
+<<<<<<< HEAD
 /* .ant-popover-inner-content { padding: 0; } */
+=======
+>>>>>>> bb5c2bba2030ea92a4a66393c9ffa4a1a59b64b5
 .ant-popover-buttons {
   display: flex;
 }
