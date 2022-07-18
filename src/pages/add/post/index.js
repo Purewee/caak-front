@@ -19,12 +19,12 @@ import {
   Skeleton,
   Upload,
 } from 'antd';
-import { DeleteOutlined, SaveOutlined, SearchOutlined } from '@ant-design/icons';
+import { CameraOutlined, DeleteOutlined, SaveOutlined, SearchOutlined } from '@ant-design/icons';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import InlineEditor from '@ckeditor/ckeditor5-build-inline';
 import { imagePath } from '../../../utility/Util';
 import { useNavigate, useParams } from 'react-router-dom';
-import { getDataFromBlob } from '../../../lib/imageCompress';
+import { getDataFromBlob, imageCompress } from '../../../lib/imageCompress';
 import AddBlock from './AddBlock';
 import SortableContainer from './SortableContainer';
 import { DatePicker } from 'antd/es';
@@ -65,10 +65,14 @@ function AddPost() {
   const [blocks, setBlocks] = useState([]);
   const [featured, setFeatured] = useState(false);
   const [saveArticle, { loading: saving }] = useMutation(id ? UPDATE : CREATE, { context: { upload: true } });
+  const [cover, setCover] = useState();
 
   useEffect(() => {
     setBlocks(sortBy(article?.blocks, 'position') || []);
     setFeatured(article?.featured);
+    if (article?.imageUrl) {
+      setCover(imagePath(article?.imageUrl));
+    }
   }, [article]);
 
   useEffect(() => {
@@ -87,10 +91,10 @@ function AddPost() {
             featuredFrom: values.featuredDates?.[0],
             featuredTo: values.featuredDates?.[1],
             ...values,
-            blocks: values.blocks.map((x) => ({
+            blocks: values.blocks.map((x, idx) => ({
               id: x.id,
               kind: x.kind,
-              position: x.position,
+              position: idx + 1,
               title: x.title,
               image: x.image,
               content: x.content,
@@ -136,17 +140,45 @@ function AddPost() {
             >
               <CKEditor editor={InlineEditor} config={ckConfig} />
             </Form.Item>
+            <Form.Item
+              name="image"
+              valuePropName="file"
+              getValueFromEvent={(e) => {
+                return e?.fileList[0].originFileObj;
+              }}
+            >
+              <Upload
+                maxCount={1}
+                showUploadList={false}
+                className="overflow-hidden rounded border h-[240px] flex"
+                accept="image/*"
+                customRequest={({ file, onSuccess }) => {
+                  imageCompress(file).then((result) => {
+                    return getDataFromBlob(result).then((base64) => {
+                      setCover(base64);
+                      onSuccess('ok');
+                    });
+                  });
+                }}
+              >
+                {cover && <Image src={cover} className="object-contain" alt="cover" preview={false} />}
+                <Button icon={<CameraOutlined className="text-caak-primary" />} className="flex m-[20px]">
+                  Upload cover
+                </Button>
+              </Upload>
+            </Form.Item>
 
             <div className="flex flex-wrap">
               <SortableContainer items={blocks} setItems={setBlocks} />
             </div>
-            <AddBlock items={blocks} setItems={setBlocks} top={true} />
-            <h3 className="font-merri text-[18px]">
-              Мэдээний агуулга (<span>{blocks.length}</span>)
-            </h3>
+
             <Form.List name="blocks">
               {(fields, { add, remove }, { errors }) => (
                 <>
+                  <AddBlock items={blocks} setItems={setBlocks} top={true} add={add} />
+                  <h3 className="font-merri text-[18px]">
+                    Мэдээний агуулга (<span>{blocks.length}</span>)
+                  </h3>
                   {fields.map((field, idx) => {
                     const block = blocks[idx];
                     return (
@@ -154,7 +186,7 @@ function AddPost() {
                         <Form.Item name={[idx, 'id']} hidden>
                           <Input />
                         </Form.Item>
-                        <Form.Item name={[idx, 'position']} hidden>
+                        <Form.Item name={[idx, 'position']} hidden initialValue={idx + 1}>
                           <Input />
                         </Form.Item>
                         <Form.Item name={[idx, 'kind']} hidden>
@@ -172,10 +204,10 @@ function AddPost() {
                       </div>
                     );
                   })}
+                  <AddBlock items={blocks} setItems={setBlocks} add={add} />
                 </>
               )}
             </Form.List>
-            <AddBlock items={blocks} setItems={setBlocks} />
           </Card>
         </Col>
         <Col span={6} className="border-l border-[#efefef] bg-[#ffffff]" style={{ padding: 12 }}>
@@ -336,9 +368,12 @@ export function TextBlock({ block, idx, setBlocks, onRemove }) {
 }
 
 function VideoBlock({ block, idx, setBlocks, onRemove }) {
-  const [url, setUrl] = useState(block?.data?.url);
+  const [url, setUrl] = useState();
   const [image, setImage] = useState(null);
   const [title, setTitle] = useState('');
+  useEffect(() => {
+    setUrl(block?.data?.url);
+  }, [block]);
 
   useEffect(() => {
     setBlocks((blocks) => {
@@ -373,7 +408,7 @@ function VideoBlock({ block, idx, setBlocks, onRemove }) {
           </Button>
         </>
       }
-      extra={[<RemoveBlock key="remove" position={block.position} setBlocks={setBlocks} />]}
+      extra={[<RemoveBlock key="remove" position={block.position} setBlocks={setBlocks} onRemove={onRemove} />]}
     >
       <Row gutter={12}>
         <Col span={6}>

@@ -728,6 +728,7 @@ input addArticleInput {
     featured: Boolean
     featuredFrom: ISO8601DateTime
     featuredTo: ISO8601DateTime
+    image: Upload
     publishDate: ISO8601DateTime
     slug: String
     tags: [String!]
@@ -864,6 +865,7 @@ input updateArticleInput {
     featuredFrom: ISO8601DateTime
     featuredTo: ISO8601DateTime
     id: ID!
+    image: Upload
     publishDate: ISO8601DateTime
     slug: String
     tags: [String!]

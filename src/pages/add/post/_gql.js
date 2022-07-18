@@ -58,6 +58,7 @@ export const CREATE = gql`
     $title: String!
     $description: String
     $publishDate: ISO8601DateTime
+    $image: Upload
     $acceptComment: Boolean
     $featured: Boolean
     $featuredFrom: ISO8601DateTime
@@ -70,6 +71,7 @@ export const CREATE = gql`
       input: {
         title: $title
         description: $description
+        image: $image
         publishDate: $publishDate
         acceptComment: $acceptComment
         featured: $featured
@@ -90,6 +92,7 @@ export const UPDATE = gql`
     $id: ID!
     $title: String!
     $description: String
+    $image: Upload
     $publishDate: ISO8601DateTime
     $acceptComment: Boolean
     $featured: Boolean
@@ -104,6 +107,7 @@ export const UPDATE = gql`
         id: $id
         title: $title
         description: $description
+        image: $image
         publishDate: $publishDate
         acceptComment: $acceptComment
         featured: $featured
