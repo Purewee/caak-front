@@ -12,16 +12,20 @@ import Logo from '../../component/logo';
 import UserInfo from '../../component/navigation/navbar/UserInfo';
 import { FIcon } from '../../component/icon';
 import SearchModal from '../../component/modal/SearchModal';
+import { useAuth } from '../../context/AuthContext';
+import SignInUpController from '../../component/modal/SignInUpController';
 
 export default function Home() {
-  const es = new ESService('caak');
+  const context = useContext(AppContext);
   const [page, setPage] = useState(0);
   const [loading, setLoading] = useState(false);
   const [articles, setArticles] = useState([]);
   const [selected, setSelected] = useState('recent');
   const [stickyTabs, setStickyTabs] = useState(false);
+  const [isShown, setIsShown] = useState(false);
   const [searchShown, setSearchShown] = useState(false);
-  const context = useContext(AppContext);
+  const es = new ESService('caak');
+  const { isAuth } = useAuth();
 
   const isLaptop = useMediaQuery('(min-width: 1001px) and (max-width: 1920px)');
   const isTablet = useMediaQuery('(min-width: 401px) and (max-width: 1000px)');
@@ -62,7 +66,7 @@ export default function Home() {
 
   return (
     <>
-      <div className={`relative bg-white flex flex-col items-center pb-[100px]`}>
+      <div className={`relative bg-white flex flex-col items-center mb-[100px]`}>
         <div className="h-[57px] border-b-[3px] md:hidden border-[#EFEEEF] bg-white z-[2] w-full sticky top-[46px] pl-[16px]">
           <div className="absolute -bottom-[3px] h-[36px] flex flex-row items-center gap-[16px]">
             <p
@@ -126,7 +130,27 @@ export default function Home() {
               onClick={() => setSearchShown(true)}
               className="icon-fi-rs-search text-caak-darkGray text-[20px] w-[32px] mr-[6px]"
             />
-            <UserInfo className={'text-caak-darkGray'} />
+            {isAuth ? (
+              <UserInfo className={'text-caak-darkGray'} />
+            ) : (
+              <div className={'hidden md:flex flex-row items-center'}>
+                <button
+                  className={`mr-[12px] h-[34px] font-roboto rounded-[4px] w-[92px] text-[15px] text-[#111111] border border-[#D4D8D8] font-medium`}
+                  onClick={() => setIsShown('signin')}
+                >
+                  Нэвтрэх
+                </button>
+                {/* <button
+                  className={
+                    'h-[34px] font-roboto w-[112px] bg-caak-primary rounded-[4px] text-[15px] font-bold text-white'
+                  }
+                  onClick={() => setIsShown('signup')}
+                >
+                  Бүртгүүлэх
+                </button> */}
+                <SignInUpController isShown={isShown} setIsShown={setIsShown} />
+              </div>
+            )}
           </div>
           {searchShown && <SearchModal setSearchShown={setSearchShown} />}
         </div>
@@ -153,8 +177,8 @@ export default function Home() {
         {/* ingeed hiichvvl mobile deer ewdrehgv zvgeer bn */}
 
         <div className="max-w-[1310px] w-full flex flex-wrap justify-center gap-x-[22px] gap-y-[40px] px-[16px] sm:px-0 mt-[40px]">
-          {articles.map((post) => (
-            <Col className="w-full sm:w-[422px]" key={post.id}>
+          {articles.map((post, index) => (
+            <Col className="w-full sm:w-[422px]" key={index}>
               <PostCard isMobile={isMobile} post={post} />
             </Col>
           ))}

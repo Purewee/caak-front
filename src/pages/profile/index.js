@@ -22,7 +22,6 @@ export default function Profile() {
   const [loading, setLoading] = useState(false);
   const { data } = useQuery(USER, { variables: { id } });
   const user = data?.user || {};
-  console.log(user);
   const { data: me } = useQuery(ME);
   const loggedUser = me?.me;
   const { isAuth } = useAuth();
@@ -60,7 +59,7 @@ export default function Profile() {
   }, [user]);
 
   return (
-    <div className="flex justify-center px-[16px] md:px-0">
+    <div className="flex justify-center px-[16px]">
       <div className="max-w-[1310px] w-full flex flex-col">
         <div className="pt-[17px] md:pt-[71px] pb-[17px] md:pb-[50px] flex flex-col md:flex-row justify-between w-full items-center">
           <div className="flex flex-col md:flex-row">
@@ -80,7 +79,7 @@ export default function Profile() {
           </div>
           <div className="flex flex-row mt-[20px] md:mt-0">
             {loggedUser?.id === id ? (
-              <Link to={`/settings/${loggedUser.id}`}>
+              <Link to={`/settings/${loggedUser?.id}`}>
                 <div className="cursor-pointer w-[151px] h-[34px] border-[1px] border-[#FF6600] rounded-[4px] flex justify-center items-center">
                   <p className="text-[15px] leading-[18px] font-medium text-[#FF6600]">Мэдээллээ засах</p>
                 </div>
@@ -122,7 +121,7 @@ export default function Profile() {
               )}
             </Row>
           </Tabs.TabPane>
-          {id === loggedUser.id && <Tabs.TabPane key="saved" tab="Хадгалсан мэдээнүүд" />}
+          {id === loggedUser?.id && <Tabs.TabPane key="saved" tab="Хадгалсан мэдээнүүд" />}
           <Tabs.TabPane key="history" tab="Үзсэн түүх" />
         </Tabs>
       </div>

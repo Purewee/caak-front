@@ -396,7 +396,10 @@ export default function Help() {
                                 moneyNews.map((data, index) => {
                                     return(
                                         <div onMouseEnter={() => toggleHoverNews(index)} onMouseLeave={() => setHoveredNews(false)} key={index} style={{boxShadow: hoveredNews === index ? '0px 2px 16px #00000033' : '0px 2px 2px #0000000F'}} className='w-full sm:w-[418px] h-[316px] border border-[#D4D8D8] rounded-[4px]'>
-                                            <img className=' w-full h-[113px]' />
+                                            <div className='w-full h-[113px] relative rounded-t-[4px]'>
+                                                <img alt='' src='https://xenews.net/wp-content/uploads/2021/07/suzy-poster.jpg' className='w-full h-full object-cover' />
+                                                <p className='bg-black bg-opacity-30 h-full w-full text-white text-[20px] font-bold absolute top-0 flex justify-center items-center'>{data.pos}</p>
+                                            </div>
                                             <div className='flex flex-col justify-between h-[203px] p-[20px]'>
                                                 <p className='text-caak-darkGray text-[15px] leading-[20px]'>{data.desc}</p>
                                                 <button className='bg-[#363946] text-white text-[16px] font-medium w-full h-[44px] rounded-[4px]'>
