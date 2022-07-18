@@ -11,6 +11,7 @@ import PostCard from '../../component/card/Post';
 import Logo from '../../component/logo';
 import UserInfo from '../../component/navigation/navbar/UserInfo';
 import { FIcon } from '../../component/icon';
+import SearchModal from '../../component/modal/SearchModal';
 
 export default function Home() {
   const es = new ESService('caak');
@@ -19,6 +20,7 @@ export default function Home() {
   const [articles, setArticles] = useState([]);
   const [selected, setSelected] = useState('recent');
   const [stickyTabs, setStickyTabs] = useState(false);
+  const [searchShown, setSearchShown] = useState(false);
   const context = useContext(AppContext);
 
   const isLaptop = useMediaQuery('(min-width: 1001px) and (max-width: 1920px)');
@@ -120,9 +122,13 @@ export default function Home() {
             </Tabs>
           </div>
           <div className={`min-w-[150px] flex flex-row items-center ${stickyTabs ? 'block' : ' hidden'}`}>
-            <FIcon className="icon-fi-rs-search text-caak-darkGray text-[20px] w-[32px] mr-[6px]" />
+            <FIcon
+              onClick={() => setSearchShown(true)}
+              className="icon-fi-rs-search text-caak-darkGray text-[20px] w-[32px] mr-[6px]"
+            />
             <UserInfo className={'text-caak-darkGray'} />
           </div>
+          {searchShown && <SearchModal setSearchShown={setSearchShown} />}
         </div>
         {/* <Row gutter={[22, 40]} className="max-w-[1310px]">
           {articles.map((post) => (

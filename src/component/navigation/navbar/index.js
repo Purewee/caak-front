@@ -8,12 +8,12 @@ import SignInUpController from '../../modal//SignInUpController';
 import { useAuth } from '../../../context/AuthContext';
 import UserInfo from './UserInfo';
 import logoIcon from '../../../images/New-Logo.svg';
-import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Avatar, Skeleton } from 'antd';
 import { Link } from 'react-router-dom';
 import { FIcon } from '../../../component/icon';
 import { ME } from '../../../pages/post/view/_gql';
 import MobileBottomMenu from '../../footer/mobileBottomMenu';
+import SearchModal from '../../modal/SearchModal';
 
 const CATEGORIES = gql`
   query GetCategories {
@@ -55,8 +55,6 @@ export default function NavbarNew() {
   const [subMenuShown, setSubMenuShown] = useState(false);
   const [mobileSideMenu, setMobileSideMenu] = useState(false);
   const [searchShown, setSearchShown] = useState(false);
-  const [navBarSticky, setNavBarSticky] = useState(true);
-  const [searchValue, setSearchValue] = useState('');
   const [isShown, setIsShown] = useState(false);
   const [navBarStyle, setNavBarStyle] = useState(true);
   const [sideMenuOpen, setSideMenuOpen] = useState(false);
@@ -83,19 +81,6 @@ export default function NavbarNew() {
     },
   ];
 
-  const navigate = useNavigate();
-
-  function handleChange(event) {
-    setSearchValue(event.target.value);
-  }
-  //prettier-ignore
-  const onPressEnter = (e) => {
-    if (e.key === 'Enter') {
-      navigate(`/search`, { state: { q: e.target.value }});
-      setSearchShown(false)
-    }
-  };
-
   //prettier-ignore
   function useOutsideAlerter(ref) {
     useEffect(() => {
@@ -104,7 +89,6 @@ export default function NavbarNew() {
        */
       function handleClickOutside(event) {
         if (ref.current && !ref.current.contains(event.target)) {
-          setSearchShown(false)
           setSideMenuOpen(false)
           setMobileSideMenu(false)
         }
@@ -118,10 +102,8 @@ export default function NavbarNew() {
     }, [ref]);
   }
 
-  const searchRef = useRef(null);
   const mobileRef = useRef(null);
   const sideMenuRef = useRef(null);
-  useOutsideAlerter(searchRef);
   useOutsideAlerter(mobileRef);
   useOutsideAlerter(sideMenuRef);
 
@@ -138,21 +120,6 @@ export default function NavbarNew() {
       setNavBarStyle(null);
     }
   }, [context.store]);
-
-  useEffect(() => {
-    const listener = () => {
-      const scrolled = document.scrollingElement.scrollTop;
-      if (scrolled > 40) {
-        setNavBarSticky(false);
-      } else {
-        setNavBarSticky(true);
-      }
-    };
-    document.addEventListener('scroll', listener);
-    return () => {
-      document.removeEventListener('scroll', listener);
-    };
-  }, [setNavBarSticky]);
 
   if (loading) {
     return <Skeleton />;
@@ -285,28 +252,7 @@ export default function NavbarNew() {
             <p className="text-[#555555] text-[15px] mt-[30px] text-center">©2022 “Саак Холдинг” ХХК</p>
           </div>
         )}
-        {searchShown && (
-          <div className="search_modal w-full">
-            <div ref={searchRef} className="w-full flex justify-center items-center bg-white h-[70px] z-50">
-              <div className="relative max-w-[600px] w-full">
-                <input
-                  onKeyDown={onPressEnter}
-                  value={searchValue}
-                  onChange={handleChange}
-                  placeholder="Хайлт хийх..."
-                  className={`h-[54px] text-[17px] text-[#555555] w-full border px-[50px] border-[#BBBEBE] rounded-[4px]`}
-                />
-                <span className="icon-fi-rs-search absolute left-[16px] top-[16px] text-[18px] w-[22px] h-[22px] flex justify-center items-center text-[#555555]" />
-                {searchValue && (
-                  <span
-                    onClick={() => setSearchValue('')}
-                    className="icon-fi-rs-close cursor-pointer absolute right-[16px] top-[16px] text-[16.5px] w-[22px] h-[22px] flex justify-center items-center text-[#555555]"
-                  />
-                )}
-              </div>
-            </div>
-          </div>
-        )}
+        {searchShown && <SearchModal setSearchShown={setSearchShown} />}
       </nav>
     )
   ) : (
