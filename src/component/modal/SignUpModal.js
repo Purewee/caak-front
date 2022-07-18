@@ -62,7 +62,7 @@ export default function SignUpModal({ setIsShown }) {
                 className="bg-[#FF6600] w-full rounded-[4px] h-[44px] text-[16px] cursor-pointer flex flex-row items-center justify-center text-white mt-[20px]"
               >
                 <FIcon className="icon-fi-rs-mail-f mr-[27px] text-[24px] w-[26px] h-[26px]" />
-                Имэйл хаяг/Утасны дугаар
+                Утасны дугаар/Имэйл хаяг
               </div>
             </div>
             {/* footer */}
@@ -114,7 +114,7 @@ export default function SignUpModal({ setIsShown }) {
             <p className="mt-[60px] text-[32px] font-condensed text-[#111111] leading-[38px] font-bold">Бүртгүүлэх</p>
             <input
               className="w-full rounded-[4px] mt-[30px] bg-[#EFEEEF] h-[44px] px-[22px]"
-              placeholder="Имэйл хаяг/Утасны дугаар"
+              placeholder="Утасны дугаар/Имэйл хаяг"
             />
             <div className="w-full relative mt-[12px]">
               <input

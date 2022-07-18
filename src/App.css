@@ -299,10 +299,14 @@
   }
 }
 
-<<<<<<< HEAD
-/* .ant-popover-inner-content { padding: 0; } */
-=======
->>>>>>> bb5c2bba2030ea92a4a66393c9ffa4a1a59b64b5
+.ant-tabs > .ant-tabs-nav { /* So that there is no gap between the content and tabs */
+  margin-bottom: 0;
+}
+
+.ant-tabs-top > .ant-tabs-nav::before { 
+  border: none;
+}
+
 .ant-popover-buttons {
   display: flex;
 }

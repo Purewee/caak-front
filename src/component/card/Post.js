@@ -77,8 +77,6 @@ export default function PostCard({ isMobile, post, ...rest }) {
                 </div>
                 <MetaTag className={`ml-[6px] text-[15px] text-white`}>{post?.source?.name}</MetaTag>
               </Link>
-              &nbsp;•&nbsp;
-              <p className=""></p>
             </div>
             <button className="w-[90px] rounded-[4px] text-[15px] font-bold bg-white bg-opacity-10 text-white h-[34px]">
               Дагах
@@ -112,7 +110,7 @@ export default function PostCard({ isMobile, post, ...rest }) {
                 </div>
               )}
             </div>
-            <div className="hidden sm:block">
+            <div className="hidden sm:block text-[#555555]">
               &nbsp;•&nbsp;
               <Link to={`/profile/${post.author?.id}`}>
                 <MetaTag className={`ml-0`}>{post.author?.name}</MetaTag>

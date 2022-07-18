@@ -124,78 +124,6 @@ const Post = () => {
         <meta property="og:description" key="og:description" content={metaDescription} />
         <meta property="og:image" key="og:image" content={imagePath(article.image)} />
       </Helmet>
-<<<<<<< HEAD
-        <div className="w-full hidden md:block max-w-[250px]">
-          <div className={`hidden md:flex ${leftMenuSticky ? 'sticky top-[180px]' : 'mt-[380px]'} w-full flex-col items-end`}>
-            <div className="flex flex-col items-center w-[60px] h-[226px]">
-              <p className="text-[#555555] text-[15px] leading-[18px] font-bold">{article.data?.like_count}</p>
-              <Popover
-                placement='top'
-                trigger="hover"
-                overlayStyle={{ width: 262, borderRadius: 8 }}
-                content={
-                  <div className="flex flex-row gap-[8px] h-full justify-center">
-                    {
-                      ACTIONS.map((data, index) => (
-                        <Lottie
-                          key={index}
-                          options={{
-                            animationData: data?.icon,
-                            loop: true,
-                            autoplay: true,
-                            rendererSettings: {
-                              preserveAspectRatio: 'xMidYMid slice',
-                            },
-                          }}
-                          height={38}
-                          width={38}
-                          isStopped={isStopped}
-                          isPaused={isPaused}
-                        />
-                      ))
-                    }
-                  </div>
-                }
-              >
-                <FIcon className="mt-[6px] icon-fi-rs-heart text-[26px] text-[#F53757] border border-[#D4D8D8] w-[60px] h-[60px] rounded-full" />
-              </Popover>
-              <span onClick={() => setSavePostOpen(true)}  className="text-[#909090] cursor-pointer text-[20px] icon-fi-rs-bookmark mt-[22px]" />
-              <span onClick={() => setSharePostOpen(true)} className="text-[#909090] cursor-pointer text-[19px] icon-fi-rs-share mt-[24.5px]" />
-              <Popover
-                placement="bottom"
-                trigger="click"
-                className="font-bold text-[14px] leading-[16px] tracking-[0px]"
-                overlayStyle={{ width: 166 }}
-                overlayInnerStyle={{ borderRadius: 8 }}
-                visible={isMenuOpen}
-                onVisibleChange={handleMenu}
-                content={
-                  <div className="flex flex-col gap-[15px] h-full justify-between">
-                    {
-                      me?.me?.id === article.author.id 
-                      &&
-                      <Link to={`/add/${article.id}`} target="_blank">
-                        <div className="flex flex-row items-center cursor-pointer">
-                          <span className="text-[#555555] text-[20px] mr-[8px] w-[22px] h-[22px] flex items-center justify-center icon-fi-rs-editor-o" />
-                          <p className="text-[#555555] text-[15px] leading-[18px]">Засах</p>
-                        </div>
-                      </Link>
-                    }
-                    {
-                      me?.me?.id === article.author.id 
-                      &&
-                      <div className="flex flex-row items-center cursor-pointer">
-                        <span className="text-[#555555] text-[20px] mr-[8px] w-[22px] h-[22px] flex items-center justify-center icon-fi-rs-delete" />
-                        <p className="text-[#555555] text-[15px] leading-[18px]">Устгах</p>
-                      </div>
-                    }
-                    <div className="flex flex-row items-center cursor-pointer">
-                      <span className="text-[#555555] text-[18px] mr-[8px] w-[22px] h-[22px] flex items-center justify-center icon-fi-rs-flag" />
-                      <p 
-                        onClick={() => {
-                          setIsMenuOpen(false);
-                          setIsReportOpen(true);
-=======
       <div className="w-full hidden md:block max-w-[250px]">
         <div
           className={`hidden md:flex ${leftMenuSticky ? 'sticky top-[180px]' : 'mt-[380px]'} w-full flex-col items-end`}
@@ -218,7 +146,6 @@ const Post = () => {
                           rendererSettings: {
                             preserveAspectRatio: 'xMidYMid slice',
                           },
->>>>>>> bb5c2bba2030ea92a4a66393c9ffa4a1a59b64b5
                         }}
                         height={38}
                         width={38}
@@ -249,15 +176,8 @@ const Post = () => {
               visible={isMenuOpen}
               onVisibleChange={handleMenu}
               content={
-<<<<<<< HEAD
-                <div className="flex flex-col gap-[15px] h-full justify-between">
-                  {
-                    me?.me.id === article.author.id
-                    &&
-=======
                 <div className="flex flex-col gap-[15px] h-full justify-between p-[18px]">
                   {me?.me?.id === article.author.id && (
->>>>>>> bb5c2bba2030ea92a4a66393c9ffa4a1a59b64b5
                     <Link to={`/add/${article.id}`} target="_blank">
                       <div className="flex flex-row items-center cursor-pointer">
                         <span className="text-[#555555] text-[20px] mr-[8px] w-[22px] h-[22px] flex items-center justify-center icon-fi-rs-editor-o" />

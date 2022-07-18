@@ -38,7 +38,7 @@ const REMOVE_SAVED = gql`
   }
 `;
 
-export default function UserInfo() {
+export default function UserInfo({ className }) {
   const context = useContext(AppContext);
   const { data, loading, refetch } = useQuery(ME);
   const [isShown, setIsShown] = useState(false);
@@ -72,12 +72,12 @@ export default function UserInfo() {
   ];
 
   return (
-    <div className="flex flex-row items-center">
+    <div className={`flex flex-row items-center`}>
       <Link to="/add">
-        <FIcon className={`icon-fi-rs-edit mr-[6px] ${textColor}`} />
+        <FIcon className={`icon-fi-rs-edit mr-[6px] ${className ? className : textColor}`} />
       </Link>
       <Popover
-        placement="topRight"
+        placement="bottomRight"
         trigger="click"
         content={
           <List
@@ -117,12 +117,12 @@ export default function UserInfo() {
         }
       >
         <Badge count={saved_articles.length} size="small" showZero={false} overflowCount={10}>
-          <FIcon className={`icon-fi-rs-list-o mx-[6px] ${textColor}`} />
+          <FIcon className={`icon-fi-rs-list-o mx-[6px] ${className ? className : textColor}`} />
         </Badge>
       </Popover>
       {/*<FIcon className={`icon-fi-rs-notification mx-[6px] ${textColor}`} />*/}
       <Popover
-        placement="topRight"
+        placement="bottomRight"
         trigger="click"
         overlayInnerStyle={{ borderRadius: 4 }}
         visible={isShown}

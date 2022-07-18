@@ -104,7 +104,7 @@ export default function SignInModal({ setIsShown }) {
               className="bg-[#FF6600] w-full flex flex-row items-center justify-center rounded-[4px] h-[44px] text-[16px] text-white mt-[20px] relative"
             >
               <span className="icon-fi-rs-mail-f text-[23px] w-[26px] h-[26px] flex justify-center items-center mr-[20px] text-white" />
-              Имэйл хаяг/Утасны дугаар
+              Утасны дугаар/Имэйл хаяг
             </button>
           </div>
           {/* footer */}
@@ -225,7 +225,7 @@ function LoginWithMail({ onSuccess, setIsShown }) {
         <input
           {...register('username')}
           className="w-full rounded-[4px] mt-[30px] bg-[#EFEEEF] h-[44px] px-[22px]"
-          placeholder="Имэйл хаяг/Утасны дугаар"
+          placeholder="Утасны дугаар/Имэйл хаяг"
           name="username"
         />
         <div className="w-full relative mt-[12px]">
