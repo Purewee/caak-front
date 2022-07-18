@@ -122,6 +122,7 @@ export default function Profile() {
               )}
             </Row>
           </Tabs.TabPane>
+          {id === loggedUser.id && <Tabs.TabPane key="saved" tab="Хадгалсан мэдээнүүд" />}
           <Tabs.TabPane key="history" tab="Үзсэн түүх" />
         </Tabs>
       </div>

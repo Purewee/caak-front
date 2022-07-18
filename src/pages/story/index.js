@@ -1,12 +1,13 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { ESService } from '../../lib/esService';
 import { AppContext } from '../../App';
-import StoryImage from '../../assets/images/story-news.svg';
 import Logo from '../../component/logo';
 import { Link, useParams } from 'react-router-dom';
 import { useSwipeable } from 'react-swipeable';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import StoryItem from '../../component/story/Story';
+import PostShareModal from '../../component/modal/PostShareModal';
+import { imagePath } from '../../utility/Util';
 
 export default function Story() {
   // prettier-ignore
@@ -15,8 +16,7 @@ export default function Story() {
   const [stories, setStories] = useState([]);
   const [indexOfStory, setIndexOfStory] = useState(id === 'done' ? 'done' : JSON.parse(id));
   const [shownStory, setShownStory] = useState(null);
-
-  console.log(stories);
+  const [sharePostOpen, setSharePostOpen] = useState(false);
 
   useEffect(() => {
     const es = new ESService('caak');
@@ -85,14 +85,12 @@ export default function Story() {
         />
       </div>
       <div className="w-full h-full absolute top-0 flex flex-col items-center justify-between">
-        <div className="flex flex-row items-center w-full justify-between px-[19px] mt-[16px]">
-          <div>
-            <Logo />
-          </div>
+        <div className="flex flex-row items-center w-full justify-between px-[19px] storyLinearTop pt-[16px]">
+          <Logo />
           <div className="flex flex-row items-center">
             <span className="icon-fi-rs-volume text-[22px] text-white" />
             <span className="icon-fi-rs-play text-[18px] text-white ml-[27px]" />
-            <span className="icon-fi-rs-share text-[20px] text-white ml-[25px]" />
+            <span onClick={() => setSharePostOpen(true)} className="icon-fi-rs-share cursor-pointer text-[20px] text-white ml-[25px]" />
             <Link to={'/'}>
               <div className="w-[34px] h-[34px] bg-opacity-30 bg-white rounded-full flex justify-center items-center ml-[33.8px]">
                 <span className="icon-fi-rs-close text-[13.5px] text-white xl:text-[#555555] " />
@@ -101,24 +99,23 @@ export default function Story() {
           </div>
         </div>
         <div className="md:pt-[104px] px-[16px] md:px-[150px] storyLinearBig w-full flex flex-col items-center">
-          {/* {indexOfStory === 0 && (
-            <div className="w-[246px] h-[60px] border-t border-b border-white flex items-center justify-center">
-              <img src={StoryImage} alt="" />
-            </div>
-          )} */}
           <div className="border-l-[6px] border-white w-full h-[286px] md:h-[340px] pl-[16px] md:pl-[40px]">
             <div className="flex flex-row justify-start mt-[12px]">
               {shownStory?.categories?.map((x) => (
-                <div key={x.id} className="bg-[#FF6600] h-[22px] flex items-center px-[8px]">
-                  <p className="text-white text-[12px] font-bold leading-[14px]">
-                    {x.name}
-                  </p>
-                </div>
+                <Link key={x.id} to={`/category/${x.slug}`}>
+                  <div className="bg-[#FF6600] h-[22px] flex items-center px-[8px]">
+                    <p className="text-white text-[12px] font-bold leading-[14px]">
+                      {x.name}
+                    </p>
+                  </div>
+                </Link>
               ))}
             </div>
-            <p className="text-white mt-[12px] text-[28px] xl:text-[54px] font-condensed font-bold leading-[34px] truncate-3 md:truncate-2 xl:leading-[70px] max-w-[1032px]">
-              {shownStory?.title}
-            </p>
+            <Link to={`/post/view/${shownStory?.id}`}>
+              <p className="text-white text-[28px] mt-[12px] xl:text-[54px] font-condensed font-bold leading-[34px] truncate-3 md:truncate-2 xl:leading-[70px] max-w-[1032px]">
+                {shownStory?.title}
+              </p>
+            </Link>
             <div className="flex flex-row items-center mt-[12px]">
               <p className="hidden xl:block font-medium text-white border-r border-[#FFFFFF] border-opacity-80 opacity-80 text-[16px] leading-[19px] pr-[12px]">
                 Редактор: {shownStory?.author.name}
@@ -127,9 +124,11 @@ export default function Story() {
                 2022.04.28, 22:05
               </p>
             </div>
-            <button className="bg-[#00000019] mt-[30px] text-white h-[44px] w-[190px] border border-[#FFFFFF80] rounded-[4px]">
-              Дэлгэрэнгүй унших
-            </button>
+            <Link to={`/post/view/${shownStory?.id}`}>
+              <p className="bg-[#00000019] mt-[30px] flex justify-center items-center text-white h-[44px] w-[190px] border border-[#FFFFFF80] rounded-[4px]">
+                Дэлгэрэнгүй унших
+              </p>
+            </Link>
           </div>
         </div>
       </div>
@@ -153,6 +152,12 @@ export default function Story() {
           </div>
         </Link>
       }
+      <PostShareModal
+        post={shownStory}
+        setSharePostOpen={setSharePostOpen}
+        sharePostOpen={sharePostOpen}
+        image={imagePath(shownStory?.image)}
+      />
     </div>
   );
 }

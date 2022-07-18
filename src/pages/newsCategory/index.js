@@ -75,7 +75,7 @@ export default function Category() {
           onChange={(e) => {
             setSort(e);
           }}
-          className="my-[48px]"
+          className="mt-[48px]"
         >
           <Tabs.TabPane tab={<span className="text-[24px] font-normal font-merri">ШИНЭ</span>} key="recent" />
           <Tabs.TabPane tab={<span className="text-[24px] font-normal font-merri">ШИЛДЭГ</span>} key="top" />
