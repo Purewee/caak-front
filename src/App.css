@@ -113,6 +113,11 @@
   opacity: 20;
 }
 
+.storyBackgroundLinear {
+  background: transparent linear-gradient(214deg, #F53757 0%, #FF9E5D 100%) 0% 0% no-repeat;
+  opacity: 100;
+}
+
 .storyLinearBig {
   background: transparent linear-gradient(180deg, #00000000 0%, #000000 100%) 0% 0% no-repeat padding-box;
 }

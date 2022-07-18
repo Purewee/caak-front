@@ -132,7 +132,7 @@ export default function Settings() {
                             <p className='text-[16px] font-medium leading-[19px] mt-[24px]'>Нууц үг солих</p>
                             <div className='mt-[12px] h-[44px] w-[190px] border rounded-[2px]'></div>
                             <p className='text-[16px] font-medium leading-[19px] mt-[24px]'>Профайл нуух</p>
-                            <Switch checked className='mt-[12px] w-[40px] h-[22px] bg-[#E4E4E5]' />
+                            <Switch className='mt-[12px] w-[40px] h-[22px] bg-[#E4E4E5]' />
                             <p className='text-[16px] font-medium leading-[19px] mt-[24px]'>Хадгалсан мэдээнүүд нуух</p>
                             <Switch className='mt-[12px] w-[40px] h-[22px] bg-[#E4E4E5]' />
                         </div>
