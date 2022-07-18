@@ -30,6 +30,10 @@ export default function Search() {
     context.setStore('default');
   }, []);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <div className="flex flex-col items-center mb-[100px]">
       <div className="w-full h-[208px] bg-[#F5F5F5] flex justify-center px-[16px] sm:px-0">

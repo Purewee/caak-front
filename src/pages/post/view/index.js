@@ -211,7 +211,7 @@ const Post = () => {
           </div>
         </div>
       </div>
-      <div className="pt-0 md:pt-[61px] flex flex-col max-w-[760px] w-full font-roboto md:mx-[100px] px-[16px] md:px-0">
+      <div className="pt-0 md:pt-[61px] flex flex-col items-center max-w-[760px] w-full font-roboto md:mx-[100px] px-[16px] md:px-0">
         <img
           src={imagePath(article.imageUrl)}
           alt=""

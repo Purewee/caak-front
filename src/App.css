@@ -108,6 +108,16 @@
   opacity: 20;
 }
 
+.storyLinearTop {
+  background: transparent linear-gradient(180deg, #00000067 0%, #00000000 100%) 0% 0% no-repeat;
+  opacity: 20;
+}
+
+.storyBackgroundLinear {
+  background: transparent linear-gradient(214deg, #F53757 0%, #FF9E5D 100%) 0% 0% no-repeat;
+  opacity: 100;
+}
+
 .storyLinearBig {
   background: transparent linear-gradient(180deg, #00000000 0%, #000000 100%) 0% 0% no-repeat padding-box;
 }
@@ -297,6 +307,14 @@
   100% {
     opacity: 1;
   }
+}
+
+.ant-tabs > .ant-tabs-nav { /* So that there is no gap between the content and tabs */
+  margin-bottom: 0;
+}
+
+.ant-tabs-top > .ant-tabs-nav::before { 
+  border: none;
 }
 
 .ant-popover-buttons {

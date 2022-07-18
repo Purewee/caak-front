@@ -54,15 +54,19 @@ export default function Profile() {
     context.setStore('default');
   }, []);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [user]);
+
   return (
-    <div className="flex justify-center px-[16px] md:px-0">
+    <div className="flex justify-center px-[16px]">
       <div className="max-w-[1310px] w-full flex flex-col">
         <div className="pt-[17px] md:pt-[71px] pb-[17px] md:pb-[50px] flex flex-col md:flex-row justify-between w-full items-center">
           <div className="flex flex-col md:flex-row">
             <Avatar className="w-[57px] h-[57px] md:w-[82px] md:h-[82px] object-cover" />
             <div className="md:ml-[16px] mt-[15px] md:mt-0">
               <Title className="font-condensed mt-0 font-bold text-[30px] leading-[35px]">
-                {`${user?.firstName || null} ${user?.lastName || null}`}
+                {`${user?.firstName || null} ${user?.lastName || ''}`}
               </Title>
               <p className="mt-[9px] md:mt-[12px] text-[15px] text-[#555555] leading-[18px] max-w-[600px]">
                 Өөрийн дуртай график дизайны мэдээллээ авдаг сайтнаас хүргэх болно.
@@ -75,7 +79,7 @@ export default function Profile() {
           </div>
           <div className="flex flex-row mt-[20px] md:mt-0">
             {loggedUser?.id === id ? (
-              <Link to={`/settings/${loggedUser.id}`}>
+              <Link to={`/settings/${loggedUser?.id}`}>
                 <div className="cursor-pointer w-[151px] h-[34px] border-[1px] border-[#FF6600] rounded-[4px] flex justify-center items-center">
                   <p className="text-[15px] leading-[18px] font-medium text-[#FF6600]">Мэдээллээ засах</p>
                 </div>
@@ -117,6 +121,7 @@ export default function Profile() {
               )}
             </Row>
           </Tabs.TabPane>
+          {id === loggedUser?.id && <Tabs.TabPane key="saved" tab="Хадгалсан мэдээнүүд" />}
           <Tabs.TabPane key="history" tab="Үзсэн түүх" />
         </Tabs>
       </div>

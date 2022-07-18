@@ -18,6 +18,7 @@ export default function PostShareModal({ sharePostOpen, setSharePostOpen, post, 
     notification.open(args);
     copyText(`http://caak.mn/post/view/${post.id}`);
   };
+
   return (
     sharePostOpen && (
       <div className="popup_modal">
@@ -28,7 +29,7 @@ export default function PostShareModal({ sharePostOpen, setSharePostOpen, post, 
             <div className="ml-[16px]">
               <p className="font-merri text-[16px] h-[64px]">{post.title}</p>
               <div className="text-[#555555] mt-[10px] flex flex-row items-center leading-[18px] text-[15px]">
-                <p>gogo.mn</p>
+                <p>{post?.source?.name}</p>
                 <p className="ml-[6px]">• {post.author.name}</p>
               </div>
             </div>

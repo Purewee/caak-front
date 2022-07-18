@@ -13,24 +13,26 @@ const NavbarPostHeaderCard = ({ type, item }) => {
         <div
           className={`flex flex-col w-full absolute bottom-0 ${type === 'wide' ? 'px-[40px]' : 'px-[30px]'} py-[30px]`}
         >
-          <div className="uppercase text-[14px] font-medium tracking-[0.2px] leading-[15px]">
+          <div className="flex justify-start">
             {item.categories?.map((x) => {
               return (
-                <div key={x.name} className="flex items-center flex-row">
-                  <p className="truncate-1 text-white ml-[6px] text-[14px] font-medium tracking-[0.21px] leading-[16px]">
-                    #{x.name}
-                  </p>
-                </div>
+                <Link key={x.name} to={`/category/${x.slug}`}>
+                  <div className="flex items-center flex-row">
+                    <p className="truncate-1 uppercase text-white ml-[6px] text-[14px] font-medium tracking-[0.21px] leading-[16px]">
+                      {x.name}
+                    </p>
+                  </div>
+                </Link>
               );
             })}
           </div>
-          <Link to={`/post/view/${item.id}`}>
+          <Link className="mt-[10px]" to={`/post/view/${item.id}`}>
             <p
               className={`${
                 type === 'wide'
                   ? 'text-[40px] md:text-[50px] tracking-[0.4px] md:tracking-[0.5px] leading-[46px] md:leading-[56px]'
                   : 'text-[24px] md:text-[30px] tracking-[0.2px] md:tracking-[0.32px] truncate-3 leading-[28px] md:leading-[36px]'
-              } text-white font-medium mt-[10px] condMedium`}
+              } text-white font-medium condMedium`}
             >
               {item.title}
             </p>
