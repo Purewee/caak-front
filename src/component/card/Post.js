@@ -87,7 +87,7 @@ export default function PostCard({ isMobile, post, sponsored, ...rest }) {
         )}
         {!sponsored && (
           <div className={`text-[14px] text-[#909090] hidden sm:block tracking-[0.21px] leading-[16px] mt-[12px]`}>
-            {moment(post.publish_date).format('YYYY-MM-DD, hh:mm')}
+            {generateTimeAgo(post.publish_date)}
           </div>
         )}
       </div>
