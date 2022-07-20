@@ -14,6 +14,7 @@ import {
   Input,
   message,
   Popconfirm,
+  Radio,
   Row,
   Select,
   Skeleton,
@@ -22,7 +23,7 @@ import {
 import { CameraOutlined, DeleteOutlined, SaveOutlined, SearchOutlined } from '@ant-design/icons';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import InlineEditor from '@ckeditor/ckeditor5-build-inline';
-import { imagePath } from '../../../utility/Util';
+import { imagePath, parseVideoURL } from '../../../utility/Util';
 import { useNavigate, useParams } from 'react-router-dom';
 import { getDataFromBlob, imageCompress } from '../../../lib/imageCompress';
 import AddBlock from './AddBlock';
@@ -186,7 +187,7 @@ function AddPost() {
                         <Form.Item name={[idx, 'id']} hidden>
                           <Input />
                         </Form.Item>
-                        <Form.Item name={[idx, 'position']} hidden initialValue={idx + 1}>
+                        <Form.Item name={[idx, 'position']} hidden>
                           <Input />
                         </Form.Item>
                         <Form.Item name={[idx, 'kind']} hidden>
@@ -238,6 +239,13 @@ function AddPost() {
                   </Form.Item>
                 </div>
               )}
+              <Form.Item name={['data', 'numbering']} className="font-merri text-[10px]">
+                <Radio.Group>
+                  <Radio.Button>Дугаарлахгүй</Radio.Button>
+                  <Radio.Button value="asc">Өсөхөөр</Radio.Button>
+                  <Radio.Button value="desc">Буурхаар</Radio.Button>
+                </Radio.Group>
+              </Form.Item>
               <hr className="my-[20px]" />
               <Button.Group className="w-full">
                 <Button title="Save" size="large" icon={<SearchOutlined />} loading={saving} shape="round" block>
@@ -265,9 +273,12 @@ function AddPost() {
 }
 
 function ImageBlock({ block, idx, setBlocks, onRemove }) {
-  const [image64, setImage64] = useState(block.image64);
+  const [image64, setImage64] = useState();
   useEffect(() => {
-    if (image64 === null) return;
+    if (block.image64) setImage64(block.image64);
+  }, [block]);
+  useEffect(() => {
+    if (image64 === null || image64 === block.image64) return;
     setBlocks((blocks) => {
       const index = blocks.findIndex((x) => x.position === block.position);
       return blocks.map((x, idx) => (idx === index ? { ...block, image64: image64 } : x));
@@ -292,6 +303,7 @@ function ImageBlock({ block, idx, setBlocks, onRemove }) {
         <Col span={6}>
           <Form.Item
             name={[idx, 'image']}
+            valuePropName="file"
             getValueFromEvent={(e) => {
               return e?.fileList[0].originFileObj;
             }}
@@ -440,18 +452,6 @@ function TagsField({ ...rest }) {
   const options = data?.tags?.nodes.map((x) => ({ key: x.slug, value: x.slug, label: x.name })) || [];
 
   return <Select showSearch onSearch={setFilter} filterOption={false} options={options} loading={loading} {...rest} />;
-}
-function parseVideoURL(url) {
-  const match = url.match(
-    /(https:|https:|)\/\/(player.|www.)?(vimeo|youtu(be|be\.googleapis))(\.be|\.com)\/(video\/|embed\/|watch\?v=|v\/)?([A-Za-z0-9._%-]*)(\&\S+)?/,
-  );
-  return (
-    match &&
-    match[7] && {
-      provider: match[3],
-      id: match[7],
-    }
-  );
 }
 
 function RemoveBlock({ position, setBlocks, onRemove }) {

@@ -51,12 +51,15 @@ export default function PostCard({ isMobile, post, ...rest }) {
             } sm:h-[300px] object-cover`}
           />
         </Link>
-        {!sponsored &&
-          post?.categories?.map((x, index) => (
-            <Link className="hidden sm:block mt-[20px]" key={index} to={`/category/${x.slug}`}>
-              <HashTag>{x.name}</HashTag>
-            </Link>
-          ))}
+        {!sponsored && (
+          <div className="flex">
+            {post?.categories?.map((x, index) => (
+              <Link className="hidden sm:block mr-[12px] mt-[16px]" key={index} to={`/category/${x.slug}`}>
+                <HashTag>{x.name}</HashTag>
+              </Link>
+            ))}
+          </div>
+        )}
         <Link className={`${sponsored ? 'mt-[22px]' : 'sm:mt-[10px]'} ${text}`} to={postURL}>
           <p
             className={`${

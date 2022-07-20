@@ -11,6 +11,7 @@ import { useAuth } from '../../context/AuthContext';
 import { Link } from 'react-router-dom';
 import { AppContext } from '../../App';
 import useMediaQuery from '../../component/navigation/useMediaQuery';
+import { imagePath } from '../../utility/Util';
 
 export default function Profile() {
   const context = useContext(AppContext);
@@ -63,13 +64,11 @@ export default function Profile() {
       <div className="max-w-[1310px] w-full flex flex-col">
         <div className="pt-[17px] md:pt-[71px] pb-[17px] md:pb-[50px] flex flex-col md:flex-row justify-between w-full items-center">
           <div className="flex flex-col md:flex-row">
-            <Avatar className="w-[57px] h-[57px] md:w-[82px] md:h-[82px] object-cover" />
+            <Avatar className="w-[57px] h-[57px] md:w-[82px] md:h-[82px] object-cover" src={imagePath(user?.avatar)} />
             <div className="md:ml-[16px] mt-[15px] md:mt-0">
-              <Title className="font-condensed mt-0 font-bold text-[30px] leading-[35px]">
-                {`${user?.firstName || null} ${user?.lastName || ''}`}
-              </Title>
+              <Title className="font-condensed mt-0 font-bold text-[30px] leading-[35px]">{user?.firstName}</Title>
               <p className="mt-[9px] md:mt-[12px] text-[15px] text-[#555555] leading-[18px] max-w-[600px]">
-                Өөрийн дуртай график дизайны мэдээллээ авдаг сайтнаас хүргэх болно.
+                {user?.data?.bio}
               </p>
               <div className="flex flex-row text-[#555555] gap-[23px] mt-[18px] text-[15px] leading-[18px] font-merri text-center">
                 <Statistic title="Пост" value={user?.articles?.totalCount} />
@@ -97,7 +96,7 @@ export default function Profile() {
             </div>
           </div>
         </div>
-        <Tabs size="large">
+        <Tabs size="large" className="mb-[200px]">
           <Tabs.TabPane key="posts" tab="Оруулсан мэдээ">
             <Row gutter={[22, 40]} className="max-w-[1310px] my-[24px]">
               {articles.map((post) => (

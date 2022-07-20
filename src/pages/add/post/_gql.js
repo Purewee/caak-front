@@ -66,6 +66,7 @@ export const CREATE = gql`
     $blocks: [BlockInput!]
     $categoryIds: [ID!]
     $tags: [String!]
+    $data: JSON
   ) {
     article: addArticle(
       input: {
@@ -80,6 +81,7 @@ export const CREATE = gql`
         blocks: $blocks
         categoryIds: $categoryIds
         tags: $tags
+        data: $data
       }
     ) {
       id
@@ -101,6 +103,7 @@ export const UPDATE = gql`
     $blocks: [BlockInput!]
     $categoryIds: [ID!]
     $tags: [String!]
+    $data: JSON
   ) {
     article: updateArticle(
       input: {
@@ -116,6 +119,7 @@ export const UPDATE = gql`
         blocks: $blocks
         categoryIds: $categoryIds
         tags: $tags
+        data: $data
       }
     ) {
       id

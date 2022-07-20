@@ -440,6 +440,19 @@ export const imagePath = (src) => {
   return `${Configure.host}/${src}`;
 };
 
+export function parseVideoURL(url) {
+  const match = url.match(
+    /(https:|https:|)\/\/(player.|www.)?(vimeo|youtu(be|be\.googleapis))(\.be|\.com)\/(video\/|embed\/|watch\?v=|v\/)?([A-Za-z0-9._%-]*)(\&\S+)?/,
+  );
+  return (
+    match &&
+    match[7] && {
+      provider: match[3],
+      id: match[7],
+    }
+  );
+}
+
 const object = {
   mailNumber,
   name,

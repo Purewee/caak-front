@@ -125,13 +125,14 @@ export const USER = gql`
       firstName
       lastName
       email
+      data
+      avatar
+      status
       articles {
         totalCount
       }
-      status
       recipes {
         id
-        name
         createdAt
       }
     }
