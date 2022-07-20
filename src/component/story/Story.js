@@ -20,7 +20,7 @@ export default function StoryItem({ story, index }) {
                   key={x.name}
                   className="bg-[#FF6600] hidden xl:flex px-[8px] py-[4px] text-white text-[12px] font-bold uppercase"
                 >
-                  #{x.name}
+                  {x.name}
                 </p>
               ))}
               <p className="truncate-3 text-white text-[12px] xl:text-[22px] condMedium xl:font-bold mt-[10px] tracking-[0.36px] leading-[15px] xl:leading-[28px] xl:font-condensed">
