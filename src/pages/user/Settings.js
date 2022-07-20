@@ -82,7 +82,7 @@ export default function Settings() {
             className="w-full md:w-[790px] font-merri"
             layout="vertical"
             autoComplete="off"
-            initialValues={me}
+            initialValues={{ firstName: me.firstName, data: me.data }}
             onFinish={(values) => {
               update({ variables: values }).then((res) => message.success('Мэдээлэл шинэчилэгдлээ'));
             }}
