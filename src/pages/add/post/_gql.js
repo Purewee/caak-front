@@ -67,6 +67,9 @@ export const CREATE = gql`
     $categoryIds: [ID!]
     $tags: [String!]
     $data: JSON
+    $sourceId: ID
+    $imageUrl: String
+    $kind: String
   ) {
     article: addArticle(
       input: {
@@ -82,6 +85,9 @@ export const CREATE = gql`
         categoryIds: $categoryIds
         tags: $tags
         data: $data
+        sourceId: $sourceId
+        imageUrl: $imageUrl
+        kind: $kind
       }
     ) {
       id
@@ -104,6 +110,9 @@ export const UPDATE = gql`
     $categoryIds: [ID!]
     $tags: [String!]
     $data: JSON
+    $sourceId: ID
+    $imageUrl: String
+    $kind: String
   ) {
     article: updateArticle(
       input: {
@@ -120,6 +129,9 @@ export const UPDATE = gql`
         categoryIds: $categoryIds
         tags: $tags
         data: $data
+        sourceId: $sourceId
+        imageUrl: $imageUrl
+        kind: $kind
       }
     ) {
       id
@@ -134,6 +146,25 @@ export const TAGS = gql`
         id
         name
         slug
+      }
+    }
+  }
+`;
+
+export const CONVERT_LINK = gql`
+  mutation ConvertLink($link: String!) {
+    convertLink(input: { link: $link })
+  }
+`;
+
+export const SOURCES = gql`
+  query GetSources {
+    sources {
+      nodes {
+        id
+        name
+        icon
+        domain
       }
     }
   }
