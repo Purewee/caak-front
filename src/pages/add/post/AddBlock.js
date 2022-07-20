@@ -1,12 +1,10 @@
-import React, { useState } from 'react';
-import { Form, Button, Upload } from 'antd';
+import React from 'react';
+import { Button, Upload } from 'antd';
 import { CameraFilled, FontSizeOutlined, YoutubeFilled } from '@ant-design/icons';
 import { getDataFromBlob } from '../../../lib/imageCompress';
-import { useDebounce } from '../../../utility/Util';
 import { uniqBy } from 'lodash/array';
 
 export default function AddBlock({ items, setItems, add, top = false }) {
-  const form = Form.useFormInstance();
   let images = [];
   return (
     <Button.Group className="w-full my-[40px]">
@@ -21,10 +19,6 @@ export default function AddBlock({ items, setItems, add, top = false }) {
               const idx = fileList.indexOf(f);
               const base64 = await getDataFromBlob(f);
               images.push({ kind: 'image', position: items.length + idx + 1, image64: base64, image: f, content: '' });
-              add(
-                { kind: 'image', position: top ? 1 : items.length + idx + 1, image64: base64, image: f, content: '' },
-                items.length + idx,
-              );
             }
             const newList = top ? [...uniqBy(images), ...items] : [...items, ...uniqBy(images)];
             const sortedList = newList.map((x, idx) => ({ ...x, position: idx + 1 }));

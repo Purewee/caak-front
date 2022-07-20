@@ -5,7 +5,7 @@ import { useParams } from 'react-router-dom';
 import moment from 'moment';
 import Loader from '../../../component/loader';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
-import { imagePath } from '../../../utility/Util';
+import { imagePath, parseVideoURL } from '../../../utility/Util';
 import { Wrapper, Title, BlockTitle, Paragraph, HashTag, MetaTag } from './wrapper';
 import Comments from './comments';
 import { ARTICLE, ME } from './_gql';
@@ -29,6 +29,7 @@ import * as wow from '../../../assets/json/wow-js.json';
 import Lottie from 'react-lottie';
 import { FIcon } from '../../../component/icon';
 import { ADD_REACTION, REACTIONS } from './_gql';
+import { sortBy } from 'lodash';
 import ReactPlayer from 'react-player/lazy';
 
 const ACTIONS = [{ icon: love }, { icon: haha }, { icon: wow }, { icon: cry }, { icon: angry }];
@@ -177,9 +178,9 @@ const Post = () => {
               visible={isMenuOpen}
               onVisibleChange={handleMenu}
               content={
-                <div className="flex flex-col gap-[15px] h-full justify-between p-[18px]">
+                <div className="flex flex-col gap-[15px] h-full justify-between ">
                   {me?.me?.id === article.author.id && (
-                    <Link to={`/add/${article.id}`} target="_blank">
+                    <Link to={`/edit/${article.id}`} target="_blank">
                       <div className="flex flex-row items-center cursor-pointer">
                         <span className="text-[#555555] text-[20px] mr-[8px] w-[22px] h-[22px] flex items-center justify-center icon-fi-rs-editor-o" />
                         <p className="text-[#555555] text-[15px] leading-[18px]">Засах</p>
@@ -227,11 +228,11 @@ const Post = () => {
         </div>
         <Wrapper>
           <Title className="text-center">{article.title}</Title>
-          <div className="sm:flex flex-row hidden items-center mt-[30px]">
-            <img className="w-[20px]" src={LoveIcon} alt="" />
-            <img className="w-[20px]" src={HahaIcon} alt="" />
-            <p className="ml-[6px] text-[15px] text-caak-primary leading-[16px]">{article.data?.like_count}</p>
-          </div>
+          {/*<div className="flex flex-row items-center mt-[30px]">*/}
+          {/*  <img className="w-[20px]" src={LoveIcon} alt="" />*/}
+          {/*  <img className="w-[20px]" src={HahaIcon} alt="" />*/}
+          {/*  <p className="ml-[6px] text-[15px] text-caak-primary leading-[16px]">{article.data?.like_count}</p>*/}
+          {/*</div>*/}
           <div className="flex flex-row justify-between w-full h-[32px] mt-[21px]">
             <div className="flex flex-row items-center h-[32px]">
               <Avatar className="w-[32px] h-[32px] rounded-full" src={imagePath(article.source?.icon)} />
@@ -276,21 +277,42 @@ const Post = () => {
           <div className="pt-[20px] pb-[26px] md:pb-[50px]">
             <Paragraph dangerouslySetInnerHTML={createMarkup(article.description)} />
           </div>
-          {article.blocks.map((b) => {
+          {sortBy(article.blocks, 'position').map((b) => {
             return (
-              <div key={b.id} className="flex flex-col md:items-center mb-[26px] md:mb-[50px] w-full">
-                {b.title && <BlockTitle>{b.title}</BlockTitle>}
-                {b.kind === 'image'
-                  ? b.imageUrl && (
-                      <LazyLoadImage
-                        src={imagePath(b.imageUrl)}
-                        alt=""
-                        className="w-full md:max-h-[640px] object-cover"
-                      />
-                    )
-                  : b.data?.url && <ReactPlayer controls url={b.data?.url} />}
-                {b.content && (
-                  <Paragraph className="mt-[16px] md:mt-0" dangerouslySetInnerHTML={createMarkup(b.content)} />
+              <div key={b.position}>
+                {b.kind === 'image' && (
+                  <div key={b.id} className="flex flex-col md:items-center mb-[26px] md:mb-[50px] w-full">
+                    {b.title && <BlockTitle>{b.title}</BlockTitle>}
+                    <LazyLoadImage
+                      src={imagePath(b.imageUrl)}
+                      alt={b.title}
+                      className="w-full md:max-h-[640px] object-cover"
+                    />
+                    {b.content && (
+                      <Paragraph className="mt-[16px] md:mt-0" dangerouslySetInnerHTML={createMarkup(b.content)} />
+                    )}
+                  </div>
+                )}
+                {b.kind === 'text' && (
+                  <div key={b.id} className="flex flex-col md:items-center mb-[26px] md:mb-[50px] w-full">
+                    <Paragraph className="mt-[16px] md:mt-0" dangerouslySetInnerHTML={createMarkup(b.content)} />
+                  </div>
+                )}
+                {b.kind === 'video' && (
+                  <div key={b.id} className="flex flex-col md:items-center mb-[26px] md:mb-[50px] w-full">
+                    {b.title && <BlockTitle>{b.title}</BlockTitle>}
+                    <iframe
+                      width="100%"
+                      height="420px"
+                      className="object-cover"
+                      src={`https://www.youtube.com/embed/${parseVideoURL(b.data.url).id}`}
+                      title="YouTube video player"
+                      frameBorder="0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                    />
+                    <Paragraph className="mt-[16px] md:mt-0" dangerouslySetInnerHTML={createMarkup(b.content)} />
+                  </div>
                 )}
               </div>
             );
@@ -298,7 +320,7 @@ const Post = () => {
         </Wrapper>
         <div className="flex flex-row gap-[8px] w-full mt-[29px] md:mt-[82px]">
           {article.tags?.map((x) => (
-            <Link to={`/tags/${x.slug}`}>
+            <Link to={`/tags/${x.slug}`} key={x.slug}>
               <p
                 key={x.id}
                 className="border border-[#D4D8D8] hover:border-caak-primary hover:text-caak-primary rounded-[3px] h-[30px] flex items-center text-[14px] leading-[16px] px-[12px]"
