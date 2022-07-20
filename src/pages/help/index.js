@@ -6,6 +6,9 @@ import CaakRadio from '../../images/Caak-radio.png';
 import CaakEnt from '../../images/caak-entertainment.png';
 import Caak from '../../images/New-Logo.svg';
 import { useLocation } from 'react-router-dom';
+import VideoContent from '../../assets/images/newsmade.png';
+import OntslohNews from '../../assets/images/ontsloh.png';
+import NewsMade from '../../assets/images/realnews.png';
 
 //prettier-ignore
 const Tabs = [
@@ -156,15 +159,18 @@ const caakAds = [
 const moneyNews = [
     {
         pos: 'ВИДЕО КОНТЕНТ',
-        desc: 'Тухайн байгууллагын үйлчилгээ, бүтээгдэхүүнийг далд хэлбэрээр сурталчилсан сонирхолтой видео контент бүтээж өгнө. Түгээх суваг: facebook, Youtube, Instagram'
+        desc: 'Тухайн байгууллагын үйлчилгээ, бүтээгдэхүүнийг далд хэлбэрээр сурталчилсан сонирхолтой видео контент бүтээж өгнө. Түгээх суваг: facebook, Youtube, Instagram',
+        pic: VideoContent
     },
     {
         pos: 'ОНЦЛОХ МЭДЭЭ',
-        desc: 'Нүүр хуудасны хамгийн эхэнд 24 цаг онцлогдоно. Мөн мэдээний жагсаалт дунд ялгарч харагдана. Сайтын баруунд доод хэсгээс pop-up хэлбэрээр хэрэглэгчид санал болгоно. Сайтын сошиал (facebook, twitter) сувгуудаар давхар шэйр хийгдэнэ'
+        desc: 'Нүүр хуудасны хамгийн эхэнд 24 цаг онцлогдоно. Мөн мэдээний жагсаалт дунд ялгарч харагдана. Сайтын баруунд доод хэсгээс pop-up хэлбэрээр хэрэглэгчид санал болгоно. Сайтын сошиал (facebook, twitter) сувгуудаар давхар шэйр хийгдэнэ',
+        pic: OntslohNews
     },
     {
         pos: 'МЭДЭЭ, НИЙТЛЭЛ БЭЛТГЭХ',
-        desc: 'Тухайн үйлчилгээ, бүтээгдэхүүнийг далд хэлбэрээр сурталчилсан сонирхолтой мэдээ бэлтгэж өгнө. Мөн дараах сувгуудаар түгээж өгнө: Caak.mn, фэйсбүүк, Твиттер'
+        desc: 'Тухайн үйлчилгээ, бүтээгдэхүүнийг далд хэлбэрээр сурталчилсан сонирхолтой мэдээ бэлтгэж өгнө. Мөн дараах сувгуудаар түгээж өгнө: Caak.mn, фэйсбүүк, Твиттер',
+        pic: NewsMade
     },
 ]
 
@@ -397,7 +403,7 @@ export default function Help() {
                                     return(
                                         <div onMouseEnter={() => toggleHoverNews(index)} onMouseLeave={() => setHoveredNews(false)} key={index} style={{boxShadow: hoveredNews === index ? '0px 2px 16px #00000033' : '0px 2px 2px #0000000F'}} className='w-full sm:w-[418px] h-[316px] border border-[#D4D8D8] rounded-[4px]'>
                                             <div className='w-full h-[113px] relative rounded-t-[4px]'>
-                                                <img alt='' src='https://xenews.net/wp-content/uploads/2021/07/suzy-poster.jpg' className='w-full h-full object-cover' />
+                                                <img alt='' src={data.pic} className='w-full h-full object-cover' />
                                                 <p className='bg-black bg-opacity-30 h-full w-full text-white text-[20px] font-bold absolute top-0 flex justify-center items-center'>{data.pos}</p>
                                             </div>
                                             <div className='flex flex-col justify-between h-[203px] p-[20px]'>

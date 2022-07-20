@@ -56,17 +56,17 @@ const MenuItems = ({ navBarStyle }) => {
                 placement="bottom"
                 trigger="click"
                 className="text-[14px] leading-[16px] tracking-[0px]"
-                overlayStyle={{ width: 800 }}
+                overlayStyle={{ width: 600 }}
                 overlayInnerStyle={{ borderRadius: 8 }}
                 visible={isShown}
                 onVisibleChange={handleMenu}
                 content={
-                  <Row gutter={24} className="p-[12px]">
+                  <Row className="p-[12px] gap-y-[12px]">
                     {categories?.map((x) => {
                       return (
-                        <Col key={x.id} span={8} className="mt-[12px]">
+                        <Col key={x.id} span={8}>
                           <Link onClick={() => setIsShown(false)} to={`/category/${x.slug}`} key={x.id}>
-                            <span className="text-[#111111] font-roboto p-[8px] leading-[18px] tracking-[0.23px] text-[14px]">
+                            <span className="text-[#111111] font-roboto hover:text-caak-primary hover:leading-[18px] leading-[19px] hover:tracking-[0.23px] tracking-[0.24px] hover:text-[15px] text-[16px]">
                               {x.name}
                             </span>
                           </Link>

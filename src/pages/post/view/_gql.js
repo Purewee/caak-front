@@ -105,6 +105,8 @@ export const ME = gql`
       email
       firstName
       lastName
+      avatar
+      data
       recipes {
         articles {
           nodes {

@@ -47,7 +47,7 @@ export default function PostCard({ isMobile, post, sponsored, ...rest }) {
             alt={post.title}
             src={imagePath(post.image)}
             className={`${
-              sponsored ? 'h-[220px] w-full' : 'h-[105px] min-w-[130px] max-w-[130px] sm:max-w-[422px]'
+              sponsored ? 'h-[220px] w-full' : 'h-[105px] min-w-[130px] max-w-[130px] sm:min-w-full sm:max-w-[422px]'
             } sm:h-[300px] object-cover`}
           />
         </Link>

@@ -224,23 +224,47 @@ export default function NavbarNew() {
               <span className="icon-fi-rs-hashtag w-[24px] h-[24px] flex items-center justify-center text-[20px] text-[#111111] mr-[26px]" />
               <p className="text-[18px] font-medium leading-[21px] text-[#111111]">ТАГУУД</p>
             </div>
-            <div className="mt-[40px] flex flex-row items-center cursor-pointer">
+            <a
+              target={'_blank'}
+              href="https://www.youtube.com/c/caakvideo"
+              className="mt-[40px] flex flex-row items-center cursor-pointer"
+            >
               <span className="icon-fi-rs-tv w-[24px] h-[24px] flex items-center justify-center text-[20px] text-[#111111] mr-[26px]" />
               <p className="text-[18px] font-medium leading-[21px] text-[#111111]">ВИДЕО</p>
-            </div>
-            <div className="mt-[40px] flex flex-row items-center cursor-pointer">
+            </a>
+            <a
+              target={'_blank'}
+              href="https://soundcloud.com/caak-podcast"
+              className="mt-[40px] flex flex-row items-center cursor-pointer"
+            >
               <span className="icon-fi-rs-mic w-[24px] h-[24px] flex items-center justify-center text-[20px] text-[#111111] mr-[26px]" />
               <p className="text-[18px] font-medium leading-[21px] text-[#111111]">ПОДКАСТ</p>
-            </div>
-            <div className="mt-[40px] flex flex-row items-center cursor-pointer">
+            </a>
+            <a
+              target={'_blank'}
+              href="https://www.caak.mn/radio"
+              className="mt-[40px] flex flex-row items-center cursor-pointer"
+            >
               <span className="icon-fi-rs-wave w-[24px] h-[24px] flex items-center justify-center text-[20px] text-[#111111] mr-[26px]" />
               <p className="text-[18px] font-medium leading-[21px] text-[#111111]">РАДИО</p>
-            </div>
-            <div className="mt-[40px] flex flex-row items-center cursor-pointer">
+            </a>
+            <div
+              onClick={() => {
+                navigate('/help', { state: 1 });
+                setSideMenuOpen(false);
+              }}
+              className="mt-[40px] flex flex-row items-center cursor-pointer"
+            >
               <span className="icon-fi-rs-ads w-[24px] h-[24px] flex items-center justify-center text-[20px] text-[#111111] mr-[26px]" />
               <p className="text-[18px] font-medium leading-[21px] text-[#111111]">СУРТАЛЧИЛГАА</p>
             </div>
-            <div className="mt-[40px] flex flex-row items-center cursor-pointer">
+            <div
+              onClick={() => {
+                navigate('/help', { state: 2 });
+                setSideMenuOpen(false);
+              }}
+              className="mt-[40px] flex flex-row items-center cursor-pointer"
+            >
               <span className="icon-fi-rs-phone w-[24px] h-[24px] flex items-center justify-center text-[20px] text-[#111111] mr-[26px]" />
               <p className="text-[18px] font-medium leading-[21px] text-[#111111]">ХОЛБОО БАРИХ</p>
             </div>
@@ -353,7 +377,7 @@ export default function NavbarNew() {
             </div>
             <div
               onClick={() => {
-                navigate('/help', { state: 1 });
+                navigate('/help', { state: 2 });
                 setMobileSideMenu(false);
               }}
               className="flex flex-row items-center ml-[24px] mt-[24px]"

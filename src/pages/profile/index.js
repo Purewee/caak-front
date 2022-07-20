@@ -98,27 +98,25 @@ export default function Profile() {
         </div>
         <Tabs size="large" className="mb-[200px]">
           <Tabs.TabPane key="posts" tab="Оруулсан мэдээ">
-            <Row gutter={[22, 40]} className="max-w-[1310px] my-[24px]">
-              {articles.map((post) => (
-                <Col key={post.id} span={isLaptop && 8}>
-                  <PostCard post={post} />
+            <div className="max-w-[1310px] w-full flex flex-wrap justify-center 2xl:justify-start gap-x-[22px] gap-y-[40px] px-[16px] sm:px-0 mt-[40px]">
+              {articles.map((post, index) => (
+                <Col className="w-full sm:w-[422px]" key={index}>
+                  <PostCard isMobile={isMobile} post={post} />
                 </Col>
               ))}
               {loading && <Skeleton />}
-              {count > 24 * (page + 1) && (
-                <Col span={24}>
-                  <Button
-                    block
-                    size="large"
-                    className="font-roboto border-caak-primary text-caak-primary mt-[20px]"
-                    onClick={() => setPage(page + 1)}
-                    loading={loading}
-                  >
-                    Цааш үзэх
-                  </Button>
-                </Col>
-              )}
-            </Row>
+              <Col span={24}>
+                <Button
+                  block
+                  size="large"
+                  className="font-roboto border-caak-primary text-caak-primary mt-[20px]"
+                  onClick={() => setPage(page + 1)}
+                  loading={loading}
+                >
+                  Цааш үзэх
+                </Button>
+              </Col>
+            </div>
           </Tabs.TabPane>
           {id === loggedUser?.id && <Tabs.TabPane key="saved" tab="Хадгалсан мэдээнүүд" />}
           <Tabs.TabPane key="history" tab="Үзсэн түүх" />
