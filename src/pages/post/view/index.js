@@ -30,6 +30,7 @@ import Lottie from 'react-lottie';
 import { FIcon } from '../../../component/icon';
 import { ADD_REACTION, REACTIONS } from './_gql';
 import { sortBy } from 'lodash';
+import ReactPlayer from 'react-player/lazy';
 
 const ACTIONS = [{ icon: love }, { icon: haha }, { icon: wow }, { icon: cry }, { icon: angry }];
 
@@ -100,7 +101,7 @@ const Post = () => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, []);
+  }, [id]);
 
   if (loading) {
     return (
@@ -218,11 +219,13 @@ const Post = () => {
           alt=""
           className="w-full h-[210px] flex md:hidden mt-[20px] object-cover"
         />
-        {article.categories?.nodes?.map((x) => (
-          <Link key={x.id} to={`/category/${x.slug}`}>
-            <HashTag className="text-center hidden md:block">{x.name}</HashTag>
-          </Link>
-        ))}
+        <div className="flex flex-row gap-[15px]">
+          {article.categories?.nodes?.map((x) => (
+            <Link key={x.id} to={`/category/${x.slug}`}>
+              <HashTag className="text-center hidden md:block">{x.name}</HashTag>
+            </Link>
+          ))}
+        </div>
         <Wrapper>
           <Title className="text-center">{article.title}</Title>
           {/*<div className="flex flex-row items-center mt-[30px]">*/}
@@ -247,6 +250,11 @@ const Post = () => {
                   </p>
                 </div>
               </div>
+            </div>
+            <div className="flex sm:hidden flex-row items-center">
+              <img className="w-[20px]" src={LoveIcon} alt="" />
+              <img className="w-[20px]" src={HahaIcon} alt="" />
+              <p className="ml-[6px] text-[15px] text-caak-primary leading-[16px]">{article.data?.like_count}</p>
             </div>
             <div className="hidden md:flex flex-row items-center">
               <FacebookShareButton className="h-[20px]" url={`http://front.caak.mn/post/view/${article.id}`}>

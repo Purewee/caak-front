@@ -199,13 +199,13 @@ export default function Help() {
     return (
         //prettier-ignore
         <div className='w-full flex flex-col items-center bg-[#F5F5F5]'>
-            <div className="w-full h-[340px] bg-[#463146] flex justify-center">
+            <div className="w-full h-[230px] md:h-[340px] bg-[#463146] flex justify-center px-[16px]">
                 <div className='max-w-[1310px] w-full flex flex-row justify-between items-center'>
                     <div className='max-w-[480px] w-full'>
-                        <p className='text-[52px] text-white font-medium leading-[54px]'>Мэдээ мэдээллийн төв цэг!</p>
+                        <p className='text-[35px] md:text-[52px] text-white font-medium leading-[41px] md:leading-[54px]'>Мэдээ мэдээллийн төв цэг!</p>
                         <p className='max-w-[372px] w-full text-white text-[18px] leading-[23px] text-opacity-80 mt-[30px]'>Хүн болгонд соргог мэдээллийг таны гарт шинэхэн талх шиг түгээх болно.</p>
                     </div>
-                    <img className='w-[604px] h-[271px]' alt='' src={require('../../assets/images/help2x.png')} />
+                    <img className='w-[604px] h-[271px] hidden md:block' alt='' src={require('../../assets/images/help2x.png')} />
                 </div>
             </div>
             <div className='max-w-[1310px] w-full flex flex-col sm:flex-row mt-[30px] sm:mt-[60px] justify-between mb-[87px] px-[16px] md:px-0'>
@@ -250,7 +250,7 @@ export default function Help() {
                         selected === 1
                         ?
                         <div>
-                            <p className='font-condensed font-bold text-[32px] text-[#111111] leading-[38px] mt-[20px] sm:mt-0'>Сурталчилгаа байршуулах</p>
+                            <p className='font-condensed font-bold text-[25px] md:text-[32px] text-[#111111] md:leading-[38px] mt-[20px] sm:mt-0'>Сурталчилгаа байршуулах</p>
                             <p className='text-[15px] text-[#555555] leading-[20px] mt-[23px]'>Та манай 13 жилийн түүхтэй CAAK.MN сайт дээр Мэдээ, Пост, Контент бэлтгүүлэх болон Сурталчилгаа байршуулснаар дараах давуу талуудыг хүртэх боломжтой.</p>
                             <p className='text-[#363946] text-[20px] font-bold leading-[24px] mt-[40px]'>Давуу талууд</p>
                             <div className='flex flex-wrap justify-between gap-[20px] mt-[20px]'>
@@ -429,7 +429,7 @@ export default function Help() {
             }
             {
                 ((selected === 1) || (selected === 2)) &&
-                <div className='w-full h-[276px] bg-[#FF6600] flex justify-center'> 
+                <div className='w-full h-[276px] hidden bg-[#FF6600] md:flex justify-center'> 
                     <div className='max-w-[1310px] w-full flex flex-col sm:flex-row sm:items-center px-[16px] sm:px-0 pt-[20px] sm:pt-0'>
                         <p className='text-[#F5F5F5] font-medium text-[30px] leading-[40px] sm:text-[48px] sm:leading-[59px] max-w-[645px]'>Өөрийн мэдээг үнэ цэнэтэй болгомоор байна уу?</p>
                         <div onClick={() => setSelected(2)} className='w-[280px] cursor-pointer h-[64px] bg-white flex flex-row items-center justify-center rounded-[4px] mt-[20px] sm:mt-0 sm:ml-[210px]'>

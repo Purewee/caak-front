@@ -45,9 +45,6 @@ export default function Footer() {
                     <p className='text-white text-[14px] font-bold leading-[16px]'>ТУСЛАМЖ</p>
                     <div className='h-[86px] flex flex-col justify-between text-[15px] text-[#838383] mt-[20px]'>
                         <p className='cursor-pointer' onClick={() => navigate("/help", { state: 2 })}>Холбоо барих</p>
-                        <Link to={{pathname: 'help'}}>
-
-                        </Link>
                         <p className='cursor-pointer' onClick={() => navigate("/help", { state: 1 })}>Сурталчилгаа</p>
                         <p className='cursor-pointer' onClick={() => navigate("/help", { state: 2 })}>Контент нийлүүлэх</p>
                     </div>

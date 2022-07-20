@@ -11,7 +11,7 @@ export const Title = tw.h1`
 `;
 
 export const BlockTitle = tw.h2`
-  text-[#111111] text-[20px] md:text-[26px] font-bold md:font-semibold mb-[26px] md:mb-[50px] w-full
+  text-[#111111] text-[20px] md:text-[26px] font-bold md:font-semibold mb-[10px] md:mb-[50px] w-full
 `;
 
 export const Paragraph = tw.p`

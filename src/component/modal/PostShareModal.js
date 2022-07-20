@@ -27,7 +27,7 @@ export default function PostShareModal({ sharePostOpen, setSharePostOpen, post, 
           <div className="bg-[#FBFAFB] w-full h-[132px] mt-[13px] border-t border-b border-[#D4D8D8] px-[24px] py-[16px] flex flex-row">
             <img alt="" className="min-w-[100px] max-w-[100px] h-[100px] object-cover truncate-3" src={image} />
             <div className="ml-[16px]">
-              <p className="font-merri text-[16px] h-[64px]">{post.title}</p>
+              <p className="font-merri text-[16px] leading-[21px] h-[64px] truncate-3">{post.title}</p>
               <div className="text-[#555555] mt-[10px] flex flex-row items-center leading-[18px] text-[15px]">
                 <p>{post?.source?.name}</p>
                 <p className="ml-[6px]">• {post.author.name}</p>

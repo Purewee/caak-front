@@ -36,7 +36,7 @@ function App() {
     <AppContext.Provider value={{ store, setStore, shown, setShown }}>
       <WithApolloProvider>
         <AuthProvider>
-          <div className="caak-main-wrapper font-roboto text-[#111111]">
+          <div className="caak-main-wrapper font-roboto text-[#111111] antialiased">
             <BrowserRouter>
               <Helmet>
                 <meta
