@@ -9,6 +9,19 @@
     url("./assets/fonts/Roboto-Medium.ttf") format("truetype");
 }
 
+::-moz-selection {
+  background:#3297FD;
+  color: white;
+}
+::-webkit-selection {
+  background:#3297FD;
+  color: white;
+}
+::selection {
+  background:#3297FD;
+  color: white;
+}
+
 .condMedium {
   font-family: 'condMedium';
 }
