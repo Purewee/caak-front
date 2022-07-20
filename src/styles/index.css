@@ -24,6 +24,7 @@
 .ant-btn .anticon {
   margin: 0;
 }
+
 .ant-btn-primary {
   background-color: var(--ant-primary-color) !important;
 }

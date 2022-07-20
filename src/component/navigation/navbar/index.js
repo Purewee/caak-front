@@ -12,8 +12,8 @@ import { Avatar, Skeleton } from 'antd';
 import { Link } from 'react-router-dom';
 import { FIcon } from '../../../component/icon';
 import { ME } from '../../../pages/post/view/_gql';
-import MobileBottomMenu from '../../footer/mobileBottomMenu';
 import SearchModal from '../../modal/SearchModal';
+import { useNavigate } from 'react-router-dom';
 
 const CATEGORIES = gql`
   query GetCategories {
@@ -58,6 +58,7 @@ export default function NavbarNew() {
   const [isShown, setIsShown] = useState(false);
   const [navBarStyle, setNavBarStyle] = useState(true);
   const [sideMenuOpen, setSideMenuOpen] = useState(false);
+  const navigate = useNavigate();
   const isLaptop = useMediaQuery('(min-width: 1001px) and (max-width: 1920px)');
   const isTablet = useMediaQuery('(min-width: 401px) and (max-width: 1000px)');
   const isMobile = useMediaQuery('screen and (max-width: 400)');
@@ -256,7 +257,7 @@ export default function NavbarNew() {
       </nav>
     )
   ) : (
-    <nav className="pt-[13px] flex flex-col sticky top-0 z-[2] bg-white">
+    <nav className="py-[10px] flex flex-col sticky top-0 z-[2] bg-white">
       <div className="w-full flex flex-row justify-between pl-[16px] pr-[17px]">
         <Logo className={''} mobile navBarStyle={false} />
         <span
@@ -340,20 +341,44 @@ export default function NavbarNew() {
                 );
               })}
             </div>
-            <div className="flex flex-row items-center ml-[24px] mt-[24px]">
+            <div
+              onClick={() => {
+                navigate('/help', { state: 1 });
+                setMobileSideMenu(false);
+              }}
+              className="flex flex-row items-center ml-[24px] mt-[24px]"
+            >
               <FIcon className={`icon-fi-rs-ads mr-[18px] text-[24px] w-[26px] h-[26px]`} />
               <p className="text-[18px]">Сурталчилгаа</p>
             </div>
-            <div className="flex flex-row items-center ml-[24px] mt-[24px]">
+            <div
+              onClick={() => {
+                navigate('/help', { state: 1 });
+                setMobileSideMenu(false);
+              }}
+              className="flex flex-row items-center ml-[24px] mt-[24px]"
+            >
               <FIcon className={`icon-fi-rs-phone mr-[18px] text-[24px] w-[26px] h-[26px]`} />
               <p className="text-[18px]">Холбоо барих</p>
             </div>
-            <div className="w-full border-t border-b mt-[30px] py-[25px] flex flex-col gap-[24px]">
-              <div className="flex flex-row items-center ml-[24px]">
+            <div className="w-full border-t border-b mt-[30px] py-[25px] flex flex-col gap-[24px] ml-[24px]">
+              <div
+                onClick={() => {
+                  navigate('/help', { state: 1 });
+                  setMobileSideMenu(false);
+                }}
+                className="flex flex-row items-center"
+              >
                 <FIcon className={`icon-fi-rs-ads mr-[18px] text-[24px] w-[26px] h-[26px]`} />
                 <p className="text-[18px]">Нууцлалын бодлого</p>
               </div>
-              <div className="flex flex-row items-center ml-[24px]">
+              <div
+                onClick={() => {
+                  navigate('/help', { state: 1 });
+                  setMobileSideMenu(false);
+                }}
+                className="flex flex-row items-center"
+              >
                 <FIcon className={`icon-fi-rs-phone mr-[18px] text-[24px] w-[26px] h-[26px]`} />
                 <p className="text-[18px]">Үйлчилгээний нөхцөл</p>
               </div>
@@ -362,7 +387,6 @@ export default function NavbarNew() {
         </div>
       )}
       <SignInUpController isShown={isShown} setIsShown={setIsShown} />
-      <MobileBottomMenu />
     </nav>
   );
 }

@@ -61,7 +61,11 @@ export default function Dashboard() {
 
     useEffect(() => {
         context.setStore('default');
-      }, []);
+    }, []);
+
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
     //prettier-ignore
     return isAuth && data?.me?.id === id ? (
         <div className='flex w-full justify-center bg-white px-[16px] md:px-0'>
@@ -96,16 +100,16 @@ export default function Dashboard() {
                 <table className="w-full mt-[40px] mb-[40px] border border-[#EFEEEF]">
                     <thead className="h-[44px]">
                         <tr className="bg-[#F5F5F5]">
-                            <th className="w-full text-left text-[#555555] font-medium text-[15px] pl-[25px]">
+                            <th className="w-full text-left text-[#555555] font-medium text-[15px] pl-[10px] md:pl-[25px]">
                                 Мэдээний нэр
                             </th>
-                            <th className="text-center text-[15px] text-[#555555] font-medium min-w-[150px]">
+                            <th className="text-center text-[15px] text-[#555555] font-medium md:min-w-[150px]">
                             Үзэлт
                             </th>
-                            <th className="text-center text-[15px] text-[#555555] font-medium min-w-[150px]">
+                            <th className="text-center text-[15px] text-[#555555] font-medium md:min-w-[150px]">
                             Сэтгэгдэл
                             </th>
-                            <th className="text-center text-[15px] text-[#555555] font-medium min-w-[150px]">
+                            <th className="text-center text-[15px] text-[#555555] font-medium md:min-w-[150px]">
                             Реакшн
                             </th>
                         </tr>
@@ -116,7 +120,7 @@ export default function Dashboard() {
                                 return(
                                     <tr key={index} className="border-b">
                                         <td>
-                                            <div className='flex flex-row items-center pl-[20px] h-[57px] paddinTop'>
+                                            <div className='flex flex-row items-center pl-[10px] md:pl-[20px] h-[57px] md:paddinTop'>
                                                 <img className='w-[44px] h-[44px] object-cover' src={imagePath(data.image)} />
                                                 <div className='ml-[12px]'>
                                                     <Link to={`/post/view/${data.id}`}>
@@ -133,10 +137,10 @@ export default function Dashboard() {
                                             <p className='text-[15px] font-medium text-center'>35</p>
                                         </td>
                                         <td>
-                                            <div className='flex flex-row items-center pl-[40px]'>
-                                                <img className='w-[20px]'  src={LoveIcon}/>
-                                                <img className='w-[20px]'  src={HahaIcon}/>
-                                                <p className='ml-[6px] text-[15px]'>{data.data?.like_count}</p>
+                                            <div className='flex flex-row items-center justify-center'>
+                                                <img className='w-[20px] hidden sm:block'  src={LoveIcon}/>
+                                                <img className='w-[20px] hidden sm:block'  src={HahaIcon}/>
+                                                <p className='ml-[6px] text-[15px]'>{data.data?.like_count || 0}</p>
                                             </div>
                                         </td>
                                     </tr>

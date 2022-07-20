@@ -11,7 +11,7 @@ import { FIcon } from '../icon';
 
 const colors = ['#163943', '#463146', '#131D1C', '#1E1642', '#854D0E', '#233C6A', '#813333'];
 
-export default function PostCard({ isMobile, post, ...rest }) {
+export default function PostCard({ isMobile, post, sponsored, ...rest }) {
   const [savePostOpen, setSavePostOpen] = useState(false);
   const [fixedMenu, setFixedMenu] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -20,7 +20,7 @@ export default function PostCard({ isMobile, post, ...rest }) {
   const [random] = useState(Math.floor(Math.random() * colors.length));
 
   const postURL = `/post/view/${post.id}`;
-  const sponsored = post.is_featured && moment().isBetween(moment(post.featured_from), moment(post.featured_to));
+  // const sponsored = post.is_featured && moment().isBetween(moment(post.featured_from), moment(post.featured_to));
 
   const color = sponsored ? { backgroundColor: colors[random] } : {};
   const text = sponsored ? 'text-[#ffffff] sm:text-center hover:text-[#ffffff]' : 'hover:text-[#111111]';
@@ -51,12 +51,14 @@ export default function PostCard({ isMobile, post, ...rest }) {
             } sm:h-[300px] object-cover`}
           />
         </Link>
-        {!sponsored &&
-          post?.categories?.map((x, index) => (
-            <Link className="hidden sm:block mt-[20px]" key={index} to={`/category/${x.slug}`}>
-              <HashTag>{x.name}</HashTag>
-            </Link>
-          ))}
+        <div className="flex flex-row gap-[15px] overflow-hidden">
+          {!sponsored &&
+            post?.categories?.map((x, index) => (
+              <Link className="hidden sm:block mt-[20px]" key={index} to={`/category/${x.slug}`}>
+                <HashTag>{x.name}</HashTag>
+              </Link>
+            ))}
+        </div>
         <Link className={`${sponsored ? 'mt-[22px]' : 'sm:mt-[10px]'} ${text}`} to={postURL}>
           <p
             className={`${

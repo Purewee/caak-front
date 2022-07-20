@@ -67,7 +67,7 @@ export default function Home() {
   return (
     <>
       <div className={`relative bg-white flex flex-col items-center mb-[100px]`}>
-        <div className="h-[57px] border-b-[3px] md:hidden border-[#EFEEEF] bg-white z-[2] w-full sticky top-[46px] pl-[16px]">
+        <div className="h-[47px] border-b-[3px] md:hidden border-[#EFEEEF] bg-white z-[1] w-full sticky top-[53px] pl-[16px]">
           <div className="absolute -bottom-[3px] h-[36px] flex flex-row items-center gap-[16px]">
             <p
               onClick={() => setSelected('recent')}
@@ -84,6 +84,14 @@ export default function Home() {
               } text-[21px] leading-[24px] pb-[9px] border-b-[3px] font-condensed font-bold`}
             >
               ТРЭНД
+            </p>
+            <p
+              onClick={() => setSelected('sponsored')}
+              className={`${
+                selected === 'sponsored' ? 'text-[#111111] border-caak-primary' : 'text-[#555555]'
+              } text-[21px] leading-[24px] pb-[9px] border-b-[3px] font-condensed font-bold`}
+            >
+              ОНЦЛОХ
             </p>
           </div>
         </div>
@@ -179,7 +187,7 @@ export default function Home() {
         <div className="max-w-[1310px] w-full flex flex-wrap justify-center gap-x-[22px] gap-y-[40px] px-[16px] sm:px-0 mt-[40px]">
           {articles.map((post, index) => (
             <Col className="w-full sm:w-[422px]" key={index}>
-              <PostCard isMobile={isMobile} post={post} />
+              <PostCard sponsored={selected === 'sponsored' && true} isMobile={isMobile} post={post} />
             </Col>
           ))}
           {loading && <Skeleton />}
