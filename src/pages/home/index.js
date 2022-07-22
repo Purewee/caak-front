@@ -1,35 +1,42 @@
 import NavbarPostHeader from '../../component/navigation/navbarPostHeader';
 import Story from '../../component/story';
-import { ESService } from '../../lib/esService';
 import React, { useEffect, useState, useContext } from 'react';
-import FeedMagazine from '../../component/magazine/FeedMagazine';
-import FeedTopTags from '../../component/toptags/FeedTopTags';
 import { AppContext } from '../../App';
 import useMediaQuery from '../../component/navigation/useMediaQuery';
-import { Tabs, Row, Col, Button, Skeleton } from 'antd';
-import PostCard from '../../component/card/Post';
+import { Tabs, Select } from 'antd';
 import Logo from '../../component/logo';
 import UserInfo from '../../component/navigation/navbar/UserInfo';
 import { FIcon } from '../../component/icon';
 import SearchModal from '../../component/modal/SearchModal';
 import { useAuth } from '../../context/AuthContext';
 import SignInUpController from '../../component/modal/SignInUpController';
+import ArticlesList from './articles_list';
+import { FieldTimeOutlined, LineChartOutlined } from '@ant-design/icons';
 
 export default function Home() {
   const context = useContext(AppContext);
-  const [page, setPage] = useState(0);
-  const [loading, setLoading] = useState(false);
-  const [articles, setArticles] = useState([]);
   const [selected, setSelected] = useState('recent');
   const [stickyTabs, setStickyTabs] = useState(false);
   const [isShown, setIsShown] = useState(false);
   const [searchShown, setSearchShown] = useState(false);
-  const es = new ESService('caak');
   const { isAuth } = useAuth();
 
   const isLaptop = useMediaQuery('(min-width: 1001px) and (max-width: 1920px)');
   const isTablet = useMediaQuery('(min-width: 401px) and (max-width: 1000px)');
   const isMobile = useMediaQuery('screen and (max-width: 767px)');
+
+  const [filter, setFilter] = useState([]);
+  const [sort, setSort] = useState({});
+
+  useEffect(() => {
+    if (selected === 'recent') {
+      setFilter([]);
+      setSort({ publish_date: 'desc' });
+    } else if (selected === 'trend') {
+      setFilter([]);
+      setSort({ views_count: 'desc' });
+    }
+  }, [selected]);
 
   document.title = 'Саак';
 
@@ -40,14 +47,6 @@ export default function Home() {
   useEffect(() => {
     context.setShown(true);
   }, []);
-
-  useEffect(() => {
-    setLoading(true);
-    es.home_articles(page).then((response) => {
-      setArticles([...articles, ...response]);
-      setLoading(false);
-    });
-  }, [page]);
 
   useEffect(() => {
     const listener = () => {
@@ -148,61 +147,41 @@ export default function Home() {
                 >
                   Нэвтрэх
                 </button>
-                {/* <button
-                  className={
-                    'h-[34px] font-roboto w-[112px] bg-caak-primary rounded-[4px] text-[15px] font-bold text-white'
-                  }
-                  onClick={() => setIsShown('signup')}
-                >
-                  Бүртгүүлэх
-                </button> */}
                 <SignInUpController isShown={isShown} setIsShown={setIsShown} />
               </div>
             )}
           </div>
           {searchShown && <SearchModal setSearchShown={setSearchShown} />}
         </div>
-        {/* <Row gutter={[22, 40]} className="max-w-[1310px]">
-          {articles.map((post) => (
-            <Col key={post.id} span={24}>
-              <PostCard post={post} />
-            </Col>
-          ))}
-          {loading && <Skeleton />}
-          <Col span={24}>
-            <Button
-              block
-              size="large"
-              className="font-roboto border-caak-primary text-caak-primary mt-[20px]"
-              onClick={() => setPage(page + 1)}
-              loading={loading}
+        {selected === 'trend' && (
+          <div className="flex mt-[12px] gap-[12px] font-merri">
+            <Select
+              onChange={(value) => {
+                setSort({ [value]: 'desc' });
+              }}
+              defaultValue="views_count"
+              className="w-[160px]"
+              suffixIcon={<LineChartOutlined />}
             >
-              Цааш үзэх
-            </Button>
-          </Col>
-        </Row> */}
-
-        {/* ingeed hiichvvl mobile deer ewdrehgv zvgeer bn */}
-
-        <div className="max-w-[1310px] w-full flex flex-wrap justify-center gap-x-[22px] gap-y-[40px] px-[16px] sm:px-0 mt-[40px]">
-          {articles.map((post, index) => (
-            <Col className="w-full sm:w-[422px]" key={index}>
-              <PostCard sponsored={selected === 'sponsored' && true} isMobile={isMobile} post={post} />
-            </Col>
-          ))}
-          {loading && <Skeleton />}
-          <Col span={24}>
-            <Button
-              block
-              size="large"
-              className="font-roboto border-caak-primary text-caak-primary mt-[20px]"
-              onClick={() => setPage(page + 1)}
-              loading={loading}
+              <Select.Option value="views_count">Их үзсэн</Select.Option>
+              <Select.Option value="comments_count">Их сэтгэгдэлтэй</Select.Option>
+            </Select>
+            <Select
+              onChange={(value) => {
+                setFilter([{ range: { publish_date: { gte: `now-${value}d/d` } } }]);
+              }}
+              defaultValue="10000"
+              className="w-[160px]"
+              suffixIcon={<FieldTimeOutlined />}
             >
-              Цааш үзэх
-            </Button>
-          </Col>
-        </div>
+              <Select.Option value="7">7 хоног</Select.Option>
+              <Select.Option value="30">30 хоног</Select.Option>
+              <Select.Option value="360">Сүүлийн жил</Select.Option>
+              <Select.Option value="10000">Бүх цаг үе</Select.Option>
+            </Select>
+          </div>
+        )}
+        <ArticlesList filter={filter} sort={sort} size={24} />
       </div>
     </>
   );

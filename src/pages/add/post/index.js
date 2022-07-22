@@ -130,7 +130,7 @@ function AddPost() {
         ...article,
         tags: article?.tags.map((x) => x.slug),
         blocks: sortBy(article?.blocks, 'position'),
-        featuredDates: [moment(article?.featuredFrom), moment(article?.featuredTo)],
+        featuredDates: [moment(article?.featuredFrom || undefined), moment(article?.featuredTo || undefined)],
       }}
     >
       <Row gutter={12} className="mb-[400px]">
@@ -249,7 +249,7 @@ function AddPost() {
             </Form.List>
           </Card>
         </Col>
-        <Col span={6} className="border-l border-[#efefef] bg-[#ffffff]" style={{ padding: 12 }}>
+        <Col span={6} className="border-l border-[#efefef] bg-[#ffffff] p-[12px]">
           <Affix offsetTop={12}>
             <div className="h-screen">
               <h3 className="font-merri font-bold text-[16px]">Мэдээний төрөл</h3>

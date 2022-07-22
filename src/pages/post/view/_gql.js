@@ -4,6 +4,7 @@ export const ARTICLE = gql`
   query GetArticle($id: ID!) {
     article(id: $id, impression: true) {
       id
+      kind
       title
       slug
       imageUrl

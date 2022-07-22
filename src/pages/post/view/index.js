@@ -28,9 +28,7 @@ import * as haha from '../../../assets/json/haha-js.json';
 import * as wow from '../../../assets/json/wow-js.json';
 import Lottie from 'react-lottie';
 import { FIcon } from '../../../component/icon';
-import { ADD_REACTION, REACTIONS } from './_gql';
 import { sortBy } from 'lodash';
-import ReactPlayer from 'react-player/lazy';
 
 const ACTIONS = [{ icon: love }, { icon: haha }, { icon: wow }, { icon: cry }, { icon: angry }];
 
@@ -52,7 +50,8 @@ const Post = () => {
   const { isAuth } = useAuth();
 
   const title = article?.title;
-  const metaDescription = 'defaul tdescription';
+  const metaDescription = 'default description';
+  if (article?.kind === 'linked') window.location = article.data?.link;
 
   const openNotification = () => {
     const args = {

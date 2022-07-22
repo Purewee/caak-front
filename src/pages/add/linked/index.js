@@ -1,22 +1,45 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Tabs, Button, Affix, message, Form, Row, Col, Input, Card, Skeleton, Image, Upload, Select } from 'antd';
-import { AppContext } from '../../../App';
+import {
+  Tabs,
+  Button,
+  Affix,
+  message,
+  Form,
+  Row,
+  Col,
+  Input,
+  Card,
+  Skeleton,
+  Image,
+  Upload,
+  Select,
+  Checkbox,
+} from 'antd';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { sortBy } from 'lodash';
-import moment from 'moment';
 import { useMutation, useQuery } from '@apollo/client';
-import { CREATE, POST, UPDATE, CONVERT_LINK, SOURCES } from '../post/_gql';
+import { CREATE, POST, UPDATE, CONVERT_LINK, SOURCES, CATEGORIES, TAGS } from '../post/_gql';
 import { LinkOutlined, PlaySquareOutlined, SaveOutlined } from '@ant-design/icons';
 import { getDataFromBlob, imageCompress } from '../../../lib/imageCompress';
+import { DatePicker } from 'antd/es';
+import moment from 'moment';
 
 function AddLink() {
   const { id } = useParams();
   const navigate = useNavigate();
+  const { data: categories, refetch } = useQuery(CATEGORIES);
   const { data: post, loading } = useQuery(POST, { variables: { id }, skip: !id });
   const { data: sources, loading: source_fetching } = useQuery(SOURCES);
+  const [featured, setFeatured] = useState(false);
   const [saveArticle, { loading: saving }] = useMutation(id ? UPDATE : CREATE, { context: { upload: true } });
   const article = post?.article;
   const [data, setData] = useState();
+  useEffect(() => {
+    setFeatured(article?.featured);
+  }, [article]);
+
+  if (loading) {
+    return <Skeleton />;
+  }
   return (
     <Form
       onFinish={(values) => {
@@ -33,7 +56,7 @@ function AddLink() {
             if (id) {
               refetch();
             } else {
-              navigate(`/edit/${res?.data?.article.id}`);
+              navigate(`/edit/linked/${res?.data?.article.id}`);
             }
           })
           .catch((e) => {
@@ -44,10 +67,12 @@ function AddLink() {
       className="caak_article font-merri"
       initialValues={{
         ...article,
+        tags: article?.tags.map((x) => x.slug),
+        featuredDates: [moment(article?.featuredFrom), moment(article?.featuredTo)],
       }}
     >
-      <Row gutter={12} className="mb-[400px]">
-        <Col span={16} className=" x-[50px]">
+      <Row gutter={24} className="mb-[400px]">
+        <Col span={16} className="x-[50px]">
           <Tabs className="max-w-[880px] mx-auto mt-[20px] border-b" defaultActiveKey="linked" size="large">
             <Tabs.TabPane
               tab={
@@ -125,18 +150,45 @@ function AddLink() {
             )}
           </Card>
         </Col>
-        <Col span={6}>
-          <Affix className="min-h-[100vh] border-l px-[12px] pt-[40px]" offsetTop={40}>
-            <Form.Item name="sourceId" label="Эх үүсвэр">
-              <Select size="large" loading={source_fetching} allowClear>
-                {sources?.sources?.nodes?.map((x) => (
-                  <Select.Option value={x.id}>{`${x.name} - ${x.domain}`}</Select.Option>
-                ))}
-              </Select>
-            </Form.Item>
-            <Button htmlType="submit" type="primary" icon={<SaveOutlined />} size="large" block loading={saving}>
-              Хадгалах
-            </Button>
+        <Col span={6} className="border-l border-[#efefef] bg-[#ffffff] p-[24px]">
+          <Affix offsetTop={12}>
+            <div className="h-screen">
+              <Form.Item name="sourceId" label="Эх үүсвэр">
+                <Select size="large" loading={source_fetching} allowClear>
+                  {sources?.sources?.nodes?.map((x) => (
+                    <Select.Option value={x.id}>{`${x.name} - ${x.domain}`}</Select.Option>
+                  ))}
+                </Select>
+              </Form.Item>
+              <Form.Item name="categoryIds" className="font-merri" label="Ангилал">
+                <Select
+                  mode="multiple"
+                  placeholder="Categories"
+                  size="large"
+                  options={(categories?.categories?.nodes || []).map((x) => ({
+                    value: x.id,
+                    label: x.name,
+                    key: x.id,
+                  }))}
+                />
+              </Form.Item>
+              <Form.Item name="tags" className="font-merri" label="Таг">
+                <TagsField mode="tags" placeholder="Tags" size="large" />
+              </Form.Item>
+              <Form.Item name="featured" className="font-merri" valuePropName="checked">
+                <Checkbox onChange={(e) => setFeatured(e.target.checked)}>Мэдээг онцлох</Checkbox>
+              </Form.Item>
+              {featured && (
+                <div className="flex justify-between">
+                  <Form.Item name="featuredDates" className="font-merri text-[12px]" label="Онцлох огноо">
+                    <DatePicker.RangePicker showTime format="YYYY-MM-DD HH:mm" />
+                  </Form.Item>
+                </div>
+              )}
+              <Button htmlType="submit" type="primary" icon={<SaveOutlined />} size="large" block loading={saving}>
+                Хадгалах
+              </Button>
+            </div>
           </Affix>
         </Col>
       </Row>
@@ -169,3 +221,11 @@ const LinkField = ({ onSuccess }) => {
 };
 
 export default AddLink;
+
+function TagsField({ ...rest }) {
+  const [filter, setFilter] = useState(null);
+  const { data, loading } = useQuery(TAGS, { variables: { filter } });
+  const options = data?.tags?.nodes.map((x) => ({ key: x.slug, value: x.slug, label: x.name })) || [];
+
+  return <Select showSearch onSearch={setFilter} filterOption={false} options={options} loading={loading} {...rest} />;
+}

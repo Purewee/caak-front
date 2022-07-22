@@ -67,12 +67,22 @@ export class ESService {
     return this.post({
       query: {
         bool: {
-          must: [...defaultFilters, { term: { 'data.is_featured': true } }],
+          must: [
+            ...defaultFilters,
+            { term: { featured: true } },
+            { range: { featured_from: { lte: 'now' } } },
+            { range: { featured_to: { gte: 'now' } } },
+          ],
         },
       },
-      sort: { views_count: 'desc' },
+      sort: {
+        _script: {
+          script: 'Math.random()',
+          type: 'number',
+          order: 'asc',
+        },
+      },
       size: size,
-      from: size * size,
     }).then(convertHits);
   }
 
@@ -92,6 +102,19 @@ export class ESService {
         },
       },
       ...rest,
+    }).then(convertHitsTotal);
+  }
+
+  posts(filter, sort, size, page) {
+    return this.post({
+      query: {
+        bool: {
+          must: [...defaultFilters, ...filter],
+        },
+      },
+      sort: sort,
+      size: size,
+      from: size * page,
     }).then(convertHitsTotal);
   }
 

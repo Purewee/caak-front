@@ -1,17 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Image, Avatar, Popover } from 'antd';
+import { Avatar, Popover } from 'antd';
 import { generateTimeAgo, imagePath } from '../../utility/Util';
 import { HashTag, MetaTag } from '../../pages/post/view/wrapper';
-import moment from 'moment';
 import PostSaveModal from '../modal/PostSaveModal';
 import PostShareModal from '../modal/PostShareModal';
 import ReportModal from '../modal/ReportModal';
 import { FIcon } from '../icon';
+import moment from 'moment';
 
 const colors = ['#163943', '#463146', '#131D1C', '#1E1642', '#854D0E', '#233C6A', '#813333'];
 
-export default function PostCard({ isMobile, post, sponsored, ...rest }) {
+export default function PostCard({ isMobile, post, ...rest }) {
   const [savePostOpen, setSavePostOpen] = useState(false);
   const [fixedMenu, setFixedMenu] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -20,7 +20,7 @@ export default function PostCard({ isMobile, post, sponsored, ...rest }) {
   const [random] = useState(Math.floor(Math.random() * colors.length));
 
   const postURL = `/post/view/${post.id}`;
-  // const sponsored = post.is_featured && moment().isBetween(moment(post.featured_from), moment(post.featured_to));
+  const sponsored = post?.featured && moment().isBetween(moment(post.featured_from), moment(post.featured_to));
 
   const color = sponsored ? { backgroundColor: colors[random] } : {};
   const text = sponsored ? 'text-[#ffffff] sm:text-center hover:text-[#ffffff]' : 'hover:text-[#111111]';
@@ -42,7 +42,7 @@ export default function PostCard({ isMobile, post, sponsored, ...rest }) {
         </div>
       )}
       <div className={`flex ${sponsored ? 'flex-col' : 'flex-row md:flex-col'}`}>
-        <Link className="sm:h-[300px]" to={postURL}>
+        <Link className="sm:h-[300px]" to={postURL} target={post.kind === 'linked' && '_blank'}>
           <img
             alt={post.title}
             src={imagePath(post.image)}
@@ -59,7 +59,11 @@ export default function PostCard({ isMobile, post, sponsored, ...rest }) {
               </Link>
             ))}
         </div>
-        <Link className={`${sponsored ? 'mt-[22px]' : 'sm:mt-[10px]'} ${text}`} to={postURL}>
+        <Link
+          className={`${sponsored ? 'mt-[22px]' : 'sm:mt-[10px]'} ${text}`}
+          to={postURL}
+          target={post.kind === 'linked' && '_blank'}
+        >
           <p
             className={`${
               sponsored

@@ -59,7 +59,9 @@ function App() {
                 <Route path="/add" element={<Add />} />
                 <Route path="/add/post" element={<AddPost />} />
                 <Route path="/add/linked" element={<AddLink />} />
+                <Route path="/edit/linked/:id" element={<AddLink />} />
                 <Route path="/edit/:id" element={<AddPost />} />
+                <Route path="/edit/post/:id" element={<AddPost />} />
                 <Route path="/add/:id" element={<AddPost />} />
                 <Route path="/search" element={<Search />} />
                 <Route path="/help" element={<Help />} />
