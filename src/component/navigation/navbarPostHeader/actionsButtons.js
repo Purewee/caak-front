@@ -5,66 +5,49 @@ import DropDown from '../DropDown';
 import ReportModal from '../../modal/ReportModal';
 import { useClickOutSide } from '../../../utility/Util';
 import { imagePath } from '../../../utility/Util';
+import { Popover } from 'antd';
 
 const ActionButtons = ({ post }) => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [sharePostOpen, setSharePostOpen] = useState(false);
-  const [savePostOpen, setSavePostOpen] = useState(false);
-  const [reportOpen, setReportOpen] = useState(false);
+  const [sharing, setSharing] = useState(false);
+  const [saving, setSaving] = useState(false);
+  const [reporting, setReporting] = useState(false);
 
-  const menuRef = useClickOutSide(() => {
-    setIsMenuOpen(false);
-  });
-
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
-  };
   return (
-    <div className={'flex flex-row items-center justify-between'}>
+    <div className="flex flex-row items-center justify-between">
       <div
-        onClick={() => setSavePostOpen(true)}
-        className={'w-[20px] h-[20px] flex items-center justify-center cursor-pointer'}
+        onClick={() => setSaving(true)}
+        className="w-[20px] h-[20px] flex items-center justify-center cursor-pointer"
       >
-        <span className={'icon-fi-rs-bookmark text-white text-[17px]'} />
+        <span className="icon-fi-rs-bookmark text-white text-[17px]" />
       </div>
-      <div
-        ref={menuRef}
-        onClick={toggleMenu}
-        className={'w-[20px] h-[20px] relative flex items-center justify-center cursor-pointer ml-[10px]'}
-      >
-        <span className={'icon-fi-rs-more-ver text-white text-[17px]'} />
-        <DropDown
-          arrow={'topRight'}
-          className="absolute border border-[#D4D8D8] drop-shadow-[0_2px_2px_rgba(0,0,0,0.06)] top-[28px] -left-[125px] w-[166px] h-[97px]"
-          open={isMenuOpen}
-          onToggle={toggleMenu}
-          content={
-            <div className="flex flex-col justify-center h-full pl-[14px]">
-              <div onClick={() => setSharePostOpen(true)} className="flex flex-row items-center cursor-pointer">
-                <span className="text-[#555555] text-[16px] mr-[11px] w-[22px] h-[22px] flex items-center justify-center icon-fi-rs-share" />
-                <p className="text-[#555555] text-[15px] leading-[18px]">Хуваалцах</p>
+      <div className="w-[20px] h-[20px] relative flex items-center justify-center cursor-pointer ml-[10px]">
+        {reporting || sharing || (
+          <Popover
+            placement="bottom"
+            trigger="click"
+            className="leading-[16px] tracking-[0px]"
+            overlayStyle={{ width: 166 }}
+            overlayInnerStyle={{ borderRadius: 8 }}
+            content={
+              <div className="flex flex-col justify-center h-full">
+                <div onClick={() => setSharing(true)} className="flex flex-row items-center cursor-pointer">
+                  <span className="text-[#555555] text-[16px] mr-[11px] w-[22px] h-[22px] flex items-center justify-center icon-fi-rs-share" />
+                  <p className="text-[#555555] text-[15px] leading-[18px]">Хуваалцах</p>
+                </div>
+                <div onClick={() => setReporting(true)} className="flex flex-row items-center mt-[12px] cursor-pointer">
+                  <span className="text-[#555555] text-[15px] mr-[11px] w-[22px] h-[22px] flex items-center justify-center icon-fi-rs-flag" />
+                  <p className="text-[#555555] text-[15px] leading-[18px]">Репорт</p>
+                </div>
               </div>
-              <div onClick={() => setReportOpen(true)} className="flex flex-row items-center mt-[12px] cursor-pointer">
-                <span className="text-[#555555] text-[15px] mr-[11px] w-[22px] h-[22px] flex items-center justify-center icon-fi-rs-flag" />
-                <p className="text-[#555555] text-[15px] leading-[18px]">Репорт</p>
-              </div>
-            </div>
-          }
-        />
+            }
+          >
+            <span className="icon-fi-rs-more-ver text-white text-[17px]" />
+          </Popover>
+        )}
       </div>
-      <PostShareModal
-        post={post}
-        setSharePostOpen={setSharePostOpen}
-        sharePostOpen={sharePostOpen}
-        image={imagePath(post.image)}
-      />
-      <PostSaveModal
-        post={post}
-        onClose={() => setSavePostOpen(false)}
-        open={savePostOpen}
-        image={imagePath(post.image)}
-      />
-      <ReportModal isOpen={reportOpen} setIsOpen={setReportOpen} />
+      {saving && <PostSaveModal post={post} toggle={() => setSaving(false)} image={imagePath(post.image)} />}
+      {sharing && <PostShareModal post={post} toggle={() => setSharing(false)} image={imagePath(post.image)} />}
+      {reporting && <ReportModal post={post} toggle={() => setReporting(false)} />}
     </div>
   );
 };

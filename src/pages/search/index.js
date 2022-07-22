@@ -20,7 +20,7 @@ export default function Search() {
   useEffect(() => {
     setLoading(true);
     es.search(q, page).then(({ hits, total }) => {
-      setArticles([...hits]);
+      setArticles([...articles, ...hits]);
       setTotalResult(total);
       setLoading(false);
     });
@@ -63,9 +63,7 @@ export default function Search() {
             <Button
               block
               size="large"
-              type="primary"
-              ghost
-              className="font-roboto"
+              className="font-roboto border-caak-primary text-caak-primary"
               onClick={() => setPage(page + 1)}
               loading={loading}
             >

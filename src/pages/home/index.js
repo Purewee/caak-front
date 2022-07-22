@@ -170,13 +170,14 @@ export default function Home() {
               onChange={(value) => {
                 setFilter([{ range: { publish_date: { gte: `now-${value}d/d` } } }]);
               }}
-              defaultValue="10000"
+              defaultValue="1"
               className="w-[160px]"
               suffixIcon={<FieldTimeOutlined />}
             >
+              <Select.Option value="1">24 цаг</Select.Option>
               <Select.Option value="7">7 хоног</Select.Option>
               <Select.Option value="30">30 хоног</Select.Option>
-              <Select.Option value="360">Сүүлийн жил</Select.Option>
+              <Select.Option value="360">1 жил</Select.Option>
               <Select.Option value="10000">Бүх цаг үе</Select.Option>
             </Select>
           </div>

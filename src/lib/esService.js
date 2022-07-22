@@ -105,6 +105,24 @@ export class ESService {
     }).then(convertHitsTotal);
   }
 
+  tagPosts(slug, rest) {
+    return this.post({
+      query: {
+        bool: {
+          must: [
+            ...defaultFilters,
+            {
+              nested: {
+                path: 'tags',
+                query: { term: { 'tags.slug': slug } },
+              },
+            },
+          ],
+        },
+      },
+      ...rest,
+    }).then(convertHitsTotal);
+  }
   posts(filter, sort, size, page) {
     return this.post({
       query: {

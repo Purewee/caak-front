@@ -12,11 +12,10 @@ import moment from 'moment';
 const colors = ['#163943', '#463146', '#131D1C', '#1E1642', '#854D0E', '#233C6A', '#813333'];
 
 export default function PostCard({ isMobile, post, ...rest }) {
-  const [savePostOpen, setSavePostOpen] = useState(false);
+  const [saving, setSaving] = useState(false);
   const [fixedMenu, setFixedMenu] = useState(false);
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isReportOpen, setIsReportOpen] = useState(false);
-  const [sharePostOpen, setSharePostOpen] = useState(false);
+  const [reporting, setReporting] = useState(false);
+  const [sharing, setSharing] = useState(false);
   const [random] = useState(Math.floor(Math.random() * colors.length));
 
   const postURL = `/post/view/${post.id}`;
@@ -25,9 +24,6 @@ export default function PostCard({ isMobile, post, ...rest }) {
   const color = sponsored ? { backgroundColor: colors[random] } : {};
   const text = sponsored ? 'text-[#ffffff] sm:text-center hover:text-[#ffffff]' : 'hover:text-[#111111]';
 
-  const handleMenu = (show) => {
-    setIsMenuOpen(show);
-  };
   return (
     <div
       className={`${
@@ -42,7 +38,7 @@ export default function PostCard({ isMobile, post, ...rest }) {
         </div>
       )}
       <div className={`flex ${sponsored ? 'flex-col' : 'flex-row md:flex-col'}`}>
-        <Link className="sm:h-[300px]" to={postURL} target={post.kind === 'linked' && '_blank'}>
+        <Link className="sm:h-[300px]" to={postURL} target={post.kind === 'linked' ? '_blank' : '_self'}>
           <img
             alt={post.title}
             src={imagePath(post.image)}
@@ -62,7 +58,7 @@ export default function PostCard({ isMobile, post, ...rest }) {
         <Link
           className={`${sponsored ? 'mt-[22px]' : 'sm:mt-[10px]'} ${text}`}
           to={postURL}
-          target={post.kind === 'linked' && '_blank'}
+          target={post.kind === 'linked' ? '_blank' : '_self'}
         >
           <p
             className={`${
@@ -125,70 +121,58 @@ export default function PostCard({ isMobile, post, ...rest }) {
           </div>
           <div className="flex flex-row items-center">
             <FIcon
-              onClick={() => setSharePostOpen(true)}
+              onClick={() => setSharing(true)}
               className={`${
                 sponsored ? 'text-white' : 'text-[#909090]'
               } h-[22px] icon-fi-rs-share sm:hidden text-[22px] mr-[20px]`}
             />
             <FIcon
-              onClick={() => setSavePostOpen(true)}
+              onClick={() => setSaving(true)}
               className={`h-[22px] ${sponsored ? 'text-white' : 'text-[#909090]'} icon-fi-rs-bookmark text-[22px]`}
             />
-            <Popover
-              placement="bottom"
-              trigger="click"
-              className="leading-[16px] tracking-[0px]"
-              overlayStyle={{ width: 166 }}
-              overlayInnerStyle={{ borderRadius: 8 }}
-              visible={isMenuOpen}
-              onVisibleChange={handleMenu}
-              content={
-                <div className="flex flex-col justify-center h-full ">
-                  <div
-                    onClick={() => {
-                      setIsMenuOpen(false);
-                      setSharePostOpen(true);
-                    }}
-                    className="flex flex-row items-center cursor-pointer"
-                  >
-                    <span className="text-[#555555] text-[16px] mr-[11px] w-[22px] h-[22px] flex items-center justify-center icon-fi-rs-share" />
-                    <p className="text-[#555555] text-[15px] leading-[18px]">Хуваалцах</p>
+            {reporting || sharing || (
+              <Popover
+                placement="bottom"
+                trigger="click"
+                className="leading-[16px] tracking-[0px]"
+                overlayStyle={{ width: 166 }}
+                overlayInnerStyle={{ borderRadius: 8 }}
+                content={
+                  <div className="flex flex-col justify-center h-full ">
+                    <div
+                      onClick={() => {
+                        setSharing(true);
+                      }}
+                      className="flex flex-row items-center cursor-pointer"
+                    >
+                      <span className="text-[#555555] text-[16px] mr-[11px] w-[22px] h-[22px] flex items-center justify-center icon-fi-rs-share" />
+                      <p className="text-[#555555] text-[15px] leading-[18px]">Хуваалцах</p>
+                    </div>
+                    <div
+                      onClick={() => {
+                        setReporting(true);
+                      }}
+                      className="flex flex-row items-center mt-[12px] cursor-pointer"
+                    >
+                      <span className="text-[#555555] text-[15px] mr-[11px] w-[22px] h-[22px] flex items-center justify-center icon-fi-rs-flag" />
+                      <p className="text-[#555555] text-[15px] leading-[18px]">Репорт</p>
+                    </div>
                   </div>
-                  <div
-                    onClick={() => {
-                      setIsMenuOpen(false);
-                      setIsReportOpen(true);
-                    }}
-                    className="flex flex-row items-center mt-[12px] cursor-pointer"
-                  >
-                    <span className="text-[#555555] text-[15px] mr-[11px] w-[22px] h-[22px] flex items-center justify-center icon-fi-rs-flag" />
-                    <p className="text-[#555555] text-[15px] leading-[18px]">Репорт</p>
-                  </div>
-                </div>
-              }
-            >
-              <FIcon
-                className={`${
-                  sponsored ? 'text-white' : 'text-[#909090]'
-                } cursor-pointer text-[22px] w-[22px] h-[22px] icon-fi-rs-more-ver ml-[10px]`}
-              />
-            </Popover>
+                }
+              >
+                <FIcon
+                  className={`${
+                    sponsored ? 'text-white' : 'text-[#909090]'
+                  } cursor-pointer text-[22px] w-[22px] h-[22px] icon-fi-rs-more-ver ml-[10px]`}
+                />
+              </Popover>
+            )}
           </div>
         </div>
       </div>
-      <PostSaveModal
-        post={post}
-        onClose={() => setSavePostOpen(false)}
-        open={savePostOpen}
-        image={imagePath(post.image)}
-      />
-      <PostShareModal
-        post={post}
-        setSharePostOpen={setSharePostOpen}
-        sharePostOpen={sharePostOpen}
-        image={imagePath(post.image)}
-      />
-      <ReportModal isOpen={isReportOpen} setIsOpen={setIsReportOpen} />
+      {saving && <PostSaveModal post={post} toggle={() => setSaving(false)} image={imagePath(post.image)} />}
+      {sharing && <PostShareModal post={post} toggle={() => setSharing(false)} image={imagePath(post.image)} />}
+      {reporting && <ReportModal post={post} toggle={() => setReporting(false)} />}
       {fixedMenu && (
         <div className="left-0 right-0 bottom-0 top-0 z-[5] overflow-auto fixed flex justify-center items-end bg-black bg-opacity-70">
           <div className="w-full">
@@ -206,7 +190,7 @@ export default function PostCard({ isMobile, post, ...rest }) {
                 <div
                   onClick={() => {
                     setFixedMenu(false);
-                    setSharePostOpen(true);
+                    setSharing(true);
                   }}
                   className="flex flex-row items-center cursor-pointer"
                 >
@@ -216,7 +200,7 @@ export default function PostCard({ isMobile, post, ...rest }) {
                 <div
                   onClick={() => {
                     setFixedMenu(false);
-                    setIsReportOpen(true);
+                    setReporting(true);
                   }}
                   className="flex flex-row items-center mt-[24px] cursor-pointer"
                 >

@@ -1,140 +1,103 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { AppContext } from '../../App';
-import TagsCard from '../../component/card/TagsCard';
+import React, { useEffect, useState, useContext } from 'react';
+import { Tabs, Statistic, Button, Row, Col, Skeleton } from 'antd';
 import { ESService } from '../../lib/esService';
 import { gql, useQuery } from '@apollo/client';
 import { useParams } from 'react-router-dom';
-import Loader from '../../component/loader';
-import FeedCard from '../../component/card/FeedCard';
-import useMediaQuery from '../../component/navigation/useMediaQuery';
-import HighlightCard from '../../component/card/FeedCard/HighlightCard';
-import { Tabs, Row, Col, Button, Skeleton, Space } from 'antd';
-
-const menu = [
-  {
-    title: 'ШИНЭ',
-  },
-  {
-    title: 'ШИЛДЭГ',
-  },
-];
+import PostCard from '../../component/card/Post';
+import { HashTag, Title } from '../post/view/wrapper';
+import { AppContext } from '../../App';
 
 const CATEGORY = gql`
-  query GetCategory($slug: String) {
-    category(slug: $slug) {
+  query getTag($slug: String) {
+    tag(slug: $slug) {
       id
       name
       slug
-      status
-      articles {
-        totalCount
-      }
     }
   }
 `;
 
-export default function TopTags() {
-  const context = useContext(AppContext);
-  const { slug } = useParams();
-  const [selected, setSelected] = useState(0);
-  const [articles, setArticles] = useState([]);
-  const { data, loading } = useQuery(CATEGORY, { variables: { slug } });
-  const category = data?.category || {};
+const sortMap = {
+  recent: { publish_date: 'desc' },
+  top: { views_count: 'desc' },
+};
 
-  const isLaptop = useMediaQuery('(min-width: 1001px) and (max-width: 1920px)');
-  const isTablet = useMediaQuery('(min-width: 401px) and (max-width: 1000px)');
-  const isMobile = useMediaQuery('screen and (max-width: 767px)');
+export default function Category() {
+  const context = useContext(AppContext);
+  const es = new ESService('caak');
+  const { slug } = useParams();
+  const { data } = useQuery(CATEGORY, { variables: { slug } });
+  const category = data?.tag || {};
+  const [sort, setSort] = useState('recent');
+  const [count, setCount] = useState(0);
+  const [articles, setArticles] = useState([]);
+  const [page, setPage] = useState(0);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    setLoading(true);
+    es.tagPosts(slug, { size: 24, sort: sortMap[sort] }).then(({ hits, total }) => {
+      setArticles(hits);
+      setCount(total);
+      setLoading(false);
+    });
+  }, [slug, sort]);
+
+  useEffect(() => {
+    if (page === 0) return;
+    setLoading(true);
+    es.tagPosts(slug, { from: 24 * page, size: 24, sort: sortMap[sort] }).then(({ hits }) => {
+      setArticles([...articles, ...hits]);
+      setLoading(false);
+    });
+  }, [page]);
 
   useEffect(() => {
     context.setStore('default');
-    // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
-    context.setShown(true);
+    window.scrollTo(0, 0);
   }, []);
 
-  // useEffect(() => {
-  //   const es = new ESService('caak');
-  //   es.categoryPosts(slug, { size: 24 }).then(setArticles);
-  // }, [slug]);
-
-  if (loading)
-    return (
-      <div className={'w-full flex justify-center'}>
-        <Loader className={`bg-caak-primary self-center`} />
-      </div>
-    );
-  //prettier-ignore
   return (
-    <div className="flex justify-center pt-[70px] pb-[100px]">
+    <div className="flex justify-center pt-[20px] md:pt-[51px] pb-[100px] px-[16px] md:px-[0px]">
       <div className="max-w-[1310px] w-full flex flex-col items-center">
-        <div className="flex flex-row justify-between items-center w-full">
-          <div className="w-[142px]"></div>
-          <p className="text-black text-[38px] font-roboto leading-[44px] font-bold">#{category?.name}</p>
-          <div className="flex flex-row items-center">
-            <button className="bg-caak-primary text-white text-[15px] font-bold font-roboto w-[90px] h-[34px] rounded-[4px] border border-caak-primary">
-              Дагах
-            </button>
-            <div className=' border border-[#D4D8D8] rounded-[4px] w-[42px] h-[34px] flex justify-center items-center ml-[10px] cursor-pointer'>
-              <span className="icon-fi-rs-more-ver text-[#111111] text-[18px] rotate-90" />
-            </div>
-          </div>
+        <HashTag className="uppercase">Таг</HashTag>
+        <Title>{category.name}</Title>
+        <div className="flex">
+          <Statistic title="Нийт мэдээлэл" value={count} className="mx-[24px] text-center" />
         </div>
-        <div className="flex flex-row items-center mt-[10px]">
-          <p className="text-[#555555] text-[15px] leading-[18px]">
-            <span className="text-[#111111] font-medium">{category?.articles?.totalCount}</span> Пост
-          </p>
-          <p className="text-[#555555] text-[15px] leading-[18px] ml-[20px]">
-            <span className="text-[#111111] font-medium">30 </span>Дагагчид
-          </p>
-        </div>
-        <div className="hidden xl:flex flex-row items-center justify-center gap-[50px] pb-[1px] max-w-[1310px] w-full ">
-          <Tabs size="large" onChange={(e) => setSelected(e)} className="w-full" centered>
-            <Tabs.TabPane
-              key="recent"
-              tab={
-                <span
-                  className={`text-[20px] font-bold cursor-pointer text-center leading-[20px] uppercase font-merri ${
-                    selected === 'recent' ? 'text-[#111111]' : 'text-[#555555]'
-                  }`}
-                >
-                  Шинэ
-                </span>
-              }
-            ></Tabs.TabPane>
-            <Tabs.TabPane
-              key="trend"
-              tab={
-                <span
-                  className={`text-[20px] font-bold cursor-pointer text-center leading-[20px] uppercase font-merri  ${
-                    selected === 'trend' ? 'text-[#111111]' : 'text-[#555555]'
-                  }`}
-                >
-                  Трэнд
-                </span>
-              }
-            ></Tabs.TabPane>
-          </Tabs>
-        </div>
-        <div className="max-w-[1310px] w-full flex flex-wrap justify-center gap-x-[22px] gap-y-[40px]">
-          {articles?.map((post) => (
-            <Col className="w-full sm:w-[422px]" key={post.id}>
-              <PostCard isMobile={isMobile} post={post} />
+        <Tabs
+          defaultActiveKey="recent"
+          onChange={(e) => {
+            setSort(e);
+          }}
+          className="mt-[48px]"
+        >
+          <Tabs.TabPane tab={<span className="text-[24px] font-normal font-merri">ШИНЭ</span>} key="recent" />
+          <Tabs.TabPane tab={<span className="text-[24px] font-normal font-merri">ШИЛДЭГ</span>} key="top" />
+        </Tabs>
+        <div className="max-w-[1310px] w-full flex flex-wrap justify-center xl:justify-start gap-x-[22px] gap-y-[40px] pt-[30px] md:pt-[70px]">
+          {articles.map((post) => (
+            <Col key={post.id}>
+              <PostCard post={post} />
             </Col>
           ))}
           {loading && <Skeleton />}
-          <Col span={24}>
-            <Button
-              block
-              size="large"
-              className="font-roboto border-caak-primary text-caak-primary mt-[20px]"
-              onClick={() => setPage(page + 1)}
-              loading={loading}
-            >
-              Цааш үзэх
-            </Button>
-          </Col>
+          {count > 24 * (page + 1) && (
+            <Col span={24}>
+              <Button
+                block
+                size="large"
+                className="font-roboto mt-[24px] text-caak-primary border-caak-primary"
+                onClick={() => setPage(page + 1)}
+                loading={loading}
+              >
+                Цааш үзэх
+              </Button>
+            </Col>
+          )}
         </div>
       </div>
     </div>
