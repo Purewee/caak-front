@@ -38,11 +38,9 @@ const Post = () => {
   const [isStopped, setIsStopped] = useState(true);
   const [isPaused, setIsPaused] = useState(true);
   const [leftMenuSticky, setLeftMenuSticky] = useState(false);
-  const [isReportOpen, setIsReportOpen] = useState(false);
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isBottomMenu, setIsBottomMenu] = useState(false);
-  const [savePostOpen, setSavePostOpen] = useState(false);
-  const [sharePostOpen, setSharePostOpen] = useState(false);
+  const [reporting, setReporting] = useState(false);
+  const [saving, setSaving] = useState(false);
+  const [sharing, setSharing] = useState(false);
   const [isShown, setIsShown] = useState(false);
   const { data, loading } = useQuery(ARTICLE, { variables: { id } });
   const { data: me, loading: me_loading } = useQuery(ME);
@@ -66,14 +64,6 @@ const Post = () => {
   function createMarkup(e) {
     return { __html: e };
   }
-
-  const handleMenu = (show) => {
-    setIsMenuOpen(show);
-  };
-
-  const handleBottomMenu = (show) => {
-    setIsBottomMenu(show);
-  };
 
   useEffect(() => {
     context.setStore('default');
@@ -131,84 +121,85 @@ const Post = () => {
         >
           <div className="flex flex-col items-center w-[60px] h-[226px]">
             <p className="text-[#555555] text-[15px] leading-[18px] font-bold">{article.data?.like_count}</p>
-            <Popover
-              placement="top"
-              trigger="hover"
-              overlayStyle={{ width: 230, borderRadius: 8 }}
-              content={
-                <div className="flex flex-row gap-[8px] h-full justify-center py-[4px]">
-                  {ACTIONS.map((data, index) => (
-                    <Button key={index} shape="circle" type="link">
-                      <Lottie
-                        options={{
-                          animationData: data?.icon,
-                          loop: true,
-                          autoplay: true,
-                          rendererSettings: {
-                            preserveAspectRatio: 'xMidYMid slice',
-                          },
-                        }}
-                        height={38}
-                        width={38}
-                        isStopped={isStopped}
-                        isPaused={isPaused}
-                      />
-                    </Button>
-                  ))}
-                </div>
-              }
-            >
-              <FIcon className="mt-[6px] icon-fi-rs-heart text-[26px] text-[#F53757] border border-[#D4D8D8] w-[60px] h-[60px] rounded-full" />
-            </Popover>
+            {reporting || (
+              <Popover
+                placement="top"
+                trigger="hover"
+                overlayStyle={{ width: 230, borderRadius: 8 }}
+                content={
+                  <div className="flex flex-row gap-[8px] h-full justify-center py-[4px]">
+                    {ACTIONS.map((data, index) => (
+                      <Button key={index} shape="circle" type="link">
+                        <Lottie
+                          options={{
+                            animationData: data?.icon,
+                            loop: true,
+                            autoplay: true,
+                            rendererSettings: {
+                              preserveAspectRatio: 'xMidYMid slice',
+                            },
+                          }}
+                          height={38}
+                          width={38}
+                          isStopped={isStopped}
+                          isPaused={isPaused}
+                        />
+                      </Button>
+                    ))}
+                  </div>
+                }
+              >
+                <FIcon className="mt-[6px] icon-fi-rs-heart text-[26px] text-[#F53757] border border-[#D4D8D8] w-[60px] h-[60px] rounded-full" />
+              </Popover>
+            )}
             <span
-              onClick={() => setSavePostOpen(true)}
+              onClick={() => setSaving(true)}
               className="text-[#909090] cursor-pointer text-[20px] icon-fi-rs-bookmark mt-[22px]"
             />
             <span
-              onClick={() => setSharePostOpen(true)}
+              onClick={() => setSharing(true)}
               className="text-[#909090] cursor-pointer text-[19px] icon-fi-rs-share mt-[24.5px]"
             />
-            <Popover
-              placement="bottom"
-              trigger="click"
-              className="font-bold text-[14px] leading-[16px] tracking-[0px]"
-              overlayStyle={{ width: 166 }}
-              overlayInnerStyle={{ borderRadius: 8 }}
-              visible={isMenuOpen}
-              onVisibleChange={handleMenu}
-              content={
-                <div className="flex flex-col gap-[15px] h-full justify-between ">
-                  {me?.me?.id === article.author.id && (
-                    <Link to={`/edit/${article.id}`} target="_blank">
+            {reporting || (
+              <Popover
+                placement="bottom"
+                trigger="click"
+                className="font-bold text-[14px] leading-[16px] tracking-[0px]"
+                overlayStyle={{ width: 166 }}
+                overlayInnerStyle={{ borderRadius: 8 }}
+                content={
+                  <div className="flex flex-col gap-[15px] h-full justify-between ">
+                    {me?.me?.id === article.author.id && (
+                      <Link to={`/edit/${article.kind}/${article.id}`} target="_blank">
+                        <div className="flex flex-row items-center cursor-pointer">
+                          <span className="text-[#555555] text-[20px] mr-[8px] w-[22px] h-[22px] flex items-center justify-center icon-fi-rs-editor-o" />
+                          <p className="text-[#555555] text-[15px] leading-[18px]">Засах</p>
+                        </div>
+                      </Link>
+                    )}
+                    {me?.me?.id === article.author.id && (
                       <div className="flex flex-row items-center cursor-pointer">
-                        <span className="text-[#555555] text-[20px] mr-[8px] w-[22px] h-[22px] flex items-center justify-center icon-fi-rs-editor-o" />
-                        <p className="text-[#555555] text-[15px] leading-[18px]">Засах</p>
+                        <span className="text-[#555555] text-[20px] mr-[8px] w-[22px] h-[22px] flex items-center justify-center icon-fi-rs-delete" />
+                        <p className="text-[#555555] text-[15px] leading-[18px]">Устгах</p>
                       </div>
-                    </Link>
-                  )}
-                  {me?.me?.id === article.author.id && (
+                    )}
                     <div className="flex flex-row items-center cursor-pointer">
-                      <span className="text-[#555555] text-[20px] mr-[8px] w-[22px] h-[22px] flex items-center justify-center icon-fi-rs-delete" />
-                      <p className="text-[#555555] text-[15px] leading-[18px]">Устгах</p>
+                      <span className="text-[#555555] text-[18px] mr-[8px] w-[22px] h-[22px] flex items-center justify-center icon-fi-rs-flag" />
+                      <button
+                        onClick={() => {
+                          setReporting(true);
+                        }}
+                        className="text-[#555555] text-[15px] leading-[18px]"
+                      >
+                        Репорт
+                      </button>
                     </div>
-                  )}
-                  <div className="flex flex-row items-center cursor-pointer">
-                    <span className="text-[#555555] text-[18px] mr-[8px] w-[22px] h-[22px] flex items-center justify-center icon-fi-rs-flag" />
-                    <p
-                      onClick={() => {
-                        setIsMenuOpen(false);
-                        setIsReportOpen(true);
-                      }}
-                      className="text-[#555555] text-[15px] leading-[18px]"
-                    >
-                      Репорт
-                    </p>
                   </div>
-                </div>
-              }
-            >
-              <span className="text-[#909090] cursor-pointer text-[20px] icon-fi-rs-more-ver mt-[21px] rotate-90" />
-            </Popover>
+                }
+              >
+                <span className="text-[#909090] cursor-pointer text-[20px] icon-fi-rs-more-ver mt-[21px] rotate-90" />
+              </Popover>
+            )}
           </div>
         </div>
       </div>
@@ -263,7 +254,7 @@ const Post = () => {
                 <span className="icon-fi-rs-tw hover:text-[#1D9BF1] cursor-pointer text-[#909090] text-[20px]" />
               </TwitterShareButton>
               <span
-                onClick={() => setSavePostOpen(true)}
+                onClick={() => setSaving(true)}
                 className="icon-fi-rs-bookmark cursor-pointer hover:text-[#111111] w-[32px] h-[32px] flex justify-center items-center rounded-[2px] hover:bg-[#EFEEEF] border border-[#EFEEEF] text-[#909090] text-[20px] ml-[17px]"
               />
             </div>
@@ -343,7 +334,7 @@ const Post = () => {
             </div>
           </TwitterShareButton>
           <span
-            onClick={() => setSavePostOpen(true)}
+            onClick={() => setSaving(true)}
             className="icon-fi-rs-bookmark text-[#555555] text-[23.5px] w-[50px] h-[50px] rounded-full bg-[#F7F7F7] flex justify-center items-center cursor-pointer ml-[20px]"
           />
           <Popover
@@ -352,12 +343,10 @@ const Post = () => {
             className="font-bold text-[14px] leading-[16px] tracking-[0px] ml-[14px]"
             overlayStyle={{ width: 166 }}
             overlayInnerStyle={{ borderRadius: 8 }}
-            visible={isBottomMenu}
-            onVisibleChange={handleBottomMenu}
             content={
-              <div className="flex flex-col gap-[15px] h-full justify-between p-[18px]">
+              <div className="flex flex-col gap-[15px] h-full justify-between">
                 {me?.me.id === article.author.id && (
-                  <Link to={`/add/${article.id}`} target="_blank">
+                  <Link to={`/add/${article.kind}/${article.id}`} target="_blank">
                     <div className="flex flex-row items-center cursor-pointer">
                       <span className="text-[#555555] text-[20px] mr-[8px] w-[22px] h-[22px] flex items-center justify-center icon-fi-rs-editor-o" />
                       <p className="text-[#555555] text-[15px] leading-[18px]">Засах</p>
@@ -370,13 +359,7 @@ const Post = () => {
                     <p className="text-[#555555] text-[15px] leading-[18px]">Устгах</p>
                   </div>
                 )}
-                <div
-                  onClick={() => {
-                    setIsBottomMenu(false);
-                    setIsReportOpen(true);
-                  }}
-                  className="flex flex-row items-center cursor-pointer"
-                >
+                <div onClick={() => setReporting(true)} className="flex flex-row items-center cursor-pointer">
                   <span className="text-[#555555] text-[18px] mr-[8px] w-[22px] h-[22px] flex items-center justify-center icon-fi-rs-flag" />
                   <p className="text-[#555555] text-[15px] leading-[18px]">Репорт</p>
                 </div>
@@ -425,20 +408,12 @@ const Post = () => {
           }`}
         ></div>
       </div>
-      <PostSaveModal
-        post={article}
-        onClose={() => setSavePostOpen(false)}
-        open={savePostOpen}
-        image={imagePath(article.imageUrl)}
-      />
-      <PostShareModal
-        post={article}
-        setSharePostOpen={setSharePostOpen}
-        sharePostOpen={sharePostOpen}
-        image={imagePath(article.imageUrl)}
-      />
+      {saving && <PostSaveModal post={article} image={imagePath(article.imageUrl)} toggle={() => setSaving(false)} />}
+      {sharing && (
+        <PostShareModal post={article} toggle={() => setSharing(false)} image={imagePath(article.imageUrl)} />
+      )}
       <SignInUpController isShown={isShown} setIsShown={setIsShown} />
-      <ReportModal isOpen={isReportOpen} setIsOpen={setIsReportOpen} />
+      {reporting && <ReportModal post={article} toggle={() => setReporting(false)} />}
     </div>
   );
 };

@@ -33,7 +33,7 @@ export default function Home() {
       setFilter([]);
       setSort({ publish_date: 'desc' });
     } else if (selected === 'trend') {
-      setFilter([]);
+      setFilter([{ range: { publish_date: { gte: `now-1d/d` } } }]);
       setSort({ views_count: 'desc' });
     }
   }, [selected]);
