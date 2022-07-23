@@ -244,7 +244,7 @@ const Post = () => {
             <div className="flex sm:hidden flex-row items-center">
               <img className="w-[20px]" src={LoveIcon} alt="" />
               <img className="w-[20px]" src={HahaIcon} alt="" />
-              <p className="ml-[6px] text-[15px] text-caak-primary leading-[16px]">{article.data?.like_count}</p>
+              <p className="ml-[6px] text-[15px] text-caak-primary leading-[16px]">{article.data?.like_count || 0}</p>
             </div>
             <div className="hidden md:flex flex-row items-center">
               <FacebookShareButton className="h-[20px]" url={`http://front.caak.mn/post/view/${article.id}`}>

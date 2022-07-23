@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { gql, useQuery } from '@apollo/client';
 import { Button, Popover, Skeleton, Row, Col } from 'antd';
 import { Link } from 'react-router-dom';
+import { FIcon } from '../../icon';
 
 const menuItems = [
   { title: 'ВИДЕО', link: 'https://www.youtube.com/c/caakvideo' },
@@ -26,6 +27,7 @@ const CATEGORIES = gql`
 
 const MenuItems = ({ navBarStyle }) => {
   const [isShown, setIsShown] = useState(false);
+  console.log(isShown);
   const { data, loading } = useQuery(CATEGORIES);
   const categories = data?.categories?.nodes || [];
   if (loading) {
@@ -55,7 +57,7 @@ const MenuItems = ({ navBarStyle }) => {
               <Popover
                 placement="bottom"
                 trigger="click"
-                className="text-[14px] leading-[16px] tracking-[0px]"
+                className="leading-[16px] tracking-[0px]"
                 overlayStyle={{ width: 600 }}
                 overlayInnerStyle={{ borderRadius: 8 }}
                 visible={isShown}
@@ -76,9 +78,13 @@ const MenuItems = ({ navBarStyle }) => {
                   </Row>
                 }
               >
-                <p className="hover:text-caak-primary font-bold">
+                <p className="hover:text-caak-primary font-bold flex">
                   <span>{item.title}</span>
-                  <span className="icon-fi-rs-down-chevron text-[14px] text-caak-primary px-[8px]" />
+                  <FIcon
+                    className={`${
+                      isShown ? 'icon-fi-rs-down-chevron rotate-180 ' : 'icon-fi-rs-down-chevron'
+                    } text-[14px] h-[14px] text-caak-primary`}
+                  />
                 </p>
               </Popover>
             )}
