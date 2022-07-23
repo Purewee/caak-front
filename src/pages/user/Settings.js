@@ -70,9 +70,9 @@ export default function Settings() {
     <div className="flex justify-center w-full pb-[100px] px-[16px] md:px-0">
       <div className="max-w-[1140px] w-full mt-[51px]">
         <div className="flex flex-col md:flex-row gap-[20px] md:gap-[60px]">
-          <Anchor offsetTop={40}>
+          <Anchor className="bg-white" offsetTop={53}>
             <p className="text-[28px] font-merri leading-[24px] px-[12px]">Тохиргоо</p>
-            <div className="w-full h-[170px] rounded-[4px] mt-[22px]">
+            <div className="w-full h-[90px] rounded-[4px] mt-[22px]">
               {menu.map((data, idx) => (
                 <Anchor.Link href={data.href} title={data.title} className="font-merri" key={idx} />
               ))}
@@ -144,17 +144,17 @@ export default function Settings() {
               <p className="text-[22px] font-bold leading-[25px] w-full border-b border-[#D4D8D8] pb-[14px]">
                 Мэдээний төрөл
               </p>
-              <div className="mt-[24px] flex flex-wrap justify-between">
-                <div className="w-[172px] h-[100px] rounded-[6px] relative cursor-pointer zoom">
+              <div className="mt-[24px] flex flex-wrap gap-[10px] justify-between">
+                <div className="w-full sm:w-[172px] h-[100px] rounded-[6px] relative cursor-pointer zoom">
                   <img
                     src="https://images.complex.com/complex/images/c_fill,dpr_auto,f_auto,q_auto,w_1400/fl_lossy,pg_1/f7ovkpuwqmuhwnfpd4ki/post?fimg-ssr-default"
-                    className="w-full h-full object-cover rounded-[8px]"
+                    className="w-full sm:w-full h-full object-cover rounded-[8px]"
                   />
                   <p className="absolute top-0 h-full w-full flex items-center justify-center text-white text-[15px] font-medium bg-black bg-opacity-50 rounded-[6px]">
                     Post Malone
                   </p>
                 </div>
-                <div className="w-[172px] h-[100px] rounded-[6px] relative cursor-pointer zoom">
+                <div className="w-full sm:w-[172px] h-[100px] rounded-[6px] relative cursor-pointer zoom">
                   <img
                     src="https://cdn.unitycms.io/images/5D0o2tfgaEsA-LuVS2RN7K.png?op=ocroped&val=1200,1200,1000,1000,0,0&sum=rDoHXgs-buo"
                     className="w-full h-full object-cover rounded-[8px]"
@@ -163,7 +163,7 @@ export default function Settings() {
                     Post Malone
                   </p>
                 </div>
-                <div className="w-[172px] h-[100px] rounded-[6px] relative cursor-pointer zoom">
+                <div className="w-full sm:w-[172px] h-[100px] rounded-[6px] relative cursor-pointer zoom">
                   <img
                     src="https://townsquare.media/site/812/files/2022/06/attachment-post-malone.jpg?w=1200&h=0&zc=1&s=0&a=t&q=89"
                     className="w-full h-full object-cover rounded-[8px]"
@@ -172,7 +172,7 @@ export default function Settings() {
                     Post Malone
                   </p>
                 </div>
-                <div className="w-[172px] h-[100px] rounded-[6px] border border-caak-primary bg-[#FFF9F5] flex flex-col items-center justify-center">
+                <div className="w-full sm:w-[172px] h-[100px] rounded-[6px] border border-caak-primary bg-[#FFF9F5] flex flex-col items-center justify-center">
                   <FIcon className="icon-fi-rs-plus w-[34px] h-[34px] text-caak-primary rounded-[6px] border-[2px] border-dashed border-[#FF6600]" />
                   <p className="mt-[12px] text-caak-primary text-[15px] font-medium leading-[18px]">Төрөл нэмэх</p>
                 </div>

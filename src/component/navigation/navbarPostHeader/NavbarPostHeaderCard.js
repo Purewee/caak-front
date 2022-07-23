@@ -7,8 +7,10 @@ import { MetaTag } from '../../../pages/post/view/wrapper';
 const NavbarPostHeaderCard = ({ type, item }) => {
   return (
     item && (
-      <div className="w-full h-full relative min-h-[560px]">
-        <img className="object-cover w-full h-[560px]" alt="" src={imagePath(item.image)} />
+      <div className="w-full h-full zoomIn relative min-h-[560px]">
+        <div className="zoomIn h-full w-full">
+          <img className="object-cover w-full h-[560px]" alt="" src={imagePath(item.image)} />
+        </div>
         <div className="min-h-[480px] w-full navBarPostHeaderCardGradient absolute bottom-0" />
         <div
           className={`flex flex-col w-full absolute bottom-0 ${type === 'wide' ? 'px-[40px]' : 'px-[30px]'} py-[30px]`}

@@ -16,7 +16,7 @@ export default function Story() {
   const [stories, setStories] = useState([]);
   const [indexOfStory, setIndexOfStory] = useState(id === 'done' ? 'done' : JSON.parse(id));
   const [shownStory, setShownStory] = useState(null);
-  const [sharePostOpen, setSharePostOpen] = useState(false);
+  const [sharing, setSharing] = useState(false);
 
   useEffect(() => {
     const es = new ESService('caak');
@@ -90,7 +90,7 @@ export default function Story() {
           <div className="flex flex-row items-center">
             <span className="icon-fi-rs-volume text-[22px] text-white" />
             <span className="icon-fi-rs-play text-[18px] text-white ml-[27px]" />
-            <span onClick={() => setSharePostOpen(true)} className="icon-fi-rs-share cursor-pointer text-[20px] text-white ml-[25px]" />
+            <span onClick={() => setSharing(true)} className="icon-fi-rs-share cursor-pointer text-[20px] text-white ml-[25px]" />
             <Link to={'/'}>
               <div className="w-[34px] h-[34px] bg-opacity-30 bg-white rounded-full flex justify-center items-center ml-[33.8px]">
                 <span className="icon-fi-rs-close text-[13.5px] text-white xl:text-[#555555] " />
@@ -152,12 +152,7 @@ export default function Story() {
           </div>
         </Link>
       }
-      <PostShareModal
-        post={shownStory}
-        setSharePostOpen={setSharePostOpen}
-        sharePostOpen={sharePostOpen}
-        image={imagePath(shownStory?.image)}
-      />
+      {sharing && <PostShareModal post={shownStory} toggle={() => setSharing(false)} image={imagePath(shownStory?.image)} />}
     </div>
   );
 }

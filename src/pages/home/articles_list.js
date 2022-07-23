@@ -39,11 +39,11 @@ export default function ArticlesList({ filter = [], sort = {}, size = 24 }) {
         <Button
           block
           size="large"
-          className="font-roboto border-caak-primary text-caak-primary mt-[20px]"
+          className="font-roboto border-caak-primary h-[74px] text-[18px] font-medium text-caak-primary mt-[20px]"
           onClick={() => setPage(page + 1)}
           loading={loading}
         >
-          Цааш үзэх
+          Бусад мэдээ
         </Button>
       </Col>
     </div>

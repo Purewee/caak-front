@@ -18,7 +18,7 @@ const ActionButtons = ({ post }) => {
         onClick={() => setSaving(true)}
         className="w-[20px] h-[20px] flex items-center justify-center cursor-pointer"
       >
-        <span className="icon-fi-rs-bookmark text-white text-[17px]" />
+        <span className="icon-fi-rs-bookmark text-white text-[22px]" />
       </div>
       <div className="w-[20px] h-[20px] relative flex items-center justify-center cursor-pointer ml-[10px]">
         {reporting || sharing || (
@@ -41,7 +41,7 @@ const ActionButtons = ({ post }) => {
               </div>
             }
           >
-            <span className="icon-fi-rs-more-ver text-white text-[17px]" />
+            <span className="icon-fi-rs-more-ver text-white text-[22px]" />
           </Popover>
         )}
       </div>

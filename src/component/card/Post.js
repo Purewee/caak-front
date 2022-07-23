@@ -18,7 +18,7 @@ export default function PostCard({ isMobile, post, ...rest }) {
   const [sharing, setSharing] = useState(false);
   const [random] = useState(Math.floor(Math.random() * colors.length));
 
-  const postURL = `/post/view/${post.id}`;
+  const postURL = `/post/view/${post?.id}`;
   const sponsored = post?.featured && moment().isBetween(moment(post.featured_from), moment(post.featured_to));
 
   const color = sponsored ? { backgroundColor: colors[random] } : {};
@@ -64,7 +64,7 @@ export default function PostCard({ isMobile, post, ...rest }) {
             className={`${
               sponsored
                 ? 'px-[16px] h-[85px] truncate-4 sm:truncate-3 text-[22px] sm:text-[21px] leading-[30px] sm:leading-[29px] font-bold sm:font-normal'
-                : 'truncate-3 font-medium sm:font-normal text-[16px] sm:text-[21px] leading-[20px] sm:leading-[29px] ml-[16px] sm:ml-0'
+                : 'truncate-3 font-medium hover:underline underline-offset-4 decoration-[#3B4491]/20 sm:font-normal text-[16px] sm:text-[21px] leading-[20px] sm:leading-[29px] ml-[16px] sm:ml-0'
             } font-roboto sm:font-merri ${text}`}
           >
             {post.title}
@@ -184,7 +184,9 @@ export default function PostCard({ isMobile, post, ...rest }) {
                   alt=""
                   src={imagePath(post.image)}
                 />
-                <p className="text-[#555555] text-[16px] leading-[19px] font-medium ml-[18px]">{post.title}</p>
+                <p className="text-[#555555] text-[16px] leading-[19px] hover:underline font-medium ml-[18px]">
+                  {post.title}
+                </p>
               </div>
               <div className="flex flex-col justify-center h-full pl-[14px] pt-[24px]">
                 <div

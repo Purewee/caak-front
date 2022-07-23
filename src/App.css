@@ -112,13 +112,12 @@
   font-weight: 700;
 }
 
-.navBarPostHeaderCardGradient {
-  background: transparent linear-gradient(180deg, #11111100 0%, #111111cc 100%) 0 0 no-repeat padding-box;
+* {
+  animation-duration: 0s !important;
 }
 
-.storyLinear {
-  background: transparent linear-gradient(180deg, #00000067 0%, #00000000 100%) 0% 0% no-repeat;
-  opacity: 20;
+.navBarPostHeaderCardGradient {
+  background: transparent linear-gradient(180deg, #11111100 0%, #111111cc 100%) 0 0 no-repeat padding-box;
 }
 
 .storyLinearTop {
@@ -133,6 +132,10 @@
 
 .storyLinearBig {
   background: transparent linear-gradient(180deg, #00000000 0%, #000000 100%) 0% 0% no-repeat padding-box;
+}
+
+.storyLinearItem {
+  background: transparent linear-gradient(180deg, #00000000 0%, #000000C9 100%) 0% 0% no-repeat padding-box;
 }
 
 .storyLinearBorder {
@@ -371,7 +374,21 @@
 }
 
 .zoom:hover {
-  transform: scale(0.95); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+  transform: scale(0.95);
+}
+
+.zoomIn {
+  display: inline-block; /* shrink wrap to image */
+  overflow: hidden;
+}
+
+.zoomIn img {
+  display: block; /* no whitespace */
+  transition: 0.4s ease-in-out;
+}
+
+.zoomIn:hover img {
+  transform: scale(1.05);
 }
 
 .reportModalItemsContainer {

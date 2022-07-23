@@ -3,18 +3,22 @@ import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { generateTimeAgo, imagePath } from '../../utility/Util';
 import { Link } from 'react-router-dom';
 
-export default function StoryItem({ story, index }) {
+export default function StoryItem({ story, index, border }) {
   return (
     <div className={`min-w-[106px] sm:min-w-[290px] max-w-[290px] sm:min-h-[435px] min-h-[160px] max-h-[435px]`}>
       <Link to={`/story/${index}`}>
-        <div className="h-full w-full storyBackgroundLinear hover:p-[3px] rounded-[8px]">
-          <div className="relative h-full w-full bg-white rounded-[8px] hover:p-[5px]">
+        <div className={`h-full w-full storyBackgroundLinear ${border && 'p-[3px]'} rounded-[8px]`}>
+          <div className={`relative h-full w-full bg-white rounded-[8px] ${border && 'p-[5px]'}`}>
             <LazyLoadImage
               alt={story.id}
               className={`object-cover h-full w-full rounded-[8px]`}
               src={imagePath(story?.image)}
             />
-            <div className="absolute bottom-0 rounded-[8px] storyLinear h-full w-full hover:h-[424px] hover:w-[274px] py-[14px] xl:py-[30px] px-[10px] xl:px-[20px] flex flex-col items-start justify-end">
+            <div
+              className={`absolute ${border ? 'bottom-[5px]' : 'bottom-0'} rounded-[8px] storyLinearItem h-1/2 w-full ${
+                border && 'h-[424px] w-[274px]'
+              } xl:py-[30px] px-[10px] xl:px-[20px] flex flex-col items-start justify-end`}
+            >
               {story?.categories?.map((x) => (
                 <p
                   key={x.name}

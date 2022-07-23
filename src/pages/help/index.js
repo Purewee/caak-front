@@ -82,24 +82,14 @@ const caakNames = [
         desc: 'Мэдээ мэдээллийн халуун цэг!'
     },
     {
-        image: CaakNews,
-        name: 'Caaknews.mn',
-        desc: 'Мэдээллээс илүү мэдлэгийг түгээнэ!'
-    },
-    {
-        image: CaakRadio,
-        name: 'Caak Radio',
-        desc: 'Ажлаа хийнгээ хит дуунуудаа сонс!'
-    },
-    {
         image: CaakEnt,
         name: 'Caak Видео',
         desc: 'Таны мэлмийг нээж, оюуныг баясгах суваг!'
     },
     {
-        image: CaakPodcast,
-        name: 'Caak Зууч',
-        desc: 'Үнэ цэнэтэй хөрөнгийн зууч!'
+        image: CaakRadio,
+        name: 'Caak Radio',
+        desc: 'Ажлаа хийнгээ хит дуунуудаа сонс!'
     },
 ]
 
@@ -209,7 +199,7 @@ export default function Help() {
                 <div className='max-w-[1310px] w-full flex flex-row justify-between items-center'>
                     <div className='max-w-[480px] w-full'>
                         <p className='text-[35px] md:text-[52px] text-white font-medium leading-[41px] md:leading-[54px]'>Мэдээ мэдээллийн төв цэг!</p>
-                        <p className='max-w-[372px] w-full text-white text-[18px] leading-[23px] text-opacity-80 mt-[30px]'>Хүн болгонд соргог мэдээллийг таны гарт шинэхэн талх шиг түгээх болно.</p>
+                        <p className='max-w-[372px] w-full text-white text-[18px] leading-[23px] text-opacity-80 mt-[30px]'>Дотоод, гадаадын шилдэг, шинэ мэдээллүүдийг нэг цэгээс хүргэнэ!</p>
                     </div>
                     <img className='w-[604px] h-[271px] hidden md:block' alt='' src={require('../../assets/images/help2x.png')} />
                 </div>
@@ -233,9 +223,13 @@ export default function Help() {
                         ?
                         <div>
                             <p className='font-condensed font-bold text-[32px] text-[#111111] leading-[38px] mt-[20px] sm:mt-0'>Бидний тухай</p>
-                            <div className='sm:h-[68px] flex flex-col justify-between mt-[20px] text-[#555555]'>
-                                <p className='text-[15px] leading-[20px]'>Саак.мн сайт нь 2006 оны 1-р сарын 23-аас эхэлж үйл ажиллагаагаа явуулж эхэлсэн бөгөөд Дэлхийн болон дотоодын сонин содон, сонирхолтой, сургамжтай, гэрэл гэгээтэй мэдээллийг цаг алдалгүй хүргэдэг Монголын анхны энтертаймент сайт билээ.</p>
-                                <span className='inline-flex'><p className='font-bold'>Бидний зорилго: &nbsp;</p> Монголын нийгэмд гэрэл гэгээ түгээж, хүмүүст урам зориг, мэдлэг түгээх юм.</span>
+                            <div className='flex flex-col justify-between mt-[20px] text-[#555555]'>
+                                <p className='text-[15px] leading-[20px]'>Саак.мн сайт нь 2006 оны 1-р сарын 23-аас эхэлж үйл ажиллагаагаа явуулж эхэлсэн бөгөөд Гадаад дотоодын сонин содон, сонирхолтой баримт, гэрэл зургуудыг хүргэсээр ирсэн Монголын анхны энтертаймент сайт билээ.</p>
+                                <span className='inline-flex'><p className='font-bold'>-Өөрчлөлт шинэчлэлт: &nbsp;</p></span>
+                                <ul className="ml-[20px]">
+                                    <li>Гадаад дотоодын шилдэг, шинэ мэдээллүүдийг нэг цэгээс хүргэх суваг болов</li>
+                                    <li>Та бүртгүүлээд өөрийн сонирхолын дагуу мэдээллээ авах боломжтой болсон</li>
+                                </ul>
                             </div>
                             <p className='text-[#363946] text-[20px] font-bold leading-[24px] mt-[40px]'>Манай үйлчилгээнүүд</p>
                             <div className='flex flex-wrap justify-center gap-[21px] mt-[20px]'>
@@ -257,7 +251,7 @@ export default function Help() {
                         ?
                         <div>
                             <p className='font-condensed font-bold text-[25px] md:text-[32px] text-[#111111] md:leading-[38px] mt-[20px] sm:mt-0'>Сурталчилгаа байршуулах</p>
-                            <p className='text-[15px] text-[#555555] leading-[20px] mt-[23px]'>Та манай 13 жилийн түүхтэй CAAK.MN сайт дээр Мэдээ, Пост, Контент бэлтгүүлэх болон Сурталчилгаа байршуулснаар дараах давуу талуудыг хүртэх боломжтой.</p>
+                            <p className='text-[15px] text-[#555555] leading-[20px] mt-[23px]'>Та манай 16 жилийн түүхтэй CAAK.MN сайт дээр Мэдээ, Пост, Контент нийтлүүлэх болон бизнесийн сурталчилгаа байршуулснаар дараах давуу талуудыг хүртэх боломжтой.</p>
                             <p className='text-[#363946] text-[20px] font-bold leading-[24px] mt-[40px]'>Давуу талууд</p>
                             <div className='flex flex-wrap justify-between gap-[20px] mt-[20px]'>
                                 {
@@ -433,7 +427,7 @@ export default function Help() {
                     </div>
                 </div>
             }
-            {
+            {/* {
                 ((selected === 1) || (selected === 2)) &&
                 <div className='w-full h-[276px] hidden bg-[#FF6600] md:flex justify-center'> 
                     <div className='max-w-[1310px] w-full flex flex-col sm:flex-row sm:items-center px-[16px] sm:px-0 pt-[20px] sm:pt-0'>
@@ -444,7 +438,7 @@ export default function Help() {
                         </div>
                     </div>
                 </div>
-            }
+            } */}
         </div>
     );
 }

@@ -25,7 +25,7 @@ export default function Reaction({ articleId }) {
 
   return (
     <Spin className="max-w-[760px] w-full flex flex-col items-center" spinning={loading || fetching}>
-      <p className="text-[#111111] text-[18px] font-bold leading-[21px] my-[36px] max-w-[190px] md:max-w-full md:mt-[50px]">
+      <p className="text-[#111111] text-[18px] font-bold leading-[21px] my-[36px] text-center px-[70px] md:px-0 md:mt-[50px]">
         ЭНЭ МЭДЭЭНД ӨГӨХ ТАНЫ СЭТГЭГДЭЛ?
       </p>
       <div className="flex flex-row items-center gap-[7px] md:gap-[24px] mt-[14px]">

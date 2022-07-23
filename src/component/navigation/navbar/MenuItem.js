@@ -78,7 +78,7 @@ const MenuItems = ({ navBarStyle }) => {
               >
                 <p className="hover:text-caak-primary font-bold">
                   <span>{item.title}</span>
-                  <span className="icon-fi-rs-down-chevron text-[12px] text-caak-primary px-[8px]" />
+                  <span className="icon-fi-rs-down-chevron text-[14px] text-caak-primary px-[8px]" />
                 </p>
               </Popover>
             )}

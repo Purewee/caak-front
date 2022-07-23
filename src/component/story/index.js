@@ -80,7 +80,7 @@ const StoryFeed = () => {
         className="w-full wrapper gap-[13px] transition-all pb-[26px] md:pb-0 duration-300 mt-[14px] md:mt-[39px]"
       >
         {stories.map((item, index) => {
-          return <StoryItem story={item} key={index} index={index} />;
+          return <StoryItem border={index === 0} story={item} key={index} index={index} />;
         })}
         <div className="min-w-[106px] sm:min-w-[290px] relative flex items-center justify-center max-w-[290px] rounded-[8px] min-h-[160px] sm:min-h-[435px] max-h-[435px]">
           <img className="w-full h-full" src={require('../../assets/images/all-stories.png')} alt="All Stories" />

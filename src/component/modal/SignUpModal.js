@@ -21,19 +21,19 @@ export default function SignUpModal({ setIsShown }) {
             <img src={logoIcon} className="cursor-pointer object-contain" alt="Caak Logo" width={157} height={47} />
             <p className="mt-[22px] text-[18px] font-medium text-[#111111]">Мэдээ мэдээллийн төв цэг!</p>
             <div className="flex flex-row mt-[58px]">
-              <span className="icon-fi-rs-filter-f text-white w-[30px] h-[30px] flex items-center justify-center bg-[#FF6600] rounded-full" />
+              <span className="icon-fi-rs-filter-f text-white text-[15px] w-[30px] h-[30px] flex items-center justify-center bg-[#FF6600] rounded-full" />
               <p className="text-[#111111] text-[15px] leading-[20px] w-[152px] ml-[14px]">
                 Мэдээллийг шүүн өөртөө тааруулах
               </p>
             </div>
             <div className="flex flex-row mt-[15px]">
-              <span className="icon-fi-rs-network text-white w-[30px] h-[30px] flex items-center justify-center bg-[#FF6600] rounded-full" />
+              <span className="icon-fi-rs-network text-white text-[15px] w-[30px] h-[30px] flex items-center justify-center bg-[#FF6600] rounded-full" />
               <p className="text-[#111111] text-[15px] leading-[20px] w-[152px] ml-[14px]">
                 Шилдэг мэдээний сувгийг дагах
               </p>
             </div>
             <div className="flex flex-row mt-[15px]">
-              <span className="icon-fi-rs-list-f text-white w-[30px] h-[30px] flex items-center justify-center bg-[#FF6600] rounded-full" />
+              <span className="icon-fi-rs-list-f text-white text-[15px] w-[30px] h-[30px] flex items-center justify-center bg-[#FF6600] rounded-full" />
               <p className="text-[#111111] text-[15px] leading-[20px] w-[152px] ml-[14px]">
                 Таалагдсан мэдээг хадгалан жор үүсгэх
               </p>

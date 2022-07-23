@@ -20,7 +20,7 @@ export default function Footer() {
   }, [context.shown]);
   // prettier-ignore
   return isFooter ? (
-    <div className='w-full md:h-[429px] bg-[#111111] flex flex-col items-center justify-between pb-[82px]'>
+    <div className='w-full md:h-[423px] bg-[#111111] flex flex-col items-center justify-between'>
         <div className='flex flex-col md:flex-row w-full items-start max-w-[1310px] px-[16px] md:px-0'>
             <img src={Logo} className='mr-[193px] mt-[41px] hidden md:block'/>
             <div className='w-full flex flex-col md:flex-row gap-[16px] justify-between mt-[30px] md:mt-[60px]'>
@@ -76,7 +76,7 @@ export default function Footer() {
                 </div>
             </div>
         </div>
-        <div className='border-t flex justify-center w-full py-[20px] md:py-[40px]'>
+        <div className='border-t border-[#3B3B3B] flex justify-center w-full py-[20px] md:py-[40px]'>
             <p className='text-[#838383] text-[15px]'>©2022 “Саак Холдинг” ХХК</p>
         </div>
     </div>

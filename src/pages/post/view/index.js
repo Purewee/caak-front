@@ -154,17 +154,17 @@ const Post = () => {
             )}
             <span
               onClick={() => setSaving(true)}
-              className="text-[#909090] cursor-pointer text-[20px] icon-fi-rs-bookmark mt-[22px]"
+              className="text-[#909090] cursor-pointer text-[24px] icon-fi-rs-bookmark mt-[22px]"
             />
             <span
               onClick={() => setSharing(true)}
-              className="text-[#909090] cursor-pointer text-[19px] icon-fi-rs-share mt-[24.5px]"
+              className="text-[#909090] cursor-pointer text-[24px] icon-fi-rs-share mt-[24.5px]"
             />
             {reporting || (
               <Popover
                 placement="bottom"
                 trigger="click"
-                className="font-bold text-[14px] leading-[16px] tracking-[0px]"
+                className="leading-[16px] tracking-[0px]"
                 overlayStyle={{ width: 166 }}
                 overlayInnerStyle={{ borderRadius: 8 }}
                 content={
@@ -197,7 +197,7 @@ const Post = () => {
                   </div>
                 }
               >
-                <span className="text-[#909090] cursor-pointer text-[20px] icon-fi-rs-more-ver mt-[21px] rotate-90" />
+                <span className="text-[#909090] cursor-pointer text-[22px] icon-fi-rs-more-ver mt-[21px] rotate-90" />
               </Popover>
             )}
           </div>
@@ -218,11 +218,11 @@ const Post = () => {
         </div>
         <Wrapper>
           <Title className="text-center">{article.title}</Title>
-          {/*<div className="flex flex-row items-center mt-[30px]">*/}
-          {/*  <img className="w-[20px]" src={LoveIcon} alt="" />*/}
-          {/*  <img className="w-[20px]" src={HahaIcon} alt="" />*/}
-          {/*  <p className="ml-[6px] text-[15px] text-caak-primary leading-[16px]">{article.data?.like_count}</p>*/}
-          {/*</div>*/}
+          <div className="flex flex-row items-center mt-[30px]">
+            <img className="w-[20px]" src={LoveIcon} alt="" />
+            <img className="w-[20px]" src={HahaIcon} alt="" />
+            <p className="ml-[6px] text-[15px] text-caak-primary leading-[16px]">{article.data?.like_count}</p>
+          </div>
           <div className="flex flex-row justify-between w-full h-[32px] mt-[21px]">
             <div className="flex flex-row items-center h-[32px]">
               <Avatar className="w-[32px] h-[32px] rounded-full" src={imagePath(article.source?.icon)} />
@@ -248,10 +248,10 @@ const Post = () => {
             </div>
             <div className="hidden md:flex flex-row items-center">
               <FacebookShareButton className="h-[20px]" url={`http://front.caak.mn/post/view/${article.id}`}>
-                <span className="icon-fi-rs-fb hover:text-[#1877F2] cursor-pointer text-[#909090] text-[20px]" />
+                <FIcon className="text-[#909090] hover:text-[#1877F2] text-[22px] w-[24px] h-[24px] icon-fi-rs-fb" />
               </FacebookShareButton>
               <TwitterShareButton className="h-[20px] ml-[24px]" url={`http://front.caak.mn/post/view/${article.id}`}>
-                <span className="icon-fi-rs-tw hover:text-[#1D9BF1] cursor-pointer text-[#909090] text-[20px]" />
+                <FIcon className="text-[#909090] hover:text-[#1877F2] text-[22px] w-[24px] h-[24px] icon-fi-rs-tw" />
               </TwitterShareButton>
               <span
                 onClick={() => setSaving(true)}
@@ -259,12 +259,8 @@ const Post = () => {
               />
             </div>
           </div>
-          <img
-            src={imagePath(article.imageUrl)}
-            alt=""
-            className="w-full h-[530px] hidden md:flex mt-[30px] object-cover"
-          />
-          <div className="pt-[20px] pb-[26px] md:pb-[50px]">
+          <img src={imagePath(article.imageUrl)} alt="" className="w-full hidden md:flex mt-[30px] object-cover" />
+          <div className="pb-[26px] md:pb-[50px]">
             <Paragraph dangerouslySetInnerHTML={createMarkup(article.description)} />
           </div>
           {sortBy(article.blocks, 'position').map((b) => {
@@ -273,14 +269,8 @@ const Post = () => {
                 {b.kind === 'image' && (
                   <div key={b.id} className="flex flex-col md:items-center mb-[26px] md:mb-[50px] w-full">
                     {b.title && <BlockTitle>{b.title}</BlockTitle>}
-                    <LazyLoadImage
-                      src={imagePath(b.imageUrl)}
-                      alt={b.title}
-                      className="w-full md:max-h-[640px] object-cover"
-                    />
-                    {b.content && (
-                      <Paragraph className="mt-[16px] md:mt-0" dangerouslySetInnerHTML={createMarkup(b.content)} />
-                    )}
+                    <LazyLoadImage src={imagePath(b.imageUrl)} alt={b.title} className="w-full object-cover" />
+                    {b.content && <Paragraph dangerouslySetInnerHTML={createMarkup(b.content)} />}
                   </div>
                 )}
                 {b.kind === 'text' && (
