@@ -27,7 +27,6 @@ const CATEGORIES = gql`
 
 const MenuItems = ({ navBarStyle }) => {
   const [isShown, setIsShown] = useState(false);
-  console.log(isShown);
   const { data, loading } = useQuery(CATEGORIES);
   const categories = data?.categories?.nodes || [];
   if (loading) {

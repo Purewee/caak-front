@@ -11,7 +11,7 @@ import moment from 'moment';
 
 const colors = ['#163943', '#463146', '#131D1C', '#1E1642', '#854D0E', '#233C6A', '#813333'];
 
-export default function PostCard({ isMobile, post, ...rest }) {
+export default function PostCard({ isMobile, post, sponsored, ...rest }) {
   const [saving, setSaving] = useState(false);
   const [fixedMenu, setFixedMenu] = useState(false);
   const [reporting, setReporting] = useState(false);
@@ -19,7 +19,7 @@ export default function PostCard({ isMobile, post, ...rest }) {
   const [random] = useState(Math.floor(Math.random() * colors.length));
 
   const postURL = `/post/view/${post?.id}`;
-  const sponsored = post?.featured && moment().isBetween(moment(post.featured_from), moment(post.featured_to));
+  // const sponsored = post?.featured && moment().isBetween(moment(post.featured_from), moment(post.featured_to));
 
   const color = sponsored ? { backgroundColor: colors[random] } : {};
   const text = sponsored ? 'text-[#ffffff] sm:text-center hover:text-[#ffffff]' : 'hover:text-[#111111]';
@@ -134,28 +134,27 @@ export default function PostCard({ isMobile, post, ...rest }) {
               <Popover
                 placement="bottom"
                 trigger="click"
-                className="leading-[16px] tracking-[0px]"
                 overlayStyle={{ width: 166 }}
-                overlayInnerStyle={{ borderRadius: 8 }}
+                overlayInnerStyle={{ borderRadius: 4 }}
                 content={
                   <div className="flex flex-col justify-center h-full ">
                     <div
                       onClick={() => {
                         setSharing(true);
                       }}
-                      className="flex flex-row items-center cursor-pointer"
+                      className="flex flex-row items-center cursor-pointer text-[#555555]"
                     >
-                      <span className="text-[#555555] text-[16px] mr-[11px] w-[22px] h-[22px] flex items-center justify-center icon-fi-rs-share" />
-                      <p className="text-[#555555] text-[15px] leading-[18px]">Хуваалцах</p>
+                      <span className="text-[22px] mr-[11px] w-[22px] h-[22px] flex items-center justify-center icon-fi-rs-share" />
+                      <p className="text-[15px] leading-[18px]">Хуваалцах</p>
                     </div>
                     <div
                       onClick={() => {
                         setReporting(true);
                       }}
-                      className="flex flex-row items-center mt-[12px] cursor-pointer"
+                      className="flex flex-row items-center mt-[12px] cursor-pointer text-[#555555]"
                     >
-                      <span className="text-[#555555] text-[15px] mr-[11px] w-[22px] h-[22px] flex items-center justify-center icon-fi-rs-flag" />
-                      <p className="text-[#555555] text-[15px] leading-[18px]">Репорт</p>
+                      <span className="text-[22px] mr-[11px] w-[22px] h-[22px] flex items-center justify-center icon-fi-rs-flag" />
+                      <p className="text-[15px] leading-[18px]">Репорт</p>
                     </div>
                   </div>
                 }

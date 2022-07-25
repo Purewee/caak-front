@@ -12,10 +12,12 @@ import { useAuth } from '../../context/AuthContext';
 import SignInUpController from '../../component/modal/SignInUpController';
 import ArticlesList from './articles_list';
 import { FieldTimeOutlined, LineChartOutlined } from '@ant-design/icons';
+import SideMenu from '../../component/navigation/navbar/SideMenu';
 
 export default function Home() {
   const context = useContext(AppContext);
   const [selected, setSelected] = useState('recent');
+  const [sideMenuOpen, setSideMenuOpen] = useState(false);
   const [stickyTabs, setStickyTabs] = useState(false);
   const [isShown, setIsShown] = useState(false);
   const [searchShown, setSearchShown] = useState(false);
@@ -84,14 +86,6 @@ export default function Home() {
             >
               ТРЭНД
             </p>
-            <p
-              onClick={() => setSelected('sponsored')}
-              className={`${
-                selected === 'sponsored' ? 'text-[#111111] border-caak-primary' : 'text-[#555555]'
-              } text-[21px] leading-[24px] pb-[9px] border-b-[3px] font-condensed font-bold`}
-            >
-              ОНЦЛОХ
-            </p>
           </div>
         </div>
         <NavbarPostHeader />
@@ -101,8 +95,13 @@ export default function Home() {
         <div
           className={`${
             !stickyTabs ? 'max-w-[1310px] w-full' : 'w-full'
-          } hidden xl:flex sticky top-0 z-[2] flex-row justify-center items-center border-b bg-white px-[40px]`}
+          } hidden xl:flex sticky top-0 z-[1] flex-row justify-center items-center border-b bg-white px-[40px]`}
         >
+          <FIcon
+            onClick={() => setSideMenuOpen(true)}
+            className={`${stickyTabs ? 'icon-fi-rs-hamburger-menu text-[22px] mr-[20px] text-caak-black' : 'hidden'}`}
+          />
+          {sideMenuOpen && <SideMenu setSideMenuOpen={setSideMenuOpen} />}
           <Logo className={stickyTabs ? 'block mr-[10px]' : ' hidden'} />
           <div className="max-w-[1310px] w-full px-[16px] sm:px-0">
             <Tabs size="large" onChange={(e) => setSelected(e)} className="w-full" centered>
@@ -132,7 +131,7 @@ export default function Home() {
               ></Tabs.TabPane>
             </Tabs>
           </div>
-          <div className={`min-w-[150px] flex flex-row items-center ${stickyTabs ? 'block' : ' hidden'}`}>
+          <div className={`min-w-[192px] flex flex-row items-center ${stickyTabs ? 'block' : ' hidden'}`}>
             <FIcon
               onClick={() => setSearchShown(true)}
               className="icon-fi-rs-search text-caak-darkGray text-[20px] w-[32px] mr-[6px]"

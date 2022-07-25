@@ -7,15 +7,15 @@ import { MetaTag } from '../../../pages/post/view/wrapper';
 const NavbarPostHeaderCard = ({ type, item }) => {
   return (
     item && (
-      <div className="w-full h-full zoomIn relative min-h-[560px]">
+      <div className="w-full zoomIn relative h-[560px]">
         <div className="zoomIn h-full w-full">
           <img className="object-cover w-full h-[560px]" alt="" src={imagePath(item.image)} />
         </div>
         <div className="min-h-[480px] w-full navBarPostHeaderCardGradient absolute bottom-0" />
         <div
-          className={`flex flex-col w-full absolute bottom-0 ${type === 'wide' ? 'px-[40px]' : 'px-[30px]'} py-[30px]`}
+          className={`flex flex-col w-full absolute bottom-0 ${type === 'wide' ? 'px-[40px]' : 'px-[30px]'} pb-[30px]`}
         >
-          <div className="flex justify-start">
+          {/* <div className="flex justify-start">
             {item.categories?.map((x) => {
               return (
                 <Link key={x.name} to={`/category/${x.slug}`}>
@@ -27,7 +27,7 @@ const NavbarPostHeaderCard = ({ type, item }) => {
                 </Link>
               );
             })}
-          </div>
+          </div> */}
           <Link className="mt-[10px]" to={`/post/view/${item.id}`}>
             <p
               className={`${
@@ -39,24 +39,24 @@ const NavbarPostHeaderCard = ({ type, item }) => {
               {item.title}
             </p>
           </Link>
-          <p className="text-[14px] text-white font-medium tracking-[0.21px] leading-[16px] mt-[14px]">
+          {/* <p className="text-[14px] text-white font-medium tracking-[0.21px] leading-[16px] mt-[14px]">
             {generateTimeAgo(item.publish_date)}
-          </p>
-          <div className="flex flex-wrap justify-between w-full mt-[30px] items-center">
+          </p> */}
+          <div className="flex flex-wrap justify-between w-full mt-[29px] items-center">
             <div className="flex text-white flex-row items-center self-start">
-              <div className="flex flex-row items-center font-medium">
+              <div className="flex flex-row items-center">
                 <Link to={`/channel/${item.source?.slug}`} className="flex flex-row items-center">
                   <Avatar className="w-[22px] h-[22px]" src={imagePath(item.source?.icon)} />
-                  <MetaTag className="ml-[6px] text-[#FFFFFF]">{item?.source?.name}</MetaTag>
+                  <MetaTag className="ml-[6px] text-[#FFFFFF] text-[15px]">{item?.source?.name}</MetaTag>
                 </Link>
                 <Link to={`/profile/${item.author?.id}`}>
                   <MetaTag className="ml-[6px] text-[#FFFFFF]">• {(item.author?.name).split(' ')[0]}</MetaTag>
                 </Link>
               </div>
             </div>
-            <div className="flex items-center mt-[10px] sm:mt-0 self-end md:self-center">
+            {/* <div className="flex items-center mt-[10px] sm:mt-0 self-end md:self-center">
               <ActionButtons post={item} />
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

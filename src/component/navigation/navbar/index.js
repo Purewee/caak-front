@@ -6,7 +6,6 @@ import Logo from '../../logo';
 import { AppContext } from '../../../App';
 import { useAuth } from '../../../context/AuthContext';
 import UserInfo from './UserInfo';
-import logoIcon from '../../../images/New-Logo.svg';
 import { Avatar, Skeleton } from 'antd';
 import { Link } from 'react-router-dom';
 import { FIcon } from '../../../component/icon';
@@ -14,6 +13,8 @@ import { ME } from '../../../pages/post/view/_gql';
 import SearchModal from '../../modal/SearchModal';
 import { useNavigate } from 'react-router-dom';
 import SessionModal from '../../modal/session';
+import SideMenu from './SideMenu';
+import { ESService } from '../../../lib/esService';
 
 const CATEGORIES = gql`
   query GetCategories {
@@ -48,11 +49,9 @@ const mobileItems = [
 
 export default function NavbarNew() {
   const context = useContext(AppContext);
-  const { data, loading } = useQuery(CATEGORIES);
   const { data: me, loading: me_loading } = useQuery(ME);
-  const categories = data?.categories?.nodes || [];
   const [loaded, setLoaded] = useState(false);
-  const [subMenuShown, setSubMenuShown] = useState(false);
+  const [posts, setPosts] = useState([]);
   const [mobileSideMenu, setMobileSideMenu] = useState(false);
   const [searchShown, setSearchShown] = useState(false);
   const [isShown, setIsShown] = useState(false);
@@ -100,9 +99,12 @@ export default function NavbarNew() {
   }
 
   const mobileRef = useRef(null);
-  const sideMenuRef = useRef(null);
   useOutsideAlerter(mobileRef);
-  useOutsideAlerter(sideMenuRef);
+
+  useEffect(() => {
+    const es = new ESService('caak');
+    es.boostedPosts().then(setPosts);
+  }, []);
 
   useEffect(() => {
     setLoaded(true);
@@ -117,10 +119,6 @@ export default function NavbarNew() {
       setNavBarStyle(null);
     }
   }, [context.store]);
-
-  if (loading) {
-    return <Skeleton />;
-  }
 
   return navBarStyle === null ? null : isLaptop ? (
     loaded && (
@@ -273,6 +271,7 @@ export default function NavbarNew() {
             <p className="text-[#555555] text-[15px] mt-[30px] text-center">©2022 “Саак Холдинг” ХХК</p>
           </div>
         )}
+        {sideMenuOpen && <SideMenu setSideMenuOpen={setSideMenuOpen} />}
         {searchShown && <SearchModal setSearchShown={setSearchShown} />}
       </nav>
     )

@@ -15,9 +15,9 @@ export default function StoryItem({ story, index, border }) {
               src={imagePath(story?.image)}
             />
             <div
-              className={`absolute ${border ? 'bottom-[5px]' : 'bottom-0'} rounded-[8px] storyLinearItem h-1/2 w-full ${
-                border && 'h-[424px] w-[274px]'
-              } xl:py-[30px] px-[10px] xl:px-[20px] flex flex-col items-start justify-end`}
+              className={`absolute ${
+                border ? 'bottom-[5px] w-[90px] md:w-[274px] py-[10px]' : 'bottom-0 py-[18px]'
+              } rounded-[8px] storyLinearItem h-1/2 xl:py-[30px] px-[10px] xl:px-[20px] flex flex-col items-start justify-end`}
             >
               {story?.categories?.map((x) => (
                 <p

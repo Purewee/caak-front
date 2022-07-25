@@ -64,7 +64,7 @@ const StoryFeed = () => {
 
       <div className="flex flex-row items-center w-full relative md:justify-center">
         <img
-          className="h-[20px] md:h-[42px] md:w-[324px] mt-[30px] md:mt-0"
+          className="h-[20px] md:h-[42px] md:w-[324px] mt-[30px] md:mt-0 hidden sm:block"
           src={require('../../assets/images/feed_story.svg').default}
           alt="Feeds"
         />
