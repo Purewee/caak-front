@@ -7,26 +7,14 @@ import { AppContext } from '../../../App';
 import SignInUpController from '../../modal//SignInUpController';
 import { useAuth } from '../../../context/AuthContext';
 import UserInfo from './UserInfo';
-import logoIcon from '../../../images/New-Logo.svg';
 import { Avatar, Skeleton } from 'antd';
 import { Link } from 'react-router-dom';
 import { FIcon } from '../../../component/icon';
 import { ME } from '../../../pages/post/view/_gql';
 import SearchModal from '../../modal/SearchModal';
 import { useNavigate } from 'react-router-dom';
-
-const CATEGORIES = gql`
-  query GetCategories {
-    categories(sort: { direction: asc, field: "position" }, filter: { status: { eq: "active" } }) {
-      nodes {
-        id
-        name
-        slug
-        position
-      }
-    }
-  }
-`;
+import SideMenu from './SideMenu';
+import { ESService } from '../../../lib/esService';
 
 const mobileItems = [
   {
@@ -48,11 +36,9 @@ const mobileItems = [
 
 export default function NavbarNew() {
   const context = useContext(AppContext);
-  const { data, loading } = useQuery(CATEGORIES);
   const { data: me, loading: me_loading } = useQuery(ME);
-  const categories = data?.categories?.nodes || [];
   const [loaded, setLoaded] = useState(false);
-  const [subMenuShown, setSubMenuShown] = useState(false);
+  const [posts, setPosts] = useState([]);
   const [mobileSideMenu, setMobileSideMenu] = useState(false);
   const [searchShown, setSearchShown] = useState(false);
   const [isShown, setIsShown] = useState(false);
@@ -90,7 +76,6 @@ export default function NavbarNew() {
        */
       function handleClickOutside(event) {
         if (ref.current && !ref.current.contains(event.target)) {
-          setSideMenuOpen(false)
           setMobileSideMenu(false)
         }
       }
@@ -104,9 +89,12 @@ export default function NavbarNew() {
   }
 
   const mobileRef = useRef(null);
-  const sideMenuRef = useRef(null);
   useOutsideAlerter(mobileRef);
-  useOutsideAlerter(sideMenuRef);
+
+  useEffect(() => {
+    const es = new ESService('caak');
+    es.boostedPosts().then(setPosts);
+  }, []);
 
   useEffect(() => {
     setLoaded(true);
@@ -121,10 +109,6 @@ export default function NavbarNew() {
       setNavBarStyle(null);
     }
   }, [context.store]);
-
-  if (loading) {
-    return <Skeleton />;
-  }
 
   return navBarStyle === null ? null : isLaptop ? (
     loaded && (
@@ -185,98 +169,7 @@ export default function NavbarNew() {
           </div>
         </div>
         <SignInUpController isShown={isShown} setIsShown={setIsShown} />
-        {sideMenuOpen && (
-          <div
-            ref={sideMenuRef}
-            className="absolute left-0 top-0 w-[410px] bg-white px-[50px] pt-[50px] pb-[55px] font-condensed z-[1]"
-          >
-            <div className="flex flex-row items-center justify-between w-full">
-              <span className="icon-fi-rs-search text-[20px] text-[#111111]" />
-              <img src={logoIcon} className="cursor-pointer w-[130px] object-contain" alt="Caak Logo" />
-              <span
-                onClick={() => setSideMenuOpen(false)}
-                className="icon-fi-rs-close cursor-pointer text-[18px] w-[24px] h-[24px] flex items-center justify-center text-[#111111]"
-              />
-            </div>
-            <div
-              onClick={() => setSubMenuShown(!subMenuShown)}
-              className="mt-[75px] flex flex-row items-center cursor-pointer"
-            >
-              <span
-                className={`${
-                  subMenuShown ? 'icon-fi-rs-minus' : 'icon-fi-rs-plus'
-                } w-[24px] h-[24px] flex items-center justify-center text-[20px] text-[#FF6600] mr-[26px]`}
-              />
-              <p className="text-[18px] font-medium leading-[21px] hover:text-[#555555]">МЭДЭЭНИЙ ТӨРӨЛ</p>
-            </div>
-            {subMenuShown && (
-              <div className="ml-[50px] mt-[30px] flex flex-col gap-[20px]">
-                {categories.map((data, index) => {
-                  return (
-                    <Link key={index} to={`/tags/${data.slug}`}>
-                      <p className="text-[#111111] leading-[20px] text-[14px] font-condensed">{data.name}</p>
-                    </Link>
-                  );
-                })}
-              </div>
-            )}
-            <div className="mt-[40px] flex flex-row items-center cursor-pointer">
-              <span className="icon-fi-rs-hashtag w-[24px] h-[24px] flex items-center justify-center text-[20px] text-[#111111] mr-[26px]" />
-              <p className="text-[18px] font-medium leading-[21px] text-[#111111]">ТАГУУД</p>
-            </div>
-            <a
-              target={'_blank'}
-              href="https://www.youtube.com/c/caakvideo"
-              className="mt-[40px] flex flex-row items-center cursor-pointer"
-            >
-              <span className="icon-fi-rs-tv w-[24px] h-[24px] flex items-center justify-center text-[20px] text-[#111111] mr-[26px]" />
-              <p className="text-[18px] font-medium leading-[21px] text-[#111111]">ВИДЕО</p>
-            </a>
-            <a
-              target={'_blank'}
-              href="https://soundcloud.com/caak-podcast"
-              className="mt-[40px] flex flex-row items-center cursor-pointer"
-            >
-              <span className="icon-fi-rs-mic w-[24px] h-[24px] flex items-center justify-center text-[20px] text-[#111111] mr-[26px]" />
-              <p className="text-[18px] font-medium leading-[21px] text-[#111111]">ПОДКАСТ</p>
-            </a>
-            <a
-              target={'_blank'}
-              href="https://www.caak.mn/radio"
-              className="mt-[40px] flex flex-row items-center cursor-pointer"
-            >
-              <span className="icon-fi-rs-wave w-[24px] h-[24px] flex items-center justify-center text-[20px] text-[#111111] mr-[26px]" />
-              <p className="text-[18px] font-medium leading-[21px] text-[#111111]">РАДИО</p>
-            </a>
-            <div
-              onClick={() => {
-                navigate('/help', { state: 1 });
-                setSideMenuOpen(false);
-              }}
-              className="mt-[40px] flex flex-row items-center cursor-pointer"
-            >
-              <span className="icon-fi-rs-ads w-[24px] h-[24px] flex items-center justify-center text-[20px] text-[#111111] mr-[26px]" />
-              <p className="text-[18px] font-medium leading-[21px] text-[#111111]">СУРТАЛЧИЛГАА</p>
-            </div>
-            <div
-              onClick={() => {
-                navigate('/help', { state: 2 });
-                setSideMenuOpen(false);
-              }}
-              className="mt-[40px] flex flex-row items-center cursor-pointer"
-            >
-              <span className="icon-fi-rs-phone w-[24px] h-[24px] flex items-center justify-center text-[20px] text-[#111111] mr-[26px]" />
-              <p className="text-[18px] font-medium leading-[21px] text-[#111111]">ХОЛБОО БАРИХ</p>
-            </div>
-            <div className="border-t border-b w-full border-[#D4D8D8] flex flex-row items-center justify-center gap-[19px] py-[30px] mt-[137px]">
-              <span className="icon-fi-rs-fb text-[22px]" />
-              <span className="icon-fi-rs-ig text-[22px]" />
-              <span className="icon-fi-rs-tw text-[22px]" />
-              <span className="icon-fi-rs-yt text-[22px]" />
-            </div>
-            <p className="text-[#555555] text-[15px] mt-[30px] text-center">©2022 “Саак Холдинг” ХХК</p>
-          </div>
-        )}
+        {sideMenuOpen && <SideMenu setSideMenuOpen={setSideMenuOpen} />}
         {searchShown && <SearchModal setSearchShown={setSearchShown} />}
       </nav>
     )

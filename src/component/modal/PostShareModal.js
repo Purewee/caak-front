@@ -27,7 +27,7 @@ export default function PostShareModal({ post, toggle, image }) {
           <img alt="" className="min-w-[100px] max-w-[100px] h-[100px] object-cover truncate-3" src={image} />
           <div className="ml-[16px]">
             <p className="font-merri text-[16px] leading-[21px] h-[64px] truncate-3">{post?.title}</p>
-            <div className="text-[#555555] mt-[10px] flex flex-row items-center leading-[18px] text-[15px]">
+            <div className="text-[#555555] mt-[10px] flex flex-row items-center leading-[18px] text-[14px]">
               <p>{post?.source?.name}</p>
               <p className="ml-[6px]">• {post?.author?.name}</p>
             </div>

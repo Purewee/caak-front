@@ -8,27 +8,7 @@ import { AppContext } from '../../../App';
 import { Link } from 'react-router-dom';
 import { imagePath } from '../../../utility/Util';
 import AvatarSvg from '../../../assets/images/avatar.svg';
-
-const ME = gql`
-  query Me {
-    me {
-      id
-      mobile
-      email
-      firstName
-      lastName
-      recipes {
-        articles {
-          nodes {
-            id
-            title
-            imageUrl
-          }
-        }
-      }
-    }
-  }
-`;
+import { ME } from '../../../pages/post/view/_gql';
 
 const REMOVE_SAVED = gql`
   mutation RemoveSavedArticle($id: ID, $articleId: ID!) {
@@ -43,6 +23,7 @@ export default function UserInfo({ className }) {
   const { data, loading, refetch } = useQuery(ME);
   const [isShown, setIsShown] = useState(false);
   const { logout } = useAuth();
+  const me = data?.me || {};
   const textColor = context.store === 'default' ? 'text-[#555555]' : 'text-white';
   const saved_articles = data?.me?.recipes.map((x) => x?.articles.nodes).flat() || [];
   const [remove, { loading: removing }] = useMutation(REMOVE_SAVED);
@@ -130,7 +111,11 @@ export default function UserInfo({ className }) {
         content={
           <div className="w-full text-[#555555]">
             <div className="border-b w-full pb-[16px] flex flex-row items-center pl-[8px]">
-              <Avatar className="mr-[12px] flex items-center justify-center" src={AvatarSvg} size={38} />
+              <Avatar
+                className="mr-[12px] flex items-center justify-center"
+                src={me.avatar ? imagePath(me.avatar) : AvatarSvg}
+                size={38}
+              />
               <div>
                 <p className="font-condensed text-[18px] font-bold leading-[21px] text-[#111111]">
                   {data?.me?.firstName}

@@ -26,6 +26,12 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-fi-rs-bookmark-f:before {
+  content: "\e960";
+}
+.icon-fi-rs-fire:before {
+  content: "\e961";
+}
 .icon-fi-rs-adjust:before {
   content: "\e94e";
 }
