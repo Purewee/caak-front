@@ -95,7 +95,7 @@ export default function Home() {
         <div
           className={`${
             !stickyTabs ? 'max-w-[1310px] w-full' : 'w-full'
-          } hidden xl:flex sticky top-0 z-[2] flex-row justify-center items-center border-b bg-white px-[40px]`}
+          } hidden xl:flex sticky top-0 z-[1] flex-row justify-center items-center border-b bg-white px-[40px]`}
         >
           <FIcon
             onClick={() => setSideMenuOpen(true)}

@@ -205,7 +205,7 @@ export default function Help() {
                 </div>
             </div>
             <div className='max-w-[1310px] w-full flex flex-col sm:flex-row mt-[30px] sm:mt-[60px] justify-between mb-[87px] px-[16px] md:px-0'>
-                <div style={{boxShadow: '0px 2px 2px #00000010'}} className='w-[290px] bg-[#FFFFFF] border border-[#EFEEEF] h-[270px] rounded-[4px] p-[10px]'>
+                <div style={{boxShadow: '0px 2px 2px #00000010'}} className={`w-[290px] bg-[#FFFFFF] border ${selected !== 1 && 'sticky top-[60px]'} border-[#EFEEEF] h-[270px] rounded-[4px] p-[10px]`}>
                     {
                         Tabs.map((data, index) => {
                             return(

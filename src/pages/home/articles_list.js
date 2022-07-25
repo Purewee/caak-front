@@ -31,7 +31,7 @@ export default function ArticlesList({ filter = [], sort = {}, size = 24 }) {
     <div className="max-w-[1310px] w-full flex flex-wrap justify-center gap-x-[22px] gap-y-[40px] px-[16px] sm:px-0 mt-[30px]">
       {list.map((post, index) => (
         <Col className="w-full sm:w-[422px]" key={index}>
-          <PostCard isMobile={isMobile} post={post} />
+          <PostCard sponsored={index === 0} isMobile={isMobile} post={post} />
         </Col>
       ))}
       {loading && <Skeleton />}

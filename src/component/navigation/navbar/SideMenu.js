@@ -52,8 +52,9 @@ export default function SideMenu({ setSideMenuOpen }) {
     return (
         <div
             ref={sideMenuRef}
-            className="absolute left-0 top-0 w-[410px] bg-white px-[50px] pt-[50px] pb-[55px] font-condensed z-[1]"
-            >
+            style={{boxShadow: '0px 0px 30px #00000039'}}
+            className="absolute left-0 top-0 w-[410px] flex flex-col wrapper max-h-screen bg-white px-[50px] pt-[50px] pb-[55px] font-condensed z-[1]"
+        >
             <div className="flex flex-row items-center justify-between w-full">
                 <span className="icon-fi-rs-search text-[20px] text-[#111111]" />
                 <img src={logoIcon} className="cursor-pointer w-[130px] object-contain" alt="Caak Logo" />
@@ -84,53 +85,53 @@ export default function SideMenu({ setSideMenuOpen }) {
                 })}
                 </div>
             )}
-            <div className="mt-[40px] flex flex-row items-center cursor-pointer">
-                <span className="icon-fi-rs-hashtag w-[24px] h-[24px] flex items-center justify-center text-[20px] text-[#111111] mr-[26px]" />
-                <p className="text-[18px] font-medium leading-[21px] text-[#111111]">ТАГУУД</p>
+            <div className="mt-[40px] text-caak-black hover:text-caak-darkGray flex flex-row items-center cursor-pointer">
+                <span className="icon-fi-rs-hashtag w-[24px] h-[24px] flex items-center justify-center text-[20px] mr-[26px]" />
+                <p className="text-[18px] font-medium leading-[21px]">ТАГУУД</p>
             </div>
             <a
                 target={'_blank'}
                 href="https://www.youtube.com/c/caakvideo"
-                className="mt-[40px] flex flex-row items-center cursor-pointer"
+                className="mt-[40px] flex flex-row text-caak-black hover:text-caak-darkGray items-center cursor-pointer"
             >
-                <span className="icon-fi-rs-tv w-[24px] h-[24px] flex items-center justify-center text-[20px] text-[#111111] mr-[26px]" />
-                <p className="text-[18px] font-medium leading-[21px] text-[#111111]">ВИДЕО</p>
+                <span className="icon-fi-rs-tv w-[24px] h-[24px] flex items-center justify-center text-[20px] mr-[26px]" />
+                <p className="text-[18px] font-medium leading-[21px]">ВИДЕО</p>
             </a>
             <a
                 target={'_blank'}
                 href="https://soundcloud.com/caak-podcast"
-                className="mt-[40px] flex flex-row items-center cursor-pointer"
+                className="mt-[40px] flex flex-row text-caak-black hover:text-caak-darkGray items-center cursor-pointer"
             >
-                <span className="icon-fi-rs-mic w-[24px] h-[24px] flex items-center justify-center text-[20px] text-[#111111] mr-[26px]" />
-                <p className="text-[18px] font-medium leading-[21px] text-[#111111]">ПОДКАСТ</p>
+                <span className="icon-fi-rs-mic w-[24px] h-[24px] flex items-center justify-center text-[20px] mr-[26px]" />
+                <p className="text-[18px] font-medium leading-[21px]">ПОДКАСТ</p>
             </a>
             <a
                 target={'_blank'}
                 href="https://www.caak.mn/radio"
-                className="mt-[40px] flex flex-row items-center cursor-pointer"
+                className="mt-[40px] flex flex-row text-caak-black hover:text-caak-darkGray items-center cursor-pointer"
             >
-                <span className="icon-fi-rs-wave w-[24px] h-[24px] flex items-center justify-center text-[20px] text-[#111111] mr-[26px]" />
-                <p className="text-[18px] font-medium leading-[21px] text-[#111111]">РАДИО</p>
+                <span className="icon-fi-rs-wave w-[24px] h-[24px] flex items-center justify-center text-[20px] mr-[26px]" />
+                <p className="text-[18px] font-medium leading-[21px]">РАДИО</p>
             </a>
             <div
                 onClick={() => {
                 navigate('/help', { state: 1 });
                 setSideMenuOpen(false);
                 }}
-                className="mt-[40px] flex flex-row items-center cursor-pointer"
+                className="mt-[40px] flex flex-row text-caak-black hover:text-caak-darkGray items-center cursor-pointer"
             >
-                <span className="icon-fi-rs-ads w-[24px] h-[24px] flex items-center justify-center text-[20px] text-[#111111] mr-[26px]" />
-                <p className="text-[18px] font-medium leading-[21px] text-[#111111]">СУРТАЛЧИЛГАА</p>
+                <span className="icon-fi-rs-ads w-[24px] h-[24px] flex items-center justify-center text-[20px] mr-[26px]" />
+                <p className="text-[18px] font-medium leading-[21px]">СУРТАЛЧИЛГАА</p>
             </div>
             <div
                 onClick={() => {
                 navigate('/help', { state: 2 });
                 setSideMenuOpen(false);
                 }}
-                className="mt-[40px] flex flex-row items-center cursor-pointer"
+                className="mt-[40px] flex flex-row text-caak-black hover:text-caak-darkGray items-center cursor-pointer"
             >
-                <span className="icon-fi-rs-phone w-[24px] h-[24px] flex items-center justify-center text-[20px] text-[#111111] mr-[26px]" />
-                <p className="text-[18px] font-medium leading-[21px] text-[#111111]">ХОЛБОО БАРИХ</p>
+                <span className="icon-fi-rs-phone w-[24px] h-[24px] flex items-center justify-center text-[20px] mr-[26px]" />
+                <p className="text-[18px] font-medium leading-[21px]">ХОЛБОО БАРИХ</p>
             </div>
             <div className="border-t border-b w-full border-[#D4D8D8] flex flex-row items-center justify-center gap-[19px] py-[30px] mt-[137px]">
                 <span className="icon-fi-rs-fb text-[22px]" />

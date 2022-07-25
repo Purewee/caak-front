@@ -85,7 +85,11 @@ export default function UserInfo({ className }) {
                 ]}
               >
                 <List.Item.Meta
-                  avatar={<Avatar src={imagePath(x.imageUrl)} shape="square" />}
+                  avatar={
+                    <Link to={`/post/view/${x.id}`}>
+                      <Avatar src={imagePath(x.imageUrl)} shape="square" />
+                    </Link>
+                  }
                   title={
                     <Link to={`/post/view/${x.id}`} className="truncate-3 text-[13px]">
                       {x.title}
