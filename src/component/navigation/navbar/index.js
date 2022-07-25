@@ -4,7 +4,6 @@ import useMediaQuery from '../useMediaQuery';
 import { gql, useQuery } from '@apollo/client';
 import Logo from '../../logo';
 import { AppContext } from '../../../App';
-import SignInUpController from '../../modal//SignInUpController';
 import { useAuth } from '../../../context/AuthContext';
 import UserInfo from './UserInfo';
 import logoIcon from '../../../images/New-Logo.svg';
@@ -14,6 +13,7 @@ import { FIcon } from '../../../component/icon';
 import { ME } from '../../../pages/post/view/_gql';
 import SearchModal from '../../modal/SearchModal';
 import { useNavigate } from 'react-router-dom';
+import SessionModal from '../../modal/session';
 
 const CATEGORIES = gql`
   query GetCategories {
@@ -62,7 +62,7 @@ export default function NavbarNew() {
   const isLaptop = useMediaQuery('(min-width: 1001px) and (max-width: 1920px)');
   const isTablet = useMediaQuery('(min-width: 401px) and (max-width: 1000px)');
   const isMobile = useMediaQuery('screen and (max-width: 400)');
-  const { isAuth, logout } = useAuth();
+  const { isAuth, logout, openModal } = useAuth();
 
   const Settings = [
     {
@@ -82,23 +82,19 @@ export default function NavbarNew() {
     },
   ];
 
-  //prettier-ignore
   function useOutsideAlerter(ref) {
     useEffect(() => {
-      /**
-       * Alert if clicked on outside of element
-       */
       function handleClickOutside(event) {
         if (ref.current && !ref.current.contains(event.target)) {
-          setSideMenuOpen(false)
-          setMobileSideMenu(false)
+          setSideMenuOpen(false);
+          setMobileSideMenu(false);
         }
       }
       // Bind the event listener
-      document.addEventListener("mousedown", handleClickOutside);
+      document.addEventListener('mousedown', handleClickOutside);
       return () => {
         // Unbind the event listener on clean up
-        document.removeEventListener("mousedown", handleClickOutside);
+        document.removeEventListener('mousedown', handleClickOutside);
       };
     }, [ref]);
   }
@@ -168,7 +164,7 @@ export default function NavbarNew() {
                       ? 'text-white bg-transparent border-[1px] font-bold  border-white'
                       : 'text-[#111111] border border-[#D4D8D8] font-medium'
                   } `}
-                  onClick={() => setIsShown('signin')}
+                  onClick={() => openModal('login')}
                 >
                   Нэвтрэх
                 </button>
@@ -176,7 +172,7 @@ export default function NavbarNew() {
                   className={
                     'h-[34px] font-roboto w-[112px] bg-caak-primary rounded-[4px] text-[15px] font-bold text-white'
                   }
-                  onClick={() => setIsShown('signup')}
+                  onClick={() => openModal('open')}
                 >
                   Бүртгүүлэх
                 </button>
@@ -184,7 +180,7 @@ export default function NavbarNew() {
             )}
           </div>
         </div>
-        <SignInUpController isShown={isShown} setIsShown={setIsShown} />
+        <SessionModal />
         {sideMenuOpen && (
           <div
             ref={sideMenuRef}
@@ -336,7 +332,7 @@ export default function NavbarNew() {
                   </p>
                   <button
                     onClick={() => {
-                      setIsShown('signup');
+                      openModal('open');
                       setMobileSideMenu(false);
                     }}
                     className="w-full h-[58px] text-[16px] font-medium text-white mt-[20px] bg-caak-primary rounded-[4px]"
@@ -345,7 +341,7 @@ export default function NavbarNew() {
                   </button>
                   <button
                     onClick={() => {
-                      setIsShown('signin');
+                      openModal('login');
                       setMobileSideMenu(false);
                     }}
                     className="w-full h-[58px] text-[16px] font-medium text-caak-black mt-[20px] border rounded-[4px]"
@@ -410,7 +406,7 @@ export default function NavbarNew() {
           </div>
         </div>
       )}
-      <SignInUpController isShown={isShown} setIsShown={setIsShown} />
+      <SessionModal />
     </nav>
   );
 }
