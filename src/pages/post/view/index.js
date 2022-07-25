@@ -116,7 +116,7 @@ const Post = () => {
           className={`hidden md:flex ${leftMenuSticky ? 'sticky top-[180px]' : 'mt-[380px]'} w-full flex-col items-end`}
         >
           <div className="flex flex-col items-center w-[60px] h-[226px]">
-            <p className="text-[#555555] text-[15px] leading-[18px] font-bold">{article.data?.like_count}</p>
+            <p className="text-[#555555] text-[15px] leading-[18px] font-bold">{article.reactionsCount}</p>
             {reporting || (
               <Popover
                 placement="top"
@@ -214,11 +214,13 @@ const Post = () => {
         </div>
         <Wrapper>
           <Title className="text-center">{article.title}</Title>
-          <div className="flex flex-row items-center mt-[30px]">
-            <img className="w-[20px]" src={LoveIcon} alt="" />
-            <img className="w-[20px]" src={HahaIcon} alt="" />
-            <p className="ml-[6px] text-[15px] text-caak-primary leading-[16px]">{article.data?.like_count}</p>
-          </div>
+          {article?.reactionsCount > 0 && (
+            <div className="flex flex-row items-center mt-[30px]">
+              <img className="w-[20px]" src={LoveIcon} alt="" />
+              <img className="w-[20px]" src={HahaIcon} alt="" />
+              <p className="ml-[6px] text-[15px] text-caak-primary leading-[16px]">{article?.reactionsCount}</p>
+            </div>
+          )}
           <div className="flex flex-row justify-between w-full h-[32px] mt-[21px]">
             <div className="flex flex-row items-center h-[32px]">
               <Avatar className="w-[32px] h-[32px] rounded-full" src={imagePath(article.source?.icon)} />
@@ -228,19 +230,14 @@ const Post = () => {
                 </Link>
                 <div className="text-[12px] text-[#909090] flex flex-row items-center leading-[14px]">
                   <p>{moment(article.createdAt).format('YYYY.MM.DD, hh:mm')}</p>
-                  <p
-                    onClick={() => (isAuth ? openNotification() : setIsShown('signin'))}
-                    className="underline cursor-pointer ml-[6px]"
-                  >
-                    ДАГАХ
-                  </p>
+                  <span className="mx-[20px]">Нийт үзсэн: {article?.viewsCount}</span>
                 </div>
               </div>
             </div>
             <div className="flex sm:hidden flex-row items-center">
               <img className="w-[20px]" src={LoveIcon} alt="" />
               <img className="w-[20px]" src={HahaIcon} alt="" />
-              <p className="ml-[6px] text-[15px] text-caak-primary leading-[16px]">{article.data?.like_count || 0}</p>
+              <p className="ml-[6px] text-[15px] text-caak-primary leading-[16px]">{article?.reactionsCount}</p>
             </div>
             <div className="hidden md:flex flex-row items-center">
               <FacebookShareButton className="h-[20px]" url={`http://front.caak.mn/post/view/${article.id}`}>

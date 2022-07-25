@@ -9,7 +9,8 @@ export const ARTICLE = gql`
       slug
       imageUrl
       data
-      viewCount
+      viewsCount
+      reactionsCount
       publishDate
       description
       createdAt
