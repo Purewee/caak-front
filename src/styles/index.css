@@ -40,3 +40,7 @@
 .caak-saved-articles .ant-list-item-action{
   margin: 0;
 }
+
+.caak-menu .ant-collapse-header {
+  padding: 0 !important;
+}

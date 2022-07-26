@@ -26,6 +26,7 @@ import Category from './pages/newsCategory';
 import PostSaved from './pages/user/saved';
 import Notification from './pages/user/notification';
 import './assets/fonts/Roboto-Medium.ttf';
+import CaakHeader from './component/header';
 
 export const AppContext = createContext(null);
 
@@ -45,7 +46,7 @@ function App() {
                   content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, viewport-fit=cover"
                 />
               </Helmet>
-              <NavbarNew />
+              <CaakHeader />
               <Routes>
                 <Route exact path="/" element={<Home />} />
                 <Route path="/post/view/:id" element={<Post />} />

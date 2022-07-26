@@ -1,14 +1,14 @@
 import React, { useContext, useState } from 'react';
 import { useQuery, gql, useMutation } from '@apollo/client';
 import { Popover, Badge, List, Button, Avatar, message } from 'antd';
-import { useAuth } from '../../../context/AuthContext';
-import { CloseOutlined, UserOutlined } from '@ant-design/icons';
-import { FIcon } from '../../icon';
-import { AppContext } from '../../../App';
-import { Link } from 'react-router-dom';
-import { imagePath } from '../../../utility/Util';
-import AvatarSvg from '../../../assets/images/avatar.svg';
-import { ME } from '../../../pages/post/view/_gql';
+import { useAuth } from '../../context/AuthContext';
+import { FIcon } from '../icon';
+import { AppContext } from '../../App';
+import { Link, useNavigate } from 'react-router-dom';
+import { imagePath } from '../../utility/Util';
+import AvatarSvg from '../../assets/images/avatar.svg';
+import { ME } from '../../pages/post/view/_gql';
+import { CloseOutlined } from '@ant-design/icons';
 
 const REMOVE_SAVED = gql`
   mutation RemoveSavedArticle($id: ID, $articleId: ID!) {
@@ -18,19 +18,14 @@ const REMOVE_SAVED = gql`
   }
 `;
 
-export default function UserInfo({ className }) {
+export default function UserInfo() {
   const context = useContext(AppContext);
   const { data, loading, refetch } = useQuery(ME);
-  const [isShown, setIsShown] = useState(false);
   const { logout } = useAuth();
   const me = data?.me || {};
-  const textColor = context.store === 'default' ? 'text-[#555555]' : 'text-white';
   const saved_articles = data?.me?.recipes.map((x) => x?.articles.nodes).flat() || [];
   const [remove, { loading: removing }] = useMutation(REMOVE_SAVED);
-
-  const handleMenu = (show) => {
-    setIsShown(show);
-  };
+  const navigate = useNavigate();
 
   if (loading) return <span>Loading ...</span>;
 
@@ -53,11 +48,15 @@ export default function UserInfo({ className }) {
   ];
 
   return (
-    <div className={`flex flex-row items-center`}>
-      <Link to="/add">
-        <FIcon className={`icon-fi-rs-edit mr-[6px] ${className ? className : textColor}`} />
-      </Link>
+    <div className="flex flex-row items-center text-[#555555]">
+      <Button
+        onClick={() => navigate('/add')}
+        className="hidden md:block border-0"
+        shape="circle"
+        icon={<FIcon className="icon-fi-rs-edit" />}
+      ></Button>
       <Popover
+        className="hidden md:block"
         placement="bottomRight"
         trigger="click"
         content={
@@ -101,17 +100,20 @@ export default function UserInfo({ className }) {
           />
         }
       >
-        <Badge count={saved_articles.length} size="small" showZero={false} overflowCount={10}>
-          <FIcon className={`icon-fi-rs-list-o mx-[6px] ${className ? className : textColor}`} />
-        </Badge>
+        <Button
+          icon={
+            <Badge className="mt-[3px]" count={saved_articles.length} size="small" showZero={false} overflowCount={10}>
+              <FIcon className="icon-fi-rs-list-o" />
+            </Badge>
+          }
+          className="border-0"
+          shape="circle"
+        />
       </Popover>
-      {/*<FIcon className={`icon-fi-rs-notification mx-[6px] ${textColor}`} />*/}
       <Popover
         placement="bottomRight"
         trigger="click"
         overlayInnerStyle={{ borderRadius: 4 }}
-        visible={isShown}
-        onVisibleChange={handleMenu}
         content={
           <div className="w-full text-[#555555]">
             <div className="border-b w-full pb-[16px] flex flex-row items-center pl-[8px]">
@@ -130,7 +132,7 @@ export default function UserInfo({ className }) {
             <div className="p-[16px] flex flex-col gap-[16px] border-b">
               {Settings.map((data, index) => {
                 return (
-                  <Link onClick={() => setIsShown(false)} key={index} to={{ pathname: data.link }}>
+                  <Link key={index} to={{ pathname: data.link }}>
                     <div className="flex flex-row items-center cursor-pointer">
                       <span className={`${data.icon} text-[20px]`} />
                       <p className="text-[15px] ml-[12px] -mt-[3px] leading-[18px]">{data.title}</p>

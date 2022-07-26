@@ -15,7 +15,7 @@ const SAVE_POST = gql`
 export default function PostSaveModal({ post, toggle, image }) {
   const [isShown, setIsShown] = useState(false);
   const [save, { loading }] = useMutation(SAVE_POST, { variables: { articleId: post.id } });
-  const { isAuth } = useAuth();
+  const { isAuth, openModal } = useAuth();
 
   return (
     <Modal
@@ -27,7 +27,7 @@ export default function PostSaveModal({ post, toggle, image }) {
               message.success('Амжилттай хадгалагдлаа');
               toggle();
             })
-          : setIsShown('signin')
+          : openModal('open')
       }
       onCancel={toggle}
       title={<span className="text-[26px] font-condensed font-bold leading-[30px]">Мэдээ хадгалах</span>}

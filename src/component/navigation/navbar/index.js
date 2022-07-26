@@ -5,7 +5,7 @@ import { gql, useQuery } from '@apollo/client';
 import Logo from '../../logo';
 import { AppContext } from '../../../App';
 import { useAuth } from '../../../context/AuthContext';
-import UserInfo from './UserInfo';
+import UserInfo from '../../header/UserInfo';
 import { Avatar, Skeleton } from 'antd';
 import { Link } from 'react-router-dom';
 import { FIcon } from '../../../component/icon';
