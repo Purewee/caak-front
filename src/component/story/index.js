@@ -62,16 +62,19 @@ const StoryFeed = () => {
         </div>
       )}
 
-      <div className="flex flex-row items-center w-full relative md:justify-center">
+      <div className="flex flex-row items-center w-full relative justify-between md:justify-center">
+        <p className="text-[17px] font-medium leading-[20px] sm:hidden">Стори мэдээ</p>
         <img
           className="h-[20px] md:h-[42px] md:w-[324px] mt-[30px] md:mt-0 hidden sm:block"
           src={require('../../assets/images/feed_story.svg').default}
           alt="Feeds"
         />
         <Link to="/stories">
-          <div className="hidden xl:flex flex-row absolute items-center right-[121px]">
-            <p className="text-[16px] text-[#111111]">Бүх сторинууд</p>
-            <span className="icon-fi-rs-stories-o text-[#FF6600] text-[18px] ml-[6px]" />
+          <div className="flex flex-row-reverse sm:flex-row gap-[6px] sm:absolute items-center right-[121px]">
+            <p className="text-[14px] font-medium sm:font-normal sm:text-[16px] text-[#909090] sm:text-[#111111]">
+              Бүх сторинууд
+            </p>
+            <span className="icon-fi-rs-stories-o text-[#909090] sm:text-[#FF6600] text-[18px]" />
           </div>
         </Link>
       </div>

@@ -4,7 +4,7 @@
 
 
 @font-face {
-  font-family: "condMedium";   /*Can be any text*/
+  font-family: "Roboto Condensed";   /*Can be any text*/
   src: local("Roboto-Medium"),
     url("./assets/fonts/Roboto-Medium.ttf") format("truetype");
 }
@@ -23,7 +23,7 @@
 }
 
 .condMedium {
-  font-family: 'condMedium';
+  font-family: 'Roboto Condensed';
 }
 
 .HighlightFeedGrid {

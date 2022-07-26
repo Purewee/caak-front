@@ -36,7 +36,7 @@ export default function Home() {
     <>
       <div className={`relative bg-white flex flex-col items-center mb-[100px]`}>
         <NavbarPostHeader />
-        <div className="md:px-[30px] w-full flex justify-center px-[16px] sm:px-0">
+        <div className="md:px-[30px] mt-[100px] w-full flex justify-center px-[16px] sm:px-0">
           <Story />
         </div>
         <div className="max-w-[1310px] w-full px-[16px] sm:px-0">
