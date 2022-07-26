@@ -54,7 +54,7 @@ export default function UserInfo() {
         className="hidden md:block border-0"
         shape="circle"
         icon={<FIcon className="icon-fi-rs-edit" />}
-      ></Button>
+      />
       <Popover
         className="hidden md:block"
         placement="bottomRight"

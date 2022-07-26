@@ -136,8 +136,22 @@ export const USER = gql`
         totalCount
       }
       recipes {
-        id
-        createdAt
+        articles {
+          nodes {
+            id
+            title
+            image: imageUrl
+            publish_date: publishDate
+            source {
+              id
+              icon
+              name
+            }
+            author {
+              name: firstName
+            }
+          }
+        }
       }
     }
   }

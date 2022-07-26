@@ -3,15 +3,15 @@ import { useQuery } from '@apollo/client';
 import { useParams } from 'react-router-dom';
 import { ESService } from '../../lib/esService';
 import { ME, USER } from '../post/view/_gql';
-import { Avatar, Col, Statistic, Row, Tabs, Skeleton, Button, notification } from 'antd';
+import { Avatar, Col, Statistic, Tabs, Skeleton, Button, message } from 'antd';
 import PostCard from '../../component/card/Post';
 import { Title } from '../post/view/wrapper';
-import SignInUpController from '../../component/modal/SignInUpController';
 import { useAuth } from '../../context/AuthContext';
 import { Link } from 'react-router-dom';
 import { AppContext } from '../../App';
 import useMediaQuery from '../../component/navigation/useMediaQuery';
 import { imagePath } from '../../utility/Util';
+import ArticlesList from '../home/articles_list';
 
 export default function Profile() {
   const context = useContext(AppContext);
@@ -25,22 +25,10 @@ export default function Profile() {
   const user = data?.user || {};
   const { data: me } = useQuery(ME);
   const loggedUser = me?.me;
-  const { isAuth } = useAuth();
-  const [isShown, setIsShown] = useState(false);
+  const { isAuth, openModal } = useAuth();
+  const saved_articles = user?.recipes?.map((x) => x?.articles.nodes).flat() || [];
 
-  const isLaptop = useMediaQuery('(min-width: 1001px) and (max-width: 1920px)');
-  const isTablet = useMediaQuery('(min-width: 401px) and (max-width: 1000px)');
   const isMobile = useMediaQuery('screen and (max-width: 767px)');
-
-  const openNotification = () => {
-    const args = {
-      message: `Та ${data?.user.firstName}-г дагалаа`,
-      duration: 4,
-      placement: 'bottom',
-      className: 'h-[50px] bg-[#12805C] w-[470px]',
-    };
-    notification.open(args);
-  };
 
   useEffect(() => {
     setLoading(true);
@@ -85,7 +73,7 @@ export default function Profile() {
               </Link>
             ) : (
               <button
-                onClick={() => (isAuth ? openNotification() : setIsShown('signin'))}
+                onClick={() => (isAuth ? message.success('success') : openModal('open'))}
                 className="w-[90px] h-[34px] bg-caak-primary rounded-[4px] text-white text-[15px] font-bold"
               >
                 Дагах
@@ -96,7 +84,7 @@ export default function Profile() {
             </div>
           </div>
         </div>
-        <Tabs size="large" className="mb-[200px]">
+        <Tabs size="large" className="mb-[200px] font-merri">
           <Tabs.TabPane key="posts" tab="Оруулсан мэдээ">
             <div className="max-w-[1310px] w-full flex flex-wrap justify-center 2xl:justify-start gap-x-[22px] gap-y-[40px] px-[16px] sm:px-0 mt-[40px]">
               {articles.map((post, index) => (
@@ -105,24 +93,31 @@ export default function Profile() {
                 </Col>
               ))}
               {loading && <Skeleton />}
-              <Col span={24}>
-                <Button
-                  block
-                  size="large"
-                  className="font-roboto border-caak-primary text-caak-primary mt-[20px]"
-                  onClick={() => setPage(page + 1)}
-                  loading={loading}
-                >
-                  Цааш үзэх
-                </Button>
-              </Col>
+              <Button
+                block
+                size="large"
+                className="font-roboto border-caak-primary text-caak-primary mt-[20px]"
+                onClick={() => setPage(page + 1)}
+                loading={loading}
+              >
+                Цааш үзэх
+              </Button>
             </div>
           </Tabs.TabPane>
-          {id === loggedUser?.id && <Tabs.TabPane key="saved" tab="Хадгалсан мэдээнүүд" />}
+          {id === loggedUser?.id && (
+            <Tabs.TabPane key="saved" tab="Хадгалсан мэдээнүүд">
+              <div className="max-w-[1310px] w-full flex flex-wrap justify-center 2xl:justify-start gap-x-[22px] gap-y-[40px] px-[16px] sm:px-0 mt-[40px]">
+                {saved_articles.map((post, index) => (
+                  <Col className="w-full sm:w-[422px]" key={index}>
+                    <PostCard isMobile={isMobile} post={post} />
+                  </Col>
+                ))}
+              </div>
+            </Tabs.TabPane>
+          )}
           <Tabs.TabPane key="history" tab="Үзсэн түүх" />
         </Tabs>
       </div>
-      <SignInUpController isShown={isShown} setIsShown={setIsShown} />
     </div>
   );
 }
