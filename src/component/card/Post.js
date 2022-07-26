@@ -121,12 +121,6 @@ export default function PostCard({ isMobile, post, sponsored, ...rest }) {
           </div>
           <div className="flex flex-row items-center">
             <FIcon
-              onClick={() => setSharing(true)}
-              className={`${
-                sponsored ? 'text-white' : 'text-[#909090]'
-              } h-[22px] icon-fi-rs-share sm:hidden text-[22px] mr-[20px]`}
-            />
-            <FIcon
               onClick={() => setSaving(true)}
               className={`h-[22px] ${sponsored ? 'text-white' : 'text-[#909090]'} icon-fi-rs-bookmark text-[22px]`}
             />

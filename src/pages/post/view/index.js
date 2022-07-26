@@ -48,6 +48,7 @@ const Post = () => {
   const { data, loading } = useQuery(ARTICLE, { variables: { id } });
   const { data: me, loading: me_loading } = useQuery(ME);
   const article = data?.article || {};
+  console.log(article);
   const { isAuth } = useAuth();
 
   const title = article?.title;
@@ -239,12 +240,14 @@ const Post = () => {
                   </Link>
                   <div className="text-[12px] text-[#909090] flex flex-row items-center leading-[14px]">
                     <p>{moment(article.createdAt).format('YYYY.MM.DD, hh:mm')}</p>
-                    <p
-                      onClick={() => (isAuth ? openNotification() : setIsShown('signin'))}
-                      className="underline cursor-pointer ml-[6px]"
-                    >
-                      ДАГАХ
-                    </p>
+                    <div className="ml-[12px] flex flex-row items-center text-[#555555]">
+                      <span className="icon-fi-rs-eye text-[18px] mr-[4px]" />
+                      <p className="text-[14px]">{article?.viewsCount}</p>
+                    </div>
+                    <div className="ml-[12px] flex flex-row items-center text-[#555555]">
+                      <span className="icon-fi-rs-comment-o text-[18px] mr-[4px]" />
+                      <p className="text-[14px]">{article?.viewsCount}</p>
+                    </div>
                   </div>
                 </div>
               </div>
