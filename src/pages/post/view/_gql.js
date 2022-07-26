@@ -11,6 +11,7 @@ export const ARTICLE = gql`
       data
       viewsCount
       reactionsCount
+      commentsCount
       publishDate
       description
       createdAt

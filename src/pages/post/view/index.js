@@ -13,7 +13,7 @@ import LoveIcon from '../../../assets/images/fi-rs-react-love.png';
 import HahaIcon from '../../../assets/images/fi-rs-react-haha.svg';
 import PostSaveModal from '../../../component/modal/PostSaveModal';
 import PostShareModal from '../../../component/modal/PostShareModal';
-import { Avatar, Popover, notification, Button, Alert } from 'antd';
+import { Avatar, Popover, notification, Button, Alert, Statistic } from 'antd';
 import { useAuth } from '../../../context/AuthContext';
 import SignInUpController from '../../../component/modal/SignInUpController';
 import { Link } from 'react-router-dom';
@@ -28,7 +28,7 @@ import * as haha from '../../../assets/json/haha-js.json';
 import * as wow from '../../../assets/json/wow-js.json';
 import Lottie from 'react-lottie';
 import { FIcon } from '../../../component/icon';
-import { sortBy } from 'lodash';
+import { orderBy } from 'lodash';
 import ArticlesList from '../../home/articles_list';
 
 const ACTIONS = [{ icon: love }, { icon: haha }, { icon: wow }, { icon: cry }, { icon: angry }];
@@ -48,7 +48,7 @@ const Post = () => {
   const { data, loading } = useQuery(ARTICLE, { variables: { id } });
   const { data: me, loading: me_loading } = useQuery(ME);
   const article = data?.article || {};
-  console.log(article);
+  const numbering = article?.data?.numbering || false;
   const { isAuth } = useAuth();
 
   const title = article?.title;
@@ -246,7 +246,7 @@ const Post = () => {
                     </div>
                     <div className="ml-[12px] flex flex-row items-center text-[#555555]">
                       <span className="icon-fi-rs-comment-o text-[18px] mr-[4px]" />
-                      <p className="text-[14px]">{article?.viewsCount}</p>
+                      <p className="text-[14px]">{article?.commentsCount || 0}</p>
                     </div>
                   </div>
                 </div>
@@ -273,12 +273,12 @@ const Post = () => {
             <div className="pb-[26px] md:pb-[50px]">
               <Paragraph dangerouslySetInnerHTML={createMarkup(article.description)} />
             </div>
-            {sortBy(article.blocks, 'position').map((b) => {
+            {orderBy(article?.blocks, ['position'], [numbering || 'asc']).map((b) => {
               return (
                 <div key={b.position}>
                   {b.kind === 'image' && (
                     <div key={b.id} className="flex flex-col md:items-center mb-[26px] md:mb-[50px] w-full">
-                      {b.title && <BlockTitle>{b.title}</BlockTitle>}
+                      {b.title && <BlockTitle>{`${numbering ? `${b.position}. ` : ''}${b.title}`}</BlockTitle>}
                       <LazyLoadImage src={imagePath(b.imageUrl)} alt={b.title} className="w-full object-cover" />
                       {b.content && <Paragraph dangerouslySetInnerHTML={createMarkup(b.content)} />}
                     </div>
@@ -290,7 +290,7 @@ const Post = () => {
                   )}
                   {b.kind === 'video' && (
                     <div key={b.id} className="flex flex-col md:items-center mb-[26px] md:mb-[50px] w-full">
-                      {b.title && <BlockTitle>{b.title}</BlockTitle>}
+                      {b.title && <BlockTitle>{`${numbering ? `${b.position}. ` : ''}${b.title}`}</BlockTitle>}
                       <iframe
                         width="100%"
                         height="420px"

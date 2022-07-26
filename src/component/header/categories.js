@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { gql, useQuery } from '@apollo/client';
 import { Popover, Skeleton, Row, Col } from 'antd';
 import { Link } from 'react-router-dom';
@@ -27,6 +27,7 @@ const CATEGORIES = gql`
 
 const Categories = () => {
   const { data, loading } = useQuery(CATEGORIES);
+  const [open, setOpen] = useState(false);
   const categories = data?.categories?.nodes || [];
   if (loading) {
     return <Skeleton />;
@@ -54,12 +55,13 @@ const Categories = () => {
                 className="leading-[16px] tracking-[0px]"
                 overlayStyle={{ width: 600 }}
                 overlayInnerStyle={{ borderRadius: 8 }}
+                visible={open}
                 content={
                   <Row className="p-[12px] gap-y-[12px]">
-                    {categories?.map((x) => {
+                    {categories.map((x) => {
                       return (
                         <Col key={x.id} span={8}>
-                          <Link to={`/category/${x.slug}`} key={x.id}>
+                          <Link to={`/category/${x.slug}`} key={x.id} onClick={() => setOpen(false)}>
                             <span className="text-[#111111] font-roboto hover:text-caak-primary hover:leading-[18px] leading-[19px] hover:tracking-[0.23px] tracking-[0.24px] hover:text-[15px] text-[16px]">
                               {x.name}
                             </span>
@@ -70,7 +72,7 @@ const Categories = () => {
                   </Row>
                 }
               >
-                <p className="hover:text-caak-primary font-bold flex">
+                <p className="hover:text-caak-primary font-bold flex" onClick={() => setOpen(!open)}>
                   <span>{item.title}</span>
                   <FIcon className="icon-fi-rs-down-chevron text-[14px] h-[14px] text-caak-primary" />
                 </p>

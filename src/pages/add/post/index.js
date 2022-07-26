@@ -30,7 +30,8 @@ import {
   SearchOutlined,
 } from '@ant-design/icons';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
-import InlineEditor from '@ckeditor/ckeditor5-build-inline';
+import InlineEditor from 'ckeditor5-custom-build';
+
 import { imagePath, parseVideoURL } from '../../../utility/Util';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { getDataFromBlob, imageCompress } from '../../../lib/imageCompress';
@@ -57,6 +58,8 @@ const ckConfig = {
     'blockQuote',
     'bulletedList',
     'numberedList',
+    'outdent',
+    'indent',
     '|',
     'undo',
     'redo',
@@ -279,7 +282,7 @@ function AddPost() {
               )}
               <Form.Item name={['data', 'numbering']} className="font-merri text-[10px]">
                 <Radio.Group>
-                  <Radio.Button>Дугаарлахгүй</Radio.Button>
+                  <Radio.Button value={null}>Дугаарлахгүй</Radio.Button>
                   <Radio.Button value="asc">Өсөхөөр</Radio.Button>
                   <Radio.Button value="desc">Буурхаар</Radio.Button>
                 </Radio.Group>

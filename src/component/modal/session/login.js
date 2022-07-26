@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { Form, Modal, Input, Button, message } from 'antd';
-import { CheckOutlined } from '@ant-design/icons';
+import { Form, Modal, Input, Button, message, Divider } from 'antd';
+import { CheckOutlined, FacebookFilled, GoogleCircleFilled } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
 import { loginWithPassword } from '../../../utility/WithApolloProvider';
 import { useAuth } from '../../../context/AuthContext';
@@ -21,6 +21,20 @@ function LoginStep({ setStep }) {
       <div className="font-roboto border-b">
         <div className="p-[40px]">
           <p className="my-[12px] text-[28px] font-condensed text-[#111111] text-center font-bold">Нэвтрэх</p>
+          <Button
+            block
+            icon={<FacebookFilled />}
+            size="large"
+            className="bg-[#1876F3] mb-4 text-white border-0 hover:border"
+          >
+            Facebook
+          </Button>
+          <Button block icon={<GoogleCircleFilled />} size="large">
+            Google
+          </Button>
+          <Divider>
+            <span className="text-[#909090] font-normal text-[14px]">Эсвэл</span>
+          </Divider>
           <Form
             autoComplete="off"
             onFinish={async ({ login: username, password }) => {

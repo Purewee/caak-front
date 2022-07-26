@@ -25,6 +25,7 @@
     "apollo-upload-client": "^17.0.0",
     "babel-eslint": "^10.1.0",
     "ckeditor4-react": "^3.1.0",
+    "ckeditor5-custom-build": "./src/lib/ckeditor",
     "compressorjs": "^1.1.1",
     "crypto-js": "^4.1.1",
     "eslint": "^8.17.0",

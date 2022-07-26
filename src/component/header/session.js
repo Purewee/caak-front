@@ -7,7 +7,7 @@ export default function Session() {
   const { openModal } = useAuth();
   return (
     <>
-      <Button onClick={() => openModal('login')} className="font-bold">
+      <Button onClick={() => openModal('login')} className="font-bold mr-[12px]">
         Нэвтрэх
       </Button>
       <Button onClick={() => openModal('open')} type="primary" className="font-bold">
