@@ -177,7 +177,7 @@ const Post = () => {
                   overlayInnerStyle={{ borderRadius: 8 }}
                   content={
                     <div className="flex flex-col gap-[15px] h-full justify-between ">
-                      {me?.me?.id === article.author.id && (
+                      {['admin', 'moderator'].includes(me?.me?.role) && (
                         <Link to={`/edit/${article.kind}/${article.id}`} target="_blank">
                           <div className="flex flex-row items-center cursor-pointer">
                             <span className="text-[#555555] text-[20px] mr-[8px] w-[22px] h-[22px] flex items-center justify-center icon-fi-rs-editor-o" />
@@ -185,7 +185,7 @@ const Post = () => {
                           </div>
                         </Link>
                       )}
-                      {me?.me?.id === article.author.id && (
+                      {['admin', 'moderator'].includes(me?.me?.role) && (
                         <div className="flex flex-row items-center cursor-pointer">
                           <span className="text-[#555555] text-[20px] mr-[8px] w-[22px] h-[22px] flex items-center justify-center icon-fi-rs-delete" />
                           <p className="text-[#555555] text-[15px] leading-[18px]">Устгах</p>
@@ -280,6 +280,11 @@ const Post = () => {
                     <div key={b.id} className="flex flex-col md:items-center mb-[26px] md:mb-[50px] w-full">
                       {b.title && <BlockTitle>{`${numbering ? `${b.position}. ` : ''}${b.title}`}</BlockTitle>}
                       <LazyLoadImage src={imagePath(b.imageUrl)} alt={b.title} className="w-full object-cover" />
+                      {b.data.meta.length > 0 && (
+                        <span className="w-[99%] bg-[#697581] text-white p-[8px] text-center font-condensed text-[12px] italic">
+                          {b.data.meta}
+                        </span>
+                      )}
                       {b.content && <Paragraph dangerouslySetInnerHTML={createMarkup(b.content)} />}
                     </div>
                   )}

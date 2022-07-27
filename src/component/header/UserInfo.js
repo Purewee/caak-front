@@ -150,7 +150,11 @@ export default function UserInfo() {
           </div>
         }
       >
-        <Avatar src={AvatarSvg} className="ml-[16px] cursor-pointer flex justify-center items-center " shape="circle" />
+        <Avatar
+          src={me.avatar ? imagePath(me.avatar) : AvatarSvg}
+          className="ml-[16px] cursor-pointer flex justify-center items-center "
+          shape="circle"
+        />
       </Popover>
     </div>
   );

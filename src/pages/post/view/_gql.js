@@ -110,6 +110,7 @@ export const ME = gql`
       lastName
       avatar
       data
+      role
       recipes {
         articles {
           nodes {

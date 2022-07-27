@@ -382,7 +382,7 @@ function ImageBlock({ block, idx, setBlocks, onRemove }) {
           >
             <CKEditor editor={InlineEditor} config={ckConfig} />
           </Form.Item>
-          <Form.Item name={[idx, 'data', 'comment']}>
+          <Form.Item name={[idx, 'data', 'meta']}>
             <Input placeholder="Богино тайлбар" maxLength={200} showCount />
           </Form.Item>
         </Col>

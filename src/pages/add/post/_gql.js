@@ -27,6 +27,9 @@ export const POST = gql`
       author {
         id
       }
+      source {
+        id
+      }
       blocks {
         id
         kind

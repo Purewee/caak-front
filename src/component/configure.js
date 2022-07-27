@@ -10,6 +10,7 @@ const Configure = {
   cid: '1cT1tgfWggH3ZsaihJYGbYeB2rXwobijRAgui8qqtU4',
   cs: 'Z31TDT2SopqUVcXyxrymJpIxfPrsuWyuneVQIhOaz9o',
   userTokenField: 'us.t',
+  appFacebookId: '162724064327441',
 };
 
 export default Configure;

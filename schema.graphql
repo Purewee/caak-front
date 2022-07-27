@@ -43,6 +43,7 @@ type Article {
         "Sorting functionality"
         sort: SortFilter
     ): CommentConnection!
+    commentsCount: Int
     createdAt: ISO8601DateTime
     data: JSON
     description: String
@@ -68,6 +69,7 @@ type Article {
         "Sorting functionality"
         sort: SortFilter
     ): ReactionConnection!
+    reactionsCount: Int
     slug: String
     source: Source
     status: String!
@@ -75,6 +77,7 @@ type Article {
     title: String!
     updatedAt: ISO8601DateTime
     viewCount: Int
+    viewsCount: Int
 }
 
 type ArticleBlock {
@@ -559,6 +562,7 @@ type User {
     lastName: String
     mobile: String
     recipes: [Recipe!]!
+    role: String
     status: String
     updatedAt: ISO8601DateTime
 }

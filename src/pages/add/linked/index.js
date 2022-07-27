@@ -22,6 +22,7 @@ import { LinkOutlined, PlaySquareOutlined, SaveOutlined } from '@ant-design/icon
 import { getDataFromBlob, imageCompress } from '../../../lib/imageCompress';
 import { DatePicker } from 'antd/es';
 import moment from 'moment';
+import { imagePath } from '../../../utility/Util';
 
 function AddLink() {
   const { id } = useParams();
@@ -67,6 +68,7 @@ function AddLink() {
       className="caak_article font-merri"
       initialValues={{
         ...article,
+        sourceId: article?.source?.id,
         tags: article?.tags.map((x) => x.slug),
         featuredDates: [moment(article?.featuredFrom), moment(article?.featuredTo)],
       }}
@@ -104,7 +106,7 @@ function AddLink() {
           </Tabs>
           <Card bordered={false} className="max-w-[920px] mx-auto">
             <LinkField onSuccess={setData} />
-            {!data ? (
+            {!data && !id ? (
               <Skeleton
                 active
                 avatar={{ shape: 'square', size: 200 }}
@@ -134,7 +136,11 @@ function AddLink() {
                         });
                       }}
                     >
-                      <Image src={data?.image} className="object-cover w-[300px] h-[200px]" preview={false} />
+                      <Image
+                        src={data?.image || imagePath(article?.imageUrl)}
+                        className="object-cover w-[300px] h-[200px]"
+                        preview={false}
+                      />
                     </Upload>
                   </Form.Item>
                   <div className="flex flex-col w-full">
