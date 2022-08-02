@@ -1,600 +1,699 @@
 # This file was generated based on ".graphqlconfig". Do not edit manually.
 
 schema {
-    query: Query
-    mutation: Mutation
+  query: Query
+  mutation: Mutation
 }
+
+union FollowerTarget = Category | Source | Tag | User
 
 union Target = Article
 
 type Article {
-    acceptComment: Boolean!
-    acceptHomepage: Boolean!
-    author: User!
-    blocks: [ArticleBlock!]!
-    categories(
-        "Returns the elements in the list that come after the specified cursor."
-        after: String,
-        "Returns the elements in the list that come before the specified cursor."
-        before: String,
-        filter: CategoryFilter,
-        "Returns the first _n_ elements from the list."
-        first: Int,
-        "Returns the last _n_ elements from the list."
-        last: Int,
-        "Returns the elements skipping _n_ from the list."
-        offset: Int,
-        "Sorting functionality"
-        sort: SortFilter
-    ): CategoryConnection!
-    categoryIds: [ID!]!
-    comments(
-        "Returns the elements in the list that come after the specified cursor."
-        after: String,
-        "Returns the elements in the list that come before the specified cursor."
-        before: String,
-        filter: CommentFilter,
-        "Returns the first _n_ elements from the list."
-        first: Int,
-        "Returns the last _n_ elements from the list."
-        last: Int,
-        "Returns the elements skipping _n_ from the list."
-        offset: Int,
-        "Sorting functionality"
-        sort: SortFilter
-    ): CommentConnection!
-    commentsCount: Int
-    createdAt: ISO8601DateTime
-    data: JSON
-    description: String
-    featured: Boolean!
-    featuredFrom: ISO8601DateTime
-    featuredTo: ISO8601DateTime
-    id: ID!
-    imageUrl: String
-    kind: String!
-    position: Int
-    publishDate: ISO8601Date
-    reactions(
-        "Returns the elements in the list that come after the specified cursor."
-        after: String,
-        "Returns the elements in the list that come before the specified cursor."
-        before: String,
-        "Returns the first _n_ elements from the list."
-        first: Int,
-        "Returns the last _n_ elements from the list."
-        last: Int,
-        "Returns the elements skipping _n_ from the list."
-        offset: Int,
-        "Sorting functionality"
-        sort: SortFilter
-    ): ReactionConnection!
-    reactionsCount: Int
-    slug: String
-    source: Source
-    status: String!
-    tags: [Tag!]!
-    title: String!
-    updatedAt: ISO8601DateTime
-    viewCount: Int
-    viewsCount: Int
+  acceptComment: Boolean!
+  acceptHomepage: Boolean!
+  author: User!
+  blocks: [ArticleBlock!]!
+  categories(
+    "Returns the elements in the list that come after the specified cursor."
+    after: String,
+    "Returns the elements in the list that come before the specified cursor."
+    before: String,
+    filter: CategoryFilter,
+    "Returns the first _n_ elements from the list."
+    first: Int,
+    "Returns the last _n_ elements from the list."
+    last: Int,
+    "Returns the elements skipping _n_ from the list."
+    offset: Int,
+    "Sorting functionality"
+    sort: SortFilter
+  ): CategoryConnection!
+  categoryIds: [ID!]!
+  comments(
+    "Returns the elements in the list that come after the specified cursor."
+    after: String,
+    "Returns the elements in the list that come before the specified cursor."
+    before: String,
+    filter: CommentFilter,
+    "Returns the first _n_ elements from the list."
+    first: Int,
+    "Returns the last _n_ elements from the list."
+    last: Int,
+    "Returns the elements skipping _n_ from the list."
+    offset: Int,
+    "Sorting functionality"
+    sort: SortFilter
+  ): CommentConnection!
+  commentsCount: Int
+  createdAt: ISO8601DateTime
+  data: JSON
+  description: String
+  featured: Boolean!
+  featuredFrom: ISO8601DateTime
+  featuredTo: ISO8601DateTime
+  id: ID!
+  imageUrl: String
+  kind: String!
+  position: Int
+  publishDate: ISO8601Date
+  reactions(
+    "Returns the elements in the list that come after the specified cursor."
+    after: String,
+    "Returns the elements in the list that come before the specified cursor."
+    before: String,
+    "Returns the first _n_ elements from the list."
+    first: Int,
+    "Returns the last _n_ elements from the list."
+    last: Int,
+    "Returns the elements skipping _n_ from the list."
+    offset: Int,
+    "Sorting functionality"
+    sort: SortFilter
+  ): ReactionConnection!
+  reactionsCount: Int
+  slug: String
+  source: Source
+  status: String!
+  tags: [Tag!]!
+  title: String!
+  updatedAt: ISO8601DateTime
+  viewCount: Int
+  viewsCount: Int
 }
 
 type ArticleBlock {
-    article: Article!
-    content: String
-    createdAt: ISO8601DateTime
-    data: JSON
-    id: ID!
-    imageUrl: String
-    kind: String
-    position: Int
-    status: String
-    title: String
-    updatedAt: ISO8601DateTime
+  article: Article!
+  content: String
+  createdAt: ISO8601DateTime
+  data: JSON
+  id: ID!
+  imageUrl: String
+  kind: String
+  position: Int
+  status: String
+  title: String
+  updatedAt: ISO8601DateTime
 }
 
 "The connection type for Article."
 type ArticleConnection {
-    "A list of edges."
-    edges: [ArticleEdge!]!
-    "A list of nodes."
-    nodes: [Article!]!
-    "Information to aid in pagination."
-    pageInfo: PageInfo!
-    totalCount: Int!
+  "A list of edges."
+  edges: [ArticleEdge!]!
+  "A list of nodes."
+  nodes: [Article!]!
+  "Information to aid in pagination."
+  pageInfo: PageInfo!
+  totalCount: Int!
 }
 
 "An edge in a connection."
 type ArticleEdge {
-    "A cursor for use in pagination."
-    cursor: String!
-    "The item at the end of the edge."
-    node: Article!
+  "A cursor for use in pagination."
+  cursor: String!
+  "The item at the end of the edge."
+  node: Article!
 }
 
 type Category {
-    articles(
-        "Returns the elements in the list that come after the specified cursor."
-        after: String,
-        "Returns the elements in the list that come before the specified cursor."
-        before: String,
-        "Returns the first _n_ elements from the list."
-        first: Int,
-        "Returns the last _n_ elements from the list."
-        last: Int,
-        "Returns the elements skipping _n_ from the list."
-        offset: Int,
-        "Sorting functionality"
-        sort: SortFilter
-    ): ArticleConnection!
-    articlesCount: Int!
-    childs(
-        "Returns the elements in the list that come after the specified cursor."
-        after: String,
-        "Returns the elements in the list that come before the specified cursor."
-        before: String,
-        filter: CategoryFilter,
-        "Returns the first _n_ elements from the list."
-        first: Int,
-        "Returns the last _n_ elements from the list."
-        last: Int,
-        "Returns the elements skipping _n_ from the list."
-        offset: Int,
-        "Sorting functionality"
-        sort: SortFilter
-    ): CategoryConnection!
-    createdAt: ISO8601DateTime
-    data: JSON
-    id: ID!
-    name: String!
-    parent: Category
-    position: Int
-    slug: String!
-    status: String!
-    updatedAt: ISO8601DateTime
+  articles(
+    "Returns the elements in the list that come after the specified cursor."
+    after: String,
+    "Returns the elements in the list that come before the specified cursor."
+    before: String,
+    "Returns the first _n_ elements from the list."
+    first: Int,
+    "Returns the last _n_ elements from the list."
+    last: Int,
+    "Returns the elements skipping _n_ from the list."
+    offset: Int,
+    "Sorting functionality"
+    sort: SortFilter
+  ): ArticleConnection!
+  articlesCount: Int!
+  childs(
+    "Returns the elements in the list that come after the specified cursor."
+    after: String,
+    "Returns the elements in the list that come before the specified cursor."
+    before: String,
+    filter: CategoryFilter,
+    "Returns the first _n_ elements from the list."
+    first: Int,
+    "Returns the last _n_ elements from the list."
+    last: Int,
+    "Returns the elements skipping _n_ from the list."
+    offset: Int,
+    "Sorting functionality"
+    sort: SortFilter
+  ): CategoryConnection!
+  createdAt: ISO8601DateTime
+  data: JSON
+  followers(
+    "Returns the elements in the list that come after the specified cursor."
+    after: String,
+    "Returns the elements in the list that come before the specified cursor."
+    before: String,
+    "Returns the first _n_ elements from the list."
+    first: Int,
+    "Returns the last _n_ elements from the list."
+    last: Int,
+    "Returns the elements skipping _n_ from the list."
+    offset: Int,
+    "Sorting functionality"
+    sort: SortFilter
+  ): FollowerConnection!
+  followersCount: Int!
+  following: Boolean!
+  id: ID!
+  name: String!
+  parent: Category
+  position: Int
+  slug: String!
+  status: String!
+  updatedAt: ISO8601DateTime
 }
 
 "The connection type for Category."
 type CategoryConnection {
-    "A list of edges."
-    edges: [CategoryEdge!]!
-    "A list of nodes."
-    nodes: [Category!]!
-    "Information to aid in pagination."
-    pageInfo: PageInfo!
-    totalCount: Int!
+  "A list of edges."
+  edges: [CategoryEdge!]!
+  "A list of nodes."
+  nodes: [Category!]!
+  "Information to aid in pagination."
+  pageInfo: PageInfo!
+  totalCount: Int!
 }
 
 "An edge in a connection."
 type CategoryEdge {
-    "A cursor for use in pagination."
-    cursor: String!
-    "The item at the end of the edge."
-    node: Category!
+  "A cursor for use in pagination."
+  cursor: String!
+  "The item at the end of the edge."
+  node: Category!
 }
 
 type Comment {
-    childs(
-        "Returns the elements in the list that come after the specified cursor."
-        after: String,
-        "Returns the elements in the list that come before the specified cursor."
-        before: String,
-        filter: CommentFilter,
-        "Returns the first _n_ elements from the list."
-        first: Int,
-        "Returns the last _n_ elements from the list."
-        last: Int,
-        "Returns the elements skipping _n_ from the list."
-        offset: Int,
-        "Sorting functionality"
-        sort: SortFilter
-    ): CommentConnection
-    comment: String
-    createdAt: ISO8601DateTime
-    data: JSON
-    id: ID!
-    parent: Comment
-    status: String!
-    target: Target
-    updatedAt: ISO8601DateTime
-    user: User!
+  childs(
+    "Returns the elements in the list that come after the specified cursor."
+    after: String,
+    "Returns the elements in the list that come before the specified cursor."
+    before: String,
+    filter: CommentFilter,
+    "Returns the first _n_ elements from the list."
+    first: Int,
+    "Returns the last _n_ elements from the list."
+    last: Int,
+    "Returns the elements skipping _n_ from the list."
+    offset: Int,
+    "Sorting functionality"
+    sort: SortFilter
+  ): CommentConnection
+  comment: String
+  createdAt: ISO8601DateTime
+  data: JSON
+  id: ID!
+  parent: Comment
+  status: String!
+  target: Target
+  updatedAt: ISO8601DateTime
+  user: User!
 }
 
 "The connection type for Comment."
 type CommentConnection {
-    "A list of edges."
-    edges: [CommentEdge!]!
-    "A list of nodes."
-    nodes: [Comment!]!
-    "Information to aid in pagination."
-    pageInfo: PageInfo!
-    totalCount: Int!
+  "A list of edges."
+  edges: [CommentEdge!]!
+  "A list of nodes."
+  nodes: [Comment!]!
+  "Information to aid in pagination."
+  pageInfo: PageInfo!
+  totalCount: Int!
 }
 
 "An edge in a connection."
 type CommentEdge {
-    "A cursor for use in pagination."
-    cursor: String!
-    "The item at the end of the edge."
-    node: Comment!
+  "A cursor for use in pagination."
+  cursor: String!
+  "The item at the end of the edge."
+  node: Comment!
+}
+
+type Follower {
+  createdAt: ISO8601DateTime
+  id: ID!
+  target: FollowerTarget!
+  updatedAt: ISO8601DateTime
+  user: User!
+}
+
+"The connection type for Follower."
+type FollowerConnection {
+  "A list of edges."
+  edges: [FollowerEdge!]!
+  "A list of nodes."
+  nodes: [Follower!]!
+  "Information to aid in pagination."
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+"An edge in a connection."
+type FollowerEdge {
+  "A cursor for use in pagination."
+  cursor: String!
+  "The item at the end of the edge."
+  node: Follower!
 }
 
 type Mutation {
-    addArticle(
-        "Parameters for addArticle"
-        input: addArticleInput!
-    ): Article
-    addCategory(
-        "Parameters for addCategory"
-        input: addCategoryInput!
-    ): Category
-    addComment(
-        "Parameters for addComment"
-        input: addCommentInput!
-    ): Comment
-    addToRecipe(
-        "Parameters for addToRecipe"
-        input: addToRecipeInput!
-    ): Recipe
-    changePassword(
-        "Parameters for changePassword"
-        input: changePasswordInput!
-    ): Boolean
-    "Checks if email or mobile registered"
-    checkLogin(
-        "Parameters for checkLogin"
-        input: checkLoginInput!
-    ): JSON
-    convertLink(
-        "Parameters for convertLink"
-        input: convertLinkInput!
-    ): JSON
-    createReaction(
-        "Parameters for createReaction"
-        input: createReactionInput!
-    ): Reaction
-    createRecipe(
-        "Parameters for createRecipe"
-        input: createRecipeInput!
-    ): Recipe
-    destroyArticle(
-        "Parameters for destroyArticle"
-        input: destroyArticleInput!
-    ): Boolean
-    destroyCategory(
-        "Parameters for destroyCategory"
-        input: destroyCategoryInput!
-    ): Boolean
-    "Нэвтрээгүй хэрэглэгч нууц үгээ сэргээх хүсэлт илгээснээр `OTP` token очно"
-    forgotPassword(
-        "Parameters for forgotPassword"
-        input: forgotPasswordInput!
-    ): String
-    registerUser(
-        "Parameters for registerUser"
-        input: registerUserInput!
-    ): User
-    removeComment(
-        "Parameters for removeComment"
-        input: removeCommentInput!
-    ): Boolean
-    removeRecipeItem(
-        "Parameters for removeRecipeItem"
-        input: removeRecipeItemInput!
-    ): Recipe
-    reportArticle(
-        "Parameters for reportArticle"
-        input: reportArticleInput!
-    ): Boolean
-    updateArticle(
-        "Parameters for updateArticle"
-        input: updateArticleInput!
-    ): Article
-    updateCategory(
-        "Parameters for updateCategory"
-        input: updateCategoryInput!
-    ): Category
-    updateComment(
-        "Parameters for updateComment"
-        input: updateCommentInput!
-    ): Comment
-    updateRecipe(
-        "Parameters for updateRecipe"
-        input: updateRecipeInput!
-    ): Recipe
-    updateUserProfile(
-        "Parameters for updateUserProfile"
-        input: updateUserProfileInput!
-    ): User
+  addArticle(
+    "Parameters for addArticle"
+    input: addArticleInput!
+  ): Article
+  addCategory(
+    "Parameters for addCategory"
+    input: addCategoryInput!
+  ): Category
+  addComment(
+    "Parameters for addComment"
+    input: addCommentInput!
+  ): Comment
+  addToRecipe(
+    "Parameters for addToRecipe"
+    input: addToRecipeInput!
+  ): Recipe
+  changePassword(
+    "Parameters for changePassword"
+    input: changePasswordInput!
+  ): Boolean
+  "Checks if email or mobile registered"
+  checkLogin(
+    "Parameters for checkLogin"
+    input: checkLoginInput!
+  ): JSON
+  convertLink(
+    "Parameters for convertLink"
+    input: convertLinkInput!
+  ): JSON
+  createReaction(
+    "Parameters for createReaction"
+    input: createReactionInput!
+  ): Reaction
+  createRecipe(
+    "Parameters for createRecipe"
+    input: createRecipeInput!
+  ): Recipe
+  destroyArticle(
+    "Parameters for destroyArticle"
+    input: destroyArticleInput!
+  ): Boolean
+  destroyCategory(
+    "Parameters for destroyCategory"
+    input: destroyCategoryInput!
+  ): Boolean
+  "Нэвтрээгүй хэрэглэгч нууц үгээ сэргээх хүсэлт илгээснээр `OTP` token очно"
+  forgotPassword(
+    "Parameters for forgotPassword"
+    input: forgotPasswordInput!
+  ): String
+  registerUser(
+    "Parameters for registerUser"
+    input: registerUserInput!
+  ): User
+  removeComment(
+    "Parameters for removeComment"
+    input: removeCommentInput!
+  ): Boolean
+  removeRecipeItem(
+    "Parameters for removeRecipeItem"
+    input: removeRecipeItemInput!
+  ): Recipe
+  reportArticle(
+    "Parameters for reportArticle"
+    input: reportArticleInput!
+  ): Boolean
+  toggleFollow(
+    "Parameters for toggleFollow"
+    input: toggleFollowInput!
+  ): Boolean
+  updateArticle(
+    "Parameters for updateArticle"
+    input: updateArticleInput!
+  ): Article
+  updateCategory(
+    "Parameters for updateCategory"
+    input: updateCategoryInput!
+  ): Category
+  updateComment(
+    "Parameters for updateComment"
+    input: updateCommentInput!
+  ): Comment
+  updateRecipe(
+    "Parameters for updateRecipe"
+    input: updateRecipeInput!
+  ): Recipe
+  updateUserProfile(
+    "Parameters for updateUserProfile"
+    input: updateUserProfileInput!
+  ): User
 }
 
 "Information about pagination in a connection."
 type PageInfo {
-    "When paginating forwards, the cursor to continue."
-    endCursor: String
-    "When paginating forwards, are there more items?"
-    hasNextPage: Boolean!
-    "When paginating backwards, are there more items?"
-    hasPreviousPage: Boolean!
-    "When paginating backwards, the cursor to continue."
-    startCursor: String
+  "When paginating forwards, the cursor to continue."
+  endCursor: String
+  "When paginating forwards, are there more items?"
+  hasNextPage: Boolean!
+  "When paginating backwards, are there more items?"
+  hasPreviousPage: Boolean!
+  "When paginating backwards, the cursor to continue."
+  startCursor: String
 }
 
 type Query {
-    article(id: ID!, impression: Boolean): Article!
-    articles(
-        "Returns the elements in the list that come after the specified cursor."
-        after: String,
-        "Returns the elements in the list that come before the specified cursor."
-        before: String,
-        "Returns the first _n_ elements from the list."
-        first: Int,
-        "Returns the last _n_ elements from the list."
-        last: Int,
-        "Returns the elements skipping _n_ from the list."
-        offset: Int,
-        "Sorting functionality"
-        sort: SortFilter
-    ): ArticleConnection
-    categories(
-        "Returns the elements in the list that come after the specified cursor."
-        after: String,
-        "Returns the elements in the list that come before the specified cursor."
-        before: String,
-        filter: CategoryFilter,
-        "Returns the first _n_ elements from the list."
-        first: Int,
-        "Returns the last _n_ elements from the list."
-        last: Int,
-        "Returns the elements skipping _n_ from the list."
-        offset: Int,
-        "Sorting functionality"
-        sort: SortFilter
-    ): CategoryConnection
-    category(id: ID, slug: String): Category!
-    me: User
-    recipe(id: ID): Recipe!
-    reportTypes: [ReportType!]!
-    sources(
-        "Returns the elements in the list that come after the specified cursor."
-        after: String,
-        "Returns the elements in the list that come before the specified cursor."
-        before: String,
-        "Returns the first _n_ elements from the list."
-        first: Int,
-        "Returns the last _n_ elements from the list."
-        last: Int,
-        "Returns the elements skipping _n_ from the list."
-        offset: Int,
-        "Sorting functionality"
-        sort: SortFilter
-    ): SourceConnection
-    tag(slug: String): Tag!
-    tags(
-        "Returns the elements in the list that come after the specified cursor."
-        after: String,
-        "Returns the elements in the list that come before the specified cursor."
-        before: String,
-        filter: TagFilter,
-        "Returns the first _n_ elements from the list."
-        first: Int,
-        "Returns the last _n_ elements from the list."
-        last: Int,
-        "Returns the elements skipping _n_ from the list."
-        offset: Int,
-        "Sorting functionality"
-        sort: SortFilter
-    ): TagConnection
-    user(id: ID!): User!
+  article(id: ID!, impression: Boolean): Article!
+  articles(
+    "Returns the elements in the list that come after the specified cursor."
+    after: String,
+    "Returns the elements in the list that come before the specified cursor."
+    before: String,
+    "Returns the first _n_ elements from the list."
+    first: Int,
+    "Returns the last _n_ elements from the list."
+    last: Int,
+    "Returns the elements skipping _n_ from the list."
+    offset: Int,
+    "Sorting functionality"
+    sort: SortFilter
+  ): ArticleConnection
+  categories(
+    "Returns the elements in the list that come after the specified cursor."
+    after: String,
+    "Returns the elements in the list that come before the specified cursor."
+    before: String,
+    filter: CategoryFilter,
+    "Returns the first _n_ elements from the list."
+    first: Int,
+    "Returns the last _n_ elements from the list."
+    last: Int,
+    "Returns the elements skipping _n_ from the list."
+    offset: Int,
+    "Sorting functionality"
+    sort: SortFilter
+  ): CategoryConnection
+  category(id: ID, slug: String): Category!
+  me: User
+  recipe(id: ID): Recipe!
+  reportTypes: [ReportType!]!
+  source(id: ID!): Source!
+  sources(
+    "Returns the elements in the list that come after the specified cursor."
+    after: String,
+    "Returns the elements in the list that come before the specified cursor."
+    before: String,
+    "Returns the first _n_ elements from the list."
+    first: Int,
+    "Returns the last _n_ elements from the list."
+    last: Int,
+    "Returns the elements skipping _n_ from the list."
+    offset: Int,
+    "Sorting functionality"
+    sort: SortFilter
+  ): SourceConnection
+  tag(slug: String): Tag!
+  tags(
+    "Returns the elements in the list that come after the specified cursor."
+    after: String,
+    "Returns the elements in the list that come before the specified cursor."
+    before: String,
+    filter: TagFilter,
+    "Returns the first _n_ elements from the list."
+    first: Int,
+    "Returns the last _n_ elements from the list."
+    last: Int,
+    "Returns the elements skipping _n_ from the list."
+    offset: Int,
+    "Sorting functionality"
+    sort: SortFilter
+  ): TagConnection
+  user(id: ID!): User!
 }
 
 type Reaction {
-    action: String!
-    createdAt: ISO8601DateTime
-    id: ID!
-    updatedAt: ISO8601DateTime
-    user: User!
+  action: String!
+  createdAt: ISO8601DateTime
+  id: ID!
+  updatedAt: ISO8601DateTime
+  user: User!
 }
 
 "The connection type for Reaction."
 type ReactionConnection {
-    "A list of edges."
-    edges: [ReactionEdge!]!
-    "A list of nodes."
-    nodes: [Reaction!]!
-    "Information to aid in pagination."
-    pageInfo: PageInfo!
-    totalCount: Int!
+  "A list of edges."
+  edges: [ReactionEdge!]!
+  "A list of nodes."
+  nodes: [Reaction!]!
+  "Information to aid in pagination."
+  pageInfo: PageInfo!
+  totalCount: Int!
 }
 
 "An edge in a connection."
 type ReactionEdge {
-    "A cursor for use in pagination."
-    cursor: String!
-    "The item at the end of the edge."
-    node: Reaction!
+  "A cursor for use in pagination."
+  cursor: String!
+  "The item at the end of the edge."
+  node: Reaction!
 }
 
 type Recipe {
-    articles(
-        "Returns the elements in the list that come after the specified cursor."
-        after: String,
-        "Returns the elements in the list that come before the specified cursor."
-        before: String,
-        "Returns the first _n_ elements from the list."
-        first: Int,
-        "Returns the last _n_ elements from the list."
-        last: Int,
-        "Returns the elements skipping _n_ from the list."
-        offset: Int,
-        "Sorting functionality"
-        sort: SortFilter
-    ): ArticleConnection!
-    createdAt: ISO8601DateTime
-    description: String
-    id: ID!
-    name: String!
-    position: Int
-    status: String!
-    updatedAt: ISO8601DateTime
+  articles(
+    "Returns the elements in the list that come after the specified cursor."
+    after: String,
+    "Returns the elements in the list that come before the specified cursor."
+    before: String,
+    "Returns the first _n_ elements from the list."
+    first: Int,
+    "Returns the last _n_ elements from the list."
+    last: Int,
+    "Returns the elements skipping _n_ from the list."
+    offset: Int,
+    "Sorting functionality"
+    sort: SortFilter
+  ): ArticleConnection!
+  createdAt: ISO8601DateTime
+  description: String
+  id: ID!
+  name: String!
+  position: Int
+  status: String!
+  updatedAt: ISO8601DateTime
 }
 
 type ReportType {
-    createdAt: ISO8601DateTime
-    description: String
-    id: ID!
-    name: String!
-    position: Int
-    status: String!
-    updatedAt: ISO8601DateTime
+  createdAt: ISO8601DateTime
+  description: String
+  id: ID!
+  name: String!
+  position: Int
+  status: String!
+  updatedAt: ISO8601DateTime
 }
 
 type Source {
-    articles(
-        "Returns the elements in the list that come after the specified cursor."
-        after: String,
-        "Returns the elements in the list that come before the specified cursor."
-        before: String,
-        "Returns the first _n_ elements from the list."
-        first: Int,
-        "Returns the last _n_ elements from the list."
-        last: Int,
-        "Returns the elements skipping _n_ from the list."
-        offset: Int,
-        "Sorting functionality"
-        sort: SortFilter
-    ): ArticleConnection!
-    articlesCount: Int
-    createdAt: ISO8601DateTime
-    domain: String
-    icon: String
-    id: ID!
-    name: String!
-    slug: String
-    updatedAt: ISO8601DateTime
+  articles(
+    "Returns the elements in the list that come after the specified cursor."
+    after: String,
+    "Returns the elements in the list that come before the specified cursor."
+    before: String,
+    "Returns the first _n_ elements from the list."
+    first: Int,
+    "Returns the last _n_ elements from the list."
+    last: Int,
+    "Returns the elements skipping _n_ from the list."
+    offset: Int,
+    "Sorting functionality"
+    sort: SortFilter
+  ): ArticleConnection!
+  articlesCount: Int
+  createdAt: ISO8601DateTime
+  domain: String
+  followers(
+    "Returns the elements in the list that come after the specified cursor."
+    after: String,
+    "Returns the elements in the list that come before the specified cursor."
+    before: String,
+    "Returns the first _n_ elements from the list."
+    first: Int,
+    "Returns the last _n_ elements from the list."
+    last: Int,
+    "Returns the elements skipping _n_ from the list."
+    offset: Int,
+    "Sorting functionality"
+    sort: SortFilter
+  ): FollowerConnection!
+  followersCount: Int!
+  following: Boolean!
+  icon: String
+  id: ID!
+  name: String!
+  slug: String
+  updatedAt: ISO8601DateTime
 }
 
 "The connection type for Source."
 type SourceConnection {
-    "A list of edges."
-    edges: [SourceEdge!]!
-    "A list of nodes."
-    nodes: [Source!]!
-    "Information to aid in pagination."
-    pageInfo: PageInfo!
-    totalCount: Int!
+  "A list of edges."
+  edges: [SourceEdge!]!
+  "A list of nodes."
+  nodes: [Source!]!
+  "Information to aid in pagination."
+  pageInfo: PageInfo!
+  totalCount: Int!
 }
 
 "An edge in a connection."
 type SourceEdge {
-    "A cursor for use in pagination."
-    cursor: String!
-    "The item at the end of the edge."
-    node: Source!
+  "A cursor for use in pagination."
+  cursor: String!
+  "The item at the end of the edge."
+  node: Source!
 }
 
 type Tag {
-    articles(
-        "Returns the elements in the list that come after the specified cursor."
-        after: String,
-        "Returns the elements in the list that come before the specified cursor."
-        before: String,
-        "Returns the first _n_ elements from the list."
-        first: Int,
-        "Returns the last _n_ elements from the list."
-        last: Int,
-        "Returns the elements skipping _n_ from the list."
-        offset: Int,
-        "Sorting functionality"
-        sort: SortFilter
-    ): ArticleConnection!
-    articlesCount: Int
-    createdAt: ISO8601DateTime
-    data: JSON
-    id: ID!
-    name: String!
-    slug: String
-    updatedAt: ISO8601DateTime
-    user: User
+  articles(
+    "Returns the elements in the list that come after the specified cursor."
+    after: String,
+    "Returns the elements in the list that come before the specified cursor."
+    before: String,
+    "Returns the first _n_ elements from the list."
+    first: Int,
+    "Returns the last _n_ elements from the list."
+    last: Int,
+    "Returns the elements skipping _n_ from the list."
+    offset: Int,
+    "Sorting functionality"
+    sort: SortFilter
+  ): ArticleConnection!
+  articlesCount: Int
+  createdAt: ISO8601DateTime
+  data: JSON
+  followers(
+    "Returns the elements in the list that come after the specified cursor."
+    after: String,
+    "Returns the elements in the list that come before the specified cursor."
+    before: String,
+    "Returns the first _n_ elements from the list."
+    first: Int,
+    "Returns the last _n_ elements from the list."
+    last: Int,
+    "Returns the elements skipping _n_ from the list."
+    offset: Int,
+    "Sorting functionality"
+    sort: SortFilter
+  ): FollowerConnection!
+  followersCount: Int!
+  following: Boolean!
+  id: ID!
+  name: String!
+  slug: String
+  updatedAt: ISO8601DateTime
+  user: User
 }
 
 "The connection type for Tag."
 type TagConnection {
-    "A list of edges."
-    edges: [TagEdge!]!
-    "A list of nodes."
-    nodes: [Tag!]!
-    "Information to aid in pagination."
-    pageInfo: PageInfo!
-    totalCount: Int!
+  "A list of edges."
+  edges: [TagEdge!]!
+  "A list of nodes."
+  nodes: [Tag!]!
+  "Information to aid in pagination."
+  pageInfo: PageInfo!
+  totalCount: Int!
 }
 
 "An edge in a connection."
 type TagEdge {
-    "A cursor for use in pagination."
-    cursor: String!
-    "The item at the end of the edge."
-    node: Tag!
+  "A cursor for use in pagination."
+  cursor: String!
+  "The item at the end of the edge."
+  node: Tag!
 }
 
 type User {
-    articles(
-        "Returns the elements in the list that come after the specified cursor."
-        after: String,
-        "Returns the elements in the list that come before the specified cursor."
-        before: String,
-        "Returns the first _n_ elements from the list."
-        first: Int,
-        "Returns the last _n_ elements from the list."
-        last: Int,
-        "Returns the elements skipping _n_ from the list."
-        offset: Int,
-        "Sorting functionality"
-        sort: SortFilter
-    ): ArticleConnection!
-    avatar: String
-    createdAt: ISO8601DateTime
-    data: JSON
-    email: String
-    firstName: String
-    id: ID!
-    lastName: String
-    mobile: String
-    recipes: [Recipe!]!
-    role: String
-    status: String
-    updatedAt: ISO8601DateTime
+  articles(
+    "Returns the elements in the list that come after the specified cursor."
+    after: String,
+    "Returns the elements in the list that come before the specified cursor."
+    before: String,
+    "Returns the first _n_ elements from the list."
+    first: Int,
+    "Returns the last _n_ elements from the list."
+    last: Int,
+    "Returns the elements skipping _n_ from the list."
+    offset: Int,
+    "Sorting functionality"
+    sort: SortFilter
+  ): ArticleConnection!
+  avatar: String
+  createdAt: ISO8601DateTime
+  data: JSON
+  email: String
+  firstName: String
+  followers(
+    "Returns the elements in the list that come after the specified cursor."
+    after: String,
+    "Returns the elements in the list that come before the specified cursor."
+    before: String,
+    "Returns the first _n_ elements from the list."
+    first: Int,
+    "Returns the last _n_ elements from the list."
+    last: Int,
+    "Returns the elements skipping _n_ from the list."
+    offset: Int,
+    "Sorting functionality"
+    sort: SortFilter
+  ): FollowerConnection!
+  followersCount: Int!
+  following: Boolean!
+  follows: [Follower!]!
+  id: ID!
+  lastName: String
+  mobile: String
+  recipes: [Recipe!]!
+  role: String
+  status: String
+  updatedAt: ISO8601DateTime
 }
 
 "Reaction kinds"
 enum ActionKind {
-    "angry"
-    angry
-    "cry"
-    cry
-    "haha"
-    haha
-    "like"
-    like
-    "wow"
-    wow
+  "angry"
+  angry
+  "cry"
+  cry
+  "haha"
+  haha
+  "like"
+  like
+  "wow"
+  wow
 }
 
 "Reaction target types"
 enum ReactionTarget {
-    "Caak::Article"
-    article
-    "Caak::Comment"
-    comment
+  "Caak::Article"
+  article
+  "Caak::Comment"
+  comment
 }
 
 "Sort Direction"
 enum SortDirection {
-    "Ascending"
-    asc
-    "Descending"
-    desc
+  "Ascending"
+  asc
+  "Descending"
+  desc
 }
 
 "An ISO 8601-encoded date"
@@ -609,363 +708,373 @@ scalar JSON
 scalar Upload
 
 input BlockInput {
-    _destroy: Boolean
-    content: String
-    data: JSON
-    "ID"
-    id: ID
-    image: Upload
-    kind: String
-    position: Int
-    title: String
+  _destroy: Boolean
+  content: String
+  data: JSON
+  "ID"
+  id: ID
+  image: Upload
+  kind: String
+  position: Int
+  title: String
 }
 
 "Categories filter"
 input CategoryFilter {
-    createdAt: DateFilter
-    id: IDFilter
-    name: StringFilter
-    slug: StringFilter
-    status: StringFilter
-    updatedAt: DateFilter
+  createdAt: DateFilter
+  id: IDFilter
+  name: StringFilter
+  slug: StringFilter
+  status: StringFilter
+  updatedAt: DateFilter
 }
 
 "Comments filter"
 input CommentFilter {
-    articleId: IntFilter
-    comment: StringFilter
-    createdAt: DateFilter
-    id: IDFilter
-    updatedAt: DateFilter
+  articleId: IntFilter
+  comment: StringFilter
+  createdAt: DateFilter
+  id: IDFilter
+  updatedAt: DateFilter
 }
 
 input DateFilter {
-    "equals to"
-    eq: String
-    "Greater than"
-    gt: String
-    "Greater than or equals"
-    gteq: String
-    "Less than"
-    lt: String
-    "Less than or equals"
-    lteq: String
-    "not equals to"
-    notEq: String
-    "is null ?"
-    notNull: Boolean
-    "is null ?"
-    null: Boolean
+  "equals to"
+  eq: String
+  "Greater than"
+  gt: String
+  "Greater than or equals"
+  gteq: String
+  "Less than"
+  lt: String
+  "Less than or equals"
+  lteq: String
+  "not equals to"
+  notEq: String
+  "is null ?"
+  notNull: Boolean
+  "is null ?"
+  null: Boolean
 }
 
 input IDFilter {
-    "is null ?"
-    blank: Boolean
-    "equals to"
-    eq: ID
-    "Greater than"
-    gt: Int
-    "Greater than or equals"
-    gteq: Int
-    "in: Matches any values in giver array"
-    in: [ID!]
-    "Less than"
-    lt: Int
-    "Less than or equals"
-    lteq: Int
-    "not equals to"
-    notEq: ID
-    "in: Matches none of values in giver array"
-    notIn: [ID!]
-    "Starts with"
-    start: Int
+  "is null ?"
+  blank: Boolean
+  "equals to"
+  eq: ID
+  "Greater than"
+  gt: Int
+  "Greater than or equals"
+  gteq: Int
+  "in: Matches any values in giver array"
+  in: [ID!]
+  "Less than"
+  lt: Int
+  "Less than or equals"
+  lteq: Int
+  "not equals to"
+  notEq: ID
+  "in: Matches none of values in giver array"
+  notIn: [ID!]
+  "Starts with"
+  start: Int
 }
 
 input IntFilter {
-    "is blank ?"
-    blank: Boolean
-    "equals to"
-    eq: Float
-    "Greater than"
-    gt: Float
-    "Greater than or equals"
-    gteq: Float
-    "in: Matches none of values in giver array"
-    in: [Float!]
-    "Less than"
-    lt: Float
-    "Less than or equals"
-    lteq: Float
-    "not equals to"
-    notEq: Float
-    "in: Matches none of values in giver array"
-    notIn: [Float!]
-    "is null ?"
-    null: Boolean
+  "is blank ?"
+  blank: Boolean
+  "equals to"
+  eq: Float
+  "Greater than"
+  gt: Float
+  "Greater than or equals"
+  gteq: Float
+  "in: Matches none of values in giver array"
+  in: [Float!]
+  "Less than"
+  lt: Float
+  "Less than or equals"
+  lteq: Float
+  "not equals to"
+  notEq: Float
+  "in: Matches none of values in giver array"
+  notIn: [Float!]
+  "is null ?"
+  null: Boolean
 }
 
 input SortFilter {
-    direction: SortDirection
-    field: String!
+  direction: SortDirection
+  field: String!
 }
 
 input StringFilter {
-    "is blank ?"
-    blank: Boolean
-    "contains"
-    cont: String
-    "ends with"
-    end: String
-    "equals to"
-    eq: String
-    "in: Matches any values in giver array"
-    in: [String!]
-    "not equals to"
-    notEq: String
-    "in: Matches none of values in giver array"
-    notIn: [String!]
-    "is null ?"
-    notNull: Boolean
-    "is null ?"
-    null: Boolean
-    "starts with"
-    start: String
+  "is blank ?"
+  blank: Boolean
+  "contains"
+  cont: String
+  "ends with"
+  end: String
+  "equals to"
+  eq: String
+  "in: Matches any values in giver array"
+  in: [String!]
+  "not equals to"
+  notEq: String
+  "in: Matches none of values in giver array"
+  notIn: [String!]
+  "is null ?"
+  notNull: Boolean
+  "is null ?"
+  null: Boolean
+  "starts with"
+  start: String
 }
 
 "Tags filter"
 input TagFilter {
-    createdAt: DateFilter
-    id: IDFilter
-    name: StringFilter
-    nameOrSlug: StringFilter
-    slug: StringFilter
-    updatedAt: DateFilter
+  createdAt: DateFilter
+  id: IDFilter
+  name: StringFilter
+  nameOrSlug: StringFilter
+  slug: StringFilter
+  updatedAt: DateFilter
 }
 
 "Autogenerated input type of addArticle"
 input addArticleInput {
-    acceptComment: Boolean
-    blocks: [BlockInput!]
-    categoryIds: [ID!]
-    "A unique identifier for the client performing the mutation."
-    clientMutationId: String
-    data: JSON
-    description: String
-    featured: Boolean
-    featuredFrom: ISO8601DateTime
-    featuredTo: ISO8601DateTime
-    image: Upload
-    imageUrl: String
-    kind: String
-    publishDate: ISO8601DateTime
-    slug: String
-    sourceId: ID
-    tags: [String!]
-    title: String!
+  acceptComment: Boolean
+  blocks: [BlockInput!]
+  categoryIds: [ID!]
+  "A unique identifier for the client performing the mutation."
+  clientMutationId: String
+  data: JSON
+  description: String
+  featured: Boolean
+  featuredFrom: ISO8601DateTime
+  featuredTo: ISO8601DateTime
+  image: Upload
+  imageUrl: String
+  kind: String
+  publishDate: ISO8601DateTime
+  slug: String
+  sourceId: ID
+  tags: [String!]
+  title: String!
 }
 
 "Autogenerated input type of addCategory"
 input addCategoryInput {
-    "A unique identifier for the client performing the mutation."
-    clientMutationId: String
-    parentId: Int
-    position: Int
-    slug: String
-    status: String!
-    title: String!
+  "A unique identifier for the client performing the mutation."
+  clientMutationId: String
+  parentId: Int
+  position: Int
+  slug: String
+  status: String!
+  title: String!
 }
 
 "Autogenerated input type of addComment"
 input addCommentInput {
-    "A unique identifier for the client performing the mutation."
-    clientMutationId: String
-    comment: String
-    name: String
-    parentId: ID
-    targetId: ID!
-    targetType: String!
+  "A unique identifier for the client performing the mutation."
+  clientMutationId: String
+  comment: String
+  name: String
+  parentId: ID
+  targetId: ID!
+  targetType: String!
 }
 
 "Autogenerated input type of addToRecipe"
 input addToRecipeInput {
-    articleId: ID!
-    "A unique identifier for the client performing the mutation."
-    clientMutationId: String
-    id: ID
+  articleId: ID!
+  "A unique identifier for the client performing the mutation."
+  clientMutationId: String
+  id: ID
 }
 
 "Autogenerated input type of changePassword"
 input changePasswordInput {
-    "A unique identifier for the client performing the mutation."
-    clientMutationId: String
-    "current valid password"
-    currentPassword: String!
-    password: String!
-    passwordConfirm: String!
+  "A unique identifier for the client performing the mutation."
+  clientMutationId: String
+  "current valid password"
+  currentPassword: String!
+  password: String!
+  passwordConfirm: String!
 }
 
 "Autogenerated input type of checkLogin"
 input checkLoginInput {
-    "A unique identifier for the client performing the mutation."
-    clientMutationId: String
-    "Login email or mobile"
-    login: String!
+  "A unique identifier for the client performing the mutation."
+  clientMutationId: String
+  "Login email or mobile"
+  login: String!
 }
 
 "Autogenerated input type of convertLink"
 input convertLinkInput {
-    "A unique identifier for the client performing the mutation."
-    clientMutationId: String
-    link: String!
+  "A unique identifier for the client performing the mutation."
+  clientMutationId: String
+  link: String!
 }
 
 "Autogenerated input type of createReaction"
 input createReactionInput {
-    action: ActionKind!
-    "A unique identifier for the client performing the mutation."
-    clientMutationId: String
-    targetId: ID!
-    targetType: ReactionTarget!
+  action: ActionKind!
+  "A unique identifier for the client performing the mutation."
+  clientMutationId: String
+  targetId: ID!
+  targetType: ReactionTarget!
 }
 
 "Autogenerated input type of createRecipe"
 input createRecipeInput {
-    "A unique identifier for the client performing the mutation."
-    clientMutationId: String
-    description: String
-    name: String!
+  "A unique identifier for the client performing the mutation."
+  clientMutationId: String
+  description: String
+  name: String!
 }
 
 "Autogenerated input type of destroyArticle"
 input destroyArticleInput {
-    "A unique identifier for the client performing the mutation."
-    clientMutationId: String
-    id: ID!
+  "A unique identifier for the client performing the mutation."
+  clientMutationId: String
+  id: ID!
 }
 
 "Autogenerated input type of destroyCategory"
 input destroyCategoryInput {
-    "A unique identifier for the client performing the mutation."
-    clientMutationId: String
-    id: String!
+  "A unique identifier for the client performing the mutation."
+  clientMutationId: String
+  id: String!
 }
 
 "Autogenerated input type of forgotPassword"
 input forgotPasswordInput {
-    "A unique identifier for the client performing the mutation."
-    clientMutationId: String
-    "имэйл эсвэл утасны дугаар"
-    login: String!
-    """
+  "A unique identifier for the client performing the mutation."
+  clientMutationId: String
+  "имэйл эсвэл утасны дугаар"
+  login: String!
+  """
 
-    Хэрэв email ээр сэргээж байгаа бол холбоосоор redirect хийх хаягыг тодорхойлж болно жишээ нь:
-    `https://caak.mn/password/reset` эсвэл deeplink `caak://reset/pass`
-    """
-    redirectUri: String
+  Хэрэв email ээр сэргээж байгаа бол холбоосоор redirect хийх хаягыг тодорхойлж болно жишээ нь:
+  `https://caak.mn/password/reset` эсвэл deeplink `caak://reset/pass`
+  """
+  redirectUri: String
 }
 
 "Autogenerated input type of registerUser"
 input registerUserInput {
-    "A unique identifier for the client performing the mutation."
-    clientMutationId: String
-    "email or mobile"
-    login: String!
-    "New password"
-    password: String!
+  "A unique identifier for the client performing the mutation."
+  clientMutationId: String
+  "email or mobile"
+  login: String!
+  "New password"
+  password: String!
 }
 
 "Autogenerated input type of removeComment"
 input removeCommentInput {
-    "A unique identifier for the client performing the mutation."
-    clientMutationId: String
-    id: ID!
+  "A unique identifier for the client performing the mutation."
+  clientMutationId: String
+  id: ID!
 }
 
 "Autogenerated input type of removeRecipeItem"
 input removeRecipeItemInput {
-    articleId: ID!
-    "A unique identifier for the client performing the mutation."
-    clientMutationId: String
-    id: ID
+  articleId: ID!
+  "A unique identifier for the client performing the mutation."
+  clientMutationId: String
+  id: ID
 }
 
 "Autogenerated input type of reportArticle"
 input reportArticleInput {
-    articleId: ID!
-    "A unique identifier for the client performing the mutation."
-    clientMutationId: String
-    comment: String
-    contact: String
-    name: String
-    reportTypeId: ID!
+  articleId: ID!
+  "A unique identifier for the client performing the mutation."
+  clientMutationId: String
+  comment: String
+  contact: String
+  name: String
+  reportTypeId: ID!
+}
+
+"Autogenerated input type of toggleFollow"
+input toggleFollowInput {
+  "A unique identifier for the client performing the mutation."
+  clientMutationId: String
+  "Object ID of target"
+  targetId: ID!
+  "Object type of target. vendor, user, website ..."
+  targetType: String!
 }
 
 "Autogenerated input type of updateArticle"
 input updateArticleInput {
-    acceptComment: Boolean
-    blocks: [BlockInput!]
-    categoryIds: [ID!]
-    "A unique identifier for the client performing the mutation."
-    clientMutationId: String
-    data: JSON
-    description: String
-    featured: Boolean
-    featuredFrom: ISO8601DateTime
-    featuredTo: ISO8601DateTime
-    id: ID!
-    image: Upload
-    imageUrl: String
-    kind: String
-    publishDate: ISO8601DateTime
-    slug: String
-    sourceId: ID
-    tags: [String!]
-    title: String!
+  acceptComment: Boolean
+  blocks: [BlockInput!]
+  categoryIds: [ID!]
+  "A unique identifier for the client performing the mutation."
+  clientMutationId: String
+  data: JSON
+  description: String
+  featured: Boolean
+  featuredFrom: ISO8601DateTime
+  featuredTo: ISO8601DateTime
+  id: ID!
+  image: Upload
+  imageUrl: String
+  kind: String
+  publishDate: ISO8601DateTime
+  slug: String
+  sourceId: ID
+  tags: [String!]
+  title: String!
 }
 
 "Autogenerated input type of updateCategory"
 input updateCategoryInput {
-    "A unique identifier for the client performing the mutation."
-    clientMutationId: String
-    id: String!
-    parentId: Int
-    position: Int
-    slug: String
-    status: String!
-    title: String!
+  "A unique identifier for the client performing the mutation."
+  clientMutationId: String
+  id: String!
+  parentId: Int
+  position: Int
+  slug: String
+  status: String!
+  title: String!
 }
 
 "Autogenerated input type of updateComment"
 input updateCommentInput {
-    "A unique identifier for the client performing the mutation."
-    clientMutationId: String
-    comment: String
-    id: ID!
-    status: String
+  "A unique identifier for the client performing the mutation."
+  clientMutationId: String
+  comment: String
+  id: ID!
+  status: String
 }
 
 "Autogenerated input type of updateRecipe"
 input updateRecipeInput {
-    "A unique identifier for the client performing the mutation."
-    clientMutationId: String
-    description: String
-    id: ID!
-    name: String
-    status: String
+  "A unique identifier for the client performing the mutation."
+  clientMutationId: String
+  description: String
+  id: ID!
+  name: String
+  status: String
 }
 
 "Autogenerated input type of updateUserProfile"
 input updateUserProfileInput {
-    avatar: Upload
-    birthday: String
-    "A unique identifier for the client performing the mutation."
-    clientMutationId: String
-    data: JSON
-    firstName: String
-    gender: String
-    "Хэрэглэгчийн ID: өөрийн бүртгэлийг шинэчэлж байх үед шаардлагагүй / Зөвхөн ADMIN user_id тайгаар update дуудаж чадна"
-    id: ID
-    lastName: String
-    password: String
-    register: String
+  avatar: Upload
+  birthday: String
+  "A unique identifier for the client performing the mutation."
+  clientMutationId: String
+  data: JSON
+  firstName: String
+  gender: String
+  "Хэрэглэгчийн ID: өөрийн бүртгэлийг шинэчэлж байх үед шаардлагагүй / Зөвхөн ADMIN user_id тайгаар update дуудаж чадна"
+  id: ID
+  lastName: String
+  password: String
+  register: String
 }

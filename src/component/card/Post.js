@@ -11,7 +11,7 @@ import moment from 'moment';
 
 const colors = ['#163943', '#463146', '#131D1C', '#1E1642', '#854D0E', '#233C6A', '#813333'];
 
-export default function PostCard({ isMobile, post, sponsored, ...rest }) {
+export default function PostCard({ isMobile, post, ...rest }) {
   const [saving, setSaving] = useState(false);
   const [fixedMenu, setFixedMenu] = useState(false);
   const [reporting, setReporting] = useState(false);
@@ -19,7 +19,7 @@ export default function PostCard({ isMobile, post, sponsored, ...rest }) {
   const [random] = useState(Math.floor(Math.random() * colors.length));
 
   const postURL = `/post/view/${post?.id}`;
-  // const sponsored = post?.featured && moment().isBetween(moment(post.featured_from), moment(post.featured_to));
+  const sponsored = post?.featured && moment().isBetween(moment(post.featured_from), moment(post.featured_to));
 
   const color = sponsored ? { backgroundColor: colors[random] } : {};
   const text = sponsored ? 'text-[#ffffff] sm:text-center hover:text-[#ffffff]' : 'hover:text-[#111111]';
@@ -73,7 +73,7 @@ export default function PostCard({ isMobile, post, sponsored, ...rest }) {
         {sponsored && (
           <div className="hidden sm:flex flex-row items-center justify-between w-full mt-[18px] px-[16px]">
             <div className="flex flex-row items-center">
-              <Link to={`/channel/${post.source?.slug}`} className="flex flex-row items-center">
+              <Link to={`/channel/${post.source?.id}`} className="flex flex-row items-center">
                 <div className="flex justify-center items-center w-[40px] h-[40px] rounded-full bg-white bg-opacity-20">
                   <Avatar className={`w-[34px] h-[34px]`} src={imagePath(post.source?.icon)} />
                 </div>
@@ -99,7 +99,7 @@ export default function PostCard({ isMobile, post, sponsored, ...rest }) {
         >
           <div className={`${sponsored ? 'flex sm:hidden' : 'flex'} flex-row items-end`}>
             <div className="flex flex-row items-center">
-              <Link to={`/channel/${post.source?.slug}`} className="flex flex-row items-center">
+              <Link to={`/channel/${post.source?.id}`} className="flex flex-row items-center">
                 <Avatar className={`w-[22px] h-[22px]`} src={imagePath(post.source?.icon)} />
                 <MetaTag className={`ml-[6px] text-[14px] ${sponsored ? 'text-white' : 'text-[#555555]'}`}>
                   {post?.source?.name}

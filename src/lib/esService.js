@@ -123,6 +123,17 @@ export class ESService {
       ...rest,
     }).then(convertHitsTotal);
   }
+
+  sourcePosts(id, rest) {
+    return this.post({
+      query: {
+        bool: {
+          must: [...defaultFilters, { term: { 'source.id': id } }],
+        },
+      },
+      ...rest,
+    }).then(convertHitsTotal);
+  }
   posts(filter, sort, size, page) {
     return this.post({
       query: {

@@ -1,84 +1,152 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { AppContext } from '../../App';
 import { useParams } from 'react-router-dom';
-import { useQuery, gql } from '@apollo/client';
+import { useQuery, gql, useMutation } from '@apollo/client';
+import { Button, Col, Skeleton, Statistic } from 'antd';
+import { ESService } from '../../lib/esService';
+import { Tabs } from 'antd';
+import PostCard from '../../component/card/Post';
+import { imagePath } from '../../utility/Util';
+import { BellOutlined, HeartOutlined } from '@ant-design/icons';
 
-const Source = gql`
-  query GetSource($slug: String) {
-    source(slug: $slug) {
+const SOURCE = gql`
+  query GetSource($id: ID!) {
+    source(id: $id) {
       id
       name
+      domain
+      icon
       slug
+      followersCount
+      following
+      followers(first: 10) {
+        nodes {
+          user {
+            id
+            firstName
+            lastName
+            avatar
+          }
+        }
+      }
     }
   }
 `;
 
-const menu = [
-  {
-    title: 'ШИНЭ',
-  },
-  {
-    title: 'ШИЛДЭГ',
-  },
-];
+const FOLLOW = gql`
+  mutation Follow($id: ID!) {
+    toggleFollow(input: { targetType: "source", targetId: $id })
+  }
+`;
+const sortMap = {
+  recent: { publish_date: 'desc' },
+  top: { views_count: 'desc' },
+};
 
 export default function Channel() {
-  const { slug } = useParams();
-  const [selected, setSelected] = useState(0);
-  const { data } = useQuery(Source, { variables: { slug } });
-  console.log(data);
-
-  const context = useContext(AppContext);
-
-  useEffect(() => {
-    context.setStore('default');
-  }, []);
-
-  useEffect(() => {
-    context.setShown(true);
-  }, []);
+  const { id } = useParams();
+  const { data, loading: fetching, refetch } = useQuery(SOURCE, { variables: { id } });
+  const es = new ESService('caak');
+  const source = data?.source || {};
+  const [sort, setSort] = useState('recent');
+  const [count, setCount] = useState(0);
+  const [articles, setArticles] = useState([]);
+  const [page, setPage] = useState(0);
+  const [loading, setLoading] = useState(true);
+  const [follow, { loading: saving }] = useMutation(FOLLOW, { variables: { id } });
 
   useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
+    setLoading(true);
+    es.sourcePosts(id, { size: 24, sort: sortMap[sort] }).then(({ hits, total }) => {
+      setArticles(hits);
+      setCount(total);
+      setLoading(false);
+    });
+  }, [id, sort]);
+
+  useEffect(() => {
+    if (page === 0) return;
+    setLoading(true);
+    es.sourcePosts(id, { from: 24 * page, size: 24, sort: sortMap[sort] }).then(({ hits }) => {
+      setArticles([...articles, ...hits]);
+      setLoading(false);
+    });
+  }, [page]);
+
+  if (fetching) return <Skeleton />;
 
   return (
-    <div className="flex flex-col w-full items-center">
+    <div className="flex flex-col w-full items-center mb-[40px]">
       <img
         className="w-[94px] h-[94px] rounded-full mt-[30px] md:mt-[51px]"
-        alt=""
-        src="https://cdna.artstation.com/p/assets/images/images/049/505/328/large/constantine-sekeris-konshu-03b.jpg?1652671392"
+        alt={source.domain}
+        src={imagePath(source.icon)}
       />
-      <p className="text-black text-[30px] font-condensed font-bold leading-[35px] mt-[16px]">Wired.com</p>
-      <p className="mt-[12px] text-[#555555] text-[15px] leading-[18px] ">WIRED is where tomorrow is realized.</p>
+      <p className="text-black text-[30px] font-condensed font-bold leading-[35px] mt-[16px]">{source.domain}</p>
+      <p className="mt-[12px] text-[#555555] text-[15px] leading-[18px]">{source.slug}</p>
       <div className="flex flex-row items-center mt-[18px] text-[15px]">
-        <p className="text-[#555555] leading-[18px]">
-          <span className="text-[#111111] font-medium">8</span> Пост
-        </p>
-        <p className="text-[#555555] leading-[18px]">
-          <span className="text-[#111111] font-medium ml-[20px]">30</span> Дагагчид
-        </p>
+        <Statistic title="Нийт мэдээлэл" value={count} className="mx-[24px] text-center" />
+        <Statistic title="Дагагчид" value={source.followersCount} className="mx-[24px] text-center" />
       </div>
       <div className="flex flex-row items-center mt-[20px]">
-        <button className="w-[90px] h-[34px] bg-[#FF6600] rounded-[4px] text-white text-[15px] font-bold">Дагах</button>
+        {source.following ? (
+          <Button
+            type="primary"
+            icon={<HeartOutlined />}
+            onClick={() => {
+              follow().then(() => {
+                refetch().then(console.log);
+              });
+            }}
+          >
+            ДАГАСАН
+          </Button>
+        ) : (
+          <Button
+            type="primary"
+            icon={<BellOutlined />}
+            onClick={() => {
+              follow().then(() => {
+                refetch().then(console.log);
+              });
+            }}
+          >
+            ДАГАХ
+          </Button>
+        )}
         <div className="w-[42px] h-[34px] flex justify-center items-center border rounded-[4px] ml-[10px] cursor-pointer">
           <span className="icon-fi-rs-more-ver rotate-90 text-[18px]" />
         </div>
       </div>
-      <div className=" mt-[40px] flex flex-row max-w-[1310px] items-center border-[#EFEEEF] border-b w-full justify-center gap-[50px] pb-[1px] pt-[17px]">
-        {menu.map((data, index) => {
-          return (
-            <p
-              key={index}
-              onClick={() => setSelected(index)}
-              className={`text-[18px] font-bold cursor-pointer text-center leading-[21px] ${
-                selected === index ? 'border-b-[3px] border-[#FF6600] pb-[12px]' : 'border-none pb-[15px]'
-              } ${selected === index ? 'text-[#111111]' : 'text-[#555555]'}`}
+      <Tabs
+        defaultActiveKey="recent"
+        onChange={(e) => {
+          setSort(e);
+        }}
+        className="w-full flex items-center mt-[40px] border-b font-merri text-[18px]"
+      >
+        <Tabs.TabPane tab={<span className="text-[24px] font-normal font-merri">ШИНЭ</span>} key="recent" />
+        <Tabs.TabPane tab={<span className="text-[24px] font-normal font-merri">ШИЛДЭГ</span>} key="top" />
+      </Tabs>
+      <div className="max-w-[1310px] w-full flex flex-wrap justify-center xl:justify-start gap-x-[22px] gap-y-[40px] pt-[30px] md:pt-[70px]">
+        {articles.map((post) => (
+          <Col key={post.id}>
+            <PostCard post={post} />
+          </Col>
+        ))}
+        {loading && <Skeleton />}
+        {count > 24 * (page + 1) && (
+          <Col span={24}>
+            <Button
+              block
+              size="large"
+              className="font-roboto my-[24px] text-caak-primary border-caak-primary"
+              onClick={() => setPage(page + 1)}
+              loading={loading}
             >
-              {data.title}
-            </p>
-          );
-        })}
+              Цааш үзэх
+            </Button>
+          </Col>
+        )}
       </div>
     </div>
   );
