@@ -30,6 +30,7 @@ import Lottie from 'react-lottie';
 import { FIcon } from '../../../component/icon';
 import { orderBy } from 'lodash';
 import ArticlesList from '../../home/articles_list';
+import Banner from '../../../component/banner';
 
 const ACTIONS = [{ icon: love }, { icon: haha }, { icon: wow }, { icon: cry }, { icon: angry }];
 
@@ -217,6 +218,7 @@ const Post = () => {
             alt=""
             className="w-full h-[210px] flex md:hidden mt-[20px] object-cover"
           />
+          <Banner position="a1" />
           <div className="flex flex-row gap-[15px]">
             {article.categories?.nodes?.map((x) => (
               <Link key={x.id} to={`/category/${x.slug}`}>

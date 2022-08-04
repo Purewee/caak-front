@@ -13,6 +13,7 @@ import SignInUpController from '../../component/modal/SignInUpController';
 import ArticlesList from './articles_list';
 import { FieldTimeOutlined, LineChartOutlined } from '@ant-design/icons';
 import SideMenu from '../../component/navigation/navbar/SideMenu';
+import Banner from '../../component/banner';
 
 export default function Home() {
   const context = useContext(AppContext);
@@ -36,7 +37,8 @@ export default function Home() {
     <>
       <div className={`relative bg-white flex flex-col items-center mb-[100px]`}>
         <NavbarPostHeader />
-        <div className="md:px-[30px] mt-[100px] w-full flex justify-center px-[16px] sm:px-0">
+        <Banner position="a1" />
+        <div className="md:px-[30px] w-full flex justify-center px-[16px] sm:px-0">
           <Story />
         </div>
         <div className="max-w-[1310px] w-full px-[16px] sm:px-0">

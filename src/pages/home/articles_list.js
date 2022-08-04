@@ -3,6 +3,7 @@ import { ESService } from '../../lib/esService';
 import { Button, Col, Skeleton } from 'antd';
 import PostCard from '../../component/card/Post';
 import useMediaQuery from '../../component/navigation/useMediaQuery';
+import Banner from '../../component/banner';
 
 export default function ArticlesList({ filter = [], sort = {}, size = 24 }) {
   const es = new ESService('caak');
@@ -26,26 +27,49 @@ export default function ArticlesList({ filter = [], sort = {}, size = 24 }) {
       setLoading(false);
     });
   }, [page]);
+  const chunked = list.reduce((res, item, index) => {
+    const chunkIndex = Math.floor(index / 8);
+    if (!res[chunkIndex]) {
+      res[chunkIndex] = []; // start a new chunk
+    }
 
+    res[chunkIndex].push(item);
+
+    return res;
+  }, []);
   return (
-    <div className="max-w-[1310px] w-full flex flex-wrap justify-center gap-x-[22px] gap-y-[40px] px-[16px] sm:px-0 mt-[30px]">
-      {list.map((post, index) => (
-        <Col className="w-full sm:w-[422px]" key={index}>
-          <PostCard sponsored={index === 0} isMobile={isMobile} post={post} />
-        </Col>
-      ))}
-      {loading && <Skeleton />}
-      <Col span={24}>
+    <>
+      {chunked.map((section) => {
+        const divider = Math.floor(Math.random() * 8);
+        return (
+          <div className="max-w-[1310px] w-full flex flex-wrap justify-center gap-x-[22px] gap-y-[40px] px-[16px] sm:px-0 mt-[30px]">
+            {section.map((post, index) => (
+              <>
+                {index === divider && (
+                  <Col className="w-full sm:w-[422px]" key={`${index}-banner`}>
+                    <Banner position="a2" />
+                  </Col>
+                )}
+                <Col className="w-full sm:w-[422px]" key={index}>
+                  <PostCard sponsored={index === 0} isMobile={isMobile} post={post} />
+                </Col>
+              </>
+            ))}
+            {loading && <Skeleton />}
+          </div>
+        );
+      })}
+      <div className="max-w-[1310px] w-full">
         <Button
           block
           size="large"
-          className="font-roboto border-caak-primary h-[74px] text-[18px] font-medium text-caak-primary mt-[20px]"
+          className="font-roboto border-caak-primary h-[54px] text-[18px] font-medium text-caak-primary mt-[20px]"
           onClick={() => setPage(page + 1)}
           loading={loading}
         >
           Бусад мэдээ
         </Button>
-      </Col>
-    </div>
+      </div>
+    </>
   );
 }

@@ -115,6 +115,22 @@ type ArticleEdge {
   node: Article!
 }
 
+type Banner {
+  bannerLocation: String
+  bannerType: String
+  clicksCount: Int
+  createdAt: ISO8601DateTime
+  data: JSON
+  dateFrom: ISO8601DateTime
+  dateTo: ISO8601DateTime
+  fileUrl: String
+  id: ID!
+  position: Int
+  title: String
+  updatedAt: ISO8601DateTime
+  url: String
+}
+
 type Category {
   articles(
     "Returns the elements in the list that come after the specified cursor."
@@ -403,6 +419,7 @@ type Query {
   ): CategoryConnection
   category(id: ID, slug: String): Category!
   me: User
+  randomBanner(position: String!): Banner
   recipe(id: ID): Recipe!
   reportTypes: [ReportType!]!
   source(id: ID!): Source!
