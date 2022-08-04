@@ -1,11 +1,13 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { Tabs, Statistic, Button, Row, Col, Skeleton } from 'antd';
 import { ESService } from '../../lib/esService';
-import { gql, useQuery } from '@apollo/client';
+import { gql, useMutation, useQuery } from '@apollo/client';
 import { useParams } from 'react-router-dom';
 import PostCard from '../../component/card/Post';
 import { HashTag, Title } from '../post/view/wrapper';
 import { AppContext } from '../../App';
+import { BellOutlined, HeartOutlined } from '@ant-design/icons';
+import { useAuth } from '../../context/AuthContext';
 
 const CATEGORY = gql`
   query GetCategory($slug: String) {
@@ -14,7 +16,14 @@ const CATEGORY = gql`
       name
       slug
       status
+      following
+      followersCount
     }
+  }
+`;
+const FOLLOW = gql`
+  mutation Follow($id: ID!) {
+    toggleFollow(input: { targetType: "category", targetId: $id })
   }
 `;
 
@@ -26,14 +35,16 @@ const sortMap = {
 export default function Category() {
   const context = useContext(AppContext);
   const es = new ESService('caak');
+  const { isAuth, openModal } = useAuth();
   const { slug } = useParams();
-  const { data } = useQuery(CATEGORY, { variables: { slug } });
+  const { data, refetch } = useQuery(CATEGORY, { variables: { slug } });
   const category = data?.category || {};
   const [sort, setSort] = useState('recent');
   const [count, setCount] = useState(0);
   const [articles, setArticles] = useState([]);
   const [page, setPage] = useState(0);
   const [loading, setLoading] = useState(true);
+  const [follow, { loading: saving }] = useMutation(FOLLOW, { variables: { id: category?.id } });
 
   useEffect(() => {
     setLoading(true);
@@ -68,7 +79,47 @@ export default function Category() {
         <Title>{category.name}</Title>
         <div className="flex">
           <Statistic title="Нийт мэдээлэл" value={count} className="mx-[24px] text-center" />
-          <Statistic title="Дагагчид" value={count} className="text-center font-condensed" />
+          <Statistic title="Дагагчид" value={category.followersCount} className="text-center font-condensed" />
+        </div>
+        <div className="flex flex-row items-center mt-[20px]">
+          {category.following ? (
+            <Button
+              type="primary"
+              icon={<HeartOutlined />}
+              loading={saving}
+              onClick={() => {
+                if (isAuth) {
+                  follow().then(() => {
+                    refetch().then(console.log);
+                  });
+                } else {
+                  openModal('open');
+                }
+              }}
+            >
+              ДАГАСАН
+            </Button>
+          ) : (
+            <Button
+              type="primary"
+              icon={<BellOutlined />}
+              loading={saving}
+              onClick={() => {
+                if (isAuth) {
+                  follow().then(() => {
+                    refetch().then(console.log);
+                  });
+                } else {
+                  openModal('open');
+                }
+              }}
+            >
+              ДАГАХ
+            </Button>
+          )}
+          <div className="w-[42px] h-[34px] flex justify-center items-center border rounded-[4px] ml-[10px] cursor-pointer">
+            <span className="icon-fi-rs-more-ver rotate-90 text-[18px]" />
+          </div>
         </div>
         <Tabs
           defaultActiveKey="recent"

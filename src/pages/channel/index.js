@@ -7,6 +7,7 @@ import { Tabs } from 'antd';
 import PostCard from '../../component/card/Post';
 import { imagePath } from '../../utility/Util';
 import { BellOutlined, HeartOutlined } from '@ant-design/icons';
+import { useAuth } from '../../context/AuthContext';
 
 const SOURCE = gql`
   query GetSource($id: ID!) {
@@ -43,6 +44,7 @@ const sortMap = {
 };
 
 export default function Channel() {
+  const { isAuth, openModal } = useAuth();
   const { id } = useParams();
   const { data, loading: fetching, refetch } = useQuery(SOURCE, { variables: { id } });
   const es = new ESService('caak');
@@ -92,10 +94,15 @@ export default function Channel() {
           <Button
             type="primary"
             icon={<HeartOutlined />}
+            loading={saving}
             onClick={() => {
-              follow().then(() => {
-                refetch().then(console.log);
-              });
+              if (isAuth) {
+                follow().then(() => {
+                  refetch().then(console.log);
+                });
+              } else {
+                openModal('open');
+              }
             }}
           >
             ДАГАСАН
@@ -104,10 +111,15 @@ export default function Channel() {
           <Button
             type="primary"
             icon={<BellOutlined />}
+            loading={saving}
             onClick={() => {
-              follow().then(() => {
-                refetch().then(console.log);
-              });
+              if (isAuth) {
+                follow().then(() => {
+                  refetch().then(console.log);
+                });
+              } else {
+                openModal('open');
+              }
             }}
           >
             ДАГАХ
