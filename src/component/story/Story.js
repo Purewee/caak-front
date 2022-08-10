@@ -5,10 +5,10 @@ import { Link } from 'react-router-dom';
 
 export default function StoryItem({ story, index, border }) {
   return (
-    <div className={`min-w-[106px] sm:min-w-[290px] max-w-[290px] sm:min-h-[435px] min-h-[160px] max-h-[435px]`}>
+    <div className={`min-w-[136px] sm:min-w-[290px] max-w-[290px] sm:min-h-[435px] min-h-[203px] max-h-[435px]`}>
       <Link to={`/story/${index}`}>
-        <div className={`h-full w-full storyBackgroundLinear ${border && 'p-[3px]'} rounded-[8px]`}>
-          <div className={`relative h-full w-full bg-white rounded-[8px] ${border && 'p-[5px]'}`}>
+        <div className={`h-full w-full storyBackgroundLinear ${border && 'p-[2px] sm:p-[3px]'} rounded-[8px]`}>
+          <div className={`relative h-full w-full bg-white rounded-[8px] ${border && 'sm:p-[5px]'}`}>
             <LazyLoadImage
               alt={story.id}
               className={`object-cover h-full w-full rounded-[8px]`}
@@ -16,7 +16,7 @@ export default function StoryItem({ story, index, border }) {
             />
             <div
               className={`absolute ${
-                border ? 'bottom-[5px] w-[90px] md:w-[274px] py-[10px]' : 'bottom-0 py-[18px]'
+                border ? 'bottom-0 sm:bottom-[5px] w-[132px] md:w-[274px] py-[10px]' : 'bottom-0 py-[18px]'
               } rounded-[8px] storyLinearItem h-1/2 xl:py-[30px] px-[10px] xl:px-[20px] flex flex-col items-start justify-end`}
             >
               {story?.categories?.map((x) => (
@@ -27,7 +27,7 @@ export default function StoryItem({ story, index, border }) {
                   {x.name}
                 </p>
               ))}
-              <p className="truncate-3 text-white text-[12px] xl:text-[22px] condMedium xl:font-bold mt-[10px] tracking-[0.36px] leading-[15px] xl:leading-[28px] xl:font-condensed">
+              <p className="truncate-3 text-white text-[13px] xl:text-[22px] condMedium xl:font-bold mt-[10px] tracking-[0.36px] leading-[15px] xl:leading-[28px] xl:font-condensed">
                 {story?.title}
               </p>
               <p className="text-white text-[14px] font-medium mt-[10px] hidden xl:flex condMedium">

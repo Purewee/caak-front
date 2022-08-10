@@ -63,7 +63,7 @@ const StoryFeed = () => {
       )}
 
       <div className="flex flex-row items-center w-full relative justify-between md:justify-center">
-        <p className="text-[17px] font-medium leading-[20px] sm:hidden">Стори мэдээ</p>
+        <p className="text-[17px] condMedium font-medium leading-[20px] sm:hidden">Стори мэдээ</p>
         <img
           className="h-[20px] md:h-[42px] md:w-[324px] mt-[30px] md:mt-0 hidden sm:block"
           src={require('../../assets/images/feed_story.svg').default}
@@ -71,7 +71,7 @@ const StoryFeed = () => {
         />
         <Link to="/stories">
           <div className="flex flex-row-reverse sm:flex-row gap-[6px] sm:absolute items-center right-[121px]">
-            <p className="text-[14px] font-medium sm:font-normal sm:text-[16px] text-[#909090] sm:text-[#111111]">
+            <p className="text-[14px] condMedium sm:font-normal sm:text-[16px] text-[#909090] sm:text-[#111111]">
               Бүх сторинууд
             </p>
             <span className="icon-fi-rs-stories-o text-[#909090] sm:text-[#FF6600] text-[18px]" />
@@ -85,7 +85,7 @@ const StoryFeed = () => {
         {stories.map((item, index) => {
           return <StoryItem border={index === 0} story={item} key={index} index={index} />;
         })}
-        <div className="min-w-[106px] sm:min-w-[290px] relative flex items-center justify-center max-w-[290px] rounded-[8px] min-h-[160px] sm:min-h-[435px] max-h-[435px]">
+        <div className="min-w-[106px] hidden sm:min-w-[290px] relative sm:flex items-center justify-center max-w-[290px] rounded-[8px] min-h-[160px] sm:min-h-[435px] max-h-[435px]">
           <img className="w-full h-full" src={require('../../assets/images/all-stories.png')} alt="All Stories" />
           <div className="bg-black rounded-[8px] bg-opacity-70 px-[10px] md:px-[47px] h-full w-full absolute flex justify-center items-center">
             <Link to="/stories" className="w-full">

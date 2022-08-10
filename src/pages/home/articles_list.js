@@ -4,6 +4,7 @@ import { Button, Col, Skeleton } from 'antd';
 import PostCard from '../../component/card/Post';
 import useMediaQuery from '../../component/navigation/useMediaQuery';
 import Banner from '../../component/banner';
+import { FIcon } from '../../component/icon';
 
 export default function ArticlesList({ filter = [], sort = {}, size = 24 }) {
   const es = new ESService('caak');
@@ -39,12 +40,15 @@ export default function ArticlesList({ filter = [], sort = {}, size = 24 }) {
   }, []);
   return (
     <>
-      {chunked.map((section) => {
+      {chunked.map((section, index) => {
         const divider = Math.floor(Math.random() * 8);
         return (
-          <div className="max-w-[1310px] w-full flex flex-wrap justify-center gap-x-[22px] gap-y-[40px] px-[16px] sm:px-0 mt-[30px]">
+          <div
+            key={index}
+            className="max-w-[1310px] w-full flex flex-wrap justify-center gap-x-[22px] gap-y-[40px] px-[16px] sm:px-0 mt-[30px]"
+          >
             {section.map((post, index) => (
-              <>
+              <div key={index}>
                 {index === divider && (
                   <Col className="w-full sm:w-[422px]" key={`${index}-banner`}>
                     <Banner position="a2" />
@@ -53,7 +57,7 @@ export default function ArticlesList({ filter = [], sort = {}, size = 24 }) {
                 <Col className="w-full sm:w-[422px]" key={index}>
                   <PostCard sponsored={index === 0} isMobile={isMobile} post={post} />
                 </Col>
-              </>
+              </div>
             ))}
             {loading && <Skeleton />}
           </div>
@@ -63,11 +67,12 @@ export default function ArticlesList({ filter = [], sort = {}, size = 24 }) {
         <Button
           block
           size="large"
-          className="font-roboto border-caak-primary h-[54px] text-[18px] font-medium text-caak-primary mt-[20px]"
+          className="font-roboto border-caak-primary h-[74px] text-[18px] font-medium text-caak-primary mt-[20px]"
           onClick={() => setPage(page + 1)}
           loading={loading}
         >
-          Бусад мэдээ
+          Илүү ихийг үзэх
+          <FIcon className="icon-fi-rs-down-chevron text-caak-primary text-[16px] w-[16px] ml-[8px]" />
         </Button>
       </div>
     </>

@@ -110,6 +110,17 @@ export default function UserInfo() {
           shape="circle"
         />
       </Popover>
+      <Link className="sm:hidden" to={'/notification'}>
+        <Button
+          icon={
+            <Badge className="mt-[3px]" count={saved_articles.length} size="small" showZero={false} overflowCount={10}>
+              <FIcon className="icon-fi-rs-list-o" />
+            </Badge>
+          }
+          className="border-0"
+          shape="circle"
+        />
+      </Link>
       <Popover
         placement="bottomRight"
         trigger="click"
