@@ -70,34 +70,15 @@ export default function PostCard({ isMobile, post, ...rest }) {
             {post.title}
           </p>
         </Link>
-        {sponsored && (
-          <div className="hidden sm:flex flex-row items-center justify-between w-full mt-[18px] px-[16px]">
-            <div className="flex flex-row items-center">
-              <Link to={`/channel/${post.source?.id}`} className="flex flex-row items-center">
-                <div className="flex justify-center items-center w-[40px] h-[40px] rounded-full bg-white bg-opacity-20">
-                  <Avatar className={`w-[34px] h-[34px]`} src={imagePath(post.source?.icon)} />
-                </div>
-                <MetaTag className={`ml-[6px] text-[15px] text-white`}>{post?.source?.name}</MetaTag>
-              </Link>
-            </div>
-            <button className="w-[90px] rounded-[4px] text-[15px] font-bold bg-white bg-opacity-10 text-white h-[34px]">
-              Дагах
-            </button>
-          </div>
-        )}
         {!sponsored && (
           <div className={`text-[14px] text-[#909090] hidden sm:block tracking-[0.21px] leading-[16px] mt-[12px]`}>
             {generateTimeAgo(post.publish_date)}
           </div>
         )}
       </div>
-      <div className="flex flex-col justify-between px-[8px] sm:px-0 pb-[13px] sm:pb-[15px]">
-        <div
-          className={`${
-            sponsored ? 'justify-between sm:justify-end sm:pr-[16px]' : 'justify-between'
-          } flex items-center`}
-        >
-          <div className={`${sponsored ? 'flex sm:hidden' : 'flex'} flex-row items-end`}>
+      <div className="flex flex-col justify-between pb-[13px] sm:pb-[15px]">
+        <div className={`flex items-center w-full justify-between ${sponsored && 'sm:pl-[20px]'} sm:pr-[16px]`}>
+          <div className={`flex flex-row items-center ${sponsored && 'px-[13px] sm:px-0'}`}>
             <div className="flex flex-row items-center">
               <Link to={`/channel/${post.source?.id}`} className="flex flex-row items-center">
                 <Avatar className={`w-[22px] h-[22px]`} src={imagePath(post.source?.icon)} />
@@ -112,10 +93,10 @@ export default function PostCard({ isMobile, post, ...rest }) {
                 </div>
               )}
             </div>
-            <div className="hidden sm:block text-[#555555]">
+            <div className={`hidden sm:block ${sponsored ? 'text-white' : 'sm:text-[#555555]'}`}>
               &nbsp;•&nbsp;
               <Link to={`/profile/${post.author?.id}`}>
-                <MetaTag className={`ml-0`}>{post.author?.name}</MetaTag>
+                <MetaTag className={`ml-0 ${sponsored && 'text-white'}`}>{post.author?.name}</MetaTag>
               </Link>
             </div>
           </div>

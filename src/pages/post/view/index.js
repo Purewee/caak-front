@@ -3,6 +3,7 @@ import { AppContext } from '../../../App';
 import { gql, useQuery } from '@apollo/client';
 import { useParams } from 'react-router-dom';
 import moment from 'moment';
+import { useMutation } from '@apollo/client';
 import Loader from '../../../component/loader';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { imagePath, parseVideoURL } from '../../../utility/Util';
@@ -13,7 +14,8 @@ import LoveIcon from '../../../assets/images/fi-rs-react-love.png';
 import HahaIcon from '../../../assets/images/fi-rs-react-haha.svg';
 import PostSaveModal from '../../../component/modal/PostSaveModal';
 import PostShareModal from '../../../component/modal/PostShareModal';
-import { Avatar, Popover, notification, Button, Alert, Statistic } from 'antd';
+import { Avatar, Popover, notification, Button, Alert, Statistic, Skeleton } from 'antd';
+import { HeartOutlined, BellOutlined } from '@ant-design/icons';
 import { useAuth } from '../../../context/AuthContext';
 import SignInUpController from '../../../component/modal/SignInUpController';
 import { Link } from 'react-router-dom';
@@ -34,6 +36,36 @@ import Banner from '../../../component/banner';
 
 const ACTIONS = [{ icon: love }, { icon: haha }, { icon: wow }, { icon: cry }, { icon: angry }];
 
+const SOURCE = gql`
+  query GetSource($id: ID!) {
+    source(id: $id) {
+      id
+      name
+      domain
+      icon
+      slug
+      followersCount
+      following
+      followers(first: 10) {
+        nodes {
+          user {
+            id
+            firstName
+            lastName
+            avatar
+          }
+        }
+      }
+    }
+  }
+`;
+
+const FOLLOW = gql`
+  mutation Follow($id: ID!) {
+    toggleFollow(input: { targetType: "source", targetId: $id })
+  }
+`;
+
 const Post = () => {
   const context = useContext(AppContext);
   const { id } = useParams();
@@ -50,7 +82,14 @@ const Post = () => {
   const { data: me, loading: me_loading } = useQuery(ME);
   const article = data?.article || {};
   const numbering = article?.data?.numbering || false;
-  const { isAuth } = useAuth();
+  const {
+    data: data_source,
+    loading: fetching,
+    refetch,
+  } = useQuery(SOURCE, { variables: { id: article?.source?.id } });
+  const source = data_source?.source || {};
+  const [follow, { loading: follow_saving }] = useMutation(FOLLOW, { variables: { id: article?.source?.id } });
+  const { isAuth, openModal } = useAuth();
 
   const title = article?.title;
   const metaDescription = 'default description';
@@ -106,6 +145,8 @@ const Post = () => {
     );
   }
 
+  if (fetching) return <Skeleton />;
+
   return (
     <div className="pb-[100px]">
       <div className="flex flex-row pb-[100px] justify-center">
@@ -122,7 +163,7 @@ const Post = () => {
           <meta property="og:description" key="og:description" content={metaDescription} />
           <meta property="og:image" key="og:image" content={imagePath(article.image)} />
         </Helmet>
-        <div className="w-full hidden md:block max-w-[250px]">
+        <div className="w-full hidden xl:block max-w-[250px]">
           <div
             className={`hidden md:flex ${
               leftMenuSticky ? 'sticky top-[180px]' : 'mt-[380px]'
@@ -282,7 +323,7 @@ const Post = () => {
                     <div key={b.id} className="flex flex-col md:items-center mb-[26px] md:mb-[50px] w-full">
                       {b.title && <BlockTitle>{`${numbering ? `${b.position}. ` : ''}${b.title}`}</BlockTitle>}
                       <LazyLoadImage src={imagePath(b.imageUrl)} alt={b.title} className="w-full object-cover" />
-                      {b.data.meta.length > 0 && (
+                      {b.data?.meta?.length > 0 && (
                         <span className="w-[99%] bg-[#697581] text-white p-[8px] text-center font-condensed text-[12px] italic">
                           {b.data.meta}
                         </span>
@@ -388,12 +429,41 @@ const Post = () => {
               </Link>
               {/* <MetaTag className="text-[#909090]">{moment(article.createdAt).format('YYYY.MM.DD, hh:mm')}</MetaTag> */}
             </div>
-            <button
-              onClick={() => (isAuth ? openNotification() : setIsShown('signin'))}
-              className="bg-caak-primary rounded-[4px] text-white font-bold text-[15px] w-[90px] h-[34px]"
-            >
-              Дагах
-            </button>
+            {source.following ? (
+              <Button
+                className="h-[34px] text-[15px] font-bold px-[24px]"
+                type="primary"
+                loading={follow_saving}
+                onClick={() => {
+                  if (isAuth) {
+                    follow().then(() => {
+                      refetch().then(console.log);
+                    });
+                  } else {
+                    openModal('open');
+                  }
+                }}
+              >
+                ДАГАСАН
+              </Button>
+            ) : (
+              <Button
+                className="h-[34px] text-[15px] font-bold px-[24px]"
+                type="primary"
+                loading={follow_saving}
+                onClick={() => {
+                  if (isAuth) {
+                    follow().then(() => {
+                      refetch().then(console.log);
+                    });
+                  } else {
+                    openModal('open');
+                  }
+                }}
+              >
+                ДАГАХ
+              </Button>
+            )}
           </div>
           <Reaction articleId={article?.id} />
           {article?.acceptComment === true ? (
@@ -408,7 +478,7 @@ const Post = () => {
             />
           )}
         </div>
-        <div className="w-[270px] hidden md:block">
+        <div className="w-[270px] hidden xl:block">
           <div
             className={`w-[250px] h-[392px] bg-orange-300 ${
               leftMenuSticky ? 'sticky top-[80px] fade-in-banner' : 'hidden'

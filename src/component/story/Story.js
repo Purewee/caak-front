@@ -5,13 +5,13 @@ import { Link } from 'react-router-dom';
 
 export default function StoryItem({ story, index, border }) {
   return (
-    <div className={`min-w-[136px] sm:min-w-[290px] max-w-[290px] sm:min-h-[435px] min-h-[203px] max-h-[435px]`}>
+    <div className={`min-w-[136px] sm:min-w-[290px] max-w-[290px] h-full`}>
       <Link to={`/story/${index}`}>
         <div className={`h-full w-full storyBackgroundLinear ${border && 'p-[2px] sm:p-[3px]'} rounded-[8px]`}>
           <div className={`relative h-full w-full bg-white rounded-[8px] ${border && 'sm:p-[5px]'}`}>
             <LazyLoadImage
               alt={story.id}
-              className={`object-cover h-full w-full rounded-[8px]`}
+              className={`object-cover max-h-[428px] h-full w-full rounded-[8px]`}
               src={imagePath(story?.image)}
             />
             <div

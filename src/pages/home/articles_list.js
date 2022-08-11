@@ -29,7 +29,7 @@ export default function ArticlesList({ filter = [], sort = {}, size = 24 }) {
     });
   }, [page]);
   const chunked = list.reduce((res, item, index) => {
-    const chunkIndex = Math.floor(index / 8);
+    const chunkIndex = Math.floor(index / 9);
     if (!res[chunkIndex]) {
       res[chunkIndex] = []; // start a new chunk
     }
@@ -49,14 +49,15 @@ export default function ArticlesList({ filter = [], sort = {}, size = 24 }) {
           >
             {section.map((post, index) => (
               <div key={index}>
-                {index === divider && (
+                {index === divider ? (
                   <Col className="w-full sm:w-[422px]" key={`${index}-banner`}>
                     <Banner position="a2" />
                   </Col>
+                ) : (
+                  <Col className="w-full sm:w-[422px]" key={index}>
+                    <PostCard sponsored={index === 0} isMobile={isMobile} post={post} />
+                  </Col>
                 )}
-                <Col className="w-full sm:w-[422px]" key={index}>
-                  <PostCard sponsored={index === 0} isMobile={isMobile} post={post} />
-                </Col>
               </div>
             ))}
             {loading && <Skeleton />}
