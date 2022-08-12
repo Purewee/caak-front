@@ -13,7 +13,7 @@ const SORTS = {
   replied: { direction: 'desc', field: 'createdAt' },
 };
 export default function Comments({ articleId }) {
-  const [sort, setSort] = useState('recent');
+  const [sort, setSort] = useState('liked');
   const [addComment, { loading: saving }] = useMutation(ADD_COMMENT, { variables: { articleId } });
   const { data, loading, refetch } = useQuery(COMMENTS, { variables: { articleId, sort: SORTS[sort] } });
   const comments = data?.article?.comments;
@@ -27,26 +27,26 @@ export default function Comments({ articleId }) {
           });
         }}
       >
-        <Avatar size="large" src={AvatarSvg} shape="square" />
+        <Avatar className="w-[50px] h-[50px]" src={AvatarSvg} shape="square" />
         <div className="w-full ml-[12px]">
           <Form.Item className="w-full" name="comment">
             <Input.TextArea
               style={{ resize: 'none' }}
-              className="w-full rounded-[2px] py-[20px] px-[24px] max-h-[104px] border border-[#D4D8D8]"
+              className="w-full rounded-[2px] py-[20px] px-[20px] text-[16px] text-[#909090] max-h-[104px] border border-[#D4D8D8]"
               placeholder="Сэтгэгдлээ үлдээнэ үү..."
             />
           </Form.Item>
           <div className="flex flex-row items-start">
             <Form.Item className="w-full" name="name">
               <Input
-                className="w-full max-w-[508px] h-[54px] rounded-[2px] px-[24px] border border-[#D4D8D8] mr-[10px]"
+                className="w-full max-w-[508px] h-[54px] text-[16px] rounded-[2px] text-[#909090] px-[20px] border border-[#D4D8D8]"
                 placeholder="Нэрээ бичнэ үү"
               />
             </Form.Item>
             <Button
               htmlType="submit"
               loading={saving}
-              className="w-[180px] h-[54px] bg-[#555555] rounded-[2px] text-white text-[16px] font-medium"
+              className="max-w-[180px] w-full h-[54px] hover:bg-[#363946] hover:border-none bg-[#363946] rounded-[2px] hover:text-white text-white text-[16px] font-medium"
             >
               Сэтгэгдэл үлдээх
             </Button>
@@ -54,14 +54,55 @@ export default function Comments({ articleId }) {
         </div>
       </Form>
       <div className="flex flex-col justify-start w-full">
-        <BlockTitle className="text-left px-[0px] font-medium md:font-bold text-[17px] md:text-[22px]">
+        <BlockTitle className="text-left px-[0px] sm:mb-[40px] font-medium xl:font-bold text-[17px] xl:text-[24px]">
           Нийт сэтгэгдэл ({comments?.totalCount})
         </BlockTitle>
-        <Tabs className="hidden md:flex" size="small" defaultActiveKey="tab-1" onChange={(e) => setSort(e)}>
-          <Tabs.TabPane tab="ИХ ХАНДАЛТТАЙ" key="liked" />
-          <Tabs.TabPane tab="СҮҮЛД НЭМЭГДСЭН" key="recent" />
-          <Tabs.TabPane tab="ИХ ХАРИУЛСАН" key="replied" />
-        </Tabs>
+        <div className="hidden md:flex border-b-[2px] relative h-[28px]">
+          <Tabs className="absolute bottom-[-2px]" size="small" defaultActiveKey="tab-1" onChange={(e) => setSort(e)}>
+            <Tabs.TabPane
+              tab={
+                <p
+                  className={`${
+                    sort === 'liked'
+                      ? 'text-[14px] text-caak-black font-medium'
+                      : 'text-[#555555] text-[14px] font-medium'
+                  }`}
+                >
+                  ИХ ХАНДАЛТТАЙ
+                </p>
+              }
+              key="liked"
+            />
+            <Tabs.TabPane
+              tab={
+                <p
+                  className={`${
+                    sort === 'recent'
+                      ? 'text-[14px] text-caak-black font-medium'
+                      : 'text-[#555555] text-[14px] font-medium'
+                  }`}
+                >
+                  СҮҮЛД НЭМЭГДСЭН
+                </p>
+              }
+              key="recent"
+            />
+            <Tabs.TabPane
+              tab={
+                <p
+                  className={`${
+                    sort === 'replied'
+                      ? 'text-[14px] text-caak-black font-medium'
+                      : 'text-[#555555] text-[14px] font-medium'
+                  }`}
+                >
+                  ИХ ХАРИУЛСАН
+                </p>
+              }
+              key="replied"
+            />
+          </Tabs>
+        </div>
         {loading && <Skeleton />}
         {comments?.edges?.map((x) => {
           const comment = x.node;
@@ -103,7 +144,7 @@ export default function Comments({ articleId }) {
                     fontWeight: 'bold',
                   }}
                 >
-                  {(comment.data?.name || comment.user.firstName)[0]}
+                  {comment.data?.name || comment.user?.firstName}
                 </Avatar>
               }
               datetime={
