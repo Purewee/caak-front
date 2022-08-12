@@ -37,6 +37,7 @@ export const POST = gql`
         title
         content
         imageUrl
+        videoUrl
         data
       }
       tags {
@@ -170,5 +171,11 @@ export const SOURCES = gql`
         domain
       }
     }
+  }
+`;
+
+export const UPLOAD = gql`
+  mutation UploadFile($blob: Upload!) {
+    directUpload(input: { blob: $blob })
   }
 `;

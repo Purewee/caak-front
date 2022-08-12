@@ -2,7 +2,6 @@ import './styles/index.css';
 import './App.css';
 import React, { useEffect, useState, createContext } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import NavbarNew from './component/navigation/navbar';
 import Home from './pages/home';
 import { Helmet } from 'react-helmet';
 import Post from './pages/post/view';
@@ -14,6 +13,7 @@ import Story from './pages/story';
 import Add from './pages/add';
 import AddPost from './pages/add/post';
 import AddLink from './pages/add/linked';
+import AddStory from './pages/add/story';
 import WithApolloProvider from './utility/WithApolloProvider';
 import { AuthProvider } from './context/AuthContext';
 import AllStories from './pages/allstories';
@@ -60,10 +60,12 @@ function App() {
                 <Route path="/add" element={<Add />} />
                 <Route path="/add/post" element={<AddPost />} />
                 <Route path="/add/linked" element={<AddLink />} />
-                <Route path="/edit/linked/:id" element={<AddLink />} />
+                <Route path="/add/story" element={<AddStory />} />
                 <Route path="/edit/:id" element={<AddPost />} />
-                <Route path="/edit/post/:id" element={<AddPost />} />
                 <Route path="/add/:id" element={<AddPost />} />
+                <Route path="/edit/linked/:id" element={<AddLink />} />
+                <Route path="/edit/post/:id" element={<AddPost />} />
+                <Route path="/edit/story/:id" element={<AddStory />} />
                 <Route path="/search" element={<Search />} />
                 <Route path="/help" element={<Help />} />
                 <Route path="/category/:slug" element={<Category />} />
