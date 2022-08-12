@@ -29,7 +29,7 @@ export default function ArticlesList({ filter = [], sort = {}, size = 24 }) {
     });
   }, [page]);
   const chunked = list.reduce((res, item, index) => {
-    const chunkIndex = Math.floor(index / 9);
+    const chunkIndex = Math.floor(index / 12);
     if (!res[chunkIndex]) {
       res[chunkIndex] = []; // start a new chunk
     }
@@ -41,7 +41,7 @@ export default function ArticlesList({ filter = [], sort = {}, size = 24 }) {
   return (
     <>
       {chunked.map((section, index) => {
-        const divider = Math.floor(Math.random() * 8);
+        const divider = Math.floor(Math.random() * 11);
         return (
           <div
             key={index}

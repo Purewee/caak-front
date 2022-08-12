@@ -102,7 +102,7 @@ export default function UserInfo() {
                 )
               }
             />
-            {saved_articles.length < 10 && (
+            {saved_articles.length > 10 && (
               <Link
                 state={'saved'}
                 to={{ pathname: `/profile/${me.id}` }}
