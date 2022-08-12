@@ -15,19 +15,6 @@ const NavbarPostHeaderCard = ({ type, item }) => {
         <div
           className={`flex flex-col w-full absolute bottom-0 ${type === 'wide' ? 'px-[40px]' : 'px-[30px]'} pb-[30px]`}
         >
-          {/* <div className="flex justify-start">
-            {item.categories?.map((x) => {
-              return (
-                <Link key={x.name} to={`/category/${x.slug}`}>
-                  <div className="flex items-center flex-row">
-                    <p className="truncate-1 uppercase text-white ml-[6px] text-[14px] font-medium tracking-[0.21px] leading-[16px]">
-                      {x.name}
-                    </p>
-                  </div>
-                </Link>
-              );
-            })}
-          </div> */}
           <Link className="mt-[10px]" to={`/post/view/${item.id}`}>
             <p
               className={`${
@@ -50,7 +37,7 @@ const NavbarPostHeaderCard = ({ type, item }) => {
                   <MetaTag className="ml-[6px] text-[#FFFFFF] text-[15px]">{item?.source?.name}</MetaTag>
                 </Link>
                 <Link to={`/profile/${item.author?.id}`}>
-                  <MetaTag className="ml-[6px] text-[#FFFFFF]">• {(item.author?.name).split(' ')[0]}</MetaTag>
+                  <MetaTag className="ml-[6px] text-[#FFFFFF]">• Sponsored</MetaTag>
                 </Link>
               </div>
             </div>

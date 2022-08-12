@@ -11,13 +11,16 @@ import { Link } from 'react-router-dom';
 import { AppContext } from '../../App';
 import useMediaQuery from '../../component/navigation/useMediaQuery';
 import { imagePath } from '../../utility/Util';
+import { useLocation } from 'react-router-dom';
 import ArticlesList from '../home/articles_list';
 
 export default function Profile() {
   const context = useContext(AppContext);
   const { id } = useParams();
   const es = new ESService('caak');
+  const location = useLocation();
   const [articles, setArticles] = useState([]);
+  const [selected, setSelected] = useState(location.state ? location.state : 'posts');
   const [count, setCount] = useState(0);
   const [page, setPage] = useState(0);
   const [loading, setLoading] = useState(false);
@@ -84,8 +87,24 @@ export default function Profile() {
             </div>
           </div>
         </div>
-        <Tabs size="large" className="mb-[200px] font-merri">
-          <Tabs.TabPane key="posts" tab="Оруулсан мэдээ">
+        <Tabs
+          defaultActiveKey={location.state === 'saved' ? 'saved' : 'posts'}
+          onChange={(e) => setSelected(e)}
+          size="large"
+          className="mb-[200px] font-merri"
+        >
+          <Tabs.TabPane
+            key="posts"
+            tab={
+              <p
+                className={`text-[16px] font-roboto font-bold ${
+                  selected === 'posts' ? 'text-caak-black' : 'text-caak-gray'
+                }`}
+              >
+                Оруулсан мэдээ
+              </p>
+            }
+          >
             <div className="max-w-[1310px] w-full flex flex-wrap justify-center 2xl:justify-start gap-x-[22px] gap-y-[40px] px-[16px] sm:px-0 mt-[40px]">
               {articles.map((post, index) => (
                 <Col className="w-full sm:w-[422px]" key={index}>
@@ -105,7 +124,18 @@ export default function Profile() {
             </div>
           </Tabs.TabPane>
           {id === loggedUser?.id && (
-            <Tabs.TabPane key="saved" tab="Хадгалсан мэдээнүүд">
+            <Tabs.TabPane
+              key="saved"
+              tab={
+                <p
+                  className={`text-[16px] font-roboto font-bold ${
+                    selected === 'saved' ? 'text-caak-black' : 'text-caak-gray'
+                  }`}
+                >
+                  ХАДГАЛСАН МЭДЭЭ
+                </p>
+              }
+            >
               <div className="max-w-[1310px] w-full flex flex-wrap justify-center 2xl:justify-start gap-x-[22px] gap-y-[40px] px-[16px] sm:px-0 mt-[40px]">
                 {saved_articles.map((post, index) => (
                   <Col className="w-full sm:w-[422px]" key={index}>
@@ -115,7 +145,18 @@ export default function Profile() {
               </div>
             </Tabs.TabPane>
           )}
-          <Tabs.TabPane key="history" tab="Үзсэн түүх" />
+          <Tabs.TabPane
+            key="history"
+            tab={
+              <p
+                className={`text-[16px] font-roboto font-bold ${
+                  selected === 'history' ? 'text-caak-black' : 'text-caak-gray'
+                }`}
+              >
+                ҮЗСЭН ТҮҮХ
+              </p>
+            }
+          />
         </Tabs>
       </div>
     </div>

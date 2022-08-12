@@ -47,7 +47,7 @@ export default function Home() {
               key="recent"
               tab={
                 <span
-                  className={`text-[20px] font-bold cursor-pointer text-center leading-[20px] uppercase font-merri ${
+                  className={`text-[20px] font-bold cursor-pointer text-center leading-[20px] uppercase ${
                     selected === 'recent' ? 'text-[#111111]' : 'text-[#555555]'
                   }`}
                 >
@@ -59,7 +59,7 @@ export default function Home() {
               key="trend"
               tab={
                 <span
-                  className={`text-[20px] font-bold cursor-pointer text-center leading-[20px] uppercase font-merri  ${
+                  className={`text-[20px] font-bold cursor-pointer text-center leading-[20px] uppercase  ${
                     selected === 'trend' ? 'text-[#111111]' : 'text-[#555555]'
                   }`}
                 >
@@ -67,6 +67,20 @@ export default function Home() {
                 </span>
               }
             ></Tabs.TabPane>
+            {isAuth && (
+              <Tabs.TabPane
+                key="foryou"
+                tab={
+                  <span
+                    className={`text-[20px] font-bold cursor-pointer text-center leading-[20px] uppercase ${
+                      selected === 'foryou' ? 'text-[#111111]' : 'text-[#555555]'
+                    }`}
+                  >
+                    Танд
+                  </span>
+                }
+              ></Tabs.TabPane>
+            )}
           </Tabs>
         </div>
         {selected === 'trend' && (

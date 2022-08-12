@@ -11,7 +11,7 @@ export default function Search() {
     <>
       <Button
         icon={<FIcon className="icon-fi-rs-search text-[22px]" />}
-        className="hidden md:block border-0 text-[#555555] mx-[8px]"
+        className="border-0 text-[#555555] mx-[8px]"
         onClick={() => setOpen(!open)}
         shape="circle"
       />

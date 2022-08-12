@@ -26,6 +26,7 @@ export default function UserInfo() {
   const saved_articles = data?.me?.recipes.map((x) => x?.articles.nodes).flat() || [];
   const [remove, { loading: removing }] = useMutation(REMOVE_SAVED);
   const navigate = useNavigate();
+  const hovered = useState(false);
 
   if (loading) return <span>Loading ...</span>;
 
@@ -60,44 +61,57 @@ export default function UserInfo() {
         placement="bottomRight"
         trigger="click"
         content={
-          <List
-            style={{ width: 300 }}
-            className="caak-saved-articles max-h-screen overflow-hidden overflow-y-scroll"
-            dataSource={saved_articles}
-            size="small"
-            renderItem={(x) => (
-              <List.Item
-                className="font-condensed"
-                actions={[
-                  <Button
-                    size="small"
-                    icon={<CloseOutlined />}
-                    type="link"
-                    onClick={() => {
-                      remove({ variables: { articleId: x.id } }).then(() => {
-                        refetch();
-                        message.success('Амжилттай устгалаа');
-                      });
-                    }}
-                    loading={removing}
-                  />,
-                ]}
+          <div>
+            <List
+              style={{ width: 400 }}
+              className="caak-saved-articles max-h-screen"
+              dataSource={saved_articles}
+              size="small"
+              renderItem={(x, index) =>
+                index < 10 && (
+                  <List.Item
+                    className="font-condensed hover:bg-[#EFEEEF] flex flex-row h-[64px]"
+                    actions={[
+                      <Button
+                        size="small"
+                        icon={hovered && <CloseOutlined />}
+                        type="link"
+                        onClick={() => {
+                          remove({ variables: { articleId: x.id } }).then(() => {
+                            refetch();
+                            message.success('Амжилттай устгалаа');
+                          });
+                        }}
+                        loading={removing}
+                      />,
+                    ]}
+                  >
+                    <Link className="text-[#111111] w-full text-[15px]" to={`/post/view/${x.id}`}>
+                      <List.Item.Meta
+                        avatar={
+                          <Avatar
+                            className="w-[60px] h-[44px] object-cover"
+                            src={imagePath(x.imageUrl)}
+                            shape="square"
+                          />
+                        }
+                        title={x.title}
+                      />
+                    </Link>
+                  </List.Item>
+                )
+              }
+            />
+            {saved_articles.length > 10 && (
+              <Link
+                state={'saved'}
+                to={{ pathname: `/profile/${me.id}` }}
+                className="w-full h-[47px] cursor-pointer flex justify-center items-center bg-[#F5F5F5]"
               >
-                <List.Item.Meta
-                  avatar={
-                    <Link to={`/post/view/${x.id}`}>
-                      <Avatar src={imagePath(x.imageUrl)} shape="square" />
-                    </Link>
-                  }
-                  title={
-                    <Link to={`/post/view/${x.id}`} className="truncate-3 text-[13px]">
-                      {x.title}
-                    </Link>
-                  }
-                />
-              </List.Item>
+                <p className="text-caak-primary font-medium text-[16px]">Илүү ихийг үзэх</p>
+              </Link>
             )}
-          />
+          </div>
         }
       >
         <Button
@@ -110,6 +124,17 @@ export default function UserInfo() {
           shape="circle"
         />
       </Popover>
+      <Link className="sm:hidden" to={'/notification'}>
+        <Button
+          icon={
+            <Badge className="mt-[3px]" count={saved_articles.length} size="small" showZero={false} overflowCount={10}>
+              <FIcon className="icon-fi-rs-list-o" />
+            </Badge>
+          }
+          className="border-0"
+          shape="circle"
+        />
+      </Link>
       <Popover
         placement="bottomRight"
         trigger="click"
