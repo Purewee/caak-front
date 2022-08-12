@@ -20,6 +20,7 @@ import {
   Skeleton,
   Upload,
   Tabs,
+  DatePicker,
 } from 'antd';
 import {
   CameraOutlined,
@@ -37,7 +38,6 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import { getDataFromBlob, imageCompress } from '../../../lib/imageCompress';
 import AddBlock from './AddBlock';
 import SortableContainer from './SortableContainer';
-import { DatePicker } from 'antd/es';
 import { AppContext } from '../../../App';
 
 const fallback =
