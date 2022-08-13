@@ -1,7 +1,17 @@
 import Configure from '../component/configure';
 
 const searchFields = ['title^9', 'description^6', 'keyword.name^5', 'keyword.mn^5'];
-export const defaultFilters = [{ range: { publish_date: { lte: 'now' } } }, { exists: { field: 'image' } }];
+export const defaultFilters = [
+  { range: { publish_date: { lte: 'now' } } },
+  { exists: { field: 'image' } },
+  { terms: { kind: ['post', 'linked'] } },
+];
+
+export const defaultStoryFilters = [
+  { range: { publish_date: { lte: 'now' } } },
+  { exists: { field: 'image' } },
+  { term: { kind: 'story' } },
+];
 
 export class ESService {
   constructor(index) {
@@ -47,16 +57,11 @@ export class ESService {
     return this.post({
       query: {
         bool: {
-          must: [
-            ...defaultFilters,
-            {
-              nested: {
-                path: 'categories',
-                query: { term: { 'categories.slug': 'travel' } },
-              },
-            },
-          ],
+          must: [...defaultStoryFilters],
         },
+      },
+      sort: {
+        publish_date: 'desc',
       },
       size: size,
       from: page * size,

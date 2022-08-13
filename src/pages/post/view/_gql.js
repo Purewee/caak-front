@@ -66,6 +66,9 @@ export const COMMENTS = gql`
           node {
             id
             comment
+            likesCount
+            dislikesCount
+            repliesCount
             data
             status
             createdAt
@@ -74,6 +77,30 @@ export const COMMENTS = gql`
               email
               firstName
               lastName
+            }
+            childs {
+              totalCount
+              pageInfo {
+                hasNextPage
+                endCursor
+              }
+              edges {
+                node {
+                  id
+                  comment
+                  likesCount
+                  dislikesCount
+                  data
+                  status
+                  createdAt
+                  user {
+                    id
+                    email
+                    firstName
+                    lastName
+                  }
+                }
+              }
             }
           }
         }
