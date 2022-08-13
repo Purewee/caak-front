@@ -253,7 +253,7 @@ const Post = () => {
             </div>
           </div>
         </div>
-        <div>
+        <div className="flex flex-col items-center">
           <Banner position="a1" />
           <div className="pt-0 md:pt-[40px] flex flex-col items-center max-w-[760px] w-full font-roboto md:mx-[100px] px-[16px] md:px-0">
             <img
@@ -445,6 +445,13 @@ const Post = () => {
                       follow().then(() => {
                         refetch().then(console.log);
                       });
+                      const args = {
+                        message: `Та ${article?.source?.name}-г дагахаа болилоо.`,
+                        duration: 4,
+                        placement: 'bottom',
+                        className: 'h-[50px] bg-[#12805C] w-[300px]',
+                      };
+                      notification.open(args);
                     } else {
                       openModal('open');
                     }
@@ -462,6 +469,16 @@ const Post = () => {
                       follow().then(() => {
                         refetch().then(console.log);
                       });
+                      const followNotify = {
+                        message: `Та ${article?.source?.name} сувгийг дагалаа.`,
+                        duration: 4,
+                        placement: 'bottom',
+                        className: 'h-[50px] bg-[#12805C] w-[300px]',
+                        icon: (
+                          <FIcon className="icon-fi-rs-check w-[20px] h-[20px] text-[13px] bg-white rounded-full text-[#12805C]" />
+                        ),
+                      };
+                      notification.open(followNotify);
                     } else {
                       openModal('open');
                     }
@@ -500,7 +517,7 @@ const Post = () => {
         {reporting && <ReportModal post={article} toggle={() => setReporting(false)} />}
       </div>
       <div className="w-full flex flex-col items-center">
-        <span className="font-bold inline-flex text-[24px] max-w-[1310px] border-b border-[#EFEEEF] pb-[20px] w-full">
+        <span className="font-bold inline-flex text-[24px] max-w-[1310px] px-[40px] border-b border-[#EFEEEF] pb-[20px] w-full">
           ТӨСТЭЙ<p className="font-normal">&nbsp;МЭДЭЭНҮҮД</p>
         </span>
         <ArticlesList filter={filter} sort={sort} size={24} />

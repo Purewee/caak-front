@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Avatar, Popover } from 'antd';
+import { Avatar, Popover, Button, message } from 'antd';
 import { generateTimeAgo, imagePath } from '../../utility/Util';
 import { HashTag, MetaTag } from '../../pages/post/view/wrapper';
 import PostSaveModal from '../modal/PostSaveModal';
@@ -8,14 +8,26 @@ import PostShareModal from '../modal/PostShareModal';
 import ReportModal from '../modal/ReportModal';
 import { FIcon } from '../icon';
 import moment from 'moment';
+import { useMutation, gql, useQuery } from '@apollo/client';
+import { ME } from '../../pages/post/view/_gql';
+
+const REMOVE_SAVED = gql`
+  mutation RemoveSavedArticle($id: ID, $articleId: ID!) {
+    removeRecipeItem(input: { id: $id, articleId: $articleId }) {
+      id
+    }
+  }
+`;
 
 const colors = ['#163943', '#463146', '#131D1C', '#1E1642', '#854D0E', '#233C6A', '#813333'];
 
-export default function PostCard({ isMobile, post, ...rest }) {
+export default function PostCard({ isMobile, post, removeSaved, ...rest }) {
   const [saving, setSaving] = useState(false);
   const [fixedMenu, setFixedMenu] = useState(false);
   const [reporting, setReporting] = useState(false);
   const [sharing, setSharing] = useState(false);
+  const { refetch } = useQuery(ME);
+  const [remove, { loading: removing }] = useMutation(REMOVE_SAVED);
   const [random] = useState(Math.floor(Math.random() * colors.length));
 
   const postURL = `/post/view/${post?.id}`;
@@ -101,6 +113,19 @@ export default function PostCard({ isMobile, post, ...rest }) {
             </div>
           </div>
           <div className="flex flex-row items-center">
+            {removeSaved && (
+              <FIcon
+                onClick={() => {
+                  remove({ variables: { articleId: post.id } }).then(() => {
+                    refetch();
+                    message.success('Амжилттай устгалаа');
+                  });
+                }}
+                className={`h-[22px] ${
+                  sponsored ? 'text-white' : 'text-[#F53757]'
+                } icon-fi-rs-delete mr-[12px] text-[22px]`}
+              />
+            )}
             <FIcon
               onClick={() => setSaving(true)}
               className={`h-[22px] ${sponsored ? 'text-white' : 'text-[#909090]'} icon-fi-rs-bookmark text-[22px]`}
