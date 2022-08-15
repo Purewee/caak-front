@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { Input, Form, Button, Avatar, Tabs, Comment, Skeleton } from 'antd';
+import { Input, Form, Button, Avatar, Tabs, Comment, Skeleton, Modal } from 'antd';
 import AvatarSvg from '../../../assets/images/avatar.svg';
 import { useMutation, useQuery } from '@apollo/client';
-import { ADD_COMMENT, COMMENTS } from './_gql';
+import { ADD_COMMENT, COMMENTS, REACT_COMMENT } from './_gql';
 import { BlockTitle } from './wrapper';
 import moment from 'moment';
 import { FIcon } from '../../../component/icon';
@@ -55,7 +55,7 @@ export default function Comments({ articleId }) {
       </Form>
       <div className="flex flex-col justify-start w-full">
         <BlockTitle className="text-left px-[0px] font-medium md:font-bold text-[17px] md:text-[22px]">
-          Нийт сэтгэгдэл ({comments?.totalCount})
+          Нийт сэтгэгдэл ({data?.article?.commentsCount})
         </BlockTitle>
         <Tabs className="hidden md:flex" size="small" defaultActiveKey="tab-1" onChange={(e) => setSort(e)}>
           <Tabs.TabPane tab="ИХ ХАНДАЛТТАЙ" key="liked" />
@@ -65,16 +65,16 @@ export default function Comments({ articleId }) {
         {loading && <Skeleton />}
         {comments?.edges?.map((x) => {
           return (
-            <>
-              <SingleComment comment={x.node} key={x.node.id} />
+            <React.Fragment key={x.node.id}>
+              <SingleComment comment={x.node} key={x.node.id} refetch={refetch} />
               {x.node.childs.totalCount > 0 && (
                 <div className="mx-[50px]">
                   {x.node.childs.edges.map((c) => {
-                    return <SingleComment comment={c.node} key={c.node.id} />;
+                    return <SingleComment comment={c.node} key={c.node.id} refetch={refetch} />;
                   })}
                 </div>
               )}
-            </>
+            </React.Fragment>
           );
         })}
       </div>
@@ -82,7 +82,19 @@ export default function Comments({ articleId }) {
   );
 }
 
-function SingleComment({ comment }) {
+function SingleComment({ comment, refetch }) {
+  const [open, setOpen] = useState(false);
+  const [reply, { loading }] = useMutation(ADD_COMMENT, {
+    variables: { articleId: comment.targetId, parentId: comment.id },
+  });
+  const [react, { loading: reacting }] = useMutation(REACT_COMMENT, {
+    variables: {
+      commentId: comment.id,
+    },
+  });
+  const [reacted, setReacted] = useState(false);
+  const [name, setName] = useState('');
+  const [body, setBody] = useState('');
   return (
     <Comment
       key={comment.id}
@@ -91,15 +103,74 @@ function SingleComment({ comment }) {
           <div className="bg-[#F7F7F7] mt-[10px] rounded-[10px] p-[20px] rounded-t-[0px] rounded-r-[10px]">
             <p className="text-[#555555] text-[15px] leading-[21px]">{comment.comment}</p>
             <div className="flex flex-row items-center mt-[17px]">
-              <div className="flex flex-row items-center cursor-pointer">
-                <FIcon className="text-[#37AF37] text-[13px] w-[16px] h-[16px] icon-fi-rs-down-chevron rotate-180" />
-                <p className="text-caak-darkGray text-[13px] font-medium ml-[3px]">{comment.likesCount}</p>
-              </div>
-              <div className="flex flex-row items-center ml-[12px] cursor-pointer">
-                <FIcon className="text-[#F53757] text-[13px] w-[16px] h-[16px] icon-fi-rs-down-chevron" />
-                <p className="text-caak-darkGray text-[13px] font-medium ml-[3px]">{comment.dislikesCount}</p>
-              </div>
-              <p className="text-caak-darkGray text-[13px] font-medium ml-[20px] cursor-pointer">Хариулах</p>
+              <Button
+                icon={
+                  <FIcon className="text-[#37AF37] text-[13px] w-[16px] h-[16px] icon-fi-rs-down-chevron rotate-180" />
+                }
+                size="small"
+                type="link"
+                loading={reacting}
+                className="text-caak-darkGray text-[13px] font-medium ml-[3px]"
+                disabled={reacted}
+                onClick={() => {
+                  react({ variables: { action: 'like' } }).then(() => {
+                    setReacted(true);
+                  });
+                }}
+              >
+                {comment.likesCount}
+              </Button>
+              <Button
+                icon={<FIcon className="text-[#F53757] text-[13px] w-[16px] h-[16px] icon-fi-rs-down-chevron" />}
+                size="small"
+                type="link"
+                loading={reacting}
+                className="text-caak-darkGray text-[13px] font-medium ml-[3px]"
+                disabled={reacted}
+                onClick={() => {
+                  react({ variables: { action: 'dislike' } }).then(() => {
+                    setReacted(true);
+                  });
+                }}
+              >
+                {comment.dislikesCount}
+              </Button>
+              {!comment.parentId && (
+                <>
+                  <Button
+                    type="link"
+                    className="text-caak-darkGray text-[13px] font-medium ml-[8px] cursor-pointer"
+                    onClick={() => setOpen(true)}
+                    size="small"
+                  >
+                    Хариулах
+                  </Button>
+                  {open && (
+                    <Modal
+                      width={300}
+                      visible
+                      title="Сэтгэгдэл бичих"
+                      onOk={() => {
+                        reply({ variables: { name: name, comment: body } }).then(() => {
+                          refetch();
+                          setOpen(false);
+                        });
+                      }}
+                      onCancel={() => setOpen(false)}
+                      confirmLoading={loading}
+                    >
+                      <Form>
+                        <Input.TextArea rows={4} onChange={(e) => setBody(e.target.value)} placeholder="Сэтгэгдэл" />
+                        <Input
+                          placeholder="Нэрээ бичнэ үү"
+                          onChange={(e) => setName(e.target.value)}
+                          className="my-2"
+                        />
+                      </Form>
+                    </Modal>
+                  )}
+                </>
+              )}
             </div>
           </div>
         </>

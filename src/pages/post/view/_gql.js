@@ -56,6 +56,7 @@ export const ARTICLE = gql`
 export const COMMENTS = gql`
   query GetComment($articleId: ID!, $sort: SortFilter) {
     article(id: $articleId) {
+      commentsCount
       comments(first: 10, sort: $sort) {
         totalCount
         pageInfo {
@@ -71,6 +72,8 @@ export const COMMENTS = gql`
             repliesCount
             data
             status
+            parentId
+            targetId
             createdAt
             user {
               id
@@ -92,7 +95,12 @@ export const COMMENTS = gql`
                   dislikesCount
                   data
                   status
+                  parentId
+                  targetId
                   createdAt
+                  parent {
+                    id
+                  }
                   user {
                     id
                     email
@@ -110,11 +118,16 @@ export const COMMENTS = gql`
 `;
 
 export const ADD_COMMENT = gql`
-  mutation AddComment($articleId: ID!, $name: String, $comment: String) {
-    addComment(input: { targetType: "article", targetId: $articleId, name: $name, comment: $comment }) {
+  mutation AddComment($articleId: ID!, $name: String, $comment: String, $parentId: ID) {
+    addComment(
+      input: { targetType: "article", targetId: $articleId, name: $name, comment: $comment, parentId: $parentId }
+    ) {
       id
       comment
       status
+      parent {
+        id
+      }
       createdAt
       user {
         id
@@ -123,6 +136,16 @@ export const ADD_COMMENT = gql`
         lastName
       }
       data
+    }
+  }
+`;
+
+export const REACT_COMMENT = gql`
+  mutation ReactComment($commentId: ID!, $action: String!) {
+    reactComment(input: { id: $commentId, action: $action }) {
+      id
+      likesCount
+      dislikesCount
     }
   }
 `;
