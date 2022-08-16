@@ -7,7 +7,7 @@ import { useSwipeable } from 'react-swipeable';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import StoryItem from '../../component/story/Story';
 import PostShareModal from '../../component/modal/PostShareModal';
-import { imagePath } from '../../utility/Util';
+import { generateTimeAgo, imagePath } from '../../utility/Util';
 
 export default function Story() {
   // prettier-ignore
@@ -81,7 +81,7 @@ export default function Story() {
         <LazyLoadImage
           className="w-full h-screen object-cover"
           alt=""
-          src={`http://graph.caak.mn${shownStory?.image}`}
+          src={imagePath(shownStory?.image)}
         />
       </div>
       <div className="w-full h-full absolute top-0 flex flex-col items-center justify-between">
@@ -121,7 +121,7 @@ export default function Story() {
                 Редактор: {shownStory?.author.name}
               </p>
               <p className="font-medium text-white opacity-80 text-[16px] leading-[19px] pl-[12px]">
-                2022.04.28, 22:05
+                {generateTimeAgo(shownStory?.publish_date)}
               </p>
             </div>
             <Link to={`/post/view/${shownStory?.id}`}>

@@ -20,6 +20,11 @@ const CATEGORIES = gql`
         name
         slug
         position
+        parent {
+          id
+          name
+          slug
+        }
       }
     }
   }
@@ -29,6 +34,7 @@ const Categories = () => {
   const { data, loading } = useQuery(CATEGORIES);
   const [open, setOpen] = useState(false);
   const categories = data?.categories?.nodes || [];
+  // console.log(categories);
   if (loading) {
     return <Skeleton />;
   }
@@ -53,23 +59,28 @@ const Categories = () => {
                 placement="bottom"
                 trigger="click"
                 className="leading-[16px] tracking-[0px]"
-                overlayStyle={{ width: 600 }}
                 overlayInnerStyle={{ borderRadius: 8 }}
                 visible={open}
                 content={
-                  <Row className="p-[12px] gap-y-[12px]">
+                  <div className="p-[12px] flex flex-row gap-x-[50px]">
                     {categories.map((x) => {
                       return (
-                        <Col key={x.id} span={8}>
-                          <Link to={`/category/${x.slug}`} key={x.id} onClick={() => setOpen(false)}>
-                            <span className="text-[#111111] font-roboto hover:text-caak-primary hover:leading-[18px] leading-[19px] hover:tracking-[0.23px] tracking-[0.24px] hover:text-[15px] text-[16px]">
+                        x.parent === null && (
+                          <div>
+                            <Link
+                              className="text-[#111111] condMedium font-roboto hover:text-caak-primary hover:leading-[18px] leading-[19px] hover:tracking-[0.23px] tracking-[0.24px] hover:text-[15px] text-[16px]"
+                              to={`/category/${x.slug}`}
+                              key={x.id}
+                              onClick={() => setOpen(false)}
+                            >
                               {x.name}
-                            </span>
-                          </Link>
-                        </Col>
+                            </Link>
+                            {x.parent === null && x.id === x.parent?.id ? x.name : null}
+                          </div>
+                        )
                       );
                     })}
-                  </Row>
+                  </div>
                 }
               >
                 <p className="hover:text-caak-primary font-bold flex" onClick={() => setOpen(!open)}>

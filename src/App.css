@@ -136,6 +136,7 @@
 
 .storyLinearItem {
   background: transparent linear-gradient(180deg, #00000000 0%, #000000C9 100%) 0% 0% no-repeat padding-box;
+  width: 100%;
 }
 
 .storyLinearBorder {
