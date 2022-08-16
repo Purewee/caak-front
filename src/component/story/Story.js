@@ -6,12 +6,12 @@ import { Link } from 'react-router-dom';
 export default function StoryItem({ story, index, border }) {
   return (
     <div className={`min-w-[136px] sm:min-w-[290px] max-w-[290px] h-full`}>
-      <Link to={`/story/${index}`}>
+      <Link to={`/story/${story.id}`}>
         <div className={`h-full w-full storyBackgroundLinear ${border && 'p-[2px] sm:p-[3px]'} rounded-[8px]`}>
           <div className={`relative h-full w-full bg-white rounded-[8px] ${border && 'sm:p-[5px]'}`}>
             <LazyLoadImage
               alt={story.id}
-              className={`object-cover max-h-[428px] h-full w-full rounded-[8px]`}
+              className="object-cover max-h-[428px] h-full w-full rounded-[8px]"
               src={imagePath(story?.image)}
             />
             <div
@@ -28,7 +28,7 @@ export default function StoryItem({ story, index, border }) {
                 </p>
               ))}
               <p className="truncate-3 text-white text-[13px] xl:text-[22px] condMedium xl:font-bold mt-[10px] tracking-[0.36px] leading-[15px] xl:leading-[28px] xl:font-condensed">
-                {story?.title}
+                {story?.content}
               </p>
               <p className="text-white text-[14px] font-medium mt-[10px] hidden xl:flex condMedium">
                 {generateTimeAgo(story?.publish_date)}

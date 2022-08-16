@@ -54,10 +54,10 @@ export const ARTICLE = gql`
 `;
 
 export const COMMENTS = gql`
-  query GetComment($articleId: ID!, $sort: SortFilter) {
+  query GetComment($articleId: ID!, $sort: SortFilter, $after: String) {
     article(id: $articleId) {
       commentsCount
-      comments(first: 10, sort: $sort) {
+      comments(first: 10, sort: $sort, after: $after) {
         totalCount
         pageInfo {
           hasNextPage
@@ -81,7 +81,7 @@ export const COMMENTS = gql`
               firstName
               lastName
             }
-            childs {
+            childs(sort: { direction: asc, field: "createdAt" }) {
               totalCount
               pageInfo {
                 hasNextPage

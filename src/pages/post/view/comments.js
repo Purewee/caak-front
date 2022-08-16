@@ -6,17 +6,20 @@ import { ADD_COMMENT, COMMENTS, REACT_COMMENT } from './_gql';
 import { BlockTitle } from './wrapper';
 import moment from 'moment';
 import { FIcon } from '../../../component/icon';
+import { DownOutlined } from '@ant-design/icons';
 
 const SORTS = {
   recent: { direction: 'desc', field: 'createdAt' },
   liked: { direction: 'asc', field: 'createdAt' },
   replied: { direction: 'desc', field: 'repliesCount' },
 };
-export default function Comments({ articleId }) {
+export default function Comments({ articleId, refProp }) {
   const [sort, setSort] = useState('recent');
   const [addComment, { loading: saving }] = useMutation(ADD_COMMENT, { variables: { articleId } });
-  const { data, loading, refetch } = useQuery(COMMENTS, { variables: { articleId, sort: SORTS[sort] } });
+  const { data, loading, refetch, fetchMore } = useQuery(COMMENTS, { variables: { articleId, sort: SORTS[sort] } });
   const comments = data?.article?.comments;
+  const pageInfo = comments?.pageInfo;
+  console.log({ pageInfo });
   return (
     <>
       <Form
@@ -53,7 +56,7 @@ export default function Comments({ articleId }) {
           </div>
         </div>
       </Form>
-      <div className="flex flex-col justify-start w-full">
+      <div className="flex flex-col justify-start w-full" ref={refProp}>
         <BlockTitle className="text-left px-[0px] font-medium md:font-bold text-[17px] md:text-[22px]">
           Нийт сэтгэгдэл ({data?.article?.commentsCount})
         </BlockTitle>
@@ -77,6 +80,18 @@ export default function Comments({ articleId }) {
             </React.Fragment>
           );
         })}
+        {pageInfo?.hasNextPage && (
+          <Button
+            block
+            size="large"
+            icon={<DownOutlined />}
+            onClick={() => fetchMore({ variables: { after: pageInfo?.endCursor } })}
+            className="mx-[20px]"
+            loading={loading}
+          >
+            Бусад сэтгэгдэлүүд
+          </Button>
+        )}
       </div>
     </>
   );

@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, useRef } from 'react';
 import { AppContext } from '../../../App';
 import { gql, useQuery } from '@apollo/client';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import moment from 'moment';
 import { useMutation } from '@apollo/client';
 import Loader from '../../../component/loader';
@@ -82,6 +82,7 @@ const Post = () => {
   const { data: me, loading: me_loading } = useQuery(ME);
   const article = data?.article || {};
   const numbering = article?.data?.numbering || false;
+  const commentsRef = useRef(null);
   const {
     data: data_source,
     loading: fetching,
@@ -94,16 +95,6 @@ const Post = () => {
   const title = article?.title;
   const metaDescription = 'default description';
   if (article?.kind === 'linked') window.location = article.data?.link;
-
-  const openNotification = () => {
-    const args = {
-      message: `Та ${article?.source?.name}-г дагалаа`,
-      duration: 4,
-      placement: 'bottom',
-      className: 'h-[50px] bg-[#12805C] w-[250px]',
-    };
-    notification.open(args);
-  };
 
   function createMarkup(e) {
     return { __html: e };
@@ -284,14 +275,25 @@ const Post = () => {
                     </Link>
                     <div className="text-[12px] text-[#909090] flex flex-row items-center leading-[14px]">
                       <p>{moment(article.createdAt).format('YYYY.MM.DD, hh:mm')}</p>
-                      <div className="ml-[12px] flex flex-row items-center text-[#555555]">
-                        <span className="icon-fi-rs-eye text-[18px] mr-[4px]" />
-                        <p className="text-[14px]">{article?.viewsCount}</p>
-                      </div>
-                      <div className="ml-[12px] flex flex-row items-center text-[#555555]">
-                        <span className="icon-fi-rs-comment-o text-[18px] mr-[4px]" />
-                        <p className="text-[14px]">{article?.commentsCount || 0}</p>
-                      </div>
+                      <Button
+                        type="link"
+                        size="small"
+                        icon={<span className="icon-fi-rs-eye text-[18px] mr-[4px]" />}
+                        className="flex flex-row items-center text-[#555555] text-[14px]"
+                      >
+                        {article?.viewsCount}
+                      </Button>
+                      <Button
+                        icon={<span className="icon-fi-rs-comment-o text-[18px] mr-[4px]" />}
+                        className="flex flex-row items-center text-[#555555] text-[14px]"
+                        size="small"
+                        type="link"
+                        onClick={() => {
+                          commentsRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        }}
+                      >
+                        {article?.commentsCount || 0}
+                      </Button>
                     </div>
                   </div>
                 </div>
@@ -490,7 +492,7 @@ const Post = () => {
             </div>
             <Reaction articleId={article?.id} />
             {article?.acceptComment === true ? (
-              <Comments articleId={article?.id} />
+              <Comments articleId={article?.id} refProp={commentsRef} />
             ) : (
               <Alert
                 type="warning"
@@ -498,6 +500,7 @@ const Post = () => {
                 showIcon
                 banner
                 className="mt-[40px] py-[24px]"
+                ref={commentsRef}
               />
             )}
           </div>
