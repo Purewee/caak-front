@@ -154,7 +154,7 @@ const Post = () => {
           <meta property="og:description" key="og:description" content={metaDescription} />
           <meta property="og:image" key="og:image" content={imagePath(article.image)} />
         </Helmet>
-        <div className="w-full hidden xl:block max-w-[200px]">
+        <div className="w-full hidden xl:block max-w-[150px]">
           <div
             className={`hidden md:flex ${
               leftMenuSticky ? 'sticky top-[180px]' : 'mt-[380px]'
@@ -348,9 +348,7 @@ const Post = () => {
                       <div key={b.id} className="flex flex-col md:items-center mb-[26px] md:mb-[50px] w-full">
                         {b.title && <BlockTitle>{`${numbering ? `${b.position}. ` : ''}${b.title}`}</BlockTitle>}
                         <iframe
-                          width="100%"
-                          height="420px"
-                          className="object-cover"
+                          className="w-full h-[420px]"
                           src={`https://www.youtube.com/embed/${parseVideoURL(b.data.url).id}`}
                           title="YouTube video player"
                           frameBorder="0"
@@ -505,12 +503,10 @@ const Post = () => {
             )}
           </div>
         </div>
-        <div className="w-[270px] hidden xl:block">
-          <div
-            className={`w-[250px] h-[392px] bg-orange-300 ${
-              leftMenuSticky ? 'sticky top-[80px] fade-in-banner' : 'hidden'
-            }`}
-          ></div>
+        <div className="w-[250px] hidden xl:block">
+          <div className={`${leftMenuSticky ? 'sticky top-[80px] fade-in-banner' : 'hidden'}`}>
+            <Banner position={'a3'} />
+          </div>
         </div>
         {saving && <PostSaveModal post={article} image={imagePath(article.imageUrl)} toggle={() => setSaving(false)} />}
         {sharing && (

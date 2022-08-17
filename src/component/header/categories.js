@@ -66,17 +66,13 @@ const Categories = () => {
                     {categories.map((x) => {
                       return (
                         x.parent === null && (
-                          <div>
-                            <Link
-                              className="text-[#111111] condMedium font-roboto hover:text-caak-primary hover:leading-[18px] leading-[19px] hover:tracking-[0.23px] tracking-[0.24px] hover:text-[15px] text-[16px]"
-                              to={`/category/${x.slug}`}
-                              key={x.id}
-                              onClick={() => setOpen(false)}
-                            >
-                              {x.name}
-                            </Link>
-                            {x.parent === null && x.id === x.parent?.id ? x.name : null}
-                          </div>
+                          <Link
+                            className="text-[#111111] condMedium font-roboto hover:text-caak-primary hover:leading-[18px] leading-[19px] hover:tracking-[0.23px] tracking-[0.24px] hover:text-[15px] text-[16px]"
+                            to={`/category/${x.slug}`}
+                            onClick={() => setOpen(false)}
+                          >
+                            {x.name}
+                          </Link>
                         )
                       );
                     })}

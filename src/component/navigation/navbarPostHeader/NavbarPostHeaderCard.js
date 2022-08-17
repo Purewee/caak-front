@@ -31,13 +31,11 @@ const NavbarPostHeaderCard = ({ type, item }) => {
           </p> */}
           <div className="flex flex-wrap justify-between w-full mt-[29px] items-center">
             <div className="flex flex-row items-center self-start text-white">
-              <Link to={`/channel/${item.source?.slug}`} className="flex flex-row items-center">
+              <Link to={`/channel/${item.source?.id}`} className="flex flex-row items-center">
                 <Avatar className="w-[22px] h-[22px]" src={imagePath(item.source?.icon)} />
                 <MetaTag className="ml-[6px] text-[#FFFFFF] text-[15px]">{item?.source?.name}</MetaTag>
               </Link>
-              <Link to={`/profile/${item.author?.id}`}>
-                <MetaTag className="ml-[6px] text-[#FFFFFF]">• Sponsored</MetaTag>
-              </Link>
+              <MetaTag className="ml-[6px] text-[#FFFFFF]">• Sponsored</MetaTag>
             </div>
             {/* <div className="flex items-center mt-[10px] sm:mt-0 self-end md:self-center">
               <ActionButtons post={item} />

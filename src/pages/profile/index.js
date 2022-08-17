@@ -145,18 +145,20 @@ export default function Profile() {
               </div>
             </Tabs.TabPane>
           )}
-          <Tabs.TabPane
-            key="history"
-            tab={
-              <p
-                className={`text-[16px] font-roboto font-bold ${
-                  selected === 'history' ? 'text-caak-black' : 'text-caak-gray'
-                }`}
-              >
-                ҮЗСЭН ТҮҮХ
-              </p>
-            }
-          />
+          {id === loggedUser?.id && (
+            <Tabs.TabPane
+              key="history"
+              tab={
+                <p
+                  className={`text-[16px] font-roboto font-bold ${
+                    selected === 'history' ? 'text-caak-black' : 'text-caak-gray'
+                  }`}
+                >
+                  ҮЗСЭН ТҮҮХ
+                </p>
+              }
+            />
+          )}
         </Tabs>
       </div>
     </div>
