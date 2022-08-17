@@ -1,158 +1,129 @@
-import React, { useEffect, useState, useContext } from 'react';
-import { ESService } from '../../lib/esService';
-import { AppContext } from '../../App';
+import React, { useEffect, useState, useRef } from 'react';
 import Logo from '../../component/logo';
-import { Link, useParams } from 'react-router-dom';
-import { useSwipeable } from 'react-swipeable';
-import { LazyLoadImage } from 'react-lazy-load-image-component';
-import StoryItem from '../../component/story/Story';
-import PostShareModal from '../../component/modal/PostShareModal';
-import { generateTimeAgo, imagePath } from '../../utility/Util';
+import { Link, useNavigate, useParams } from 'react-router-dom';
+import { imagePath } from '../../utility/Util';
+import { useQuery } from '@apollo/client';
+import { STORY } from './_gql';
+import Stories, { WithSeeMore, WithHeader } from 'react-insta-stories';
+import { Button, Skeleton } from 'antd';
+import { FIcon } from '../../component/icon';
+import ReactPlayer from 'react-player';
 
 export default function Story() {
-  // prettier-ignore
   const { id } = useParams();
-  const context = useContext(AppContext);
-  const [stories, setStories] = useState([]);
-  const [indexOfStory, setIndexOfStory] = useState(id === 'done' ? 'done' : JSON.parse(id));
-  const [shownStory, setShownStory] = useState(null);
-  const [sharing, setSharing] = useState(false);
-
-  useEffect(() => {
-    const es = new ESService('caak');
-    es.stories().then((res) => {
-      setStories(res);
-    });
-  }, []);
-
-  useEffect(() => {
-    context.setStore(null);
-    // eslint-disable-next-line
-  }, []);
-
-  // prettier-ignore
-  // useEffect(() => {
-  //   setTimeout(( )=> {
-  //     setIndexOfStory(indexOfStory + 1)
-  //   }, 5000)
-  // },[indexOfStory])
-
-  useEffect(() => {
-    setShownStory(stories[indexOfStory]);
-  }, [indexOfStory, stories]);
-
-  useEffect(() => {
-    context.setShown(false);
-  }, []);
-
-  const handlers = useSwipeable({
-    onSwipedLeft: () => setIndexOfStory(indexOfStory + 1 === stories.length ? 'done' : indexOfStory + 1),
-    onSwipedRight: () => setIndexOfStory(indexOfStory === 0 ? 0 : indexOfStory - 1),
+  const navigate = useNavigate();
+  const { data, loading } = useQuery(STORY, { variables: { id } });
+  const story = data?.article || {};
+  const stories = story?.blocks?.map((b) => {
+    if (b.kind === 'video') {
+      return {
+        content: (props) => <VideoStory {...props} block={b} story={story} />,
+        header: { heading: b.content, subheading: story.publishDate, profileImage: imagePath(story.author.avatar) },
+        seeMore: () => navigate('/'),
+      };
+    } else {
+      return {
+        content: (props) => <ImageStory {...props} block={b} story={story} />,
+        header: { heading: b.content, subheading: story.publishDate, profileImage: imagePath(story.author.avatar) },
+        seeMore: () => navigate('/'),
+      };
+    }
   });
-  //prettier-ignore
-  return indexOfStory === 'done' ? (
-    <div {...handlers} className="w-full h-screen relative bg-black px-[16px] sm:px-0 pt-[16px]">
-      <div className="flex w-full justify-end px-[19px]">
-        <Link to={'/'}>
-          <div className="w-[34px] h-[34px] md:bg-white rounded-full flex justify-center items-center ml-[33.8px]">
-            <span className="icon-fi-rs-close text-[15px] text-white xl:text-[#555555] " />
-          </div>
-        </Link>
-      </div>
-      <div className="w-full h-full flex flex-col items-center">
-        <div className="max-w-[1310px] w-full">
-          <span className="text-[15px] font-bold leading-[18px] inline-flex text-white">
-            <span className="icon-fi-rs-bolt text-[22px] w-[24px] text-[#FF6600]" />
-            ОНЦЛОХ СТОРИ <p className="font-normal">&nbsp;МЭДЭЭНҮҮД</p>
-          </span>
-        </div>
-        <div className="w-full wrapper gap-[13px] transition-all pb-[26px] md:pb-0 duration-300 mt-[14px] md:mt-[39px] max-w-[1310px]">
-          {
-            stories.map((data, index) => (
-              <StoryItem key={index} story={data} index={index}/>
-            ))
-          }
-        </div>
-      </div>
-    </div>
-  ) : (
-    <div {...handlers} className="w-full relative">
-      <div>
-        <LazyLoadImage
-          className="w-full h-screen object-cover"
-          alt=""
-          src={imagePath(shownStory?.image)}
+  const contRef = useRef(null);
+
+  useEffect(() => {
+    contRef?.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [loading]);
+
+  if (loading) return <Skeleton />;
+  return (
+    <div className="w-full relative" ref={contRef}>
+      <div className="w-full flex justify-center">
+        <Stories
+          width="100vw"
+          height="100vh"
+          keyboardNavigation
+          preventDefault
+          loop={false}
+          storyContainerStyles={{
+            width: '100%',
+            overflow: 'hidden',
+            background: 'black',
+            padding: 32,
+          }}
+          header
+          stories={stories}
+          onAllStoriesEnd={() => {
+            if (story.prevStoryId) {
+              navigate(`/story/${story.prevStoryId}`);
+            }
+          }}
         />
       </div>
-      <div className="w-full h-full absolute top-0 flex flex-col items-center justify-between">
-        <div className="flex flex-row items-center w-full justify-between px-[19px] storyLinearTop pt-[16px]">
-          <Logo />
-          <div className="flex flex-row items-center">
-            <span className="icon-fi-rs-volume text-[22px] text-white" />
-            <span className="icon-fi-rs-play text-[18px] text-white ml-[27px]" />
-            <span onClick={() => setSharing(true)} className="icon-fi-rs-share cursor-pointer text-[20px] text-white ml-[25px]" />
-            <Link to={'/'}>
-              <div className="w-[34px] h-[34px] bg-opacity-30 bg-white rounded-full flex justify-center items-center ml-[33.8px]">
-                <span className="icon-fi-rs-close text-[13.5px] text-white xl:text-[#555555] " />
-              </div>
-            </Link>
-          </div>
-        </div>
-        <div className="md:pt-[104px] px-[16px] md:px-[150px] storyLinearBig w-full flex flex-col items-center">
-          <div className="border-l-[6px] border-white w-full h-[286px] md:h-[340px] pl-[16px] md:pl-[40px]">
-            <div className="flex flex-row justify-start mt-[12px]">
-              {shownStory?.categories?.map((x) => (
-                <Link key={x.id} to={`/category/${x.slug}`}>
-                  <div className="bg-[#FF6600] h-[22px] flex items-center px-[8px]">
-                    <p className="text-white text-[12px] font-bold leading-[14px]">
-                      {x.name}
-                    </p>
-                  </div>
-                </Link>
-              ))}
-            </div>
-            <Link to={`/post/view/${shownStory?.id}`}>
-              <p className="text-white text-[28px] mt-[12px] xl:text-[54px] font-condensed font-bold leading-[34px] truncate-3 md:truncate-2 xl:leading-[70px] max-w-[1032px]">
-                {shownStory?.title}
-              </p>
-            </Link>
-            <div className="flex flex-row items-center mt-[12px]">
-              <p className="hidden xl:block font-medium text-white border-r border-[#FFFFFF] border-opacity-80 opacity-80 text-[16px] leading-[19px] pr-[12px]">
-                Редактор: {shownStory?.author.name}
-              </p>
-              <p className="font-medium text-white opacity-80 text-[16px] leading-[19px] pl-[12px]">
-                {generateTimeAgo(shownStory?.publish_date)}
-              </p>
-            </div>
-            <Link to={`/post/view/${shownStory?.id}`}>
-              <p className="bg-[#00000019] mt-[30px] flex justify-center items-center text-white h-[44px] w-[190px] border border-[#FFFFFF80] rounded-[4px]">
-                Дэлгэрэнгүй унших
-              </p>
-            </Link>
+    </div>
+  );
+}
+
+function ImageStory({ block, story, config, action }) {
+  const navigate = useNavigate();
+  return (
+    <WithSeeMore
+      story={{
+        header: { heading: block.content, subheading: story.publishDate, profileImage: imagePath(story.author.avatar) },
+        seeMore: () => navigate(block.data.url || ''),
+        // seeMoreCollapsed: ({ toggleMore, action }) => (
+        //   <Button onClick={() => toggleMore(true)}>Дэлгэрэнгүй үзэх</Button>
+        // ),
+      }}
+      action={action}
+      globalHeader={config.header}
+    >
+      <div className="w-full h-full flex flex-col items-center justify-center">
+        <div className="relative">
+          <img
+            src={imagePath(block.imageUrl)}
+            alt={block.content}
+            className="min-w-[360px] max-h-[84vh] object-contain h-auto"
+          />
+          <div className="absolute bottom-0 p-[24px] storyLinearItem w-full">
+            <span
+              className="truncate-2 text-white text-[24px] font-merri"
+              dangerouslySetInnerHTML={{ __html: block.content }}
+            />
+            <span className="text-white font-merri text-[12px]">{story.publishDate}</span>
           </div>
         </div>
       </div>
-      {indexOfStory > 0 && (
-        <Link to={`/story/${indexOfStory - 1}`}>
-          <div
-            onClick={() => setIndexOfStory(indexOfStory - 1)}
-            className="absolute hidden top-1/2 left-[20px] w-[54px] h-[54px] rounded-full bg-[#000000] bg-opacity-20 xl:flex items-center justify-center cursor-pointer"
-          >
-            <span className="icon-fi-rs-down-chevron text-white text-[20px] rotate-90" />
+    </WithSeeMore>
+  );
+}
+
+function VideoStory({ block, story, config, action }) {
+  const navigate = useNavigate();
+  return (
+    <WithSeeMore
+      story={{
+        header: { heading: block.content, subheading: story.publishDate, profileImage: imagePath(story.author.avatar) },
+        seeMore: () => navigate(block.data.url || ''),
+        // seeMoreCollapsed: ({ toggleMore, action }) => (
+        //   <Button onClick={() => toggleMore(true)}>Дэлгэрэнгүй үзэх</Button>
+        // ),
+      }}
+      action={action}
+      globalHeader={config.header}
+    >
+      <div className="w-full h-full flex flex-col items-center justify-center">
+        <div className="relative">
+          <div className="py-[12px]">
+            <span
+              className="truncate-2 text-white text-[24px] font-merri"
+              dangerouslySetInnerHTML={{ __html: block.content }}
+            />
+            <span className="text-white font-merri text-[12px]">{story.publishDate}</span>
           </div>
-        </Link>
-      )}
-      {
-        <Link to={`/story/${indexOfStory + 1 === stories.length ? 'done' : indexOfStory + 1}`}>
-          <div
-            onClick={() => setIndexOfStory(indexOfStory + 1 === stories.length ? 'done' : indexOfStory + 1)}
-            className="absolute top-1/2 right-[20px] w-[54px] h-[54px] rounded-full bg-[#000000] bg-opacity-20 hidden xl:flex items-center justify-center cursor-pointer"
-          >
-            <span className="icon-fi-rs-down-chevron text-white text-[20px] -rotate-90" />
-          </div>
-        </Link>
-      }
-      {sharing && <PostShareModal post={shownStory} toggle={() => setSharing(false)} image={imagePath(shownStory?.image)} />}
-    </div>
+          <ReactPlayer url={imagePath(block.videoUrl)} playing controls />
+        </div>
+      </div>
+    </WithSeeMore>
   );
 }

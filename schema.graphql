@@ -55,7 +55,9 @@ type Article {
   id: ID!
   imageUrl: String
   kind: String!
+  nextStoryId: Int
   position: Int
+  prevStoryId: Int
   publishDate: ISO8601Date
   reactions(
     "Returns the elements in the list that come after the specified cursor."
