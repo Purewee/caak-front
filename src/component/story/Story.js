@@ -5,20 +5,18 @@ import { Link } from 'react-router-dom';
 
 export default function StoryItem({ story, index, border }) {
   return (
-    <div className={`min-w-[136px] sm:min-w-[290px] max-w-[290px] h-full`}>
+    <div className="min-w-[136px] sm:min-w-[290px] max-w-[290px] h-full">
       <Link to={`/story/${story.id}`}>
-        <div className={`h-full w-full storyBackgroundLinear ${border && 'p-[2px] sm:p-[3px]'} rounded-[8px]`}>
-          <div className={`relative h-full w-full bg-white rounded-[8px] ${border && 'sm:p-[5px]'}`}>
+        <div
+          className={`h-full w-full overflow-hidden mb-[6px] rounded-[6px] hover:border-2 hover:border-[#FF6600] hover:p-1`}
+        >
+          <div className={`relative h-full w-full bg-white `}>
             <LazyLoadImage
               alt={story.id}
-              className="object-cover max-h-[428px] h-full w-full rounded-[8px]"
+              className="object-cover max-h-[428px] h-full w-full rounded-[6px]"
               src={imagePath(story?.image)}
             />
-            <div
-              className={`absolute ${
-                border ? 'bottom-0 sm:bottom-[5px] w-[132px] md:w-[274px] py-[10px]' : 'bottom-0 py-[18px]'
-              } rounded-[8px] storyLinearItem h-1/2 xl:py-[30px] px-[10px] xl:px-[20px] flex flex-col items-start justify-end`}
-            >
+            <div className="absolute bottom-[0px] rounded-[6px] w-full storyLinearItem h-1/2 p-[24px] flex flex-col items-start justify-end">
               {story?.categories?.map((x) => (
                 <p
                   key={x.name}
@@ -27,9 +25,10 @@ export default function StoryItem({ story, index, border }) {
                   {x.name}
                 </p>
               ))}
-              <p className="truncate-3 text-white text-[13px] xl:text-[22px] condMedium xl:font-bold mt-[10px] tracking-[0.36px] leading-[15px] xl:leading-[28px] xl:font-condensed">
-                {story?.content}
-              </p>
+              <p
+                className="truncate-3 text-white text-[13px] xl:text-[22px] condMedium xl:font-bold mt-[10px] tracking-[0.36px] leading-[15px] xl:leading-[28px] xl:font-condensed"
+                dangerouslySetInnerHTML={{ __html: story?.title }}
+              />
               <p className="text-white text-[14px] font-medium mt-[10px] hidden xl:flex condMedium">
                 {generateTimeAgo(story?.publish_date)}
               </p>

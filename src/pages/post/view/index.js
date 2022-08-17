@@ -87,7 +87,7 @@ const Post = () => {
     data: data_source,
     loading: fetching,
     refetch,
-  } = useQuery(SOURCE, { variables: { id: article?.source?.id } });
+  } = useQuery(SOURCE, { variables: { id: article?.source?.id }, skip: !!!article?.source?.id });
   const source = data_source?.source || {};
   const [follow, { loading: follow_saving }] = useMutation(FOLLOW, { variables: { id: article?.source?.id } });
   const { isAuth, openModal } = useAuth();
@@ -288,9 +288,7 @@ const Post = () => {
                         className="flex flex-row items-center text-[#555555] text-[14px]"
                         size="small"
                         type="link"
-                        onClick={() => {
-                          commentsRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                        }}
+                        onClick={() => commentsRef.current.scrollIntoView()}
                       >
                         {article?.commentsCount || 0}
                       </Button>
@@ -401,7 +399,7 @@ const Post = () => {
                 overlayInnerStyle={{ borderRadius: 8 }}
                 content={
                   <div className="flex flex-col gap-[15px] h-full justify-between">
-                    {me?.me.id === article.author.id && (
+                    {me?.me?.id === article.author?.id && (
                       <Link to={`/add/${article.kind}/${article.id}`} target="_blank">
                         <div className="flex flex-row items-center cursor-pointer">
                           <span className="text-[#555555] text-[20px] mr-[8px] w-[22px] h-[22px] flex items-center justify-center icon-fi-rs-editor-o" />
@@ -409,7 +407,7 @@ const Post = () => {
                         </div>
                       </Link>
                     )}
-                    {me?.me.id === article.author.id && (
+                    {me?.me?.id === article.author?.id && (
                       <div className="flex flex-row items-center cursor-pointer">
                         <span className="text-[#555555] text-[20px] mr-[8px] w-[22px] h-[22px] flex items-center justify-center icon-fi-rs-delete" />
                         <p className="text-[#555555] text-[15px] leading-[18px]">Устгах</p>
@@ -433,7 +431,7 @@ const Post = () => {
                 </Link>
                 &nbsp;•&nbsp;
                 <Link className=" leading-[16px]" to={`/profile/${article.author?.id}`}>
-                  <MetaTag className="ml-0">{`${article.author.firstName}`}</MetaTag>
+                  <MetaTag className="ml-0">{`${article.author?.firstName}`}</MetaTag>
                 </Link>
                 {/* <MetaTag className="text-[#909090]">{moment(article.createdAt).format('YYYY.MM.DD, hh:mm')}</MetaTag> */}
               </div>

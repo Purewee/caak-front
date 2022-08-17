@@ -47,6 +47,7 @@
     "react-dom": "^18.1.0",
     "react-helmet": "^6.1.0",
     "react-hook-form": "^7.31.1",
+    "react-insta-stories": "^2.4.2",
     "react-lazy-load-image-component": "^1.5.4",
     "react-lottie": "^1.2.3",
     "react-otp-input": "^2.4.0",

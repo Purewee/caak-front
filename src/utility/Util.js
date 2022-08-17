@@ -437,7 +437,7 @@ export const differenceDate = (date1, date2) => {
 export const imagePath = (src) => {
   // return `http://graph.caak.mn${src}`;
   if (!src) return false;
-  return `${Configure.host}/${src}`;
+  return `${Configure.host}${src}`;
 };
 
 export function parseVideoURL(url) {
