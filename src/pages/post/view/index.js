@@ -154,7 +154,7 @@ const Post = () => {
           <meta property="og:description" key="og:description" content={metaDescription} />
           <meta property="og:image" key="og:image" content={imagePath(article.image)} />
         </Helmet>
-        <div className="w-full hidden xl:block max-w-[250px]">
+        <div className="w-full hidden xl:block max-w-[200px]">
           <div
             className={`hidden md:flex ${
               leftMenuSticky ? 'sticky top-[180px]' : 'mt-[380px]'
