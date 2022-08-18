@@ -35,7 +35,8 @@ const NavbarPostHeaderCard = ({ type, item }) => {
                 <Avatar className="w-[22px] h-[22px]" src={imagePath(item.source?.icon)} />
                 <MetaTag className="ml-[6px] text-[#FFFFFF] text-[15px]">{item?.source?.name}</MetaTag>
               </Link>
-              <MetaTag className="ml-[6px] text-[#FFFFFF]">• Sponsored</MetaTag>
+              &nbsp;&#8226;&nbsp;
+              <MetaTag className="ml-[0px] text-[#FFFFFF]">Sponsored</MetaTag>
             </div>
             {/* <div className="flex items-center mt-[10px] sm:mt-0 self-end md:self-center">
               <ActionButtons post={item} />

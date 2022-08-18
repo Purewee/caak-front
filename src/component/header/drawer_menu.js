@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import logoIcon from '../../images/New-Logo.svg';
 import { Skeleton, Drawer, Collapse } from 'antd';
 import { gql, useQuery } from '@apollo/client';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { FIcon } from '../icon';
 
 const CATEGORIES = gql`
@@ -13,13 +13,25 @@ const CATEGORIES = gql`
         name
         slug
         position
+        parent {
+          id
+          name
+          slug
+        }
+        childs(sort: { direction: asc, field: "position" }) {
+          nodes {
+            id
+            name
+            position
+            slug
+          }
+        }
       }
     }
   }
 `;
 
 export default function DrawerMenu() {
-  const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const { data, loading } = useQuery(CATEGORIES);
   const categories = data?.categories?.nodes || [];
@@ -38,7 +50,7 @@ export default function DrawerMenu() {
         onClose={() => setOpen(false)}
         className="font-condensed caak-menu"
         closeIcon={false}
-        bodyStyle={{ padding: 50 }}
+        bodyStyle={{ paddingInline: 0, paddingTop: 0, scrollbarWidth: 0 }}
         title={
           <div className="flex flex-row items-center justify-between w-full">
             <FIcon className="icon-fi-rs-search" />
@@ -52,38 +64,45 @@ export default function DrawerMenu() {
           </div>
         }
       >
-        <Collapse bordered={false} ghost>
-          <Collapse.Panel
-            header={
-              <div className="flex items-center cursor-pointer">
-                <FIcon className="icon-fi-rs-plus text-[#FF6600] mr-[26px]" />
-                <p className="text-[18px] font-medium leading-[21px] hover:text-[#555555]">МЭДЭЭНИЙ ТӨРӨЛ</p>
-              </div>
-            }
-            key="1"
-            showArrow={false}
-            className="p-0"
-          >
-            <div className="ml-[36px] mt-[20px] flex flex-col gap-[20px]">
-              {categories.map((data, index) => {
-                return (
-                  <Link onClick={() => setOpen(false)} key={index} to={`/category/${data.slug}`}>
-                    <p className="text-[#111111] leading-[20px] text-[14px] font-condensed">{data.name}</p>
-                  </Link>
-                );
-              })}
-            </div>
-          </Collapse.Panel>
-        </Collapse>
-
-        <div className="mt-[40px] text-caak-black hover:text-caak-darkGray flex flex-row items-center cursor-pointer">
+        {categories.map((x, index) => {
+          return (
+            x.parent === null && (
+              <Collapse key={index} className="w-full custom" bordered={false} accordion={true}>
+                <Collapse.Panel
+                  header={
+                    <div className="flex items-center cursor-pointer justify-between w-full py-[20px] border-b pl-[40px] pr-[30px] text-caak-black hover:text-[#555555]">
+                      <p className="text-[20px] condMedium leading-[24px]">{x.name}</p>
+                      <span className="icon-fi-rs-down-chevron text-[#FF6600] text-[16px] -rotate-90" />
+                    </div>
+                  }
+                  key={index}
+                  showArrow={false}
+                >
+                  <div className="ml-[40px] flex flex-col pr-[30px] custom">
+                    {x.childs?.nodes?.map((data, index) => {
+                      return (
+                        <Link onClick={() => setOpen(false)} key={index} to={`/category/${data.slug}`}>
+                          <div className="flex items-center cursor-pointer justify-between w-full py-[20px] border-b">
+                            <p className="text-[18px] font-roboto leading-[21px] text-[#111111]">{data.name}</p>
+                            <span className="icon-fi-rs-down-chevron text-[#BBBEBE] text-[16px] -rotate-90" />
+                          </div>
+                        </Link>
+                      );
+                    })}
+                  </div>
+                </Collapse.Panel>
+              </Collapse>
+            )
+          );
+        })}
+        <div className="mt-[40px] text-caak-black hover:text-caak-darkGray flex flex-row items-center cursor-pointer pl-[40px] pr-[30px]">
           <span className="icon-fi-rs-hashtag w-[24px] h-[24px] flex items-center justify-center text-[20px] mr-[26px]" />
           <p className="text-[18px] font-medium leading-[21px]">ТАГУУД</p>
         </div>
         <a
           target={'_blank'}
           href="https://www.youtube.com/c/caakvideo"
-          className="mt-[40px] flex flex-row text-caak-black hover:text-caak-darkGray items-center cursor-pointer"
+          className="mt-[40px] flex flex-row text-caak-black hover:text-caak-darkGray items-center cursor-pointer pl-[40px] pr-[30px]"
         >
           <span className="icon-fi-rs-tv w-[24px] h-[24px] flex items-center justify-center text-[20px] mr-[26px]" />
           <p className="text-[18px] font-medium leading-[21px]">ВИДЕО</p>
@@ -91,7 +110,7 @@ export default function DrawerMenu() {
         <a
           target={'_blank'}
           href="https://soundcloud.com/caak-podcast"
-          className="mt-[40px] flex flex-row text-caak-black hover:text-caak-darkGray items-center cursor-pointer"
+          className="mt-[40px] flex flex-row text-caak-black hover:text-caak-darkGray items-center cursor-pointer pl-[40px] pr-[30px]"
         >
           <span className="icon-fi-rs-mic w-[24px] h-[24px] flex items-center justify-center text-[20px] mr-[26px]" />
           <p className="text-[18px] font-medium leading-[21px]">ПОДКАСТ</p>
@@ -99,7 +118,7 @@ export default function DrawerMenu() {
         <a
           target={'_blank'}
           href="https://www.caak.mn/radio"
-          className="mt-[40px] flex flex-row text-caak-black hover:text-caak-darkGray items-center cursor-pointer"
+          className="mt-[40px] flex flex-row text-caak-black hover:text-caak-darkGray items-center cursor-pointer pl-[40px] pr-[30px]"
         >
           <span className="icon-fi-rs-wave w-[24px] h-[24px] flex items-center justify-center text-[20px] mr-[26px]" />
           <p className="text-[18px] font-medium leading-[21px]">РАДИО</p>
@@ -109,7 +128,7 @@ export default function DrawerMenu() {
           onClick={() => {
             setOpen(false);
           }}
-          className="mt-[40px] flex flex-row text-caak-black hover:text-caak-darkGray items-center cursor-pointer"
+          className="mt-[40px] flex flex-row text-caak-black hover:text-caak-darkGray items-center cursor-pointer pl-[40px] pr-[30px]"
         >
           <span className="icon-fi-rs-ads w-[24px] h-[24px] flex items-center justify-center text-[20px] mr-[26px]" />
           <p className="text-[18px] font-medium leading-[21px]">СУРТАЛЧИЛГАА</p>
@@ -119,7 +138,7 @@ export default function DrawerMenu() {
           onClick={() => {
             setOpen(false);
           }}
-          className="mt-[40px] flex flex-row text-caak-black hover:text-caak-darkGray items-center cursor-pointer"
+          className="mt-[40px] flex flex-row text-caak-black hover:text-caak-darkGray items-center cursor-pointer pl-[40px] pr-[30px]"
         >
           <span className="icon-fi-rs-phone w-[24px] h-[24px] flex items-center justify-center text-[20px] mr-[26px]" />
           <p className="text-[18px] font-medium leading-[21px]">ХОЛБОО БАРИХ</p>

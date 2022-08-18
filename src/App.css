@@ -66,6 +66,12 @@
   background: 0 0;
 }
 
+.calculated-width {
+  width: -webkit-calc(100% - 10px);
+  width:    -moz-calc(100% - 10px);
+  width:         calc(100% - 10px);
+}​
+
 .hideScrollbar {
   overflow: hidden;
 }
@@ -437,4 +443,15 @@
   width: 100%;
 }
 
+.ant-collapse-header-text {
+  width: 100%;
+}
 
+.ant-collapse-header {
+  width: 100%;
+}
+
+.custom .ant-collapse-content-box {
+  padding: 0;
+  padding-top: 0;
+}

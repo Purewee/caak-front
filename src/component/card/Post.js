@@ -36,10 +36,12 @@ export default function PostCard({ isMobile, post, removeSaved, ...rest }) {
   const color = sponsored ? { backgroundColor: colors[random] } : {};
   const text = sponsored ? 'text-[#ffffff] sm:text-center hover:text-[#ffffff]' : 'hover:text-[#111111]';
 
+  const width = window.screen.width;
+
   return (
     <div
       className={`${
-        sponsored ? 'h-[417px]' : 'h-[150px]'
+        sponsored ? 'h-[417px]' : `h-[150px] w-[${width - 32}px] sm:w-full`
       } sm:h-[520px] flex flex-col justify-between text-[#111111] sm:w-[422px] border-b border-[#EFEFEF] rounded-sm`}
       style={color}
     >
@@ -68,7 +70,7 @@ export default function PostCard({ isMobile, post, removeSaved, ...rest }) {
             ))}
         </div>
         <Link
-          className={`${sponsored ? 'mt-[22px]' : 'sm:mt-[10px]'} ${text}`}
+          className={`${sponsored ? 'mt-[22px]' : 'sm:mt-[10px]'} calculated-width ${text}`}
           to={postURL}
           target={post.kind === 'linked' ? '_blank' : '_self'}
         >

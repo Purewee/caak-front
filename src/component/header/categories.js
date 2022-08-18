@@ -42,7 +42,6 @@ const Categories = () => {
   const { data, loading } = useQuery(CATEGORIES);
   const [open, setOpen] = useState(false);
   const categories = data?.categories?.nodes || [];
-  // console.log(categories);
   if (loading) {
     return <Skeleton />;
   }
@@ -68,19 +67,34 @@ const Categories = () => {
                 visible={open}
                 content={
                   <div className="p-[12px] flex flex-row gap-x-[50px]">
-                    {categories.map((x) => {
+                    {categories.map((x, index) => {
                       return (
                         x.parent === null && (
-                          <div>
+                          <div
+                            key={x.id}
+                            className={`flex flex-col gap-y-[16px] pl-[19px] ${
+                              index > 0 && 'border-l border-[#EFEEEF]'
+                            }`}
+                          >
                             <Link
-                              className="text-[#111111] condMedium font-roboto hover:text-caak-primary hover:leading-[18px] leading-[19px] hover:tracking-[0.23px] tracking-[0.24px] hover:text-[15px] text-[16px]"
+                              className="text-[#111111] condMedium hover:text-caak-primary hover:leading-[18px] leading-[19px] hover:tracking-[0.23px] tracking-[0.24px] hover:text-[15px] text-[16px]"
                               to={`/category/${x.slug}`}
-                              key={x.id}
                               onClick={() => setOpen(false)}
                             >
                               {x.name}
                             </Link>
-                            {x.id === x.parent?.id ? x.name : null}
+                            {x.childs?.nodes?.map((data, index) => {
+                              return (
+                                <Link
+                                  className="text-[#555555] font-condensed hover:text-caak-primary leading-[20px] hover:tracking-[0.23px] tracking-[0.24px] text-[17px]"
+                                  to={`/category/${data.slug}`}
+                                  key={index}
+                                  onClick={() => setOpen(false)}
+                                >
+                                  {data.name}
+                                </Link>
+                              );
+                            })}
                           </div>
                         )
                       );
