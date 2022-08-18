@@ -25,6 +25,14 @@ const CATEGORIES = gql`
           name
           slug
         }
+        childs(sort: { direction: asc, field: "position" }) {
+          nodes {
+            id
+            name
+            position
+            slug
+          }
+        }
       }
     }
   }
@@ -43,10 +51,7 @@ const Categories = () => {
     <ul className="hidden md:block text-[#555555] font-bold text-[14px] p-0 ml-[20px]">
       {menuItems.map((item, index) => {
         return (
-          <li
-            key={index}
-            className={'flex flex-row relative items-center list-none mr-[40px] cursor-pointer float-left'}
-          >
+          <li key={index} className="flex flex-row relative items-center list-none mr-[40px] cursor-pointer float-left">
             {item.link && (
               <a rel="noreferrer" href={item.link} target="_blank">
                 <p className="hover:text-caak-primary font-bold text-[14px] leading-[16px] tracking-[0px]">
@@ -66,13 +71,17 @@ const Categories = () => {
                     {categories.map((x) => {
                       return (
                         x.parent === null && (
-                          <Link
-                            className="text-[#111111] condMedium font-roboto hover:text-caak-primary hover:leading-[18px] leading-[19px] hover:tracking-[0.23px] tracking-[0.24px] hover:text-[15px] text-[16px]"
-                            to={`/category/${x.slug}`}
-                            onClick={() => setOpen(false)}
-                          >
-                            {x.name}
-                          </Link>
+                          <div>
+                            <Link
+                              className="text-[#111111] condMedium font-roboto hover:text-caak-primary hover:leading-[18px] leading-[19px] hover:tracking-[0.23px] tracking-[0.24px] hover:text-[15px] text-[16px]"
+                              to={`/category/${x.slug}`}
+                              key={x.id}
+                              onClick={() => setOpen(false)}
+                            >
+                              {x.name}
+                            </Link>
+                            {x.id === x.parent?.id ? x.name : null}
+                          </div>
                         )
                       );
                     })}
