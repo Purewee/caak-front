@@ -17,8 +17,8 @@ function OpenStep({ setStep }) {
       onCancel={() => setStep('closed')}
     >
       <Row gutter={0} className="font-roboto">
-        <Col span={10}>
-          <div className="hidden h-full bg-[#F7F7F7] sm:flex flex-col items-center justify-center p-[24px]">
+        <Col className="hidden sm:block" span={10}>
+          <div className="h-full bg-[#F7F7F7] flex flex-col items-center justify-center p-[24px]">
             <img src={logoIcon} className="cursor-pointer object-contain" alt="Caak Logo" width={157} height={47} />
             <p className="mt-[22px] text-[18px] font-medium text-[#111111]">Мэдээ мэдээллийн төв цэг!</p>
             <div className="flex flex-row mt-[58px]">
@@ -41,7 +41,7 @@ function OpenStep({ setStep }) {
             </div>
           </div>
         </Col>
-        <Col span={14} className="border-l">
+        <Col span={14} className="border-l col-span-14">
           <div className="p-[40px] mt-[40px] border-b">
             <h3 className="mb-[20px] text-[30px] font-bold leading-[38px]">
               Бүртгэл үүсгэн мэдээллийг өөрийн болгоорой!
