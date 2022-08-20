@@ -108,7 +108,6 @@ function AddLink() {
             <LinkField onSuccess={setData} />
             {!data && !id ? (
               <Skeleton
-                active
                 avatar={{ shape: 'square', size: 200 }}
                 title={{ width: '80%' }}
                 paragraph={{ rows: 4, width: '100%' }}
@@ -159,21 +158,33 @@ function AddLink() {
         <Col span={6} className="border-l border-[#efefef] bg-[#ffffff] p-[24px]">
           <Affix offsetTop={12}>
             <div className="h-screen">
-              <Form.Item name="sourceId" label="Эх үүсвэр">
+              <Form.Item name="sourceId" label="Суваг">
                 <Select size="large" loading={source_fetching} allowClear>
                   {sources?.sources?.nodes?.map((x) => (
                     <Select.Option value={x.id}>{`${x.name} - ${x.domain}`}</Select.Option>
                   ))}
                 </Select>
+                <a
+                  href={imagePath('/admin/sources/new')}
+                  className="font-merri text-caak-primary  text-[12px] mt-1"
+                  target="_blank"
+                >
+                  Add Source
+                </a>
               </Form.Item>
               <Form.Item name="categoryIds" className="font-merri" label="Ангилал">
                 <Select
                   mode="multiple"
                   placeholder="Categories"
                   size="large"
+                  allowClear
+                  filterOption={(input, option) =>
+                    option.props.value.toLowerCase().indexOf(input.toLowerCase()) >= 0 ||
+                    option.props.label.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                  }
                   options={(categories?.categories?.nodes || []).map((x) => ({
                     value: x.id,
-                    label: x.name,
+                    label: x.fullName,
                     key: x.id,
                   }))}
                 />

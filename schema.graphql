@@ -183,6 +183,7 @@ type Category {
   ): FollowerConnection!
   followersCount: Int!
   following: Boolean!
+  fullName: String!
   id: ID!
   name: String!
   parent: Category

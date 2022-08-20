@@ -204,7 +204,17 @@ function AddStory() {
                 <Select
                   mode="multiple"
                   placeholder="Categories"
-                  options={categories.map((x) => ({ value: x.id, label: x.name, key: x.id }))}
+                  size="large"
+                  allowClear
+                  filterOption={(input, option) =>
+                    option.props.value.toLowerCase().indexOf(input.toLowerCase()) >= 0 ||
+                    option.props.label.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                  }
+                  options={categories.map((x) => ({
+                    value: x.id,
+                    label: x.fullName,
+                    key: x.id,
+                  }))}
                 />
               </Form.Item>
               <hr className="my-[20px]" />

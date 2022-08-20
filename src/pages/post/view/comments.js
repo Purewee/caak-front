@@ -10,8 +10,8 @@ import { DownOutlined } from '@ant-design/icons';
 
 const SORTS = {
   recent: { direction: 'desc', field: 'createdAt' },
-  liked: { direction: 'asc', field: 'createdAt' },
-  replied: { direction: 'desc', field: 'repliesCount' },
+  liked: { direction: 'desc', field: 'likesCount' },
+  disliked: { direction: 'desc', field: 'dislikesCount' },
 };
 export default function Comments({ articleId, refProp }) {
   const [sort, setSort] = useState('recent');
@@ -19,7 +19,6 @@ export default function Comments({ articleId, refProp }) {
   const { data, loading, refetch, fetchMore } = useQuery(COMMENTS, { variables: { articleId, sort: SORTS[sort] } });
   const comments = data?.article?.comments;
   const pageInfo = comments?.pageInfo;
-  console.log({ pageInfo });
   return (
     <>
       <Form
@@ -61,9 +60,9 @@ export default function Comments({ articleId, refProp }) {
           Нийт сэтгэгдэл ({data?.article?.commentsCount})
         </BlockTitle>
         <Tabs className="hidden md:flex" size="small" defaultActiveKey="tab-1" onChange={(e) => setSort(e)}>
-          <Tabs.TabPane tab="ИХ ХАНДАЛТТАЙ" key="liked" />
-          <Tabs.TabPane tab="СҮҮЛД НЭМЭГДСЭН" key="recent" />
-          <Tabs.TabPane tab="ИХ ХАРИУЛСАН" key="replied" />
+          <Tabs.TabPane tab="ШИНЭ" key="recent" />
+          <Tabs.TabPane tab="ТААЛАГДСАН" key="liked" />
+          <Tabs.TabPane tab="ТААЛАГДААГҮЙ" key="disliked" />
         </Tabs>
         {loading && <Skeleton />}
         {comments?.edges?.map((x) => {

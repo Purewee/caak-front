@@ -124,9 +124,18 @@ const Post = () => {
   }, [setLeftMenuSticky]);
 
   useEffect(() => {
-    setFilter([]);
+    setFilter([
+      {
+        more_like_this: {
+          fields: ['title', 'categories.slug', 'tags.slug', 'source.name'],
+          like: { _index: 'caak', _type: 'article', _id: id },
+          min_term_freq: 1,
+          min_doc_freq: 1,
+        },
+      },
+    ]);
     setSort({ publish_date: 'desc' });
-  }, []);
+  }, [id]);
 
   if (loading) {
     return (
@@ -274,7 +283,7 @@ const Post = () => {
                       <p className="text-caak-black text-[14px] leading-[16px]">{article?.source?.name}</p>
                     </Link>
                     <div className="text-[12px] text-[#909090] flex flex-row items-center leading-[14px]">
-                      <p>{moment(article.createdAt).format('YYYY.MM.DD, hh:mm')}</p>
+                      <p>{moment(article.publishDate).format('YYYY.MM.DD, hh:mm')}</p>
                       <Button
                         type="link"
                         size="small"
@@ -298,9 +307,7 @@ const Post = () => {
                 <div className="flex sm:hidden flex-row items-center">
                   <img className="w-[20px]" src={LoveIcon} alt="" />
                   <img className="w-[20px]" src={HahaIcon} alt="" />
-                  <p className="ml-[6px] text-[15px] text-caak-primary leading-[16px]">
-                    {article.data?.like_count || 0}
-                  </p>
+                  <p className="ml-[6px] text-[15px] text-caak-primary leading-[16px]">{article.reactionsCount || 0}</p>
                 </div>
                 <div className="hidden md:flex flex-row items-center">
                   <FacebookShareButton className="h-[20px]" url={`http://front.caak.mn/post/view/${article.id}`}>

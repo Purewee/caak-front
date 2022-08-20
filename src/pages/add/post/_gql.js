@@ -6,6 +6,7 @@ export const CATEGORIES = gql`
       nodes {
         id
         name
+        fullName
         slug
       }
     }
