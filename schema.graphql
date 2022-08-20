@@ -515,6 +515,7 @@ type Recipe {
     "Sorting functionality"
     sort: SortFilter
   ): ArticleConnection!
+  articlesCount: Int!
   createdAt: ISO8601DateTime
   description: String
   id: ID!

@@ -9,6 +9,7 @@ import { imagePath } from '../../utility/Util';
 import AvatarSvg from '../../assets/images/avatar.svg';
 import { ME } from '../../pages/post/view/_gql';
 import { CloseOutlined } from '@ant-design/icons';
+import { sumBy } from 'lodash';
 
 const REMOVE_SAVED = gql`
   mutation RemoveSavedArticle($id: ID, $articleId: ID!) {
@@ -24,6 +25,7 @@ export default function UserInfo() {
   const { logout } = useAuth();
   const me = data?.me || {};
   const saved_articles = data?.me?.recipes.map((x) => x?.articles.nodes).flat() || [];
+  const totalSaved = sumBy(data?.me?.recipes.map((x) => x.articlesCount));
   const [remove, { loading: removing }] = useMutation(REMOVE_SAVED);
   const navigate = useNavigate();
   const hovered = useState(false);
@@ -102,7 +104,7 @@ export default function UserInfo() {
                 )
               }
             />
-            {saved_articles.length > 10 && (
+            {totalSaved > 10 && (
               <Link
                 state={'saved'}
                 to={{ pathname: `/profile/${me.id}` }}
@@ -116,7 +118,7 @@ export default function UserInfo() {
       >
         <Button
           icon={
-            <Badge className="mt-[3px]" count={saved_articles.length} size="small" showZero={false} overflowCount={10}>
+            <Badge className="mt-[3px]" count={totalSaved} size="small" showZero={false} overflowCount={20}>
               <FIcon className="icon-fi-rs-list-o" />
             </Badge>
           }
@@ -124,10 +126,10 @@ export default function UserInfo() {
           shape="circle"
         />
       </Popover>
-      <Link className="sm:hidden" to={'/notification'}>
+      <Link className="sm:hidden" to="/notification">
         <Button
           icon={
-            <Badge className="mt-[3px]" count={saved_articles.length} size="small" showZero={false} overflowCount={10}>
+            <Badge className="mt-[3px]" count={totalSaved} size="small" showZero={false} overflowCount={20}>
               <FIcon className="icon-fi-rs-list-o" />
             </Badge>
           }

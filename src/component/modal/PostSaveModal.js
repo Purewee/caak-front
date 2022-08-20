@@ -9,11 +9,11 @@ const SAVE_POST = gql`
   mutation SavePost($articleId: ID!) {
     addToRecipe(input: { articleId: $articleId }) {
       id
+      articlesCount
     }
   }
 `;
 export default function PostSaveModal({ post, toggle, image }) {
-  const [isShown, setIsShown] = useState(false);
   const [save, { loading }] = useMutation(SAVE_POST, { variables: { articleId: post.id } });
   const { isAuth, openModal } = useAuth();
 
@@ -48,7 +48,6 @@ export default function PostSaveModal({ post, toggle, image }) {
           </div>
         </div>
       </div>
-      <SignInUpController isShown={isShown} setIsShown={setIsShown} />
     </Modal>
   );
 }

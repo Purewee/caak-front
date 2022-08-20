@@ -162,6 +162,8 @@ export const ME = gql`
       data
       role
       recipes {
+        id
+        articlesCount
         articles {
           nodes {
             id
