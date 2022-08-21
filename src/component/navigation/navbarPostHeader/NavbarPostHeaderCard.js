@@ -33,9 +33,9 @@ const NavbarPostHeaderCard = ({ type, item }) => {
             <div className="flex flex-row items-center self-start text-white">
               <Link to={`/channel/${item.source?.id}`} className="flex flex-row items-center">
                 <Avatar className="w-[22px] h-[22px]" src={imagePath(item.source?.icon)} />
-                <MetaTag className="ml-[6px] text-[#FFFFFF] text-[15px]">{item?.source?.name}</MetaTag>
+                <MetaTag className="ml-[6px] text-[#FFFFFF] text-[15px] leading-[18px]">{item?.source?.name}</MetaTag>
               </Link>
-              &nbsp;&#8226;&nbsp;
+              <span className="h-[18px]">&nbsp;&#8226;&nbsp;</span>
               <MetaTag className="ml-[0px] text-[#FFFFFF]">Sponsored</MetaTag>
             </div>
             {/* <div className="flex items-center mt-[10px] sm:mt-0 self-end md:self-center">

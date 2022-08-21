@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { gql, useQuery } from '@apollo/client';
-import { Popover, Skeleton, Row, Col } from 'antd';
+import { Popover, Skeleton } from 'antd';
 import { Link } from 'react-router-dom';
 import { FIcon } from '../icon';
 
@@ -86,7 +86,7 @@ const Categories = () => {
                             {x.childs?.nodes?.map((data, index) => {
                               return (
                                 <Link
-                                  className="text-[#555555] font-condensed hover:text-caak-primary leading-[20px] hover:tracking-[0.23px] tracking-[0.24px] text-[17px]"
+                                  className="text-[#555555] font-roboto hover:text-caak-primary leading-[20px] hover:tracking-[0.23px] tracking-[0.24px] text-[17px]"
                                   to={`/category/${data.slug}`}
                                   key={index}
                                   onClick={() => setOpen(false)}

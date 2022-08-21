@@ -191,7 +191,7 @@ export default function Settings() {
               </Form.Item>
             </div>
             <Button htmlType="submit" icon={<SaveOutlined />} type="primary" size="large" loading={saving}>
-              Мэдээлэл шинэчилэх
+              Хадгалах
             </Button>
           </Form>
         </div>

@@ -73,19 +73,17 @@ export default function Category() {
 
   return (
     <div className="flex justify-center pt-[20px] md:pt-[51px] pb-[100px] px-[16px] md:px-[0px]">
-      <div className="max-w-[1310px] w-full flex flex-col items-center">
+      <div className="max-w-[1310px] w-full flex flex-col items-center leading-[44px]">
         <HashTag className="uppercase">Таг</HashTag>
-        <Title>{category.name}</Title>
+        <p className="font-condensed font-bold text-[38px]">#{category.name}</p>
         <div className="flex">
           <Statistic title="Нийт мэдээлэл" value={count} className="mx-[24px] text-center" />
           <Statistic title="Дагагчид" value={category.followersCount} className="text-center font-condensed" />
         </div>
         <div className="flex flex-row items-center mt-[20px]">
           {category.following ? (
-            <Button
-              type="primary"
-              icon={<HeartOutlined />}
-              loading={saving}
+            <button
+              className="w-[90px] h-[34px] bg-caak-darkGray flex justify-center items-center rounded-[4px] text-white text-[15px] font-bold"
               onClick={() => {
                 if (isAuth) {
                   follow().then(() => {
@@ -97,12 +95,12 @@ export default function Category() {
               }}
             >
               ДАГАСАН
-            </Button>
+            </button>
           ) : (
             <Button
               type="primary"
-              icon={<BellOutlined />}
               loading={saving}
+              className="w-[90px] h-[34px] bg-caak-primary rounded-[4px] text-white text-[15px] font-bold"
               onClick={() => {
                 if (isAuth) {
                   follow().then(() => {

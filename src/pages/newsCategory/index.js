@@ -83,10 +83,8 @@ export default function Category() {
         </div>
         <div className="flex flex-row items-center mt-[20px]">
           {category.following ? (
-            <Button
-              type="primary"
-              icon={<HeartOutlined />}
-              loading={saving}
+            <button
+              className="w-[90px] h-[34px] bg-caak-darkGray rounded-[4px] text-white text-[15px] font-bold"
               onClick={() => {
                 if (isAuth) {
                   follow().then(() => {
@@ -98,12 +96,12 @@ export default function Category() {
               }}
             >
               ДАГАСАН
-            </Button>
+            </button>
           ) : (
             <Button
               type="primary"
-              icon={<BellOutlined />}
               loading={saving}
+              className="w-[90px] h-[34px] bg-caak-primary rounded-[4px] text-white text-[15px] font-bold"
               onClick={() => {
                 if (isAuth) {
                   follow().then(() => {

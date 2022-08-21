@@ -186,6 +186,7 @@ export const USER = gql`
       data
       avatar
       status
+      following
       articles {
         totalCount
       }

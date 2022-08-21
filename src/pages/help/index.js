@@ -79,17 +79,20 @@ const caakNames = [
     {
         image: Caak,
         name: 'Caak.mn',
-        desc: 'Мэдээ мэдээллийн халуун цэг!'
+        desc: 'Мэдээ мэдээллийн халуун цэг!',
+        url: 'https://www.caak.mn/'
     },
     {
         image: CaakEnt,
         name: 'Caak Видео',
-        desc: 'Таны мэлмийг нээж, оюуныг баясгах суваг!'
+        desc: 'Таны мэлмийг нээж, оюуныг баясгах суваг!',
+        url: 'https://www.youtube.com/c/CaakVideo'
     },
     {
         image: CaakRadio,
         name: 'Caak Radio',
-        desc: 'Ажлаа хийнгээ хит дуунуудаа сонс!'
+        desc: 'Ажлаа хийнгээ хит дуунуудаа сонс!',
+        url: 'https://www.caak.mn/radio/'
     },
 ]
 
@@ -225,10 +228,9 @@ export default function Help() {
                             <p className='font-condensed font-bold text-[32px] text-[#111111] leading-[38px] mt-[20px] sm:mt-0'>Бидний тухай</p>
                             <div className='flex flex-col justify-between mt-[20px] text-[#555555]'>
                                 <p className='text-[15px] leading-[20px]'>Саак.мн сайт нь 2006 оны 1-р сарын 23-аас эхэлж үйл ажиллагаагаа явуулж эхэлсэн бөгөөд Гадаад дотоодын сонин содон, сонирхолтой баримт, гэрэл зургуудыг хүргэсээр ирсэн Монголын анхны энтертаймент сайт билээ.</p>
-                                <span className='inline-flex'><p className='font-bold'>-Өөрчлөлт шинэчлэлт: &nbsp;</p></span>
-                                <ul className="ml-[20px]">
-                                    <li>Гадаад дотоодын шилдэг, шинэ мэдээллүүдийг нэг цэгээс хүргэх суваг болов</li>
-                                    <li>Та бүртгүүлээд өөрийн сонирхолын дагуу мэдээллээ авах боломжтой болсон</li>
+                                <ul>
+                                    <li>- Гадаад дотоодын шилдэг, шинэ мэдээллүүдийг нэг цэгээс хүргэх суваг болов</li>
+                                    <li>- Та бүртгүүлээд өөрийн сонирхолын дагуу мэдээллээ авах боломжтой болсон</li>
                                 </ul>
                             </div>
                             <p className='text-[#363946] text-[20px] font-bold leading-[24px] mt-[40px]'>Манай үйлчилгээнүүд</p>
@@ -236,11 +238,18 @@ export default function Help() {
                                 {
                                     caakNames.map((data, index) => {
                                         return(
-                                            <div key={index} style={{boxShadow: '0px 2px 2px #0000000F'}} className='w-[306px] h-[226px] flex flex-col items-center justify-center bg-white rounded-[4px] border border-[#EFEEEF] px-[20px]'>
+                                            index !== 2 ?
+                                            <a href={data.url} target="_blank" key={index} style={{boxShadow: '0px 2px 2px #0000000F'}} className='w-[306px] h-[226px] flex flex-col items-center justify-center bg-white rounded-[4px] border border-[#EFEEEF] px-[20px]'>
                                                 <img src={data.image} alt=''/>
                                                 <p className='text-[#909090] text-[16px] font-medium leading-[19px] mt-[20px]'>{data.name}</p>
                                                 <p className='text-[#555555] text-[15px] leading-[19px] mt-[20px] text-center'>{data.desc}</p>
-                                            </div>
+                                            </a>
+                                            :
+                                            <a href={data.url} target="popup" key={index} style={{boxShadow: '0px 2px 2px #0000000F'}} className='w-[306px] h-[226px] flex flex-col items-center justify-center bg-white rounded-[4px] border border-[#EFEEEF] px-[20px]'>
+                                                <img src={data.image} alt=''/>
+                                                <p className='text-[#909090] text-[16px] font-medium leading-[19px] mt-[20px]'>{data.name}</p>
+                                                <p className='text-[#555555] text-[15px] leading-[19px] mt-[20px] text-center'>{data.desc}</p>
+                                            </a>
                                         )
                                     })
                                 }

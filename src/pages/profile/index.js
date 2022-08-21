@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { useQuery } from '@apollo/client';
+import { useQuery, gql, useMutation } from '@apollo/client';
 import { useParams } from 'react-router-dom';
 import { ESService } from '../../lib/esService';
 import { ME, USER } from '../post/view/_gql';
@@ -12,7 +12,12 @@ import { AppContext } from '../../App';
 import useMediaQuery from '../../component/navigation/useMediaQuery';
 import { imagePath } from '../../utility/Util';
 import { useLocation } from 'react-router-dom';
-import ArticlesList from '../home/articles_list';
+
+const FOLLOW = gql`
+  mutation Follow($id: ID!) {
+    toggleFollow(input: { targetType: "user", targetId: $id })
+  }
+`;
 
 export default function Profile() {
   const context = useContext(AppContext);
@@ -24,12 +29,13 @@ export default function Profile() {
   const [count, setCount] = useState(0);
   const [page, setPage] = useState(0);
   const [loading, setLoading] = useState(false);
-  const { data } = useQuery(USER, { variables: { id } });
+  const { data, loading: fetching, refetch } = useQuery(USER, { variables: { id } });
   const user = data?.user || {};
   const { data: me } = useQuery(ME);
   const loggedUser = me?.me;
   const { isAuth, openModal } = useAuth();
   const saved_articles = user?.recipes?.map((x) => x?.articles.nodes).flat() || [];
+  const [follow, { loading: saving }] = useMutation(FOLLOW, { variables: { id } });
 
   const isMobile = useMediaQuery('screen and (max-width: 767px)');
 
@@ -49,6 +55,8 @@ export default function Profile() {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [user]);
+
+  if (fetching) return <Skeleton />;
 
   return (
     <div className="flex justify-center px-[16px]">
@@ -74,13 +82,38 @@ export default function Profile() {
                   <p className="text-[15px] leading-[18px] font-medium text-[#FF6600]">Мэдээллээ засах</p>
                 </div>
               </Link>
-            ) : (
+            ) : user.following ? (
               <button
-                onClick={() => (isAuth ? message.success('success') : openModal('open'))}
-                className="w-[90px] h-[34px] bg-caak-primary rounded-[4px] text-white text-[15px] font-bold"
+                className="w-[90px] h-[34px] bg-caak-darkGray rounded-[4px] text-white text-[15px] font-bold"
+                onClick={() => {
+                  if (isAuth) {
+                    follow().then(() => {
+                      refetch().then(console.log);
+                    });
+                  } else {
+                    openModal('open');
+                  }
+                }}
               >
-                Дагах
+                ДАГАСАН
               </button>
+            ) : (
+              <Button
+                type="primary"
+                loading={saving}
+                className="w-[90px] h-[34px] bg-caak-primary rounded-[4px] text-white text-[15px] font-bold"
+                onClick={() => {
+                  if (isAuth) {
+                    follow().then(() => {
+                      refetch().then(console.log);
+                    });
+                  } else {
+                    openModal('open');
+                  }
+                }}
+              >
+                ДАГАХ
+              </Button>
             )}
             <div className=" border-[1px] cursor-pointer border-[#D4D8D8] w-[42px] h-[34px] flex justify-center items-center rounded-[4px] ml-[10px]">
               <span className="icon-fi-rs-more-ver rotate-90 text-[#111111] text-[18px]" />
@@ -96,13 +129,18 @@ export default function Profile() {
           <Tabs.TabPane
             key="posts"
             tab={
-              <p
-                className={`text-[16px] font-roboto font-bold ${
-                  selected === 'posts' ? 'text-caak-black' : 'text-caak-gray'
-                }`}
-              >
-                Оруулсан мэдээ
-              </p>
+              <div className="flex flex-row items-center">
+                <p
+                  className={`text-[16px] font-roboto font-bold ${
+                    selected === 'posts' ? 'text-caak-black' : 'text-caak-gray'
+                  }`}
+                >
+                  Оруулсан мэдээ
+                </p>
+                <p className="bg-[#BBBEBE] py-[2px] px-[6px] ml-[10px] font-roboto rounded-[4px] text-white text-[14px] font-bold leading-[16px]">
+                  {user.articles?.totalCount}
+                </p>
+              </div>
             }
           >
             <div className="max-w-[1310px] w-full flex flex-wrap justify-center 2xl:justify-start gap-x-[22px] gap-y-[40px] px-[16px] sm:px-0 mt-[40px]">
@@ -127,13 +165,18 @@ export default function Profile() {
             <Tabs.TabPane
               key="saved"
               tab={
-                <p
-                  className={`text-[16px] font-roboto font-bold ${
-                    selected === 'saved' ? 'text-caak-black' : 'text-caak-gray'
-                  }`}
-                >
-                  ХАДГАЛСАН МЭДЭЭ
-                </p>
+                <div className="flex flex-row items-center">
+                  <p
+                    className={`text-[16px] font-roboto font-bold ${
+                      selected === 'saved' ? 'text-caak-black' : 'text-caak-gray'
+                    }`}
+                  >
+                    ХАДГАЛСАН МЭДЭЭ
+                  </p>
+                  <p className="bg-[#BBBEBE] py-[2px] px-[6px] ml-[10px] font-roboto rounded-[4px] text-white text-[14px] font-bold leading-[16px]">
+                    {user.recipes[0]?.articles?.nodes?.length}
+                  </p>
+                </div>
               }
             >
               <div className="max-w-[1310px] w-full flex flex-wrap justify-center 2xl:justify-start gap-x-[22px] gap-y-[40px] px-[16px] sm:px-0 mt-[40px]">
