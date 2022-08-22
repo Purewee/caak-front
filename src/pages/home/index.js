@@ -1,27 +1,49 @@
 import NavbarPostHeader from '../../component/navigation/navbarPostHeader';
 import Story from '../../component/story';
-import React, { useEffect, useState, useContext } from 'react';
-import { AppContext } from '../../App';
-import useMediaQuery from '../../component/navigation/useMediaQuery';
+import React, { useEffect, useState } from 'react';
 import { Tabs, Select } from 'antd';
-import Logo from '../../component/logo';
-import UserInfo from '../../component/header/UserInfo';
-import { FIcon } from '../../component/icon';
-import SearchModal from '../../component/modal/SearchModal';
 import { useAuth } from '../../context/AuthContext';
-import SignInUpController from '../../component/modal/SignInUpController';
 import ArticlesList from './articles_list';
 import { FieldTimeOutlined, LineChartOutlined } from '@ant-design/icons';
-import SideMenu from '../../component/navigation/navbar/SideMenu';
 import Banner from '../../component/banner';
+import { gql, useQuery } from '@apollo/client';
+import { groupBy } from 'lodash/collection';
+
+const FOLLOWS = gql`
+  query GetFollows {
+    me {
+      follows {
+        target {
+          ... on Source {
+            id
+            name
+          }
+          ... on Tag {
+            id
+            name
+          }
+          ... on Category {
+            id
+            name
+          }
+          ... on User {
+            id
+            firstName
+          }
+        }
+      }
+    }
+  }
+`;
 
 export default function Home() {
-  const context = useContext(AppContext);
   const [selected, setSelected] = useState('recent');
-  const { isAuth, openModal } = useAuth();
+  const { isAuth } = useAuth();
 
   const [filter, setFilter] = useState([]);
   const [sort, setSort] = useState({});
+  const { data } = useQuery(FOLLOWS, { skip: !isAuth && selected !== 'user' });
+  const follows = groupBy(data?.me?.follows.map((x) => x.target) || [], (x) => x.__typename.toLowerCase());
 
   useEffect(() => {
     if (selected === 'recent') {
@@ -30,6 +52,34 @@ export default function Home() {
     } else if (selected === 'trend') {
       setFilter([{ range: { publish_date: { gte: `now-1d/d` } } }]);
       setSort({ views_count: 'desc' });
+    } else if (selected === 'user') {
+      const should = [];
+
+      if (follows.user) {
+        should.push({ terms: { 'author.id': follows.user.map((x) => x.id) } });
+      }
+      if (follows.tag) {
+        should.push({
+          nested: {
+            path: 'tags',
+            query: { terms: { 'tags.id': follows.tag.map((x) => x.id) } },
+          },
+        });
+      }
+      if (follows.category) {
+        should.push({
+          nested: {
+            path: 'categories',
+            query: { terms: { 'categories.id': follows.category.map((x) => x.id) } },
+          },
+        });
+      }
+      if (follows.source) {
+        should.push({ terms: { 'source.id': follows.source.map((x) => x.id) } });
+      }
+      setFilter([{ bool: { should: should } }]);
+
+      setSort({ publish_date: 'desc' });
     }
   }, [selected]);
 
@@ -42,7 +92,7 @@ export default function Home() {
           <Story />
         </div>
         <div className="max-w-[1310px] w-full px-[16px] sm:px-0">
-          <Tabs size="large" onChange={(e) => setSelected(e)} className="w-full border-b" centered>
+          <Tabs onChange={(e) => setSelected(e)} className="w-full border-b font-merri" centered>
             <Tabs.TabPane
               key="recent"
               tab={
@@ -69,11 +119,11 @@ export default function Home() {
             ></Tabs.TabPane>
             {isAuth && (
               <Tabs.TabPane
-                key="foryou"
+                key="user"
                 tab={
                   <span
                     className={`text-[20px] font-bold cursor-pointer text-center leading-[20px] uppercase ${
-                      selected === 'foryou' ? 'text-[#111111]' : 'text-[#555555]'
+                      selected === 'user' ? 'text-[#111111]' : 'text-[#555555]'
                     }`}
                   >
                     Танд
