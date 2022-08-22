@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import logoIcon from '../../images/New-Logo.svg';
 import { Skeleton, Drawer, Collapse } from 'antd';
 import { gql, useQuery } from '@apollo/client';
 import { Link, useNavigate } from 'react-router-dom';
 import { FIcon } from '../icon';
+import Logo from '../logo';
 
 const CATEGORIES = gql`
   query GetCategories {
@@ -57,7 +57,7 @@ export default function DrawerMenu() {
         title={
           <div className="flex flex-row items-center justify-between w-full">
             <FIcon className="icon-fi-rs-search" />
-            <img src={logoIcon} className="cursor-pointer w-[130px] object-contain" alt="Caak Logo" />
+            <Logo />
             <FIcon
               className="icon-fi-rs-close"
               onClick={() => {
@@ -76,8 +76,8 @@ export default function DrawerMenu() {
                     <div
                       onClick={() => (selected === null ? setSelected(x.id) : setSelected(null))}
                       className={`flex items-center ${
-                        selected !== x.id && 'justify-between'
-                      } cursor-pointer w-full py-[20px] border-b pl-[40px] pr-[30px] text-caak-black hover:text-[#555555]`}
+                        selected !== x.id ? 'justify-between pl-[40px]' : 'pl-[20px]'
+                      } cursor-pointer w-full py-[20px] border-b pr-[30px] text-caak-black hover:text-[#555555]`}
                     >
                       {selected === x.id && (
                         <span className="icon-fi-rs-down-chevron text-[#FF6600] text-[16px] rotate-90 mr-[8px]" />
@@ -91,7 +91,7 @@ export default function DrawerMenu() {
                   key={index}
                   showArrow={false}
                 >
-                  <div className="ml-[40px] flex flex-col pr-[30px] custom">
+                  <div className="ml-[60px] flex flex-col pr-[30px] custom">
                     {x.childs?.nodes?.map((data, index) => {
                       return (
                         <Link onClick={() => setOpen(false)} key={index} to={`/category/${data.slug}`}>

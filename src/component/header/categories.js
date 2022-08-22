@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { gql, useQuery } from '@apollo/client';
 import { Popover, Skeleton } from 'antd';
 import { Link } from 'react-router-dom';
@@ -42,6 +42,29 @@ const Categories = () => {
   const { data, loading } = useQuery(CATEGORIES);
   const [open, setOpen] = useState(false);
   const categories = data?.categories?.nodes || [];
+
+  function useOutsideAlerter(ref) {
+    useEffect(() => {
+      /**
+       * Alert if clicked on outside of element
+       */
+      function handleClickOutside(event) {
+        if (ref.current && !ref.current.contains(event.target)) {
+          setOpen(false);
+        }
+      }
+      // Bind the event listener
+      document.addEventListener('mousedown', handleClickOutside);
+      return () => {
+        // Unbind the event listener on clean up
+        document.removeEventListener('mousedown', handleClickOutside);
+      };
+    }, [ref]);
+  }
+
+  const sideMenuRef = useRef(null);
+  useOutsideAlerter(sideMenuRef);
+
   if (loading) {
     return <Skeleton />;
   }
@@ -66,7 +89,7 @@ const Categories = () => {
                 overlayInnerStyle={{ borderRadius: 8 }}
                 visible={open}
                 content={
-                  <div className="p-[12px] flex flex-row gap-x-[50px]">
+                  <div ref={sideMenuRef} className="p-[12px] flex flex-row gap-x-[50px]">
                     {categories.map((x, index) => {
                       return (
                         x.parent === null && (
