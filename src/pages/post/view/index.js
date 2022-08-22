@@ -124,17 +124,18 @@ const Post = () => {
   }, [setLeftMenuSticky]);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     setFilter([
       {
         more_like_this: {
-          fields: ['title', 'categories.slug', 'tags.slug', 'source.name'],
+          fields: ['tags_text', 'categories_text'],
           like: { _index: 'caak', _type: 'article', _id: id },
           min_term_freq: 1,
           min_doc_freq: 1,
         },
       },
     ]);
-    setSort({ publish_date: 'desc' });
+    setSort({ _score: 'desc', publish_date: 'desc' });
   }, [id]);
 
   if (loading) {

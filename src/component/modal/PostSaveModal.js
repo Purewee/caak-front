@@ -10,6 +10,13 @@ const SAVE_POST = gql`
     addToRecipe(input: { articleId: $articleId }) {
       id
       articlesCount
+      articles {
+        nodes {
+          id
+          title
+          imageUrl
+        }
+      }
     }
   }
 `;

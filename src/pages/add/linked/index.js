@@ -158,19 +158,22 @@ function AddLink() {
         <Col span={6} className="border-l border-[#efefef] bg-[#ffffff] p-[24px]">
           <Affix offsetTop={12}>
             <div className="h-screen">
-              <Form.Item name="sourceId" label="Суваг">
-                <Select size="large" loading={source_fetching} allowClear>
-                  {sources?.sources?.nodes?.map((x) => (
-                    <Select.Option value={x.id}>{`${x.name} - ${x.domain}`}</Select.Option>
-                  ))}
-                </Select>
+              <div className="w-full mb-2 flex justify-between">
+                <span>Суваг</span>
                 <a
                   href={imagePath('/admin/sources/new')}
                   className="font-merri text-caak-primary  text-[12px] mt-1"
                   target="_blank"
                 >
-                  Add Source
+                  Суваг нэмэх
                 </a>
+              </div>
+              <Form.Item name="sourceId" rules={[{ required: true, message: 'Суваг заавал сонгоно уу' }]}>
+                <Select size="large" loading={source_fetching} allowClear>
+                  {sources?.sources?.nodes?.map((x) => (
+                    <Select.Option value={x.id}>{`${x.name} - ${x.domain}`}</Select.Option>
+                  ))}
+                </Select>
               </Form.Item>
               <Form.Item name="categoryIds" className="font-merri" label="Ангилал">
                 <Select
