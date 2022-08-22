@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import logoIcon from '../../images/New-Logo.svg';
 import { Skeleton, Drawer, Collapse } from 'antd';
 import { gql, useQuery } from '@apollo/client';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { FIcon } from '../icon';
 
 const CATEGORIES = gql`
@@ -33,8 +33,11 @@ const CATEGORIES = gql`
 
 export default function DrawerMenu() {
   const [open, setOpen] = useState(false);
+  const [selected, setSelected] = useState(null);
   const { data, loading } = useQuery(CATEGORIES);
   const categories = data?.categories?.nodes || [];
+
+  const navigate = useNavigate();
 
   if (loading) {
     return <Skeleton />;
@@ -70,9 +73,19 @@ export default function DrawerMenu() {
               <Collapse key={index} className="w-full custom" bordered={false} accordion={true}>
                 <Collapse.Panel
                   header={
-                    <div className="flex items-center cursor-pointer justify-between w-full py-[20px] border-b pl-[40px] pr-[30px] text-caak-black hover:text-[#555555]">
+                    <div
+                      onClick={() => (selected === null ? setSelected(x.id) : setSelected(null))}
+                      className={`flex items-center ${
+                        selected !== x.id && 'justify-between'
+                      } cursor-pointer w-full py-[20px] border-b pl-[40px] pr-[30px] text-caak-black hover:text-[#555555]`}
+                    >
+                      {selected === x.id && (
+                        <span className="icon-fi-rs-down-chevron text-[#FF6600] text-[16px] rotate-90 mr-[8px]" />
+                      )}
                       <p className="text-[20px] condMedium leading-[24px]">{x.name}</p>
-                      <span className="icon-fi-rs-down-chevron text-[#FF6600] text-[16px] -rotate-90" />
+                      {selected !== x.id && (
+                        <span className="icon-fi-rs-down-chevron text-[#FF6600] text-[16px] -rotate-90" />
+                      )}
                     </div>
                   }
                   key={index}
@@ -123,26 +136,26 @@ export default function DrawerMenu() {
           <span className="icon-fi-rs-wave w-[24px] h-[24px] flex items-center justify-center text-[20px] mr-[26px]" />
           <p className="text-[18px] font-medium leading-[21px]">РАДИО</p>
         </a>
-        <Link
-          to="/help"
+        <div
           onClick={() => {
+            navigate('/help', { state: 1 });
             setOpen(false);
           }}
           className="mt-[40px] flex flex-row text-caak-black hover:text-caak-darkGray items-center cursor-pointer pl-[40px] pr-[30px]"
         >
           <span className="icon-fi-rs-ads w-[24px] h-[24px] flex items-center justify-center text-[20px] mr-[26px]" />
           <p className="text-[18px] font-medium leading-[21px]">СУРТАЛЧИЛГАА</p>
-        </Link>
-        <Link
-          to="/help"
+        </div>
+        <div
           onClick={() => {
+            navigate('/help', { state: 2 });
             setOpen(false);
           }}
           className="mt-[40px] flex flex-row text-caak-black hover:text-caak-darkGray items-center cursor-pointer pl-[40px] pr-[30px]"
         >
           <span className="icon-fi-rs-phone w-[24px] h-[24px] flex items-center justify-center text-[20px] mr-[26px]" />
           <p className="text-[18px] font-medium leading-[21px]">ХОЛБОО БАРИХ</p>
-        </Link>
+        </div>
         <div className="border-t border-b w-full border-[#D4D8D8] flex flex-row items-center justify-center gap-[19px] py-[30px] mt-[137px]">
           <span className="icon-fi-rs-fb text-[22px]" />
           <span className="icon-fi-rs-ig text-[22px]" />

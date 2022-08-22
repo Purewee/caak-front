@@ -1,9 +1,8 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import { useQuery, gql, useMutation } from '@apollo/client';
 import { Popover, Badge, List, Button, Avatar, message } from 'antd';
 import { useAuth } from '../../context/AuthContext';
 import { FIcon } from '../icon';
-import { AppContext } from '../../App';
 import { Link, useNavigate } from 'react-router-dom';
 import { imagePath } from '../../utility/Util';
 import AvatarSvg from '../../assets/images/avatar.svg';
@@ -20,7 +19,7 @@ const REMOVE_SAVED = gql`
 `;
 
 export default function UserInfo() {
-  const context = useContext(AppContext);
+  const [hovered, setHovered] = useState(null);
   const { data, loading, refetch } = useQuery(ME);
   const { logout } = useAuth();
   const me = data?.me || {};
@@ -28,7 +27,6 @@ export default function UserInfo() {
   const totalSaved = sumBy(data?.me?.recipes.map((x) => x.articlesCount));
   const [remove, { loading: removing }] = useMutation(REMOVE_SAVED);
   const navigate = useNavigate();
-  const hovered = useState(false);
 
   if (loading) return <span>Loading ...</span>;
 
@@ -72,11 +70,13 @@ export default function UserInfo() {
               renderItem={(x, index) =>
                 index < 10 && (
                   <List.Item
+                    onMouseEnter={() => setHovered(x.id)}
+                    onMouseLeave={() => setHovered(null)}
                     className="font-condensed hover:bg-[#EFEEEF] flex flex-row h-[64px]"
                     actions={[
                       <Button
                         size="small"
-                        icon={hovered && <CloseOutlined />}
+                        icon={hovered === x.id && <CloseOutlined />}
                         type="link"
                         onClick={() => {
                           remove({ variables: { articleId: x.id } }).then(() => {
