@@ -444,10 +444,8 @@ const Post = () => {
                 {/* <MetaTag className="text-[#909090]">{moment(article.createdAt).format('YYYY.MM.DD, hh:mm')}</MetaTag> */}
               </div>
               {source.following ? (
-                <Button
-                  className="h-[34px] text-[15px] font-bold px-[24px]"
-                  type="primary"
-                  loading={follow_saving}
+                <button
+                  className="h-[34px] text-[15px] font-bold w-[90px] bg-caak-darkGray text-white rounded-[4px]"
                   onClick={() => {
                     if (isAuth) {
                       follow().then(() => {
@@ -457,7 +455,7 @@ const Post = () => {
                         message: `Та ${article?.source?.name}-г дагахаа болилоо.`,
                         duration: 4,
                         placement: 'bottom',
-                        className: 'h-[50px] bg-[#12805C] w-[300px]',
+                        className: 'h-[50px] bg-[#FF0000] w-[300px]',
                       };
                       notification.open(args);
                     } else {
@@ -466,10 +464,10 @@ const Post = () => {
                   }}
                 >
                   ДАГАСАН
-                </Button>
+                </button>
               ) : (
                 <Button
-                  className="h-[34px] text-[15px] font-bold px-[24px]"
+                  className="h-[34px] text-[15px] font-bold w-[90px]"
                   type="primary"
                   loading={follow_saving}
                   onClick={() => {
