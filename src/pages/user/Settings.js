@@ -60,6 +60,8 @@ export default function Settings() {
 
   const me = data?.me || {};
 
+  console.log(me);
+
   useEffect(() => {
     context.setStore('default');
     if (me.avatar) setAvatar(imagePath(me.avatar));

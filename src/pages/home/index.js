@@ -97,7 +97,7 @@ export default function Home() {
               key="recent"
               tab={
                 <span
-                  className={`text-[20px] font-bold cursor-pointer text-center leading-[20px] uppercase ${
+                  className={`text-[16px] sm:text-[20px] font-bold cursor-pointer text-center leading-[16px] sm:leading-[20px] uppercase ${
                     selected === 'recent' ? 'text-[#111111]' : 'text-[#555555]'
                   }`}
                 >
@@ -109,7 +109,7 @@ export default function Home() {
               key="trend"
               tab={
                 <span
-                  className={`text-[20px] font-bold cursor-pointer text-center leading-[20px] uppercase  ${
+                  className={`text-[16px] sm:text-[20px] font-bold cursor-pointer text-center leading-[16px] sm:leading-[20px] uppercase  ${
                     selected === 'trend' ? 'text-[#111111]' : 'text-[#555555]'
                   }`}
                 >
@@ -122,7 +122,7 @@ export default function Home() {
                 key="user"
                 tab={
                   <span
-                    className={`text-[20px] font-bold cursor-pointer text-center leading-[20px] uppercase ${
+                    className={`text-[16px] sm:text-[20px] font-bold cursor-pointer text-center leading-[16px] sm:leading-[20px] uppercase ${
                       selected === 'user' ? 'text-[#111111]' : 'text-[#555555]'
                     }`}
                   >

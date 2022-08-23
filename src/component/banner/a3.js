@@ -11,7 +11,7 @@ export default function A3({ banner }) {
         <img
           src={imagePath(banner?.fileUrl)}
           alt={banner?.title}
-          className="min-w-[250px] max-w-[250px] max-h-[320px] object-cover"
+          className="min-w-[250px] max-w-[250px] object-cover"
         />
       ) : (
         <video src={imagePath(banner?.fileUrl)} />

@@ -13,7 +13,7 @@ export default function StoryItem({ story, index, border }) {
             className="object-cover h-full w-full rounded-[6px]"
             src={imagePath(story?.image)}
           />
-          <div className="absolute bottom-[0px] rounded-[6px] w-full storyLinearItem h-1/2 p-[24px] flex flex-col items-start justify-end">
+          <div className="absolute bottom-[0px] rounded-[6px] w-full storyLinearItem h-1/2 p-[12px] md:p-[24px] flex flex-col items-start justify-end">
             {story?.categories?.map((x) => (
               <p
                 key={x.name}
