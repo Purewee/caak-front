@@ -90,8 +90,6 @@ export default function Category() {
                   follow().then(() => {
                     refetch().then(console.log);
                   });
-                } else {
-                  openModal('open');
                 }
               }}
             >
@@ -107,8 +105,6 @@ export default function Category() {
                   follow().then(() => {
                     refetch().then(console.log);
                   });
-                } else {
-                  openModal('open');
                 }
               }}
             >

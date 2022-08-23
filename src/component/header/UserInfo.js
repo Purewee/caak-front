@@ -62,9 +62,11 @@ export default function UserInfo() {
         trigger="click"
         content={
           <div>
+            <p className="condMedium text-[22px] leading-[25px] pb-[14px] border-b border-[#D4D8D8]">
+              Хадгалсан мэдээнүүд
+            </p>
             <List
-              style={{ width: 400 }}
-              className="caak-saved-articles max-h-screen"
+              className={`caak-saved-articles w-[370px] max-h-screen pt-[16px]`}
               dataSource={saved_articles}
               size="small"
               renderItem={(x, index) =>
@@ -76,7 +78,7 @@ export default function UserInfo() {
                     actions={[
                       <Button
                         size="small"
-                        icon={hovered === x.id && <CloseOutlined />}
+                        icon={<span className="icon-fi-rs-close text-caak-primary text-[13.5px]" />}
                         type="link"
                         onClick={() => {
                           remove({ variables: { articleId: x.id } }).then(() => {
@@ -110,7 +112,7 @@ export default function UserInfo() {
                 to={{ pathname: `/profile/${me.id}` }}
                 className="w-full h-[47px] cursor-pointer flex justify-center items-center bg-[#F5F5F5]"
               >
-                <p className="text-caak-primary font-medium text-[16px]">Илүү ихийг үзэх</p>
+                <p className="text-caak-primary font-medium text-[16px]">Бусад мэдээнүүд</p>
               </Link>
             )}
           </div>

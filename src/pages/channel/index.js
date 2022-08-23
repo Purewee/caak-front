@@ -101,8 +101,6 @@ export default function Channel() {
                 follow().then(() => {
                   refetch().then(console.log);
                 });
-              } else {
-                openModal('open');
               }
             }}
           >
@@ -118,8 +116,6 @@ export default function Channel() {
                 follow().then(() => {
                   refetch().then(console.log);
                 });
-              } else {
-                openModal('open');
               }
             }}
           >

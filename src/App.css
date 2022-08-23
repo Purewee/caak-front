@@ -455,3 +455,8 @@
   padding: 0;
   padding-top: 0;
 }
+
+.ant-list-item {
+  display: flex;
+  flex-direction: row;
+}
