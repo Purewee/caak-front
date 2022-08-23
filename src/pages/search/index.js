@@ -8,23 +8,30 @@ import { AppContext } from '../../App';
 
 export default function Search() {
   const context = useContext(AppContext);
-  const location = useLocation();
   const es = new ESService('caak');
-  const [searchParams, setSearchParams] = useSearchParams(location.state === null ? '' : location.state);
-  const q = searchParams.get('q');
+  const [q, setQ] = useSearchParams();
+  const [search, setSearch] = useState('');
   const [page, setPage] = useState(0);
   const [loading, setLoading] = useState(false);
   const [articles, setArticles] = useState([]);
   const [totalResult, setTotalResult] = useState(0);
 
   useEffect(() => {
+    setSearch(q.get('q'));
+  }, [q]);
+
+  useEffect(() => {
     setLoading(true);
-    es.search(q, page).then(({ hits, total }) => {
-      setArticles([...articles, ...hits]);
+    es.search(search, page).then(({ hits, total }) => {
+      if (page === 0) {
+        setArticles([...hits]);
+      } else {
+        setArticles([...articles, ...hits]);
+      }
       setTotalResult(total);
       setLoading(false);
     });
-  }, [q, page]);
+  }, [page, search]);
 
   useEffect(() => {
     context.setStore('default');
@@ -42,10 +49,10 @@ export default function Search() {
           <div className="relative w-full mt-[20px]">
             <Input.Search
               placeholder="Хайлт хийх..."
-              defaultValue={q}
+              defaultValue={q.get('q')}
               allowClear
               enterButton={<FIcon className="icon-fi-rs-search text-[22px]" />}
-              onSearch={(filter) => setSearchParams({ q: filter })}
+              onSearch={(filter) => setQ({ q: filter })}
               size="large"
             />
           </div>

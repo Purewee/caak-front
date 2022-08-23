@@ -83,7 +83,7 @@ export default function Channel() {
         alt={source.domain}
         src={imagePath(source.icon)}
       />
-      <p className="text-black text-[30px] font-condensed font-bold leading-[35px] mt-[16px]">{source.domain}</p>
+      <p className="text-black text-[30px] font-condensed font-bold leading-[35px] mt-[16px]">{source.name}</p>
       <p className="mt-[12px] text-[#555555] text-[15px] leading-[18px]">{source.slug}</p>
       <div className="flex flex-row items-center mt-[18px] text-[15px]">
         <Statistic title="Нийт мэдээлэл" value={count} className="mx-[24px] text-center" />
