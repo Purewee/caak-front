@@ -59,7 +59,7 @@ export default function Comments({ articleId, refProp }) {
         <BlockTitle className="text-left px-[0px] font-medium md:font-bold text-[17px] md:text-[22px]">
           Нийт сэтгэгдэл ({data?.article?.commentsCount})
         </BlockTitle>
-        <Tabs className="hidden md:flex" size="small" defaultActiveKey="tab-1" onChange={(e) => setSort(e)}>
+        <Tabs size="small" defaultActiveKey="tab-1" onChange={(e) => setSort(e)}>
           <Tabs.TabPane tab="ШИНЭ" key="recent" />
           <Tabs.TabPane tab="ТААЛАГДСАН" key="liked" />
           <Tabs.TabPane tab="ТААЛАГДААГҮЙ" key="disliked" />
