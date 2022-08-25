@@ -1,6 +1,5 @@
-import ActionButtons from './actionsButtons';
 import { Link } from 'react-router-dom';
-import { generateTimeAgo, imagePath } from '../../../utility/Util';
+import { imagePath } from '../../../utility/Util';
 import { Avatar } from 'antd';
 import { MetaTag } from '../../../pages/post/view/wrapper';
 
