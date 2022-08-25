@@ -1,13 +1,9 @@
 import React from 'react';
 import { notification } from 'antd';
 import { FacebookShareButton, TwitterShareButton } from 'react-share';
+import CopyToClipboard from 'react-copy-to-clipboard';
 
 export default function PostShareModal({ post, toggle, image }) {
-  function copyText(e) {
-    if (!navigator.clipboard) return;
-    navigator.clipboard.writeText(e);
-  }
-
   const openNotification = () => {
     const args = {
       message: 'Линк хуулагдлаа',
@@ -16,7 +12,6 @@ export default function PostShareModal({ post, toggle, image }) {
       className: 'h-[50px] bg-[#12805C] w-[200px]',
     };
     notification.open(args);
-    copyText(`http://caak.mn/post/view/${post?.id}`);
   };
 
   return (
@@ -52,12 +47,14 @@ export default function PostShareModal({ post, toggle, image }) {
               <span className="icon-fi-rs-link" />
               <p id="myInput" className="text-[15px] ml-[10px]">{`http://caak.mn/post/view/${post?.id}`}</p>
             </div>
-            <p
-              className="cursor-pointer text-[#FF6600] font-medium text-[15px] leading-[18px]"
-              onClick={() => openNotification()}
-            >
-              Хуулах
-            </p>
+            <CopyToClipboard text={`http://front.caak.mn/post/view/${post?.id}`}>
+              <p
+                className="cursor-pointer text-[#FF6600] font-medium text-[15px] leading-[18px]"
+                onClick={() => openNotification()}
+              >
+                Хуулах
+              </p>
+            </CopyToClipboard>
           </div>
           <div className="w-full flex justify-end">
             <p

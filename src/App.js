@@ -27,6 +27,7 @@ import PostSaved from './pages/user/saved';
 import Notification from './pages/user/notification';
 import './assets/fonts/Roboto-Medium.ttf';
 import CaakHeader from './component/header';
+import PushUp from './component/pushup';
 
 export const AppContext = createContext(null);
 
@@ -74,6 +75,7 @@ function App() {
                 <Route path="/notification" element={<Notification />} />
               </Routes>
               <Footer />
+              <PushUp />
             </BrowserRouter>
           </div>
         </AuthProvider>
