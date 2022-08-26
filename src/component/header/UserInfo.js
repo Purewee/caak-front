@@ -68,11 +68,12 @@ export default function UserInfo() {
               {saved_articles.map((x, index) => {
                 return (
                   <div
+                    key={index}
                     onMouseEnter={() => setHovered(x.id)}
                     onMouseLeave={() => setHovered(null)}
                     className="flex flex-row items-center w-full justify-between font-condensed hover:bg-[#EFEEEF] h-[64px]"
                   >
-                    <Link key={index} className="flex flex-row" to={`/post/view/${x.id}`}>
+                    <Link className="flex flex-row" to={`/post/view/${x.id}`}>
                       <Avatar
                         className="min-w-[60px] max-w-[60px] h-[44px] object-cover"
                         src={imagePath(x.imageUrl)}

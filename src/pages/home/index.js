@@ -1,13 +1,14 @@
 import NavbarPostHeader from '../../component/navigation/navbarPostHeader';
 import Story from '../../component/story';
 import React, { useEffect, useState } from 'react';
-import { Tabs, Select } from 'antd';
+import { Tabs, Select, Button } from 'antd';
 import { useAuth } from '../../context/AuthContext';
 import ArticlesList from './articles_list';
 import { FieldTimeOutlined, LineChartOutlined } from '@ant-design/icons';
 import Banner from '../../component/banner';
 import { gql, useQuery } from '@apollo/client';
 import { groupBy } from 'lodash/collection';
+import { FIcon } from '../../component/icon';
 
 const FOLLOWS = gql`
   query GetFollows {
@@ -85,7 +86,7 @@ export default function Home() {
 
   return (
     <>
-      <div className={`relative bg-white flex flex-col items-center mb-[100px]`}>
+      <div className={`relative bg-white flex flex-col items-center sm:mb-[100px]`}>
         <NavbarPostHeader />
         <Banner position="a1" />
         <div className="md:px-[30px] w-full flex justify-center px-[16px] sm:px-0">
@@ -163,6 +164,19 @@ export default function Home() {
           </div>
         )}
         <ArticlesList filter={filter} sort={sort} size={24} />
+        <div className="bg-[#B8E5FF] w-full h-[288px] sm:hidden mt-[60px] px-[16px] pt-[20px] flex flex-col items-center">
+          <FIcon className="icon-fi-rs-mail-o text-[22px] text-caak-primary w-[50px] h-[50px] rounded-full bg-white" />
+          <p className="mt-[12px] condMedium text-[22px] leading-[26px]">Шилдэг мэдээг таны и-мэйл руу!</p>
+          <p className="mt-[12px] text-[15px] text-[#555555] leading-[22px] text-center">
+            Таны сонирхолт таарсан мэдээллийн товхимлыг ажлын өдөр бүр, өглөө 07:00 цагт үнэгүй илгээнэ.
+          </p>
+          <div className="flex flex-row mt-[20px]">
+            <input className="h-[54px] bg-white p-[18px] w-full rounded-l-[2px]" placeholder="и-мэйл хаяг…" />
+            <button className="bg-[#FF6600] h-[54px] min-w-[140px] text-white text-[17px] font-medium rounded-r-[2px]">
+              Хүлээн авах
+            </button>
+          </div>
+        </div>
       </div>
     </>
   );

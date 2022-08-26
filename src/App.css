@@ -456,6 +456,10 @@
   padding-top: 0;
 }
 
+.ant-popover-inner-content .custom {
+  padding: 0px 0px;
+}
+
 .ant-list-item {
   display: flex;
   flex-direction: row;
