@@ -18,8 +18,7 @@ const REMOVE_SAVED = gql`
   }
 `;
 
-export default function UserInfo() {
-  const [hovered, setHovered] = useState(null);
+export default function UserInfo({ transparent }) {
   const { data, loading, refetch } = useQuery(ME);
   const { logout } = useAuth();
   const me = data?.me || {};
@@ -49,12 +48,13 @@ export default function UserInfo() {
   ];
 
   return (
-    <div className="flex flex-row items-center text-[#555555]">
+    <div className="flex flex-row items-center">
       <Button
         onClick={() => navigate('/add')}
-        className="hidden md:block border-0"
+        className={`hidden md:flex border-0 ${transparent ? 'text-white' : 'text-[#555555]'}`}
         shape="circle"
-        icon={<FIcon className="icon-fi-rs-edit" />}
+        icon={<FIcon className="icon-fi-rs-edit text-[22px] mx-0 p-0" />}
+        type="ghost"
       />
       <Popover
         className="hidden md:block"
@@ -72,8 +72,6 @@ export default function UserInfo() {
               renderItem={(x, index) =>
                 index < 10 && (
                   <List.Item
-                    onMouseEnter={() => setHovered(x.id)}
-                    onMouseLeave={() => setHovered(null)}
                     className="font-condensed hover:bg-[#EFEEEF] flex flex-row h-[64px]"
                     actions={[
                       <Button
@@ -121,11 +119,12 @@ export default function UserInfo() {
         <Button
           icon={
             <Badge className="mt-[3px]" count={totalSaved} size="small" showZero={false} overflowCount={20}>
-              <FIcon className="icon-fi-rs-list-o" />
+              <FIcon className={`icon-fi-rs-list-o ${transparent ? 'text-white' : 'text-[#555555]'}`} />
             </Badge>
           }
           className="border-0"
           shape="circle"
+          type="ghost"
         />
       </Popover>
       <Link className="sm:hidden" to="/notification">
@@ -135,7 +134,7 @@ export default function UserInfo() {
               <FIcon className="icon-fi-rs-list-o" />
             </Badge>
           }
-          className="border-0"
+          className="border-0 mx-[8px]"
           shape="circle"
         />
       </Link>

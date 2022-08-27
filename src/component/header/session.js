@@ -3,7 +3,7 @@ import { useAuth } from '../../context/AuthContext';
 import { Button } from 'antd';
 import SessionModal from '../modal/session';
 
-export default function Session() {
+export default function Session({ transparent }) {
   const { openModal } = useAuth();
   return (
     <>

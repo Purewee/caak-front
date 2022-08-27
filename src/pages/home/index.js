@@ -3,6 +3,7 @@ import Story from '../../component/story';
 import React, { useEffect, useState } from 'react';
 import { Tabs, Select } from 'antd';
 import { useAuth } from '../../context/AuthContext';
+import { useHeader } from '../../context/HeaderContext';
 import ArticlesList from './articles_list';
 import { FieldTimeOutlined, LineChartOutlined } from '@ant-design/icons';
 import Banner from '../../component/banner';
@@ -39,11 +40,16 @@ const FOLLOWS = gql`
 export default function Home() {
   const [selected, setSelected] = useState('recent');
   const { isAuth } = useAuth();
+  const { setMode } = useHeader();
 
   const [filter, setFilter] = useState([]);
   const [sort, setSort] = useState({});
   const { data } = useQuery(FOLLOWS, { skip: !isAuth && selected !== 'user' });
   const follows = groupBy(data?.me?.follows.map((x) => x.target) || [], (x) => x.__typename.toLowerCase());
+
+  useEffect(() => {
+    setMode('transparent');
+  }, []);
 
   useEffect(() => {
     if (selected === 'recent') {
@@ -91,7 +97,7 @@ export default function Home() {
         <div className="md:px-[30px] w-full flex justify-center px-[16px] sm:px-0">
           <Story />
         </div>
-        <div className="max-w-[1310px] w-full px-[16px] sm:px-0">
+        <div className="sticky bg-white z-50 top-0 max-w-[1310px] w-full px-[16px] sm:px-0">
           <Tabs onChange={(e) => setSelected(e)} className="w-full border-b font-merri" centered>
             <Tabs.TabPane
               key="recent"

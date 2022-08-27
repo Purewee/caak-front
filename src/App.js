@@ -1,6 +1,6 @@
 import './styles/index.css';
 import './App.css';
-import React, { useEffect, useState, createContext } from 'react';
+import React, { useState, createContext } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Home from './pages/home';
 import { Helmet } from 'react-helmet';
@@ -16,6 +16,7 @@ import AddLink from './pages/add/linked';
 import AddStory from './pages/add/story';
 import WithApolloProvider from './utility/WithApolloProvider';
 import { AuthProvider } from './context/AuthContext';
+import { HeaderProvider } from './context/HeaderContext';
 import AllStories from './pages/allstories';
 import Footer from './component/footer';
 import Search from './pages/search';
@@ -27,13 +28,13 @@ import PostSaved from './pages/user/saved';
 import Notification from './pages/user/notification';
 import './assets/fonts/Roboto-Medium.ttf';
 import CaakHeader from './component/header';
+import ProtectedRoute from './component/ProtectedRoute';
 
 export const AppContext = createContext(null);
 
 function App() {
   const [store, setStore] = useState('default');
   const [shown, setShown] = useState(true);
-
   return (
     <AppContext.Provider value={{ store, setStore, shown, setShown }}>
       <WithApolloProvider>
@@ -46,33 +47,189 @@ function App() {
                   content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, viewport-fit=cover"
                 />
               </Helmet>
-              <CaakHeader />
-              <Routes>
-                <Route exact path="/" element={<Home />} />
-                <Route path="/post/view/:id" element={<Post />} />
-                <Route path="/post/saved" element={<PostSaved />} />
-                <Route path="/profile/:id" element={<Profile />} />
-                <Route path="/magazine/:id" element={<Magazine />} />
-                <Route path="/tags/:slug" element={<TopTags />} />
-                <Route path="/channel/:id" element={<Channel />} />
-                <Route path="/story/:id" element={<Story />} />
-                <Route path="/stories" element={<AllStories />} />
-                <Route path="/add" element={<Add />} />
-                <Route path="/add/post" element={<AddPost />} />
-                <Route path="/add/linked" element={<AddLink />} />
-                <Route path="/add/story" element={<AddStory />} />
-                <Route path="/edit/:id" element={<AddPost />} />
-                <Route path="/add/:id" element={<AddPost />} />
-                <Route path="/edit/linked/:id" element={<AddLink />} />
-                <Route path="/edit/post/:id" element={<AddPost />} />
-                <Route path="/edit/story/:id" element={<AddStory />} />
-                <Route path="/search" element={<Search />} />
-                <Route path="/help" element={<Help />} />
-                <Route path="/category/:slug" element={<Category />} />
-                <Route path="/dashboard/:id" element={<Dashboard />} />
-                <Route path="/settings/:id" element={<Settings />} />
-                <Route path="/notification" element={<Notification />} />
-              </Routes>
+              <HeaderProvider>
+                <CaakHeader />
+                <Routes>
+                  <Route index path="/" element={<Home />} />
+                  <Route path="/post/view/:id" element={<Post />} />
+                  <Route
+                    path="/post/saved"
+                    element={
+                      <ProtectedRoute>
+                        <PostSaved />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="/profile/:id"
+                    element={
+                      <ProtectedRoute>
+                        <Profile />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="/magazine/:id"
+                    element={
+                      <ProtectedRoute>
+                        <Magazine />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="/tags/:slug"
+                    element={
+                      <ProtectedRoute>
+                        <TopTags />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="/channel/:id"
+                    element={
+                      <ProtectedRoute>
+                        <Channel />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="/story/:id"
+                    element={
+                      <ProtectedRoute>
+                        <Story />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="/stories"
+                    element={
+                      <ProtectedRoute>
+                        <AllStories />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="/add"
+                    element={
+                      <ProtectedRoute>
+                        <Add />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="/add/post"
+                    element={
+                      <ProtectedRoute>
+                        <AddPost />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="/add/linked"
+                    element={
+                      <ProtectedRoute>
+                        <AddLink />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="/add/story"
+                    element={
+                      <ProtectedRoute>
+                        <AddStory />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="/edit/:id"
+                    element={
+                      <ProtectedRoute>
+                        <AddPost />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="/add/:id"
+                    element={
+                      <ProtectedRoute>
+                        <AddPost />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="/edit/linked/:id"
+                    element={
+                      <ProtectedRoute>
+                        <AddLink />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="/edit/post/:id"
+                    element={
+                      <ProtectedRoute>
+                        <AddPost />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="/edit/story/:id"
+                    element={
+                      <ProtectedRoute>
+                        <AddStory />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="/search"
+                    element={
+                      <ProtectedRoute>
+                        <Search />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="/help"
+                    element={
+                      <ProtectedRoute>
+                        <Help />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="/category/:slug"
+                    element={
+                      <ProtectedRoute>
+                        <Category />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="/dashboard/:id"
+                    element={
+                      <ProtectedRoute>
+                        <Dashboard />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="/settings/:id"
+                    element={
+                      <ProtectedRoute>
+                        <Settings />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="/notification"
+                    element={
+                      <ProtectedRoute>
+                        <Notification />
+                      </ProtectedRoute>
+                    }
+                  />
+                </Routes>
+              </HeaderProvider>
               <Footer />
             </BrowserRouter>
           </div>

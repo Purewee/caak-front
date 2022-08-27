@@ -70,7 +70,7 @@ const Categories = () => {
   }
 
   return (
-    <ul className="hidden md:block text-[#555555] font-bold text-[14px] p-0 ml-[20px]">
+    <ul className="hidden md:block font-bold text-[14px] p-0 ml-[20px]">
       {menuItems.map((item, index) => {
         return (
           <li key={index} className="flex flex-row relative items-center list-none mr-[40px] cursor-pointer float-left">

@@ -15,8 +15,8 @@ import HahaIcon from '../../../assets/images/fi-rs-react-haha.svg';
 import PostSaveModal from '../../../component/modal/PostSaveModal';
 import PostShareModal from '../../../component/modal/PostShareModal';
 import { Avatar, Popover, notification, Button, Alert, Statistic, Skeleton } from 'antd';
-import { HeartOutlined, BellOutlined } from '@ant-design/icons';
 import { useAuth } from '../../../context/AuthContext';
+import { useHeader } from '../../../context/HeaderContext';
 import SignInUpController from '../../../component/modal/SignInUpController';
 import { Link } from 'react-router-dom';
 import { FacebookShareButton, TwitterShareButton } from 'react-share';
@@ -91,6 +91,7 @@ const Post = () => {
   const source = data_source?.source || {};
   const [follow, { loading: follow_saving }] = useMutation(FOLLOW, { variables: { id: article?.source?.id } });
   const { isAuth, openModal } = useAuth();
+  const { setMode } = useHeader();
 
   const title = article?.title;
   const metaDescription = 'default description';
@@ -102,6 +103,7 @@ const Post = () => {
 
   useEffect(() => {
     context.setStore('default');
+    setMode('sticky');
   }, []);
 
   useEffect(() => {

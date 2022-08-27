@@ -3,7 +3,7 @@ import { Drawer, Input, Button } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { FIcon } from '../icon';
 
-export default function Search() {
+export default function Search({ transparent }) {
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
 
@@ -11,9 +11,10 @@ export default function Search() {
     <>
       <Button
         icon={<FIcon className="icon-fi-rs-search text-[22px]" />}
-        className="border-0 text-[#555555] mx-[8px]"
+        className={`border-0 ${transparent ? 'text-white' : 'text-[#555555]'}`}
         onClick={() => setOpen(!open)}
         shape="circle"
+        type="ghost"
       />
       <Drawer
         visible={open}

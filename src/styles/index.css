@@ -41,6 +41,10 @@
   margin: 0;
 }
 
+.transparent-header {
+  background: transparent linear-gradient(180deg, #1111119A 0%, #00000000 100%) 0% 0% no-repeat padding-box;
+}
+
 .caak-menu .ant-collapse-header {
   padding: 0 !important;
 }
