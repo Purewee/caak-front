@@ -39,14 +39,11 @@ export default function ArticlesList({ filter = [], sort = {}, size = 24 }) {
     return res;
   }, []);
   return (
-    <>
+    <div className="px-[16px] sm:px-0 mt-[30px]">
       {chunked.map((section, index) => {
         const divider = Math.floor(Math.random() * 11);
         return (
-          <div
-            key={index}
-            className="max-w-[1310px] w-full flex flex-wrap  gap-x-[22px] gap-y-[40px] px-[16px] sm:px-0 mt-[30px]"
-          >
+          <div key={index} className="max-w-[1310px] w-full flex flex-wrap justify-center gap-x-[22px] gap-y-[40px]">
             {section.map((post, index) => (
               <div key={index}>
                 {index === divider ? (
@@ -76,6 +73,6 @@ export default function ArticlesList({ filter = [], sort = {}, size = 24 }) {
           <FIcon className="icon-fi-rs-down-chevron text-caak-primary text-[16px] w-[16px] ml-[8px]" />
         </Button>
       </div>
-    </>
+    </div>
   );
 }

@@ -57,7 +57,7 @@ export default function UserInfo({ transparent }) {
         type="ghost"
       />
       <Popover
-        className="hidden md:block"
+        // className="hidden md:block"
         placement="bottomRight"
         trigger="click"
         content={
@@ -65,45 +65,40 @@ export default function UserInfo({ transparent }) {
             <p className="condMedium text-[22px] leading-[25px] pb-[14px] border-b border-[#D4D8D8]">
               Хадгалсан мэдээнүүд
             </p>
-            <List
-              className={`caak-saved-articles w-[370px] max-h-screen pt-[16px]`}
-              dataSource={saved_articles}
-              size="small"
-              renderItem={(x, index) =>
-                index < 10 && (
-                  <List.Item
-                    className="font-condensed hover:bg-[#EFEEEF] flex flex-row h-[64px]"
-                    actions={[
-                      <Button
-                        size="small"
-                        icon={<span className="icon-fi-rs-close text-caak-primary text-[13.5px]" />}
-                        type="link"
-                        onClick={() => {
-                          remove({ variables: { articleId: x.id } }).then(() => {
-                            refetch();
-                            message.success('Амжилттай устгалаа');
-                          });
-                        }}
-                        loading={removing}
-                      />,
-                    ]}
+            <div className="w-full max-w-[368px] pt-[6px]">
+              {saved_articles.map((x, index) => {
+                return (
+                  <div
+                    key={index}
+                    onMouseEnter={() => setHovered(x.id)}
+                    onMouseLeave={() => setHovered(null)}
+                    className="flex flex-row items-center w-full justify-between font-condensed hover:bg-[#EFEEEF] h-[64px]"
                   >
-                    <Link className="text-[#111111] w-full text-[15px]" to={`/post/view/${x.id}`}>
-                      <List.Item.Meta
-                        avatar={
-                          <Avatar
-                            className="w-[60px] h-[44px] object-cover"
-                            src={imagePath(x.imageUrl)}
-                            shape="square"
-                          />
-                        }
-                        title={x.title}
+                    <Link className="flex flex-row" to={`/post/view/${x.id}`}>
+                      <Avatar
+                        className="min-w-[60px] max-w-[60px] h-[44px] object-cover"
+                        src={imagePath(x.imageUrl)}
+                        shape="square"
                       />
+                      <p className="text-[#111111] w-full text-[15px] ml-[14px]">{x.title}</p>
                     </Link>
-                  </List.Item>
-                )
-              }
-            />
+                    <Button
+                      size="small"
+                      className={`${hovered !== x.id ? 'flex sm:hidden' : 'flex'}`}
+                      icon={<span className="icon-fi-rs-close text-caak-primary text-[13.5px] w-[13.5px]" />}
+                      type="link"
+                      onClick={() => {
+                        remove({ variables: { articleId: x.id } }).then(() => {
+                          refetch();
+                          message.success('Амжилттай устгалаа');
+                        });
+                      }}
+                      loading={removing}
+                    />
+                  </div>
+                );
+              })}
+            </div>
             {totalSaved > 10 && (
               <Link
                 state={'saved'}
@@ -127,7 +122,7 @@ export default function UserInfo({ transparent }) {
           type="ghost"
         />
       </Popover>
-      <Link className="sm:hidden" to="/notification">
+      {/* <Link className="sm:hidden" to="/notification">
         <Button
           icon={
             <Badge className="mt-[3px]" count={totalSaved} size="small" showZero={false} overflowCount={20}>
@@ -137,7 +132,7 @@ export default function UserInfo({ transparent }) {
           className="border-0 mx-[8px]"
           shape="circle"
         />
-      </Link>
+      </Link> */}
       <Popover
         placement="bottomRight"
         trigger="click"

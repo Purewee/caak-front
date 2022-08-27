@@ -1,6 +1,6 @@
 import './styles/index.css';
 import './App.css';
-import React, { useState, createContext } from 'react';
+import React, { useEffect, useState, createContext } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Home from './pages/home';
 import { Helmet } from 'react-helmet';
@@ -16,7 +16,6 @@ import AddLink from './pages/add/linked';
 import AddStory from './pages/add/story';
 import WithApolloProvider from './utility/WithApolloProvider';
 import { AuthProvider } from './context/AuthContext';
-import { HeaderProvider } from './context/HeaderContext';
 import AllStories from './pages/allstories';
 import Footer from './component/footer';
 import Search from './pages/search';
@@ -28,6 +27,7 @@ import PostSaved from './pages/user/saved';
 import Notification from './pages/user/notification';
 import './assets/fonts/Roboto-Medium.ttf';
 import CaakHeader from './component/header';
+import PushUp from './component/pushup';
 import ProtectedRoute from './component/ProtectedRoute';
 
 export const AppContext = createContext(null);
@@ -35,6 +35,7 @@ export const AppContext = createContext(null);
 function App() {
   const [store, setStore] = useState('default');
   const [shown, setShown] = useState(true);
+
   return (
     <AppContext.Provider value={{ store, setStore, shown, setShown }}>
       <WithApolloProvider>
@@ -231,6 +232,7 @@ function App() {
                 </Routes>
               </HeaderProvider>
               <Footer />
+              <PushUp />
             </BrowserRouter>
           </div>
         </AuthProvider>

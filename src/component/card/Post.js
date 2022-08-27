@@ -91,8 +91,8 @@ export default function PostCard({ isMobile, post, removeSaved, ...rest }) {
         )}
       </div>
       <div className="flex flex-col justify-between pb-[13px] sm:pb-[15px]">
-        <div className={`flex items-center w-full justify-between ${sponsored && 'sm:pl-[20px]'} sm:pr-[16px]`}>
-          <div className={`flex flex-row items-end ${sponsored && 'px-[13px] sm:px-0'}`}>
+        <div className={`flex items-center w-full justify-between ${sponsored && 'sm:pl-[20px] sm:pr-[16px]'}`}>
+          <div className={`flex flex-row items-center ${sponsored && 'px-[13px] sm:px-0'}`}>
             <div className="flex flex-row items-center">
               <Link to={`/channel/${post.source?.id}`} className="flex flex-row items-center">
                 <Avatar className={`w-[22px] h-[22px]`} src={imagePath(post.source?.icon)} />
@@ -102,13 +102,17 @@ export default function PostCard({ isMobile, post, removeSaved, ...rest }) {
               </Link>
               {!sponsored && (
                 <div className="flex sm:hidden flex-row items-center text-[#555555]">
-                  &nbsp;•&nbsp;
+                  <span className={`h-[18px] ${sponsored ? 'text-white' : 'sm:text-[#555555]'}`}>
+                    &nbsp;&#8226;&nbsp;
+                  </span>
                   <p className="text-[14px]">{generateTimeAgo(post.publish_date)}</p>
                 </div>
               )}
             </div>
+            <span className={`h-[18px] hidden sm:flex ${sponsored ? 'text-white' : 'sm:text-[#555555]'}`}>
+              &nbsp;&#8226;&nbsp;
+            </span>
             <div className={`hidden sm:block ${sponsored ? 'text-white' : 'sm:text-[#555555]'}`}>
-              &nbsp;•&nbsp;
               <Link to={`/profile/${post.author?.id}`}>
                 <MetaTag className={`ml-0 font-roboto ${sponsored && 'text-white'}`}>{post.author?.name}</MetaTag>
               </Link>

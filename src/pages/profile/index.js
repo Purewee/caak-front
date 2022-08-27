@@ -139,7 +139,7 @@ export default function Profile() {
               </div>
             }
           >
-            <div className="max-w-[1310px] w-full flex flex-wrap justify-center 2xl:justify-start gap-x-[22px] gap-y-[40px] px-[16px] sm:px-0 mt-[40px]">
+            <div className="max-w-[1310px] w-full flex flex-wrap justify-center xl:justify-start gap-x-[22px] gap-y-[40px] px-[16px] sm:px-0 mt-[40px]">
               {articles.map((post, index) => (
                 <Col className="w-full sm:w-[422px]" key={index}>
                   <PostCard isMobile={isMobile} post={post} />
@@ -175,7 +175,7 @@ export default function Profile() {
                 </div>
               }
             >
-              <div className="max-w-[1310px] w-full flex flex-wrap justify-center 2xl:justify-start gap-x-[22px] gap-y-[40px] px-[16px] sm:px-0 mt-[40px]">
+              <div className="max-w-[1310px] w-full flex flex-wrap justify-center xl:justify-start gap-x-[22px] gap-y-[40px] px-[16px] sm:px-0 mt-[40px]">
                 {saved_articles.map((post, index) => (
                   <Col className="w-full sm:w-[422px]" key={index}>
                     <PostCard removeSaved isMobile={isMobile} post={post} />

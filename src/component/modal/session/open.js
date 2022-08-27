@@ -41,7 +41,7 @@ function OpenStep({ setStep }) {
             </div>
           </div>
         </Col>
-        <Col span={14} className="border-l col-span-14">
+        <Col xs={24} xl={14} className="border-l">
           <div className="p-[40px] mt-[40px] border-b">
             <h3 className="mb-[20px] text-[30px] font-bold leading-[38px]">
               Бүртгэл үүсгэн мэдээллийг өөрийн болгоорой!
