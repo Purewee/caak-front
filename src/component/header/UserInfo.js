@@ -19,6 +19,7 @@ const REMOVE_SAVED = gql`
 `;
 
 export default function UserInfo({ transparent }) {
+  const [hovered, setHovered] = useState();
   const { data, loading, refetch } = useQuery(ME);
   const { logout } = useAuth();
   const me = data?.me || {};

@@ -16,6 +16,7 @@ import AddLink from './pages/add/linked';
 import AddStory from './pages/add/story';
 import WithApolloProvider from './utility/WithApolloProvider';
 import { AuthProvider } from './context/AuthContext';
+import { HeaderProvider } from './context/HeaderContext';
 import AllStories from './pages/allstories';
 import Footer from './component/footer';
 import Search from './pages/search';
