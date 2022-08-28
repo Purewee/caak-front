@@ -10,8 +10,8 @@ export default function Search({ transparent }) {
   return (
     <>
       <Button
-        icon={<FIcon className="icon-fi-rs-search text-[22px]" />}
-        className={`border-0 ${transparent ? 'text-white' : 'text-[#555555]'}`}
+        icon={<FIcon className={`icon-fi-rs-search text-[22px] ${transparent ? 'text-white' : 'text-[#555555]'}`} />}
+        className={`border-0`}
         onClick={() => setOpen(!open)}
         shape="circle"
         type="ghost"

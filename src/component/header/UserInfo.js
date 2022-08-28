@@ -52,9 +52,11 @@ export default function UserInfo({ transparent }) {
     <div className="flex flex-row items-center">
       <Button
         onClick={() => navigate('/add')}
-        className={`hidden md:flex border-0 ${transparent ? 'text-white' : 'text-[#555555]'}`}
+        className={`hidden md:flex border-0`}
         shape="circle"
-        icon={<FIcon className="icon-fi-rs-edit text-[22px] mx-0 p-0" />}
+        icon={
+          <FIcon className={`icon-fi-rs-edit ${transparent ? 'text-white' : 'text-[#555555]'} text-[22px] mx-0 p-0`} />
+        }
         type="ghost"
       />
       <Popover
@@ -115,7 +117,7 @@ export default function UserInfo({ transparent }) {
         <Button
           icon={
             <Badge className="mt-[3px]" count={totalSaved} size="small" showZero={false} overflowCount={20}>
-              <FIcon className={`icon-fi-rs-list-o ${transparent ? 'text-white' : 'text-[#555555]'}`} />
+              <FIcon className={`icon-fi-rs-list-o text-[22px] ${transparent ? 'text-white' : 'text-[#555555]'}`} />
             </Badge>
           }
           className="border-0"
