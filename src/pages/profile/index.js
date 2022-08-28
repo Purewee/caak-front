@@ -3,7 +3,7 @@ import { useQuery, gql, useMutation } from '@apollo/client';
 import { useParams } from 'react-router-dom';
 import { ESService } from '../../lib/esService';
 import { ME, USER } from '../post/view/_gql';
-import { Avatar, Col, Statistic, Tabs, Skeleton, Button, message } from 'antd';
+import { Avatar, Col, Statistic, Tabs, Skeleton, Button } from 'antd';
 import PostCard from '../../component/card/Post';
 import { Title } from '../post/view/wrapper';
 import { useAuth } from '../../context/AuthContext';

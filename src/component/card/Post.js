@@ -96,7 +96,11 @@ export default function PostCard({ isMobile, post, removeSaved, ...rest }) {
             <div className="flex flex-row items-center">
               <Link to={`/channel/${post.source?.id}`} className="flex flex-row items-center">
                 <Avatar className={`w-[22px] h-[22px]`} src={imagePath(post.source?.icon)} />
-                <MetaTag className={`ml-[6px] text-[15px] font-roboto ${sponsored ? 'text-white' : 'text-[#555555]'}`}>
+                <MetaTag
+                  className={`ml-[6px] text-[14px] leading-[16px] font-roboto ${
+                    sponsored ? 'text-white' : 'text-[#555555]'
+                  }`}
+                >
                   {post?.source?.name}
                 </MetaTag>
               </Link>
@@ -112,11 +116,12 @@ export default function PostCard({ isMobile, post, removeSaved, ...rest }) {
             <span className={`h-[18px] hidden sm:flex ${sponsored ? 'text-white' : 'sm:text-[#555555]'}`}>
               &nbsp;&#8226;&nbsp;
             </span>
-            <div className={`hidden sm:block ${sponsored ? 'text-white' : 'sm:text-[#555555]'}`}>
-              <Link to={`/profile/${post.author?.id}`}>
-                <MetaTag className={`ml-0 font-roboto ${sponsored && 'text-white'}`}>{post.author?.name}</MetaTag>
-              </Link>
-            </div>
+            <Link
+              className={`hidden sm:block leading-[16px] ${sponsored ? 'text-white' : 'sm:text-[#555555]'}`}
+              to={`/profile/${post.author?.id}`}
+            >
+              <MetaTag className={`ml-0 font-roboto ${sponsored && 'text-white'}`}>{post.author?.name}</MetaTag>
+            </Link>
           </div>
           <div className="flex flex-row items-center">
             {removeSaved && (

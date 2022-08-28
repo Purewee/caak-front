@@ -39,11 +39,14 @@ export default function ArticlesList({ filter = [], sort = {}, size = 24 }) {
     return res;
   }, []);
   return (
-    <div className="px-[16px] sm:px-0 mt-[30px]">
+    <div className="mt-[30px]">
       {chunked.map((section, index) => {
         const divider = Math.floor(Math.random() * 11);
         return (
-          <div key={index} className="max-w-[1310px] w-full flex flex-wrap justify-center gap-x-[22px] gap-y-[40px]">
+          <div
+            key={index}
+            className="max-w-[1310px] px-[16px] sm:px-0  w-full flex flex-wrap justify-center gap-x-[22px] gap-y-[40px]"
+          >
             {section.map((post, index) => (
               <div key={index}>
                 {index === divider ? (
@@ -61,18 +64,20 @@ export default function ArticlesList({ filter = [], sort = {}, size = 24 }) {
           </div>
         );
       })}
-      <div className="max-w-[1310px] w-full">
-        <Button
-          block
-          size="large"
-          className="font-roboto border-caak-primary h-[74px] text-[18px] font-medium text-caak-primary mt-[20px]"
-          onClick={() => setPage(page + 1)}
-          loading={loading}
-        >
-          Илүү ихийг үзэх
-          <FIcon className="icon-fi-rs-down-chevron text-caak-primary text-[16px] w-[16px] ml-[8px]" />
-        </Button>
-      </div>
+      {page === 0 && list?.length > 23 && (
+        <div className="max-w-[1310px] w-full px-[16px]">
+          <Button
+            block
+            size="large"
+            className="font-roboto border-caak-primary h-[74px] text-[18px] font-medium text-caak-primary mt-[20px]"
+            onClick={() => setPage(page + 1)}
+            loading={loading}
+          >
+            Илүү ихийг үзэх
+            <FIcon className="icon-fi-rs-down-chevron text-caak-primary text-[16px] w-[16px] ml-[8px]" />
+          </Button>
+        </div>
+      )}
     </div>
   );
 }

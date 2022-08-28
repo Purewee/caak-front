@@ -456,6 +456,11 @@
   padding-top: 0;
 }
 
+.ant-notification-notice-with-icon {
+  display: flex;
+  flex-direction: column;
+}
+
 .ant-popover-inner-content .custom {
   padding: 0px 0px;
 }

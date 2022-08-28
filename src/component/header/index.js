@@ -21,7 +21,7 @@ function CaakHeader() {
       cls = 'sticky top-0 border-b bg-white text-[#555555]';
       break;
     case 'transparent':
-      cls = 'transparent-header absolute top-0 border-0 text-white';
+      cls = 'transparent-header sm:absolute top-0 border-0 text-white';
       break;
   }
 

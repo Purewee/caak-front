@@ -76,56 +76,80 @@ export default function Category() {
     <div className="flex justify-center pt-[20px] md:pt-[51px] pb-[100px] px-[16px] md:px-[0px]">
       <div className="max-w-[1310px] w-full flex flex-col items-center">
         <HashTag className="uppercase">Мэдээний төрөл</HashTag>
-        <Title>{category.name}</Title>
-        <div className="flex">
+        <div className="flex flex-col sm:flex-row items-center justify-center relative w-full">
+          <p className="text-[38px] font-condensed font-bold leading-[44px] uppercase">{category.name}</p>
+          <div className="flex flex-row items-center mt-[20px] sm:mt-0 sm:absolute top-0 right-0">
+            {category.following ? (
+              <button
+                className="w-[90px] h-[34px] bg-caak-darkGray rounded-[4px] text-white text-[15px] font-bold"
+                onClick={() => {
+                  if (isAuth) {
+                    follow().then(() => {
+                      refetch().then(console.log);
+                    });
+                  }
+                }}
+              >
+                ДАГАСАН
+              </button>
+            ) : (
+              <Button
+                type="primary"
+                loading={saving}
+                className="w-[90px] h-[34px] bg-caak-primary rounded-[4px] text-white text-[15px] font-bold"
+                onClick={() => {
+                  if (isAuth) {
+                    follow().then(() => {
+                      refetch().then(console.log);
+                    });
+                  }
+                }}
+              >
+                ДАГАХ
+              </Button>
+            )}
+            <div className="w-[42px] h-[34px] flex justify-center items-center border rounded-[4px] ml-[10px] cursor-pointer">
+              <span className="icon-fi-rs-more-ver rotate-90 text-[18px]" />
+            </div>
+          </div>
+        </div>
+        <div className="flex mt-[10px]">
           <Statistic title="Нийт мэдээлэл" value={count} className="mx-[24px] text-center" />
           <Statistic title="Дагагчид" value={category.followersCount} className="text-center font-condensed" />
-        </div>
-        <div className="flex flex-row items-center mt-[20px]">
-          {category.following ? (
-            <button
-              className="w-[90px] h-[34px] bg-caak-darkGray rounded-[4px] text-white text-[15px] font-bold"
-              onClick={() => {
-                if (isAuth) {
-                  follow().then(() => {
-                    refetch().then(console.log);
-                  });
-                }
-              }}
-            >
-              ДАГАСАН
-            </button>
-          ) : (
-            <Button
-              type="primary"
-              loading={saving}
-              className="w-[90px] h-[34px] bg-caak-primary rounded-[4px] text-white text-[15px] font-bold"
-              onClick={() => {
-                if (isAuth) {
-                  follow().then(() => {
-                    refetch().then(console.log);
-                  });
-                }
-              }}
-            >
-              ДАГАХ
-            </Button>
-          )}
-          <div className="w-[42px] h-[34px] flex justify-center items-center border rounded-[4px] ml-[10px] cursor-pointer">
-            <span className="icon-fi-rs-more-ver rotate-90 text-[18px]" />
-          </div>
         </div>
         <Tabs
           defaultActiveKey="recent"
           onChange={(e) => {
             setSort(e);
           }}
-          className="mt-[48px]"
+          className="mt-[35px]"
         >
-          <Tabs.TabPane tab={<span className="text-[24px] font-normal font-merri">ШИНЭ</span>} key="recent" />
-          <Tabs.TabPane tab={<span className="text-[24px] font-normal font-merri">ШИЛДЭГ</span>} key="top" />
+          <Tabs.TabPane
+            tab={
+              <span
+                className={`text-[18px] font-bold leading-[21px] ${
+                  sort === 'recent' ? 'text-[#111111]' : 'text-[#555555]'
+                }`}
+              >
+                ШИНЭ
+              </span>
+            }
+            key="recent"
+          />
+          <Tabs.TabPane
+            tab={
+              <span
+                className={`text-[18px] font-bold leading-[21px] ${
+                  sort === 'top' ? 'text-[#111111]' : 'text-[#555555]'
+                }`}
+              >
+                ШИЛДЭГ
+              </span>
+            }
+            key="top"
+          />
         </Tabs>
-        <div className="max-w-[1310px] w-full flex flex-wrap justify-center xl:justify-start gap-x-[22px] gap-y-[40px] pt-[30px] md:pt-[70px]">
+        <div className="max-w-[1310px] w-full flex flex-wrap justify-center 2xl:justify-start gap-x-[22px] gap-y-[40px] pt-[30px] md:pt-[70px]">
           {articles.map((post) => (
             <Col key={post.id}>
               <PostCard post={post} />

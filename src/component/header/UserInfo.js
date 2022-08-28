@@ -75,7 +75,7 @@ export default function UserInfo({ transparent }) {
                     key={index}
                     onMouseEnter={() => setHovered(x.id)}
                     onMouseLeave={() => setHovered(null)}
-                    className="flex flex-row items-center w-full justify-between font-condensed hover:bg-[#EFEEEF] h-[64px]"
+                    className="flex flex-row items-center w-full justify-between hover:bg-[#EFEEEF] h-[64px]"
                   >
                     <Link className="flex flex-row" to={`/post/view/${x.id}`}>
                       <Avatar
@@ -83,7 +83,7 @@ export default function UserInfo({ transparent }) {
                         src={imagePath(x.imageUrl)}
                         shape="square"
                       />
-                      <p className="text-[#111111] w-full text-[15px] ml-[14px]">{x.title}</p>
+                      <p className="text-[#111111] w-full text-[15px] font-roboto ml-[14px] truncate-2">{x.title}</p>
                     </Link>
                     <Button
                       size="small"

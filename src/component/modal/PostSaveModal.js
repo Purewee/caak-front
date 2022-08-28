@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
-import { notification, Modal, message } from 'antd';
-import { gql, useMutation } from '@apollo/client';
+import { notification, Modal, message, Button } from 'antd';
+import { gql, useMutation, useQuery } from '@apollo/client';
 import { MetaTag } from '../../pages/post/view/wrapper';
 import { useAuth } from '../../context/AuthContext';
-import SignInUpController from './SignInUpController';
+import { useNavigate } from 'react-router-dom';
+import { FIcon } from '../icon';
+import { ME } from '../../pages/post/view/_gql';
 
 const SAVE_POST = gql`
   mutation SavePost($articleId: ID!) {
@@ -23,6 +25,32 @@ const SAVE_POST = gql`
 export default function PostSaveModal({ post, toggle, image }) {
   const [save, { loading }] = useMutation(SAVE_POST, { variables: { articleId: post.id } });
   const { isAuth, openModal } = useAuth();
+  const navigate = useNavigate();
+  const { data: me } = useQuery(ME);
+
+  const openNotification = () => {
+    const args = {
+      message: (
+        <div className="inline-flex">
+          Амжилттай хадгалагдлаа.
+          <p
+            className="font-bold mx-[6px] cursor-pointer"
+            onClick={() => navigate(`/profile/${me?.me.id}`, { state: 'saved' })}
+          >
+            Энд
+          </p>
+          дарж үзнэ үү!
+        </div>
+      ),
+      duration: 4,
+      icon: (
+        <FIcon className="icon-fi-rs-check text-[13px] mt-[5px] bg-white text-[#12805C] rounded-full w-[14px] h-[14px]" />
+      ),
+      placement: 'bottom',
+      className: 'h-[50px] bg-[#12805C] w-[450px] flex flex-row items-center',
+    };
+    notification.open(args);
+  };
 
   return (
     <Modal
@@ -31,7 +59,7 @@ export default function PostSaveModal({ post, toggle, image }) {
       onOk={() =>
         isAuth
           ? save().then((e) => {
-              message.success('Амжилттай хадгалагдлаа');
+              openNotification();
               toggle();
             })
           : openModal('open')

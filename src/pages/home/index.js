@@ -99,7 +99,7 @@ export default function Home() {
           <Story />
         </div>
         <div className="sticky bg-white z-50 top-0 max-w-[1310px] w-full px-[16px] sm:px-0">
-          <Tabs onChange={(e) => setSelected(e)} className="w-full border-b font-merri" centered>
+          <Tabs onChange={(e) => setSelected(e)} className="w-full border-b font-roboto" centered>
             <Tabs.TabPane
               key="recent"
               tab={

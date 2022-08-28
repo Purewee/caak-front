@@ -108,10 +108,14 @@ export default function DrawerMenu() {
             )
           );
         })}
-        <div className="mt-[40px] text-caak-black hover:text-caak-darkGray flex flex-row items-center cursor-pointer pl-[40px] pr-[30px]">
+        <Link
+          onClick={() => setOpen(false)}
+          className="mt-[40px] text-caak-black hover:text-caak-darkGray flex flex-row items-center cursor-pointer pl-[40px] pr-[30px]"
+          to={`/tags`}
+        >
           <span className="icon-fi-rs-hashtag w-[24px] h-[24px] flex items-center justify-center text-[20px] mr-[26px]" />
           <p className="text-[18px] font-medium leading-[21px]">ТАГУУД</p>
-        </div>
+        </Link>
         <a
           target={'_blank'}
           href="https://www.youtube.com/c/caakvideo"
