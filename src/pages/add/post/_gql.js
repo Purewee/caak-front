@@ -170,6 +170,9 @@ export const SOURCES = gql`
         name
         icon
         domain
+        articlesCount
+        slug
+        following
       }
     }
   }

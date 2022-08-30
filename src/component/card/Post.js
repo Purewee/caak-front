@@ -148,7 +148,7 @@ export default function PostCard({ isMobile, post, removeSaved, ...rest }) {
                 overlayStyle={{ width: 166 }}
                 overlayInnerStyle={{ borderRadius: 4 }}
                 content={
-                  <div className="flex flex-col justify-center h-full ">
+                  <div className="w-[166px] pl-[14px] py-[18px]">
                     <div
                       onClick={() => {
                         setSharing(true);

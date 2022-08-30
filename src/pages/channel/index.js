@@ -44,7 +44,7 @@ const sortMap = {
 };
 
 export default function Channel() {
-  const { isAuth, openModal } = useAuth();
+  const { isAuth } = useAuth();
   const { id } = useParams();
   const { data, loading: fetching, refetch } = useQuery(SOURCE, { variables: { id } });
   const es = new ESService('caak');
@@ -134,7 +134,7 @@ export default function Channel() {
         <Tabs.TabPane tab={<span className="text-[24px] font-normal font-merri">ШИНЭ</span>} key="recent" />
         <Tabs.TabPane tab={<span className="text-[24px] font-normal font-merri">ШИЛДЭГ</span>} key="top" />
       </Tabs>
-      <div className="max-w-[1310px] w-full flex flex-wrap justify-center xl:justify-start gap-x-[22px] gap-y-[40px] pt-[30px] md:pt-[70px]">
+      <div className="max-w-[1310px] w-full flex flex-wrap justify-center 2xl:justify-start gap-x-[22px] gap-y-[40px] pt-[30px] md:pt-[70px]">
         {articles.map((post) => (
           <Col key={post.id}>
             <PostCard post={post} />

@@ -461,7 +461,7 @@
   flex-direction: column;
 }
 
-.ant-popover-inner-content .custom {
+.ant-popover-inner-content {
   padding: 0px 0px;
 }
 

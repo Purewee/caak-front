@@ -64,42 +64,44 @@ export default function UserInfo({ transparent }) {
         placement="bottomRight"
         trigger="click"
         content={
-          <div>
-            <p className="condMedium text-[22px] leading-[25px] pb-[14px] border-b border-[#D4D8D8]">
+          <div className="pt-[20px]">
+            <p className="condMedium text-[22px] leading-[25px] pb-[14px] pl-[16px] border-b border-[#D4D8D8]">
               Хадгалсан мэдээнүүд
             </p>
             <div className="w-full max-w-[368px] pt-[6px]">
               {saved_articles.map((x, index) => {
-                return (
-                  <div
-                    key={index}
-                    onMouseEnter={() => setHovered(x.id)}
-                    onMouseLeave={() => setHovered(null)}
-                    className="flex flex-row items-center w-full justify-between hover:bg-[#EFEEEF] h-[64px]"
-                  >
-                    <Link className="flex flex-row" to={`/post/view/${x.id}`}>
-                      <Avatar
-                        className="min-w-[60px] max-w-[60px] h-[44px] object-cover"
-                        src={imagePath(x.imageUrl)}
-                        shape="square"
+                if (index < 10) {
+                  return (
+                    <div
+                      key={index}
+                      onMouseEnter={() => setHovered(x.id)}
+                      onMouseLeave={() => setHovered(null)}
+                      className="flex flex-row items-center w-full justify-between px-[16px] hover:bg-[#EFEEEF] h-[64px]"
+                    >
+                      <Link className="flex flex-row" to={`/post/view/${x.id}`}>
+                        <Avatar
+                          className="min-w-[60px] max-w-[60px] h-[44px] object-cover"
+                          src={imagePath(x.imageUrl)}
+                          shape="square"
+                        />
+                        <p className="text-[#111111] w-full text-[15px] font-roboto ml-[14px] truncate-2">{x.title}</p>
+                      </Link>
+                      <Button
+                        size="small"
+                        className={`${hovered !== x.id ? 'flex sm:hidden' : 'flex'}`}
+                        icon={<span className="icon-fi-rs-close text-caak-primary text-[13.5px] w-[13.5px]" />}
+                        type="link"
+                        onClick={() => {
+                          remove({ variables: { articleId: x.id } }).then(() => {
+                            refetch();
+                            message.success('Амжилттай устгалаа');
+                          });
+                        }}
+                        loading={removing}
                       />
-                      <p className="text-[#111111] w-full text-[15px] font-roboto ml-[14px] truncate-2">{x.title}</p>
-                    </Link>
-                    <Button
-                      size="small"
-                      className={`${hovered !== x.id ? 'flex sm:hidden' : 'flex'}`}
-                      icon={<span className="icon-fi-rs-close text-caak-primary text-[13.5px] w-[13.5px]" />}
-                      type="link"
-                      onClick={() => {
-                        remove({ variables: { articleId: x.id } }).then(() => {
-                          refetch();
-                          message.success('Амжилттай устгалаа');
-                        });
-                      }}
-                      loading={removing}
-                    />
-                  </div>
-                );
+                    </div>
+                  );
+                }
               })}
             </div>
             {totalSaved > 10 && (
@@ -141,8 +143,8 @@ export default function UserInfo({ transparent }) {
         trigger="click"
         overlayInnerStyle={{ borderRadius: 4 }}
         content={
-          <div className="w-full text-[#555555]">
-            <div className="border-b w-full pb-[16px] flex flex-row items-center pl-[8px]">
+          <div className="text-[#555555] pt-[20px] pb-[18px] w-[220px]">
+            <div className="border-b w-full pb-[16px] flex flex-row items-center pl-[18px]">
               <Avatar
                 className="mr-[12px] flex items-center justify-center"
                 src={me.avatar ? imagePath(me.avatar) : AvatarSvg}
@@ -155,7 +157,7 @@ export default function UserInfo({ transparent }) {
                 <p className="text-[14px] leading-[16px] mt-[3px]">Мэдээллээ засах</p>
               </div>
             </div>
-            <div className="p-[16px] flex flex-col gap-[16px] border-b">
+            <div className="pl-[18px] flex flex-col border-b gap-y-[16px] py-[19px]">
               {Settings.map((data, index) => {
                 return (
                   <Link key={index} to={{ pathname: data.link }}>
@@ -167,11 +169,9 @@ export default function UserInfo({ transparent }) {
                 );
               })}
             </div>
-            <div className="px-[18px] pt-[18px] pb-[8px] flex flex-col gap-[16px]">
-              <div onClick={() => logout()} className="flex flex-row items-center cursor-pointer">
-                <span className={`icon-fi-rs-exit text-[20px]`} />
-                <p className="text-[15px] ml-[12px] leading-[18px]">Гарах</p>
-              </div>
+            <div onClick={() => logout()} className="flex flex-row items-center cursor-pointer mt-[18px] ml-[18px]">
+              <span className={`icon-fi-rs-exit text-[20px]`} />
+              <p className="text-[15px] ml-[12px] leading-[18px]">Гарах</p>
             </div>
           </div>
         }

@@ -178,9 +178,9 @@ const Post = () => {
                 <Popover
                   placement="top"
                   trigger="hover"
-                  overlayStyle={{ width: 230, borderRadius: 8 }}
+                  overlayStyle={{ borderRadius: 8 }}
                   content={
-                    <div className="flex flex-row gap-[8px] h-full justify-center py-[4px]">
+                    <div className="flex flex-row h-[46px] items-center max-w-[230px] gap-[8px]">
                       {ACTIONS.map((data, index) => (
                         <Button key={index} shape="circle" type="link">
                           <Lottie

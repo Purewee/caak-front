@@ -89,7 +89,7 @@ const Categories = () => {
                 overlayInnerStyle={{ borderRadius: 8 }}
                 visible={open}
                 content={
-                  <div ref={sideMenuRef} className="p-[12px] flex flex-row gap-x-[50px]">
+                  <div ref={sideMenuRef} className="p-[30px] flex flex-row gap-x-[50px]">
                     {categories.map((x, index) => {
                       return (
                         x.parent === null && (

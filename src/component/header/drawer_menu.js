@@ -111,6 +111,14 @@ export default function DrawerMenu() {
         <Link
           onClick={() => setOpen(false)}
           className="mt-[40px] text-caak-black hover:text-caak-darkGray flex flex-row items-center cursor-pointer pl-[40px] pr-[30px]"
+          to={`/channels`}
+        >
+          <span className="icon-fi-rs-tv w-[24px] h-[24px] flex items-center justify-center text-[20px] mr-[26px]" />
+          <p className="text-[18px] font-medium leading-[21px]">СУВГУУД</p>
+        </Link>
+        <Link
+          onClick={() => setOpen(false)}
+          className="mt-[40px] text-caak-black hover:text-caak-darkGray flex flex-row items-center cursor-pointer pl-[40px] pr-[30px]"
           to={`/tags`}
         >
           <span className="icon-fi-rs-hashtag w-[24px] h-[24px] flex items-center justify-center text-[20px] mr-[26px]" />

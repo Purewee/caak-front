@@ -30,7 +30,8 @@ import './assets/fonts/Roboto-Medium.ttf';
 import CaakHeader from './component/header';
 import PushUp from './component/pushup';
 import ProtectedRoute from './component/ProtectedRoute';
-import AllTags from './pages/add/tags';
+import AllTags from './pages/tags';
+import Channels from './pages/channels';
 
 export const AppContext = createContext(null);
 
@@ -223,19 +224,27 @@ function App() {
                       </ProtectedRoute>
                     }
                   />
-                  <Route
+                  {/* <Route
                     path="/notification"
                     element={
                       <ProtectedRoute>
                         <Notification />
                       </ProtectedRoute>
                     }
-                  />
+                  /> */}
                   <Route
                     path="/tags"
                     element={
                       <ProtectedRoute>
                         <AllTags />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="/channels"
+                    element={
+                      <ProtectedRoute>
+                        <Channels />
                       </ProtectedRoute>
                     }
                   />
