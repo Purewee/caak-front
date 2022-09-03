@@ -45,7 +45,7 @@ export default function Session() {
   useOutsideAlerter(mobileRef);
   return (
     <div>
-      <nav className="py-[10px] flex sm:hidden flex-col sticky top-0 z-[2] bg-white">
+      <nav className="py-[10px] flex sm:hidden flex-col sticky top-0 z-[2]">
         <div className="w-full flex flex-row justify-between">
           <span
             onClick={() => setMobileSideMenu(!mobileSideMenu)}
@@ -142,8 +142,8 @@ export default function Session() {
           </div>
         )}
       </nav>
-      <div className="hidden sm:flex flex-row">
-        <Button onClick={() => openModal('login')} className="font-bold mr-[12px]">
+      <div className="hidden sm:flex flex-row ml-[10px]">
+        <Button onClick={() => openModal('login')} className="font-bold mr-[12px] text-white">
           Нэвтрэх
         </Button>
         <Button onClick={() => openModal('open')} type="primary" className="font-bold">
