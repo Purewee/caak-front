@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useQuery, gql, useMutation } from '@apollo/client';
-import { Popover, Badge, List, Button, Avatar, message } from 'antd';
+import { Popover, Badge, List, Button, Avatar, message, Spin } from 'antd';
 import { useAuth } from '../../context/AuthContext';
 import { FIcon } from '../icon';
 import { Link, useNavigate } from 'react-router-dom';
@@ -9,6 +9,7 @@ import AvatarSvg from '../../assets/images/avatar.svg';
 import { ME } from '../../pages/post/view/_gql';
 import { CloseOutlined } from '@ant-design/icons';
 import { sumBy } from 'lodash';
+import Loader from '../loader';
 
 const REMOVE_SAVED = gql`
   mutation RemoveSavedArticle($id: ID, $articleId: ID!) {
@@ -28,7 +29,7 @@ export default function UserInfo({ transparent }) {
   const [remove, { loading: removing }] = useMutation(REMOVE_SAVED);
   const navigate = useNavigate();
 
-  if (loading) return <span>Loading ...</span>;
+  if (loading) return <Spin className={'text-caak-primary'} />;
 
   const Settings = [
     {

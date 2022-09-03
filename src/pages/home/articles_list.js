@@ -45,7 +45,7 @@ export default function ArticlesList({ filter = [], sort = {}, size = 24 }) {
         return (
           <div
             key={index}
-            className="max-w-[1310px] px-[16px] sm:px-0  w-full flex flex-wrap justify-center gap-x-[22px] gap-y-[40px]"
+            className="max-w-[1310px] px-[16px] sm:px-0  w-full flex flex-wrap justify-center gap-x-[22px] gap-y-[40px] mb-[40px]"
           >
             {section.map((post, index) => (
               <div key={index}>

@@ -34,7 +34,12 @@ export default function Channels() {
               >
                 <div className="flex flex-col items-center">
                   <Avatar className="h-[64px] w-[64px]" src={imagePath(data.icon)} />
-                  <p className="text-black font-medium text-[17px] leading-[20px] mt-[10px]">{data.name}</p>
+                  <Link
+                    className="text-black font-medium text-[17px] leading-[20px] mt-[10px]"
+                    to={`/channel/${data.id}`}
+                  >
+                    {data.name}
+                  </Link>
                   <p className="text-caak-darkGray mt-[24px] text-[15px] leading-[18px] truncate-2">{data.slug}</p>
                 </div>
                 {data.following ? (
