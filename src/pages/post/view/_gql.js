@@ -154,6 +154,7 @@ export const ME = gql`
   query Me {
     me {
       id
+      login
       mobile
       email
       firstName

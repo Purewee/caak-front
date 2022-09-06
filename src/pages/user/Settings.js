@@ -1,4 +1,4 @@
-import { Switch, Form, Anchor, Input, Upload, Button, Skeleton, Image, message } from 'antd';
+import { Switch, Form, Anchor, Input, Upload, Button, Skeleton, Image, message, Avatar } from 'antd';
 import React, { useEffect, useContext, useState } from 'react';
 import { AppContext } from '../../App';
 import { FIcon } from '../../component/icon';
@@ -36,6 +36,17 @@ const ME = gql`
       lastName
       avatar
       data
+      follows {
+        id
+        target {
+          ... on Category {
+            id
+            name
+            slug
+            cover
+          }
+        }
+      }
     }
   }
 `;
@@ -59,8 +70,6 @@ export default function Settings() {
   const [update, { loading: saving }] = useMutation(UPDATE, { context: { upload: true } });
 
   const me = data?.me || {};
-
-  console.log(me);
 
   useEffect(() => {
     context.setStore('default');
@@ -115,8 +124,7 @@ export default function Settings() {
                       showUploadList={false}
                       maxCount={1}
                       accept="image/*"
-                      listType="picture-card"
-                      className="w-[164px] h-[164px]"
+                      className=""
                       customRequest={({ file, onSuccess }) => {
                         imageCompress(file).then((result) => {
                           return getDataFromBlob(result).then((base64) => {
@@ -126,14 +134,15 @@ export default function Settings() {
                         });
                       }}
                     >
-                      {avatar ? (
-                        <Image src={avatar} preview={false} className="object-cover" />
-                      ) : (
-                        <>
-                          <FIcon className="icon-fi-rs-camera-f" />
-                          <div>Зураг солих</div>
-                        </>
-                      )}
+                      <div className="relative">
+                        {avatar && <Avatar size={120} src={avatar} preview={false} />}
+                        <Button
+                          type="primary"
+                          shape="circle"
+                          icon={<FIcon className="icon-fi-rs-camera-f" />}
+                          className="absolute right-0 bottom-0"
+                        />
+                      </div>
                     </Upload>
                   </Form.Item>
                 </div>
@@ -146,38 +155,23 @@ export default function Settings() {
               <p className="text-[22px] font-bold leading-[25px] w-full border-b border-[#D4D8D8] pb-[14px]">
                 Мэдээний төрөл
               </p>
-              <div className="mt-[24px] flex flex-wrap gap-[10px] justify-between">
-                <div className="w-full sm:w-[172px] h-[100px] rounded-[6px] relative cursor-pointer zoom">
-                  <img
-                    src="https://images.complex.com/complex/images/c_fill,dpr_auto,f_auto,q_auto,w_1400/fl_lossy,pg_1/f7ovkpuwqmuhwnfpd4ki/post?fimg-ssr-default"
-                    className="w-full sm:w-full h-full object-cover rounded-[8px]"
-                  />
-                  <p className="absolute top-0 h-full w-full flex items-center justify-center text-white text-[15px] font-medium bg-black bg-opacity-50 rounded-[6px]">
-                    Post Malone
-                  </p>
-                </div>
-                <div className="w-full sm:w-[172px] h-[100px] rounded-[6px] relative cursor-pointer zoom">
-                  <img
-                    src="https://cdn.unitycms.io/images/5D0o2tfgaEsA-LuVS2RN7K.png?op=ocroped&val=1200,1200,1000,1000,0,0&sum=rDoHXgs-buo"
-                    className="w-full h-full object-cover rounded-[8px]"
-                  />
-                  <p className="absolute top-0 h-full w-full flex items-center justify-center text-white text-[15px] font-medium bg-black bg-opacity-50 rounded-[6px]">
-                    Post Malone
-                  </p>
-                </div>
-                <div className="w-full sm:w-[172px] h-[100px] rounded-[6px] relative cursor-pointer zoom">
-                  <img
-                    src="https://townsquare.media/site/812/files/2022/06/attachment-post-malone.jpg?w=1200&h=0&zc=1&s=0&a=t&q=89"
-                    className="w-full h-full object-cover rounded-[8px]"
-                  />
-                  <p className="absolute top-0 h-full w-full flex items-center justify-center text-white text-[15px] font-medium bg-black bg-opacity-50 rounded-[6px]">
-                    Post Malone
-                  </p>
-                </div>
-                <div className="w-full sm:w-[172px] h-[100px] rounded-[6px] border border-caak-primary bg-[#FFF9F5] flex flex-col items-center justify-center">
-                  <FIcon className="icon-fi-rs-plus w-[34px] h-[34px] text-caak-primary rounded-[6px] border-[2px] border-dashed border-[#FF6600]" />
-                  <p className="mt-[12px] text-caak-primary text-[15px] font-medium leading-[18px]">Төрөл нэмэх</p>
-                </div>
+              <div className="mt-[24px] flex flex-wrap justify-start gap-[10px]">
+                {me.follows.map(({ target: x }) => (
+                  <div
+                    className="w-[170px] h-[100px] relative items-center justify-center rounded-md cursor-pointer overflow-hidden"
+                    key={x.id}
+                  >
+                    {x.cover && (
+                      <div
+                        style={{ backgroundImage: `url(${imagePath(x.cover)})` }}
+                        className="w-full h-full bg-center bg-cover bg-no-repeat"
+                      />
+                    )}
+                    <span className="absolute top-0 h-full w-full flex items-center justify-center text-white text-[15px] font-medium bg-black bg-opacity-50 rounded-md">
+                      {x.name}
+                    </span>
+                  </div>
+                ))}
               </div>
             </div>
             <div className="border-[#EFEEEF] border rounded-[4px] w-full p-[30px] my-[50px]" id="security">

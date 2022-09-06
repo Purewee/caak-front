@@ -14,7 +14,9 @@ import { FIcon } from '../../component/icon';
 const FOLLOWS = gql`
   query GetFollows {
     me {
+      id
       follows {
+        id
         target {
           ... on Source {
             id

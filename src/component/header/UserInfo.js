@@ -1,15 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useQuery, gql, useMutation } from '@apollo/client';
-import { Popover, Badge, List, Button, Avatar, message, Spin } from 'antd';
+import { Popover, Badge, Button, Avatar, message, Spin } from 'antd';
 import { useAuth } from '../../context/AuthContext';
 import { FIcon } from '../icon';
 import { Link, useNavigate } from 'react-router-dom';
 import { imagePath } from '../../utility/Util';
 import AvatarSvg from '../../assets/images/avatar.svg';
 import { ME } from '../../pages/post/view/_gql';
-import { CloseOutlined } from '@ant-design/icons';
 import { sumBy } from 'lodash';
-import Loader from '../loader';
+import ProfileModal from './ProfileModal';
 
 const REMOVE_SAVED = gql`
   mutation RemoveSavedArticle($id: ID, $articleId: ID!) {
@@ -21,6 +20,7 @@ const REMOVE_SAVED = gql`
 
 export default function UserInfo({ transparent }) {
   const [hovered, setHovered] = useState();
+  const [open, setOpen] = useState(false);
   const { data, loading, refetch } = useQuery(ME);
   const { logout } = useAuth();
   const me = data?.me || {};
@@ -28,6 +28,12 @@ export default function UserInfo({ transparent }) {
   const totalSaved = sumBy(data?.me?.recipes.map((x) => x.articlesCount));
   const [remove, { loading: removing }] = useMutation(REMOVE_SAVED);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (me.id && !me.firstName) {
+      setOpen(true);
+    }
+  }, [me]);
 
   if (loading) return <Spin className={'text-caak-primary'} />;
 
@@ -183,6 +189,7 @@ export default function UserInfo({ transparent }) {
           shape="circle"
         />
       </Popover>
+      {open && <ProfileModal login={me?.login} />}
     </div>
   );
 }

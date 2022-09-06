@@ -103,7 +103,7 @@ function RegisterStep({ setStep }) {
           </Button>
         </div>
         <p className="mt-[40px] flex items-center flex-wrap text-[13px] text-[#909090] justify-center">
-          Та энэ алхамын үргэлжлүүлснээр, сайтын
+          Та энэ алхамыг үргэлжлүүлснээр, сайтын
           <Button
             onClick={() => {
               navigate('/help', { state: 4 });

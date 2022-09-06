@@ -3,6 +3,7 @@ import { useAuth } from '../../context/AuthContext';
 import { Button } from 'antd';
 import SessionModal from '../modal/session';
 import { FIcon } from '../icon';
+import { useNavigate } from 'react-router-dom';
 
 const mobileItems = [
   {
@@ -23,7 +24,8 @@ const mobileItems = [
 ];
 
 export default function Session() {
-  const { isAuth, logout, openModal } = useAuth();
+  const { openModal } = useAuth();
+  const navigate = useNavigate();
   const [mobileSideMenu, setMobileSideMenu] = useState(false);
   function useOutsideAlerter(ref) {
     useEffect(() => {

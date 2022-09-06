@@ -49,7 +49,7 @@ function LoginStep({ setStep }) {
             layout="vertical"
           >
             <Form.Item name="login" rules={[{ required: true, message: 'Заавал оруулна уу!' }]}>
-              <Input type={'email'} size="large" placeholder="Утасны дугаар / Имэйл" />
+              <Input size="large" placeholder="Утасны дугаар / Имэйл" />
             </Form.Item>
             <Form.Item
               name="password"
