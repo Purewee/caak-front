@@ -33,7 +33,7 @@ export default function Profile() {
   const user = data?.user || {};
   const { data: me } = useQuery(ME);
   const loggedUser = me?.me;
-  const { isAuth, openModal } = useAuth();
+  const { isAuth } = useAuth();
   const saved_articles = user?.recipes?.map((x) => x?.articles.nodes).flat() || [];
   const [follow, { loading: saving }] = useMutation(FOLLOW, { variables: { id } });
 
@@ -119,19 +119,14 @@ export default function Profile() {
         <Tabs
           defaultActiveKey={location.state === 'saved' ? 'saved' : 'posts'}
           onChange={(e) => setSelected(e)}
-          size="large"
-          className="mb-[200px] font-merri"
+          className="mb-[200px] font-condensed w-full border-t border-1"
         >
           <Tabs.TabPane
             key="posts"
             tab={
               <div className="flex flex-row items-center">
-                <p
-                  className={`text-[16px] font-roboto font-bold ${
-                    selected === 'posts' ? 'text-caak-black' : 'text-caak-gray'
-                  }`}
-                >
-                  Оруулсан мэдээ
+                <p className={`text-[16px] font-bold ${selected === 'posts' ? 'text-caak-black' : 'text-caak-gray'}`}>
+                  ОРУУЛСАН МЭДЭЭ
                 </p>
                 <p className="bg-[#BBBEBE] py-[2px] px-[6px] ml-[10px] font-roboto rounded-[4px] text-white text-[14px] font-bold leading-[16px]">
                   {user.articles?.totalCount}
@@ -139,7 +134,7 @@ export default function Profile() {
               </div>
             }
           >
-            <div className="max-w-[1310px] w-full flex flex-wrap justify-center xl:justify-start gap-x-[22px] gap-y-[40px] px-[16px] sm:px-0 mt-[40px]">
+            <div className="max-w-[1310px] w-full flex flex-wrap justify-center xl:justify-start gap-x-[22px] gap-y-[40px] px-[32px] sm:px-0  border-t">
               {articles.map((post, index) => (
                 <Col className="w-full sm:w-[422px]" key={index}>
                   <PostCard isMobile={isMobile} post={post} />
@@ -162,20 +157,18 @@ export default function Profile() {
               key="saved"
               tab={
                 <div className="flex flex-row items-center">
-                  <p
-                    className={`text-[16px] font-roboto font-bold ${
-                      selected === 'saved' ? 'text-caak-black' : 'text-caak-gray'
-                    }`}
-                  >
+                  <p className={`text-[16px] font-bold ${selected === 'saved' ? 'text-caak-black' : 'text-caak-gray'}`}>
                     ХАДГАЛСАН МЭДЭЭ
                   </p>
-                  <p className="bg-[#BBBEBE] py-[2px] px-[6px] ml-[10px] font-roboto rounded-[4px] text-white text-[14px] font-bold leading-[16px]">
-                    {user.recipes[0]?.articles?.nodes?.length}
-                  </p>
+                  {saved_articles && (
+                    <p className="bg-[#BBBEBE] py-[2px] px-[6px] ml-[10px] font-roboto rounded-[4px] text-white text-[14px] font-bold leading-[16px]">
+                      {saved_articles.length}
+                    </p>
+                  )}
                 </div>
               }
             >
-              <div className="max-w-[1310px] w-full flex flex-wrap justify-center xl:justify-start gap-x-[22px] gap-y-[40px] px-[16px] sm:px-0 mt-[40px]">
+              <div className="max-w-[1310px] w-full flex flex-wrap justify-center xl:justify-start gap-x-[22px] gap-y-[40px] px-[32px] sm:px-0 border-t">
                 {saved_articles.map((post, index) => (
                   <Col className="w-full sm:w-[422px]" key={index}>
                     <PostCard removeSaved isMobile={isMobile} post={post} />
@@ -188,15 +181,13 @@ export default function Profile() {
             <Tabs.TabPane
               key="history"
               tab={
-                <p
-                  className={`text-[16px] font-roboto font-bold ${
-                    selected === 'history' ? 'text-caak-black' : 'text-caak-gray'
-                  }`}
-                >
+                <p className={`text-[16px] font-bold ${selected === 'history' ? 'text-caak-black' : 'text-caak-gray'}`}>
                   ҮЗСЭН ТҮҮХ
                 </p>
               }
-            />
+            >
+              <div className="w-full border-t"></div>
+            </Tabs.TabPane>
           )}
         </Tabs>
       </div>

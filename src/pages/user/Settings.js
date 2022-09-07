@@ -156,22 +156,24 @@ export default function Settings() {
                 Мэдээний төрөл
               </p>
               <div className="mt-[24px] flex flex-wrap justify-start gap-[10px]">
-                {me.follows.map(({ target: x }) => (
-                  <div
-                    className="w-[170px] h-[100px] relative items-center justify-center rounded-md cursor-pointer overflow-hidden"
-                    key={x.id}
-                  >
-                    {x.cover && (
-                      <div
-                        style={{ backgroundImage: `url(${imagePath(x.cover)})` }}
-                        className="w-full h-full bg-center bg-cover bg-no-repeat"
-                      />
-                    )}
-                    <span className="absolute top-0 h-full w-full flex items-center justify-center text-white text-[15px] font-medium bg-black bg-opacity-50 rounded-md">
-                      {x.name}
-                    </span>
-                  </div>
-                ))}
+                {me.follows
+                  .filter((x) => x.target.__typename === 'Category')
+                  .map(({ target: x }) => (
+                    <div
+                      className="w-[170px] h-[100px] relative items-center justify-center rounded-md cursor-pointer overflow-hidden"
+                      key={x.id}
+                    >
+                      {x.cover && (
+                        <div
+                          style={{ backgroundImage: `url(${imagePath(x.cover)})` }}
+                          className="w-full h-full bg-center bg-cover bg-no-repeat"
+                        />
+                      )}
+                      <span className="absolute top-0 h-full w-full flex items-center justify-center text-white text-[15px] font-medium bg-black bg-opacity-50 rounded-md">
+                        {x.name}
+                      </span>
+                    </div>
+                  ))}
               </div>
             </div>
             <div className="border-[#EFEEEF] border rounded-[4px] w-full p-[30px] my-[50px]" id="security">
