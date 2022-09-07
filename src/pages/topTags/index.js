@@ -77,8 +77,8 @@ export default function Category() {
         <HashTag className="uppercase">Таг</HashTag>
         <p className="font-condensed font-bold text-[38px]">#{category.name}</p>
         <div className="flex">
-          <Statistic title="Нийт мэдээлэл" value={count} className="mx-[24px] text-center" />
-          <Statistic title="Дагагчид" value={category.followersCount} className="text-center font-condensed" />
+          <Statistic title="нийтлэл" value={count} className="mx-[24px] text-center" />
+          <Statistic title="дагагч" value={category.followersCount} className="text-center font-condensed" />
         </div>
         <div className="flex flex-row items-center mt-[20px]">
           {category.following ? (

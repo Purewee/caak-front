@@ -100,7 +100,7 @@ export default function Home() {
         <div className="md:px-[30px] w-full flex justify-center px-[16px] sm:px-0">
           <Story />
         </div>
-        <div className="sticky bg-white z-50 top-0 max-w-[1310px] w-full px-[16px] sm:px-0">
+        <div className="sticky bg-white z-[3] top-0 max-w-[1310px] w-full px-[16px] sm:px-0">
           <Tabs onChange={(e) => setSelected(e)} className="w-full border-b font-roboto" centered>
             <Tabs.TabPane
               key="recent"
@@ -186,6 +186,7 @@ export default function Home() {
           </div>
         </div>
       </div>
+      <Banner position={'a4'} />
     </>
   );
 }

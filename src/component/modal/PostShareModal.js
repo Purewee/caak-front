@@ -45,7 +45,7 @@ export default function PostShareModal({ post, toggle, image }) {
           <div className="bg-[#FBFAFB] w-full h-[44px] mt-[8px] border flex flex-row items-center justify-between border-[#EFEEEF] py-[12px] pl-[12px] pr-[16px]">
             <div className="flex flex-row items-center text-[#555555]">
               <span className="icon-fi-rs-link" />
-              <p id="myInput" className="text-[15px] ml-[10px]">{`http://caak.mn/post/view/${post?.id}`}</p>
+              <p id="myInput" className="text-[15px] ml-[10px]">{`http://front.caak.mn/post/view/${post?.id}`}</p>
             </div>
             <CopyToClipboard text={`http://front.caak.mn/post/view/${post?.id}`}>
               <p

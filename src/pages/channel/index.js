@@ -87,8 +87,8 @@ export default function Channel() {
         {source.name || source.domain}
       </p>
       <div className="flex flex-row items-center mt-[18px] text-[15px]">
-        <Statistic title="Нийт мэдээлэл" value={count} className="mx-[24px] text-center" />
-        <Statistic title="Дагагчид" value={source.followersCount} className="mx-[24px] text-center" />
+        <Statistic title="нийтлэл" value={count} className="mx-[24px] text-center" />
+        <Statistic title="дагагч" value={source.followersCount} className="mx-[24px] text-center" />
       </div>
       <div className="flex flex-row items-center mt-[20px]">
         {source.following ? (
