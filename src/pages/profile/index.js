@@ -63,7 +63,16 @@ export default function Profile() {
       <div className="max-w-[1310px] w-full flex flex-col">
         <div className="pt-[17px] md:pt-[71px] pb-[17px] md:pb-[50px] flex flex-col md:flex-row justify-between w-full items-center">
           <div className="flex flex-col md:flex-row">
-            <Avatar className="w-[57px] h-[57px] md:w-[82px] md:h-[82px] object-cover" src={imagePath(user?.avatar)} />
+            {user.avatar ? (
+              <Avatar
+                className="w-[57px] h-[57px] md:w-[82px] md:h-[82px] object-cover"
+                src={imagePath(user?.avatar)}
+              />
+            ) : (
+              <Avatar className="w-[57px] h-[57px] flex items-center md:w-[82px] md:h-[82px] bg-[#257CEE19] text-[#257CEE] text-[32px] font-medium">
+                {(user?.firstName || user?.name)[0]}
+              </Avatar>
+            )}
             <div className="md:ml-[16px] mt-[15px] md:mt-0">
               <Title className="font-condensed mt-0 font-bold text-[30px] leading-[35px]">{user?.firstName}</Title>
               <p className="mt-[9px] md:mt-[12px] text-[15px] text-[#555555] leading-[18px] max-w-[600px]">
