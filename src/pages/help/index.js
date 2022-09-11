@@ -208,7 +208,7 @@ export default function Help() {
                 </div>
             </div>
             <div className='max-w-[1310px] w-full flex flex-col sm:flex-row mt-[30px] sm:mt-[60px] justify-between mb-[87px] px-[16px] md:px-0'>
-                <div style={{boxShadow: '0px 2px 2px #00000010'}} className={`w-[290px] bg-[#FFFFFF] border ${selected !== 1 && 'sticky top-[60px]'} border-[#EFEEEF] h-[270px] rounded-[4px] p-[10px]`}>
+                <div style={{boxShadow: '0px 2px 2px #00000010'}} className={`w-[290px] bg-[#FFFFFF] border ${selected !== 1 && 'sm:sticky top-[60px]'} border-[#EFEEEF] h-[270px] rounded-[4px] p-[10px]`}>
                     {
                         Tabs.map((data, index) => {
                             return(
@@ -228,6 +228,7 @@ export default function Help() {
                             <p className='font-condensed font-bold text-[32px] text-[#111111] leading-[38px] mt-[20px] sm:mt-0'>Бидний тухай</p>
                             <div className='flex flex-col justify-between mt-[20px] text-[#555555]'>
                                 <p className='text-[15px] leading-[20px]'>Саак.мн сайт нь 2006 оны 1-р сарын 23-аас эхэлж үйл ажиллагаагаа явуулж эхэлсэн бөгөөд Гадаад дотоодын сонин содон, сонирхолтой баримт, гэрэл зургуудыг хүргэсээр ирсэн Монголын анхны энтертаймент сайт билээ.</p>
+                                <p className='text-[#555555] text-[15px] font-bold leading-[22px] mt-[10px]'>Өөрчлөлт шинэчлэлт:</p>
                                 <ul>
                                     <li>- Гадаад дотоодын шилдэг, шинэ мэдээллүүдийг нэг цэгээс хүргэх суваг болов</li>
                                     <li>- Та бүртгүүлээд өөрийн сонирхолын дагуу мэдээллээ авах боломжтой болсон</li>

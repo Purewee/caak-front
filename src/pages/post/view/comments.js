@@ -13,6 +13,7 @@ const SORTS = {
   liked: { direction: 'desc', field: 'likesCount' },
   disliked: { direction: 'desc', field: 'dislikesCount' },
 };
+
 export default function Comments({ articleId, refProp }) {
   const [sort, setSort] = useState('recent');
   const [addComment, { loading: saving }] = useMutation(ADD_COMMENT, { variables: { articleId } });
@@ -96,6 +97,9 @@ export default function Comments({ articleId, refProp }) {
   );
 }
 
+const colors = ['#257CEE', '#37AF37'];
+const colors1 = ['#257CEE19', '#37AF371A'];
+
 function SingleComment({ comment, refetch }) {
   const [open, setOpen] = useState(false);
   const [reply, { loading }] = useMutation(ADD_COMMENT, {
@@ -109,6 +113,9 @@ function SingleComment({ comment, refetch }) {
   const [reacted, setReacted] = useState(false);
   const [name, setName] = useState('');
   const [body, setBody] = useState('');
+  const random = Math.floor(Math.random() * 2);
+  const color = colors[random];
+  const color1 = colors1[random];
   return (
     <Comment
       key={comment.id}
@@ -197,14 +204,10 @@ function SingleComment({ comment, refetch }) {
       }
       avatar={
         <Avatar
+          style={{ backgroundColor: color1 }}
           shape="circle"
           size={40}
-          style={{
-            backgroundColor: 'rgba(255, 102, 0, 0.1)',
-            fontSize: 20,
-            fontWeight: 'bold',
-          }}
-          className="text-caak-primary"
+          className={`text-[${color}] text-[18px] font-bold`}
         >
           {(comment.data?.name || comment.user?.firstName || 'Зочин')[0]}
         </Avatar>

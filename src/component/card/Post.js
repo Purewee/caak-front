@@ -113,7 +113,7 @@ export default function PostCard({ isMobile, post, removeSaved, ...rest }) {
                 </div>
               )}
             </div>
-            <span className={`h-[18px] hidden sm:flex ${sponsored ? 'text-white' : 'sm:text-[#555555]'}`}>
+            <span className={`h-[18px] hidden items-center sm:flex ${sponsored ? 'text-white' : 'sm:text-[#555555]'}`}>
               &nbsp;&#8226;&nbsp;
             </span>
             <Link

@@ -221,7 +221,7 @@ const Post = () => {
                   overlayStyle={{ width: 166 }}
                   overlayInnerStyle={{ borderRadius: 8 }}
                   content={
-                    <div className="flex flex-col gap-[15px] h-full justify-between ">
+                    <div className="flex flex-col gap-[15px] h-full justify-between pl-[18px] py-[18px]">
                       {['admin', 'moderator'].includes(me?.me?.role) && (
                         <Link to={`/edit/${article.kind}/${article.id}`} target="_blank">
                           <div className="flex flex-row items-center cursor-pointer">
@@ -267,7 +267,7 @@ const Post = () => {
             <div className="flex flex-row gap-[15px]">
               {article.categories?.nodes?.map((x) => (
                 <Link key={x.id} to={`/category/${x.slug}`}>
-                  <HashTag className="text-center hidden md:block">{x.name}</HashTag>
+                  <HashTag className="text-center hidden md:block leading-[15px]">{x.name}</HashTag>
                 </Link>
               ))}
             </div>

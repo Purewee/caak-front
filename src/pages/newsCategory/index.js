@@ -114,8 +114,8 @@ export default function Category() {
           </div>
         </div>
         <div className="flex mt-[10px]">
-          <Statistic title="Нийт мэдээлэл" value={count} className="mx-[24px] text-center" />
-          <Statistic title="Дагагчид" value={category.followersCount} className="text-center font-condensed" />
+          <Statistic title="нийтлэл" value={count} className="mx-[24px] text-center" />
+          <Statistic title="дагагч" value={category.followersCount} className="text-center font-condensed" />
         </div>
         <Tabs
           defaultActiveKey="recent"

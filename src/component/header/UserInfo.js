@@ -5,7 +5,6 @@ import { useAuth } from '../../context/AuthContext';
 import { FIcon } from '../icon';
 import { Link, useNavigate } from 'react-router-dom';
 import { imagePath } from '../../utility/Util';
-import AvatarSvg from '../../assets/images/avatar.svg';
 import { ME } from '../../pages/post/view/_gql';
 import { sumBy } from 'lodash';
 import ProfileModal from './ProfileModal';
@@ -152,11 +151,13 @@ export default function UserInfo({ transparent }) {
         content={
           <div className="text-[#555555] pt-[20px] pb-[18px] w-[220px]">
             <div className="border-b w-full pb-[16px] flex flex-row items-center pl-[18px]">
-              <Avatar
-                className="mr-[12px] flex items-center justify-center"
-                src={me.avatar ? imagePath(me.avatar) : AvatarSvg}
-                size={38}
-              />
+              {me.avatar ? (
+                <Avatar className="mr-[12px] flex items-center justify-center" src={imagePath(me.avatar)} size={38} />
+              ) : (
+                <Avatar size={38} className="flex items-center bg-[#257CEE19] text-[#257CEE] text-[26px] font-medium">
+                  {(me?.firstName || me?.name)[0]}
+                </Avatar>
+              )}
               <div>
                 <p className="font-condensed text-[18px] font-bold leading-[21px] text-[#111111]">
                   {data?.me?.firstName}
@@ -183,11 +184,21 @@ export default function UserInfo({ transparent }) {
           </div>
         }
       >
-        <Avatar
-          src={me.avatar ? imagePath(me.avatar) : AvatarSvg}
-          className="ml-[16px] cursor-pointer flex justify-center items-center "
-          shape="circle"
-        />
+        {me.avatar ? (
+          <Avatar
+            src={imagePath(me.avatar)}
+            size={34}
+            className="ml-[16px] cursor-pointer flex justify-center items-center "
+            shape="circle"
+          />
+        ) : (
+          <Avatar
+            size={34}
+            className="ml-[16px] flex items-center bg-[#257CEE19] text-[#257CEE] text-[20px] font-medium"
+          >
+            {(me?.firstName || me?.name)[0]}
+          </Avatar>
+        )}
       </Popover>
       {open && <ProfileModal login={me?.login} />}
     </div>

@@ -3,6 +3,7 @@ import { gql, useQuery } from '@apollo/client';
 import A1 from './a1';
 import A2 from './a2';
 import A3 from './a3';
+import A4 from './a4';
 import { Skeleton } from 'antd';
 
 const BANNER = gql`
@@ -25,6 +26,7 @@ function Banner({ position }) {
   if (position === 'a1') return <A1 banner={data?.banner} />;
   if (position === 'a2') return <A2 banner={data?.banner} />;
   if (position === 'a3') return <A3 banner={data?.banner} />;
+  if (position === 'a4') return <A4 banner={data?.banner} />;
 }
 
 export default Banner;

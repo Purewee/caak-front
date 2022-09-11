@@ -3,6 +3,7 @@ import Logo from '../../images/New-Logo-Light.svg';
 import { AppContext } from '../../App';
 import { Link, useNavigate } from 'react-router-dom';
 import useMediaQuery from '../navigation/useMediaQuery';
+import { Collapse } from 'antd';
 
 export default function Footer() {
   // prettier-ignore
@@ -25,8 +26,80 @@ export default function Footer() {
   }, [context.shown]);
   // prettier-ignore
   return isFooter ? (
-    <div className='w-full md:h-[423px] bg-[#111111] flex flex-col items-center justify-between'>
-        <div className='flex flex-col md:flex-row w-full items-start max-w-[1310px] px-[16px] md:px-0'>
+    <div className='w-full md:h-[423px] bg-[#111111] flex flex-col sm:items-center justify-between'>
+        <div className="sm:hidden">
+            <Collapse className="w-full custom bg-caak-black" bordered={false} accordion={true}>
+                <Collapse.Panel
+                    header={
+                        <div className="flex flex-row items-center justify-between py-[10px] px-[4px]">
+                            <p className='text-white text-[14px] font-bold leading-[16px]'>CAAK КОНТЕНТ</p>
+                            <span className="icon-fi-rs-down-chevron text-caak-primary" />
+                        </div>
+                    }
+                    showArrow={false}
+                >
+                    <div className='flex flex-col gap-[10px] px-[16px] justify-between text-[15px] text-[#838383] pb-[30px]'>
+                        <a className='h-[20px] hover:text-[#FF6600]' href='https://www.caaknews.mn/' target={'_blank'}>
+                            <p>Саак мэдээ</p>
+                        </a>
+                        <a className='h-[20px] hover:text-[#FF6600]' href='https://www.youtube.com/c/CaakVideo' target={'_blank'}>
+                            <p>Видео</p>
+                        </a>
+                        <a className='h-[20px] hover:text-[#FF6600]' href='https://soundcloud.com/caak-podcast' target={'_blank'}>
+                            <p>Подкаст</p>
+                        </a>
+                        <a className='h-[20px] hover:text-[#FF6600]' href='https://www.caak.mn/radio/' target={'_blank'}>
+                            <p>Радио</p>
+                        </a>
+                    </div>
+                </Collapse.Panel>
+                <Collapse.Panel
+                    header={
+                        <div className="flex flex-row items-center justify-between px-[4px] py-[10px]">
+                            <p className='text-white text-[14px] font-bold leading-[16px]'>ТУСЛАМЖ</p>
+                            <span className="icon-fi-rs-down-chevron text-caak-primary" />
+                        </div>
+                    }
+                    showArrow={false}
+                >
+                    <div className='flex flex-col gap-[10px] justify-between px-[16px] text-[15px] text-[#838383] pb-[30px]'>
+                        <p className='cursor-pointer hover:text-[#FF6600]' onClick={() => navigate("/help", { state: 2 })}>Холбоо барих</p>
+                        <p className='cursor-pointer hover:text-[#FF6600]' onClick={() => navigate("/help", { state: 1 })}>Сурталчилгаа</p>
+                        <p className='cursor-pointer hover:text-[#FF6600]' onClick={() => navigate("/help", { state: 2 })}>Контент нийлүүлэх</p>
+                    </div>
+                </Collapse.Panel>
+                <Collapse.Panel
+                    header={
+                        <div className="flex flex-row items-center justify-between px-[4px] py-[10px]">
+                            <p className='text-white text-[14px] font-bold leading-[16px]'>БУСАД</p>
+                            <span className="icon-fi-rs-down-chevron text-caak-primary" />
+                        </div>
+                    }
+                    showArrow={false}
+                >
+                    <div className='flex flex-col gap-[10px] px-[16px] justify-between text-[15px] text-[#838383] pb-[30px]'>
+                        <p className='cursor-pointer hover:text-[#FF6600]' onClick={() => navigate("/help", { state: 0 })}>Бидний тухай</p>
+                        <p className='cursor-pointer hover:text-[#FF6600]' onClick={() => navigate("/help", { state: 4 })}>Үйлчилгээний нөхцөл</p>
+                        <p className='cursor-pointer hover:text-[#FF6600]' onClick={() => navigate("/help", {  state: 3 })}>Нууцлалын бодлого</p>
+                    </div>
+                </Collapse.Panel>
+                <div className='flex flex-row gap-[15px] justify-center text-[15px] text-white py-[20px]'>
+                    <a className='h-[20px] hover:text-[#FF6600]' href='https://www.facebook.com/caakweb' target={'_blank'}>
+                        <span className='icon-fi-rs-fb text-[20px]' />
+                    </a>
+                    <a className='h-[20px] hover:text-[#FF6600]' href='https://www.instagram.com/caak.mn' target={'_blank'}>
+                        <span className='icon-fi-rs-ig text-[20px]' />
+                    </a>
+                    <a className='h-[20px] hover:text-[#FF6600]' href='https://twitter.com/caaktwt' target={'_blank'}>
+                        <span className='icon-fi-rs-tw text-[20px]' />
+                    </a>
+                    <a className='h-[20px] hover:text-[#FF6600]' href='https://www.youtube.com/c/CaakVideo' target={'_blank'}>
+                        <span className='icon-fi-rs-yt text-[20px]' />
+                    </a>
+                </div>
+            </Collapse>
+        </div>
+        <div className='hidden sm:flex flex-col md:flex-row w-full items-start max-w-[1310px] px-[16px] md:px-0'>
             <img src={Logo} className='mr-[193px] mt-[41px] hidden md:block'/>
             <div className='w-full flex flex-col md:flex-row gap-[16px] justify-between mt-[30px] md:mt-[60px]'>
                 <div>
