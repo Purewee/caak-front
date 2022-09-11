@@ -55,8 +55,10 @@ type Article {
   id: ID!
   imageUrl: String
   kind: String!
+  nextStories: [Article!]!
   nextStoryId: Int
   position: Int
+  prevStories: [Article!]!
   prevStoryId: Int
   publishDate: ISO8601Date
   reactions(
@@ -96,6 +98,8 @@ type ArticleBlock {
   status: String
   title: String
   updatedAt: ISO8601DateTime
+  videoDuration: Int
+  videoPreview: String
   videoUrl: String
 }
 

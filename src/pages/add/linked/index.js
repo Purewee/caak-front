@@ -169,7 +169,15 @@ function AddLink() {
                 </a>
               </div>
               <Form.Item name="sourceId" rules={[{ required: true, message: 'Суваг заавал сонгоно уу' }]}>
-                <Select size="large" loading={source_fetching} allowClear>
+                <Select
+                  size="large"
+                  loading={source_fetching}
+                  allowClear
+                  filterOption={(input, option) =>
+                    option.props.value.toLowerCase().indexOf(input.toLowerCase()) >= 0 ||
+                    option.props.label.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                  }
+                >
                   {sources?.sources?.nodes?.map((x) => (
                     <Select.Option value={x.id}>{`${x.name} - ${x.domain}`}</Select.Option>
                   ))}

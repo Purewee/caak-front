@@ -15,6 +15,49 @@ export const STORY = gql`
       publishDate
       nextStoryId
       prevStoryId
+      categories {
+        nodes {
+          id
+          slug
+          name
+        }
+      }
+      nextStories {
+        id
+        categories {
+          nodes {
+            id
+            slug
+            name
+          }
+        }
+        blocks {
+          id
+          title
+          kind
+          position
+          imageUrl
+          videoPreview
+        }
+      }
+      prevStories {
+        id
+        categories {
+          nodes {
+            id
+            slug
+            name
+          }
+        }
+        blocks {
+          id
+          kind
+          title
+          position
+          imageUrl
+          videoPreview
+        }
+      }
       author {
         id
         avatar
@@ -31,6 +74,8 @@ export const STORY = gql`
         content
         imageUrl
         videoUrl
+        videoPreview
+        videoDuration
         data
       }
       tags {

@@ -5,9 +5,9 @@ import { imagePath } from '../../utility/Util';
 import { useQuery } from '@apollo/client';
 import { STORY } from './_gql';
 import Stories, { WithSeeMore, WithHeader } from 'react-insta-stories';
-import { Button, Skeleton } from 'antd';
-import { FIcon } from '../../component/icon';
+import { Button, Image, Skeleton, Tag } from 'antd';
 import ReactPlayer from 'react-player';
+import { FIcon } from '../../component/icon';
 
 export default function Story() {
   const { id } = useParams();
@@ -20,6 +20,7 @@ export default function Story() {
         content: (props) => <VideoStory {...props} block={b} story={story} />,
         header: { heading: b.content, subheading: story.publishDate, profileImage: imagePath(story.author.avatar) },
         seeMore: () => navigate('/'),
+        duration: (b.videoDuration || 10) * 1000,
       };
     } else {
       return {
@@ -37,21 +38,22 @@ export default function Story() {
 
   if (loading) return <Skeleton />;
   return (
-    <div className="w-full relative" ref={contRef}>
-      <div className="w-full flex justify-center">
+    <div className="w-full relative h-[100vh] bg-[#111111] justify-center flex" ref={contRef}>
+      <div className="w-full h-[100vh] flex justify-center flex-nowrap items-center gap-[24px] overflow-hidden">
+        {story.nextStories.map((x) => (
+          <Preview story={x} key={x.id} />
+        ))}
         <Stories
-          width="100vw"
-          height="100vh"
+          width="800px"
+          height="600px"
           keyboardNavigation
           preventDefault
           loop={false}
           storyContainerStyles={{
-            width: '100%',
             overflow: 'hidden',
             background: 'black',
-            padding: 32,
+            borderRadius: 8,
           }}
-          header
           stories={stories}
           onAllStoriesEnd={() => {
             if (story.prevStoryId) {
@@ -59,6 +61,9 @@ export default function Story() {
             }
           }}
         />
+        {story.nextStories.map((x) => (
+          <Preview story={x} key={x.id} />
+        ))}
       </div>
     </div>
   );
@@ -67,9 +72,8 @@ export default function Story() {
 function ImageStory({ block, story, config, action }) {
   const navigate = useNavigate();
   return (
-    <WithSeeMore
+    <WithHeader
       story={{
-        header: { heading: block.content, subheading: story.publishDate, profileImage: imagePath(story.author.avatar) },
         seeMore: () => navigate(block.data.url || ''),
         // seeMoreCollapsed: ({ toggleMore, action }) => (
         //   <Button onClick={() => toggleMore(true)}>Дэлгэрэнгүй үзэх</Button>
@@ -78,42 +82,45 @@ function ImageStory({ block, story, config, action }) {
       action={action}
       globalHeader={config.header}
     >
-      <div className="w-full h-full flex flex-col items-center justify-center">
-        <div className="relative">
-          <img
-            src={imagePath(block.imageUrl)}
-            alt={block.content}
-            className="min-w-[360px] max-h-[84vh] object-contain h-auto"
-          />
+      <div
+        className="w-full h-full flex flex-col items-center justify-center bg-contain bg-no-repeat bg-center"
+        style={{ backgroundImage: `url(${imagePath(block.imageUrl)})` }}
+      >
+        <div className="relative w-full h-full">
           <div className="absolute bottom-0 p-[24px] storyLinearItem w-full">
-            <span
-              className="truncate-2 text-white text-[24px] font-merri"
-              dangerouslySetInnerHTML={{ __html: block.content }}
-            />
-            <span className="text-white font-merri text-[12px]">{story.publishDate}</span>
+            <div className="flex flex-col gap-[8px]">
+              <div className="flex flex-row gap-8">
+                {story.categories.nodes.map((x) => (
+                  <Tag color="#ff6600" key={x.id} className="uppercase">
+                    {x.name || x.slug}
+                  </Tag>
+                ))}
+              </div>
+              <span
+                className="truncate-2 text-white text-[24px] font-merri"
+                dangerouslySetInnerHTML={{ __html: block.content }}
+              />
+              <span className="text-white font-merri text-[12px]">{story.publishDate}</span>
+              <Link
+                to="/story"
+                className="w-[180px] bg-white flex p-1 px-2 rounded-sm items-center justify-between font-bold"
+              >
+                Дэлгэрэнгүй үзэх
+                <FIcon className="icon-fi-rs-down-chevron text-caak-primary text-[16px]" />
+              </Link>
+            </div>
           </div>
         </div>
       </div>
-    </WithSeeMore>
+    </WithHeader>
   );
 }
 
 function VideoStory({ block, story, config, action }) {
-  const navigate = useNavigate();
   return (
-    <WithSeeMore
+    <WithHeader
       story={{
-        header: { heading: block.content, subheading: story.publishDate, profileImage: imagePath(story.author.avatar) },
-        seeMore: () => navigate(block.data.url || ''),
-        // seeMoreCollapsed: ({ toggleMore, action }) => (
-        //   <Button onClick={() => toggleMore(true)}>Дэлгэрэнгүй үзэх</Button>
-        // ),
-      }}
-      action={action}
-      globalHeader={config.header}
-    >
-      <div className="w-full h-full flex flex-col items-center justify-center">
-        <div className="relative">
+        header: (
           <div className="py-[12px]">
             <span
               className="truncate-2 text-white text-[24px] font-merri"
@@ -121,9 +128,24 @@ function VideoStory({ block, story, config, action }) {
             />
             <span className="text-white font-merri text-[12px]">{story.publishDate}</span>
           </div>
-          <ReactPlayer url={imagePath(block.videoUrl)} playing controls />
-        </div>
-      </div>
-    </WithSeeMore>
+        ),
+      }}
+      action={action}
+      globalHeader={config.header}
+      header={{ heading: block.content, subheading: story.publishDate, profileImage: imagePath(story.author.avatar) }}
+    >
+      <ReactPlayer url={imagePath(block.videoUrl)} playing controls muted width={800} height={600} />
+    </WithHeader>
+  );
+}
+
+function Preview({ story }) {
+  return (
+    <div
+      style={{ backgroundImage: `url(${imagePath(story.blocks[0].imageUrl || story.blocks[0].videoPreview)})` }}
+      className="w-[300px] h-[440px] rounded-[8px] bg-white bg-cover bg-center bg-no-repeat"
+    >
+      {story.title}
+    </div>
   );
 }

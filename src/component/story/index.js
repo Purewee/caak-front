@@ -4,11 +4,9 @@ import { ESService } from '../../lib/esService';
 import { Link } from 'react-router-dom';
 
 const StoryFeed = () => {
-  // prettier-ignore
   const [activeIndex, setActiveIndex] = useState(0);
   const [stories, setStories] = useState([]);
   const trendPostsRef = useRef(null);
-  // prettier-ignore
 
   useEffect(() => {
     const es = new ESService('caak');
@@ -16,14 +14,12 @@ const StoryFeed = () => {
       setStories(res);
     });
   }, []);
-  // prettier-ignore
 
   const nextItem = () => {
     if (activeIndex < stories.length - 1) {
       setActiveIndex(activeIndex + 1);
     }
   };
-  // prettier-ignore
   const prevItem = () => {
     if (activeIndex > 0) {
       setActiveIndex(activeIndex - 1);

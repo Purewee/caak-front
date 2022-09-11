@@ -14,15 +14,17 @@ const colors1 = ['#AA6DE4', '#FF6600', '#3B4491', '#257CEE', '#37AF37'];
 
 const TAGS = gql`
   query GetTags {
-    tags {
-      nodes {
-        id
-        name
-        articlesCount
-        slug
-        articles {
-          nodes {
-            id
+    tags(sort: { field: "articles_count", direction: desc }) {
+      edges {
+        node {
+          id
+          name
+          articlesCount
+          slug
+          articles {
+            nodes {
+              id
+            }
           }
         }
       }
@@ -32,11 +34,7 @@ const TAGS = gql`
 
 export default function AllTags() {
   const { data } = useQuery(TAGS);
-  const tags = data?.tags.nodes || [];
-  const tag = [...tags];
-  tag.sort((a, b) => {
-    return b.articles.nodes?.length - a.articles.nodes?.length;
-  });
+  const tags = data?.tags.edges.map((x) => x.node) || [];
   return (
     <div className="flex flex-col items-center">
       <p className="text-black text-[38px] font-bold font-condensed flex flex-row items-center mt-[71px] mb-[40px]">
@@ -45,7 +43,7 @@ export default function AllTags() {
       </p>
       <div className="bg-[#F5F5F5] w-full pt-[50px] flex justify-center pb-[62px]">
         <div className="max-w-[1310px] flex flex-wrap justify-center gap-[18px]">
-          {tag.map((data, index) => {
+          {tags.map((tag, index) => {
             const random = Math.floor(Math.random() * 5);
             const color = colors[random];
             const color1 = colors1[random];
@@ -64,10 +62,8 @@ export default function AllTags() {
                   </p>
                 </div>
                 <div className="ml-[14px]">
-                  <p className="text-[#111111] text-[17px] leading-[20px]">#{data.name}</p>
-                  <p className="text-[#707070] text-[13px] leading-[15px] mt-[4px]">
-                    {data.articles.nodes?.length} Мэдээтэй
-                  </p>
+                  <p className="text-[#111111] text-[17px] leading-[20px]">#{tag.name}</p>
+                  <p className="text-[#707070] text-[13px] leading-[15px] mt-[4px]">{tag.articlesCount} Мэдээтэй</p>
                 </div>
               </Link>
             );

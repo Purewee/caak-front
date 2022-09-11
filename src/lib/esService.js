@@ -107,6 +107,7 @@ export class ESService {
         },
       },
       ...rest,
+      track_total_hits: true,
     }).then(convertHitsTotal);
   }
 
@@ -137,6 +138,7 @@ export class ESService {
         },
       },
       ...rest,
+      track_total_hits: true,
     }).then(convertHitsTotal);
   }
   posts(filter, sort, size, page) {
@@ -149,6 +151,7 @@ export class ESService {
       sort: sort,
       size: size,
       from: size * page,
+      track_total_hits: true,
     }).then(convertHitsTotal);
   }
 
@@ -162,6 +165,7 @@ export class ESService {
       size: size,
       from: size * page,
       sort: { publish_date: 'desc' },
+      track_total_hits: true,
     }).then(convertHitsTotal);
   }
 
@@ -180,6 +184,7 @@ export class ESService {
       size: size,
       from: size * page,
       sort: { _score: 'desc' },
+      track_total_hits: true,
     }).then(convertHitsTotal);
   }
 }
