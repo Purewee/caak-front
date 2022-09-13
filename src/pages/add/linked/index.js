@@ -171,17 +171,19 @@ function AddLink() {
               <Form.Item name="sourceId" rules={[{ required: true, message: 'Суваг заавал сонгоно уу' }]}>
                 <Select
                   size="large"
+                  showSearch
                   loading={source_fetching}
                   allowClear
                   filterOption={(input, option) =>
                     option.props.value.toLowerCase().indexOf(input.toLowerCase()) >= 0 ||
                     option.props.label.toLowerCase().indexOf(input.toLowerCase()) >= 0
                   }
-                >
-                  {sources?.sources?.nodes?.map((x) => (
-                    <Select.Option value={x.id}>{`${x.name} - ${x.domain}`}</Select.Option>
-                  ))}
-                </Select>
+                  options={sources?.sources?.nodes?.map((x) => ({
+                    value: x.id,
+                    label: `${x.name} - ${x.domain}`,
+                    key: x.id,
+                  }))}
+                />
               </Form.Item>
               <Form.Item name="categoryIds" className="font-merri" label="Ангилал">
                 <Select

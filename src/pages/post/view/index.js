@@ -14,7 +14,7 @@ import LoveIcon from '../../../assets/images/fi-rs-react-love.png';
 import HahaIcon from '../../../assets/images/fi-rs-react-haha.svg';
 import PostSaveModal from '../../../component/modal/PostSaveModal';
 import PostShareModal from '../../../component/modal/PostShareModal';
-import { Avatar, Popover, notification, Button, Alert, Statistic, Skeleton } from 'antd';
+import { Avatar, Popover, notification, Button, Alert, Statistic, Skeleton, Popconfirm, message } from 'antd';
 import { useAuth } from '../../../context/AuthContext';
 import { useHeader } from '../../../context/HeaderContext';
 import SignInUpController from '../../../component/modal/SignInUpController';
@@ -66,8 +66,15 @@ const FOLLOW = gql`
   }
 `;
 
+const REMOVE = gql`
+  mutation RemoveArticle($id: ID!) {
+    destroyArticle(input: { id: $id })
+  }
+`;
+
 const Post = () => {
   const context = useContext(AppContext);
+  const navigate = useNavigate();
   const { id } = useParams();
   const [isStopped, setIsStopped] = useState(true);
   const [isPaused, setIsPaused] = useState(true);
@@ -90,6 +97,7 @@ const Post = () => {
   } = useQuery(SOURCE, { variables: { id: article?.source?.id }, skip: !!!article?.source?.id });
   const source = data_source?.source || {};
   const [follow, { loading: follow_saving }] = useMutation(FOLLOW, { variables: { id: article?.source?.id } });
+  const [remove, { loading: removing }] = useMutation(REMOVE, { variables: { id: article?.id } });
   const { isAuth, openModal } = useAuth();
   const { setMode } = useHeader();
 
@@ -231,10 +239,21 @@ const Post = () => {
                         </Link>
                       )}
                       {['admin', 'moderator'].includes(me?.me?.role) && (
-                        <div className="flex flex-row items-center cursor-pointer">
-                          <span className="text-[#555555] text-[20px] mr-[8px] w-[22px] h-[22px] flex items-center justify-center icon-fi-rs-delete" />
-                          <p className="text-[#555555] text-[15px] leading-[18px]">Устгах</p>
-                        </div>
+                        <Popconfirm
+                          title="Энэ мэдээг үнэхээр устгах уу?"
+                          onConfirm={() => {
+                            remove().then(() => {
+                              message.success('Мэдээ устгагдлаа.').then(() => {
+                                navigate('/');
+                              });
+                            });
+                          }}
+                        >
+                          <div className="flex flex-row items-center cursor-pointer">
+                            <span className="text-[#555555] text-[20px] mr-[8px] w-[22px] h-[22px] flex items-center justify-center icon-fi-rs-delete" />
+                            <p className="text-[#555555] text-[15px] leading-[18px]">Устгах</p>
+                          </div>
+                        </Popconfirm>
                       )}
                       <div className="flex flex-row items-center cursor-pointer">
                         <span className="text-[#555555] text-[18px] mr-[8px] w-[22px] h-[22px] flex items-center justify-center icon-fi-rs-flag" />

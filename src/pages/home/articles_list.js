@@ -10,6 +10,7 @@ export default function ArticlesList({ filter = [], sort = {}, size = 24 }) {
   const es = new ESService('caak');
   const [page, setPage] = useState(0);
   const [list, setList] = useState([]);
+  const [count, setCount] = useState(0);
   const [loading, setLoading] = useState(false);
   const isMobile = useMediaQuery('screen and (max-width: 767px)');
 
@@ -17,6 +18,7 @@ export default function ArticlesList({ filter = [], sort = {}, size = 24 }) {
     setLoading(true);
     es.posts(filter, sort, size, 0).then((response) => {
       setList(response.hits);
+      setCount(response.total);
       setLoading(false);
     });
   }, [filter, sort, size]);
@@ -25,11 +27,12 @@ export default function ArticlesList({ filter = [], sort = {}, size = 24 }) {
     setLoading(true);
     es.posts(filter, sort, size, page).then((response) => {
       setList([...list, ...response.hits]);
+      setCount(response.total);
       setLoading(false);
     });
   }, [page]);
   const chunked = list.reduce((res, item, index) => {
-    const chunkIndex = Math.floor(index / 12);
+    const chunkIndex = Math.floor(index / 11);
     if (!res[chunkIndex]) {
       res[chunkIndex] = []; // start a new chunk
     }
@@ -48,23 +51,22 @@ export default function ArticlesList({ filter = [], sort = {}, size = 24 }) {
             className="max-w-[1310px] px-[16px] sm:px-0  w-full flex flex-wrap justify-center gap-x-[22px] gap-y-[40px] mb-[40px]"
           >
             {section.map((post, index) => (
-              <div key={index}>
-                {index === divider ? (
+              <React.Fragment key={index}>
+                {index === divider && (
                   <Col className="w-full sm:w-[422px]" key={`${index}-banner`}>
                     <Banner position="a2" />
                   </Col>
-                ) : (
-                  <Col className="w-full sm:w-[422px]" key={index}>
-                    <PostCard sponsored={index === 0} isMobile={isMobile} post={post} />
-                  </Col>
                 )}
-              </div>
+                <Col className="w-full sm:w-[422px]" key={index}>
+                  <PostCard sponsored={index === 0} isMobile={isMobile} post={post} />
+                </Col>
+              </React.Fragment>
             ))}
             {loading && <Skeleton />}
           </div>
         );
       })}
-      {page === 0 && list?.length > 23 && (
+      {count > list?.length && (
         <div className="max-w-[1310px] w-full px-[16px]">
           <Button
             block
