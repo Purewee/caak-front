@@ -6,7 +6,7 @@ import moment from 'moment';
 import { useMutation } from '@apollo/client';
 import Loader from '../../../component/loader';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
-import { imagePath, parseVideoURL } from '../../../utility/Util';
+import { imagePath, parseVideoURL, isAdmin } from '../../../utility/Util';
 import { Wrapper, Title, BlockTitle, Paragraph, HashTag, MetaTag } from './wrapper';
 import Comments from './comments';
 import { ARTICLE, ME } from './_gql';
@@ -229,8 +229,8 @@ const Post = () => {
                   overlayStyle={{ width: 166 }}
                   overlayInnerStyle={{ borderRadius: 8 }}
                   content={
-                    <div className="flex flex-col gap-[15px] h-full justify-between pl-[18px] py-[18px]">
-                      {['admin', 'moderator'].includes(me?.me?.role) && (
+                    <div className="flex flex-col gap-[15px] h-full justify-between">
+                      {isAdmin(me?.me) && (
                         <Link to={`/edit/${article.kind}/${article.id}`} target="_blank">
                           <div className="flex flex-row items-center cursor-pointer">
                             <span className="text-[#555555] text-[20px] mr-[8px] w-[22px] h-[22px] flex items-center justify-center icon-fi-rs-editor-o" />
@@ -238,7 +238,7 @@ const Post = () => {
                           </div>
                         </Link>
                       )}
-                      {['admin', 'moderator'].includes(me?.me?.role) && (
+                      {isAdmin(me?.me) && (
                         <Popconfirm
                           title="Энэ мэдээг үнэхээр устгах уу?"
                           onConfirm={() => {
@@ -428,7 +428,7 @@ const Post = () => {
                 overlayInnerStyle={{ borderRadius: 8 }}
                 content={
                   <div className="flex flex-col gap-[15px] h-full justify-between">
-                    {me?.me?.id === article.author?.id && (
+                    {isAdmin(me?.me) && (
                       <Link to={`/add/${article.kind}/${article.id}`} target="_blank">
                         <div className="flex flex-row items-center cursor-pointer">
                           <span className="text-[#555555] text-[20px] mr-[8px] w-[22px] h-[22px] flex items-center justify-center icon-fi-rs-editor-o" />
@@ -436,7 +436,7 @@ const Post = () => {
                         </div>
                       </Link>
                     )}
-                    {me?.me?.id === article.author?.id && (
+                    {isAdmin(me?.me) && (
                       <div className="flex flex-row items-center cursor-pointer">
                         <span className="text-[#555555] text-[20px] mr-[8px] w-[22px] h-[22px] flex items-center justify-center icon-fi-rs-delete" />
                         <p className="text-[#555555] text-[15px] leading-[18px]">Устгах</p>

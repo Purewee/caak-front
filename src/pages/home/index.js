@@ -46,7 +46,7 @@ export default function Home() {
   const { setMode } = useHeader();
 
   const [filter, setFilter] = useState([]);
-  const [sort, setSort] = useState({});
+  const [sort, setSort] = useState({ publish_date: 'desc' });
   const { data } = useQuery(FOLLOWS, { skip: !isAuth && selected !== 'user' });
   const follows = groupBy(data?.me?.follows.map((x) => x.target) || [], (x) => x.__typename.toLowerCase());
 
@@ -186,7 +186,7 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <Banner position={'a4'} />
+      <Banner position="a4" />
     </>
   );
 }

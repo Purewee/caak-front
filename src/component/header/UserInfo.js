@@ -4,7 +4,7 @@ import { Popover, Badge, Button, Avatar, message, Spin } from 'antd';
 import { useAuth } from '../../context/AuthContext';
 import { FIcon } from '../icon';
 import { Link, useNavigate } from 'react-router-dom';
-import { imagePath } from '../../utility/Util';
+import { imagePath, isAdmin } from '../../utility/Util';
 import { ME } from '../../pages/post/view/_gql';
 import { sumBy } from 'lodash';
 import ProfileModal from './ProfileModal';
@@ -56,24 +56,28 @@ export default function UserInfo({ transparent }) {
 
   return (
     <div className="flex flex-row items-center">
-      <Button
-        onClick={() => navigate('/add')}
-        className={`hidden md:flex border-0`}
-        shape="circle"
-        icon={
-          <FIcon className={`icon-fi-rs-edit ${transparent ? 'text-white' : 'text-[#555555]'} text-[22px] mx-0 p-0`} />
-        }
-        type="ghost"
-      />
+      {isAdmin(me) && (
+        <Button
+          onClick={() => navigate('/add')}
+          className={`hidden md:flex border-0`}
+          shape="circle"
+          icon={
+            <FIcon
+              className={`icon-fi-rs-edit ${transparent ? 'text-white' : 'text-[#555555]'} text-[22px] mx-0 p-0`}
+            />
+          }
+          type="ghost"
+        />
+      )}
       <Popover
         // className="hidden md:block"
         placement="bottomRight"
         trigger="click"
         content={
-          <div className="pt-[20px]">
-            <p className="condMedium text-[22px] leading-[25px] pb-[14px] pl-[16px] border-b border-[#D4D8D8]">
+          <div>
+            <h3 className="text-[22px] leading-[25px] border-b border-[#D4D8D8] font-condensed mb-1 pb-2">
               Хадгалсан мэдээнүүд
-            </p>
+            </h3>
             <div className="w-full max-w-[368px] pt-[6px]">
               {saved_articles.map((x, index) => {
                 if (index < 10) {
@@ -149,7 +153,7 @@ export default function UserInfo({ transparent }) {
         trigger="click"
         overlayInnerStyle={{ borderRadius: 4 }}
         content={
-          <div className="text-[#555555] pt-[20px] pb-[18px] w-[220px]">
+          <div className="text-[#555555] w-[220px]">
             <div className="border-b w-full pb-[16px] flex flex-row items-center pl-[18px]">
               {me.avatar ? (
                 <Avatar className="mr-[12px] flex items-center justify-center" src={imagePath(me.avatar)} size={38} />

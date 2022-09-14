@@ -453,6 +453,10 @@ export function parseVideoURL(url) {
   );
 }
 
+export function isAdmin(user) {
+  return ['admin', 'moderator'].includes(user?.role);
+}
+
 const object = {
   mailNumber,
   name,
@@ -476,5 +480,6 @@ const object = {
   addDays,
   differenceDate,
   generateTimeAgo,
+  isAdmin,
 };
 export default object;

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Avatar, Popover, Button, message } from 'antd';
+import { Avatar, Popover, message } from 'antd';
 import { generateTimeAgo, imagePath } from '../../utility/Util';
 import { HashTag, MetaTag } from '../../pages/post/view/wrapper';
 import PostSaveModal from '../modal/PostSaveModal';
@@ -148,7 +148,7 @@ export default function PostCard({ isMobile, post, removeSaved, ...rest }) {
                 overlayStyle={{ width: 166 }}
                 overlayInnerStyle={{ borderRadius: 4 }}
                 content={
-                  <div className="w-[166px] pl-[14px] py-[18px]">
+                  <div className="w-[166px]">
                     <div
                       onClick={() => {
                         setSharing(true);
