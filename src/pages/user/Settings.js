@@ -45,20 +45,26 @@ const ME = gql`
             name
             slug
             cover
+            following
           }
           ... on Source {
             id
             name
             slug
+            following
           }
           ... on Tag {
             id
             name
             slug
+            articlesCount
+            following
           }
           ... on User {
             id
             firstName
+            avatar
+            following
           }
         }
       }
@@ -77,6 +83,12 @@ const UPDATE = gql`
   }
 `;
 
+const FOLLOW = gql`
+  mutation Follow($id: ID!) {
+    toggleFollow(input: { targetType: "source", targetId: $id })
+  }
+`;
+
 export default function Settings() {
   const context = useContext(AppContext);
   const { data, loading } = useQuery(ME);
@@ -84,9 +96,9 @@ export default function Settings() {
   const [avatar, setAvatar] = useState();
   const [selected, setSelected] = useState('posts');
   const [update, { loading: saving }] = useMutation(UPDATE, { context: { upload: true } });
+  const [follow, { loading: follow_saving }] = useMutation(FOLLOW, { variables: 1 });
 
   const me = data?.me || {};
-  console.log(me);
   const isMobile = useMediaQuery('screen and (max-width: 767px)');
 
   useEffect(() => {
@@ -100,7 +112,7 @@ export default function Settings() {
       <div className="max-w-[1140px] w-full mt-[51px]">
         <div className="flex flex-col md:flex-row gap-[20px] md:gap-[60px]">
           <div>
-            <p className="text-[28px] font-merri leading-[24px] px-[12px]">Тохиргоо</p>
+            <p className="text-[28px] leading-[24px] px-[12px] md:px-0">Тохиргоо</p>
             <Tabs
               defaultActiveKey={'posts'}
               onChange={(e) => setSelected(e)}
@@ -135,8 +147,9 @@ export default function Settings() {
                   </div>
                 }
               >
+                <p className="text-[22px] font-bold leading-[25px] text-caak-black">Ерөнхий мэдээлэл</p>
                 <Form
-                  className="w-full md:w-[790px] font-merri"
+                  className="w-full md:w-[790px] mt-[20px]"
                   layout="vertical"
                   autoComplete="off"
                   initialValues={{ firstName: me.firstName, data: me.data }}
@@ -145,25 +158,25 @@ export default function Settings() {
                   }}
                 >
                   <div className="border-[#EFEEEF] border rounded-[4px] w-full p-[30px]" id="profile">
-                    <p className="text-[22px] font-bold leading-[25px] w-full border-b border-[#D4D8D8] pb-[14px]">
-                      Профайл
-                    </p>
-                    <div className="mt-[24px]">
+                    <div>
                       <Form.Item
                         name="firstName"
                         label={
-                          <>
+                          <span className="inline-flex text-caak-black text-[16px] font-medium font-roboto leading-[19px]">
                             Нэр
                             <p className="text-[14px] text-[#909090] font-normal mx-2">/Нийтэд харагдана/</p>
-                          </>
+                          </span>
                         }
                       >
                         <Input size="large" />
                       </Form.Item>
-                      <div className="flex items-end mt-[12px]">
+                      <p className="text-[16px] font-medium text-caak-black font-roboto leading-[19px]">Аватар</p>
+                      <div className="flex flex-row items-center mt-[12px]">
+                        {avatar && <Avatar size={60} src={avatar} preview={false} />}
                         <Form.Item
                           name="avatar"
                           valuePropName="file"
+                          style={{ marginBottom: 0, marginLeft: 12 }}
                           getValueFromEvent={(e) => {
                             return e?.fileList[0].originFileObj;
                           }}
@@ -182,24 +195,25 @@ export default function Settings() {
                               });
                             }}
                           >
-                            <div className="relative">
-                              {avatar && <Avatar size={120} src={avatar} preview={false} />}
-                              <Button
-                                type="primary"
-                                shape="circle"
-                                icon={<FIcon className="icon-fi-rs-camera-f" />}
-                                className="absolute right-0 bottom-0"
-                              />
-                            </div>
+                            <Button
+                              className="border border-[#E8E8E8] w-[142px] h-[34px] rounded-[4px] gap-[8px]"
+                              icon={<FIcon className="icon-fi-rs-camera-f" />}
+                            >
+                              Зураг солих
+                            </Button>
                           </Upload>
                         </Form.Item>
                       </div>
-                      <Form.Item name={['data', 'bio']} label="Тухай">
+                      <Form.Item
+                        name={['data', 'bio']}
+                        label={<p className="text-[16px] font-medium text-caak-black leading-[19px]">Тухай</p>}
+                        className="mt-[24px] mb-0"
+                      >
                         <Input.TextArea rows={4} />
                       </Form.Item>
                     </div>
                   </div>
-                  <Button htmlType="submit" icon={<SaveOutlined />} type="primary" size="large" loading={saving}>
+                  <Button className="mt-[20px] h-[34px]" htmlType="submit" type="primary" size="large" loading={saving}>
                     Хадгалах
                   </Button>
                 </Form>
@@ -236,32 +250,62 @@ export default function Settings() {
                   >
                     <Tabs tabBarStyle={{ paddingLeft: 30 }}>
                       <Tabs.TabPane key={'category'} tab={<p>Төрөл</p>}>
-                        <div className="border-[#EFEEEF] border rounded-[4px] w-full p-[30px]" id="category">
+                        <div className="border-t w-full p-[30px]" id="category">
                           <div className="flex flex-wrap justify-start gap-[12px]">
                             {me.follows
                               .filter((x) => x.target.__typename === 'Category')
                               .map(({ target: x }) => (
-                                <div
-                                  className="w-[172px] h-[100px] relative items-center justify-center rounded-md cursor-pointer overflow-hidden"
-                                  key={x.id}
-                                >
-                                  {x.cover && (
-                                    <div
-                                      style={{ backgroundImage: `url(${imagePath(x.cover)})` }}
-                                      className="w-full h-full bg-center bg-cover bg-no-repeat"
-                                    />
+                                <div>
+                                  <div
+                                    className="w-[172px] h-[100px] relative items-center justify-center rounded-md cursor-pointer overflow-hidden"
+                                    key={x.id}
+                                  >
+                                    {x.cover && (
+                                      <div
+                                        style={{ backgroundImage: `url(${imagePath(x.cover)})` }}
+                                        className="w-full h-full bg-center bg-cover bg-no-repeat"
+                                      />
+                                    )}
+                                    <span className="absolute top-0 h-full w-full flex items-center justify-center text-white text-[16px] font-medium bg-black bg-opacity-50 rounded-md">
+                                      {x.name}
+                                    </span>
+                                  </div>
+                                  {x.following ? (
+                                    <button
+                                      className="w-[172px] h-[34px] mt-[8px] bg-[#EFEEEF] rounded-[4px] text-[#909090] text-[15px] font-medium"
+                                      onClick={() => {
+                                        if (isAuth) {
+                                          follow().then(() => {
+                                            refetch().then(console.log);
+                                          });
+                                        }
+                                      }}
+                                    >
+                                      ДАГАСАН
+                                    </button>
+                                  ) : (
+                                    <Button
+                                      type="primary"
+                                      loading={follow_saving}
+                                      className="w-[172px] h-[34px] mt-[8px] bg-caak-primary rounded-[4px] text-white text-[15px] font-bold"
+                                      onClick={() => {
+                                        if (isAuth) {
+                                          follow().then(() => {
+                                            refetch().then(console.log);
+                                          });
+                                        }
+                                      }}
+                                    >
+                                      ДАГАХ
+                                    </Button>
                                   )}
-                                  {console.log(x)}
-                                  <span className="absolute top-0 h-full w-full flex items-center justify-center text-white text-[16px] font-medium bg-black bg-opacity-50 rounded-md">
-                                    {x.name}
-                                  </span>
                                 </div>
                               ))}
                           </div>
                         </div>
                       </Tabs.TabPane>
                       <Tabs.TabPane key={'source'} tab={<p>Суваг</p>}>
-                        <div className="border-[#EFEEEF] border rounded-[4px] w-full p-[30px]" id="source">
+                        <div className="border-t w-full p-[30px]" id="source">
                           <div className="flex flex-wrap justify-start gap-[10px]">
                             {me.follows
                               .filter((x) => x.target.__typename === 'Source')
@@ -285,48 +329,104 @@ export default function Settings() {
                         </div>
                       </Tabs.TabPane>
                       <Tabs.TabPane key={'tag'} tab={<p>Таг</p>}>
-                        <div className="border-[#EFEEEF] border rounded-[4px] w-full p-[30px]" id="tag">
+                        <div className="border-t w-full p-[30px]" id="tag">
                           <div className="flex flex-wrap justify-start gap-[10px]">
                             {me.follows
                               .filter((x) => x.target.__typename === 'Tag')
                               .map(({ target: x }) => (
                                 <div
-                                  className="w-[170px] h-[100px] relative items-center justify-center rounded-md cursor-pointer overflow-hidden"
+                                  className="w-[232px] h-[124px] rounded-[4px] border border-[#EFEEEF] p-[16px]"
                                   key={x.id}
                                 >
-                                  {x.cover && (
-                                    <div
-                                      style={{ backgroundImage: `url(${imagePath(x.cover)})` }}
-                                      className="w-full h-full bg-center bg-cover bg-no-repeat"
-                                    />
+                                  <div className="flex flex-row">
+                                    <span className="h-[46px] w-[46px] rounded-[4px] bg-caak-primary bg-opacity-10 flex items-center justify-center text-[28px] font-medium text-caak-primary">
+                                      #
+                                    </span>
+                                    <div className="ml-[14px]">
+                                      <p className="text-caak-black text-[15px] font-medium">#{x.name}</p>
+                                      <span className="text-[#707070] text-[13px] leading-[15px]">
+                                        {x.articlesCount} Мэдээтэй
+                                      </span>
+                                    </div>
+                                  </div>
+                                  {x.following ? (
+                                    <button
+                                      className="w-full h-[34px] mt-[12px] bg-[#EFEEEF] rounded-[4px] text-[#909090] text-[15px] font-medium"
+                                      onClick={() => {
+                                        if (isAuth) {
+                                          follow().then(() => {
+                                            refetch().then(console.log);
+                                          });
+                                        }
+                                      }}
+                                    >
+                                      ДАГАСАН
+                                    </button>
+                                  ) : (
+                                    <Button
+                                      type="primary"
+                                      loading={follow_saving}
+                                      className="w-full h-[34px] mt-[12px] bg-caak-primary rounded-[4px] text-white text-[15px] font-bold"
+                                      onClick={() => {
+                                        if (isAuth) {
+                                          follow().then(() => {
+                                            refetch().then(console.log);
+                                          });
+                                        }
+                                      }}
+                                    >
+                                      Дагах
+                                    </Button>
                                   )}
-                                  <span className="absolute top-0 h-full w-full flex items-center justify-center text-white text-[15px] font-medium bg-black bg-opacity-50 rounded-md">
-                                    {x.name}
-                                  </span>
                                 </div>
                               ))}
                           </div>
                         </div>
                       </Tabs.TabPane>
                       <Tabs.TabPane key={'user'} tab={<p>Хэрэглэгчид</p>}>
-                        <div className="border-[#EFEEEF] border rounded-[4px] w-full p-[30px]" id="user">
-                          <div className="flex flex-wrap justify-start gap-[10px]">
+                        <div className="border-t w-full p-[30px]" id="user">
+                          <div className="flex flex-wrap justify-start gap-[16px]">
                             {me.follows
                               .filter((x) => x.target.__typename === 'User')
                               .map(({ target: x }) => (
-                                <div
-                                  className="w-[170px] h-[100px] relative items-center justify-center rounded-md cursor-pointer overflow-hidden"
-                                  key={x.id}
-                                >
-                                  {x.cover && (
-                                    <div
-                                      style={{ backgroundImage: `url(${imagePath(x.cover)})` }}
-                                      className="w-full h-full bg-center bg-cover bg-no-repeat"
-                                    />
+                                <div className="w-[232px] h-[153px] border border-[#EFEEEF] flex flex-col items-center p-[16px]">
+                                  {x.avatar ? (
+                                    <Avatar size={48} src={imagePath(x.avatar)} />
+                                  ) : (
+                                    <Avatar size={48} className="bg-[#257CEE19] text-[#257CEE] text-[32px] font-medium">
+                                      {(x?.firstName || x?.name)[0]}
+                                    </Avatar>
                                   )}
-                                  <span className="absolute top-0 h-full w-full flex items-center justify-center text-white text-[15px] font-medium bg-black bg-opacity-50 rounded-md">
-                                    {x.firstName}
-                                  </span>
+                                  <p className="text-caak-black text-[16px] leading-[19px] mt-[6px]">{x.firstName}</p>
+                                  {x.following ? (
+                                    <button
+                                      className="w-full h-[34px] mt-[14px] bg-[#EFEEEF] rounded-[4px] text-[#909090] text-[15px] font-medium"
+                                      onClick={() => {
+                                        if (isAuth) {
+                                          follow().then(() => {
+                                            refetch().then(console.log);
+                                          });
+                                        }
+                                      }}
+                                    >
+                                      ДАГАСАН
+                                    </button>
+                                  ) : (
+                                    <Button
+                                      type="primary"
+                                      loading={follow_saving}
+                                      className="w-full h-[34px] mt-[14px] bg-caak-primary rounded-[4px] text-white text-[15px] font-bold"
+                                      onClick={() => {
+                                        if (isAuth) {
+                                          follow().then(() => {
+                                            refetch().then(console.log);
+                                          });
+                                        }
+                                      }}
+                                    >
+                                      Дагах
+                                    </Button>
+                                  )}
                                 </div>
                               ))}
                           </div>
@@ -356,7 +456,7 @@ export default function Settings() {
                 }
               >
                 <Form
-                  className="w-full md:w-[790px] font-merri"
+                  className="w-full md:w-[790px]"
                   layout="vertical"
                   autoComplete="off"
                   initialValues={{ firstName: me.firstName, data: me.data }}
