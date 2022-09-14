@@ -1,8 +1,20 @@
 import React from 'react';
 import { useHeader } from '../context/HeaderContext';
+import { useQuery } from '@apollo/client';
+import { ME } from '../pages/post/view/_gql';
+import { useNavigate } from 'react-router-dom';
+import { isAdmin } from '../utility/Util';
 
-const ProtectedRoute = ({ children }) => {
+const ProtectedRoute = ({ admin = false, children }) => {
+  const { data } = useQuery(ME, { variables: { skip: !admin } });
+  const navigate = useNavigate();
+  const me = data?.me || {};
   const { setMode } = useHeader();
+  if (admin) {
+    if (!isAdmin(me)) {
+      return navigate('/');
+    }
+  }
   setMode('default');
   return children;
 };

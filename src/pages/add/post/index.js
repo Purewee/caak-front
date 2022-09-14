@@ -117,11 +117,7 @@ function AddPost() {
         })
           .then((res) => {
             message.success('Амжилттай хадгаллаа');
-            if (id) {
-              refetch().then();
-            } else {
-              navigate(`/edit/${res?.data?.article.id}`);
-            }
+            navigate(`/post/view/${res?.data?.article.id}`);
           })
           .catch((e) => {
             message.error(JSON.stringify(e.message));

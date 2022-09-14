@@ -6,7 +6,7 @@ import moment from 'moment';
 import { useMutation } from '@apollo/client';
 import Loader from '../../../component/loader';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
-import { imagePath, parseVideoURL } from '../../../utility/Util';
+import { imagePath, parseVideoURL, isAdmin } from '../../../utility/Util';
 import { Wrapper, Title, BlockTitle, Paragraph, HashTag, MetaTag } from './wrapper';
 import Comments from './comments';
 import { ARTICLE, ME } from './_gql';
@@ -14,7 +14,7 @@ import LoveIcon from '../../../assets/images/fi-rs-react-love.png';
 import HahaIcon from '../../../assets/images/fi-rs-react-haha.svg';
 import PostSaveModal from '../../../component/modal/PostSaveModal';
 import PostShareModal from '../../../component/modal/PostShareModal';
-import { Avatar, Popover, notification, Button, Alert, Statistic, Skeleton } from 'antd';
+import { Avatar, Popover, notification, Button, Alert, Statistic, Skeleton, Popconfirm, message } from 'antd';
 import { useAuth } from '../../../context/AuthContext';
 import { useHeader } from '../../../context/HeaderContext';
 import SignInUpController from '../../../component/modal/SignInUpController';
@@ -66,8 +66,15 @@ const FOLLOW = gql`
   }
 `;
 
+const REMOVE = gql`
+  mutation RemoveArticle($id: ID!) {
+    destroyArticle(input: { id: $id })
+  }
+`;
+
 const Post = () => {
   const context = useContext(AppContext);
+  const navigate = useNavigate();
   const { id } = useParams();
   const [isStopped, setIsStopped] = useState(true);
   const [isPaused, setIsPaused] = useState(true);
@@ -90,6 +97,7 @@ const Post = () => {
   } = useQuery(SOURCE, { variables: { id: article?.source?.id }, skip: !!!article?.source?.id });
   const source = data_source?.source || {};
   const [follow, { loading: follow_saving }] = useMutation(FOLLOW, { variables: { id: article?.source?.id } });
+  const [remove, { loading: removing }] = useMutation(REMOVE, { variables: { id: article?.id } });
   const { isAuth, openModal } = useAuth();
   const { setMode } = useHeader();
 
@@ -221,8 +229,8 @@ const Post = () => {
                   overlayStyle={{ width: 166 }}
                   overlayInnerStyle={{ borderRadius: 8 }}
                   content={
-                    <div className="flex flex-col gap-[15px] h-full justify-between pl-[18px] py-[18px]">
-                      {['admin', 'moderator'].includes(me?.me?.role) && (
+                    <div className="flex flex-col gap-[15px] h-full justify-between">
+                      {isAdmin(me?.me) && (
                         <Link to={`/edit/${article.kind}/${article.id}`} target="_blank">
                           <div className="flex flex-row items-center cursor-pointer">
                             <span className="text-[#555555] text-[20px] mr-[8px] w-[22px] h-[22px] flex items-center justify-center icon-fi-rs-editor-o" />
@@ -230,11 +238,22 @@ const Post = () => {
                           </div>
                         </Link>
                       )}
-                      {['admin', 'moderator'].includes(me?.me?.role) && (
-                        <div className="flex flex-row items-center cursor-pointer">
-                          <span className="text-[#555555] text-[20px] mr-[8px] w-[22px] h-[22px] flex items-center justify-center icon-fi-rs-delete" />
-                          <p className="text-[#555555] text-[15px] leading-[18px]">Устгах</p>
-                        </div>
+                      {isAdmin(me?.me) && (
+                        <Popconfirm
+                          title="Энэ мэдээг үнэхээр устгах уу?"
+                          onConfirm={() => {
+                            remove().then(() => {
+                              message.success('Мэдээ устгагдлаа.').then(() => {
+                                navigate('/');
+                              });
+                            });
+                          }}
+                        >
+                          <div className="flex flex-row items-center cursor-pointer">
+                            <span className="text-[#555555] text-[20px] mr-[8px] w-[22px] h-[22px] flex items-center justify-center icon-fi-rs-delete" />
+                            <p className="text-[#555555] text-[15px] leading-[18px]">Устгах</p>
+                          </div>
+                        </Popconfirm>
                       )}
                       <div className="flex flex-row items-center cursor-pointer">
                         <span className="text-[#555555] text-[18px] mr-[8px] w-[22px] h-[22px] flex items-center justify-center icon-fi-rs-flag" />
@@ -409,7 +428,7 @@ const Post = () => {
                 overlayInnerStyle={{ borderRadius: 8 }}
                 content={
                   <div className="flex flex-col gap-[15px] h-full justify-between">
-                    {me?.me?.id === article.author?.id && (
+                    {isAdmin(me?.me) && (
                       <Link to={`/add/${article.kind}/${article.id}`} target="_blank">
                         <div className="flex flex-row items-center cursor-pointer">
                           <span className="text-[#555555] text-[20px] mr-[8px] w-[22px] h-[22px] flex items-center justify-center icon-fi-rs-editor-o" />
@@ -417,7 +436,7 @@ const Post = () => {
                         </div>
                       </Link>
                     )}
-                    {me?.me?.id === article.author?.id && (
+                    {isAdmin(me?.me) && (
                       <div className="flex flex-row items-center cursor-pointer">
                         <span className="text-[#555555] text-[20px] mr-[8px] w-[22px] h-[22px] flex items-center justify-center icon-fi-rs-delete" />
                         <p className="text-[#555555] text-[15px] leading-[18px]">Устгах</p>

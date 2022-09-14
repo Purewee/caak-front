@@ -25,7 +25,6 @@ import Dashboard from './pages/user/Dashboard';
 import Settings from './pages/user/Settings';
 import Category from './pages/newsCategory';
 import PostSaved from './pages/user/saved';
-import Notification from './pages/user/notification';
 import './assets/fonts/Roboto-Medium.ttf';
 import CaakHeader from './component/header';
 import PushUp from './component/pushup';
@@ -115,7 +114,7 @@ function App() {
                   <Route
                     path="/add"
                     element={
-                      <ProtectedRoute>
+                      <ProtectedRoute admin>
                         <Add />
                       </ProtectedRoute>
                     }
@@ -123,7 +122,7 @@ function App() {
                   <Route
                     path="/add/post"
                     element={
-                      <ProtectedRoute>
+                      <ProtectedRoute admin>
                         <AddPost />
                       </ProtectedRoute>
                     }
@@ -131,7 +130,7 @@ function App() {
                   <Route
                     path="/add/linked"
                     element={
-                      <ProtectedRoute>
+                      <ProtectedRoute admin>
                         <AddLink />
                       </ProtectedRoute>
                     }
@@ -139,7 +138,7 @@ function App() {
                   <Route
                     path="/add/story"
                     element={
-                      <ProtectedRoute>
+                      <ProtectedRoute admin>
                         <AddStory />
                       </ProtectedRoute>
                     }
@@ -147,7 +146,7 @@ function App() {
                   <Route
                     path="/edit/:id"
                     element={
-                      <ProtectedRoute>
+                      <ProtectedRoute admin>
                         <AddPost />
                       </ProtectedRoute>
                     }
@@ -155,7 +154,7 @@ function App() {
                   <Route
                     path="/add/:id"
                     element={
-                      <ProtectedRoute>
+                      <ProtectedRoute admin>
                         <AddPost />
                       </ProtectedRoute>
                     }
@@ -163,7 +162,7 @@ function App() {
                   <Route
                     path="/edit/linked/:id"
                     element={
-                      <ProtectedRoute>
+                      <ProtectedRoute admin>
                         <AddLink />
                       </ProtectedRoute>
                     }
@@ -171,7 +170,7 @@ function App() {
                   <Route
                     path="/edit/post/:id"
                     element={
-                      <ProtectedRoute>
+                      <ProtectedRoute admin>
                         <AddPost />
                       </ProtectedRoute>
                     }
@@ -179,7 +178,7 @@ function App() {
                   <Route
                     path="/edit/story/:id"
                     element={
-                      <ProtectedRoute>
+                      <ProtectedRoute admin>
                         <AddStory />
                       </ProtectedRoute>
                     }
