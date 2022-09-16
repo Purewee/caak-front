@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useQuery, gql, useMutation } from '@apollo/client';
 import { Popover, Badge, Button, Avatar, message, Spin } from 'antd';
 import { useAuth } from '../../context/AuthContext';
@@ -19,6 +19,8 @@ const REMOVE_SAVED = gql`
 
 export default function UserInfo({ transparent }) {
   const [hovered, setHovered] = useState();
+  const [savedVisible, setSavedVisible] = useState(false);
+  const [profileVisible, setProfileVisible] = useState(false);
   const [open, setOpen] = useState(false);
   const { data, loading, refetch } = useQuery(ME);
   const { logout } = useAuth();
@@ -27,6 +29,31 @@ export default function UserInfo({ transparent }) {
   const totalSaved = sumBy(data?.me?.recipes.map((x) => x.articlesCount));
   const [remove, { loading: removing }] = useMutation(REMOVE_SAVED);
   const navigate = useNavigate();
+
+  function useOutsideAlerter(ref) {
+    useEffect(() => {
+      /**
+       * Alert if clicked on outside of element
+       */
+      function handleClickOutside(event) {
+        if (ref.current && !ref.current.contains(event.target)) {
+          setProfileVisible(false);
+          setSavedVisible(false);
+        }
+      }
+      // Bind the event listener
+      document.addEventListener('mousedown', handleClickOutside);
+      return () => {
+        // Unbind the event listener on clean up
+        document.removeEventListener('mousedown', handleClickOutside);
+      };
+    }, [ref]);
+  }
+
+  const saveRef = useRef(null);
+  const profileRef = useRef(null);
+  useOutsideAlerter(saveRef);
+  useOutsideAlerter(profileRef);
 
   useEffect(() => {
     if (me.id && !me.firstName) {
@@ -70,11 +97,11 @@ export default function UserInfo({ transparent }) {
         />
       )}
       <Popover
-        // className="hidden md:block"
         placement="bottomRight"
         trigger="click"
+        visible={savedVisible}
         content={
-          <div>
+          <div ref={saveRef}>
             <h3 className="text-[22px] leading-[25px] border-b border-[#D4D8D8] font-condensed mb-1 pb-2">
               Хадгалсан мэдээнүүд
             </h3>
@@ -88,7 +115,7 @@ export default function UserInfo({ transparent }) {
                       onMouseLeave={() => setHovered(null)}
                       className="flex flex-row items-center w-full justify-between px-[16px] hover:bg-[#EFEEEF] h-[64px]"
                     >
-                      <Link className="flex flex-row" to={`/post/view/${x.id}`}>
+                      <Link onClick={() => setSavedVisible(false)} className="flex flex-row" to={`/post/view/${x.id}`}>
                         <Avatar
                           className="min-w-[60px] max-w-[60px] h-[44px] object-cover"
                           src={imagePath(x.imageUrl)}
@@ -127,6 +154,7 @@ export default function UserInfo({ transparent }) {
         }
       >
         <Button
+          onClick={() => setSavedVisible(!savedVisible)}
           icon={
             <Badge className="mt-[3px]" count={totalSaved} size="small" showZero={false} overflowCount={20}>
               <FIcon className={`icon-fi-rs-list-o text-[22px] ${transparent ? 'text-white' : 'text-[#555555]'}`} />
@@ -137,23 +165,13 @@ export default function UserInfo({ transparent }) {
           type="ghost"
         />
       </Popover>
-      {/* <Link className="sm:hidden" to="/notification">
-        <Button
-          icon={
-            <Badge className="mt-[3px]" count={totalSaved} size="small" showZero={false} overflowCount={20}>
-              <FIcon className="icon-fi-rs-list-o" />
-            </Badge>
-          }
-          className="border-0 mx-[8px]"
-          shape="circle"
-        />
-      </Link> */}
       <Popover
         placement="bottomRight"
         trigger="click"
+        visible={profileVisible}
         overlayInnerStyle={{ borderRadius: 4 }}
         content={
-          <div className="text-[#555555] w-[220px]">
+          <div ref={profileRef} className="text-[#555555] w-[220px]">
             <div className="border-b w-full pb-[16px] flex flex-row items-center pl-[18px]">
               {me.avatar ? (
                 <Avatar className="mr-[12px] flex items-center justify-center" src={imagePath(me.avatar)} size={38} />
@@ -172,7 +190,7 @@ export default function UserInfo({ transparent }) {
             <div className="pl-[18px] flex flex-col border-b gap-y-[16px] py-[19px]">
               {Settings.map((data, index) => {
                 return (
-                  <Link key={index} to={{ pathname: data.link }}>
+                  <Link onClick={() => setProfileVisible(false)} key={index} to={{ pathname: data.link }}>
                     <div className="flex flex-row items-center cursor-pointer">
                       <span className={`${data.icon} text-[20px]`} />
                       <p className="text-[15px] ml-[12px] -mt-[3px] leading-[18px]">{data.title}</p>
@@ -181,7 +199,13 @@ export default function UserInfo({ transparent }) {
                 );
               })}
             </div>
-            <div onClick={() => logout()} className="flex flex-row items-center cursor-pointer mt-[18px] ml-[18px]">
+            <div
+              onClick={() => {
+                logout();
+                setProfileVisible(false);
+              }}
+              className="flex flex-row items-center cursor-pointer mt-[18px] ml-[18px]"
+            >
               <span className={`icon-fi-rs-exit text-[20px]`} />
               <p className="text-[15px] ml-[12px] leading-[18px]">Гарах</p>
             </div>
@@ -189,19 +213,23 @@ export default function UserInfo({ transparent }) {
         }
       >
         {me.avatar ? (
-          <Avatar
-            src={imagePath(me.avatar)}
-            size={34}
-            className="ml-[16px] cursor-pointer flex justify-center items-center "
-            shape="circle"
-          />
+          <div onClick={() => setProfileVisible(!profileVisible)}>
+            <Avatar
+              src={imagePath(me.avatar)}
+              size={34}
+              className="ml-[16px] cursor-pointer flex justify-center items-center "
+              shape="circle"
+            />
+          </div>
         ) : (
-          <Avatar
-            size={34}
-            className="ml-[16px] flex items-center bg-[#257CEE19] text-[#257CEE] text-[20px] font-medium"
-          >
-            {(me?.firstName || me?.name)[0]}
-          </Avatar>
+          <div onClick={() => setProfileVisible(!profileVisible)}>
+            <Avatar
+              size={34}
+              className="ml-[16px] flex items-center bg-[#257CEE19] text-[#257CEE] text-[20px] font-medium"
+            >
+              {(me?.firstName || me?.name)[0]}
+            </Avatar>
+          </div>
         )}
       </Popover>
       {open && <ProfileModal login={me?.login} />}

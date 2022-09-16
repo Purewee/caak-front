@@ -50,7 +50,7 @@ export default function AllTags() {
             return (
               <Link
                 key={index}
-                to={`/tags/${data.slug}`}
+                to={`/tags/${tag.slug}`}
                 className="w-[314px] h-[78px] bg-white rounded-[4px] border border-[#EFEEEF] flex flex-row items-center pl-[16px]"
               >
                 <div

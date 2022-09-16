@@ -85,18 +85,18 @@ const UPDATE = gql`
 
 const FOLLOW = gql`
   mutation Follow($id: ID!) {
-    toggleFollow(input: { targetType: "source", targetId: $id })
+    toggleFollow(input: { targetType: "category", targetId: $id })
   }
 `;
 
 export default function Settings() {
   const context = useContext(AppContext);
-  const { data, loading } = useQuery(ME);
+  const { data, loading, refetch } = useQuery(ME);
   const { isAuth } = useAuth();
   const [avatar, setAvatar] = useState();
   const [selected, setSelected] = useState('posts');
   const [update, { loading: saving }] = useMutation(UPDATE, { context: { upload: true } });
-  const [follow, { loading: follow_saving }] = useMutation(FOLLOW, { variables: 1 });
+  const [follow, { loading: follow_saving }] = useMutation(FOLLOW);
 
   const me = data?.me || {};
   const isMobile = useMediaQuery('screen and (max-width: 767px)');
@@ -112,7 +112,7 @@ export default function Settings() {
       <div className="max-w-[1140px] w-full mt-[51px]">
         <div className="flex flex-col md:flex-row gap-[20px] md:gap-[60px]">
           <div>
-            <p className="text-[28px] leading-[24px] px-[12px] md:px-0">Тохиргоо</p>
+            <p className="text-[28px] leading-[24px]">Тохиргоо</p>
             <Tabs
               defaultActiveKey={'posts'}
               onChange={(e) => setSelected(e)}
@@ -121,17 +121,19 @@ export default function Settings() {
               className="mt-[25px]"
               tabBarStyle={{
                 maxHeight: 180,
-                width: 290,
+                width: isMobile ? '100%' : 290,
                 boxShadow: '0px 1px 2px #00000010',
                 backgroundColor: 'white',
                 padding: 10,
                 border: '1px solid #EFEEEF',
+                display: 'flex',
+                flexDirection: 'column',
               }}
             >
               <Tabs.TabPane
                 key="posts"
                 tab={
-                  <div className={`flex flex-row items-center h-[32px] w-[235px]`}>
+                  <div className={`flex flex-row items-center h-[32px] sm:w-[235px]`}>
                     <span
                       className={`icon-fi-rs-user-f text-[22px] mr-[10px] ${
                         selected === 'posts' ? 'text-caak-primary' : 'text-[#909090]'
@@ -147,7 +149,9 @@ export default function Settings() {
                   </div>
                 }
               >
-                <p className="text-[22px] font-bold leading-[25px] text-caak-black">Ерөнхий мэдээлэл</p>
+                <p className="text-[22px] font-bold leading-[25px] text-caak-black mt-[20px] sm:mt-0">
+                  Ерөнхий мэдээлэл
+                </p>
                 <Form
                   className="w-full md:w-[790px] mt-[20px]"
                   layout="vertical"
@@ -256,6 +260,7 @@ export default function Settings() {
                               .filter((x) => x.target.__typename === 'Category')
                               .map(({ target: x }) => (
                                 <div>
+                                  {console.log(x)}
                                   <div
                                     className="w-[172px] h-[100px] relative items-center justify-center rounded-md cursor-pointer overflow-hidden"
                                     key={x.id}
@@ -275,7 +280,7 @@ export default function Settings() {
                                       className="w-[172px] h-[34px] mt-[8px] bg-[#EFEEEF] rounded-[4px] text-[#909090] text-[15px] font-medium"
                                       onClick={() => {
                                         if (isAuth) {
-                                          follow().then(() => {
+                                          follow({ variables: { id: x.id } }).then(() => {
                                             refetch().then(console.log);
                                           });
                                         }
@@ -290,7 +295,7 @@ export default function Settings() {
                                       className="w-[172px] h-[34px] mt-[8px] bg-caak-primary rounded-[4px] text-white text-[15px] font-bold"
                                       onClick={() => {
                                         if (isAuth) {
-                                          follow().then(() => {
+                                          follow({ variables: { id: x.id } }).then(() => {
                                             refetch().then(console.log);
                                           });
                                         }
@@ -478,6 +483,9 @@ export default function Settings() {
                       <Switch className="mt-[12px] w-[40px] h-[22px] bg-[#E4E4E5]" />
                     </Form.Item>
                   </div>
+                  <Button className="mt-[20px] h-[34px]" htmlType="submit" type="primary" size="large" loading={saving}>
+                    Хадгалах
+                  </Button>
                 </Form>
               </Tabs.TabPane>
             </Tabs>

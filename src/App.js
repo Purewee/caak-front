@@ -223,14 +223,6 @@ function App() {
                       </ProtectedRoute>
                     }
                   />
-                  {/* <Route
-                    path="/notification"
-                    element={
-                      <ProtectedRoute>
-                        <Notification />
-                      </ProtectedRoute>
-                    }
-                  /> */}
                   <Route
                     path="/tags"
                     element={

@@ -357,7 +357,7 @@ const Post = () => {
                     {b.kind === 'image' && (
                       <div key={b.id} className="flex flex-col md:items-center mb-[26px] md:mb-[50px] w-full">
                         {b.title && <BlockTitle>{`${numbering ? `${b.position}. ` : ''}${b.title}`}</BlockTitle>}
-                        <LazyLoadImage src={imagePath(b.imageUrl)} alt={b.title} className="w-full object-cover" />
+                        <LazyLoadImage src={imagePath(b.imageUrl)} alt={b.title} className="w-full" />
                         {b.data?.meta?.length > 0 && (
                           <span className="w-[99%] bg-[#697581] text-white p-[8px] text-center font-condensed text-[12px] italic">
                             {b.data.meta}
