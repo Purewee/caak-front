@@ -98,7 +98,7 @@ type ArticleBlock {
   status: String
   title: String
   updatedAt: ISO8601DateTime
-  videoDuration: Int
+  videoDuration: Float
   videoPreview: String
   videoUrl: String
 }
@@ -238,7 +238,9 @@ type Comment {
   data: JSON
   dislikesCount: Int
   id: ID!
+  ip: String
   likesCount: Int
+  name: String
   parent: Comment
   parentId: Int
   repliesCount: Int
@@ -449,11 +451,13 @@ type Query {
   recipe(id: ID): Recipe!
   reportTypes: [ReportType!]!
   source(id: ID!): Source!
+  sourceCategories: [String!]!
   sources(
     "Returns the elements in the list that come after the specified cursor."
     after: String,
     "Returns the elements in the list that come before the specified cursor."
     before: String,
+    filter: SourceFilter,
     "Returns the first _n_ elements from the list."
     first: Int,
     "Returns the last _n_ elements from the list."
@@ -560,6 +564,7 @@ type Source {
     sort: SortFilter
   ): ArticleConnection!
   articlesCount: Int
+  category: String!
   createdAt: ISO8601DateTime
   domain: String
   followers(
@@ -852,6 +857,18 @@ input IntFilter {
 input SortFilter {
   direction: SortDirection
   field: String!
+}
+
+"Source filter"
+input SourceFilter {
+  category: StringFilter
+  createdAt: DateFilter
+  domain: StringFilter
+  id: IDFilter
+  name: StringFilter
+  slug: StringFilter
+  status: StringFilter
+  updatedAt: DateFilter
 }
 
 input StringFilter {

@@ -172,7 +172,6 @@ export const SOURCES = gql`
         domain
         articlesCount
         slug
-        following
       }
     }
   }
