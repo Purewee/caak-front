@@ -85,6 +85,7 @@ const Categories = () => {
               <Popover
                 placement="bottom"
                 trigger="click"
+                overlayClassName="padding_zero"
                 className="leading-[16px] tracking-[0px]"
                 overlayInnerStyle={{ borderRadius: 8 }}
                 visible={open}

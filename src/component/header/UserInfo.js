@@ -99,10 +99,11 @@ export default function UserInfo({ transparent }) {
       <Popover
         placement="bottomRight"
         trigger="click"
+        overlayClassName="padding_zero paddin"
         visible={savedVisible}
         content={
           <div ref={saveRef}>
-            <h3 className="text-[22px] leading-[25px] border-b border-[#D4D8D8] font-condensed mb-1 pb-2">
+            <h3 className="text-[22px] leading-[25px] border-b border-[#D4D8D8] condMedium mb-1 pb-2 px-[16px] pt-[22px]">
               Хадгалсан мэдээнүүд
             </h3>
             <div className="w-full max-w-[368px] pt-[6px]">
@@ -168,10 +169,11 @@ export default function UserInfo({ transparent }) {
       <Popover
         placement="bottomRight"
         trigger="click"
+        overlayClassName="padding_zero"
         visible={profileVisible}
         overlayInnerStyle={{ borderRadius: 4 }}
         content={
-          <div ref={profileRef} className="text-[#555555] w-[220px]">
+          <div ref={profileRef} className="text-[#555555] w-[220px] py-[18px]">
             <div className="border-b w-full pb-[16px] flex flex-row items-center pl-[18px]">
               {me.avatar ? (
                 <Avatar className="mr-[12px] flex items-center justify-center" src={imagePath(me.avatar)} size={38} />
