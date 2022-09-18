@@ -33,8 +33,7 @@ import { FIcon } from '../../../component/icon';
 import { orderBy } from 'lodash';
 import ArticlesList from '../../home/articles_list';
 import Banner from '../../../component/banner';
-
-const ACTIONS = [{ icon: love }, { icon: haha }, { icon: wow }, { icon: cry }, { icon: angry }];
+import { REACTIONS, ADD_REACTION } from './_gql';
 
 const SOURCE = gql`
   query GetSource($id: ID!) {
@@ -76,9 +75,8 @@ const Post = () => {
   const context = useContext(AppContext);
   const navigate = useNavigate();
   const { id } = useParams();
-  const [isStopped, setIsStopped] = useState(true);
-  const [isPaused, setIsPaused] = useState(true);
   const [leftMenuSticky, setLeftMenuSticky] = useState(false);
+  const [active, setActive] = useState(true);
   const [reporting, setReporting] = useState(false);
   const [saving, setSaving] = useState(false);
   const [sharing, setSharing] = useState(false);
@@ -185,30 +183,10 @@ const Post = () => {
               {reporting || (
                 <Popover
                   placement="top"
-                  trigger="hover"
+                  trigger="click"
                   overlayStyle={{ borderRadius: 8 }}
-                  content={
-                    <div className="flex flex-row h-[46px] items-center max-w-[230px] gap-[8px]">
-                      {ACTIONS.map((data, index) => (
-                        <Button key={index} shape="circle" type="link">
-                          <Lottie
-                            options={{
-                              animationData: data?.icon,
-                              loop: true,
-                              autoplay: true,
-                              rendererSettings: {
-                                preserveAspectRatio: 'xMidYMid slice',
-                              },
-                            }}
-                            height={38}
-                            width={38}
-                            isStopped={isStopped}
-                            isPaused={isPaused}
-                          />
-                        </Button>
-                      ))}
-                    </div>
-                  }
+                  overlayClassName="padding_zero"
+                  content={<Reaction left articleId={article?.id} />}
                 >
                   <FIcon className="mt-[6px] icon-fi-rs-heart text-[26px] text-[#F53757] border border-[#D4D8D8] w-[60px] h-[60px] rounded-full" />
                 </Popover>

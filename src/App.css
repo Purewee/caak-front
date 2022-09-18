@@ -571,3 +571,7 @@
 .ant-tabs-left > .ant-tabs-content-holder, .ant-tabs-left > div > .ant-tabs-content-holder {
   border-left: 0px;
 }
+
+.padding_zero .ant-popover-inner-content { 
+  padding: 0px;
+}

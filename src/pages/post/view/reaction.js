@@ -9,7 +9,7 @@ import * as haha from '../../../assets/json/haha-js.json';
 import * as wow from '../../../assets/json/wow-js.json';
 import Lottie from 'react-lottie';
 
-export default function Reaction({ articleId }) {
+export default function Reaction({ articleId, left }) {
   const [active, setActive] = useState(true);
   const { data, loading: fetching, refetch } = useQuery(REACTIONS, { variables: { articleId } });
   const [add, { loading }] = useMutation(ADD_REACTION, { variables: { articleId } });
@@ -24,14 +24,22 @@ export default function Reaction({ articleId }) {
   const reactions = data?.article?.reactions;
 
   return (
-    <Spin className="max-w-[760px] w-full flex flex-col items-center" spinning={loading || fetching}>
-      <p className="text-[#111111] text-[18px] font-bold leading-[21px] my-[36px] text-center px-[70px] md:px-0 md:mt-[50px]">
+    <Spin className={`max-w-[760px] w-full flex flex-col items-center`} spinning={loading || fetching}>
+      <p
+        className={`text-[#111111] text-[18px] font-bold leading-[21px] my-[36px] text-center px-[70px] md:px-0 md:mt-[50px] ${
+          left && 'hidden'
+        }`}
+      >
         ЭНЭ МЭДЭЭНД ӨГӨХ ТАНЫ СЭТГЭГДЭЛ?
       </p>
-      <div className="flex flex-row items-center gap-[7px] md:gap-[24px] mt-[14px]">
+      <div
+        className={`flex flex-row items-center ${left ? 'gap-[8px] h-[46px]' : 'gap-[7px] md:gap-[24px] mt-[14px]'}`}
+      >
         {ACTIONS.map((x, idx) => (
           <div key={idx} className={`flex flex-col items-center`}>
-            <div className="font-bold mb-[20px]">{reactions?.nodes.filter((r) => r.action === x.action).length}</div>
+            <div className={`font-bold ${left ? 'hidden' : 'mb-[20px]'}`}>
+              {reactions?.nodes.filter((r) => r.action === x.action).length}
+            </div>
             <Button
               disabled={loading || !active}
               shape="circle"
@@ -45,7 +53,7 @@ export default function Reaction({ articleId }) {
                 })
               }
             >
-              <span className="rounded-full border p-[12px]">
+              <span className={`${!left && 'rounded-full border p-[12px]'}`}>
                 <Lottie
                   options={{
                     animationData: x.icon,
