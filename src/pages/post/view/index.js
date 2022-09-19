@@ -76,7 +76,6 @@ const Post = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const [leftMenuSticky, setLeftMenuSticky] = useState(false);
-  const [active, setActive] = useState(true);
   const [reporting, setReporting] = useState(false);
   const [saving, setSaving] = useState(false);
   const [sharing, setSharing] = useState(false);
@@ -179,11 +178,11 @@ const Post = () => {
             } w-full flex-col items-end`}
           >
             <div className="flex flex-col items-center w-[60px] h-[226px]">
-              <p className="text-[#555555] text-[15px] leading-[18px] font-bold">{article.data?.like_count}</p>
+              <p className="text-[#555555] text-[15px] leading-[18px] font-bold">{article.reactionsCount || 0}</p>
               {reporting || (
                 <Popover
                   placement="top"
-                  trigger="click"
+                  trigger="hover"
                   overlayStyle={{ borderRadius: 8 }}
                   overlayClassName="padding_zero"
                   content={<Reaction left articleId={article?.id} />}
