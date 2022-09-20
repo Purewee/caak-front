@@ -13,8 +13,6 @@ export const STORY = gql`
       featuredTo
       acceptComment
       publishDate
-      nextStoryId
-      prevStoryId
       categories {
         nodes {
           id
@@ -22,8 +20,9 @@ export const STORY = gql`
           name
         }
       }
-      nextStories {
+      nextStory {
         id
+        title
         categories {
           nodes {
             id
@@ -40,8 +39,9 @@ export const STORY = gql`
           videoPreview
         }
       }
-      prevStories {
+      prevStory {
         id
+        title
         categories {
           nodes {
             id

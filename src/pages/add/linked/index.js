@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Tabs,
   Button,
@@ -70,7 +70,7 @@ function AddLink() {
         ...article,
         sourceId: article?.source?.id,
         tags: article?.tags.map((x) => x.slug),
-        featuredDates: [moment(article?.featuredFrom), moment(article?.featuredTo)],
+        featuredDates: [moment(article?.featuredFrom || undefined), moment(article?.featuredTo || undefined)],
       }}
     >
       <Row gutter={24} className="mb-[400px]">
@@ -108,7 +108,7 @@ function AddLink() {
             <LinkField onSuccess={setData} />
             {!data && !id ? (
               <Skeleton
-                avatar={{ shape: 'square', size: 200 }}
+                avatar={{ shape: 'square', size: 240 }}
                 title={{ width: '80%' }}
                 paragraph={{ rows: 4, width: '100%' }}
               />
@@ -135,11 +135,15 @@ function AddLink() {
                         });
                       }}
                     >
-                      <Image
-                        src={data?.image || imagePath(article?.imageUrl)}
-                        className="object-cover w-[300px] h-[200px]"
-                        preview={false}
-                      />
+                      {data?.image || article?.imageUrl ? (
+                        <Image
+                          src={data?.image || imagePath(article?.imageUrl)}
+                          className="object-cover w-[300px] h-[200px]"
+                          preview={false}
+                        />
+                      ) : (
+                        <Skeleton.Image style={{ width: 300, height: 200 }} />
+                      )}
                     </Upload>
                   </Form.Item>
                   <div className="flex flex-col w-full">
@@ -238,11 +242,13 @@ const LinkField = ({ onSuccess }) => {
         placeholder="Мэдээний линк оруулна уу"
         enterButton="Хөрвүүлэх"
         onSearch={(value) => {
-          convert({ variables: { link: value } }).then((data) => {
-            onSuccess(data?.data?.convertLink);
-            form.setFieldsValue({ title: data?.data?.convertLink.title });
-            form.setFieldsValue({ description: data?.data?.convertLink.description });
-          });
+          convert({ variables: { link: value } })
+            .then((data) => {
+              onSuccess(data?.data?.convertLink);
+              form.setFieldsValue({ title: data?.data?.convertLink.title });
+              form.setFieldsValue({ description: data?.data?.convertLink.description });
+            })
+            .catch((e) => message.error(JSON.stringify(e)));
         }}
         loading={converting}
       />

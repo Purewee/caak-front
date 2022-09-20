@@ -23,5 +23,10 @@
 
 .ck-editor__editable_inline {
   min-height: 72px;
+  p {
+    a {
+      color: var(--ant-primary-color);
+    }
+  }
 }
 

@@ -381,7 +381,7 @@
 
 .zoom {
   transition: transform .2s; /* Animation */
-  width: 172;
+  width: 172px;
   height: 100px;
 }
 
@@ -569,9 +569,13 @@
   border-right-color: #EFEEEF;
 }
 .ant-tabs-left > .ant-tabs-content-holder, .ant-tabs-left > div > .ant-tabs-content-holder {
-  border-left: 0px;
+  border-left: 0;
 }
 
 .padding_zero .ant-popover-inner-content { 
-  padding: 0px;
+  padding: 0;
+}
+
+.ck-content p a {
+  color: var(--ant-primary-color);
 }
