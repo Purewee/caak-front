@@ -3,7 +3,7 @@ import { useQuery, gql, useMutation } from '@apollo/client';
 import { useParams } from 'react-router-dom';
 import { ESService } from '../../lib/esService';
 import { ME, USER } from '../post/view/_gql';
-import { Avatar, Col, Statistic, Tabs, Skeleton, Button } from 'antd';
+import { Avatar, Col, Statistic, Tabs, Skeleton, Button, Badge } from 'antd';
 import PostCard from '../../component/card/Post';
 import { Title } from '../post/view/wrapper';
 import { useAuth } from '../../context/AuthContext';
@@ -16,6 +16,39 @@ import { useLocation } from 'react-router-dom';
 const FOLLOW = gql`
   mutation Follow($id: ID!) {
     toggleFollow(input: { targetType: "user", targetId: $id })
+  }
+`;
+
+const HISTORY = gql`
+  query histories {
+    impressions(sort: { field: "id", direction: desc }) {
+      totalCount
+      edges {
+        node {
+          id
+          impressionable {
+            ... on Article {
+              id
+              title
+              image: imageUrl
+              publish_date: publishDate
+              author {
+                id
+                name: firstName
+                avatar
+              }
+              source {
+                id
+                icon
+                name
+              }
+            }
+          }
+          actionName
+          createdAt
+        }
+      }
+    }
   }
 `;
 
@@ -36,6 +69,8 @@ export default function Profile() {
   const { isAuth } = useAuth();
   const saved_articles = user?.recipes?.map((x) => x?.articles.nodes).flat() || [];
   const [follow, { loading: saving }] = useMutation(FOLLOW, { variables: { id } });
+  const { data: historyData, loading: historyLoading } = useQuery(HISTORY, { skip: selected !== 'history' });
+  const histories = historyData?.impressions?.edges?.map((x) => x.node) || [];
 
   const isMobile = useMediaQuery('screen and (max-width: 767px)');
 
@@ -133,14 +168,12 @@ export default function Profile() {
           <Tabs.TabPane
             key="posts"
             tab={
-              <div className="flex flex-row items-center">
-                <p className={`text-[16px] font-bold ${selected === 'posts' ? 'text-caak-black' : 'text-caak-gray'}`}>
-                  ОРУУЛСАН МЭДЭЭ
-                </p>
-                <p className="bg-[#BBBEBE] py-[2px] px-[6px] ml-[10px] font-roboto rounded-[4px] text-white text-[14px] font-bold leading-[16px]">
-                  {user.articles?.totalCount}
-                </p>
-              </div>
+              <Statistic
+                title={<span className="font-condensed text-[16px]">ОРУУЛСАН МЭДЭЭ</span>}
+                value={user.articles?.totalCount}
+                className="flex font-condensed font-bold"
+                style={{ flexDirection: 'row', gap: 6 }}
+              />
             }
           >
             <div className="max-w-[1310px] w-full flex flex-wrap justify-center mt-[50px] xl:justify-start gap-x-[22px] gap-y-[40px] px-[32px] sm:px-0  border-t">
@@ -165,16 +198,12 @@ export default function Profile() {
             <Tabs.TabPane
               key="saved"
               tab={
-                <div className="flex flex-row items-center">
-                  <p className={`text-[16px] font-bold ${selected === 'saved' ? 'text-caak-black' : 'text-caak-gray'}`}>
-                    ХАДГАЛСАН МЭДЭЭ
-                  </p>
-                  {saved_articles && (
-                    <p className="bg-[#BBBEBE] py-[2px] px-[6px] ml-[10px] font-roboto rounded-[4px] text-white text-[14px] font-bold leading-[16px]">
-                      {saved_articles.length}
-                    </p>
-                  )}
-                </div>
+                <Statistic
+                  title={<span className="font-condensed text-[16px]">ХАДГАЛСАН МЭДЭЭ</span>}
+                  value={saved_articles.length}
+                  className="flex font-condensed font-bold"
+                  style={{ flexDirection: 'row', gap: 8 }}
+                />
               }
             >
               <div className="max-w-[1310px] w-full flex flex-wrap mt-[50px] justify-center xl:justify-start gap-x-[22px] gap-y-[40px] px-[32px] sm:px-0 border-t">
@@ -190,12 +219,25 @@ export default function Profile() {
             <Tabs.TabPane
               key="history"
               tab={
-                <p className={`text-[16px] font-bold ${selected === 'history' ? 'text-caak-black' : 'text-caak-gray'}`}>
-                  ҮЗСЭН ТҮҮХ
-                </p>
+                <Statistic
+                  title={<span className="font-condensed text-[16px]">ҮЗСЭН ТҮҮХ</span>}
+                  value={historyData?.impressions?.totalCount || ' '}
+                  className="flex font-condensed font-bold"
+                  style={{ flexDirection: 'row', gap: 8 }}
+                  loading={historyLoading}
+                />
               }
             >
-              <div className="w-full border-t"></div>
+              {historyLoading && <Skeleton className="p-2" />}
+              <div className="max-w-[1310px] w-full flex flex-wrap mt-[50px] justify-center xl:justify-start gap-x-[22px] gap-y-[40px] px-[32px] sm:px-0 border-t">
+                {histories.map((x) => {
+                  return (
+                    <Col className="w-full sm:w-[422px]" key={x.id}>
+                      <PostCard removeSaved isMobile={isMobile} post={x.impressionable} />
+                    </Col>
+                  );
+                })}
+              </div>
             </Tabs.TabPane>
           )}
         </Tabs>

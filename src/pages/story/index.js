@@ -4,11 +4,12 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import { imagePath } from '../../utility/Util';
 import { useQuery } from '@apollo/client';
 import { STORY } from './_gql';
-import Stories, { WithHeader } from 'react-insta-stories';
-import { Button, Skeleton, Tag } from 'antd';
+import Stories from 'react-insta-stories';
+import { Button, Skeleton } from 'antd';
 import ReactPlayer from 'react-player';
 import { FIcon } from '../../component/icon';
 import { CloseOutlined } from '@ant-design/icons';
+import AllStories from '../../images/all_stories.png';
 
 export default function Story() {
   const { id } = useParams();
@@ -19,7 +20,6 @@ export default function Story() {
     if (b.kind === 'video') {
       return {
         content: (props) => <VideoStory {...props} block={b} story={story} />,
-        header: { heading: b.content, subheading: story.publishDate, profileImage: imagePath(story.author.avatar) },
         duration: (b.videoDuration || 10) * 1100,
       };
     } else {
@@ -29,22 +29,17 @@ export default function Story() {
       };
     }
   });
-  const contRef = useRef(null);
-
-  useEffect(() => {
-    contRef?.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [loading]);
 
   if (loading) return <Skeleton />;
   return (
-    <div className="w-full fixed top-0 z-50 h-[100vh] justify-center flex " ref={contRef}>
+    <div className="w-full fixed top-0 z-50 h-[100vh] justify-center flex">
       <div className="w-full h-[100vh] flex justify-center flex-nowrap items-center gap-[24px] overflow-hidden">
         <Stories
           width="100vw"
           height="100vh"
           keyboardNavigation
           preventDefault
-          loop={false}
+          loop
           storyContainerStyles={{
             overflow: 'hidden',
             background: '#323232',
@@ -75,35 +70,25 @@ function ImageStory({ block, story }) {
       >
         <div className="relative w-full h-full">
           {block.kind === 'post' && (
-            <div className="absolute bottom-0 p-[32px] storyLinearItem w-full rounded-[8px]">
+            <Link className="absolute bottom-0 p-[32px] storyLinearItem w-full rounded-[8px]" to={block?.data?.url}>
               <div className="flex flex-col gap-[8px]">
-                <div className="flex flex-row gap-8">
-                  {story.categories.nodes.map((x) => (
-                    <Tag color="#ff6600" key={x.id} className="uppercase">
-                      {x.name || x.slug}
-                    </Tag>
-                  ))}
-                </div>
                 <span
                   className="truncate-2 text-white text-[24px] font-merri"
-                  dangerouslySetInnerHTML={{ __html: block.content }}
+                  dangerouslySetInnerHTML={{ __html: block?.content }}
                 />
                 <span className="text-white font-merri text-[12px]">{story.publishDate}</span>
-                <Link
-                  to="/story"
-                  className="w-[180px] bg-white flex p-1 px-2 rounded-sm items-center justify-between font-bold"
-                >
+                <Button className="w-[180px] bg-white flex p-1 px-2 border-0 rounded-sm items-center justify-between font-bold">
                   Дэлгэрэнгүй үзэх
                   <FIcon className="icon-fi-rs-down-chevron text-caak-primary text-[16px]" />
-                </Link>
+                </Button>
               </div>
-            </div>
+            </Link>
           )}
-          {block.kind === 'image' && block.content && (
+          {block.kind === 'image' && block?.content && (
             <div className="absolute w-full bottom-0 p-[32px] flex flex-col items-center">
               <h3
-                className="text-center w-full text-white leading-[32px] text-[32px] font-condensed tracking-[0.63px] font-normal mb-[16px]"
-                dangerouslySetInnerHTML={{ __html: block.content }}
+                className="text-center w-full text-white leading-[32px] text-[32px] font-condensed tracking-[0.48px] font-normal mb-[16px]"
+                dangerouslySetInnerHTML={{ __html: block?.content }}
               />
               <div className="h-[4px] w-[60px] bg-caak-primary" />
             </div>
@@ -119,7 +104,21 @@ function ImageStory({ block, story }) {
           onClick={() => navigate('/')}
         />
 
-        {story.nextStory && <Preview story={story.nextStory} />}
+        {story.nextStory ? (
+          <Preview story={story.nextStory} />
+        ) : (
+          <div className="w-[272px] h-[440px] relative">
+            <img src={AllStories} alt="Бүх стори" className="object-cover" />
+            <Button
+              size="large"
+              className="py-4 absolute top-1/2 left-[60px] bg-white flex-col h-[80px] rounded-[8px]"
+              onClick={() => navigate('/stories')}
+            >
+              <FIcon className="icon-fi-rs-play text-caak-primary" />
+              Бусад сторинууд үзэх
+            </Button>
+          </div>
+        )}
       </div>
     </div>
   );
@@ -128,7 +127,6 @@ function ImageStory({ block, story }) {
 function VideoStory({ block, story, action }) {
   const [muted, setMuted] = useState(true);
   const [playing, setPlaying] = useState(true);
-  console.log({ muted });
   const navigate = useNavigate();
 
   return (
@@ -163,6 +161,21 @@ function VideoStory({ block, story, action }) {
           onPause={() => action('pause')}
           onPlay={() => action('play')}
         />
+        <div className="absolute z-50 bottom-[54px] left-[36px] flex flex-col">
+          <h3
+            className="truncate-2 text-center w-full text-white leading-[26px] text-[26px] font-condensed tracking-[0.39px] font-normal mb-[16px]"
+            dangerouslySetInnerHTML={{ __html: block?.content }}
+          />
+          {block?.data?.url && (
+            <a
+              className="w-[180px] bg-white flex p-1 px-2 border-0 rounded-sm items-center justify-between font-bold"
+              href={block.data.url}
+            >
+              Дэлгэрэнгүй үзэх
+              <FIcon className="icon-fi-rs-down-chevron text-caak-primary text-[16px]" />
+            </a>
+          )}
+        </div>
       </div>
       <div className="flex flex-col h-full w-[20%] justify-start items-end">
         <Button
@@ -173,7 +186,21 @@ function VideoStory({ block, story, action }) {
           onClick={() => navigate('/')}
         />
 
-        {story.nextStory && <Preview story={story.nextStory} />}
+        {story.nextStory ? (
+          <Preview story={story.nextStory} />
+        ) : (
+          <div className="w-[272px] h-[440px] relative">
+            <img src={AllStories} alt="Бүх стори" className="object-cover" />
+            <Button
+              size="large"
+              className="py-4 absolute top-1/2 left-[60px] bg-white flex-col h-[80px] rounded-[8px]"
+              onClick={() => navigate('/stories')}
+            >
+              <FIcon className="icon-fi-rs-play text-caak-primary" />
+              Бусад сторинууд үзэх
+            </Button>
+          </div>
+        )}
       </div>
     </div>
   );
@@ -181,11 +208,17 @@ function VideoStory({ block, story, action }) {
 
 function Preview({ story }) {
   const navigate = useNavigate();
+  const block = story?.blocks[0];
   return (
     <div
-      style={{ backgroundImage: `url(${imagePath(story.blocks[0].imageUrl || story.blocks[0].videoPreview)})` }}
-      className="w-[272px] h-[440px] rounded-[8px] bg-white bg-cover bg-center bg-no-repeat cursor-pointer opacity-50"
+      className="w-[272px] h-[440px] rounded-[8px]  bg-center bg-no-repeat cursor-pointer opacity-50"
       onClick={() => navigate(`/story/${story.id}`)}
-    ></div>
+    >
+      <img
+        src={imagePath(block.kind === 'video' ? block.videoPreview : block.imageUrl)}
+        alt="Preview"
+        className="bg-[#111111] object-cover h-full rounded-[8px]"
+      />
+    </div>
   );
 }
