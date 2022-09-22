@@ -23,17 +23,10 @@ import { FacebookShareButton, TwitterShareButton } from 'react-share';
 import Reaction from './reaction';
 import ReportModal from '../../../component/modal/ReportModal';
 import { Helmet } from 'react-helmet';
-import * as love from '../../../assets/json/love-js.json';
-import * as angry from '../../../assets/json/anry-js.json';
-import * as cry from '../../../assets/json/cry-js.json';
-import * as haha from '../../../assets/json/haha-js.json';
-import * as wow from '../../../assets/json/wow-js.json';
-import Lottie from 'react-lottie';
 import { FIcon } from '../../../component/icon';
 import { orderBy } from 'lodash';
 import ArticlesList from '../../home/articles_list';
 import Banner from '../../../component/banner';
-import { REACTIONS, ADD_REACTION } from './_gql';
 
 const SOURCE = gql`
   query GetSource($id: ID!) {
