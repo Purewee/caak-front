@@ -198,8 +198,8 @@ function SingleComment({ comment, refetch }) {
       }
       author={
         <div className="flex flex-row items-center">
-          <p className="text-caak-black text-[15px] font-medium leading-[18px]">{comment.data?.name || 'Зочин'}</p>
-          <p className="ml-[8px] text-[#BBBEBE] text-[14px] leading-[16px]">{`[${comment.data?.ip || ''}]`}</p>
+          <p className="text-caak-black text-[15px] font-medium leading-[18px]">{comment?.name || 'Зочин'}</p>
+          <p className="ml-[8px] text-[#BBBEBE] text-[14px] leading-[16px]">{`[${comment?.ip || ''}]`}</p>
         </div>
       }
       avatar={

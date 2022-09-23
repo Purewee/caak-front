@@ -66,12 +66,13 @@ export const COMMENTS = gql`
         edges {
           node {
             id
+            name
             comment
             likesCount
             dislikesCount
             repliesCount
-            data
             status
+            ip
             parentId
             targetId
             createdAt
@@ -90,11 +91,12 @@ export const COMMENTS = gql`
               edges {
                 node {
                   id
+                  name
                   comment
                   likesCount
                   dislikesCount
-                  data
                   status
+                  ip
                   parentId
                   targetId
                   createdAt
