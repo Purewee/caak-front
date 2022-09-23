@@ -48,7 +48,7 @@ export default function PushUp() {
     return (
         <div className={`top-to-btm ${scrollingToTop ? 'flex' : 'hidden sm:block'}`}>
             {showTopBtn && (
-                <ArrowUpOutlined onClick={goToTop} className="icon-position text-[22px] icon-style flex items-center justify-center" />
+                <span onClick={goToTop} className="icon-fi-rs-down-chevron rotate-180 icon-position icon-style" />
             )}
         </div>
     );

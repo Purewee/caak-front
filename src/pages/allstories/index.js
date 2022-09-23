@@ -65,7 +65,7 @@ export default function AllStories() {
   // prettier-ignore
   return (
     <div className='flex flex-col items-center w-full px-[16px]'>
-        <p className='text-[20px] md:text-[36px] md:leading-[42px] text-[#111111] font-merri font-bold mt-[30px] md:mt-[101px]'>БҮХ СТОРИ МЭДЭЭНҮҮД</p>
+        <p className='text-[20px] md:text-[36px] md:leading-[42px] text-[#111111] font-merri font-bold mt-[30px] md:mt-[101px]'>БҮХ СТОРИ</p>
         <div className='sm:px-[30px] mt-[20px]'>
             <div className='flex flex-row items-center md:ml-[96px]'>
                 <span className='icon-fi-rs-star-f text-[#FF6600] text-[20px] mr-[10px]' />

@@ -473,12 +473,16 @@
 }
 
 .icon-style{
-  background-color: #551B54;
-  border: 2px solid #fff;
-  border-radius: 50%;
-  height: 50px;
-  width: 50px;
-  color: #fff;
+  background-color: rgb(255,255,255,0.9);
+  border: 1px solid #00000010;
+  border-radius: 100%;
+  height: 40px;
+  width: 40px;
+  color: #000;
+  font-size: 17px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   cursor: pointer;
   animation: movebtn 3s ease-in-out infinite;
   transition: all .5s ease-in-out;

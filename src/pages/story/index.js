@@ -59,15 +59,23 @@ export default function Story() {
 function ImageStory({ block, story }) {
   const navigate = useNavigate();
   return (
-    <div className="w-full h-full flex justify-between p-5">
-      <div className="flex flex-col h-full w-[20%] items-start justify-start">
+    <div className="w-full h-full flex justify-between sm:p-5">
+      <div className="hidden sm:flex flex-col h-full w-[20%] items-start justify-start">
         <Logo white className="mb-[160px]" />
         {story.prevStory && <Preview story={story.prevStory} />}
       </div>
       <div
-        className="w-[60%] h-full rounded-[8px] flex flex-col items-center justify-center bg-contain bg-no-repeat bg-center bg-[#000000]"
+        className="w-full sm:w-[60%] h-full rounded-[8px] flex flex-col items-center justify-center bg-contain bg-no-repeat bg-center bg-[#000000]"
         style={{ backgroundImage: `url(${imagePath(block.imageUrl)})` }}
       >
+        <div className="absolute z-50 top-[12px] right-[12px] flex">
+          <Button
+            type="link"
+            className="sm:hidden"
+            icon={<FIcon className={`icon-fi-rs-close text-white`} />}
+            onClick={() => navigate('/')}
+          />
+        </div>
         <div className="relative w-full h-full">
           {block.kind === 'post' && (
             <Link className="absolute bottom-0 p-[32px] storyLinearItem w-full rounded-[8px]" to={block?.data?.url}>
@@ -84,18 +92,19 @@ function ImageStory({ block, story }) {
               </div>
             </Link>
           )}
+          {console.log(block)}
           {block.kind === 'image' && block?.content && (
-            <div className="absolute w-full bottom-0 p-[32px] flex flex-col items-center">
+            <div className="absolute w-full bottom-[50px] sm:bottom-0 p-[16px] sm:p-[32px] flex flex-col items-center">
               <h3
-                className="text-center w-full text-white leading-[32px] text-[32px] font-condensed tracking-[0.48px] font-normal mb-[16px]"
+                className="text-center w-full text-white opacity-80 leading-[32px] text-[28px] sm:text-[32px] font-condensed tracking-[0.48px] font-normal mb-[16px]"
                 dangerouslySetInnerHTML={{ __html: block?.content }}
               />
-              <div className="h-[4px] w-[60px] bg-caak-primary" />
+              {/* <div className="h-[4px] w-[60px] bg-caak-primary" /> */}
             </div>
           )}
         </div>
       </div>
-      <div className="flex flex-col h-full w-[20%] justify-start items-end">
+      <div className="hidden sm:flex flex-col h-full w-[20%] justify-start items-end">
         <Button
           shape="circle"
           type="white"
@@ -130,12 +139,12 @@ function VideoStory({ block, story, action }) {
   const navigate = useNavigate();
 
   return (
-    <div className="w-full h-full flex justify-between p-5">
-      <div className="flex flex-col h-full w-[20%] items-start justify-start">
+    <div className="w-full h-full flex justify-between sm:p-5">
+      <div className="hidden sm:flex flex-col h-full w-[20%] items-start justify-start">
         <Logo white className="mb-[160px]" />
         {story.prevStory && <Preview story={story.prevStory} />}
       </div>
-      <div className="w-[60%] h-full rounded-[8px] flex flex-col items-center justify-center bg-contain bg-no-repeat bg-center bg-[#000000] relative">
+      <div className="w-[100%] sm:w-[60%] h-full rounded-[8px] flex flex-col items-center justify-center bg-contain bg-no-repeat bg-center bg-[#000000] relative">
         <div className="absolute z-50 top-[12px] right-[12px] flex">
           <Button
             type="link"
@@ -149,6 +158,12 @@ function VideoStory({ block, story, action }) {
               setMuted(!muted);
             }}
           />
+          <Button
+            type="link"
+            className="sm:hidden"
+            icon={<FIcon className={`icon-fi-rs-close text-white`} />}
+            onClick={() => navigate('/')}
+          />
         </div>
         <ReactPlayer
           url={imagePath(block.videoUrl)}
@@ -161,7 +176,7 @@ function VideoStory({ block, story, action }) {
           onPause={() => action('pause')}
           onPlay={() => action('play')}
         />
-        <div className="absolute z-50 bottom-[54px] left-[36px] flex flex-col">
+        <div className="absolute z-50 bottom-[100px] sm:bottom-[54px] sm:left-[36px] flex flex-col">
           <h3
             className="truncate-2 text-center w-full text-white leading-[26px] text-[26px] font-condensed tracking-[0.39px] font-normal mb-[16px]"
             dangerouslySetInnerHTML={{ __html: block?.content }}
@@ -177,7 +192,7 @@ function VideoStory({ block, story, action }) {
           )}
         </div>
       </div>
-      <div className="flex flex-col h-full w-[20%] justify-start items-end">
+      <div className="hidden sm:flex flex-col h-full w-[20%] justify-start items-end">
         <Button
           shape="circle"
           type="white"
@@ -211,7 +226,7 @@ function Preview({ story }) {
   const block = story?.blocks[0];
   return (
     <div
-      className="w-[272px] h-[440px] rounded-[8px]  bg-center bg-no-repeat cursor-pointer opacity-50"
+      className="hidden sm:block w-[272px] h-[440px] rounded-[8px]  bg-center bg-no-repeat cursor-pointer opacity-50"
       onClick={() => navigate(`/story/${story.id}`)}
     >
       <img

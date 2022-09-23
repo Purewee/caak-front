@@ -39,7 +39,7 @@ export default function Footer() {
                     }
                     showArrow={false}
                 >
-                    <div className='flex flex-col gap-[10px] px-[16px] justify-between text-[15px] text-[#838383] pb-[30px]'>
+                    <div className='flex flex-col gap-[10px] px-[16px] justify-between items-center text-[15px] text-[#838383] pb-[30px]'>
                         <a className='h-[20px] hover:text-[#FF6600]' href='https://www.caaknews.mn/' target={'_blank'}>
                             <p>Саак мэдээ</p>
                         </a>
@@ -64,7 +64,7 @@ export default function Footer() {
                     }
                     showArrow={false}
                 >
-                    <div className='flex flex-col gap-[10px] justify-between px-[16px] text-[15px] text-[#838383] pb-[30px]'>
+                    <div className='flex flex-col gap-[10px] justify-between items-center px-[16px] text-[15px] text-[#838383] pb-[30px]'>
                         <p className='cursor-pointer hover:text-[#FF6600]' onClick={() => navigate("/help", { state: 2 })}>Холбоо барих</p>
                         <p className='cursor-pointer hover:text-[#FF6600]' onClick={() => navigate("/help", { state: 1 })}>Сурталчилгаа</p>
                         <p className='cursor-pointer hover:text-[#FF6600]' onClick={() => navigate("/help", { state: 2 })}>Контент нийлүүлэх</p>
@@ -80,7 +80,7 @@ export default function Footer() {
                     }
                     showArrow={false}
                 >
-                    <div className='flex flex-col gap-[10px] px-[16px] justify-between text-[15px] text-[#838383] pb-[30px]'>
+                    <div className='flex flex-col gap-[10px] px-[16px] justify-between items-center text-[15px] text-[#838383] pb-[30px]'>
                         <p className='cursor-pointer hover:text-[#FF6600]' onClick={() => navigate("/help", { state: 0 })}>Бидний тухай</p>
                         <p className='cursor-pointer hover:text-[#FF6600]' onClick={() => navigate("/help", { state: 4 })}>Үйлчилгээний нөхцөл</p>
                         <p className='cursor-pointer hover:text-[#FF6600]' onClick={() => navigate("/help", {  state: 3 })}>Нууцлалын бодлого</p>
