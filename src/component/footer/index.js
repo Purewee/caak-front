@@ -30,9 +30,10 @@ export default function Footer() {
         <div className="sm:hidden">
             <Collapse className="w-full custom bg-caak-black" bordered={false} accordion={true}>
                 <Collapse.Panel
+                    style={{borderBottomColor: '#1f1e1e'}}
                     header={
                         <div className="flex flex-row items-center justify-between py-[10px] px-[4px]">
-                            <p className='text-white text-[14px] font-bold leading-[16px]'>CAAK КОНТЕНТ</p>
+                            <p className='text-white text-[14px] font-bold leading-[16px] w-full text-center'>CAAK КОНТЕНТ</p>
                             <span className="icon-fi-rs-down-chevron text-caak-primary" />
                         </div>
                     }
@@ -54,9 +55,10 @@ export default function Footer() {
                     </div>
                 </Collapse.Panel>
                 <Collapse.Panel
+                    style={{borderBottomColor: '#1f1e1e'}}
                     header={
                         <div className="flex flex-row items-center justify-between px-[4px] py-[10px]">
-                            <p className='text-white text-[14px] font-bold leading-[16px]'>ТУСЛАМЖ</p>
+                            <p className='text-white text-[14px] font-bold leading-[16px] w-full text-center'>ТУСЛАМЖ</p>
                             <span className="icon-fi-rs-down-chevron text-caak-primary" />
                         </div>
                     }
@@ -69,9 +71,10 @@ export default function Footer() {
                     </div>
                 </Collapse.Panel>
                 <Collapse.Panel
+                    style={{borderBottomColor: '#1f1e1e'}}
                     header={
                         <div className="flex flex-row items-center justify-between px-[4px] py-[10px]">
-                            <p className='text-white text-[14px] font-bold leading-[16px]'>БУСАД</p>
+                            <p className='text-white text-[14px] font-bold leading-[16px] w-full text-center'>БУСАД</p>
                             <span className="icon-fi-rs-down-chevron text-caak-primary" />
                         </div>
                     }

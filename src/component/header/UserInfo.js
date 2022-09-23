@@ -176,17 +176,29 @@ export default function UserInfo({ transparent }) {
           <div ref={profileRef} className="text-[#555555] w-[220px] py-[18px]">
             <div className="border-b w-full pb-[16px] flex flex-row items-center pl-[18px]">
               {me.avatar ? (
-                <Avatar className="mr-[12px] flex items-center justify-center" src={imagePath(me.avatar)} size={38} />
+                <Link onClick={() => setProfileVisible(false)} to={`/profile/${me.id}`}>
+                  <Avatar className="mr-[12px] flex items-center justify-center" src={imagePath(me.avatar)} size={38} />
+                </Link>
               ) : (
                 <Avatar size={38} className="flex items-center bg-[#257CEE19] text-[#257CEE] text-[26px] font-medium">
                   {(me?.firstName || me?.name)[0]}
                 </Avatar>
               )}
-              <div>
-                <p className="font-condensed text-[18px] font-bold leading-[21px] text-[#111111]">
+              <div className="flex flex-col">
+                <Link
+                  className="font-condensed text-[18px] font-bold leading-[21px] text-[#111111]"
+                  onClick={() => setProfileVisible(false)}
+                  to={`/profile/${me.id}`}
+                >
                   {data?.me?.firstName}
-                </p>
-                <p className="text-[14px] leading-[16px] mt-[3px]">Мэдээллээ засах</p>
+                </Link>
+                <Link
+                  onClick={() => setProfileVisible(false)}
+                  to={`/settings/${me.id}`}
+                  className="text-[14px] leading-[16px] mt-[3px]"
+                >
+                  Мэдээллээ засах
+                </Link>
               </div>
             </div>
             <div className="pl-[18px] flex flex-col border-b gap-y-[16px] py-[19px]">

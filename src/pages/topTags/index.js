@@ -89,6 +89,8 @@ export default function Category() {
                   follow().then(() => {
                     refetch().then(console.log);
                   });
+                } else {
+                  openModal('login');
                 }
               }}
             >
@@ -104,6 +106,8 @@ export default function Category() {
                   follow().then(() => {
                     refetch().then(console.log);
                   });
+                } else {
+                  openModal('login');
                 }
               }}
             >

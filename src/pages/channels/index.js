@@ -41,7 +41,7 @@ const SOURCES = gql`
 
 export default function Channels() {
   const [filter, setFilter] = useState('all');
-  const { isAuth } = useAuth();
+  const { isAuth, openModal } = useAuth();
   const { data, loading, refetch } = useQuery(SOURCES, {
     variables: filter !== 'all' ? { filter: { category: { eq: filter } } } : {},
   });
@@ -71,7 +71,9 @@ export default function Channels() {
                 className="w-[248px] h-[256px] bg-white flex rounded-[4px] border border-[#EFEEEF] hover:border hover:border-[#BBBEBE] flex-col items-center px-[20px] justify-between py-[24px]"
               >
                 <div className="flex flex-col items-center">
-                  <Avatar className="h-[64px] w-[64px]" src={imagePath(source.icon)} />
+                  <Link to={`/channel/${source.id}`}>
+                    <Avatar className="h-[64px] w-[64px]" src={imagePath(source.icon)} />
+                  </Link>
                   <Link
                     className="text-black font-medium text-[17px] leading-[20px] mt-[10px]"
                     to={`/channel/${source.id}`}
@@ -90,6 +92,8 @@ export default function Channels() {
                         follow({ variables: { id: source.id } }).then(() => {
                           refetch().then(console.log);
                         });
+                      } else {
+                        openModal('login');
                       }
                     }}
                   >
@@ -98,13 +102,14 @@ export default function Channels() {
                 ) : (
                   <Button
                     type="primary"
-                    loading={saving}
                     className="w-[90px] h-[34px] bg-caak-primary rounded-[4px] text-white text-[15px] font-bold"
                     onClick={() => {
                       if (isAuth) {
                         follow({ variables: { id: source.id } }).then(() => {
                           refetch().then(console.log);
                         });
+                      } else {
+                        openModal('login');
                       }
                     }}
                   >

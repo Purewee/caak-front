@@ -33,7 +33,7 @@ export default function Profile() {
   const user = data?.user || {};
   const { data: me } = useQuery(ME);
   const loggedUser = me?.me;
-  const { isAuth } = useAuth();
+  const { isAuth, openModal } = useAuth();
   const saved_articles = user?.recipes?.map((x) => x?.articles.nodes).flat() || [];
   const [follow, { loading: saving }] = useMutation(FOLLOW, { variables: { id } });
 
@@ -79,8 +79,8 @@ export default function Profile() {
                 {user?.data?.bio}
               </p>
               <div className="flex flex-row text-[#555555] gap-[23px] mt-[18px] text-[15px] leading-[18px] font-merri text-center">
-                <Statistic title="Пост" value={user?.articles?.totalCount} />
-                <Statistic title="Дагагчид" value={0} />
+                <Statistic title="нийтлэл" value={user?.articles?.totalCount} />
+                <Statistic title="дагагч" value={0} />
               </div>
             </div>
           </div>
@@ -99,6 +99,8 @@ export default function Profile() {
                     follow().then(() => {
                       refetch().then(console.log);
                     });
+                  } else {
+                    openModal('login');
                   }
                 }}
               >
@@ -114,6 +116,8 @@ export default function Profile() {
                     follow().then(() => {
                       refetch().then(console.log);
                     });
+                  } else {
+                    openModal('login');
                   }
                 }}
               >

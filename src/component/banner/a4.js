@@ -3,7 +3,6 @@ import { imagePath } from '../../utility/Util';
 import { Affix } from 'antd';
 
 export default function A4({ banner }) {
-  console.log(banner);
   const [bannerOpen, setBannerOpen] = useState(false);
   const [bannerClose, setBannerClose] = useState(false);
   const [bannerDismissed, setBannerDismissed] = useState(false);

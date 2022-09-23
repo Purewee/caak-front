@@ -64,24 +64,24 @@ export default function PostSaveModal({ post, toggle, image }) {
               openNotification();
               toggle();
             })
-          : openModal('open')
+          : openModal('login')
       }
       onCancel={toggle}
       title={<span className="text-[26px] font-condensed font-bold leading-[30px]">Мэдээ хадгалах</span>}
       bodyStyle={{ padding: 0 }}
       afterClose={toggle}
-      cancelText="Болих"
-      okText="Хадгалах"
+      cancelText={<p className="text-[15px] font-medium text-caak-black">Болих</p>}
+      okText={<p className="text-[15px] font-bold">Хадгалах</p>}
       okType="primary"
       confirmLoading={loading}
     >
       <div className="bg-[#FBFAFB] h-[132px] px-[24px] py-[16px] flex flex-row">
         <img alt={post.title} className="min-w-[100px] max-w-[100px] h-[100px] object-cover truncate-3" src={image} />
         <div className="ml-[16px]">
-          <p className="font-merri text-[16px] leading-[21px] h-[64px] truncate-3">{post.title}</p>
+          <p className="font-merri text-[16px] leading-[22px] h-[64px] text-caak-black truncate-3">{post.title}</p>
           <div className="text-[#555555] mt-[10px] flex flex-row items-center leading-[18px] text-[12px]">
-            <MetaTag className="ml-0">{post.source?.name}</MetaTag>
-            <MetaTag className="ml-[6px]">• {post.author.firstName || post.author.name}</MetaTag>
+            <MetaTag className="ml-0 font-roboto">{post.source?.name}</MetaTag>
+            <MetaTag className="ml-[6px] font-roboto">• {post.author.firstName || post.author.name}</MetaTag>
           </div>
         </div>
       </div>

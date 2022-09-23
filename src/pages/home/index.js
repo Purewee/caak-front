@@ -96,7 +96,9 @@ export default function Home() {
     <>
       <div className={`relative bg-white flex flex-col items-center sm:mb-[100px]`}>
         <NavbarPostHeader />
-        <Banner position="a1" />
+        <div className="mt-[20px] sm:mt-[50px] mb-[20px] sm:mb-0 px-[16px] sm:px-0">
+          <Banner position="a1" />
+        </div>
         <div className="md:px-[30px] w-full flex justify-center px-[16px] sm:px-0">
           <Story />
         </div>

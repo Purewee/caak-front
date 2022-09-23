@@ -1,4 +1,4 @@
-import { Switch, Form, Anchor, Input, Upload, Button, Skeleton, Image, message, Avatar, Tabs } from 'antd';
+import { Switch, Form, Anchor, Input, Upload, Button, Skeleton, message, Avatar, Tabs } from 'antd';
 import React, { useEffect, useContext, useState } from 'react';
 import { AppContext } from '../../App';
 import { FIcon } from '../../component/icon';
@@ -6,26 +6,9 @@ import { useQuery, gql, useMutation } from '@apollo/client';
 import { useAuth } from '../../context/AuthContext';
 import { imagePath } from '../../utility/Util';
 import { getDataFromBlob, imageCompress } from '../../lib/imageCompress';
-import { SaveOutlined } from '@ant-design/icons';
 import useMediaQuery from '../../component/navigation/useMediaQuery';
-
-const menu = [
-  {
-    title: 'Профайл',
-    icon: 'icon-fi-rs-user-f',
-    href: '#profile',
-  },
-  {
-    title: 'Мэдээний төрөл',
-    icon: 'icon-fi-rs-filter-f',
-    href: '#category',
-  },
-  {
-    title: 'Нууцлал',
-    icon: 'icon-fi-rs-shield',
-    href: '#security',
-  },
-];
+import AddCategoriesModal from '../../component/modal/AddCategoriesModal';
+import { Link } from 'react-router-dom';
 
 const ME = gql`
   query Me {
@@ -83,9 +66,21 @@ const UPDATE = gql`
   }
 `;
 
-const FOLLOW = gql`
+const FOLLOW_CATEGORY = gql`
   mutation Follow($id: ID!) {
     toggleFollow(input: { targetType: "category", targetId: $id })
+  }
+`;
+
+const FOLLOW_USER = gql`
+  mutation Follow($id: ID!) {
+    toggleFollow(input: { targetType: "user", targetId: $id })
+  }
+`;
+
+const FOLLOW_TAG = gql`
+  mutation Follow($id: ID!) {
+    toggleFollow(input: { targetType: "tag", targetId: $id })
   }
 `;
 
@@ -94,9 +89,13 @@ export default function Settings() {
   const { data, loading, refetch } = useQuery(ME);
   const { isAuth } = useAuth();
   const [avatar, setAvatar] = useState();
+  const [openModal, setOpenModal] = useState();
   const [selected, setSelected] = useState('posts');
+  const [tabs, setTabs] = useState('category');
   const [update, { loading: saving }] = useMutation(UPDATE, { context: { upload: true } });
-  const [follow, { loading: follow_saving }] = useMutation(FOLLOW);
+  const [follow_category] = useMutation(FOLLOW_CATEGORY);
+  const [follow_user] = useMutation(FOLLOW_USER);
+  const [follow_tag] = useMutation(FOLLOW_TAG);
 
   const me = data?.me || {};
   const isMobile = useMediaQuery('screen and (max-width: 767px)');
@@ -252,18 +251,17 @@ export default function Settings() {
                       update({ variables: values }).then((res) => message.success('Мэдээлэл шинэчилэгдлээ'));
                     }}
                   >
-                    <Tabs tabBarStyle={{ paddingLeft: 30 }}>
+                    <Tabs onChange={(x) => setTabs(x)} tabBarStyle={{ paddingLeft: 30 }}>
                       <Tabs.TabPane key={'category'} tab={<p>Төрөл</p>}>
                         <div className="border-t w-full p-[30px]" id="category">
                           <div className="flex flex-wrap justify-start gap-[12px]">
                             {me.follows
                               .filter((x) => x.target.__typename === 'Category')
                               .map(({ target: x }) => (
-                                <div>
-                                  {console.log(x)}
-                                  <div
+                                <div className="flex flex-col" key={x.id}>
+                                  <Link
+                                    to={`/category/${x.slug}`}
                                     className="w-[172px] h-[100px] relative items-center justify-center rounded-md cursor-pointer overflow-hidden"
-                                    key={x.id}
                                   >
                                     {x.cover && (
                                       <div
@@ -274,13 +272,13 @@ export default function Settings() {
                                     <span className="absolute top-0 h-full w-full flex items-center justify-center text-white text-[16px] font-medium bg-black bg-opacity-50 rounded-md">
                                       {x.name}
                                     </span>
-                                  </div>
+                                  </Link>
                                   {x.following ? (
                                     <button
                                       className="w-[172px] h-[34px] mt-[8px] bg-[#EFEEEF] rounded-[4px] text-[#909090] text-[15px] font-medium"
                                       onClick={() => {
                                         if (isAuth) {
-                                          follow({ variables: { id: x.id } }).then(() => {
+                                          follow_category({ variables: { id: x.id } }).then(() => {
                                             refetch().then(console.log);
                                           });
                                         }
@@ -291,11 +289,10 @@ export default function Settings() {
                                   ) : (
                                     <Button
                                       type="primary"
-                                      loading={follow_saving}
                                       className="w-[172px] h-[34px] mt-[8px] bg-caak-primary rounded-[4px] text-white text-[15px] font-bold"
                                       onClick={() => {
                                         if (isAuth) {
-                                          follow({ variables: { id: x.id } }).then(() => {
+                                          follow_category({ variables: { id: x.id } }).then(() => {
                                             refetch().then(console.log);
                                           });
                                         }
@@ -315,7 +312,8 @@ export default function Settings() {
                             {me.follows
                               .filter((x) => x.target.__typename === 'Source')
                               .map(({ target: x }) => (
-                                <div
+                                <Link
+                                  to={`/channel/${x.id}`}
                                   className="w-[170px] h-[100px] relative items-center justify-center rounded-md cursor-pointer overflow-hidden"
                                   key={x.id}
                                 >
@@ -328,7 +326,7 @@ export default function Settings() {
                                   <span className="absolute top-0 h-full w-full flex items-center justify-center text-white text-[15px] font-medium bg-black bg-opacity-50 rounded-md">
                                     {x.name}
                                   </span>
-                                </div>
+                                </Link>
                               ))}
                           </div>
                         </div>
@@ -347,8 +345,10 @@ export default function Settings() {
                                     <span className="h-[46px] w-[46px] rounded-[4px] bg-caak-primary bg-opacity-10 flex items-center justify-center text-[28px] font-medium text-caak-primary">
                                       #
                                     </span>
-                                    <div className="ml-[14px]">
-                                      <p className="text-caak-black text-[15px] font-medium">#{x.name}</p>
+                                    <div className="ml-[14px] flex flex-col">
+                                      <Link to={`/tags/${x.slug}`} className="text-caak-black text-[15px] font-medium">
+                                        #{x.name}
+                                      </Link>
                                       <span className="text-[#707070] text-[13px] leading-[15px]">
                                         {x.articlesCount} Мэдээтэй
                                       </span>
@@ -359,7 +359,7 @@ export default function Settings() {
                                       className="w-full h-[34px] mt-[12px] bg-[#EFEEEF] rounded-[4px] text-[#909090] text-[15px] font-medium"
                                       onClick={() => {
                                         if (isAuth) {
-                                          follow().then(() => {
+                                          follow_tag({ variables: { id: x.id } }).then(() => {
                                             refetch().then(console.log);
                                           });
                                         }
@@ -374,7 +374,7 @@ export default function Settings() {
                                       className="w-full h-[34px] mt-[12px] bg-caak-primary rounded-[4px] text-white text-[15px] font-bold"
                                       onClick={() => {
                                         if (isAuth) {
-                                          follow().then(() => {
+                                          follow_tag({ variables: { id: x.id } }).then(() => {
                                             refetch().then(console.log);
                                           });
                                         }
@@ -402,13 +402,18 @@ export default function Settings() {
                                       {(x?.firstName || x?.name)[0]}
                                     </Avatar>
                                   )}
-                                  <p className="text-caak-black text-[16px] leading-[19px] mt-[6px]">{x.firstName}</p>
+                                  <Link
+                                    to={`/profile/${x.id}`}
+                                    className="text-caak-black text-[16px] leading-[19px] mt-[6px]"
+                                  >
+                                    {x.firstName}
+                                  </Link>
                                   {x.following ? (
                                     <button
                                       className="w-full h-[34px] mt-[14px] bg-[#EFEEEF] rounded-[4px] text-[#909090] text-[15px] font-medium"
                                       onClick={() => {
                                         if (isAuth) {
-                                          follow().then(() => {
+                                          follow_user({ variables: { id: x.id } }).then(() => {
                                             refetch().then(console.log);
                                           });
                                         }
@@ -423,7 +428,7 @@ export default function Settings() {
                                       className="w-full h-[34px] mt-[14px] bg-caak-primary rounded-[4px] text-white text-[15px] font-bold"
                                       onClick={() => {
                                         if (isAuth) {
-                                          follow().then(() => {
+                                          follow_user({ variables: { id: x.id } }).then(() => {
                                             refetch().then(console.log);
                                           });
                                         }
@@ -439,6 +444,17 @@ export default function Settings() {
                       </Tabs.TabPane>
                     </Tabs>
                   </Form>
+                  {tabs === 'category' && (
+                    <Button
+                      type="primary"
+                      onClick={() => setOpenModal(true)}
+                      className="w-[150px] h-[34px] gap-[10px] mt-[20px]"
+                      icon={<span className="icon-fi-rs-plus" />}
+                    >
+                      Төрөл нэмэх
+                    </Button>
+                  )}
+                  {openModal && <AddCategoriesModal toggle={() => setOpenModal(false)} />}
                 </div>
               </Tabs.TabPane>
               <Tabs.TabPane

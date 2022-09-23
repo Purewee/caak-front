@@ -44,7 +44,7 @@ const sortMap = {
 };
 
 export default function Channel() {
-  const { isAuth } = useAuth();
+  const { isAuth, openModal } = useAuth();
   const { id } = useParams();
   const { data, loading: fetching, refetch } = useQuery(SOURCE, { variables: { id } });
   const es = new ESService('caak');
@@ -99,6 +99,8 @@ export default function Channel() {
                 follow().then(() => {
                   refetch().then(console.log);
                 });
+              } else {
+                openModal('login');
               }
             }}
           >
@@ -114,6 +116,8 @@ export default function Channel() {
                 follow().then(() => {
                   refetch().then(console.log);
                 });
+              } else {
+                openModal('login');
               }
             }}
           >

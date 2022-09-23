@@ -330,7 +330,7 @@ const Post = () => {
               </div>
               {orderBy(article?.blocks, ['position'], [numbering || 'asc']).map((b) => {
                 return (
-                  <div key={b.position} className="post-view-block">
+                  <div key={b.position}>
                     {b.kind === 'image' && (
                       <div key={b.id} className="flex flex-col md:items-center mb-[26px] md:mb-[50px] w-full">
                         {b.title && <BlockTitle>{`${numbering ? `${b.position}. ` : ''}${b.title}`}</BlockTitle>}

@@ -4,6 +4,7 @@ import { Button } from 'antd';
 import SessionModal from '../modal/session';
 import { FIcon } from '../icon';
 import { useNavigate } from 'react-router-dom';
+import { useHeader } from '../../context/HeaderContext';
 
 const mobileItems = [
   {
@@ -27,6 +28,7 @@ export default function Session() {
   const { openModal } = useAuth();
   const navigate = useNavigate();
   const [mobileSideMenu, setMobileSideMenu] = useState(false);
+  const { mode } = useHeader();
   function useOutsideAlerter(ref) {
     useEffect(() => {
       function handleClickOutside(event) {
@@ -145,7 +147,10 @@ export default function Session() {
         )}
       </nav>
       <div className="hidden sm:flex flex-row ml-[10px]">
-        <Button onClick={() => openModal('login')} className="font-bold mr-[12px] text-white">
+        <Button
+          onClick={() => openModal('login')}
+          className={`font-bold mr-[12px] ${mode === 'sticky' ? 'text-caak-black' : 'text-white'}`}
+        >
           Нэвтрэх
         </Button>
         <Button onClick={() => openModal('open')} type="primary" className="font-bold">
