@@ -27,6 +27,7 @@ import { FIcon } from '../../../component/icon';
 import { orderBy } from 'lodash';
 import ArticlesList from '../../home/articles_list';
 import Banner from '../../../component/banner';
+import Configure from '../../../component/configure';
 
 const SOURCE = gql`
   query GetSource($id: ID!) {
@@ -302,12 +303,12 @@ const Post = () => {
                   <p className="ml-[6px] text-[15px] text-caak-primary leading-[16px]">{article.reactionsCount || 0}</p>
                 </div>
                 <div className="hidden md:flex flex-row items-center">
-                  <FacebookShareButton className="h-[20px]" url={`http://front.caak.mn/post/view/${article.id}`}>
+                  <FacebookShareButton className="h-[20px]" url={`${Configure.domain}'/post/view/${article?.id}`}>
                     <FIcon className="text-[#909090] hover:text-[#1877F2] text-[22px] w-[24px] h-[24px] icon-fi-rs-fb" />
                   </FacebookShareButton>
                   <TwitterShareButton
                     className="h-[20px] ml-[24px]"
-                    url={`http://front.caak.mn/post/view/${article.id}`}
+                    url={`${Configure.domain}'/post/view/${article?.id}`}
                   >
                     <FIcon className="text-[#909090] hover:text-[#1877F2] text-[22px] w-[24px] h-[24px] icon-fi-rs-tw" />
                   </TwitterShareButton>
@@ -374,13 +375,13 @@ const Post = () => {
               ))}
             </div>
             <div className="hidden md:flex flex-row  w-full justify-end items-center">
-              <FacebookShareButton url={`http://front.caak.mn/post/view/${article.id}`}>
+              <FacebookShareButton url={`${Configure.domain}'/post/view/${article.id}`}>
                 <div className="bg-[#1877F2] text-white font-roboto text-[15px] flex flex-row items-center justify-center rounded-[4px] h-[34px] pl-[11.6px] pr-[10px]">
                   <span className="icon-fi-rs-fb text-[16.8px] mr-[7.4px]" />
                   ХУВААЛЦАХ
                 </div>
               </FacebookShareButton>
-              <TwitterShareButton url={`http://front.caak.mn/post/view/${article.id}`}>
+              <TwitterShareButton url={`${Configure.domain}'/post/view/${article.id}`}>
                 <div className="bg-[#1D9BF1] ml-[10px] text-white font-roboto text-[15px] flex flex-row items-center justify-center rounded-[4px] h-[34px] pl-[11.6px] pr-[10px]">
                   <span className="icon-fi-rs-tw text-[16.5px] mr-[7.7px]" />
                   ЖИРГЭХ

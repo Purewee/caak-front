@@ -1,7 +1,8 @@
 import React from 'react';
 import { notification } from 'antd';
 import { FacebookShareButton, TwitterShareButton } from 'react-share';
-import CopyToClipboard from 'react-copy-to-clipboard';
+import Configure from '../configure';
+import { CopyToClipboard } from 'react-copy-to-clipboard/src';
 
 export default function PostShareModal({ post, toggle, image }) {
   const openNotification = () => {
@@ -29,13 +30,13 @@ export default function PostShareModal({ post, toggle, image }) {
           </div>
         </div>
         <div className="w-full px-[24px]">
-          <FacebookShareButton className="w-full" url={`http://front.caak.mn/post/view/${post?.id}`}>
+          <FacebookShareButton className="w-full" url={`${Configure.domain}'/post/view/${post?.id}`}>
             <div className="cursor-pointer w-full rounded-[4px] h-[44px] bg-[#1877F2] mt-[20px] flex items-center justify-center relative">
               <p className="text-[16px] text-white font-medium leading-[19px]">Хуваалцах</p>
               <span className="absolute top-[10px] left-[20px] w-[24px] h-[24px] icon-fi-rs-fb text-white text-[23px] flex items-center justify-center" />
             </div>
           </FacebookShareButton>
-          <TwitterShareButton className="mt-[8px] w-full" url={`http://front.caak.mn/post/view/${post?.id}`}>
+          <TwitterShareButton className="mt-[8px] w-full" url={`${Configure.domain}'/post/view/${post?.id}`}>
             <div className="cursor-pointer w-full rounded-[4px] h-[44px] bg-[#1D9BF1] flex items-center justify-center relative">
               <p className="text-[16px] text-white font-medium leading-[19px]">Жиргэх</p>
               <span className="absolute top-[10px] left-[20px] w-[24px] h-[24px] icon-fi-rs-tw text-white text-[22px] flex items-center justify-center" />
@@ -45,9 +46,9 @@ export default function PostShareModal({ post, toggle, image }) {
           <div className="bg-[#FBFAFB] w-full h-[44px] mt-[8px] border flex flex-row items-center justify-between border-[#EFEEEF] py-[12px] pl-[12px] pr-[16px]">
             <div className="flex flex-row items-center text-[#555555]">
               <span className="icon-fi-rs-link" />
-              <p id="myInput" className="text-[15px] ml-[10px]">{`http://front.caak.mn/post/view/${post?.id}`}</p>
+              <p id="myInput" className="text-[15px] ml-[10px]">{`${Configure.domain}'/post/view/${post?.id}`}</p>
             </div>
-            <CopyToClipboard text={`http://front.caak.mn/post/view/${post?.id}`}>
+            <CopyToClipboard text={`${Configure.domain}'/post/view/${post?.id}`}>
               <p
                 className="cursor-pointer text-[#FF6600] font-medium text-[15px] leading-[18px]"
                 onClick={() => openNotification()}
