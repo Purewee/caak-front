@@ -109,7 +109,7 @@ export default function PostCard({ isMobile, post, removeSaved, ...rest }) {
                   <span className={`h-[18px] ${sponsored ? 'text-white' : 'sm:text-[#555555]'}`}>
                     &nbsp;&#8226;&nbsp;
                   </span>
-                  <p className="text-[14px]">{generateTimeAgo(post.publish_date)}</p>
+                  <p className="text-[14px] leading-[16px]">{generateTimeAgo(post.publish_date)}</p>
                 </div>
               )}
             </div>
@@ -143,7 +143,7 @@ export default function PostCard({ isMobile, post, removeSaved, ...rest }) {
             />
             {reporting || sharing || (
               <Popover
-                placement="bottom"
+                placement={isMobile ? 'left' : 'bottom'}
                 trigger="click"
                 overlayStyle={{ width: 166 }}
                 overlayInnerStyle={{ borderRadius: 4 }}

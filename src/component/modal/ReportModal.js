@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { message, Modal, Radio, List } from 'antd';
 import { gql, useQuery, useMutation } from '@apollo/client';
+import { useAuth } from '../../context/AuthContext';
 
 const REPORT_TYPES = gql`
   query getReportTypes {
@@ -20,6 +21,7 @@ const SEND_REPORT = gql`
 export default function ReportModal({ post, toggle }) {
   const [typeId, setTypeId] = useState();
   const { data, loading } = useQuery(REPORT_TYPES);
+  const { isAuth, openModal } = useAuth();
   const [sendReport, { loading: sending }] = useMutation(SEND_REPORT, { variables: { articleId: post.id } });
   const reportTypes = data?.reportTypes || [];
 
@@ -35,10 +37,14 @@ export default function ReportModal({ post, toggle }) {
       afterClose={toggle}
       confirmLoading={sending || loading}
       onOk={() => {
-        sendReport({ variables: { typeId } }).then(() => {
-          message.success('Таны хүсэлтийг хүлээн авлаа.');
-          toggle();
-        });
+        if (isAuth) {
+          sendReport({ variables: { typeId } }).then(() => {
+            message.success('Таны хүсэлтийг хүлээн авлаа.');
+            toggle();
+          });
+        } else {
+          openModal('login');
+        }
       }}
       title={<p className="text-[26px] font-condensed font-bold leading-[30px]">Мэдээг репортлох</p>}
     >

@@ -67,7 +67,7 @@ export default function Session() {
                   />
                 </div>
                 <div className="px-[16px]">
-                  <p className="font-bold text-[28px] font-condensed w-[233px] leading-[32px] mt-[30px]">
+                  <p className="font-bold text-[28px] text-caak-black font-condensed w-[233px] leading-[32px] mt-[30px]">
                     Та бүртгэл үүсгэн мэдээллийг өөрийн болгоорой!
                   </p>
                   <button
@@ -93,7 +93,12 @@ export default function Session() {
               <div className="w-full border-t border-b mt-[30px] flex flex-col">
                 {mobileItems.map((data, index) => {
                   return (
-                    <a href={data.url} target="_blank" key={index} className="flex flex-row items-center ml-[24px]">
+                    <a
+                      href={data.url}
+                      target="_blank"
+                      key={index}
+                      className="flex text-black flex-row items-center ml-[24px]"
+                    >
                       <FIcon className={`${data.icon} mr-[18px] text-[24px] w-[26px] h-[26px]`} />
                       <p className="text-[18px]">{data.title}</p>
                     </a>
@@ -105,7 +110,7 @@ export default function Session() {
                   navigate('/help', { state: 1 });
                   setMobileSideMenu(false);
                 }}
-                className="flex flex-row items-center ml-[24px]"
+                className="flex flex-row text-caak-black items-center ml-[24px]"
               >
                 <FIcon className={`icon-fi-rs-ads mr-[18px] text-[24px] w-[26px] h-[26px]`} />
                 <p className="text-[18px]">Сурталчилгаа</p>
@@ -115,7 +120,7 @@ export default function Session() {
                   navigate('/help', { state: 2 });
                   setMobileSideMenu(false);
                 }}
-                className="flex flex-row items-center ml-[24px]"
+                className="flex flex-row text-caak-black items-center ml-[24px]"
               >
                 <FIcon className={`icon-fi-rs-phone mr-[18px] text-[24px] w-[26px] h-[26px]`} />
                 <p className="text-[18px]">Холбоо барих</p>
@@ -126,7 +131,7 @@ export default function Session() {
                     navigate('/help', { state: 1 });
                     setMobileSideMenu(false);
                   }}
-                  className="flex flex-row items-center"
+                  className="flex flex-row text-caak-black items-center"
                 >
                   <FIcon className={`icon-fi-rs-ads mr-[18px] text-[24px] w-[26px] h-[26px]`} />
                   <p className="text-[18px]">Нууцлалын бодлого</p>
@@ -136,7 +141,7 @@ export default function Session() {
                     navigate('/help', { state: 1 });
                     setMobileSideMenu(false);
                   }}
-                  className="flex flex-row items-center"
+                  className="flex flex-row text-caak-black items-center"
                 >
                   <FIcon className={`icon-fi-rs-phone mr-[18px] text-[24px] w-[26px] h-[26px]`} />
                   <p className="text-[18px]">Үйлчилгээний нөхцөл</p>

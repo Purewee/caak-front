@@ -8,9 +8,11 @@ import * as cry from '../../../assets/json/cry-js.json';
 import * as haha from '../../../assets/json/haha-js.json';
 import * as wow from '../../../assets/json/wow-js.json';
 import Lottie from 'react-lottie';
+import { useAuth } from '../../../context/AuthContext';
 
 export default function Reaction({ articleId, left }) {
   const [active, setActive] = useState(true);
+  const { isAuth, openModal } = useAuth();
   const { data, loading: fetching, refetch } = useQuery(REACTIONS, { variables: { articleId } });
   const [add, { loading }] = useMutation(ADD_REACTION, { variables: { articleId } });
   const ACTIONS = [
@@ -45,13 +47,17 @@ export default function Reaction({ articleId, left }) {
               shape="circle"
               type="link"
               key={idx}
-              onClick={() =>
-                add({ variables: { action: x.action } }).then(() => {
-                  refetch();
-                  message.success('Мэдээг үнэлсэнд баярлалаа.');
-                  setActive(false);
-                })
-              }
+              onClick={() => {
+                if (isAuth) {
+                  add({ variables: { action: x.action } }).then(() => {
+                    refetch();
+                    message.success('Мэдээг үнэлсэнд баярлалаа.');
+                    setActive(false);
+                  });
+                } else {
+                  openModal('login');
+                }
+              }}
             >
               <span className={`${!left && 'rounded-full border p-[12px]'}`}>
                 <Lottie

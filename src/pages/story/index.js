@@ -81,10 +81,10 @@ function ImageStory({ block, story }) {
             <Link className="absolute bottom-0 p-[32px] storyLinearItem w-full rounded-[8px]" to={block?.data?.url}>
               <div className="flex flex-col gap-[8px]">
                 <span
-                  className="truncate-2 text-white text-[24px] font-merri"
+                  className="truncate-2 text-white text-[24px]"
                   dangerouslySetInnerHTML={{ __html: block?.content }}
                 />
-                <span className="text-white font-merri text-[12px]">{story.publishDate}</span>
+                <span className="text-white opacity-90 text-[12px]">{story.publishDate}</span>
                 <Button className="w-[180px] bg-white flex p-1 px-2 border-0 rounded-sm items-center justify-between font-bold">
                   Дэлгэрэнгүй үзэх
                   <FIcon className="icon-fi-rs-down-chevron text-caak-primary text-[16px]" />
