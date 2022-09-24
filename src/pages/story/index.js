@@ -30,6 +30,22 @@ export default function Story() {
     }
   });
 
+  useEffect(() => {
+    const keyDownHandler = (event) => {
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        navigate('/');
+      }
+    };
+
+    document.addEventListener('keydown', keyDownHandler);
+
+    // 👇️ clean up event listener
+    return () => {
+      document.removeEventListener('keydown', keyDownHandler);
+    };
+  }, []);
+
   if (loading) return <Skeleton />;
   return (
     <div className="w-full fixed top-0 z-50 h-[100vh] justify-center flex">
@@ -92,7 +108,6 @@ function ImageStory({ block, story }) {
               </div>
             </Link>
           )}
-          {console.log(block)}
           {block.kind === 'image' && block?.content && (
             <div className="absolute w-full bottom-[50px] sm:bottom-0 p-[16px] sm:p-[32px] flex flex-col items-center">
               <h3
