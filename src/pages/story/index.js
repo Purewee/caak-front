@@ -94,7 +94,10 @@ function ImageStory({ block, story }) {
         </div>
         <div className="relative w-full h-full">
           {block.kind === 'post' && (
-            <Link className="absolute bottom-0 p-[32px] storyLinearItem w-full rounded-[8px]" to={block?.data?.url}>
+            <Link
+              className="absolute bottom-[50px] smbottom-0 p-[32px] storyLinearItem w-full rounded-[8px]"
+              to={block?.data?.url}
+            >
               <div className="flex flex-col gap-[8px]">
                 <span
                   className="truncate-2 text-white text-[24px]"
