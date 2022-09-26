@@ -2,11 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
-
 @font-face {
   font-family: "Roboto Condensed";   /*Can be any text*/
   src: local("Roboto-Medium"),
     url("./assets/fonts/Roboto-Medium.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Arial";   /*Can be any text*/
+  src: local("Arial"),
+  url('http://fonts.cdnfonts.com/css/arial') format("truetype");
 }
 
 ::-moz-selection {
@@ -24,6 +29,10 @@
 
 .condMedium {
   font-family: 'Roboto Condensed';
+}
+
+.arial {
+  font-family: 'Arial';
 }
 
 .HighlightFeedGrid {
@@ -582,4 +591,12 @@
 
 .ck-content p a {
   color: var(--ant-primary-color);
+}
+
+.element.style {
+  z-index: 5;
+}
+
+.story-linear {
+  background: transparent linear-gradient(180deg, #00000000 0%, #000000B2 100%) 0% 0% no-repeat padding-box;;
 }

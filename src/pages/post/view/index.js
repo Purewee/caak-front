@@ -246,9 +246,9 @@ const Post = () => {
             </div>
           </div>
         </div>
-        <div className="flex flex-col items-center">
+        <div className="flex flex-col w-full items-center px-[16px] md:px-0">
           <Banner position="a1" />
-          <div className="pt-0 md:pt-[40px] flex flex-col items-center max-w-[760px] w-full font-roboto md:mx-[100px] px-[16px] md:px-0">
+          <div className="pt-0 md:pt-[40px] flex flex-col items-center max-w-[760px] w-full font-roboto md:mx-[100px]">
             <img
               src={imagePath(article.imageUrl)}
               alt=""

@@ -48,26 +48,26 @@ export default function Story() {
 
   if (loading) return <Skeleton />;
   return (
-    <div className="w-full fixed top-0 z-50 h-[100vh] justify-center flex">
-      <div className="w-full h-[100vh] flex justify-center flex-nowrap items-center gap-[24px] overflow-hidden">
-        <Stories
-          width="100vw"
-          height="100vh"
-          keyboardNavigation
-          preventDefault
-          loop
-          storyContainerStyles={{
-            overflow: 'hidden',
-            background: '#323232',
-          }}
-          stories={stories}
-          onAllStoriesEnd={() => {
-            if (story?.nextStory?.id) {
-              navigate(`/story/${story.nextStory.id}`);
-            }
-          }}
-        />
-      </div>
+    <div className="w-full fixed top-0 z-50 h-full justify-center flex">
+      <Stories
+        width="100vw"
+        height="100%"
+        isPaused
+        keyboardNavigation
+        // preventDefault
+        loop
+        defaultInterval={1500}
+        storyContainerStyles={{
+          overflow: 'hidden',
+          background: '#323232',
+        }}
+        stories={stories}
+        onAllStoriesEnd={() => {
+          if (story?.prevStory?.id) {
+            navigate(`/story/${story.prevStory.id}`);
+          }
+        }}
+      />
     </div>
   );
 }
@@ -81,10 +81,10 @@ function ImageStory({ block, story }) {
         {story.prevStory && <Preview story={story.prevStory} />}
       </div>
       <div
-        className="w-full sm:w-[60%] h-full rounded-[8px] flex flex-col items-center justify-center bg-contain bg-no-repeat bg-center bg-[#000000]"
+        className="w-full sm:w-[60%] sm:rounded-[8px] bg-contain bg-no-repeat bg-center bg-[#000000]"
         style={{ backgroundImage: `url(${imagePath(block.imageUrl)})` }}
       >
-        <div className="absolute z-50 top-[12px] right-[12px] flex">
+        <div style={{ zIndex: 1000 }} className="absolute top-[12px] right-[12px] flex">
           <Button
             type="link"
             className="sm:hidden"
@@ -95,7 +95,8 @@ function ImageStory({ block, story }) {
         <div className="relative w-full h-full">
           {block.kind === 'post' && (
             <Link
-              className="absolute bottom-[50px] smbottom-0 p-[32px] storyLinearItem w-full rounded-[8px]"
+              style={{ zIndex: 1000 }}
+              className="absolute bottom-0 pb-[20px] p-[16px] sm:p-[32px] story-linear w-full rounded-[8px]"
               to={block?.data?.url}
             >
               <div className="flex flex-col gap-[8px]">
@@ -112,17 +113,17 @@ function ImageStory({ block, story }) {
             </Link>
           )}
           {block.kind === 'image' && block?.content && (
-            <div className="absolute w-full bottom-[50px] sm:bottom-0 p-[16px] sm:p-[32px] flex flex-col items-center">
+            <div className="absolute w-full story-linear bottom-0 pb-[20px] p-[16px] sm:p-[32px] flex flex-col items-center">
               <h3
                 className="text-center w-full text-white opacity-80 leading-[32px] text-[28px] sm:text-[32px] font-condensed tracking-[0.48px] font-normal mb-[16px]"
                 dangerouslySetInnerHTML={{ __html: block?.content }}
               />
-              {/* <div className="h-[4px] w-[60px] bg-caak-primary" /> */}
+              <div className="h-[4px] w-[60px] bg-caak-primary" />
             </div>
           )}
         </div>
       </div>
-      <div className="hidden sm:flex flex-col h-full w-[20%] justify-start items-end">
+      <div style={{ zIndex: 1000 }} className="hidden sm:flex flex-col h-full w-[20%] justify-start items-end">
         <Button
           shape="circle"
           type="white"
@@ -162,8 +163,8 @@ function VideoStory({ block, story, action }) {
         <Logo white className="mb-[160px]" />
         {story.prevStory && <Preview story={story.prevStory} />}
       </div>
-      <div className="w-[100%] sm:w-[60%] h-full rounded-[8px] flex flex-col items-center justify-center bg-contain bg-no-repeat bg-center bg-[#000000] relative">
-        <div className="absolute z-50 top-[12px] right-[12px] flex">
+      <div className="w-[100%] sm:w-[60%] h-full sm:rounded-[8px] flex flex-col items-center justify-center bg-contain bg-no-repeat bg-center bg-[#000000] relative">
+        <div style={{ zIndex: 1001 }} className="absolute top-[12px] right-[12px] flex">
           <Button
             type="link"
             icon={<FIcon className={`${playing ? 'icon-fi-rs-pause' : 'icon-fi-rs-play'} text-white`} />}
@@ -190,11 +191,12 @@ function VideoStory({ block, story, action }) {
           width="100%"
           height="100%"
           muted={muted}
+          style={{ zIndex: 1000 }}
           className="rounded-[8px]"
           onPause={() => action('pause')}
           onPlay={() => action('play')}
         />
-        <div className="absolute z-50 bottom-[100px] sm:bottom-[54px] sm:left-[36px] flex flex-col">
+        <div style={{ zIndex: 1000 }} className="absolute bottom-[80px] sm:left-[36px] flex flex-col">
           <h3
             className="truncate-2 text-center w-full text-white leading-[26px] text-[26px] font-condensed tracking-[0.39px] font-normal mb-[16px]"
             dangerouslySetInnerHTML={{ __html: block?.content }}
@@ -210,7 +212,7 @@ function VideoStory({ block, story, action }) {
           )}
         </div>
       </div>
-      <div className="hidden sm:flex flex-col h-full w-[20%] justify-start items-end">
+      <div style={{ zIndex: 1000 }} className="hidden sm:flex flex-col h-full w-[20%] justify-start items-end">
         <Button
           shape="circle"
           type="white"

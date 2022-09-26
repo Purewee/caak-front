@@ -48,7 +48,7 @@ export default function PostShareModal({ post, toggle, image }) {
               <span className="icon-fi-rs-link" />
               <p id="myInput" className="text-[15px] ml-[10px]">{`${Configure.domain}'/post/view/${post?.id}`}</p>
             </div>
-            <CopyToClipboard text={`${Configure.domain}'/post/view/${post?.id}`}>
+            <CopyToClipboard text={`${Configure.domain}/post/view/${post?.id}`}>
               <p
                 className="cursor-pointer text-[#FF6600] font-medium text-[15px] leading-[18px]"
                 onClick={() => openNotification()}

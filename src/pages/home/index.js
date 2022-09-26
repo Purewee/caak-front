@@ -174,7 +174,7 @@ export default function Home() {
           </div>
         )}
         <ArticlesList filter={filter} sort={sort} size={22} />
-        <div className="bg-[#B8E5FF] w-full h-[288px] sm:hidden mt-[60px] px-[16px] pt-[20px] flex flex-col items-center">
+        {/* <div className="bg-[#B8E5FF] w-full h-[288px] sm:hidden mt-[60px] px-[16px] pt-[20px] flex flex-col items-center">
           <FIcon className="icon-fi-rs-mail-o text-[22px] text-caak-primary w-[50px] h-[50px] rounded-full bg-white" />
           <p className="mt-[12px] condMedium text-[22px] leading-[26px]">Шилдэг мэдээг таны и-мэйл руу!</p>
           <p className="mt-[12px] text-[15px] text-[#555555] leading-[22px] text-center">
@@ -186,7 +186,7 @@ export default function Home() {
               Хүлээн авах
             </button>
           </div>
-        </div>
+        </div> */}
       </div>
       <Banner position="a4" />
     </>
