@@ -1,7 +1,7 @@
 import NavbarPostHeader from '../../component/navigation/navbarPostHeader';
 import Story from '../../component/story';
 import React, { useEffect, useState } from 'react';
-import { Tabs, Select, Button } from 'antd';
+import { Tabs, Select } from 'antd';
 import { useAuth } from '../../context/AuthContext';
 import { useHeader } from '../../context/HeaderContext';
 import ArticlesList from './articles_list';
@@ -40,6 +40,12 @@ const FOLLOWS = gql`
   }
 `;
 
+const SOURCE_CATEGORIES = gql`
+  query GetSourceCategories {
+    sourceCategories
+  }
+`;
+
 export default function Home() {
   const [selected, setSelected] = useState('recent');
   const { isAuth } = useAuth();
@@ -48,7 +54,9 @@ export default function Home() {
   const [filter, setFilter] = useState([]);
   const [sort, setSort] = useState({ publish_date: 'desc' });
   const { data } = useQuery(FOLLOWS, { skip: !isAuth && selected !== 'user' });
+  const { data: dataCategories } = useQuery(SOURCE_CATEGORIES);
   const follows = groupBy(data?.me?.follows.map((x) => x.target) || [], (x) => x.__typename.toLowerCase());
+  const categories = dataCategories?.sourceCategories || [];
 
   useEffect(() => {
     setMode('transparent');
@@ -88,6 +96,18 @@ export default function Home() {
       }
       setFilter([{ bool: { should: should } }]);
 
+      setSort({ publish_date: 'desc' });
+    } else {
+      setFilter([
+        {
+          bool: {
+            should: [
+              { simple_query_string: { query: selected, fields: ['source.category^9'] } },
+              { multi_match: { query: selected, type: 'phrase_prefix', fields: ['source.category^9'] } },
+            ],
+          },
+        },
+      ]);
       setSort({ publish_date: 'desc' });
     }
   }, [selected]);
@@ -142,6 +162,20 @@ export default function Home() {
                 }
               ></Tabs.TabPane>
             )}
+            {categories.map((x) => (
+              <Tabs.TabPane
+                key={x}
+                tab={
+                  <span
+                    className={`text-[16px] sm:text-[20px] font-bold cursor-pointer text-center leading-[16px] sm:leading-[20px] uppercase ${
+                      selected === x ? 'text-[#111111]' : 'text-[#555555]'
+                    }`}
+                  >
+                    {x}
+                  </span>
+                }
+              />
+            ))}
           </Tabs>
         </div>
         {selected === 'trend' && (
