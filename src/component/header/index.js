@@ -11,7 +11,7 @@ import Categories from './categories';
 
 function CaakHeader() {
   const { isAuth } = useAuth();
-  const { mode, content } = useHeader();
+  const { mode } = useHeader();
   let cls = '';
   switch (mode) {
     case 'default':
