@@ -76,7 +76,7 @@ const StoryFeed = () => {
       </div>
       <div
         ref={trendPostsRef}
-        className="w-full wrapper gap-[13px] transition-all pb-[26px] md:pb-0 duration-300 mt-[14px] md:mt-[39px]"
+        className="w-full wrapper gap-[6px] sm:gap-[13px] transition-all pb-[26px] md:pb-0 duration-300 mt-[14px] md:mt-[39px]"
       >
         {stories.map((item, index) => {
           return <StoryItem border={index === 0} story={item} key={index} index={index} />;

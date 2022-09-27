@@ -15,7 +15,7 @@ export const BlockTitle = tw.h2`
 `;
 
 export const Paragraph = tw.p`
-  text-[#303030] md:text-[#555555] mt-[16px] text-[18px] md:leading-[36px] tracking-[0.54px] arial
+  text-[#303030] md:text-[#555555] mt-[16px] text-[18px] md:leading-[36px] tracking-[0.54px] font-literata
 `;
 
 export const HashTag = tw.span`

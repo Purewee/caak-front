@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 export default function StoryItem({ story, border }) {
   return (
-    <Link className="h-[160px] min-w-[106px] md:min-w-[290px] md:h-[435px]" to={`/story/${story.id}`}>
+    <Link className="h-[190px] min-w-[115px] md:min-w-[290px] md:h-[435px]" to={`/story/${story.id}`}>
       <div className={`h-full w-full rounded-[6px] ${border && 'border-2 border-[#FF6600] sm:p-[5px]'}`}>
         <div className={`relative h-full w-full bg-white `}>
           <LazyLoadImage
