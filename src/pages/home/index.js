@@ -10,6 +10,7 @@ import Banner from '../../component/banner';
 import { gql, useQuery } from '@apollo/client';
 import { groupBy } from 'lodash/collection';
 import { FIcon } from '../../component/icon';
+import useMediaQuery from '../../component/navigation/useMediaQuery';
 
 const FOLLOWS = gql`
   query GetFollows {
@@ -57,10 +58,15 @@ export default function Home() {
   const { data: dataCategories } = useQuery(SOURCE_CATEGORIES);
   const follows = groupBy(data?.me?.follows.map((x) => x.target) || [], (x) => x.__typename.toLowerCase());
   const categories = dataCategories?.sourceCategoriesMap || [];
+  const isMobile = useMediaQuery('screen and (max-width: 640px)');
 
   useEffect(() => {
     setMode('transparent');
   }, []);
+
+  useEffect(() => {
+    window.scrollTo(0, isMobile ? 0 : 1400);
+  }, [selected]);
 
   useEffect(() => {
     if (selected === 'recent') {
@@ -107,14 +113,13 @@ export default function Home() {
     <>
       <div className={`relative bg-white flex flex-col items-center mb-[40px] sm:mb-[100px]`}>
         <NavbarPostHeader />
-        <div className="mt-[20px] sm:mt-[50px] mb-[20px] sm:mb-0 px-[16px] sm:px-0">
-          <Banner position="a1" />
-        </div>
-        <div className="md:px-[30px] w-full flex justify-center px-[16px] sm:px-0">
-          <Story />
-        </div>
-        <div className="sticky bg-white z-[1] top-0 max-w-[1310px] w-full px-[16px] sm:px-0">
-          <Tabs onChange={(e) => setSelected(e)} className="w-full border-b font-roboto" centered>
+        <div className="sticky sm:hidden bg-white z-[2] top-0 max-w-[1310px] w-full px-[16px] sm:px-0">
+          <Tabs
+            tabBarGutter={isMobile ? 16 : 30}
+            onChange={(e) => setSelected(e)}
+            className="w-full border-b font-roboto"
+            centered
+          >
             <Tabs.TabPane
               key="recent"
               tab={
@@ -169,6 +174,71 @@ export default function Home() {
             ))}
           </Tabs>
         </div>
+        <div className="mt-[20px] hidden sm:block sm:mt-[50px] mb-[20px] sm:mb-0 px-[16px] sm:px-0">
+          <Banner position="a1" />
+        </div>
+        <div className="md:px-[30px] w-full flex justify-center px-[16px] sm:px-0">
+          <Story />
+        </div>
+        <div className="hidden sm:block sticky bg-white z-[2] top-0 max-w-[1310px] w-full px-[16px] sm:px-0">
+          <Tabs onChange={(e) => setSelected(e)} className="w-full border-b font-roboto" centered>
+            <Tabs.TabPane
+              key="recent"
+              tab={
+                <span
+                  className={`text-[16px] sm:text-[20px] font-bold cursor-pointer text-center leading-[16px] sm:leading-[20px] uppercase ${
+                    selected === 'recent' ? 'text-[#111111]' : 'text-[#555555]'
+                  }`}
+                >
+                  Шинэ
+                </span>
+              }
+            ></Tabs.TabPane>
+            <Tabs.TabPane
+              key="trend"
+              tab={
+                <span
+                  className={`text-[16px] sm:text-[20px] font-bold cursor-pointer text-center leading-[16px] sm:leading-[20px] uppercase  ${
+                    selected === 'trend' ? 'text-[#111111]' : 'text-[#909090] sm:text-[#555555]'
+                  }`}
+                >
+                  Трэнд
+                </span>
+              }
+            ></Tabs.TabPane>
+            {isAuth && (
+              <Tabs.TabPane
+                key="user"
+                tab={
+                  <span
+                    className={`text-[16px] sm:text-[20px] font-bold cursor-pointer text-center leading-[16px] sm:leading-[20px] uppercase ${
+                      selected === 'user' ? 'text-[#111111]' : 'text-[#909090] sm:text-[#555555]'
+                    }`}
+                  >
+                    Танд
+                  </span>
+                }
+              ></Tabs.TabPane>
+            )}
+            {categories.map((x) => (
+              <Tabs.TabPane
+                key={x.code}
+                tab={
+                  <span
+                    className={`text-[16px] sm:text-[20px] font-bold cursor-pointer text-center leading-[16px] sm:leading-[20px] uppercase ${
+                      selected === x.code ? 'text-[#111111]' : 'text-[#909090] sm:text-[#555555]'
+                    }`}
+                  >
+                    {x.name}
+                  </span>
+                }
+              />
+            ))}
+          </Tabs>
+        </div>
+        <div className="mt-[20px] sm:hidden sm:mt-[50px] px-[16px] sm:px-0">
+          <Banner position="a1" />
+        </div>
         {selected === 'trend' && (
           <div className="flex mt-[12px] gap-[12px] font-merri">
             <Select
@@ -198,7 +268,7 @@ export default function Home() {
             </Select>
           </div>
         )}
-        <ArticlesList filter={filter} sort={sort} size={22} />
+        <ArticlesList asd={selected === ('chuluut_tsag' || 'video' || 'blog')} filter={filter} sort={sort} size={22} />
         {/* <div className="bg-[#B8E5FF] w-full h-[288px] sm:hidden mt-[60px] px-[16px] pt-[20px] flex flex-col items-center">
           <FIcon className="icon-fi-rs-mail-o text-[22px] text-caak-primary w-[50px] h-[50px] rounded-full bg-white" />
           <p className="mt-[12px] condMedium text-[22px] leading-[26px]">Шилдэг мэдээг таны и-мэйл руу!</p>

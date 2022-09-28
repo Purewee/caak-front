@@ -151,7 +151,7 @@ const Post = () => {
 
   return (
     <div className="pb-[100px]">
-      <div className="flex flex-row pb-[100px] justify-center pt-[20px] xl:pt-[41px]">
+      <div className="flex flex-row pb-[100px] justify-center w-full pt-[20px] xl:pt-[41px]">
         <Helmet>
           <title>{title}</title>
           <meta name="viewport" content="initial-scale=1.0, width=device-width" />
@@ -246,7 +246,7 @@ const Post = () => {
             </div>
           </div>
         </div>
-        <div className="flex flex-col w-full items-center px-[16px] md:px-0">
+        <div className="flex flex-col max-w-[960px] w-full items-center px-[16px] md:px-0">
           <Banner position="a1" />
           <div className="pt-0 md:pt-[40px] flex flex-col items-center max-w-[760px] w-full font-roboto md:mx-[100px]">
             <img
@@ -451,7 +451,7 @@ const Post = () => {
                       };
                       notification.open(args);
                     } else {
-                      openModal('open');
+                      openModal('login');
                     }
                   }}
                 >
@@ -478,7 +478,7 @@ const Post = () => {
                       };
                       notification.open(followNotify);
                     } else {
-                      openModal('open');
+                      openModal('login');
                     }
                   }}
                 >

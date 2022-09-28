@@ -38,7 +38,7 @@ export default function PostSaveModal({ post, toggle, image }) {
               className="font-bold mx-[6px] cursor-pointer"
               onClick={() => navigate(`/profile/${me?.me.id}`, { state: 'saved' })}
             >
-              Энд
+              ЭНД
             </p>
             дарж үзнэ үү!
           </div>

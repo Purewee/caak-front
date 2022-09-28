@@ -21,7 +21,7 @@ const REMOVE_SAVED = gql`
 
 const colors = ['#163943', '#463146', '#131D1C', '#1E1642', '#854D0E', '#233C6A', '#813333'];
 
-export default function PostCard({ isMobile, post, removeSaved, ...rest }) {
+export default function PostCard({ isMobile, post, removeSaved, asd, ...rest }) {
   const [saving, setSaving] = useState(false);
   const [fixedMenu, setFixedMenu] = useState(false);
   const [reporting, setReporting] = useState(false);
@@ -41,8 +41,13 @@ export default function PostCard({ isMobile, post, removeSaved, ...rest }) {
   return (
     <div
       className={`${
-        sponsored ? 'h-[417px]' : `h-[150px] w-[${width - 32}px] sm:w-full`
-      } sm:h-[520px] flex flex-col justify-between text-[#111111] sm:w-[422px] border-b border-[#EFEFEF] rounded-sm`}
+        sponsored
+          ? 'h-[417px]'
+          : asd
+          ? 'max-h-[340px] sm:max-h-[520px] h-full'
+          : `h-[150px] w-[${width - 32}px] sm:w-full`
+      }
+        sm:h-[520px] flex flex-col justify-between text-[#111111] sm:w-[422px] border-b border-[#EFEFEF] rounded-sm`}
       style={color}
     >
       {sponsored && (
@@ -51,13 +56,17 @@ export default function PostCard({ isMobile, post, removeSaved, ...rest }) {
           <p className="text-[13px] condMedium ml-[4px]">ОНЦЛОХ МЭДЭЭ</p>
         </div>
       )}
-      <div className={`flex ${sponsored ? 'flex-col' : 'flex-row md:flex-col'}`}>
+      <div className={`flex ${sponsored || asd ? 'flex-col' : 'flex-row md:flex-col'}`}>
         <Link className="sm:h-[300px]" to={postURL} target={post.kind === 'linked' ? '_blank' : '_self'}>
           <img
             alt={post.title}
             src={imagePath(post.image)}
             className={`${
-              sponsored ? 'h-[220px] w-full' : 'h-[105px] min-w-[130px] max-w-[130px] sm:min-w-full sm:max-w-[422px]'
+              sponsored
+                ? 'h-[220px] w-full'
+                : asd
+                ? 'h-[212px] min-w-full rounded-[8px] sm:rounded-none'
+                : 'h-[105px] min-w-[130px] max-w-[130px] sm:min-w-full sm:max-w-[422px]'
             } sm:h-[300px] object-cover`}
           />
         </Link>
@@ -78,7 +87,9 @@ export default function PostCard({ isMobile, post, removeSaved, ...rest }) {
             className={`${
               sponsored
                 ? 'px-[16px] h-[85px] truncate-4 sm:truncate-3 text-[22px] sm:text-[21px] leading-[30px] sm:leading-[29px] font-bold sm:font-normal'
-                : 'truncate-3 font-medium hover:underline underline-offset-4 decoration-[#3B4491]/20 sm:font-normal text-[16px] sm:text-[21px] leading-[20px] sm:leading-[29px] ml-[16px] sm:ml-0'
+                : `truncate-3 font-medium hover:underline underline-offset-4 decoration-[#3B4491]/20 sm:font-normal sm:text-[21px] leading-[20px] sm:leading-[29px] ${
+                    asd ? 'text-[18px] mt-[12px] sm:mt-0 truncate-3' : 'text-[16px] mt-0 ml-[16px] sm:ml-0'
+                  }`
             } font-roboto sm:font-merri ${text}`}
           >
             {post.title}
@@ -90,7 +101,7 @@ export default function PostCard({ isMobile, post, removeSaved, ...rest }) {
           </div>
         )}
       </div>
-      <div className="flex flex-col justify-between pb-[13px] sm:pb-[15px]">
+      <div className={`flex flex-col justify-between pb-[13px] sm:pb-[15px] ${asd && 'mt-[20px] sm:mt-0'}`}>
         <div className={`flex items-center w-full justify-between ${sponsored && 'sm:pl-[20px] sm:pr-[16px]'}`}>
           <div className={`flex flex-row items-center ${sponsored && 'px-[13px] sm:px-0'}`}>
             <div className="flex flex-row items-center">

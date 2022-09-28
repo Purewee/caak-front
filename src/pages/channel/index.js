@@ -74,10 +74,14 @@ export default function Channel() {
     });
   }, [page]);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   if (fetching) return <Skeleton />;
 
   return (
-    <div className="flex flex-col w-full items-center mb-[40px]">
+    <div className="flex flex-col w-full items-center mb-[40px] px-[16px] sm:px-0">
       <img
         className="w-[94px] h-[94px] rounded-full mt-[30px] md:mt-[51px]"
         alt={source.domain}

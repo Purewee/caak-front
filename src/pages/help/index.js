@@ -141,20 +141,20 @@ const caakAds = [
         size: '790x500',
         desc: 'Дурын мэдээг дэлгэрэнгүй үзэх үед мэдээн дунд харагдана.'
     },
-    {
-        pos: 'A4',
-        size: '150x150, 500x500',
-        desc: 'Нүүр хуудас болон мэдээ үзэж байхад зүүн доод булангаас хөдөлгөөнт хэлбэрээр гарч ирдэг pop-up баннер.'
-    },
+    // {
+    //     pos: 'A4',
+    //     size: '150x150, 500x500',
+    //     desc: 'Нүүр хуудас болон мэдээ үзэж байхад зүүн доод булангаас хөдөлгөөнт хэлбэрээр гарч ирдэг pop-up баннер.'
+    // },
 ]
 
 //prettier-ignore
 const moneyNews = [
-    {
-        pos: 'ВИДЕО КОНТЕНТ',
-        desc: 'Тухайн байгууллагын үйлчилгээ, бүтээгдэхүүнийг далд хэлбэрээр сурталчилсан сонирхолтой видео контент бүтээж өгнө. Түгээх суваг: facebook, Youtube, Instagram',
-        pic: VideoContent
-    },
+    // {
+    //     pos: 'ВИДЕО КОНТЕНТ',
+    //     desc: 'Тухайн байгууллагын үйлчилгээ, бүтээгдэхүүнийг далд хэлбэрээр сурталчилсан сонирхолтой видео контент бүтээж өгнө. Түгээх суваг: facebook, Youtube, Instagram',
+    //     pic: VideoContent
+    // },
     {
         pos: 'ОНЦЛОХ МЭДЭЭ',
         desc: 'Нүүр хуудасны хамгийн эхэнд 24 цаг онцлогдоно. Мөн мэдээний жагсаалт дунд ялгарч харагдана. Сайтын баруунд доод хэсгээс pop-up хэлбэрээр хэрэглэгчид санал болгоно. Сайтын сошиал (facebook, twitter) сувгуудаар давхар шэйр хийгдэнэ',
@@ -263,7 +263,7 @@ export default function Help() {
                             <p className='font-condensed font-bold text-[25px] md:text-[32px] text-[#111111] md:leading-[38px] mt-[20px] sm:mt-0'>Сурталчилгаа байршуулах</p>
                             <p className='text-[15px] text-[#555555] leading-[20px] mt-[23px]'>Та манай 16 жилийн түүхтэй CAAK.MN сайт дээр Мэдээ, Пост, Контент нийтлүүлэх болон бизнесийн сурталчилгаа байршуулснаар дараах давуу талуудыг хүртэх боломжтой.</p>
                             <p className='text-[#363946] text-[20px] font-bold leading-[24px] mt-[40px]'>Давуу талууд</p>
-                            <div className='flex flex-wrap justify-between gap-[20px] mt-[20px]'>
+                            <div className='flex flex-wrap justify-center sm:justify-between gap-[20px] mt-[20px]'>
                                 {
                                     Reclam.map((data, index) => {
                                         return(
@@ -378,7 +378,7 @@ export default function Help() {
                             </div>
                         </div>
                         <p className='mt-[40px] font-condensed font-bold text-[38px] leading-[44px]'>Баннер байршуулах</p>
-                        <p className='text-caak-primary text-[18px] leading-[21px] mt-[12px]'>/ Үнэ өдрөөр /</p>
+                        <p className='text-caak-primary text-[18px] leading-[21px] mt-[12px] w-full text-center'>/ Үнэ өдрөөр /</p>
                         <div className='mt-[30px] flex flex-wrap justify-center gap-[23px] w-full'>
                             {
                                 caakAds.map((data, index) => {
@@ -400,8 +400,8 @@ export default function Help() {
                         </div>
                         <span className='w-full h-[7px] bg-[#F5F5F5] mt-[50px]' />
                         <p className='text-[38px] font-condensed font-bold leading-[44px] mt-[50px]'>Тѳлбѳртэй мэдээ</p>
-                        <p className='text-caak-primary text-[18px] leading-[21px] mt-[12px]'>/ Нэг удаа /</p>
-                        <div className='flex flex-wrap gap-[28px] w-full mt-[31px]'>
+                        <p className='text-caak-primary text-[18px] leading-[21px] mt-[12px] w-full text-center'>/ Нэг удаа /</p>
+                        <div className='flex flex-wrap justify-center gap-[28px] w-full mt-[31px]'>
                             {
                                 moneyNews.map((data, index) => {
                                     return(

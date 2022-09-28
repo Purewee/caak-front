@@ -169,10 +169,18 @@ export default function DrawerMenu() {
           <p className="text-[18px] font-medium leading-[21px]">ХОЛБОО БАРИХ</p>
         </div>
         <div className="border-t border-b w-full border-[#D4D8D8] flex flex-row items-center justify-center gap-[19px] py-[30px] mt-[137px]">
-          <span className="icon-fi-rs-fb text-[22px]" />
-          <span className="icon-fi-rs-ig text-[22px]" />
-          <span className="icon-fi-rs-tw text-[22px]" />
-          <span className="icon-fi-rs-yt text-[22px]" />
+          <a href="https://www.facebook.com/caakweb" className="h-[22px]" target={`_blank`}>
+            <span className="icon-fi-rs-fb text-[22px]" />
+          </a>
+          <a href="https://www.instagram.com/caak.mn/" className="h-[22px]" target={`_blank`}>
+            <span className="icon-fi-rs-ig text-[22px]" />
+          </a>
+          <a href="https://twitter.com/caaktwt" className="h-[22px]" target={`_blank`}>
+            <span className="icon-fi-rs-tw text-[22px]" />
+          </a>
+          <a href="https://www.youtube.com/c/caakvideo" className="h-[22px]" target={`_blank`}>
+            <span className="icon-fi-rs-yt text-[22px]" />
+          </a>
         </div>
         <p className="text-[#555555] text-[15px] mt-[30px] text-center">©2022 “Саак Холдинг” ХХК</p>
       </Drawer>

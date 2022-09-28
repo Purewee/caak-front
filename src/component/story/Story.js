@@ -5,9 +5,9 @@ import { Link } from 'react-router-dom';
 
 export default function StoryItem({ story, border }) {
   return (
-    <Link className="h-[190px] min-w-[115px] md:min-w-[290px] md:h-[435px]" to={`/story/${story.id}`}>
+    <Link className="h-[203px] min-w-[136px] md:min-w-[290px] md:h-[435px]" to={`/story/${story.id}`}>
       <div className={`h-full w-full rounded-[6px] ${border && 'border-2 border-[#FF6600] sm:p-[5px]'}`}>
-        <div className={`relative h-full w-full bg-white `}>
+        <div className={`relative h-full w-full bg-white rounded-[6px]`}>
           <LazyLoadImage
             alt={story.id}
             className="object-cover h-full w-full rounded-[6px]"

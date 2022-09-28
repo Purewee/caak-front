@@ -97,7 +97,7 @@ export default function Profile() {
     <div className="flex justify-center px-[16px]">
       <div className="max-w-[1310px] w-full flex flex-col">
         <div className="pt-[17px] md:pt-[71px] pb-[17px] md:pb-[50px] flex flex-col md:flex-row justify-between w-full items-center">
-          <div className="flex flex-col md:flex-row">
+          <div className="flex flex-row w-full">
             {user.avatar ? (
               <Avatar
                 className="w-[57px] h-[57px] md:w-[82px] md:h-[82px] object-cover"
@@ -108,12 +108,10 @@ export default function Profile() {
                 {(user?.firstName || user?.name)[0]}
               </Avatar>
             )}
-            <div className="md:ml-[16px] mt-[15px] md:mt-0">
+            <div className="ml-[16px]">
               <Title className="font-condensed mt-0 font-bold text-[30px] leading-[35px]">{user?.firstName}</Title>
-              <p className="mt-[9px] md:mt-[12px] text-[15px] text-[#555555] leading-[18px] max-w-[600px]">
-                {user?.data?.bio}
-              </p>
-              <div className="flex flex-row text-[#555555] gap-[23px] mt-[18px] text-[15px] leading-[18px] font-merri text-center">
+              <p className="md:mt-[12px] text-[15px] text-[#555555] leading-[18px] max-w-[600px]">{user?.data?.bio}</p>
+              <div className="flex flex-row text-[#555555] gap-[23px] sm:mt-[18px] text-[15px] leading-[18px] font-merri text-center">
                 <Statistic title="нийтлэл" value={user?.articles?.totalCount} />
                 <Statistic title="дагагч" value={0} />
               </div>
@@ -180,7 +178,7 @@ export default function Profile() {
               />
             }
           >
-            <div className="max-w-[1310px] w-full flex flex-wrap justify-center mt-[50px] xl:justify-start gap-x-[22px] gap-y-[40px] px-[32px] sm:px-0  border-t">
+            <div className="max-w-[1310px] w-full flex flex-wrap justify-center mt-[50px] xl:justify-start gap-x-[22px] gap-y-[40px]">
               {articles.map((post, index) => (
                 <Col className="w-full sm:w-[422px]" key={index}>
                   <PostCard isMobile={isMobile} post={post} />

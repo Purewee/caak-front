@@ -6,7 +6,7 @@ import useMediaQuery from '../../component/navigation/useMediaQuery';
 import Banner from '../../component/banner';
 import { FIcon } from '../../component/icon';
 
-export default function ArticlesList({ filter = [], sort = {}, size = 24 }) {
+export default function ArticlesList({ filter = [], sort = {}, size = 24, asd }) {
   const es = new ESService('caak');
   const [page, setPage] = useState(0);
   const [list, setList] = useState([]);
@@ -58,7 +58,7 @@ export default function ArticlesList({ filter = [], sort = {}, size = 24 }) {
                   </Col>
                 )}
                 <Col className="w-full sm:w-[422px]" key={index}>
-                  <PostCard sponsored={index === 0} isMobile={isMobile} post={post} />
+                  <PostCard asd={asd} sponsored={index === 0} isMobile={isMobile} post={post} />
                 </Col>
               </React.Fragment>
             ))}
@@ -71,11 +71,11 @@ export default function ArticlesList({ filter = [], sort = {}, size = 24 }) {
           <Button
             block
             size="large"
-            className="font-roboto border-caak-primary h-[74px] text-[18px] font-medium text-caak-primary mt-[20px]"
+            className="font-roboto border-caak-primary h-[60px] sm:h-[74px] text-[18px] font-medium text-caak-primary mt-[20px]"
             onClick={() => setPage(page + 1)}
             loading={loading}
           >
-            Илүү ихийг үзэх
+            Бусад мэдээг үзэх
             <FIcon className="icon-fi-rs-down-chevron text-caak-primary text-[16px] w-[16px] ml-[8px]" />
           </Button>
         </div>

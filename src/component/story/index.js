@@ -27,7 +27,7 @@ const StoryFeed = () => {
   };
 
   return stories?.length > 0 ? (
-    <div className="flex flex-col max-w-[400px] sm:max-w-[600px] md:max-w-[700px] lg:max-w-[1002px] xl:max-w-[1202px] 2xl:max-w-[1502px] xl:px-0 w-full justify-center relative md:py-[80px]">
+    <div className="flex flex-col max-w-[400px] sm:max-w-[600px] md:max-w-[700px] lg:max-w-[1002px] xl:max-w-[1202px] 2xl:max-w-[1502px] xl:px-0 w-full justify-center relative mt-[14px] md:mt-0 md:py-[80px]">
       {activeIndex + 1 < stories.length - 1 && (
         <div
           onClick={() => {
@@ -65,7 +65,7 @@ const StoryFeed = () => {
           src={require('../../assets/images/feed_story.svg').default}
           alt="Feeds"
         />
-        <Link to="/stories">
+        <Link className="hidden" to="/stories">
           <div className="flex flex-row-reverse sm:flex-row gap-[6px] sm:absolute items-center right-[121px]">
             <p className="text-[14px] condMedium sm:font-normal sm:text-[16px] text-[#909090] sm:text-[#111111]">
               Бүх сторинууд
@@ -76,7 +76,7 @@ const StoryFeed = () => {
       </div>
       <div
         ref={trendPostsRef}
-        className="w-full wrapper gap-[6px] sm:gap-[13px] transition-all pb-[26px] md:pb-0 duration-300 mt-[14px] md:mt-[39px]"
+        className="w-full wrapper gap-[6px] sm:gap-[13px] transition-all pb-[10px] md:pb-0 duration-300 mt-[14px] md:mt-[39px]"
       >
         {stories.map((item, index) => {
           return <StoryItem border={index === 0} story={item} key={index} index={index} />;

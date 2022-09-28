@@ -40,9 +40,9 @@ export default function Footer() {
                     showArrow={false}
                 >
                     <div className='flex flex-col gap-[10px] px-[16px] justify-between items-center text-[15px] text-[#838383] pb-[30px]'>
-                        <a className='h-[20px] hover:text-[#FF6600]' href='https://www.caaknews.mn/' target={'_blank'}>
+                        {/* <a className='h-[20px] hover:text-[#FF6600]' href='https://www.caaknews.mn/' target={'_blank'}>
                             <p>Саак мэдээ</p>
-                        </a>
+                        </a> */}
                         <a className='h-[20px] hover:text-[#FF6600]' href='https://www.youtube.com/c/CaakVideo' target={'_blank'}>
                             <p>Видео</p>
                         </a>
@@ -107,10 +107,10 @@ export default function Footer() {
             <div className='w-full flex flex-col md:flex-row gap-[16px] justify-between mt-[30px] md:mt-[60px]'>
                 <div>
                     <p className='text-white text-[14px] font-bold leading-[16px]'>CAAK КОНТЕНТ</p>
-                    <div className='h-[120px] flex flex-col justify-between text-[15px] text-[#838383] mt-[20px]'>
-                        <a className='h-[20px] hover:text-[#FF6600]' href='https://www.caaknews.mn/' target={'_blank'}>
+                    <div className='h-[86px] flex flex-col justify-between text-[15px] text-[#838383] mt-[20px]'>
+                        {/* <a className='h-[20px] hover:text-[#FF6600]' href='https://www.caaknews.mn/' target={'_blank'}>
                             <p>Саак мэдээ</p>
-                        </a>
+                        </a> */}
                         <a className='h-[20px] hover:text-[#FF6600]' href='https://www.youtube.com/c/CaakVideo' target={'_blank'}>
                             <p>Видео</p>
                         </a>
