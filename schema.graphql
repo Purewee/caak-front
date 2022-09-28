@@ -499,6 +499,7 @@ type Query {
   reportTypes: [ReportType!]!
   source(id: ID!): Source!
   sourceCategories: [String!]!
+  sourceCategoriesMap: [JSON!]!
   sources(
     "Returns the elements in the list that come after the specified cursor."
     after: String,

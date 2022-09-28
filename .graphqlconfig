@@ -11,14 +11,14 @@
         "introspect": false
       },
       "staging": {
-        "url": "http://graph.caak.mn/graphql",
+        "url": "https://graph.caak.mn/graphql",
         "headers": {
           "Authorization": "Bearer 7d09ecd6-964b-4e86-a8e4-41c0cc803d00"
         },
         "introspect": false
       },
       "prod": {
-        "url": "http://graph.caak.mn/graphql",
+        "url": "https://graph.caak.mn/graphql",
         "headers": {
           "Authorization": "Bearer 7d09ecd6-964b-4e86-a8e4-41c0cc803d00"
         },

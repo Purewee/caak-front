@@ -18,7 +18,7 @@ import {
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
 import { CREATE, POST, UPDATE, CONVERT_LINK, SOURCES, CATEGORIES, TAGS } from '../post/_gql';
-import { LinkOutlined, PlaySquareOutlined, SaveOutlined } from '@ant-design/icons';
+import { CameraOutlined, LinkOutlined, PlaySquareOutlined, SaveOutlined } from '@ant-design/icons';
 import { getDataFromBlob, imageCompress } from '../../../lib/imageCompress';
 import { DatePicker } from 'antd/es';
 import moment from 'moment';
@@ -106,57 +106,47 @@ function AddLink() {
           </Tabs>
           <Card bordered={false} className="max-w-[920px] mx-auto">
             <LinkField onSuccess={setData} />
-            {!data && !id ? (
-              <Skeleton
-                avatar={{ shape: 'square', size: 240 }}
-                title={{ width: '80%' }}
-                paragraph={{ rows: 4, width: '100%' }}
-              />
-            ) : (
-              <>
-                <div className="flex gap-[20px]">
-                  <Form.Item
-                    name="image"
-                    valuePropName="file"
-                    getValueFromEvent={(e) => {
-                      return e?.fileList[0].originFileObj;
-                    }}
-                  >
-                    <Upload
-                      showUploadList={false}
-                      maxCount={1}
-                      accept="image/*"
-                      customRequest={({ file, onSuccess }) => {
-                        imageCompress(file).then((result) => {
-                          return getDataFromBlob(result).then((base64) => {
-                            setData({ ...data, image: base64 });
-                            onSuccess('ok');
-                          });
-                        });
-                      }}
-                    >
-                      {data?.image || article?.imageUrl ? (
-                        <Image
-                          src={data?.image || imagePath(article?.imageUrl)}
-                          className="object-cover w-[300px] h-[200px]"
-                          preview={false}
-                        />
-                      ) : (
-                        <Skeleton.Image style={{ width: 300, height: 200 }} />
-                      )}
-                    </Upload>
-                  </Form.Item>
-                  <div className="flex flex-col w-full">
-                    <Form.Item name="title" label="Гарчиг">
-                      <Input />
-                    </Form.Item>
-                    <Form.Item name="description">
-                      <Input.TextArea rows={5} />
-                    </Form.Item>
-                  </div>
-                </div>
-              </>
-            )}
+            <div className="flex gap-[20px]">
+              <Form.Item
+                name="image"
+                valuePropName="file"
+                getValueFromEvent={(e) => {
+                  return e?.fileList[0].originFileObj;
+                }}
+              >
+                <Upload
+                  showUploadList={false}
+                  maxCount={1}
+                  accept="image/*"
+                  customRequest={({ file, onSuccess }) => {
+                    imageCompress(file).then((result) => {
+                      return getDataFromBlob(result).then((base64) => {
+                        setData({ ...data, image: base64 });
+                        onSuccess('ok');
+                      });
+                    });
+                  }}
+                >
+                  {data?.image || article?.imageUrl ? (
+                    <Image
+                      src={data?.image || imagePath(article?.imageUrl)}
+                      className="object-cover w-[300px] h-[200px]"
+                      preview={false}
+                    />
+                  ) : (
+                    <Skeleton.Image style={{ width: 300, height: 200 }} />
+                  )}
+                </Upload>
+              </Form.Item>
+              <div className="flex flex-col w-full">
+                <Form.Item name="title" label="Гарчиг">
+                  <Input />
+                </Form.Item>
+                <Form.Item name="description">
+                  <Input.TextArea rows={5} />
+                </Form.Item>
+              </div>
+            </div>
           </Card>
         </Col>
         <Col span={6} className="border-l border-[#efefef] bg-[#ffffff] p-[24px]">

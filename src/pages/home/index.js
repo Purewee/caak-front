@@ -43,7 +43,7 @@ const FOLLOWS = gql`
 
 const SOURCE_CATEGORIES = gql`
   query GetSourceCategories {
-    sourceCategories
+    sourceCategoriesMap
   }
 `;
 
@@ -58,7 +58,7 @@ export default function Home() {
   const { data } = useQuery(FOLLOWS, { skip: !isAuth && selected !== 'user' });
   const { data: dataCategories } = useQuery(SOURCE_CATEGORIES);
   const follows = groupBy(data?.me?.follows.map((x) => x.target) || [], (x) => x.__typename.toLowerCase());
-  const categories = dataCategories?.sourceCategories || [];
+  const categories = dataCategories?.sourceCategoriesMap || [];
   const isMobile = useMediaQuery('screen and (max-width: 640px)');
 
   useEffect(() => {
@@ -105,16 +105,7 @@ export default function Home() {
 
       setSort({ publish_date: 'desc' });
     } else {
-      setFilter([
-        {
-          bool: {
-            should: [
-              { simple_query_string: { query: selected, fields: ['source.category^9'] } },
-              { multi_match: { query: selected, type: 'phrase_prefix', fields: ['source.category^9'] } },
-            ],
-          },
-        },
-      ]);
+      setFilter([{ term: { 'source.category': selected } }]);
       setSort({ publish_date: 'desc' });
     }
   }, [selected]);
@@ -165,14 +156,14 @@ export default function Home() {
             )}
             {categories.map((x) => (
               <Tabs.TabPane
-                key={x}
+                key={x.code}
                 tab={
                   <span
                     className={`text-[16px] sm:text-[20px] font-bold cursor-pointer text-center leading-[16px] sm:leading-[20px] uppercase ${
-                      selected === x ? 'text-[#111111]' : 'text-[#555555]'
+                      selected === x.code ? 'text-[#111111]' : 'text-[#555555]'
                     }`}
                   >
-                    {x}
+                    {x.name}
                   </span>
                 }
               />
