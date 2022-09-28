@@ -105,7 +105,7 @@ export default function Home() {
 
   return (
     <>
-      <div className={`relative bg-white flex flex-col items-center sm:mb-[100px]`}>
+      <div className={`relative bg-white flex flex-col items-center mb-[40px] sm:mb-[100px]`}>
         <NavbarPostHeader />
         <div className="mt-[20px] sm:mt-[50px] mb-[20px] sm:mb-0 px-[16px] sm:px-0">
           <Banner position="a1" />

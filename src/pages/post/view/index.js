@@ -151,7 +151,7 @@ const Post = () => {
 
   return (
     <div className="pb-[100px]">
-      <div className="flex flex-row pb-[100px] justify-center xl:pt-[41px]">
+      <div className="flex flex-row pb-[100px] justify-center pt-[20px] xl:pt-[41px]">
         <Helmet>
           <title>{title}</title>
           <meta name="viewport" content="initial-scale=1.0, width=device-width" />
