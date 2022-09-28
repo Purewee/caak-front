@@ -55,7 +55,6 @@ export default function Story() {
         isPaused
         keyboardNavigation
         // preventDefault
-        loop
         defaultInterval={1500}
         storyContainerStyles={{
           overflow: 'hidden',
