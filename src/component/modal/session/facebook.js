@@ -8,7 +8,15 @@ import { FacebookFilled } from '@ant-design/icons';
 function initFB() {
   window.fbAsyncInit = () => {
     const { FB } = window;
-    FB.init({ appId: Configure.appFacebookId, autoLogAppEvents: true, xfbml: true, version: 'v3.1' });
+    FB.init({
+      appId: Configure.appFacebookId,
+      autoLogAppEvents: true,
+      xfbml: true,
+      status: true,
+      oauth: true,
+      cookie: true,
+      version: 'v3.1',
+    });
   };
   (function (d, s, id) {
     const fjs = d.getElementsByTagName(s)[0];
@@ -23,6 +31,7 @@ function initFB() {
 function LoginWithFB() {
   const [loading, setLoading] = React.useState(false);
   const { login } = useAuth();
+
   React.useEffect(() => {
     initFB();
   }, []);
