@@ -49,7 +49,6 @@ const SOURCE_CATEGORIES = gql`
 
 export default function Home() {
   const [selected, setSelected] = useState('recent');
-  console.log(selected);
   const { isAuth } = useAuth();
   const { setMode } = useHeader();
 
@@ -115,7 +114,12 @@ export default function Home() {
       <div className={`relative bg-white flex flex-col items-center mb-[40px] sm:mb-[100px]`}>
         <NavbarPostHeader />
         <div className="sticky sm:hidden bg-white z-[2] top-0 max-w-[1310px] w-full px-[16px] sm:px-0">
-          <Tabs onChange={(e) => setSelected(e)} className="w-full border-b font-roboto" centered>
+          <Tabs
+            tabBarGutter={isMobile ? 16 : 30}
+            onChange={(e) => setSelected(e)}
+            className="w-full border-b font-roboto"
+            centered
+          >
             <Tabs.TabPane
               key="recent"
               tab={
@@ -218,21 +222,21 @@ export default function Home() {
             )}
             {categories.map((x) => (
               <Tabs.TabPane
-                key={x}
+                key={x.code}
                 tab={
                   <span
                     className={`text-[16px] sm:text-[20px] font-bold cursor-pointer text-center leading-[16px] sm:leading-[20px] uppercase ${
-                      selected === x ? 'text-[#111111]' : 'text-[#909090] sm:text-[#555555]'
+                      selected === x.code ? 'text-[#111111]' : 'text-[#909090] sm:text-[#555555]'
                     }`}
                   >
-                    {x}
+                    {x.name}
                   </span>
                 }
               />
             ))}
           </Tabs>
         </div>
-        <div className="mt-[20px] sm:hidden sm:mt-[50px] mb-[20px] sm:mb-0 px-[16px] sm:px-0">
+        <div className="mt-[20px] sm:hidden sm:mt-[50px] px-[16px] sm:px-0">
           <Banner position="a1" />
         </div>
         {selected === 'trend' && (
@@ -264,7 +268,7 @@ export default function Home() {
             </Select>
           </div>
         )}
-        <ArticlesList asd={selected === 'ЧӨЛӨӨТ ЦАГ'} filter={filter} sort={sort} size={22} />
+        <ArticlesList asd={selected === ('chuluut_tsag' || 'video' || 'blog')} filter={filter} sort={sort} size={22} />
         {/* <div className="bg-[#B8E5FF] w-full h-[288px] sm:hidden mt-[60px] px-[16px] pt-[20px] flex flex-col items-center">
           <FIcon className="icon-fi-rs-mail-o text-[22px] text-caak-primary w-[50px] h-[50px] rounded-full bg-white" />
           <p className="mt-[12px] condMedium text-[22px] leading-[26px]">Шилдэг мэдээг таны и-мэйл руу!</p>

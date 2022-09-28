@@ -53,7 +53,7 @@ export default function Session() {
         <div className="w-full flex flex-row justify-between">
           <span
             onClick={() => setMobileSideMenu(!mobileSideMenu)}
-            className="icon-fi-rs-user text-[#555555] text-[27.5px]"
+            className="icon-fi-rs-user text-white sm:text-[#555555] text-[27.5px]"
           />
         </div>
         {mobileSideMenu && (

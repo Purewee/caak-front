@@ -31,6 +31,8 @@ import PushUp from './component/pushup';
 import ProtectedRoute from './component/ProtectedRoute';
 import AllTags from './pages/tags';
 import Channels from './pages/channels';
+import NotFound from './pages/404';
+import ServerError from './pages/502';
 
 export const AppContext = createContext(null);
 
@@ -55,6 +57,8 @@ function App() {
                 <Routes>
                   <Route index path="/" element={<Home />} />
                   <Route path="/post/view/:id" element={<Post />} />
+                  <Route path="/404" element={<NotFound />} />
+                  <Route path="/502" element={<ServerError />} />
                   <Route
                     path="/post/saved"
                     element={
