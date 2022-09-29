@@ -4,6 +4,7 @@ import { gql, useQuery } from '@apollo/client';
 import { Link, useNavigate } from 'react-router-dom';
 import { FIcon } from '../icon';
 import Logo from '../logo';
+import Search from './search';
 
 const CATEGORIES = gql`
   query GetCategories {
@@ -56,7 +57,8 @@ export default function DrawerMenu() {
         bodyStyle={{ paddingInline: 0, paddingTop: 0, scrollbarWidth: 0 }}
         title={
           <div className="flex flex-row items-center justify-between w-full">
-            <FIcon className="icon-fi-rs-search" />
+            {/* <FIcon className="icon-fi-rs-search" /> */}
+            <Search />
             <Logo />
             <FIcon
               className="icon-fi-rs-close"
