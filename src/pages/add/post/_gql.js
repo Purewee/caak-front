@@ -18,6 +18,7 @@ export const POST = gql`
     article(id: $id) {
       id
       title
+      status
       description
       imageUrl
       data
@@ -61,6 +62,7 @@ export const POST = gql`
 export const CREATE = gql`
   mutation AddPost(
     $title: String!
+    $status: String
     $description: String
     $publishDate: ISO8601DateTime
     $image: Upload
@@ -79,6 +81,7 @@ export const CREATE = gql`
     article: addArticle(
       input: {
         title: $title
+        status: $status
         description: $description
         image: $image
         publishDate: $publishDate
@@ -104,6 +107,7 @@ export const UPDATE = gql`
   mutation UpdatePost(
     $id: ID!
     $title: String!
+    $status: String
     $description: String
     $image: Upload
     $publishDate: ISO8601DateTime
@@ -123,6 +127,7 @@ export const UPDATE = gql`
       input: {
         id: $id
         title: $title
+        status: $status
         description: $description
         image: $image
         publishDate: $publishDate

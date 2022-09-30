@@ -28,6 +28,7 @@ import { orderBy } from 'lodash';
 import ArticlesList from '../../home/articles_list';
 import Banner from '../../../component/banner';
 import Configure from '../../../component/configure';
+import NotFound from '../../404';
 
 const SOURCE = gql`
   query GetSource($id: ID!) {
@@ -145,6 +146,13 @@ const Post = () => {
         <Loader className={`bg-caak-primary self-center`} />
       </div>
     );
+  }
+
+  if (!loading && !article.id) {
+    return <NotFound />;
+  }
+  if (article?.status === 'draft') {
+    return <NotFound />;
   }
 
   if (fetching) return <Skeleton />;

@@ -139,6 +139,7 @@ function AddPost() {
       layout="vertical"
       className="caak_article"
       initialValues={{
+        status: 'published',
         ...article,
         tags: article?.tags.map((x) => x.slug),
         blocks: sortBy(article?.blocks, 'position'),
@@ -305,6 +306,15 @@ function AddPost() {
                   <Radio.Button value="asc">Өсөхөөр</Radio.Button>
                   <Radio.Button value="desc">Буурхаар</Radio.Button>
                 </Radio.Group>
+              </Form.Item>
+              <Form.Item name="status" className="font-merri">
+                <Select
+                  size="large"
+                  options={[
+                    { label: 'Нийтлэх', value: 'published' },
+                    { label: 'Ноорог', value: 'draft' },
+                  ]}
+                />
               </Form.Item>
               <hr className="my-[20px]" />
               <Button.Group className="w-full">

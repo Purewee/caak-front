@@ -18,7 +18,7 @@ import {
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
 import { CREATE, POST, UPDATE, CONVERT_LINK, SOURCES, CATEGORIES, TAGS } from '../post/_gql';
-import { CameraOutlined, LinkOutlined, PlaySquareOutlined, SaveOutlined } from '@ant-design/icons';
+import { LinkOutlined, PlaySquareOutlined, SaveOutlined } from '@ant-design/icons';
 import { getDataFromBlob, imageCompress } from '../../../lib/imageCompress';
 import { DatePicker } from 'antd/es';
 import moment from 'moment';
@@ -52,13 +52,9 @@ function AddLink() {
             imageUrl: data?.image,
           },
         })
-          .then((res) => {
+          .then(() => {
             message.success('Амжилттай хадгаллаа');
-            if (id) {
-              refetch();
-            } else {
-              navigate(`/edit/linked/${res?.data?.article.id}`);
-            }
+            navigate(`/`);
           })
           .catch((e) => {
             message.error(JSON.stringify(e.message));
@@ -67,6 +63,7 @@ function AddLink() {
       layout="vertical"
       className="caak_article font-merri"
       initialValues={{
+        status: 'published',
         ...article,
         sourceId: article?.source?.id,
         tags: article?.tags.map((x) => x.slug),
@@ -201,6 +198,15 @@ function AddLink() {
               </Form.Item>
               <Form.Item name="featured" className="font-merri" valuePropName="checked">
                 <Checkbox onChange={(e) => setFeatured(e.target.checked)}>Мэдээг онцлох</Checkbox>
+              </Form.Item>
+              <Form.Item name="status" className="font-merri">
+                <Select
+                  size="large"
+                  options={[
+                    { label: 'Нийтлэх', value: 'published' },
+                    { label: 'Ноорог', value: 'draft' },
+                  ]}
+                />
               </Form.Item>
               {featured && (
                 <div className="flex justify-between">

@@ -102,11 +102,7 @@ function AddStory() {
         })
           .then((res) => {
             message.success('Амжилттай хадгаллаа');
-            if (id) {
-              refetch().then();
-            } else {
-              navigate(`/edit/story/${res?.data?.article.id}`);
-            }
+            navigate(`/story/${res?.data?.article.id}`);
           })
           .catch((e) => {
             message.error(JSON.stringify(e.message));
@@ -115,6 +111,7 @@ function AddStory() {
       layout="vertical"
       className="caak_article"
       initialValues={{
+        status: 'published',
         ...article,
         tags: article?.tags.map((x) => x.slug),
         blocks: sortBy(article?.blocks, 'position'),
@@ -215,6 +212,15 @@ function AddStory() {
                     label: x.fullName,
                     key: x.id,
                   }))}
+                />
+              </Form.Item>
+              <Form.Item name="status" className="font-merri">
+                <Select
+                  size="large"
+                  options={[
+                    { label: 'Нийтлэх', value: 'published' },
+                    { label: 'Ноорог', value: 'draft' },
+                  ]}
                 />
               </Form.Item>
               <hr className="my-[20px]" />

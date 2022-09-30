@@ -6,6 +6,7 @@ export const ARTICLE = gql`
       id
       kind
       title
+      status
       slug
       imageUrl
       data
