@@ -50,7 +50,6 @@ const SOURCE_CATEGORIES = gql`
 export default function Home() {
   const [selected, setSelected] = useState('recent');
   const { isAuth } = useAuth();
-  const { setMode } = useHeader();
 
   const [filter, setFilter] = useState([]);
   const [sort, setSort] = useState({ publish_date: 'desc' });
@@ -59,10 +58,6 @@ export default function Home() {
   const follows = groupBy(data?.me?.follows.map((x) => x.target) || [], (x) => x.__typename.toLowerCase());
   const categories = dataCategories?.sourceCategoriesMap || [];
   const isMobile = useMediaQuery('screen and (max-width: 640px)');
-
-  useEffect(() => {
-    setMode('transparent');
-  }, []);
 
   useEffect(() => {
     window.scrollTo(0, isMobile ? 0 : 1400);

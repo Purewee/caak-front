@@ -2,16 +2,22 @@ import { useState, useEffect } from 'react';
 import NavbarPostHeaderCard from './NavbarPostHeaderCard';
 import { ESService } from '../../../lib/esService';
 import useMediaQuery from '../useMediaQuery';
+import { useHeader } from '../../../context/HeaderContext';
 
 const NavbarPostHeader = () => {
   const [posts, setPosts] = useState([]);
+  const { setMode } = useHeader();
+
   const isLaptop = useMediaQuery('(min-width: 1001px) and (max-width: 1920px)');
-  const isTablet = useMediaQuery('(min-width: 401px) and (max-width: 1000px)');
-  const isMobile = useMediaQuery('screen and (max-width: 767px)');
 
   useEffect(() => {
     const es = new ESService('caak');
-    es.boostedPosts().then(setPosts);
+    es.boostedPosts().then((res) => {
+      setPosts(res);
+      if (posts.length > 0) {
+        setMode('transparent');
+      }
+    });
   }, []);
 
   return (
