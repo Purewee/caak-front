@@ -44,7 +44,7 @@ export default function PostShareModal({ post, toggle, image }) {
           </TwitterShareButton>
           <p className="text-[16px] font-roboto leading-[19px] mt-[16px]">Эвлэл мэдээний линк хуулж авах</p>
           <div className="bg-[#FBFAFB] w-full h-[44px] mt-[8px] border flex flex-row items-center justify-between border-[#EFEEEF] py-[12px] pl-[12px] pr-[16px]">
-            <div className="flex flex-row items-center text-[#555555]">
+            <div className="flex flex-row items-center text-[#555555] max-w-[220px] sm:max-w-[350px] overflow-hidden">
               <span className="icon-fi-rs-link" />
               <p id="myInput" className="text-[15px] ml-[10px]">{`${Configure.domain}'/post/view/${post?.id}`}</p>
             </div>

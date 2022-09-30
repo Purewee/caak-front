@@ -256,7 +256,7 @@ export default function Settings() {
                         <div className="border-t w-full p-[30px]" id="category">
                           <div className="flex flex-wrap justify-start gap-[12px]">
                             {me.follows
-                              .filter((x) => x.target.__typename === 'Category')
+                              ?.filter((x) => x.target.__typename === 'Category')
                               .map(({ target: x }) => (
                                 <div className="flex flex-col" key={x.id}>
                                   <Link
@@ -310,7 +310,7 @@ export default function Settings() {
                         <div className="border-t w-full p-[30px]" id="source">
                           <div className="flex flex-wrap justify-start gap-[10px]">
                             {me.follows
-                              .filter((x) => x.target.__typename === 'Source')
+                              ?.filter((x) => x.target.__typename === 'Source')
                               .map(({ target: x }) => (
                                 <Link
                                   to={`/channel/${x.id}`}
@@ -335,7 +335,7 @@ export default function Settings() {
                         <div className="border-t w-full p-[30px]" id="tag">
                           <div className="flex flex-wrap justify-start gap-[10px]">
                             {me.follows
-                              .filter((x) => x.target.__typename === 'Tag')
+                              ?.filter((x) => x.target.__typename === 'Tag')
                               .map(({ target: x }) => (
                                 <div
                                   className="w-[232px] h-[124px] rounded-[4px] border border-[#EFEEEF] p-[16px]"
@@ -392,7 +392,7 @@ export default function Settings() {
                         <div className="border-t w-full p-[30px]" id="user">
                           <div className="flex flex-wrap justify-start gap-[16px]">
                             {me.follows
-                              .filter((x) => x.target.__typename === 'User')
+                              ?.filter((x) => x.target.__typename === 'User')
                               .map(({ target: x }) => (
                                 <div className="w-[232px] h-[153px] border border-[#EFEEEF] flex flex-col items-center p-[16px]">
                                   {x.avatar ? (
