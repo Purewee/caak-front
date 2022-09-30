@@ -8,6 +8,7 @@ import { imagePath, isAdmin } from '../../utility/Util';
 import { ME } from '../../pages/post/view/_gql';
 import { sumBy } from 'lodash';
 import ProfileModal from './ProfileModal';
+import useMediaQuery from '../navigation/useMediaQuery';
 
 const REMOVE_SAVED = gql`
   mutation RemoveSavedArticle($id: ID, $articleId: ID!) {
@@ -29,6 +30,7 @@ export default function UserInfo({ transparent }) {
   const totalSaved = sumBy(data?.me?.recipes.map((x) => x.articlesCount));
   const [remove, { loading: removing }] = useMutation(REMOVE_SAVED);
   const navigate = useNavigate();
+  const isMobile = useMediaQuery('screen and (max-width: 670px)');
 
   function useOutsideAlerter(ref) {
     useEffect(() => {
@@ -96,76 +98,88 @@ export default function UserInfo({ transparent }) {
           type="ghost"
         />
       )}
-      <Popover
-        placement="bottomRight"
-        trigger="click"
-        overlayClassName="padding_zero paddin"
-        visible={savedVisible}
-        content={
-          <div ref={saveRef}>
-            <h3 className="text-[22px] leading-[25px] border-b border-[#D4D8D8] condMedium mb-1 pb-2 px-[16px] pt-[22px]">
-              Хадгалсан мэдээнүүд
-            </h3>
-            <div className="w-full max-w-[368px] pt-[6px]">
-              {saved_articles.map((x, index) => {
-                if (index < 10) {
-                  return (
-                    <div
-                      key={index}
-                      onMouseEnter={() => setHovered(x.id)}
-                      onMouseLeave={() => setHovered(null)}
-                      className="flex flex-row items-center w-full justify-between px-[16px] hover:bg-[#EFEEEF] h-[64px]"
-                    >
-                      <Link onClick={() => setSavedVisible(false)} className="flex flex-row" to={`/post/view/${x.id}`}>
-                        <Avatar
-                          className="min-w-[60px] max-w-[60px] h-[44px] object-cover"
-                          src={imagePath(x.imageUrl)}
-                          shape="square"
+      {saved_articles.length > 0 && (
+        <Popover
+          placement="bottomRight"
+          trigger="click"
+          overlayClassName="padding_zero paddin"
+          visible={savedVisible}
+          content={
+            <div ref={saveRef}>
+              <h3 className="text-[22px] leading-[25px] border-b border-[#D4D8D8] condMedium mb-1 pb-2 px-[16px] pt-[22px]">
+                Хадгалсан мэдээнүүд
+              </h3>
+              <div className="w-full max-w-[368px] pt-[6px]">
+                {saved_articles.map((x, index) => {
+                  if (index < 10) {
+                    return (
+                      <div
+                        key={index}
+                        onMouseEnter={() => setHovered(x.id)}
+                        onMouseLeave={() => setHovered(null)}
+                        className="flex flex-row items-center w-full justify-between px-[16px] hover:bg-[#EFEEEF] h-[64px]"
+                      >
+                        <Link
+                          onClick={() => setSavedVisible(false)}
+                          className="flex flex-row"
+                          to={`/post/view/${x.id}`}
+                        >
+                          <Avatar
+                            className="min-w-[60px] max-w-[60px] h-[44px] object-cover"
+                            src={imagePath(x.imageUrl)}
+                            shape="square"
+                          />
+                          <p className="text-[#111111] w-full text-[15px] font-roboto ml-[14px] truncate-2">
+                            {x.title}
+                          </p>
+                        </Link>
+                        <Button
+                          size="small"
+                          className={`${hovered !== x.id ? 'flex sm:hidden' : 'flex'}`}
+                          icon={<span className="icon-fi-rs-close text-caak-primary text-[13.5px] w-[13.5px]" />}
+                          type="link"
+                          onClick={() => {
+                            remove({ variables: { articleId: x.id } }).then(() => {
+                              refetch();
+                              message.success('Амжилттай устгалаа');
+                            });
+                          }}
+                          loading={removing}
                         />
-                        <p className="text-[#111111] w-full text-[15px] font-roboto ml-[14px] truncate-2">{x.title}</p>
-                      </Link>
-                      <Button
-                        size="small"
-                        className={`${hovered !== x.id ? 'flex sm:hidden' : 'flex'}`}
-                        icon={<span className="icon-fi-rs-close text-caak-primary text-[13.5px] w-[13.5px]" />}
-                        type="link"
-                        onClick={() => {
-                          remove({ variables: { articleId: x.id } }).then(() => {
-                            refetch();
-                            message.success('Амжилттай устгалаа');
-                          });
-                        }}
-                        loading={removing}
-                      />
-                    </div>
-                  );
-                }
-              })}
+                      </div>
+                    );
+                  }
+                })}
+              </div>
+              {totalSaved > 10 && (
+                <Link
+                  state={'saved'}
+                  to={{ pathname: `/profile/${me.id}` }}
+                  className="w-full h-[47px] cursor-pointer flex justify-center items-center bg-[#F5F5F5]"
+                >
+                  <p className="text-caak-primary font-medium text-[16px]">Бусад мэдээнүүд</p>
+                </Link>
+              )}
             </div>
-            {totalSaved > 10 && (
-              <Link
-                state={'saved'}
-                to={{ pathname: `/profile/${me.id}` }}
-                className="w-full h-[47px] cursor-pointer flex justify-center items-center bg-[#F5F5F5]"
-              >
-                <p className="text-caak-primary font-medium text-[16px]">Бусад мэдээнүүд</p>
-              </Link>
-            )}
-          </div>
-        }
-      >
-        <Button
-          onClick={() => setSavedVisible(!savedVisible)}
-          icon={
-            <Badge className="mt-[3px]" count={totalSaved} size="small" showZero={false} overflowCount={20}>
-              <FIcon className={`icon-fi-rs-list-o text-[22px] ${transparent ? 'text-white' : 'text-[#555555]'}`} />
-            </Badge>
           }
-          className="border-0"
-          shape="circle"
-          type="ghost"
-        />
-      </Popover>
+        >
+          <Button
+            onClick={() => setSavedVisible(!savedVisible)}
+            icon={
+              <Badge className="mt-[3px]" count={totalSaved} size="small" showZero={false} overflowCount={20}>
+                <FIcon
+                  className={`icon-fi-rs-list-o text-[22px] ${
+                    transparent ? (isMobile ? 'text-caak-black' : 'text-white') : 'text-[#555555]'
+                  }`}
+                />
+              </Badge>
+            }
+            className="border-0"
+            shape="circle"
+            type="ghost"
+          />
+        </Popover>
+      )}
       <Popover
         placement="bottomRight"
         trigger="click"

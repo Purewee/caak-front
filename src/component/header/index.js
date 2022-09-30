@@ -8,10 +8,12 @@ import Search from './search';
 import Session from './session';
 import UserInfo from './UserInfo';
 import Categories from './categories';
+import useMediaQuery from '../navigation/useMediaQuery';
 
 function CaakHeader() {
   const { isAuth } = useAuth();
   const { mode } = useHeader();
+  const isMobile = useMediaQuery('screen and (max-width: 670px)');
   let cls = '';
   switch (mode) {
     case 'default':
@@ -21,7 +23,7 @@ function CaakHeader() {
       cls = 'sticky top-0 border-b bg-white text-[#555555]';
       break;
     case 'transparent':
-      cls = 'transparent-header sm:absolute top-0 border-0 text-white';
+      cls = `transparent-header ${isMobile && 'border-b'} bg-white sm:absolute top-0 border-0 text-white`;
       break;
   }
 
@@ -29,8 +31,8 @@ function CaakHeader() {
     <Layout.Header className={`${cls} h-[60px] z-10 w-full px-[16px] md:px-[48px]`}>
       <div className="flex items-center justify-between h-full">
         <div className="flex items-center gap-[15px] sm:gap-[24px]">
-          <DrawerMenu />
-          <Logo white={mode === 'transparent'} />
+          <DrawerMenu isMobile={isMobile} />
+          <Logo white={!isMobile && mode === 'transparent'} />
           <Categories />
         </div>
         <div className="flex items-center">

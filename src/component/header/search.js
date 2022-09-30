@@ -2,15 +2,23 @@ import React, { useState } from 'react';
 import { Drawer, Input, Button } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { FIcon } from '../icon';
+import useMediaQuery from '../navigation/useMediaQuery';
 
 export default function Search({ transparent }) {
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
+  const isMobile = useMediaQuery('screen and (max-width: 670px)');
 
   return (
     <>
       <Button
-        icon={<FIcon className={`icon-fi-rs-search text-[22px] ${transparent ? 'text-white' : 'text-[#555555]'}`} />}
+        icon={
+          <FIcon
+            className={`icon-fi-rs-search text-[22px] ${
+              transparent ? (isMobile ? 'text-caak-black' : 'text-white') : 'text-[#555555]'
+            }`}
+          />
+        }
         className={`border-0`}
         onClick={() => setOpen(!open)}
         shape="circle"

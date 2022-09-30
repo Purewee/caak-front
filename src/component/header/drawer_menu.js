@@ -32,7 +32,7 @@ const CATEGORIES = gql`
   }
 `;
 
-export default function DrawerMenu() {
+export default function DrawerMenu({ isMobile }) {
   const [open, setOpen] = useState(false);
   const [selected, setSelected] = useState(null);
   const { data, loading } = useQuery(CATEGORIES);
@@ -46,7 +46,10 @@ export default function DrawerMenu() {
 
   return (
     <>
-      <span className="icon-fi-rs-hamburger-menu text-[22px] cursor-pointer" onClick={() => setOpen(!open)} />
+      <span
+        className={`icon-fi-rs-hamburger-menu ${isMobile && 'text-caak-black'} text-[22px] cursor-pointer`}
+        onClick={() => setOpen(!open)}
+      />
       <Drawer
         visible={open}
         width={380}
@@ -58,7 +61,7 @@ export default function DrawerMenu() {
         title={
           <div className="flex flex-row items-center justify-between w-full">
             {/* <FIcon className="icon-fi-rs-search" /> */}
-            <Search />
+            <Search isMobile={isMobile} />
             <Logo />
             <FIcon
               className="icon-fi-rs-close"
