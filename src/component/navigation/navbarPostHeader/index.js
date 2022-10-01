@@ -12,13 +12,14 @@ const NavbarPostHeader = () => {
 
   useEffect(() => {
     const es = new ESService('caak');
-    es.boostedPosts().then((res) => {
-      setPosts(res);
-      if (posts.length > 0) {
-        setMode('transparent');
-      }
-    });
+    es.boostedPosts().then(setPosts);
   }, []);
+
+  useEffect(() => {
+    if (posts.length > 0) {
+      setMode('transparent');
+    }
+  }, [posts]);
 
   return (
     isLaptop &&

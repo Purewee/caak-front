@@ -3,13 +3,11 @@ import Story from '../../component/story';
 import React, { useEffect, useState } from 'react';
 import { Tabs, Select } from 'antd';
 import { useAuth } from '../../context/AuthContext';
-import { useHeader } from '../../context/HeaderContext';
 import ArticlesList from './articles_list';
 import { FieldTimeOutlined, LineChartOutlined } from '@ant-design/icons';
 import Banner from '../../component/banner';
 import { gql, useQuery } from '@apollo/client';
 import { groupBy } from 'lodash/collection';
-import { FIcon } from '../../component/icon';
 import useMediaQuery from '../../component/navigation/useMediaQuery';
 
 const FOLLOWS = gql`
