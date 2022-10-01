@@ -108,7 +108,7 @@ export default function Home() {
     <>
       <div className={`relative bg-white flex flex-col items-center mb-[40px] sm:mb-[100px]`}>
         <NavbarPostHeader />
-        <div className="sticky sm:hidden bg-white z-[2] top-0 max-w-[1310px] w-full px-[16px] sm:px-0">
+        <div style={{ zIndex: 10 }} className="sticky sm:hidden bg-white top-0 max-w-[1310px] w-full px-[16px] sm:px-0">
           <Tabs
             tabBarGutter={isMobile ? 16 : 30}
             onChange={(e) => setSelected(e)}

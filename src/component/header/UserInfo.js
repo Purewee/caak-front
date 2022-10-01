@@ -194,17 +194,19 @@ export default function UserInfo({ transparent }) {
                   <Avatar className="mr-[12px] flex items-center justify-center" src={imagePath(me.avatar)} size={38} />
                 </Link>
               ) : (
-                <Avatar size={38} className="flex items-center bg-[#257CEE19] text-[#257CEE] text-[26px] font-medium">
-                  {(me?.firstName || me?.name)[0]}
-                </Avatar>
+                <Link onClick={() => setProfileVisible(false)} to={`/profile/${me.id}`}>
+                  <Avatar size={38} className="flex items-center bg-[#257CEE19] text-[#257CEE] text-[26px] font-medium">
+                    {me?.firstName ? me?.firstName[0] : '?'}
+                  </Avatar>
+                </Link>
               )}
-              <div className="flex flex-col">
+              <div className="flex flex-col ml-[15px]">
                 <Link
                   className="font-condensed text-[18px] font-bold leading-[21px] text-[#111111]"
                   onClick={() => setProfileVisible(false)}
                   to={`/profile/${me.id}`}
                 >
-                  {data?.me?.firstName}
+                  {data?.me?.firstName || null}
                 </Link>
                 <Link
                   onClick={() => setProfileVisible(false)}
@@ -253,9 +255,9 @@ export default function UserInfo({ transparent }) {
           <div onClick={() => setProfileVisible(!profileVisible)}>
             <Avatar
               size={34}
-              className="ml-[16px] flex items-center bg-[#257CEE19] text-[#257CEE] text-[20px] font-medium"
+              className="ml-[16px] flex items-center bg-[#257CEE19] text-[#257CEE] text-[20px] cursor-pointer font-medium"
             >
-              {(me?.firstName || me?.name)[0]}
+              {me?.firstName ? me?.firstName[0] : '?'}
             </Avatar>
           </div>
         )}

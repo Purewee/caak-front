@@ -57,7 +57,10 @@ export default function Session() {
           />
         </div>
         {mobileSideMenu && (
-          <div className="left-0 right-0 bottom-0 top-0 z-[5] overflow-auto fixed flex justify-end bg-black bg-opacity-70">
+          <div
+            style={{ zIndex: 60 }}
+            className="left-0 right-0 bottom-0 top-0 overflow-auto fixed flex justify-end bg-black bg-opacity-70"
+          >
             <div ref={mobileRef} className="w-3/4 h-screen overflow-hidden overflow-y-scroll bg-white pt-[26px]">
               <div>
                 <div className="w-[56px] h-[56px] rounded-full bg-[#EFEEEF] flex items-center justify-center ml-[16px]">
