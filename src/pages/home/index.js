@@ -52,7 +52,6 @@ export default function Home() {
 
   const navigate = useNavigate();
   const { isAuth } = useAuth();
-
   const [filter, setFilter] = useState([]);
   const [sort, setSort] = useState({ publish_date: 'desc' });
   const { data } = useQuery(FOLLOWS, { skip: !isAuth && selected !== 'user' });
@@ -171,9 +170,11 @@ export default function Home() {
         <div className="mt-[20px] hidden sm:block sm:mt-[50px] mb-[20px] sm:mb-0 px-[16px] sm:px-0">
           <Banner position="a1" />
         </div>
-        <div className="md:px-[30px] w-full flex justify-center px-[16px] sm:px-0">
-          <Story />
-        </div>
+        {selected === 'recent' && (
+          <div className="md:px-[30px] w-full flex justify-center px-[16px] sm:px-0">
+            <Story />
+          </div>
+        )}
         <div className="hidden sm:block sticky bg-white z-[2] top-0 max-w-[1310px] w-full px-[16px] sm:px-0">
           <Tabs
             onChange={(e) => navigate(`/?type=${e}`)}
@@ -235,9 +236,11 @@ export default function Home() {
             ))}
           </Tabs>
         </div>
-        <div className="mt-[20px] sm:hidden sm:mt-[50px] px-[16px] sm:px-0">
-          <Banner position="a1" />
-        </div>
+        {selected === 'recent' && (
+          <div className="mt-[20px] sm:hidden sm:mt-[50px] px-[16px] sm:px-0">
+            <Banner position="a1" />
+          </div>
+        )}
         {selected === 'trend' && (
           <div className="flex mt-[12px] gap-[12px] font-merri">
             <Select
@@ -267,7 +270,25 @@ export default function Home() {
             </Select>
           </div>
         )}
-        <ArticlesList asd={selected === ('chuluut_tsag' || 'video' || 'blog')} filter={filter} sort={sort} size={22} />
+        <ArticlesList
+          asd={selected === 'vidyeo' ? true : selected === 'chuluut_tsag' ? true : selected === 'blog' ? true : false}
+          filter={filter}
+          sort={sort}
+          size={22}
+        />
+        {/* <div className="bg-[#B8E5FF] w-full h-[288px] sm:hidden mt-[60px] px-[16px] pt-[20px] flex flex-col items-center">
+          <FIcon className="icon-fi-rs-mail-o text-[22px] text-caak-primary w-[50px] h-[50px] rounded-full bg-white" />
+          <p className="mt-[12px] condMedium text-[22px] leading-[26px]">Шилдэг мэдээг таны и-мэйл руу!</p>
+          <p className="mt-[12px] text-[15px] text-[#555555] leading-[22px] text-center">
+            Таны сонирхолт таарсан мэдээллийн товхимлыг ажлын өдөр бүр, өглөө 07:00 цагт үнэгүй илгээнэ.
+          </p>
+          <div className="flex flex-row mt-[20px]">
+            <input className="h-[54px] bg-white p-[18px] w-full rounded-l-[2px]" placeholder="и-мэйл хаяг…" />
+            <button className="bg-[#FF6600] h-[54px] min-w-[140px] text-white text-[17px] font-medium rounded-r-[2px]">
+              Хүлээн авах
+            </button>
+          </div>
+        </div> */}
       </div>
       <Banner position="a4" />
     </>
