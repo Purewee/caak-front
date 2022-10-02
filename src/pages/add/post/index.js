@@ -144,6 +144,7 @@ function AddPost() {
         tags: article?.tags.map((x) => x.slug),
         blocks: sortBy(article?.blocks, 'position'),
         featuredDates: [moment(article?.featuredFrom || undefined), moment(article?.featuredTo || undefined)],
+        publishDate: moment(article.publishDate || undefined),
       }}
     >
       <Row gutter={12} className="mb-[400px]">
@@ -315,6 +316,10 @@ function AddPost() {
                     { label: 'Ноорог', value: 'draft' },
                   ]}
                 />
+              </Form.Item>
+
+              <Form.Item name="publishDate" className="font-merri w-full" label="Нийтлэх огноо">
+                <DatePicker showTime format="YYYY-MM-DD HH:mm" />
               </Form.Item>
               <hr className="my-[20px]" />
               <Button.Group className="w-full">

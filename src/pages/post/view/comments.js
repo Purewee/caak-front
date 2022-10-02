@@ -26,13 +26,18 @@ export default function Comments({ articleId, refProp }) {
         className="mt-[37px] md:mt-[50px] w-full flex flex-row"
         onFinish={(values) => {
           addComment({ variables: values }).then(() => {
-            refetch();
+            refetch().then(() => message.success('Сэтггдэл үлдээсэнд баярлала.'));
           });
         }}
+        initialValues={{ name: 'Зочин' }}
       >
         <Avatar size="large" src={AvatarSvg} shape="square" />
         <div className="w-full ml-[12px]">
-          <Form.Item className="w-full" name="comment">
+          <Form.Item
+            className="w-full"
+            name="comment"
+            rules={[{ required: true, min: 3, message: '3 - аас дээш тэмдэгт бичнэ үү.' }]}
+          >
             <Input.TextArea
               style={{ resize: 'none' }}
               className="w-full rounded-[2px] py-[20px] px-[24px] max-h-[104px] border border-[#D4D8D8]"
@@ -168,25 +173,34 @@ function SingleComment({ comment, refetch }) {
                   </Button>
                   {open && (
                     <Modal
-                      width={300}
+                      width={400}
                       visible
                       title="Сэтгэгдэл бичих"
-                      onOk={() => {
-                        reply({ variables: { name: name, comment: body } }).then(() => {
-                          refetch();
-                          setOpen(false);
-                        });
-                      }}
                       onCancel={() => setOpen(false)}
                       confirmLoading={loading}
+                      footer={false}
                     >
-                      <Form>
-                        <Input.TextArea rows={4} onChange={(e) => setBody(e.target.value)} placeholder="Сэтгэгдэл" />
-                        <Input
-                          placeholder="Нэрээ бичнэ үү"
-                          onChange={(e) => setName(e.target.value)}
-                          className="my-2"
-                        />
+                      <Form
+                        initialValues={{ name: 'Зочин' }}
+                        onFinish={(values) => {
+                          reply({ variables: values }).then(() => {
+                            refetch();
+                            setOpen(false);
+                          });
+                        }}
+                      >
+                        <Form.Item name="name">
+                          <Input placeholder="Нэрээ бичнэ үү" className="my-2" />
+                        </Form.Item>
+                        <Form.Item
+                          name="comment"
+                          rules={[{ required: true, min: 3, message: '3 - аас дээш тэмдэгт бичнэ үү.' }]}
+                        >
+                          <Input.TextArea rows={4} placeholder="Сэтгэгдэл" />
+                        </Form.Item>
+                        <Button htmlType="submit" type="primary">
+                          Сэтгэгдэл үлдээх
+                        </Button>
                       </Form>
                     </Modal>
                   )}

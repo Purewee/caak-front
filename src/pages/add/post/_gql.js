@@ -19,6 +19,7 @@ export const POST = gql`
       id
       title
       status
+      publishDate
       description
       imageUrl
       data

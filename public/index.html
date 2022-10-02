@@ -5,8 +5,17 @@
     <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#000000" />
-    <meta name="description" content="Caak.mn | Бусдаас өөр мэдрэмж" />
+    <meta name="description" content="Caak.mn | Бусдаас өөр мэдрэмж" data-react-helmet="true" />
+    <meta name="keywords" content="caak, caak.mn мэдээ мэдээлэл, зөвлөмж, зураг, зурагт мэдээ" data-react-helmet="true" />
     <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+    <meta property="og:title" content="Caak.mn | Бусдаас өөр мэдрэмж" data-react-helmet="true" />
+    <meta
+            property="og:description"
+            content="Caak.mn | Бусдаас өөр мэдрэмж"
+            data-react-helmet="true" />
+    <meta property="og:url" content="https://www.caak.mn/" data-react-helmet="true" />
+    <meta property="og:site_name" content="Caak.mn - Бусдаас өөр мэдрэмж" data-react-helmet="true" />
+    <meta property="og:type" content="website" data-react-helmet="true" />
     <!--
       manifest.json provides metadata used when your web app is installed on a
       user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
@@ -22,21 +31,22 @@
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
     <title>Caak.mn | Бусдаас өөр мэдрэмж</title>
+
     <script>
       (function(h,o,t,j,a,r){
-        h.hj=h.hjfunction(){(h.hj.q=h.hj.q[]).push(arguments)};
-        h._hjSettings={hjid:2806944,hjsv:6};
+        h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+        h._hjSettings={hjid:3183462,hjsv:6};
         a=o.getElementsByTagName('head')[0];
         r=o.createElement('script');r.async=1;
         r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
         a.appendChild(r);
-      })(window,document,'https://static.hotjar.com/c/hotjar-%27,%27.js?sv=%27');
+      })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
     </script>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
-    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+    <script src='https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js'></script>
     <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.
@@ -48,6 +58,14 @@
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
     <!-- Hotjar Tracking Code for https://caak.mn/ -->
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-4T5S8S70DN"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
 
+      gtag('config', 'G-4T5S8S70DN');
+    </script>
   </body>
 </html>

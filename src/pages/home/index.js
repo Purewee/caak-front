@@ -9,6 +9,7 @@ import Banner from '../../component/banner';
 import { gql, useQuery } from '@apollo/client';
 import { groupBy } from 'lodash/collection';
 import useMediaQuery from '../../component/navigation/useMediaQuery';
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 
 const FOLLOWS = gql`
   query GetFollows {
@@ -46,7 +47,10 @@ const SOURCE_CATEGORIES = gql`
 `;
 
 export default function Home() {
-  const [selected, setSelected] = useState('recent');
+  const [q, setQ] = useSearchParams();
+  const selected = q.get('type') || 'recent';
+
+  const navigate = useNavigate();
   const { isAuth } = useAuth();
 
   const [filter, setFilter] = useState([]);
@@ -56,10 +60,6 @@ export default function Home() {
   const follows = groupBy(data?.me?.follows.map((x) => x.target) || [], (x) => x.__typename.toLowerCase());
   const categories = dataCategories?.sourceCategoriesMap || [];
   const isMobile = useMediaQuery('screen and (max-width: 640px)');
-
-  useEffect(() => {
-    window.scrollTo(0, isMobile ? 0 : 1400);
-  }, [selected]);
 
   useEffect(() => {
     if (selected === 'recent') {
@@ -109,9 +109,10 @@ export default function Home() {
         <div style={{ zIndex: 10 }} className="sticky sm:hidden bg-white top-0 max-w-[1310px] w-full px-[16px] sm:px-0">
           <Tabs
             tabBarGutter={isMobile ? 16 : 30}
-            onChange={(e) => setSelected(e)}
+            onChange={(e) => navigate(`/?type=${e}`)}
             className="w-full border-b font-roboto"
             centered
+            activeKey={selected}
           >
             <Tabs.TabPane
               key="recent"
@@ -174,7 +175,12 @@ export default function Home() {
           <Story />
         </div>
         <div className="hidden sm:block sticky bg-white z-[2] top-0 max-w-[1310px] w-full px-[16px] sm:px-0">
-          <Tabs onChange={(e) => setSelected(e)} className="w-full border-b font-roboto" centered>
+          <Tabs
+            onChange={(e) => navigate(`/?type=${e}`)}
+            className="w-full border-b font-roboto"
+            activeKey={selected}
+            centered
+          >
             <Tabs.TabPane
               key="recent"
               tab={
@@ -262,19 +268,6 @@ export default function Home() {
           </div>
         )}
         <ArticlesList asd={selected === ('chuluut_tsag' || 'video' || 'blog')} filter={filter} sort={sort} size={22} />
-        {/* <div className="bg-[#B8E5FF] w-full h-[288px] sm:hidden mt-[60px] px-[16px] pt-[20px] flex flex-col items-center">
-          <FIcon className="icon-fi-rs-mail-o text-[22px] text-caak-primary w-[50px] h-[50px] rounded-full bg-white" />
-          <p className="mt-[12px] condMedium text-[22px] leading-[26px]">Шилдэг мэдээг таны и-мэйл руу!</p>
-          <p className="mt-[12px] text-[15px] text-[#555555] leading-[22px] text-center">
-            Таны сонирхолт таарсан мэдээллийн товхимлыг ажлын өдөр бүр, өглөө 07:00 цагт үнэгүй илгээнэ.
-          </p>
-          <div className="flex flex-row mt-[20px]">
-            <input className="h-[54px] bg-white p-[18px] w-full rounded-l-[2px]" placeholder="и-мэйл хаяг…" />
-            <button className="bg-[#FF6600] h-[54px] min-w-[140px] text-white text-[17px] font-medium rounded-r-[2px]">
-              Хүлээн авах
-            </button>
-          </div>
-        </div> */}
       </div>
       <Banner position="a4" />
     </>
