@@ -43,7 +43,6 @@ export default function AddCategoriesModal({ toggle, image }) {
   const [selected, setSelected] = useState(null);
   const [follow_category] = useMutation(FOLLOW_CATEGORY);
   const categories = data?.categories?.nodes || [];
-  console.log(categories);
   const filtered = categories.filter((category) => {
     return category.parent === null;
   });
