@@ -151,7 +151,7 @@ const Post = () => {
   if (!loading && !article.id) {
     return <NotFound />;
   }
-  if (article?.status === 'draft') {
+  if (!isAdmin(me?.me) && article?.status === 'draft') {
     return <NotFound />;
   }
 
