@@ -140,11 +140,12 @@ function AddPost() {
       className="caak_article"
       initialValues={{
         status: 'published',
+        acceptComment: true,
         ...article,
         tags: article?.tags.map((x) => x.slug),
         blocks: sortBy(article?.blocks, 'position'),
         featuredDates: [moment(article?.featuredFrom || undefined), moment(article?.featuredTo || undefined)],
-        publishDate: moment(article.publishDate || undefined),
+        publishDate: moment(article?.publishDate || undefined),
       }}
     >
       <Row gutter={12} className="mb-[400px]">
@@ -179,7 +180,7 @@ function AddPost() {
             />
           </Tabs>
           <Card bordered={false} className="max-w-[920px] mx-auto">
-            <Form.Item name="title" className="font-merri">
+            <Form.Item name="title" className="font-merri" size="large">
               <Input placeholder="Гарчиг" maxLength={200} showCount />
             </Form.Item>
             <Form.Item
@@ -308,6 +309,10 @@ function AddPost() {
                   <Radio.Button value="desc">Буурхаар</Radio.Button>
                 </Radio.Group>
               </Form.Item>
+
+              <Form.Item name="publishDate" className="font-merri w-full" label="Нийтлэх огноо">
+                <DatePicker showTime format="YYYY-MM-DD HH:mm" />
+              </Form.Item>
               <Form.Item name="status" className="font-merri">
                 <Select
                   size="large"
@@ -316,10 +321,6 @@ function AddPost() {
                     { label: 'Ноорог', value: 'draft' },
                   ]}
                 />
-              </Form.Item>
-
-              <Form.Item name="publishDate" className="font-merri w-full" label="Нийтлэх огноо">
-                <DatePicker showTime format="YYYY-MM-DD HH:mm" />
               </Form.Item>
               <hr className="my-[20px]" />
               <Button.Group className="w-full">

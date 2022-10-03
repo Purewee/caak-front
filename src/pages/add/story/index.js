@@ -85,7 +85,6 @@ function AddStory() {
         saveArticle({
           variables: {
             id: id,
-            title: 'Story',
             kind: 'story',
             ...values,
             blocks: values.blocks.map((x, idx) => ({
@@ -153,7 +152,9 @@ function AddStory() {
             <div className="flex flex-wrap">
               <SortableContainer items={blocks} setItems={setBlocks} />
             </div>
-
+            <Form.Item name="title" className="font-merri">
+              <Input placeholder="Гарчиг" maxLength={200} showCount size="large" />
+            </Form.Item>
             <Form.List name="blocks">
               {(fields, { add, remove }, { errors }) => (
                 <>
