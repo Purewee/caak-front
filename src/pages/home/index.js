@@ -175,7 +175,7 @@ export default function Home() {
             <Story />
           </div>
         )}
-        <div className="hidden sm:block sticky bg-white z-[2] top-0 max-w-[1310px] w-full px-[16px] sm:px-0">
+        <div className="hidden sm:block sticky bg-white z-[2] top-0 max-w-[1310px] w-full px-[16px] sm:px-0 mt-[80px]">
           <Tabs
             onChange={(e) => navigate(`/?type=${e}`)}
             className="w-full border-b font-roboto"

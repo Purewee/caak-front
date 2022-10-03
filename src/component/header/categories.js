@@ -100,13 +100,19 @@ const Categories = () => {
                               index > 0 && 'border-l border-[#EFEEEF]'
                             }`}
                           >
-                            <Link
-                              className="text-[#111111] condMedium hover:text-caak-primary hover:leading-[18px] leading-[19px] hover:tracking-[0.23px] tracking-[0.24px] hover:text-[15px] text-[16px]"
-                              to={`/category/${x.slug}`}
-                              onClick={() => setOpen(false)}
-                            >
-                              {x.name}
-                            </Link>
+                            {x.childs?.nodes?.length > 0 ? (
+                              <p className="text-[#111111] condMedium hover:text-caak-primary hover:leading-[18px] leading-[19px] hover:tracking-[0.23px] tracking-[0.24px] hover:text-[15px] text-[16px]">
+                                {x.name}
+                              </p>
+                            ) : (
+                              <Link
+                                className="text-[#555555] font-roboto hover:text-caak-primary leading-[20px] hover:tracking-[0.23px] tracking-[0.24px] text-[17px]"
+                                to={`/category/${x.slug}`}
+                                onClick={() => setOpen(false)}
+                              >
+                                {x.name}
+                              </Link>
+                            )}
                             {x.childs?.nodes?.map((data, index) => {
                               return (
                                 <Link

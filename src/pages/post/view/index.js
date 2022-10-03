@@ -271,11 +271,11 @@ const Post = () => {
             </div>
             <Wrapper>
               <Title className="text-center">{article.title}</Title>
-              <div className="hidden sm:flex flex-row items-center mt-[30px]">
+              {/* <div className="hidden sm:flex flex-row items-center mt-[30px]">
                 <img className="w-[20px]" src={LoveIcon} alt="" />
                 <img className="w-[20px]" src={HahaIcon} alt="" />
                 <p className="ml-[6px] text-[15px] text-caak-primary leading-[16px]">{article.data?.like_count}</p>
-              </div>
+              </div> */}
               <div className="flex flex-row justify-between w-full h-[32px] mt-[21px]">
                 <div className="flex flex-row items-center h-[32px]">
                   <Avatar className="w-[32px] h-[32px] rounded-full" src={imagePath(article.source?.icon)} />
@@ -338,7 +338,7 @@ const Post = () => {
                         {b.title && <BlockTitle>{`${numbering ? `${b.position}. ` : ''}${b.title}`}</BlockTitle>}
                         <LazyLoadImage src={imagePath(b.imageUrl)} alt={b.title} className="w-full" />
                         {b.data?.meta?.length > 0 && (
-                          <span className="w-[99%] bg-[#697581] text-white p-[8px] text-center font-condensed text-[12px] italic">
+                          <span className="w-full bg-[#697581] text-white p-[8px] text-center font-condensed text-[12px] italic">
                             {b.data.meta}
                           </span>
                         )}
@@ -370,7 +370,7 @@ const Post = () => {
                 );
               })}
             </Wrapper>
-            <div className="flex flex-row gap-[8px] w-full mt-[29px] md:mt-[82px]">
+            <div className="flex flex-row gap-[8px] w-full mt-[20px]">
               {article.tags?.map((x) => (
                 <Link to={`/tags/${x.slug}`} key={x.slug}>
                   <p

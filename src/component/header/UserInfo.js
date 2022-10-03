@@ -228,6 +228,14 @@ export default function UserInfo({ transparent }) {
                   </Link>
                 );
               })}
+              {me?.role === 'admin' && (
+                <Link onClick={() => setProfileVisible(false)} className="sm:hidden" to={'/add'}>
+                  <div className="flex flex-row items-center cursor-pointer">
+                    <span className={`icon-fi-rs-edit text-[20px]`} />
+                    <p className="text-[15px] ml-[12px] -mt-[3px] leading-[18px]">Пост нэмэх</p>
+                  </div>
+                </Link>
+              )}
             </div>
             <div
               onClick={() => {

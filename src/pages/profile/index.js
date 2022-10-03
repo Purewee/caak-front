@@ -64,6 +64,7 @@ export default function Profile() {
   const [loading, setLoading] = useState(false);
   const { data, loading: fetching, refetch } = useQuery(USER, { variables: { id } });
   const user = data?.user || {};
+  console.log(user);
   const { data: me } = useQuery(ME);
   const loggedUser = me?.me;
   const { isAuth, openModal } = useAuth();
@@ -104,16 +105,18 @@ export default function Profile() {
                 src={imagePath(user?.avatar)}
               />
             ) : (
-              <Avatar className="w-[57px] h-[57px] flex items-center md:w-[82px] md:h-[82px] bg-[#257CEE19] text-[#257CEE] text-[32px] font-medium">
-                {(user?.firstName || user?.name)[0]}
-              </Avatar>
+              user.firstName && (
+                <Avatar className="w-[57px] h-[57px] flex items-center md:w-[82px] md:h-[82px] bg-[#257CEE19] text-[#257CEE] text-[32px] font-medium">
+                  {(user?.firstName || user?.name)[0] || null}
+                </Avatar>
+              )
             )}
             <div className="ml-[16px]">
               <Title className="font-condensed mt-0 font-bold text-[30px] leading-[35px]">{user?.firstName}</Title>
               <p className="md:mt-[12px] text-[15px] text-[#555555] leading-[18px] max-w-[600px]">{user?.data?.bio}</p>
               <div className="flex flex-row text-[#555555] gap-[23px] sm:mt-[18px] text-[15px] leading-[18px] font-merri text-center">
-                <Statistic title="нийтлэл" value={user?.articles?.totalCount} />
-                <Statistic title="дагагч" value={0} />
+                <Statistic title="нийтлэл" value={user?.articles?.totalCount || 0} />
+                <Statistic title="дагагч" value={user?.followersCount || 0} />
               </div>
             </div>
           </div>

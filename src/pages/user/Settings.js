@@ -9,6 +9,8 @@ import { getDataFromBlob, imageCompress } from '../../lib/imageCompress';
 import useMediaQuery from '../../component/navigation/useMediaQuery';
 import AddCategoriesModal from '../../component/modal/AddCategoriesModal';
 import { Link } from 'react-router-dom';
+import AddSourceModal from '../../component/modal/AddSourceModal';
+import AddTagsModal from '../../component/modal/AddTagsModal';
 
 const ME = gql`
   query Me {
@@ -78,6 +80,12 @@ const FOLLOW_USER = gql`
   }
 `;
 
+const FOLLOW_SOURCE = gql`
+  mutation Follow($id: ID!) {
+    toggleFollow(input: { targetType: "source", targetId: $id })
+  }
+`;
+
 const FOLLOW_TAG = gql`
   mutation Follow($id: ID!) {
     toggleFollow(input: { targetType: "tag", targetId: $id })
@@ -90,10 +98,13 @@ export default function Settings() {
   const { isAuth } = useAuth();
   const [avatar, setAvatar] = useState();
   const [openModal, setOpenModal] = useState();
+  const [openSource, setOpenSource] = useState();
+  const [openTags, setOpenTags] = useState();
   const [selected, setSelected] = useState('posts');
   const [tabs, setTabs] = useState('category');
   const [update, { loading: saving }] = useMutation(UPDATE, { context: { upload: true } });
   const [follow_category] = useMutation(FOLLOW_CATEGORY);
+  const [follow_source] = useMutation(FOLLOW_SOURCE);
   const [follow_user] = useMutation(FOLLOW_USER);
   const [follow_tag] = useMutation(FOLLOW_TAG);
 
@@ -253,15 +264,15 @@ export default function Settings() {
                   >
                     <Tabs onChange={(x) => setTabs(x)} tabBarStyle={{ paddingLeft: 30 }}>
                       <Tabs.TabPane key={'category'} tab={<p>Төрөл</p>}>
-                        <div className="border-t w-full p-[30px]" id="category">
-                          <div className="flex flex-wrap justify-start gap-[12px]">
+                        <div className="border-t w-full p-[10px] sm:p-[30px]" id="category">
+                          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 justify-start gap-[8px] sm:gap-[12px]">
                             {me.follows
                               ?.filter((x) => x.target.__typename === 'Category')
                               .map(({ target: x }) => (
                                 <div className="flex flex-col" key={x.id}>
                                   <Link
                                     to={`/category/${x.slug}`}
-                                    className="w-[172px] h-[100px] relative items-center justify-center rounded-md cursor-pointer overflow-hidden"
+                                    className="w-full h-[100px] relative items-center justify-center rounded-md cursor-pointer overflow-hidden"
                                   >
                                     {x.cover && (
                                       <div
@@ -275,7 +286,7 @@ export default function Settings() {
                                   </Link>
                                   {x.following ? (
                                     <button
-                                      className="w-[172px] h-[34px] mt-[8px] bg-[#EFEEEF] rounded-[4px] text-[#909090] text-[15px] font-medium"
+                                      className="w-full h-[34px] mt-[8px] bg-[#EFEEEF] rounded-[4px] text-[#909090] text-[15px] font-medium"
                                       onClick={() => {
                                         if (isAuth) {
                                           follow_category({ variables: { id: x.id } }).then(() => {
@@ -307,33 +318,62 @@ export default function Settings() {
                         </div>
                       </Tabs.TabPane>
                       <Tabs.TabPane key={'source'} tab={<p>Суваг</p>}>
-                        <div className="border-t w-full p-[30px]" id="source">
-                          <div className="flex flex-wrap justify-start gap-[10px]">
+                        <div className="border-t w-full p-[10px] sm:p-[30px]" id="source">
+                          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 justify-start gap-[10px]">
                             {me.follows
                               ?.filter((x) => x.target.__typename === 'Source')
                               .map(({ target: x }) => (
-                                <Link
-                                  to={`/channel/${x.id}`}
-                                  className="w-[170px] h-[100px] relative items-center justify-center rounded-md cursor-pointer overflow-hidden"
-                                  key={x.id}
-                                >
-                                  {x.cover && (
-                                    <div
-                                      style={{ backgroundImage: `url(${imagePath(x.cover)})` }}
-                                      className="w-full h-full bg-center bg-cover bg-no-repeat"
-                                    />
+                                <div key={x} className="flex flex-col">
+                                  <Link
+                                    to={`/channel/${x.id}`}
+                                    className="w-full h-[100px] relative items-center justify-center rounded-md cursor-pointer overflow-hidden"
+                                  >
+                                    {x.cover && (
+                                      <div
+                                        style={{ backgroundImage: `url(${imagePath(x.cover)})` }}
+                                        className="w-full h-full bg-center bg-cover bg-no-repeat"
+                                      />
+                                    )}
+                                    <span className="absolute top-0 h-full w-full flex items-center justify-center text-white text-[15px] font-medium bg-black bg-opacity-50 rounded-md">
+                                      {x.name}
+                                    </span>
+                                  </Link>
+                                  {x.following ? (
+                                    <button
+                                      className="w-full h-[34px] mt-[8px] bg-[#EFEEEF] rounded-[4px] text-[#909090] text-[15px] font-medium"
+                                      onClick={() => {
+                                        if (isAuth) {
+                                          follow_source({ variables: { id: x.id } }).then(() => {
+                                            refetch().then(console.log);
+                                          });
+                                        }
+                                      }}
+                                    >
+                                      ДАГАСАН
+                                    </button>
+                                  ) : (
+                                    <Button
+                                      type="primary"
+                                      className="w-[172px] h-[34px] mt-[8px] bg-caak-primary rounded-[4px] text-white text-[15px] font-bold"
+                                      onClick={() => {
+                                        if (isAuth) {
+                                          follow_source({ variables: { id: x.id } }).then(() => {
+                                            refetch().then(console.log);
+                                          });
+                                        }
+                                      }}
+                                    >
+                                      ДАГАХ
+                                    </Button>
                                   )}
-                                  <span className="absolute top-0 h-full w-full flex items-center justify-center text-white text-[15px] font-medium bg-black bg-opacity-50 rounded-md">
-                                    {x.name}
-                                  </span>
-                                </Link>
+                                </div>
                               ))}
                           </div>
                         </div>
                       </Tabs.TabPane>
                       <Tabs.TabPane key={'tag'} tab={<p>Таг</p>}>
-                        <div className="border-t w-full p-[30px]" id="tag">
-                          <div className="flex flex-wrap justify-start gap-[10px]">
+                        <div className="border-t w-full p-[10px] sm:p-[30px]" id="tag">
+                          <div className="flex flex-wrap justify-center sm:justify-start gap-[10px]">
                             {me.follows
                               ?.filter((x) => x.target.__typename === 'Tag')
                               .map(({ target: x }) => (
@@ -388,13 +428,16 @@ export default function Settings() {
                           </div>
                         </div>
                       </Tabs.TabPane>
-                      <Tabs.TabPane key={'user'} tab={<p>Хэрэглэгчид</p>}>
-                        <div className="border-t w-full p-[30px]" id="user">
-                          <div className="flex flex-wrap justify-start gap-[16px]">
+                      {/* <Tabs.TabPane key={'user'} tab={<p>Хэрэглэгчид</p>}>
+                        <div className="border-t w-full p-[10px] sm:p-[30px]" id="user">
+                          <div className="flex flex-wrap justify-center sm:justify-start gap-[16px]">
                             {me.follows
                               ?.filter((x) => x.target.__typename === 'User')
                               .map(({ target: x }) => (
-                                <div className="w-[232px] h-[153px] border border-[#EFEEEF] flex flex-col items-center p-[16px]">
+                                <div
+                                  key={x.id}
+                                  className="w-[232px] h-[153px] border border-[#EFEEEF] flex flex-col items-center p-[16px]"
+                                >
                                   {x.avatar ? (
                                     <Avatar size={48} src={imagePath(x.avatar)} />
                                   ) : (
@@ -441,7 +484,7 @@ export default function Settings() {
                               ))}
                           </div>
                         </div>
-                      </Tabs.TabPane>
+                      </Tabs.TabPane> */}
                     </Tabs>
                   </Form>
                   {tabs === 'category' && (
@@ -454,7 +497,29 @@ export default function Settings() {
                       Төрөл нэмэх
                     </Button>
                   )}
+                  {tabs === 'source' && (
+                    <Button
+                      type="primary"
+                      onClick={() => setOpenSource(true)}
+                      className="w-[150px] h-[34px] gap-[10px] mt-[20px]"
+                      icon={<span className="icon-fi-rs-plus" />}
+                    >
+                      Суваг нэмэх
+                    </Button>
+                  )}
+                  {tabs === 'tag' && (
+                    <Button
+                      type="primary"
+                      onClick={() => setOpenTags(true)}
+                      className="w-[150px] h-[34px] gap-[10px] mt-[20px]"
+                      icon={<span className="icon-fi-rs-plus" />}
+                    >
+                      Таг нэмэх
+                    </Button>
+                  )}
                   {openModal && <AddCategoriesModal toggle={() => setOpenModal(false)} />}
+                  {openSource && <AddSourceModal toggle={() => setOpenSource(false)} />}
+                  {openTags && <AddTagsModal toggle={() => setOpenTags(false)} />}
                 </div>
               </Tabs.TabPane>
               <Tabs.TabPane
