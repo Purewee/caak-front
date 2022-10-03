@@ -27,7 +27,7 @@ export default function AddTagsModal({ toggle, image }) {
       onCancel={toggle}
       title={
         <span className="text-[38px] font-condensed font-bold leading-[44px] text-center">
-          Таны дуртай мэдээний төрлүүд?
+          Таны дуртай мэдээний тагууд?
         </span>
       }
       bodyStyle={{ padding: 0 }}
