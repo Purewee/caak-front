@@ -69,7 +69,7 @@ const REMOVE = gql`
 const Post = () => {
   const context = useContext(AppContext);
   const navigate = useNavigate();
-  const { id } = useParams();
+  const { id, slug } = useParams();
   const [leftMenuSticky, setLeftMenuSticky] = useState(false);
   const [reporting, setReporting] = useState(false);
   const [saving, setSaving] = useState(false);
@@ -77,7 +77,7 @@ const Post = () => {
   const [isShown, setIsShown] = useState(false);
   const [filter, setFilter] = useState([]);
   const [sort, setSort] = useState({});
-  const { data, loading } = useQuery(ARTICLE, { variables: { id } });
+  const { data, loading } = useQuery(ARTICLE, { variables: { id, slug } });
   const { data: me, loading: me_loading } = useQuery(ME);
   const article = data?.article || {};
   const numbering = article?.data?.numbering || false;
@@ -131,14 +131,14 @@ const Post = () => {
       {
         more_like_this: {
           fields: ['tags_text', 'categories_text'],
-          like: { _index: 'caak', _type: 'article', _id: id },
+          like: { _index: 'caak', _type: 'article', _id: article?.id },
           min_term_freq: 1,
           min_doc_freq: 1,
         },
       },
     ]);
     setSort({ _score: 'desc', publish_date: 'desc' });
-  }, [id]);
+  }, [article]);
 
   if (loading) {
     return (

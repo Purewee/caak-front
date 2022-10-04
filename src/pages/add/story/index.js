@@ -18,6 +18,7 @@ import {
   Skeleton,
   Upload,
   Tabs,
+  DatePicker,
 } from 'antd';
 import { DeleteOutlined, LinkOutlined, PlaySquareOutlined, SaveOutlined, SearchOutlined } from '@ant-design/icons';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
@@ -114,6 +115,7 @@ function AddStory() {
         ...article,
         tags: article?.tags.map((x) => x.slug),
         blocks: sortBy(article?.blocks, 'position'),
+        publishDate: moment(article?.publishDate || undefined),
         featuredDates: [moment(article?.featuredFrom || undefined), moment(article?.featuredTo || undefined)],
       }}
     >
@@ -214,6 +216,9 @@ function AddStory() {
                     key: x.id,
                   }))}
                 />
+              </Form.Item>
+              <Form.Item name="publishDate" className="font-merri w-full" label="Нийтлэх огноо">
+                <DatePicker showTime format="YYYY-MM-DD HH:mm" />
               </Form.Item>
               <Form.Item name="status" className="font-merri">
                 <Select

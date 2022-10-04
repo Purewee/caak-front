@@ -60,7 +60,7 @@ type Article {
   nextStory: Article
   position: Int
   prevStory: Article
-  publishDate: ISO8601Date
+  publishDate: ISO8601DateTime
   reactions(
     "Returns the elements in the list that come after the specified cursor."
     after: String,
@@ -132,6 +132,7 @@ type Banner {
   dateTo: ISO8601DateTime
   fileUrl: String
   id: ID!
+  mobileFileUrl: String
   position: Int
   title: String
   updatedAt: ISO8601DateTime
@@ -448,7 +449,7 @@ type PageInfo {
 }
 
 type Query {
-  article(id: ID!, impression: Boolean): Article!
+  article(id: ID, impression: Boolean, slug: String): Article!
   articles(
     "Returns the elements in the list that come after the specified cursor."
     after: String,
@@ -794,9 +795,6 @@ enum SortDirection {
   desc
 }
 
-"An ISO 8601-encoded date"
-scalar ISO8601Date
-
 "An ISO 8601-encoded datetime"
 scalar ISO8601DateTime
 
@@ -970,6 +968,7 @@ input addArticleInput {
   publishDate: ISO8601DateTime
   slug: String
   sourceId: ID
+  status: String
   tags: [String!]
   title: String!
 }
@@ -1154,6 +1153,7 @@ input updateArticleInput {
   publishDate: ISO8601DateTime
   slug: String
   sourceId: ID
+  status: String
   tags: [String!]
   title: String!
 }

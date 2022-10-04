@@ -57,6 +57,7 @@ function App() {
                 <Routes>
                   <Route index path="/" element={<Home />} />
                   <Route path="/post/view/:id" element={<Post />} />
+                  <Route path="/view/:slug" element={<Post />} />
                   <Route path="/404" element={<NotFound />} />
                   <Route path="/502" element={<ServerError />} />
                   <Route

@@ -68,6 +68,7 @@ function AddLink() {
         sourceId: article?.source?.id,
         tags: article?.tags.map((x) => x.slug),
         featuredDates: [moment(article?.featuredFrom || undefined), moment(article?.featuredTo || undefined)],
+        publishDate: moment(article?.publishDate || undefined),
       }}
     >
       <Row gutter={24} className="mb-[400px]">
@@ -198,6 +199,9 @@ function AddLink() {
               </Form.Item>
               <Form.Item name="featured" className="font-merri" valuePropName="checked">
                 <Checkbox onChange={(e) => setFeatured(e.target.checked)}>Мэдээг онцлох</Checkbox>
+              </Form.Item>
+              <Form.Item name="publishDate" className="font-merri w-full" label="Нийтлэх огноо">
+                <DatePicker showTime format="YYYY-MM-DD HH:mm" />
               </Form.Item>
               <Form.Item name="status" className="font-merri">
                 <Select
