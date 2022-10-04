@@ -152,11 +152,12 @@ export const UPDATE = gql`
 
 export const TAGS = gql`
   query Tags($filter: String) {
-    tags(first: 20, filter: { nameOrSlug: { cont: $filter } }) {
+    tags(filter: { nameOrSlug: { cont: $filter } }) {
       nodes {
         id
         name
         slug
+        following
       }
     }
   }
@@ -176,6 +177,7 @@ export const SOURCES = gql`
         name
         icon
         domain
+        following
         articlesCount
         slug
       }

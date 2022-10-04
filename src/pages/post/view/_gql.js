@@ -191,8 +191,15 @@ export const USER = gql`
       avatar
       status
       following
+      followersCount
       articles {
         totalCount
+      }
+      followers {
+        totalCount
+      }
+      follows {
+        id
       }
       recipes {
         articles {

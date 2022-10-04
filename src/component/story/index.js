@@ -27,37 +27,7 @@ const StoryFeed = () => {
   };
 
   return stories?.length > 0 ? (
-    <div className="flex flex-col max-w-[400px] sm:max-w-[600px] md:max-w-[700px] lg:max-w-[1002px] xl:max-w-[1202px] 2xl:max-w-[1502px] xl:px-0 w-full justify-center relative mt-[14px] md:mt-0 md:py-[80px]">
-      {activeIndex + 1 < stories.length - 1 && (
-        <div
-          onClick={() => {
-            trendPostsRef.current.scrollTo({
-              left: (1 + activeIndex) * 310,
-              behavior: 'smooth',
-            });
-            nextItem();
-          }}
-          className="cursor-pointer hidden md:flex z-40 w-[52px] h-[52px] items-center justify-center bg-white border-[#D4D8D8] drop-shadow-md rounded-full absolute right-[-26px] top-1/2"
-        >
-          <span className="icon-fi-rs-down-chevron text-[#555555] text-[18px] -rotate-90" />
-        </div>
-      )}
-
-      {activeIndex > 0 && (
-        <div
-          onClick={() => {
-            trendPostsRef.current.scrollTo({
-              left: (activeIndex - 1) * 310,
-              behavior: 'smooth',
-            });
-            prevItem();
-          }}
-          className="cursor-pointer hidden md:flex z-40 w-[52px] h-[52px] items-center justify-center bg-white border-[#D4D8D8] drop-shadow-md rounded-full absolute left-[-26px] top-1/2 rotate-180"
-        >
-          <span className="icon-fi-rs-down-chevron text-[#555555] text-[18px] -rotate-90" />
-        </div>
-      )}
-
+    <div className="flex flex-col w-full max-w-[1502px] justify-center relative mt-[14px] md:mt-0 md:pt-[80px]">
       <div className="flex flex-row items-center w-full relative justify-between md:justify-center">
         <p className="text-[17px] condMedium font-medium leading-[20px] sm:hidden">Стори мэдээ</p>
         <img
@@ -65,7 +35,7 @@ const StoryFeed = () => {
           src={require('../../assets/images/feed_story.svg').default}
           alt="Feeds"
         />
-        <Link className="hidden" to="/stories">
+        <Link className="hidden md:block" to="/stories">
           <div className="flex flex-row-reverse sm:flex-row gap-[6px] sm:absolute items-center right-[121px]">
             <p className="text-[14px] condMedium sm:font-normal sm:text-[16px] text-[#909090] sm:text-[#111111]">
               Бүх сторинууд
@@ -76,8 +46,37 @@ const StoryFeed = () => {
       </div>
       <div
         ref={trendPostsRef}
-        className="w-full wrapper gap-[6px] sm:gap-[13px] transition-all pb-[10px] md:pb-0 duration-300 mt-[14px] md:mt-[39px]"
+        className="w-full flex flex-row items-center wrapper gap-x-[6px] sm:gap-x-[13px] transition-all pb-[10px] md:pb-0 duration-300 mt-[14px] md:mt-[39px]"
       >
+        {activeIndex + 1 < stories.length - 1 && (
+          <div
+            onClick={() => {
+              trendPostsRef.current.scrollTo({
+                left: (1 + activeIndex) * 310,
+                behavior: 'smooth',
+              });
+              nextItem();
+            }}
+            className="cursor-pointer hidden md:flex z-40 w-[52px] h-[52px] items-center justify-center bg-white border-[#D4D8D8] drop-shadow-md rounded-full absolute right-[-26px]"
+          >
+            <span className="icon-fi-rs-down-chevron text-[#555555] text-[18px] -rotate-90" />
+          </div>
+        )}
+
+        {activeIndex > 0 && (
+          <div
+            onClick={() => {
+              trendPostsRef.current.scrollTo({
+                left: (activeIndex - 1) * 310,
+                behavior: 'smooth',
+              });
+              prevItem();
+            }}
+            className="cursor-pointer hidden md:flex z-40 w-[52px] h-[52px] items-center justify-center bg-white border-[#D4D8D8] drop-shadow-md rounded-full absolute left-[-26px] rotate-180"
+          >
+            <span className="icon-fi-rs-down-chevron text-[#555555] text-[18px] -rotate-90" />
+          </div>
+        )}
         {stories.map((item, index) => {
           return <StoryItem border={index === 0} story={item} key={index} index={index} />;
         })}

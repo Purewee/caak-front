@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { Modal } from 'antd';
-import { gql, useQuery } from '@apollo/client';
+import { gql, useQuery, useMutation } from '@apollo/client';
 import { useAuth } from '../../context/AuthContext';
 import { Link } from 'react-router-dom';
+import { imagePath } from '../../utility/Util';
 
 const CATEGORIES = gql`
   query GetCategories {
@@ -11,6 +12,7 @@ const CATEGORIES = gql`
         id
         name
         slug
+        following
         position
         parent {
           id
@@ -25,25 +27,33 @@ const CATEGORIES = gql`
             slug
           }
         }
+        cover
       }
     }
   }
 `;
+const FOLLOW_CATEGORY = gql`
+  mutation Follow($id: ID!) {
+    toggleFollow(input: { targetType: "category", targetId: $id })
+  }
+`;
 export default function AddCategoriesModal({ toggle, image }) {
   const { isAuth, openModal } = useAuth();
-  const { data, loading } = useQuery(CATEGORIES);
+  const { data, loading, refetch } = useQuery(CATEGORIES);
+  const [selected, setSelected] = useState(null);
+  const [follow_category] = useMutation(FOLLOW_CATEGORY);
   const categories = data?.categories?.nodes || [];
-  console.log(categories);
-
+  const filtered = categories.filter((category) => {
+    return category.parent === null;
+  });
+  //prettier-ignore
   return (
     <Modal
       visible
       width={738}
       onOk={() =>
         isAuth
-          ? save().then((e) => {
-              toggle();
-            })
+          ? toggle()
           : openModal('login')
       }
       onCancel={toggle}
@@ -59,15 +69,49 @@ export default function AddCategoriesModal({ toggle, image }) {
       okType="primary"
       confirmLoading={loading}
     >
-      <div className="flex flex-wrap gap-[14px] px-[70px] pt-[20px] pb-[30px]">
-        {categories.map((x, index) => {
-          return (
-            x.parent === null && (
-              <div key={index} className="text-white w-[190px] h-[110px] bg-black bg-opacity-50 rounded-[6px]">
-                {x.name}
+      <div className="flex flex-wrap justify-center px-[62px] gap-[14px] pt-[20px] pb-[30px]">
+        {filtered.map((x, index) => {
+          if(index < 2){
+            return x.parent === null ? (
+              <div onClick={() => selected ? setSelected(null) : setSelected(x.id)} key={index} className="w-[300px] h-[110px] rounded-[6px] relative">
+                <img className="w-full h-full object-cover rounded-[6px]" src={imagePath(x.cover)} />
+                <p className="text-white rounded-[6px] absolute top-0 h-full w-full flex justify-center items-center bg-black bg-opacity-50">{x.name}</p>
               </div>
-            )
-          );
+            ) : null;
+          }
+        })}
+        {selected && (
+          <div className="w-full bg-[#F5F5F5] flex flex-wrap gap-x-[6px] border border-[#EFEEEF] gap-y-[12px] p-[14px]">
+            {categories.map((data, index) => {
+              if(selected === data.parent?.id){
+                return (
+                  <p
+                    onClick={() => {
+                      if (isAuth) {
+                        follow_category({ variables: { id: data.id } }).then(() => {
+                          refetch().then(console.log);
+                        });
+                      }
+                    }}
+                    className={`${data.following ? ' bg-caak-primary text-white' : 'bg-white text-caak-black'} border cursor-pointer border-[#D4D8D8] rounded-full font-roboto px-[14px] py-[4px] leading-[16px]`}
+                    key={index}
+                  >
+                    {data.name}
+                  </p>
+                )
+              }
+            })}
+          </div>
+        )}
+        {filtered.map((x, index) => {
+          if(index >= 2){
+            return x.parent === null ? (
+              <div onClick={() => selected ? setSelected(null) : setSelected(x.id)} key={index} className="w-[300px] h-[110px] rounded-[6px] relative">
+                <img className="w-full h-full object-cover rounded-[6px]" src={imagePath(x.cover)} />
+                <p className="text-white rounded-[6px] absolute top-0 h-full w-full flex justify-center items-center bg-black bg-opacity-50">{x.name}</p>
+              </div>
+            ) : null;
+          }
         })}
       </div>
     </Modal>
