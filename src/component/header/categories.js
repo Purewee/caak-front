@@ -62,6 +62,10 @@ const Categories = () => {
     }, [ref]);
   }
 
+  const toggleMenu = () => {
+    setOpen(!open);
+  };
+
   const sideMenuRef = useRef(null);
   useOutsideAlerter(sideMenuRef);
 
@@ -88,7 +92,7 @@ const Categories = () => {
                 overlayClassName="padding_zero"
                 className="leading-[16px] tracking-[0px]"
                 overlayInnerStyle={{ borderRadius: 8 }}
-                visible={open}
+                onVisibleChange={toggleMenu}
                 content={
                   <div ref={sideMenuRef} className="p-[30px] flex flex-row gap-x-[50px]">
                     {categories.map((x, index) => {
@@ -132,7 +136,7 @@ const Categories = () => {
                   </div>
                 }
               >
-                <p className="hover:text-caak-primary font-bold flex" onClick={() => setOpen(!open)}>
+                <p className="hover:text-caak-primary font-bold flex">
                   <span>{item.title}</span>
                   <FIcon className="icon-fi-rs-down-chevron text-[14px] h-[14px] text-caak-primary" />
                 </p>

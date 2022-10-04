@@ -52,6 +52,10 @@ export default function UserInfo({ transparent }) {
     }, [ref]);
   }
 
+  const toggleMenu = () => {
+    setProfileVisible(!profileVisible);
+  };
+
   const saveRef = useRef(null);
   const profileRef = useRef(null);
   useOutsideAlerter(saveRef);
@@ -184,7 +188,7 @@ export default function UserInfo({ transparent }) {
         placement="bottomRight"
         trigger="click"
         overlayClassName="padding_zero"
-        visible={profileVisible}
+        onVisibleChange={toggleMenu}
         overlayInnerStyle={{ borderRadius: 4 }}
         content={
           <div ref={profileRef} className="text-[#555555] w-[220px] py-[18px]">
@@ -251,7 +255,7 @@ export default function UserInfo({ transparent }) {
         }
       >
         {me.avatar ? (
-          <div onClick={() => setProfileVisible(!profileVisible)}>
+          <div>
             <Avatar
               src={imagePath(me.avatar)}
               size={34}
@@ -260,7 +264,7 @@ export default function UserInfo({ transparent }) {
             />
           </div>
         ) : (
-          <div onClick={() => setProfileVisible(!profileVisible)}>
+          <div>
             <Avatar
               size={34}
               className="ml-[16px] flex items-center bg-[#257CEE19] text-[#257CEE] text-[20px] cursor-pointer font-medium"

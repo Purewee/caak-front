@@ -75,9 +75,23 @@ function ImageStory({ block, story }) {
   const navigate = useNavigate();
   return (
     <div className="w-full h-full flex justify-between sm:p-5">
-      <div className="hidden sm:flex flex-col h-full w-[20%] items-start justify-start">
+      <div style={{ zIndex: 1000 }} className="hidden sm:flex flex-col h-full w-[20%] items-start justify-start">
         <Logo white className="mb-[160px]" />
-        {story.prevStory && <Preview story={story.prevStory} />}
+        {story.nextStory ? (
+          <Preview story={story.nextStory} />
+        ) : (
+          <div className="w-[272px] h-[440px] relative">
+            <img src={AllStories} alt="Бүх стори" className="object-cover" />
+            <Button
+              size="large"
+              className="py-4 absolute top-1/2 left-[60px] bg-white flex-col h-[80px] rounded-[8px]"
+              onClick={() => navigate('/stories')}
+            >
+              <FIcon className="icon-fi-rs-play text-caak-primary" />
+              Бусад сторинууд үзэх
+            </Button>
+          </div>
+        )}
       </div>
       <div
         className="w-full sm:w-[60%] sm:rounded-[8px] bg-contain bg-no-repeat bg-center bg-[#000000]"
@@ -130,7 +144,21 @@ function ImageStory({ block, story }) {
           icon={<CloseOutlined />}
           onClick={() => navigate('/')}
         />
+        {story.prevStory && <Preview story={story.prevStory} />}
+      </div>
+    </div>
+  );
+}
 
+function VideoStory({ block, story, action }) {
+  const [muted, setMuted] = useState(true);
+  const [playing, setPlaying] = useState(true);
+  const navigate = useNavigate();
+
+  return (
+    <div className="w-full h-full flex justify-between sm:p-5">
+      <div style={{ zIndex: 1000 }} className="hidden sm:flex flex-col h-full w-[20%] items-start justify-start">
+        <Logo white className="mb-[160px]" />
         {story.nextStory ? (
           <Preview story={story.nextStory} />
         ) : (
@@ -146,21 +174,6 @@ function ImageStory({ block, story }) {
             </Button>
           </div>
         )}
-      </div>
-    </div>
-  );
-}
-
-function VideoStory({ block, story, action }) {
-  const [muted, setMuted] = useState(true);
-  const [playing, setPlaying] = useState(true);
-  const navigate = useNavigate();
-
-  return (
-    <div className="w-full h-full flex justify-between sm:p-5">
-      <div className="hidden sm:flex flex-col h-full w-[20%] items-start justify-start">
-        <Logo white className="mb-[160px]" />
-        {story.prevStory && <Preview story={story.prevStory} />}
       </div>
       <div className="w-[100%] sm:w-[60%] h-full sm:rounded-[8px] flex flex-col items-center justify-center bg-contain bg-no-repeat bg-center bg-[#000000] relative">
         <div style={{ zIndex: 1001 }} className="absolute top-[12px] right-[12px] flex">
@@ -219,22 +232,7 @@ function VideoStory({ block, story, action }) {
           icon={<CloseOutlined />}
           onClick={() => navigate('/')}
         />
-
-        {story.nextStory ? (
-          <Preview story={story.nextStory} />
-        ) : (
-          <div className="w-[272px] h-[440px] relative">
-            <img src={AllStories} alt="Бүх стори" className="object-cover" />
-            <Button
-              size="large"
-              className="py-4 absolute top-1/2 left-[60px] bg-white flex-col h-[80px] rounded-[8px]"
-              onClick={() => navigate('/stories')}
-            >
-              <FIcon className="icon-fi-rs-play text-caak-primary" />
-              Бусад сторинууд үзэх
-            </Button>
-          </div>
-        )}
+        {story.prevStory && <Preview story={story.prevStory} />}
       </div>
     </div>
   );

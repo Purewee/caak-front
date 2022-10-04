@@ -227,7 +227,7 @@ function SingleComment({ comment, refetch }) {
         </Avatar>
       }
       datetime={
-        <p className="text-[13px] leading-[15px] text-caak-darkGray">
+        <p className="text-[13px] leading-[15px] text-[#BBBEBE]">
           {moment(comment.createdAt).format('YYYY.MM.DD, hh:mm')}
         </p>
       }
