@@ -29,13 +29,20 @@ const Wrapper = styled(Drawer)`
 export default function A3({ banner }) {
   const isMobile = useMediaQuery('screen and (max-width: 767px)');
   const key = `banner_${banner.id}`;
-  const closed = localStorage.getItem(key) || false;
   const [open, setOpen] = useState(false);
 
+  const handleScroll = () => {
+    if (!open && window.scrollY > 1200) {
+      const closed = localStorage.getItem(key) || false;
+      if (!closed) setOpen(true);
+    }
+  };
   useEffect(() => {
-    if (closed) return;
-    setOpen(true);
-  }, [closed]);
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
 
   if (!banner) {
     return <></>;
@@ -60,6 +67,7 @@ export default function A3({ banner }) {
             onClick={() => {
               setOpen(false);
               localStorage.setItem(key, 'closed');
+              window.removeEventListener('scroll', handleScroll);
             }}
           />
           <a href={banner?.url} target="_blank" className="w-full flex flex-col justify-between items-center h-[360px]">

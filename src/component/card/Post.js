@@ -86,7 +86,7 @@ export default function PostCard({ isMobile, post, removeSaved, asd, ...rest }) 
           <p
             className={`${
               sponsored
-                ? 'px-[16px] h-[85px] truncate-3 sm:truncate-3 text-[22px] sm:text-[21px] leading-[30px] sm:leading-[29px] font-bold sm:font-normal'
+                ? 'px-[16px] h-[85px] truncate-3 text-[22px] sm:text-[21px] leading-[30px] sm:leading-[29px] font-bold sm:font-normal'
                 : `truncate-3 font-medium hover:underline underline-offset-4 decoration-[#3B4491]/20 sm:font-normal sm:text-[21px] leading-[20px] sm:leading-[29px] ${
                     asd ? 'text-[18px] mt-[12px] sm:mt-0 truncate-3' : 'text-[16px] mt-0 ml-[16px] sm:ml-0'
                   }`

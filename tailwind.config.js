@@ -7,7 +7,7 @@ module.exports = {
         inter: ['Inter'],
         condensed: ['Roboto Condensed'],
         merri: ['Merriweather'],
-        literata : ['Literata'],
+        literata: ['Literata'],
       },
       colors: {
         caak: {
