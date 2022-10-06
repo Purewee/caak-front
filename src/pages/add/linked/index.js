@@ -23,6 +23,7 @@ import { getDataFromBlob, imageCompress } from '../../../lib/imageCompress';
 import { DatePicker } from 'antd/es';
 import moment from 'moment';
 import { imagePath } from '../../../utility/Util';
+import { Helmet } from 'react-helmet';
 
 function AddLink() {
   const { id } = useParams();
@@ -71,6 +72,13 @@ function AddLink() {
         publishDate: moment(article?.publishDate || undefined),
       }}
     >
+      <Helmet>
+        <title>Мэдээ оруулах/засах | Caak.mn</title>
+        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+        <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="Мэдээ оруулах/засах | Caak.mn" />
+        <meta name="og:title" content="Мэдээ оруулах/засах | Caak.mn" />
+      </Helmet>
       <Row gutter={24} className="mb-[400px]">
         <Col span={16} className="x-[50px]">
           <Tabs className="max-w-[880px] mx-auto mt-[20px] border-b" defaultActiveKey="linked" size="large">

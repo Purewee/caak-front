@@ -311,12 +311,12 @@ const Post = () => {
                   <p className="ml-[6px] text-[15px] text-caak-primary leading-[16px]">{article.reactionsCount || 0}</p>
                 </div>
                 <div className="hidden md:flex flex-row items-center">
-                  <FacebookShareButton className="h-[20px]" url={`${Configure.domain}'/post/view/${article?.id}`}>
+                  <FacebookShareButton className="h-[20px]" url={`${Configure.domain}/post/view/${article?.id}`}>
                     <FIcon className="text-[#909090] hover:text-[#1877F2] text-[22px] w-[24px] h-[24px] icon-fi-rs-fb" />
                   </FacebookShareButton>
                   <TwitterShareButton
                     className="h-[20px] ml-[24px]"
-                    url={`${Configure.domain}'/post/view/${article?.id}`}
+                    url={`${Configure.domain}/post/view/${article?.id}`}
                   >
                     <FIcon className="text-[#909090] hover:text-[#1877F2] text-[22px] w-[24px] h-[24px] icon-fi-rs-tw" />
                   </TwitterShareButton>
