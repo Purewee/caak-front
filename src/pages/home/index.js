@@ -282,7 +282,7 @@ export default function Home() {
           size={22}
         />
       </div>
-      <Banner position="a4" />
+      {isMobile && <Banner position="a3" />}
     </>
   );
 }

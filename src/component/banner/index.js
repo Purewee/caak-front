@@ -15,6 +15,8 @@ const BANNER = gql`
       bannerType
       bannerLocation
       fileUrl
+      mobileFileUrl
+      data
     }
   }
 `;
