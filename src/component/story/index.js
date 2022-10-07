@@ -35,18 +35,19 @@ const StoryFeed = () => {
           src={require('../../assets/images/feed_story.svg').default}
           alt="Feeds"
         />
-        <Link className="hidden md:block" to="/stories">
-          <div className="flex flex-row-reverse sm:flex-row gap-[6px] sm:absolute items-center right-[121px]">
-            <p className="text-[14px] condMedium sm:font-normal sm:text-[16px] text-[#909090] sm:text-[#111111]">
-              Бүх сторинууд
-            </p>
-            <span className="icon-fi-rs-stories-o text-[#909090] sm:text-[#FF6600] text-[18px]" />
-          </div>
+        <Link
+          className="flex flex-row-reverse sm:flex-row gap-[6px] sm:absolute items-center right-[121px]"
+          to="/stories"
+        >
+          <p className="text-[14px] condMedium sm:font-normal sm:text-[16px] text-[#909090] sm:text-[#111111]">
+            Бүх сторинууд
+          </p>
+          <span className="icon-fi-rs-stories-o text-[#909090] sm:text-[#FF6600] text-[18px]" />
         </Link>
       </div>
       <div
         ref={trendPostsRef}
-        className="w-full flex flex-row items-center wrapper gap-x-[6px] sm:gap-x-[13px] transition-all pb-[10px] md:pb-0 duration-300 mt-[14px] md:mt-[39px]"
+        className="w-full flex flex-row items-center wrapper overflow-y-visible gap-x-[6px] sm:gap-x-[13px] transition-all pb-[10px] md:pb-0 duration-300 mt-[14px] md:mt-[39px]"
       >
         {activeIndex + 1 < stories.length - 1 && (
           <div
@@ -81,7 +82,11 @@ const StoryFeed = () => {
           return <StoryItem border={index === 0} story={item} key={index} index={index} />;
         })}
         <div className="min-w-[106px] hidden sm:min-w-[290px] relative sm:flex items-center justify-center max-w-[290px] rounded-[8px] min-h-[160px] sm:min-h-[435px] max-h-[435px]">
-          <img className="w-full h-full" src={require('../../assets/images/all-stories.png')} alt="All Stories" />
+          <img
+            className="min-w-[106px] sm:min-w-[290px] max-w-[290px] rounded-[8px] min-h-[160px] sm:min-h-[435px] max-h-[435px]"
+            src={require('../../assets/images/all-stories.png')}
+            alt="All Stories"
+          />
           <div className="bg-black rounded-[8px] bg-opacity-70 px-[10px] md:px-[47px] h-full w-full absolute flex justify-center items-center">
             <Link to="/stories" className="w-full">
               <div className="md:h-[34px] rounded-[4px] cursor-pointer bg-white w-full flex flex-row items-center justify-center">

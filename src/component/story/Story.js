@@ -16,7 +16,7 @@ export default function StoryItem({ story, border }) {
             className="object-cover h-full w-full rounded-[6px]"
             src={imagePath(story?.image)}
           />
-          <div className="absolute bottom-[0px] rounded-[6px] w-full storyLinearItem h-1/2 p-[12px] md:p-[24px] flex flex-col items-start justify-end">
+          <div className="absolute bottom-[0px] rounded-[6px] w-full storyLinearItem h-1/2 sm:h-full sm:max-h-[230px] p-[12px] md:p-[24px] flex flex-col items-start justify-end">
             {story?.categories?.map((x) => (
               <p
                 key={x.name}
@@ -26,7 +26,7 @@ export default function StoryItem({ story, border }) {
               </p>
             ))}
             <p
-              className="truncate-3 text-white text-[13px] xl:text-[22px] condMedium xl:font-bold mt-[10px] tracking-[0.36px] leading-[15px] xl:leading-[28px] xl:font-condensed"
+              className="truncate-4 text-white text-[13px] xl:text-[22px] condMedium xl:font-bold mt-[10px] tracking-[0.36px] leading-[15px] xl:leading-[28px] xl:font-condensed"
               dangerouslySetInnerHTML={{ __html: story?.title }}
             />
             <p className="text-white text-[14px] font-medium mt-[10px] hidden xl:flex condMedium">

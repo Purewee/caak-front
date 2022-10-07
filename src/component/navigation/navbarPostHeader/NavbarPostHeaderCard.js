@@ -18,9 +18,9 @@ const NavbarPostHeaderCard = ({ type, item }) => {
             <p
               className={`${
                 type === 'wide'
-                  ? 'text-[40px] md:text-[50px] tracking-[0.4px] md:tracking-[0.5px] truncate-2 leading-[46px] md:leading-[56px]'
-                  : 'text-[24px] md:text-[30px] tracking-[0.2px] md:tracking-[0.32px] truncate-3 leading-[28px] md:leading-[36px]'
-              } text-white condMedium`}
+                  ? 'text-[40px] md:text-[50px] tracking-[0.4px] md:tracking-[0.5px] leading-[46px] md:leading-[56px]'
+                  : 'text-[24px] md:text-[30px] tracking-[0.2px] md:tracking-[0.32px] leading-[28px] md:leading-[36px]'
+              } text-white condMedium truncate-3`}
             >
               {item.title}
             </p>

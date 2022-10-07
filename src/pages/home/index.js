@@ -119,8 +119,16 @@ export default function Home() {
             <HomeTabs selected={selected} />
           </div>
         </div>
-        <div className="hidden sm:block sticky bg-white z-[2] top-0 w-full px-[16px] sm:px-0 mt-[80px]">
-          <div className="w-full flex items-center justify-between border-b px-8">
+        <div className="mt-[20px] hidden sm:block sm:mt-[50px] px-[16px] sm:px-0">
+          <Banner position="a1" />
+        </div>
+        {selected === 'recent' && (
+          <div className="md:px-[30px] w-full flex justify-center px-[16px] sm:px-0">
+            <Story />
+          </div>
+        )}
+        <div className="hidden sm:flex sticky sm:justify-center bg-white z-[2] top-0 w-full px-[16px] sm:px-0 mt-[80px]">
+          <div className="w-full flex items-center justify-between border-b px-[16px] md:px-[48px]">
             <Logo className="sm:h-[28px]" />
             <HomeTabs selected={selected} />
             <div className="flex items-center">
@@ -166,7 +174,12 @@ export default function Home() {
         <span style={{ position: 'relative' }}>
           <span ref={tabsRef} style={{ position: 'absolute', top: selected === 'trend' ? '-80px' : '-40px' }} />
         </span>
-        <ArticlesList filter={filter} sort={sort} size={22} />
+        <ArticlesList
+          asd={selected === 'vidyeo' ? true : selected === 'chuluut_tsag' ? true : selected === 'blog' ? true : false}
+          filter={filter}
+          sort={sort}
+          size={22}
+        />
       </div>
       {isMobile && <Banner position="a3" />}
     </>

@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import Logo from '../../component/logo';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { imagePath } from '../../utility/Util';
+import { generateTimeAgo, imagePath } from '../../utility/Util';
 import { useQuery } from '@apollo/client';
 import { STORY } from './_gql';
 import Stories from 'react-insta-stories';
@@ -9,7 +9,8 @@ import { Button, Skeleton } from 'antd';
 import ReactPlayer from 'react-player';
 import { FIcon } from '../../component/icon';
 import { CloseOutlined } from '@ant-design/icons';
-import AllStories from '../../images/all_stories.png';
+import AllStories from '../../assets/images/all-stories.png';
+import moment from 'moment';
 
 export default function Story() {
   const { id } = useParams();
@@ -52,7 +53,6 @@ export default function Story() {
       <Stories
         width="100vw"
         height="100%"
-        isPaused
         keyboardNavigation
         // preventDefault
         defaultInterval={1500}
@@ -61,6 +61,7 @@ export default function Story() {
           background: '#323232',
         }}
         stories={stories}
+        currentIndex={() => console.log('first')}
         onAllStoriesEnd={() => {
           if (story?.prevStory?.id) {
             navigate(`/story/${story.prevStory.id}`);
@@ -74,27 +75,29 @@ export default function Story() {
 function ImageStory({ block, story }) {
   const navigate = useNavigate();
   return (
-    <div className="w-full h-full flex justify-between sm:p-5">
-      <div style={{ zIndex: 1000 }} className="hidden sm:flex flex-col h-full w-[20%] items-start justify-start">
+    <div className="w-full h-full flex justify-center lg:justify-between sm:p-5">
+      <div
+        style={{ zIndex: 1000 }}
+        className="hidden lg:flex flex-col h-full w-[272px] mr-[16px] items-start justify-start"
+      >
         <Logo white className="mb-[160px]" />
         {story.nextStory ? (
           <Preview story={story.nextStory} />
         ) : (
-          <div className="w-[272px] h-[440px] relative">
-            <img src={AllStories} alt="Бүх стори" className="object-cover" />
-            <Button
-              size="large"
-              className="py-4 absolute top-1/2 left-[60px] bg-white flex-col h-[80px] rounded-[8px]"
+          <div className="w-[272px] h-[440px] relative flex imems-center justify-center">
+            <img src={AllStories} alt="Бүх стори" className="object-cover bg-black bg-opacity-70" />
+            <div
+              className="py-4 absolute top-[180px] bg-white flex w-[188px] cursor-pointer flex-col items-center text-[#111111] text-[15px] h-[80px] rounded-[8px]"
               onClick={() => navigate('/stories')}
             >
-              <FIcon className="icon-fi-rs-play text-caak-primary" />
+              <FIcon className="icon-fi-rs-stories-o text-caak-primary" />
               Бусад сторинууд үзэх
-            </Button>
+            </div>
           </div>
         )}
       </div>
       <div
-        className="w-full sm:w-[60%] sm:rounded-[8px] bg-contain bg-no-repeat bg-center bg-[#000000]"
+        className="w-full sm:rounded-[8px] bg-contain bg-no-repeat bg-center bg-[#212121]"
         style={{ backgroundImage: `url(${imagePath(block.imageUrl)})` }}
       >
         <div style={{ zIndex: 1000 }} className="absolute top-[12px] right-[12px] flex">
@@ -107,23 +110,27 @@ function ImageStory({ block, story }) {
         </div>
         <div className="relative w-full h-full">
           {block.kind === 'post' && (
-            <Link
+            <div
               style={{ zIndex: 1000 }}
               className="absolute bottom-0 pb-[20px] p-[16px] sm:p-[32px] story-linear w-full rounded-[8px]"
-              to={block?.data?.url}
             >
-              <div className="flex flex-col gap-[8px]">
+              <p></p>
+              <div className="flex flex-col">
                 <span
-                  className="truncate-2 text-white text-[24px]"
+                  className="truncate-2 text-white condMedium text-[34px] leading-[40px]"
                   dangerouslySetInnerHTML={{ __html: block?.content }}
                 />
-                <span className="text-white opacity-90 text-[12px]">{story.publishDate}</span>
-                <Button className="w-[180px] bg-white flex p-1 px-2 border-0 rounded-sm items-center justify-between font-bold">
-                  Дэлгэрэнгүй үзэх
-                  <FIcon className="icon-fi-rs-down-chevron text-caak-primary text-[16px]" />
-                </Button>
+                <span className="text-white opacity-80 text-[14px] leading-[16px] mt-[10px]">
+                  {moment(story.publishDate).utc('Asia/Mongolia').format('YYYY.MM.DD, HH:MM')}
+                </span>
+                <Link className="mt-[24px]" to={block?.data?.url}>
+                  <div className="w-[180px] h-[44px] bg-white flex p-1 px-2 border-0 text-[15px] font-medium text-caak-black rounded-sm items-center justify-center">
+                    Дэлгэрэнгүй үзэх
+                    <FIcon className="icon-fi-rs-down-chevron text-caak-primary text-[14px] -rotate-90" />
+                  </div>
+                </Link>
               </div>
-            </Link>
+            </div>
           )}
           {block.kind === 'image' && block?.content && (
             <div className="absolute w-full story-linear bottom-0 pb-[20px] p-[16px] sm:p-[32px] flex flex-col items-center">
@@ -136,15 +143,25 @@ function ImageStory({ block, story }) {
           )}
         </div>
       </div>
-      <div style={{ zIndex: 1000 }} className="hidden sm:flex flex-col h-full w-[20%] justify-start items-end">
-        <Button
-          shape="circle"
-          type="white"
-          className="bg-white border-0 mb-[180px]"
-          icon={<CloseOutlined />}
-          onClick={() => navigate('/')}
-        />
-        {story.prevStory && <Preview story={story.prevStory} />}
+      <div
+        style={{ zIndex: 1000 }}
+        className="hidden lg:flex flex-col h-full w-[272px] ml-[16px] items-start justify-start"
+      >
+        <Logo white className="mb-[160px]" />
+        {story.prevStory ? (
+          <Preview story={story.prevStory} />
+        ) : (
+          <div className="w-[272px] h-[440px] relative flex imems-center justify-center">
+            <img src={AllStories} alt="Бүх стори" className="object-cover bg-black bg-opacity-70" />
+            <div
+              className="py-4 absolute top-[180px] bg-white flex w-[188px] cursor-pointer flex-col items-center text-[#111111] text-[15px] h-[80px] rounded-[8px]"
+              onClick={() => navigate('/stories')}
+            >
+              <FIcon className="icon-fi-rs-stories-o text-caak-primary" />
+              Бусад сторинууд үзэх
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
@@ -157,25 +174,24 @@ function VideoStory({ block, story, action }) {
 
   return (
     <div className="w-full h-full flex justify-between sm:p-5">
-      <div style={{ zIndex: 1000 }} className="hidden sm:flex flex-col h-full w-[20%] items-start justify-start">
+      <div style={{ zIndex: 1000 }} className="hidden lg:flex flex-col h-full w-[272px] items-start justify-start">
         <Logo white className="mb-[160px]" />
         {story.nextStory ? (
           <Preview story={story.nextStory} />
         ) : (
-          <div className="w-[272px] h-[440px] relative">
-            <img src={AllStories} alt="Бүх стори" className="object-cover" />
-            <Button
-              size="large"
-              className="py-4 absolute top-1/2 left-[60px] bg-white flex-col h-[80px] rounded-[8px]"
+          <div className="w-[272px] h-[440px] relative flex imems-center justify-center">
+            <img src={AllStories} alt="Бүх стори" className="object-cover bg-black bg-opacity-70" />
+            <div
+              className="py-4 absolute top-[180px] bg-white flex w-[188px] cursor-pointer flex-col items-center text-[#111111] text-[15px] h-[80px] rounded-[8px]"
               onClick={() => navigate('/stories')}
             >
-              <FIcon className="icon-fi-rs-play text-caak-primary" />
+              <FIcon className="icon-fi-rs-stories-o text-caak-primary" />
               Бусад сторинууд үзэх
-            </Button>
+            </div>
           </div>
         )}
       </div>
-      <div className="w-[100%] sm:w-[60%] h-full sm:rounded-[8px] flex flex-col items-center justify-center bg-contain bg-no-repeat bg-center bg-[#000000] relative">
+      <div className="w-[100%] h-full sm:rounded-[8px] flex flex-col items-center justify-center bg-contain bg-no-repeat bg-center bg-[#212121] relative">
         <div style={{ zIndex: 1001 }} className="absolute top-[12px] right-[12px] flex">
           <Button
             type="link"
@@ -224,7 +240,7 @@ function VideoStory({ block, story, action }) {
           )}
         </div>
       </div>
-      <div style={{ zIndex: 1000 }} className="hidden sm:flex flex-col h-full w-[20%] justify-start items-end">
+      <div style={{ zIndex: 1000 }} className="hidden lg:flex flex-col h-full w-[272px] justify-start items-end">
         <Button
           shape="circle"
           type="white"

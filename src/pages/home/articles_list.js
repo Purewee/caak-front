@@ -67,7 +67,7 @@ export default function ArticlesList({ filter = [], sort = {}, size = 24, asd })
         );
       })}
       {count > list?.length && (
-        <div className="max-w-[1310px] w-full px-[16px]">
+        <div className="max-w-[1310px] w-full px-[16px] sm:px-0">
           <Button
             block
             size="large"
@@ -75,7 +75,7 @@ export default function ArticlesList({ filter = [], sort = {}, size = 24, asd })
             onClick={() => setPage(page + 1)}
             loading={loading}
           >
-            Бусад мэдээг үзэх
+            Илүү ихийг үзэх
             <FIcon className="icon-fi-rs-down-chevron text-caak-primary text-[16px] w-[16px] ml-[8px]" />
           </Button>
         </div>

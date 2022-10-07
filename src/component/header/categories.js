@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { gql, useQuery } from '@apollo/client';
 import { Popover, Skeleton } from 'antd';
 import { Link } from 'react-router-dom';
@@ -66,8 +66,9 @@ const Categories = () => {
     setOpen(!open);
   };
 
-  const sideMenuRef = useRef(null);
-  useOutsideAlerter(sideMenuRef);
+  const hide = () => {
+    setOpen(false);
+  };
 
   if (loading) {
     return <Skeleton />;
@@ -92,9 +93,10 @@ const Categories = () => {
                 overlayClassName="padding_zero"
                 className="leading-[16px] tracking-[0px]"
                 overlayInnerStyle={{ borderRadius: 8 }}
+                visible={open}
                 onVisibleChange={toggleMenu}
                 content={
-                  <div ref={sideMenuRef} className="p-[30px] flex flex-row gap-x-[50px]">
+                  <div className="p-[30px] flex flex-row gap-x-[50px]">
                     {categories.map((x, index) => {
                       return (
                         x.parent === null && (
@@ -105,14 +107,14 @@ const Categories = () => {
                             }`}
                           >
                             {x.childs?.nodes?.length > 0 ? (
-                              <p className="text-[#111111] condMedium hover:text-caak-primary hover:leading-[18px] leading-[19px] hover:tracking-[0.23px] tracking-[0.24px] hover:text-[15px] text-[16px]">
+                              <p className="text-[#111111] condMedium leading-[19px] tracking-[0.24px] text-[16px]">
                                 {x.name}
                               </p>
                             ) : (
                               <Link
                                 className="text-[#555555] font-roboto hover:text-caak-primary leading-[20px] hover:tracking-[0.23px] tracking-[0.24px] text-[17px]"
                                 to={`/category/${x.slug}`}
-                                onClick={() => setOpen(false)}
+                                onClick={hide}
                               >
                                 {x.name}
                               </Link>
@@ -123,7 +125,7 @@ const Categories = () => {
                                   className="text-[#555555] font-roboto hover:text-caak-primary leading-[20px] hover:tracking-[0.23px] tracking-[0.24px] text-[17px]"
                                   to={`/category/${data.slug}`}
                                   key={index}
-                                  onClick={() => setOpen(false)}
+                                  onClick={hide}
                                 >
                                   {data.name}
                                 </Link>

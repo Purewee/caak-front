@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useQuery, gql, useMutation } from '@apollo/client';
 import { Popover, Badge, Button, Avatar, message, Spin } from 'antd';
 import { useAuth } from '../../context/AuthContext';
@@ -32,34 +32,21 @@ export default function UserInfo({ transparent }) {
   const navigate = useNavigate();
   const isMobile = useMediaQuery('screen and (max-width: 670px)');
 
-  function useOutsideAlerter(ref) {
-    useEffect(() => {
-      /**
-       * Alert if clicked on outside of element
-       */
-      function handleClickOutside(event) {
-        if (ref.current && !ref.current.contains(event.target)) {
-          setProfileVisible(false);
-          setSavedVisible(false);
-        }
-      }
-      // Bind the event listener
-      document.addEventListener('mousedown', handleClickOutside);
-      return () => {
-        // Unbind the event listener on clean up
-        document.removeEventListener('mousedown', handleClickOutside);
-      };
-    }, [ref]);
-  }
-
   const toggleMenu = () => {
     setProfileVisible(!profileVisible);
   };
 
-  const saveRef = useRef(null);
-  const profileRef = useRef(null);
-  useOutsideAlerter(saveRef);
-  useOutsideAlerter(profileRef);
+  const toggleSaving = () => {
+    setSavedVisible(!savedVisible);
+  };
+
+  const hide = () => {
+    setProfileVisible(false);
+  };
+
+  const hideSaved = () => {
+    setSavedVisible(false);
+  };
 
   useEffect(() => {
     if (me.id && !me.firstName) {
@@ -108,8 +95,9 @@ export default function UserInfo({ transparent }) {
           trigger="click"
           overlayClassName="padding_zero paddin"
           visible={savedVisible}
+          onVisibleChange={toggleSaving}
           content={
-            <div ref={saveRef}>
+            <div>
               <h3 className="text-[22px] leading-[25px] border-b border-[#D4D8D8] condMedium mb-1 pb-2 px-[16px] pt-[22px]">
                 Хадгалсан мэдээнүүд
               </h3>
@@ -123,11 +111,7 @@ export default function UserInfo({ transparent }) {
                         onMouseLeave={() => setHovered(null)}
                         className="flex flex-row items-center w-full justify-between px-[16px] hover:bg-[#EFEEEF] h-[64px]"
                       >
-                        <Link
-                          onClick={() => setSavedVisible(false)}
-                          className="flex flex-row"
-                          to={`/post/view/${x.id}`}
-                        >
+                        <Link onClick={hideSaved} className="flex flex-row" to={`/post/view/${x.id}`}>
                           <Avatar
                             className="min-w-[60px] max-w-[60px] h-[44px] object-cover"
                             src={imagePath(x.imageUrl)}
@@ -168,7 +152,6 @@ export default function UserInfo({ transparent }) {
           }
         >
           <Button
-            onClick={() => setSavedVisible(!savedVisible)}
             icon={
               <Badge className="mt-[3px]" count={totalSaved} size="small" showZero={false} overflowCount={20}>
                 <FIcon
@@ -188,17 +171,18 @@ export default function UserInfo({ transparent }) {
         placement="bottomRight"
         trigger="click"
         overlayClassName="padding_zero"
+        visible={profileVisible}
         onVisibleChange={toggleMenu}
         overlayInnerStyle={{ borderRadius: 4 }}
         content={
-          <div ref={profileRef} className="text-[#555555] w-[220px] py-[18px]">
+          <div className="text-[#555555] w-[220px] py-[18px]">
             <div className="border-b w-full pb-[16px] flex flex-row items-center pl-[18px]">
               {me.avatar ? (
-                <Link onClick={() => setProfileVisible(false)} to={`/profile/${me.id}`}>
+                <Link onClick={hide} to={`/profile/${me.id}`}>
                   <Avatar className="mr-[12px] flex items-center justify-center" src={imagePath(me.avatar)} size={38} />
                 </Link>
               ) : (
-                <Link onClick={() => setProfileVisible(false)} to={`/profile/${me.id}`}>
+                <Link onClick={hide} to={`/profile/${me.id}`}>
                   <Avatar size={38} className="flex items-center bg-[#257CEE19] text-[#257CEE] text-[26px] font-medium">
                     {me?.firstName ? me?.firstName[0] : '?'}
                   </Avatar>
@@ -207,16 +191,12 @@ export default function UserInfo({ transparent }) {
               <div className="flex flex-col ml-[15px]">
                 <Link
                   className="font-condensed text-[18px] font-bold leading-[21px] text-[#111111]"
-                  onClick={() => setProfileVisible(false)}
+                  onClick={hide}
                   to={`/profile/${me.id}`}
                 >
                   {data?.me?.firstName || null}
                 </Link>
-                <Link
-                  onClick={() => setProfileVisible(false)}
-                  to={`/settings/${me.id}`}
-                  className="text-[14px] leading-[16px] mt-[3px]"
-                >
+                <Link onClick={hide} to={`/settings/${me.id}`} className="text-[14px] leading-[16px] mt-[3px]">
                   Мэдээллээ засах
                 </Link>
               </div>
@@ -224,7 +204,7 @@ export default function UserInfo({ transparent }) {
             <div className="pl-[18px] flex flex-col border-b gap-y-[16px] py-[19px]">
               {Settings.map((data, index) => {
                 return (
-                  <Link onClick={() => setProfileVisible(false)} key={index} to={{ pathname: data.link }}>
+                  <Link onClick={hide} key={index} to={{ pathname: data.link }}>
                     <div className="flex flex-row items-center cursor-pointer">
                       <span className={`${data.icon} text-[20px]`} />
                       <p className="text-[15px] ml-[12px] -mt-[3px] leading-[18px]">{data.title}</p>
@@ -233,7 +213,7 @@ export default function UserInfo({ transparent }) {
                 );
               })}
               {me?.role === 'admin' && (
-                <Link onClick={() => setProfileVisible(false)} className="sm:hidden" to={'/add'}>
+                <Link onClick={hide} className="sm:hidden" to={'/add'}>
                   <div className="flex flex-row items-center cursor-pointer">
                     <span className={`icon-fi-rs-edit text-[20px]`} />
                     <p className="text-[15px] ml-[12px] -mt-[3px] leading-[18px]">Пост нэмэх</p>
