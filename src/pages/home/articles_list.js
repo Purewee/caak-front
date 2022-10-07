@@ -44,7 +44,7 @@ export default function ArticlesList({ filter = [], sort = {}, size = 24, asd })
   return (
     <div className="mt-[30px]">
       {chunked.map((section, index) => {
-        const divider = Math.floor(Math.random() * 11);
+        const divider = Math.floor(6 + Math.random() * 5);
         return (
           <div
             key={index}
