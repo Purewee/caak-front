@@ -10,6 +10,11 @@ import { gql, useQuery } from '@apollo/client';
 import { groupBy } from 'lodash/collection';
 import useMediaQuery from '../../component/navigation/useMediaQuery';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
+import HomeTabs from './tabs';
+import Logo from '../../component/logo';
+import Search from '../../component/header/search';
+import UserInfo from '../../component/header/UserInfo';
+import Session from '../../component/header/session';
 
 const FOLLOWS = gql`
   query GetFollows {
@@ -40,25 +45,16 @@ const FOLLOWS = gql`
   }
 `;
 
-const SOURCE_CATEGORIES = gql`
-  query GetSourceCategories {
-    sourceCategoriesMap
-  }
-`;
-
 export default function Home() {
   const [q] = useSearchParams();
   const selected = q.get('type') || 'recent';
   const tabsRef = useRef(null);
 
-  const navigate = useNavigate();
   const { isAuth } = useAuth();
   const [filter, setFilter] = useState([]);
   const [sort, setSort] = useState({ publish_date: 'desc' });
   const { data } = useQuery(FOLLOWS, { skip: !isAuth && selected !== 'user' });
-  const { data: dataCategories } = useQuery(SOURCE_CATEGORIES);
   const follows = groupBy(data?.me?.follows.map((x) => x.target) || [], (x) => x.__typename.toLowerCase());
-  const categories = dataCategories?.sourceCategoriesMap || [];
   const isMobile = useMediaQuery('screen and (max-width: 640px)');
 
   useEffect(() => {
@@ -97,6 +93,17 @@ export default function Home() {
       setFilter([{ bool: { should: should } }]);
 
       setSort({ publish_date: 'desc' });
+    } else if (selected === 'vidyeo') {
+      const should = [];
+      should.push({ term: { 'source.category': selected } });
+      should.push({
+        nested: {
+          path: 'categories',
+          query: { term: { 'categories.slug': 'video' } },
+        },
+      });
+      setFilter([{ bool: { should: should } }]);
+      setSort({ publish_date: 'desc' });
     } else {
       setFilter([{ term: { 'source.category': selected } }]);
       setSort({ publish_date: 'desc' });
@@ -107,136 +114,20 @@ export default function Home() {
     <>
       <div className={`relative bg-white flex flex-col items-center mb-[40px] sm:mb-[100px]`}>
         <NavbarPostHeader />
-        <div style={{ zIndex: 10 }} className="sticky sm:hidden bg-white top-0 max-w-[1310px] w-full px-[16px] sm:px-0">
-          <Tabs
-            tabBarGutter={isMobile ? 16 : 30}
-            onChange={(e) => navigate(`/?type=${e}`)}
-            className="w-full border-b font-roboto"
-            centered
-            activeKey={selected}
-          >
-            <Tabs.TabPane
-              key="recent"
-              tab={
-                <span
-                  className={`text-[16px] sm:text-[20px] font-bold cursor-pointer text-center leading-[16px] sm:leading-[20px] uppercase ${
-                    selected === 'recent' ? 'text-[#111111]' : 'text-[#555555]'
-                  }`}
-                >
-                  Шинэ
-                </span>
-              }
-            ></Tabs.TabPane>
-            <Tabs.TabPane
-              key="trend"
-              tab={
-                <span
-                  className={`text-[16px] sm:text-[20px] font-bold cursor-pointer text-center leading-[16px] sm:leading-[20px] uppercase  ${
-                    selected === 'trend' ? 'text-[#111111]' : 'text-[#555555]'
-                  }`}
-                >
-                  Трэнд
-                </span>
-              }
-            ></Tabs.TabPane>
-            {isAuth && (
-              <Tabs.TabPane
-                key="user"
-                tab={
-                  <span
-                    className={`text-[16px] sm:text-[20px] font-bold cursor-pointer text-center leading-[16px] sm:leading-[20px] uppercase ${
-                      selected === 'user' ? 'text-[#111111]' : 'text-[#555555]'
-                    }`}
-                  >
-                    Танд
-                  </span>
-                }
-              ></Tabs.TabPane>
-            )}
-            {categories.map((x) => (
-              <Tabs.TabPane
-                key={x.code}
-                tab={
-                  <span
-                    className={`text-[16px] sm:text-[20px] font-bold cursor-pointer text-center leading-[16px] sm:leading-[20px] uppercase ${
-                      selected === x.code ? 'text-[#111111]' : 'text-[#555555]'
-                    }`}
-                  >
-                    {x.name}
-                  </span>
-                }
-              />
-            ))}
-          </Tabs>
-        </div>
-        <div className="mt-[20px] hidden sm:block sm:mt-[50px] mb-[20px] sm:mb-0 px-[16px] sm:px-0">
-          <Banner position="a1" />
-        </div>
-        {selected === 'recent' && (
-          <div className="md:px-[30px] w-full flex justify-center px-[16px] sm:px-0">
-            <Story />
+        <div style={{ zIndex: 10 }} className="sticky sm:hidden bg-white top-0 w-full px-[16px] sm:px-0">
+          <div className="w-full flex items-center justify-between">
+            <HomeTabs selected={selected} />
           </div>
-        )}
-        <div className="hidden sm:block sticky bg-white z-[2] top-0 max-w-[1310px] w-full px-[16px] sm:px-0 mt-[80px]">
-          <Tabs
-            onChange={(e) => navigate(`/?type=${e}`)}
-            className="w-full border-b font-roboto"
-            activeKey={selected}
-            centered
-          >
-            <Tabs.TabPane
-              key="recent"
-              tab={
-                <span
-                  className={`text-[16px] sm:text-[20px] font-bold cursor-pointer text-center leading-[16px] sm:leading-[20px] uppercase ${
-                    selected === 'recent' ? 'text-[#111111]' : 'text-[#555555]'
-                  }`}
-                >
-                  Шинэ
-                </span>
-              }
-            ></Tabs.TabPane>
-            <Tabs.TabPane
-              key="trend"
-              tab={
-                <span
-                  className={`text-[16px] sm:text-[20px] font-bold cursor-pointer text-center leading-[16px] sm:leading-[20px] uppercase  ${
-                    selected === 'trend' ? 'text-[#111111]' : 'text-[#909090] sm:text-[#555555]'
-                  }`}
-                >
-                  Трэнд
-                </span>
-              }
-            ></Tabs.TabPane>
-            {isAuth && (
-              <Tabs.TabPane
-                key="user"
-                tab={
-                  <span
-                    className={`text-[16px] sm:text-[20px] font-bold cursor-pointer text-center leading-[16px] sm:leading-[20px] uppercase ${
-                      selected === 'user' ? 'text-[#111111]' : 'text-[#909090] sm:text-[#555555]'
-                    }`}
-                  >
-                    Танд
-                  </span>
-                }
-              ></Tabs.TabPane>
-            )}
-            {categories.map((x) => (
-              <Tabs.TabPane
-                key={x.code}
-                tab={
-                  <span
-                    className={`text-[16px] sm:text-[20px] font-bold cursor-pointer text-center leading-[16px] sm:leading-[20px] uppercase ${
-                      selected === x.code ? 'text-[#111111]' : 'text-[#909090] sm:text-[#555555]'
-                    }`}
-                  >
-                    {x.name}
-                  </span>
-                }
-              />
-            ))}
-          </Tabs>
+        </div>
+        <div className="hidden sm:block sticky bg-white z-[2] top-0 w-full px-[16px] sm:px-0 mt-[80px]">
+          <div className="w-full flex items-center justify-between border-b px-8">
+            <Logo className="sm:h-[28px]" />
+            <HomeTabs selected={selected} />
+            <div className="flex items-center">
+              <Search transparent={false} />
+              {isAuth ? <UserInfo transparent={false} /> : <Session transparent={false} />}
+            </div>
+          </div>
         </div>
         {selected === 'recent' && (
           <div className="mt-[20px] sm:hidden sm:mt-[50px] px-[16px] sm:px-0">
@@ -273,14 +164,9 @@ export default function Home() {
           </div>
         )}
         <span style={{ position: 'relative' }}>
-          <span ref={tabsRef} style={{ position: 'absolute', top: '-50px' }} />
+          <span ref={tabsRef} style={{ position: 'absolute', top: selected === 'trend' ? '-80px' : '-40px' }} />
         </span>
-        <ArticlesList
-          asd={selected === 'vidyeo' ? true : selected === 'chuluut_tsag' ? true : selected === 'blog' ? true : false}
-          filter={filter}
-          sort={sort}
-          size={22}
-        />
+        <ArticlesList filter={filter} sort={sort} size={22} />
       </div>
       {isMobile && <Banner position="a3" />}
     </>

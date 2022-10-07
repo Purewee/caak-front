@@ -19,6 +19,7 @@ import {
   Upload,
   Tabs,
   DatePicker,
+  Checkbox,
 } from 'antd';
 import { DeleteOutlined, LinkOutlined, PlaySquareOutlined, SaveOutlined, SearchOutlined } from '@ant-design/icons';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
@@ -69,8 +70,10 @@ function AddStory() {
   const article = post?.article;
   const [blocks, setBlocks] = useState([]);
   const [saveArticle, { loading: saving }] = useMutation(id ? UPDATE : CREATE, { context: { upload: true } });
+  const [featured, setFeatured] = useState(false);
 
   useEffect(() => {
+    setFeatured(article?.featured);
     setBlocks(sortBy(article?.blocks, 'position') || []);
   }, [article]);
 
@@ -159,12 +162,12 @@ function AddStory() {
             />
           </Tabs>
           <Card bordered={false} className="max-w-[920px] mx-auto">
-            <div className="flex flex-wrap">
-              <SortableContainer items={blocks} setItems={setBlocks} />
-            </div>
             <Form.Item name="title" className="font-merri">
               <Input placeholder="Гарчиг" maxLength={200} showCount size="large" />
             </Form.Item>
+            <div className="flex flex-wrap">
+              <SortableContainer items={blocks} setItems={setBlocks} />
+            </div>
             <Form.List name="blocks">
               {(fields, { add, remove }, { errors }) => (
                 <>
@@ -225,6 +228,16 @@ function AddStory() {
                   }))}
                 />
               </Form.Item>
+              <Form.Item name="featured" className="font-merri" valuePropName="checked">
+                <Checkbox onChange={(e) => setFeatured(e.target.checked)}>Мэдээг онцлох</Checkbox>
+              </Form.Item>
+              {featured && (
+                <div className="flex justify-between">
+                  <Form.Item name="featuredDates" className="font-merri text-[12px]" label="Онцлох огноо">
+                    <DatePicker.RangePicker showTime format="YYYY-MM-DD HH:mm" />
+                  </Form.Item>
+                </div>
+              )}
               <Form.Item name="publishDate" className="font-merri w-full" label="Нийтлэх огноо">
                 <DatePicker showTime format="YYYY-MM-DD HH:mm" />
               </Form.Item>

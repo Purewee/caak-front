@@ -24,11 +24,10 @@ const mobileItems = [
   },
 ];
 
-export default function Session() {
+export default function Session({ transparent }) {
   const { openModal } = useAuth();
   const navigate = useNavigate();
   const [mobileSideMenu, setMobileSideMenu] = useState(false);
-  const { mode } = useHeader();
   function useOutsideAlerter(ref) {
     useEffect(() => {
       function handleClickOutside(event) {
@@ -53,7 +52,7 @@ export default function Session() {
         <div className="w-full flex flex-row justify-between">
           <span
             onClick={() => setMobileSideMenu(!mobileSideMenu)}
-            className={`icon-fi-rs-user text-[27.5px] ${mode === 'sticky' ? 'text-[#555555]' : 'text-caak-black'}`}
+            className={`icon-fi-rs-user text-[27.5px] ${transparent ? 'text-[#555555]' : 'text-caak-black'}`}
           />
         </div>
         {mobileSideMenu && (
@@ -154,7 +153,7 @@ export default function Session() {
       <div className="hidden sm:flex flex-row ml-[10px]">
         <Button
           onClick={() => openModal('login')}
-          className={`font-bold mr-[12px] ${mode === 'sticky' ? 'text-caak-black' : 'text-white'}`}
+          className={`font-bold mr-[12px] ${transparent ? 'text-white' : 'text-[#555555]'}`}
         >
           Нэвтрэх
         </Button>

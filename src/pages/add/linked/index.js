@@ -208,6 +208,13 @@ function AddLink() {
               <Form.Item name="featured" className="font-merri" valuePropName="checked">
                 <Checkbox onChange={(e) => setFeatured(e.target.checked)}>Мэдээг онцлох</Checkbox>
               </Form.Item>
+              {featured && (
+                <div className="flex justify-between">
+                  <Form.Item name="featuredDates" className="font-merri text-[12px]" label="Онцлох огноо">
+                    <DatePicker.RangePicker showTime format="YYYY-MM-DD HH:mm" />
+                  </Form.Item>
+                </div>
+              )}
               <Form.Item name="publishDate" className="font-merri w-full" label="Нийтлэх огноо">
                 <DatePicker showTime format="YYYY-MM-DD HH:mm" />
               </Form.Item>
@@ -220,13 +227,7 @@ function AddLink() {
                   ]}
                 />
               </Form.Item>
-              {featured && (
-                <div className="flex justify-between">
-                  <Form.Item name="featuredDates" className="font-merri text-[12px]" label="Онцлох огноо">
-                    <DatePicker.RangePicker showTime format="YYYY-MM-DD HH:mm" />
-                  </Form.Item>
-                </div>
-              )}
+
               <Button htmlType="submit" type="primary" icon={<SaveOutlined />} size="large" block loading={saving}>
                 Хадгалах
               </Button>
