@@ -51,6 +51,7 @@ const StickyWrapper = styled.div`
     display: none;
   }
   &.stuck {
+    box-shadow: 0 1px 6px 0 rgb(32 33 36 / 16%);
     .sticky-part {
       display: flex;
     }
