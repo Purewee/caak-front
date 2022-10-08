@@ -225,15 +225,23 @@ export const USER = gql`
 
 export const ADD_REACTION = gql`
   mutation AddReaction($articleId: ID!, $action: ActionKind!) {
-    createReaction(input: { targetId: $articleId, targetType: article, action: $action }) {
+    reaction: createReaction(input: { targetId: $articleId, targetType: article, action: $action }) {
       id
     }
   }
 `;
 
+export const UPDATE_REACTION = gql`
+  mutation UpdateReaction($id: ID!, $action: ActionKind!) {
+    reaction: updateReaction(input: { id: $id, action: $action }) {
+      id
+    }
+  }
+`;
 export const REACTIONS = gql`
   query GetReactions($articleId: ID!) {
     article(id: $articleId) {
+      reactionsCount
       reactions {
         totalCount
         nodes {

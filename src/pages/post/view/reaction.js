@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useMutation, useQuery } from '@apollo/client';
-import { ADD_REACTION, REACTIONS } from './_gql';
+import { ADD_REACTION, UPDATE_REACTION } from './_gql';
 import { Button, Spin, message } from 'antd';
 import * as love from '../../../assets/json/love-js.json';
 import * as angry from '../../../assets/json/anry-js.json';
@@ -10,11 +10,11 @@ import * as wow from '../../../assets/json/wow-js.json';
 import Lottie from 'react-lottie';
 import { useAuth } from '../../../context/AuthContext';
 
-export default function Reaction({ articleId, left }) {
+export default function Reaction({ reactions, articleId, left, refetch, fetching }) {
   const [active, setActive] = useState(true);
-  const { isAuth, openModal } = useAuth();
-  const { data, loading: fetching, refetch } = useQuery(REACTIONS, { variables: { articleId } });
+  const { isAuth } = useAuth();
   const [add, { loading }] = useMutation(ADD_REACTION, { variables: { articleId } });
+  const [update, { loading: updating }] = useMutation(UPDATE_REACTION);
   const ACTIONS = [
     { action: 'like', icon: love },
     { action: 'haha', icon: haha },
@@ -22,8 +22,6 @@ export default function Reaction({ articleId, left }) {
     { action: 'cry', icon: cry },
     { action: 'angry', icon: angry },
   ];
-
-  const reactions = data?.article?.reactions;
 
   return (
     <Spin className={`max-w-[760px] w-full flex flex-col items-center`} spinning={loading || fetching}>
@@ -43,19 +41,40 @@ export default function Reaction({ articleId, left }) {
               {reactions?.nodes.filter((r) => r.action === x.action).length}
             </div>
             <Button
-              disabled={loading || !active}
+              disabled={loading || updating || !active}
               shape="circle"
               type="link"
               key={idx}
               onClick={() => {
                 if (isAuth) {
                   add({ variables: { action: x.action } }).then(() => {
-                    refetch();
-                    message.success('Мэдээг үнэлсэнд баярлалаа.');
-                    setActive(false);
+                    refetch().then(() => {
+                      message.success('Мэдээг үнэлсэнд баярлалаа.').then(() => {
+                        setActive(false);
+                      });
+                    });
                   });
                 } else {
-                  openModal('login');
+                  const prevId = localStorage.getItem(`r_${articleId}`) || false;
+                  if (prevId) {
+                    update({ variables: { action: x.action, id: prevId } }).then((res) => {
+                      localStorage.setItem(`r_${articleId}`, res?.data?.reaction?.id);
+                      refetch().then(() => {
+                        message.success('Мэдээг үнэлсэнд баярлалаа.').then(() => {
+                          setActive(false);
+                        });
+                      });
+                    });
+                  } else {
+                    add({ variables: { action: x.action } }).then((res) => {
+                      localStorage.setItem(`r_${articleId}`, res?.data?.reaction?.id);
+                      refetch().then(() => {
+                        message.success('Мэдээг үнэлсэнд баярлалаа.').then(() => {
+                          setActive(false);
+                        });
+                      });
+                    });
+                  }
                 }
               }}
             >
@@ -71,8 +90,8 @@ export default function Reaction({ articleId, left }) {
                   }}
                   height={38}
                   width={38}
-                  isStopped={loading}
-                  isPaused={loading}
+                  isStopped={loading || updating}
+                  isPaused={loading || updating}
                 />
               </span>
             </Button>

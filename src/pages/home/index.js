@@ -48,12 +48,12 @@ const FOLLOWS = gql`
 
 const StickyWrapper = styled.div`
   .sticky-part {
-    display: none;
+    opacity: 0;
   }
   &.stuck {
     box-shadow: 0 1px 6px 0 rgb(32 33 36 / 16%);
     .sticky-part {
-      display: flex;
+      opacity: 1;
     }
   }
 `;
@@ -73,7 +73,7 @@ export default function Home() {
 
   useEffect(() => {
     window.addEventListener('scroll', () => {
-      if (window.scrollY >= stickyRef.current?.offsetTop) {
+      if (window.scrollY >= 1500) {
         stickyRef.current?.classList?.add('stuck');
       } else {
         stickyRef.current?.classList?.remove('stuck');

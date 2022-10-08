@@ -9,7 +9,7 @@ import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { imagePath, parseVideoURL, isAdmin } from '../../../utility/Util';
 import { Wrapper, Title, BlockTitle, Paragraph, HashTag, MetaTag } from './wrapper';
 import Comments from './comments';
-import { ARTICLE, ME } from './_gql';
+import { ARTICLE, ME, REACTIONS } from './_gql';
 import LoveIcon from '../../../assets/images/fi-rs-react-love.png';
 import HahaIcon from '../../../assets/images/fi-rs-react-haha.svg';
 import PostSaveModal from '../../../component/modal/PostSaveModal';
@@ -82,17 +82,23 @@ const Post = () => {
   const article = data?.article || {};
   const numbering = article?.data?.numbering || false;
   const commentsRef = useRef(null);
-  const {
-    data: data_source,
-    loading: fetching,
-    refetch,
-  } = useQuery(SOURCE, { variables: { id: article?.source?.id }, skip: !!!article?.source?.id });
+  const { data: data_source, loading: fetching } = useQuery(SOURCE, {
+    variables: { id: article?.source?.id },
+    skip: !!!article?.source?.id,
+  });
   const source = data_source?.source || {};
   const [follow, { loading: follow_saving }] = useMutation(FOLLOW, { variables: { id: article?.source?.id } });
   const [remove, { loading: removing }] = useMutation(REMOVE, { variables: { id: article?.id } });
   const { isAuth, openModal } = useAuth();
   const { setMode } = useHeader();
+  const {
+    data: data_reactions,
+    loading: reactions_loading,
+    refetch,
+  } = useQuery(REACTIONS, { variables: { articleId: article?.id }, skip: article?.kind !== 'post' });
 
+  const reactions = data_reactions?.article?.reactions || {};
+  const reactionsCount = reactions?.totalCount || 0;
   const title = article?.title;
   const metaDescription = 'default description';
   if (article?.kind === 'linked') window.location = article.data?.link;
@@ -126,18 +132,20 @@ const Post = () => {
   }, [setLeftMenuSticky]);
 
   useEffect(() => {
-    window.scrollTo(0, 0);
-    setFilter([
-      {
-        more_like_this: {
-          fields: ['tags_text', 'categories_text'],
-          like: { _index: 'caak', _type: 'article', _id: article?.id },
-          min_term_freq: 1,
-          min_doc_freq: 1,
+    if (article?.id) {
+      window.scrollTo(0, 0);
+      setFilter([
+        {
+          more_like_this: {
+            fields: ['tags_text', 'categories_text'],
+            like: { _index: 'caak', _type: 'article', _id: article?.id },
+            min_term_freq: 1,
+            min_doc_freq: 1,
+          },
         },
-      },
-    ]);
-    setSort({ _score: 'desc', publish_date: 'desc' });
+      ]);
+      setSort({ _score: 'desc', publish_date: 'desc' });
+    }
   }, [article]);
 
   if (loading) {
@@ -180,14 +188,22 @@ const Post = () => {
             } w-full flex-col items-end`}
           >
             <div className="flex flex-col items-center w-[60px] h-[226px]">
-              <p className="text-[#555555] text-[15px] leading-[18px] font-bold">{article.reactionsCount || 0}</p>
+              <p className="text-[#555555] text-[15px] leading-[18px] font-bold">{reactionsCount}</p>
               {reporting || (
                 <Popover
                   placement="top"
                   trigger="hover"
                   overlayStyle={{ borderRadius: 8 }}
                   overlayClassName="padding_zero"
-                  content={<Reaction left articleId={article?.id} />}
+                  content={
+                    <Reaction
+                      left
+                      articleId={article?.id}
+                      reactions={reactions}
+                      refetch={refetch}
+                      fetching={reactions_loading}
+                    />
+                  }
                 >
                   <FIcon className="mt-[6px] icon-fi-rs-heart text-[26px] text-[#F53757] border border-[#D4D8D8] w-[60px] h-[60px] rounded-full" />
                 </Popover>
@@ -308,7 +324,7 @@ const Post = () => {
                 <div className="flex sm:hidden flex-row items-center">
                   <img className="w-[20px]" src={LoveIcon} alt="" />
                   <img className="w-[20px]" src={HahaIcon} alt="" />
-                  <p className="ml-[6px] text-[15px] text-caak-primary leading-[16px]">{article.reactionsCount || 0}</p>
+                  <p className="ml-[6px] text-[15px] text-caak-primary leading-[16px]">{reactionsCount}</p>
                 </div>
                 <div className="hidden md:flex flex-row items-center">
                   <FacebookShareButton className="h-[20px]" url={`${Configure.domain}/post/view/${article?.id}`}>
@@ -408,7 +424,7 @@ const Post = () => {
                 content={
                   <div className="flex flex-col gap-[15px] h-full justify-between">
                     {isAdmin(me?.me) && (
-                      <Link to={`/add/${article.kind}/${article.id}`} target="_blank">
+                      <Link to={`/edit/${article.kind}/${article.id}`} target="_blank">
                         <div className="flex flex-row items-center cursor-pointer">
                           <span className="text-[#555555] text-[20px] mr-[8px] w-[22px] h-[22px] flex items-center justify-center icon-fi-rs-editor-o" />
                           <p className="text-[#555555] text-[15px] leading-[18px]">Засах</p>
@@ -494,7 +510,9 @@ const Post = () => {
                 </Button>
               )}
             </div>
-            <Reaction articleId={article?.id} />
+            {!reactions_loading && (
+              <Reaction articleId={article?.id} reactions={reactions} refetch={refetch} fetching={reactions_loading} />
+            )}
             {article?.acceptComment === true ? (
               <Comments articleId={article?.id} refProp={commentsRef} />
             ) : (
