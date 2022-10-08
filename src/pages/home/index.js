@@ -1,7 +1,7 @@
 import NavbarPostHeader from '../../component/navigation/navbarPostHeader';
 import Story from '../../component/story';
 import React, { useEffect, useState, useRef } from 'react';
-import { Tabs, Select } from 'antd';
+import { Select } from 'antd';
 import { useAuth } from '../../context/AuthContext';
 import ArticlesList from './articles_list';
 import { FieldTimeOutlined, LineChartOutlined } from '@ant-design/icons';
@@ -9,12 +9,13 @@ import Banner from '../../component/banner';
 import { gql, useQuery } from '@apollo/client';
 import { groupBy } from 'lodash/collection';
 import useMediaQuery from '../../component/navigation/useMediaQuery';
-import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import HomeTabs from './tabs';
 import Logo from '../../component/logo';
 import Search from '../../component/header/search';
 import UserInfo from '../../component/header/UserInfo';
 import Session from '../../component/header/session';
+import styled from 'styled-components';
 
 const FOLLOWS = gql`
   query GetFollows {
@@ -45,10 +46,22 @@ const FOLLOWS = gql`
   }
 `;
 
+const StickyWrapper = styled.div`
+  .sticky-part {
+    display: none;
+  }
+  &.stuck {
+    .sticky-part {
+      display: flex;
+    }
+  }
+`;
+
 export default function Home() {
   const [q] = useSearchParams();
   const selected = q.get('type') || 'recent';
   const tabsRef = useRef(null);
+  const stickyRef = useRef(null);
 
   const { isAuth } = useAuth();
   const [filter, setFilter] = useState([]);
@@ -56,6 +69,16 @@ export default function Home() {
   const { data } = useQuery(FOLLOWS, { skip: !isAuth && selected !== 'user' });
   const follows = groupBy(data?.me?.follows.map((x) => x.target) || [], (x) => x.__typename.toLowerCase());
   const isMobile = useMediaQuery('screen and (max-width: 640px)');
+
+  useEffect(() => {
+    window.addEventListener('scroll', () => {
+      if (window.scrollY >= stickyRef.current?.offsetTop) {
+        stickyRef.current?.classList?.add('stuck');
+      } else {
+        stickyRef.current?.classList?.remove('stuck');
+      }
+    });
+  }, []);
 
   useEffect(() => {
     tabsRef.current?.scrollIntoView(true);
@@ -119,7 +142,7 @@ export default function Home() {
             <HomeTabs selected={selected} />
           </div>
         </div>
-        <div className="mt-[20px] hidden sm:block sm:mt-[50px] px-[16px] sm:px-0">
+        <div className="mt-[20px] hidden sm:block sm:mt-[50px] px-[16px] sm:px-0 ">
           <Banner position="a1" />
         </div>
         {selected === 'recent' && (
@@ -127,16 +150,19 @@ export default function Home() {
             <Story />
           </div>
         )}
-        <div className="hidden sm:flex sticky sm:justify-center bg-white z-[2] top-0 w-full px-[16px] sm:px-0 mt-[80px]">
+        <StickyWrapper
+          ref={stickyRef}
+          className="hidden sm:flex sticky sm:justify-center bg-white z-[2] top-0 w-full px-[16px] sm:px-0 mt-[80px]"
+        >
           <div className="w-full flex items-center justify-between border-b px-[16px] md:px-[48px]">
-            <Logo className="sm:h-[28px]" />
+            <Logo className="sm:h-[32px] sticky-part" />
             <HomeTabs selected={selected} />
-            <div className="flex items-center">
+            <div className="flex items-center sticky-part">
               <Search transparent={false} />
               {isAuth ? <UserInfo transparent={false} /> : <Session transparent={false} />}
             </div>
           </div>
-        </div>
+        </StickyWrapper>
         {selected === 'recent' && (
           <div className="mt-[20px] sm:hidden sm:mt-[50px] px-[16px] sm:px-0">
             <Banner position="a1" />

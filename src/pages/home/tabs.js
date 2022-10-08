@@ -50,7 +50,7 @@ export default function HomeTabs({ selected }) {
         <Tabs.TabPane
           key={x.key}
           tab={
-            <span className="text-[16px] sm:text-[20px] font-bold leading-[16px] sm:leading-[20px] uppercase">
+            <span className="text-[16px] sm:text-[22px] font-bold leading-[16px] sm:leading-[22px] uppercase">
               {x.label}
             </span>
           }
