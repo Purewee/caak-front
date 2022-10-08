@@ -241,14 +241,7 @@ export const UPDATE_REACTION = gql`
 export const REACTIONS = gql`
   query GetReactions($articleId: ID!) {
     article(id: $articleId) {
-      reactionsCount
-      reactions {
-        totalCount
-        nodes {
-          id
-          action
-        }
-      }
+      reactionsSummary
     }
   }
 `;

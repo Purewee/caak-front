@@ -37,9 +37,7 @@ export default function Reaction({ reactions, articleId, left, refetch, fetching
       >
         {ACTIONS.map((x, idx) => (
           <div key={idx} className={`flex flex-col items-center`}>
-            <div className={`font-bold ${left ? 'hidden' : 'mb-[20px]'}`}>
-              {reactions?.nodes.filter((r) => r.action === x.action).length}
-            </div>
+            <div className={`font-bold ${left ? 'hidden' : 'mb-[20px]'}`}>{reactions[x.action] || 0}</div>
             <Button
               disabled={loading || updating || !active}
               shape="circle"

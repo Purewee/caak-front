@@ -24,7 +24,7 @@ import Reaction from './reaction';
 import ReportModal from '../../../component/modal/ReportModal';
 import { Helmet } from 'react-helmet';
 import { FIcon } from '../../../component/icon';
-import { orderBy } from 'lodash';
+import { orderBy, sum } from 'lodash';
 import ArticlesList from '../../home/articles_list';
 import Banner from '../../../component/banner';
 import Configure from '../../../component/configure';
@@ -97,8 +97,8 @@ const Post = () => {
     refetch,
   } = useQuery(REACTIONS, { variables: { articleId: article?.id }, skip: article?.kind !== 'post' });
 
-  const reactions = data_reactions?.article?.reactions || {};
-  const reactionsCount = reactions?.totalCount || 0;
+  const reactions = data_reactions?.article?.reactionsSummary || {};
+  const reactionsCount = sum(Object.values(reactions)) || 0;
   const title = article?.title;
   const metaDescription = 'default description';
   if (article?.kind === 'linked') window.location = article.data?.link;

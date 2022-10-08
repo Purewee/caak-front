@@ -76,6 +76,7 @@ type Article {
     sort: SortFilter
   ): ReactionConnection!
   reactionsCount: Int
+  reactionsSummary: JSON!
   slug: String
   source: Source
   status: String!
