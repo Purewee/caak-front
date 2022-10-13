@@ -22,13 +22,14 @@ import { Link } from 'react-router-dom';
 import { FacebookShareButton, TwitterShareButton } from 'react-share';
 import Reaction from './reaction';
 import ReportModal from '../../../component/modal/ReportModal';
-import { Helmet } from 'react-helmet';
 import { FIcon } from '../../../component/icon';
 import { orderBy, sum } from 'lodash';
 import ArticlesList from '../../home/articles_list';
 import Banner from '../../../component/banner';
 import Configure from '../../../component/configure';
 import NotFound from '../../404';
+import PostMeta from './meta';
+import PostBlock from './block';
 
 const SOURCE = gql`
   query GetSource($id: ID!) {
@@ -100,7 +101,7 @@ const Post = () => {
   const reactions = data_reactions?.article?.reactionsSummary || {};
   const reactionsCount = sum(Object.values(reactions)) || 0;
   const title = article?.title;
-  const metaDescription = 'default description';
+  const metaDescription = article?.description;
   if (article?.kind === 'linked') window.location = article.data?.link;
 
   function createMarkup(e) {
@@ -168,19 +169,7 @@ const Post = () => {
   return (
     <div className="pb-[100px]">
       <div className="flex flex-row pb-[100px] justify-center w-full pt-[20px] xl:pt-[41px]">
-        <Helmet>
-          <title>{title}</title>
-          <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-          <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
-          <meta name="description" key="description" content={metaDescription} />
-          <meta name="title" key="title" content={title} />
-          <meta property="og:title" key="og:title" content={title} />
-          <meta property="og:locale" key="og:locale" content="en_US" />
-          <meta charSet="utf-8" />
-          <meta property="og:type" key="og:type" content="website" />
-          <meta property="og:description" key="og:description" content={metaDescription} />
-          <meta property="og:image" key="og:image" content={imagePath(article.image)} />
-        </Helmet>
+        <PostMeta title={title} description={metaDescription} image={article.image} />
         <div className="w-full hidden xl:block max-w-[200px]">
           <div
             className={`hidden md:flex ${
@@ -343,48 +332,10 @@ const Post = () => {
                 </div>
               </div>
               <img src={imagePath(article.imageUrl)} alt="" className="w-full hidden md:flex mt-[30px] object-cover" />
-              <div className="pb-[26px] md:pb-[50px]">
-                <Paragraph dangerouslySetInnerHTML={createMarkup(article.description)} />
-              </div>
-              {orderBy(article?.blocks, ['position'], [numbering || 'asc']).map((b) => {
-                return (
-                  <div key={b.position}>
-                    {b.kind === 'image' && (
-                      <div key={b.id} className="flex flex-col md:items-center mb-[26px] md:mb-[50px] w-full">
-                        {b.title && <BlockTitle>{`${numbering ? `${b.position}. ` : ''}${b.title}`}</BlockTitle>}
-                        <LazyLoadImage src={imagePath(b.imageUrl)} alt={b.title} className="w-full" />
-                        {b.data?.meta?.length > 0 && (
-                          <span className="w-full bg-[#697581] text-white p-[8px] text-center font-condensed text-[12px] italic">
-                            {b.data.meta}
-                          </span>
-                        )}
-                        {b.content && <Paragraph dangerouslySetInnerHTML={createMarkup(b.content)} />}
-                      </div>
-                    )}
-                    {b.kind === 'text' && (
-                      <div key={b.id} className="flex flex-col md:items-center mb-[26px] md:mb-[50px] w-full">
-                        <Paragraph className="mt-[16px] md:mt-0" dangerouslySetInnerHTML={createMarkup(b.content)} />
-                      </div>
-                    )}
-                    {b.kind === 'video' && (
-                      <div key={b.id} className="flex flex-col md:items-center mb-[26px] md:mb-[50px] w-full">
-                        {b.title && <BlockTitle>{`${numbering ? `${b.position}. ` : ''}${b.title}`}</BlockTitle>}
-                        <iframe
-                          width="100%"
-                          height="420px"
-                          className="object-cover"
-                          src={`https://www.youtube.com/embed/${parseVideoURL(b.data.url).id}`}
-                          title="YouTube video player"
-                          frameBorder="0"
-                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                          allowFullScreen
-                        />
-                        <Paragraph className="mt-[16px] md:mt-0" dangerouslySetInnerHTML={createMarkup(b.content)} />
-                      </div>
-                    )}
-                  </div>
-                );
-              })}
+              {article.description && <PostBlock b={{ kind: 'text', id: '00', content: article.description }} />}
+              {orderBy(article?.blocks, ['position'], [numbering || 'asc']).map((b) => (
+                <PostBlock b={b} numbering={numbering} key={b.id} />
+              ))}
             </Wrapper>
             <div className="flex flex-row gap-[8px] w-full mt-[20px]">
               {article.tags?.map((x) => (
@@ -448,16 +399,15 @@ const Post = () => {
               </Popover>
             </div>
             <div className="flex flex-row mt-[19px] md:mt-[38px] justify-between w-full md:border-t py-[17px] border-b border-[#EFEEEF]">
-              <div className="flex flex-row items-center text-[#555555]">
+              <div className="flex flex-row items-center text-[#555555] h-[36px]">
                 <Link to={`/channel/${article.source?.id}`} className="flex flex-row items-center">
                   <Avatar src={imagePath(article.source?.icon)} className="w-[36px] h-[36px]" />
                   <MetaTag className="ml-[8px] text-[15px]">{article.source?.name}</MetaTag>
                 </Link>
                 &nbsp;•&nbsp;
-                <Link className=" leading-[16px]" to={`/profile/${article.author?.id}`}>
+                <Link className="leading-[36px]" to={`/profile/${article.author?.id}`}>
                   <MetaTag className="ml-0">{`${article.author?.firstName}`}</MetaTag>
                 </Link>
-                {/* <MetaTag className="text-[#909090]">{moment(article.createdAt).format('YYYY.MM.DD, hh:mm')}</MetaTag> */}
               </div>
               {source.following ? (
                 <button
