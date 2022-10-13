@@ -119,6 +119,7 @@ function AddLink() {
                 getValueFromEvent={(e) => {
                   return e?.fileList[0].originFileObj;
                 }}
+                rules={[{ required: !data?.image, message: 'Зураг заавал сонгоно уу' }]}
               >
                 <Upload
                   showUploadList={false}
@@ -202,7 +203,12 @@ function AddLink() {
                   }))}
                 />
               </Form.Item>
-              <Form.Item name="tags" className="font-merri" label="Таг">
+              <Form.Item
+                name="tags"
+                className="font-merri"
+                label="Таг"
+                rules={[{ required: true, message: 'Таг заавал сонгоно уу' }]}
+              >
                 <TagsField mode="tags" placeholder="Tags" size="large" />
               </Form.Item>
               <Form.Item name="featured" className="font-merri" valuePropName="checked">

@@ -5,7 +5,7 @@ export function imageCompress(image, options = {}) {
         (resolve, reject) =>
           new ImageCompressor(image, {
             quality: options.quality || 0.6,
-            maxWidth: options.maxWidth || 1500,
+            maxWidth: options.maxWidth || 1024,
             convertSize: options.convertSize || 1024 * 1024,
             success: resolve,
             error: reject,

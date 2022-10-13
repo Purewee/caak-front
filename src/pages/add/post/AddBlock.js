@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, Upload } from 'antd';
 import { CameraFilled, FontSizeOutlined, YoutubeFilled } from '@ant-design/icons';
-import { getDataFromBlob } from '../../../lib/imageCompress';
+import { getDataFromBlob, imageCompress } from '../../../lib/imageCompress';
 import { uniqBy } from 'lodash/array';
 
 export default function AddBlock({ items, setItems, add, top = false }) {
@@ -17,8 +17,15 @@ export default function AddBlock({ items, setItems, add, top = false }) {
           if (file === fileList[0]) {
             for (const f of fileList) {
               const idx = fileList.indexOf(f);
-              const base64 = await getDataFromBlob(f);
-              images.push({ kind: 'image', position: items.length + idx + 1, image64: base64, image: f, content: '' });
+              const compressedImg = await imageCompress(f);
+              const base64 = await getDataFromBlob(compressedImg);
+              images.push({
+                kind: 'image',
+                position: items.length + idx + 1,
+                image64: base64,
+                image: compressedImg,
+                content: '',
+              });
             }
             const newList = top ? [...uniqBy(images), ...items] : [...items, ...uniqBy(images)];
             const sortedList = newList.map((x, idx) => ({ ...x, position: idx + 1 }));

@@ -208,6 +208,7 @@ function AddPost() {
               getValueFromEvent={(e) => {
                 return e?.fileList[0].originFileObj;
               }}
+              rules={[{ required: true, message: 'Зураг заавал сонгоно уу' }]}
             >
               <Upload
                 maxCount={1}
@@ -294,7 +295,11 @@ function AddPost() {
                   }))}
                 />
               </Form.Item>
-              <Form.Item name="tags" className="font-merri">
+              <Form.Item
+                name="tags"
+                className="font-merri"
+                rules={[{ required: true, message: 'Таг заавал сонгоно уу' }]}
+              >
                 <TagsField mode="tags" placeholder="Tags" />
               </Form.Item>
               <Form.Item name="acceptComment" className="font-merri mb-[0px]" valuePropName="checked">
@@ -397,9 +402,11 @@ function ImageBlock({ block, idx, setBlocks, onRemove }) {
               showUploadList={false}
               valuePropName="fileList"
               customRequest={({ file, onSuccess }) => {
-                getDataFromBlob(file).then((base64) => {
-                  setImage64(base64);
-                  onSuccess('ok');
+                imageCompress(file).then((result) => {
+                  getDataFromBlob(result).then((base64) => {
+                    setImage64(base64);
+                    onSuccess('ok');
+                  });
                 });
               }}
             >
@@ -535,7 +542,17 @@ function TagsField({ ...rest }) {
   const { data, loading } = useQuery(TAGS, { variables: { filter } });
   const options = data?.tags?.nodes.map((x) => ({ key: x.slug, value: x.slug, label: x.name })) || [];
 
-  return <Select showSearch onSearch={setFilter} filterOption={false} options={options} loading={loading} {...rest} />;
+  return (
+    <Select
+      showSearch
+      onSearch={setFilter}
+      filterOption={false}
+      options={options}
+      loading={loading}
+      {...rest}
+      size="large"
+    />
+  );
 }
 
 function RemoveBlock({ position, setBlocks, onRemove }) {

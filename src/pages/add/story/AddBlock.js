@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Button, Modal, Upload, List, Input, Avatar, Checkbox } from 'antd';
+import { Button, Modal, Upload, List, Input, Avatar, Checkbox, Tag } from 'antd';
 import { CameraFilled, PaperClipOutlined, YoutubeFilled } from '@ant-design/icons';
-import { getDataFromBlob } from '../../../lib/imageCompress';
+import { getDataFromBlob, imageCompress } from '../../../lib/imageCompress';
 import { uniqBy } from 'lodash/array';
 import { ESService } from '../../../lib/esService';
 import { imagePath, useDebounce } from '../../../utility/Util';
+import moment from 'moment';
 
 export default function AddBlock({ items, setItems, add, top = false }) {
   let images = [];
@@ -22,12 +23,13 @@ export default function AddBlock({ items, setItems, add, top = false }) {
             if (file === fileList[0]) {
               for (const f of fileList) {
                 const idx = fileList.indexOf(f);
-                const base64 = await getDataFromBlob(f);
+                const compressedImg = await imageCompress(f, { maxWidth: 1500, quality: 0.8 });
+                const base64 = await getDataFromBlob(compressedImg);
                 images.push({
                   kind: 'image',
                   position: items.length + idx + 1,
                   image64: base64,
-                  image: f,
+                  image: compressedImg,
                   content: '',
                 });
               }
@@ -109,12 +111,12 @@ function PostsModal({ toggle, onComplete }) {
   useEffect(() => {
     setLoading(true);
     if (filter.length > 0) {
-      es.search(debouncedFilter, 0, 10).then(({ hits, total }) => {
+      es.searchFromCaak(debouncedFilter, 0, 10).then(({ hits, total }) => {
         setPosts(hits);
         setLoading(false);
       });
     } else {
-      es.posts([], { publish_date: 'desc' }, 10, 0).then(({ hits, total }) => {
+      es.posts([{ term: { 'source.id': 1 } }], { publish_date: 'desc' }, 10, 0).then(({ hits, total }) => {
         setPosts(hits);
         setLoading(false);
       });
@@ -163,6 +165,11 @@ function PostsModal({ toggle, onComplete }) {
                   />
                   <Avatar shape="square" src={imagePath(item.image)} />
                 </>
+              }
+              description={
+                <span className="text-[12px]">
+                  {moment(item?.publish_date || undefined).format('YYYY-MM-DD')} | {item.source.name}
+                </span>
               }
             />
           </List.Item>

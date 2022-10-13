@@ -8,14 +8,21 @@ import ReactPlayer from 'react-player';
 const Wrapper = styled.div`
   ul {
     list-style-type: disc;
-    list-style-position: inside;
+    list-style-position: outside;
+    padding-left: 16px;
   }
   ol {
     list-style-type: decimal;
-    list-style-position: inside;
+    list-style-position: outside;
   }
   a {
     color: var(--ant-primary-color);
+  }
+  blockquote {
+    border-radius: 6px;
+    background: #eee;
+    padding: 8px 16px;
+    margin: 0px 12px;
   }
 
   .video-wrapper {

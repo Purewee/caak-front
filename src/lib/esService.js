@@ -187,6 +187,24 @@ export class ESService {
       track_total_hits: true,
     }).then(convertHitsTotal);
   }
+  searchFromCaak(q, page = 0, size = 24) {
+    return this.post({
+      query: {
+        bool: {
+          must: [...defaultFilters, { term: { 'source.id': 1 } }],
+          should: [
+            { simple_query_string: { query: q, fields: searchFields } },
+            { multi_match: { query: q, type: 'phrase_prefix', fields: searchFields } },
+          ],
+        },
+      },
+      min_score: 5,
+      size: size,
+      from: size * page,
+      sort: { _score: 'desc' },
+      track_total_hits: true,
+    }).then(convertHitsTotal);
+  }
 }
 
 export function convertHits(response) {

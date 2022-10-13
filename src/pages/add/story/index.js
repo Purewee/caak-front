@@ -229,7 +229,7 @@ function AddStory() {
                 />
               </Form.Item>
               <Form.Item name="featured" className="font-merri" valuePropName="checked">
-                <Checkbox onChange={(e) => setFeatured(e.target.checked)}>Мэдээг онцлох</Checkbox>
+                <Checkbox onChange={(e) => setFeatured(e.target.checked)}>Сториг онцлох</Checkbox>
               </Form.Item>
               {featured && (
                 <div className="flex justify-between">
@@ -317,9 +317,11 @@ function ImageBlock({ block, idx, setBlocks, onRemove }) {
               showUploadList={false}
               valuePropName="fileList"
               customRequest={({ file, onSuccess }) => {
-                getDataFromBlob(file).then((base64) => {
-                  setImage64(base64);
-                  onSuccess('ok');
+                imageCompress(file, { maxWidth: 1500, quality: 0.8 }).then((result) => {
+                  getDataFromBlob(result).then((base64) => {
+                    setImage64(base64);
+                    onSuccess('ok');
+                  });
                 });
               }}
             >
