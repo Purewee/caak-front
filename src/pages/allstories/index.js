@@ -155,7 +155,7 @@ export default function AllStories() {
                     "flex flex-col max-w-[400px] sm:max-w-[600px] md:max-w-[700px] lg:max-w-[1002px] xl:max-w-[1202px] 2xl:max-w-[1502px] w-full justify-center relative"
                 }
             >
-                {activeIndexYes + 1 < yesterdayStory.length - 1 || yesterdayStory.length > 3 && (
+                {activeIndexYes + 3 < yesterdayStory.length - 1 && (
                     <div
                     onClick={() => {
                         yesterdayRef.current.scrollTo({

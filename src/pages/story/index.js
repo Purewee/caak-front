@@ -49,9 +49,26 @@ export default function Story() {
 
   if (loading) return <Skeleton />;
   return (
-    <div className="w-full fixed top-0 z-50 h-full justify-center flex">
+    <div className="w-full h-full z-50 fixed top-0 flex justify-center lg:justify-between bg-[#212121] sm:p-[20px]">
+      <div className="hidden lg:flex flex-col h-full w-[272px] mr-[16px] items-start justify-start">
+        <Logo white className="mb-[135px]" />
+        {story.nextStory ? (
+          <Preview story={story.nextStory} />
+        ) : (
+          <div className="w-[272px] h-[440px] relative flex imems-center justify-center">
+            <img src={AllStories} alt="Бүх стори" className="object-cover bg-black bg-opacity-70" />
+            <div
+              className="py-4 absolute top-[180px] bg-white flex w-[188px] cursor-pointer flex-col items-center text-[#111111] text-[15px] h-[80px] rounded-[8px]"
+              onClick={() => navigate('/stories')}
+            >
+              <FIcon className="icon-fi-rs-stories-o text-caak-primary" />
+              Бусад сторинууд үзэх
+            </div>
+          </div>
+        )}
+      </div>
       <Stories
-        width="100vw"
+        width="100%"
         height="100%"
         keyboardNavigation
         // preventDefault
@@ -68,21 +85,16 @@ export default function Story() {
           }
         }}
       />
-    </div>
-  );
-}
-
-function ImageStory({ block, story }) {
-  const navigate = useNavigate();
-  return (
-    <div className="w-full h-full flex justify-center lg:justify-between sm:p-5">
-      <div
-        style={{ zIndex: 1000 }}
-        className="hidden lg:flex flex-col h-full w-[272px] mr-[16px] items-start justify-start"
-      >
-        <Logo white className="mb-[160px]" />
-        {story.nextStory ? (
-          <Preview story={story.nextStory} />
+      <div className="hidden lg:flex flex-col justify-center h-full w-[272px] ml-[16px]">
+        <div className="absolute top-[12px] right-[12px] flex">
+          <Button
+            type="link"
+            icon={<FIcon className={`icon-fi-rs-close text-white`} />}
+            onClick={() => navigate('/')}
+          />
+        </div>
+        {story.prevStory ? (
+          <Preview story={story.prevStory} />
         ) : (
           <div className="w-[272px] h-[440px] relative flex imems-center justify-center">
             <img src={AllStories} alt="Бүх стори" className="object-cover bg-black bg-opacity-70" />
@@ -96,18 +108,24 @@ function ImageStory({ block, story }) {
           </div>
         )}
       </div>
+    </div>
+  );
+}
+
+function ImageStory({ block, story }) {
+  const navigate = useNavigate();
+  return (
+    <div className="w-full h-full flex justify-center">
       <div
-        className="w-full sm:rounded-[8px] bg-contain bg-no-repeat bg-center bg-[#212121]"
+        style={{
+          background: 'transparent linear-gradient(180deg, #00000067 0%, #00000000 100%) 0% 0% no-repeat padding-box',
+        }}
+        className="w-full h-[100px] absolute top-0"
+      ></div>
+      <div
+        className="w-full sm:rounded-[8px] bg-contain bg-no-repeat bg-center"
         style={{ backgroundImage: `url(${imagePath(block.imageUrl)})` }}
       >
-        <div style={{ zIndex: 1000 }} className="absolute top-[12px] right-[12px] flex">
-          <Button
-            type="link"
-            className="sm:hidden"
-            icon={<FIcon className={`icon-fi-rs-close text-white`} />}
-            onClick={() => navigate('/')}
-          />
-        </div>
         <div className="relative w-full h-full">
           {block.kind === 'post' && (
             <div
@@ -143,26 +161,6 @@ function ImageStory({ block, story }) {
           )}
         </div>
       </div>
-      <div
-        style={{ zIndex: 1000 }}
-        className="hidden lg:flex flex-col h-full w-[272px] ml-[16px] items-start justify-start"
-      >
-        <Logo white className="mb-[160px]" />
-        {story.prevStory ? (
-          <Preview story={story.prevStory} />
-        ) : (
-          <div className="w-[272px] h-[440px] relative flex imems-center justify-center">
-            <img src={AllStories} alt="Бүх стори" className="object-cover bg-black bg-opacity-70" />
-            <div
-              className="py-4 absolute top-[180px] bg-white flex w-[188px] cursor-pointer flex-col items-center text-[#111111] text-[15px] h-[80px] rounded-[8px]"
-              onClick={() => navigate('/stories')}
-            >
-              <FIcon className="icon-fi-rs-stories-o text-caak-primary" />
-              Бусад сторинууд үзэх
-            </div>
-          </div>
-        )}
-      </div>
     </div>
   );
 }
@@ -173,24 +171,13 @@ function VideoStory({ block, story, action }) {
   const navigate = useNavigate();
 
   return (
-    <div className="w-full h-full flex justify-between sm:p-5">
-      <div style={{ zIndex: 1000 }} className="hidden lg:flex flex-col h-full w-[272px] items-start justify-start">
-        <Logo white className="mb-[160px]" />
-        {story.nextStory ? (
-          <Preview story={story.nextStory} />
-        ) : (
-          <div className="w-[272px] h-[440px] relative flex imems-center justify-center">
-            <img src={AllStories} alt="Бүх стори" className="object-cover bg-black bg-opacity-70" />
-            <div
-              className="py-4 absolute top-[180px] bg-white flex w-[188px] cursor-pointer flex-col items-center text-[#111111] text-[15px] h-[80px] rounded-[8px]"
-              onClick={() => navigate('/stories')}
-            >
-              <FIcon className="icon-fi-rs-stories-o text-caak-primary" />
-              Бусад сторинууд үзэх
-            </div>
-          </div>
-        )}
-      </div>
+    <div className="w-full h-full flex justify-between">
+      <div
+        style={{
+          background: 'transparent linear-gradient(180deg, #00000067 0%, #00000000 100%) 0% 0% no-repeat padding-box',
+        }}
+        className="w-full h-[100px] absolute top-0"
+      ></div>
       <div className="w-[100%] h-full sm:rounded-[8px] flex flex-col items-center justify-center bg-contain bg-no-repeat bg-center bg-[#212121] relative">
         <div style={{ zIndex: 1001 }} className="absolute top-[12px] right-[12px] flex">
           <Button
@@ -239,16 +226,6 @@ function VideoStory({ block, story, action }) {
             </a>
           )}
         </div>
-      </div>
-      <div style={{ zIndex: 1000 }} className="hidden lg:flex flex-col h-full w-[272px] justify-start items-end">
-        <Button
-          shape="circle"
-          type="white"
-          className="bg-white border-0 mb-[180px]"
-          icon={<CloseOutlined />}
-          onClick={() => navigate('/')}
-        />
-        {story.prevStory && <Preview story={story.prevStory} />}
       </div>
     </div>
   );
