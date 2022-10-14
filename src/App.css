@@ -11,7 +11,7 @@
 @font-face {
   font-family: "Arial";   /*Can be any text*/
   src: local("Arial"),
-  url('http://fonts.cdnfonts.com/css/arial') format("truetype");
+  url('https://fonts.cdnfonts.com/css/arial') format("truetype");
 }
 
 ::-moz-selection {
