@@ -208,7 +208,7 @@ function AddPost() {
               getValueFromEvent={(e) => {
                 return e?.fileList[0].originFileObj;
               }}
-              rules={[{ required: true, message: 'Зураг заавал сонгоно уу' }]}
+              rules={[{ required: !cover, message: 'Зураг заавал сонгоно уу' }]}
             >
               <Upload
                 maxCount={1}
