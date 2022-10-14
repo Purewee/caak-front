@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Modal } from 'antd';
 import { gql, useQuery, useMutation } from '@apollo/client';
 import { useAuth } from '../../context/AuthContext';
-import { Link } from 'react-router-dom';
 import { imagePath } from '../../utility/Util';
 
 const CATEGORIES = gql`
@@ -58,14 +57,18 @@ export default function AddCategoriesModal({ toggle, image }) {
       }
       onCancel={toggle}
       title={
-        <span className="text-[38px] font-condensed font-bold leading-[44px] text-center">
+        <p className="text-[38px] font-condensed font-bold leading-[44px] text-center pt-[15px]">
           Таны дуртай мэдээний төрлүүд?
-        </span>
+        </p>
       }
       bodyStyle={{ padding: 0 }}
       afterClose={toggle}
-      cancelText={<p className="text-[15px] font-medium text-caak-black">Болих</p>}
-      okText={<p className="text-[15px] font-bold">Хадгалах</p>}
+      closeIcon={<span className="icon-fi-rs-close text-[18px] text-[#909090]" />}
+      footer={
+        <div className="w-full flex justify-center">
+          <p onClick={() => toggle()} className="w-[300px] rounded-[4px] cursor-pointer h-[44px] flex justify-center items-center font-medium font-roboto text-[16px] text-[#909090] bg-[#EFEEEF]">Хадгалах</p>
+        </div>
+      }
       okType="primary"
       confirmLoading={loading}
     >
@@ -73,9 +76,9 @@ export default function AddCategoriesModal({ toggle, image }) {
         {filtered.map((x, index) => {
           if(index < 2){
             return x.parent === null ? (
-              <div onClick={() => selected ? setSelected(null) : setSelected(x.id)} key={index} className="w-[300px] h-[110px] rounded-[6px] relative">
+              <div onClick={() => selected === x.id ? setSelected(null) : setSelected(x.id)} key={index} className={`w-[300px] cursor-pointer h-[110px] rounded-[6px] relative ${selected === x.id && 'border-[#FF6600] p-[4px] border-[2px]'}`}>
                 <img className="w-full h-full object-cover rounded-[6px]" src={imagePath(x.cover)} />
-                <p className="text-white rounded-[6px] absolute top-0 h-full w-full flex justify-center items-center bg-black bg-opacity-50">{x.name}</p>
+                <p className={`text-white rounded-[6px] absolute top-0 h-full w-full flex justify-center font-roboto font-medium text-[17px] items-center bg-black bg-opacity-50 ${selected === x.id && 'w-[288px] top-[4px] h-[98px]'}`}>{x.name}</p>
               </div>
             ) : null;
           }
@@ -93,7 +96,7 @@ export default function AddCategoriesModal({ toggle, image }) {
                         });
                       }
                     }}
-                    className={`${data.following ? ' bg-caak-primary text-white' : 'bg-white text-caak-black'} border cursor-pointer border-[#D4D8D8] rounded-full font-roboto px-[14px] py-[4px] leading-[16px]`}
+                    className={`${data.following ? ' bg-caak-primary text-white' : 'bg-white text-caak-black'} border cursor-pointer border-[#D4D8D8] rounded-full font-roboto px-[14px] py-[4px] leading-[23px]`}
                     key={index}
                   >
                     {data.name}
@@ -106,9 +109,9 @@ export default function AddCategoriesModal({ toggle, image }) {
         {filtered.map((x, index) => {
           if(index >= 2){
             return x.parent === null ? (
-              <div onClick={() => selected ? setSelected(null) : setSelected(x.id)} key={index} className="w-[300px] h-[110px] rounded-[6px] relative">
+              <div onClick={() => selected === x.id ? setSelected(null) : setSelected(x.id)} key={index} className={`w-[300px] cursor-pointer h-[110px] rounded-[6px] relative ${selected === x.id && 'border-[#FF6600] p-[4px] border-[2px]'}`}>
                 <img className="w-full h-full object-cover rounded-[6px]" src={imagePath(x.cover)} />
-                <p className="text-white rounded-[6px] absolute top-0 h-full w-full flex justify-center items-center bg-black bg-opacity-50">{x.name}</p>
+                <p className={`text-white rounded-[6px] absolute top-0 h-full w-full flex justify-center font-roboto font-medium text-[17px] items-center bg-black bg-opacity-50 ${selected === x.id && 'w-[288px] top-[4px] h-[98px]'}`}>{x.name}</p>
               </div>
             ) : null;
           }

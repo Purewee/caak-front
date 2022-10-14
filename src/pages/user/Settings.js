@@ -130,7 +130,7 @@ export default function Settings() {
               type="card"
               className="mt-[25px]"
               tabBarStyle={{
-                maxHeight: 180,
+                maxHeight: 176,
                 width: isMobile ? '100%' : 290,
                 boxShadow: '0px 1px 2px #00000010',
                 backgroundColor: 'white',
@@ -138,6 +138,7 @@ export default function Settings() {
                 border: '1px solid #EFEEEF',
                 display: 'flex',
                 flexDirection: 'column',
+                borderRadius: 4,
               }}
             >
               <Tabs.TabPane
@@ -150,8 +151,8 @@ export default function Settings() {
                       }`}
                     />
                     <p
-                      className={`text-[16px] font-bold ${
-                        selected === 'posts' ? 'text-caak-primary' : 'text-caak-black'
+                      className={`text-[16px] ${
+                        selected === 'posts' ? 'text-caak-primary font-medium' : 'text-caak-black'
                       }`}
                     >
                       Ерөнхий мэдээлэл
@@ -242,8 +243,8 @@ export default function Settings() {
                       }`}
                     />
                     <p
-                      className={`text-[16px] font-bold ${
-                        selected === 'saved' ? 'text-caak-primary' : 'text-caak-black'
+                      className={`text-[16px] ${
+                        selected === 'saved' ? 'text-caak-primary font-medium' : 'text-caak-black'
                       }`}
                     >
                       Миний дагасан
@@ -251,8 +252,10 @@ export default function Settings() {
                   </div>
                 }
               >
-                <div>
-                  <p className="text-caak-black font-medium text-[22px] mb-[20px]">Миний дагасан</p>
+                <div className="flex flex-col items-end">
+                  <p className="text-caak-black font-medium text-[22px] leading-[24px] mb-[20px] w-full">
+                    Миний дагасан
+                  </p>
                   <Form
                     className="w-full md:w-[790px] border border-[#EFEEEF]"
                     layout="vertical"
@@ -263,228 +266,225 @@ export default function Settings() {
                     }}
                   >
                     <Tabs onChange={(x) => setTabs(x)} tabBarStyle={{ paddingLeft: 30 }}>
-                      <Tabs.TabPane key={'category'} tab={<p>Төрөл</p>}>
-                        <div className="border-t w-full p-[10px] sm:p-[30px]" id="category">
-                          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 justify-start gap-[8px] sm:gap-[12px]">
-                            {me.follows
-                              ?.filter((x) => x.target.__typename === 'Category')
-                              .map(({ target: x }) => (
-                                <div className="flex flex-col" key={x.id}>
-                                  <Link
-                                    to={`/category/${x.slug}`}
-                                    className="w-full h-[100px] relative items-center justify-center rounded-md cursor-pointer overflow-hidden"
-                                  >
-                                    {x.cover && (
-                                      <div
-                                        style={{ backgroundImage: `url(${imagePath(x.cover)})` }}
-                                        className="w-full h-full bg-center bg-cover bg-no-repeat"
-                                      />
-                                    )}
-                                    <span className="absolute top-0 h-full w-full flex items-center justify-center text-white text-[16px] font-medium bg-black bg-opacity-50 rounded-md">
-                                      {x.name}
-                                    </span>
-                                  </Link>
-                                  {x.following ? (
-                                    <button
-                                      className="w-full h-[34px] mt-[8px] bg-[#EFEEEF] rounded-[4px] text-[#909090] text-[15px] font-medium"
-                                      onClick={() => {
-                                        if (isAuth) {
-                                          follow_category({ variables: { id: x.id } }).then(() => {
-                                            refetch().then(console.log);
-                                          });
-                                        }
-                                      }}
+                      <Tabs.TabPane
+                        key={'category'}
+                        tab={
+                          <p
+                            className={`text-[16px] leading-[19px] ${
+                              tabs === 'category' ? 'text-caak-black' : 'text-caak-darkGray'
+                            }`}
+                          >
+                            Төрөл
+                          </p>
+                        }
+                      >
+                        {me.follows?.filter((x) => x.target.__typename === 'Category').length > 0 ? (
+                          <div className="border-t w-full p-[10px] sm:p-[30px]" id="category">
+                            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 justify-start gap-[8px] sm:gap-[12px]">
+                              {me.follows
+                                ?.filter((x) => x.target.__typename === 'Category')
+                                .map(({ target: x }) => (
+                                  <div className="flex flex-col" key={x.id}>
+                                    <Link
+                                      to={`/category/${x.slug}`}
+                                      className="w-full h-[100px] relative items-center justify-center rounded-md cursor-pointer overflow-hidden"
                                     >
-                                      ДАГАСАН
-                                    </button>
-                                  ) : (
-                                    <Button
-                                      type="primary"
-                                      className="w-[172px] h-[34px] mt-[8px] bg-caak-primary rounded-[4px] text-white text-[15px] font-bold"
-                                      onClick={() => {
-                                        if (isAuth) {
-                                          follow_category({ variables: { id: x.id } }).then(() => {
-                                            refetch().then(console.log);
-                                          });
-                                        }
-                                      }}
-                                    >
-                                      ДАГАХ
-                                    </Button>
-                                  )}
-                                </div>
-                              ))}
-                          </div>
-                        </div>
-                      </Tabs.TabPane>
-                      <Tabs.TabPane key={'source'} tab={<p>Суваг</p>}>
-                        <div className="border-t w-full p-[10px] sm:p-[30px]" id="source">
-                          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 justify-start gap-[10px]">
-                            {me.follows
-                              ?.filter((x) => x.target.__typename === 'Source')
-                              .map(({ target: x }) => (
-                                <div key={x} className="flex flex-col">
-                                  <Link
-                                    to={`/channel/${x.id}`}
-                                    className="w-full h-[100px] relative items-center justify-center rounded-md cursor-pointer overflow-hidden"
-                                  >
-                                    {x.cover && (
-                                      <div
-                                        style={{ backgroundImage: `url(${imagePath(x.cover)})` }}
-                                        className="w-full h-full bg-center bg-cover bg-no-repeat"
-                                      />
-                                    )}
-                                    <span className="absolute top-0 h-full w-full flex items-center justify-center text-white text-[15px] font-medium bg-black bg-opacity-50 rounded-md">
-                                      {x.name}
-                                    </span>
-                                  </Link>
-                                  {x.following ? (
-                                    <button
-                                      className="w-full h-[34px] mt-[8px] bg-[#EFEEEF] rounded-[4px] text-[#909090] text-[15px] font-medium"
-                                      onClick={() => {
-                                        if (isAuth) {
-                                          follow_source({ variables: { id: x.id } }).then(() => {
-                                            refetch().then(console.log);
-                                          });
-                                        }
-                                      }}
-                                    >
-                                      ДАГАСАН
-                                    </button>
-                                  ) : (
-                                    <Button
-                                      type="primary"
-                                      className="w-[172px] h-[34px] mt-[8px] bg-caak-primary rounded-[4px] text-white text-[15px] font-bold"
-                                      onClick={() => {
-                                        if (isAuth) {
-                                          follow_source({ variables: { id: x.id } }).then(() => {
-                                            refetch().then(console.log);
-                                          });
-                                        }
-                                      }}
-                                    >
-                                      ДАГАХ
-                                    </Button>
-                                  )}
-                                </div>
-                              ))}
-                          </div>
-                        </div>
-                      </Tabs.TabPane>
-                      <Tabs.TabPane key={'tag'} tab={<p>Таг</p>}>
-                        <div className="border-t w-full p-[10px] sm:p-[30px]" id="tag">
-                          <div className="flex flex-wrap justify-center sm:justify-start gap-[10px]">
-                            {me.follows
-                              ?.filter((x) => x.target.__typename === 'Tag')
-                              .map(({ target: x }) => (
-                                <div
-                                  className="w-[232px] h-[124px] rounded-[4px] border border-[#EFEEEF] p-[16px]"
-                                  key={x.id}
-                                >
-                                  <div className="flex flex-row">
-                                    <span className="h-[46px] w-[46px] rounded-[4px] bg-caak-primary bg-opacity-10 flex items-center justify-center text-[28px] font-medium text-caak-primary">
-                                      #
-                                    </span>
-                                    <div className="ml-[14px] flex flex-col">
-                                      <Link to={`/tags/${x.slug}`} className="text-caak-black text-[15px] font-medium">
-                                        #{x.name}
-                                      </Link>
-                                      <span className="text-[#707070] text-[13px] leading-[15px]">
-                                        {x.articlesCount} Мэдээтэй
+                                      {x.cover && (
+                                        <div
+                                          style={{ backgroundImage: `url(${imagePath(x.cover)})` }}
+                                          className="w-full h-full bg-center bg-cover bg-no-repeat"
+                                        />
+                                      )}
+                                      <span className="absolute top-0 h-full w-full flex items-center justify-center text-white text-[16px] font-medium bg-black bg-opacity-50 rounded-md">
+                                        {x.name}
                                       </span>
-                                    </div>
+                                    </Link>
+                                    {x.following ? (
+                                      <button
+                                        className="w-full h-[34px] mt-[8px] bg-[#EFEEEF] rounded-[4px] text-[#909090] text-[15px] font-medium"
+                                        onClick={() => {
+                                          if (isAuth) {
+                                            follow_category({ variables: { id: x.id } }).then(() => {
+                                              refetch().then(console.log);
+                                            });
+                                          }
+                                        }}
+                                      >
+                                        ДАГАСАН
+                                      </button>
+                                    ) : (
+                                      <Button
+                                        type="primary"
+                                        className="w-[172px] h-[34px] mt-[8px] bg-caak-primary rounded-[4px] text-white text-[15px] font-bold"
+                                        onClick={() => {
+                                          if (isAuth) {
+                                            follow_category({ variables: { id: x.id } }).then(() => {
+                                              refetch().then(console.log);
+                                            });
+                                          }
+                                        }}
+                                      >
+                                        ДАГАХ
+                                      </Button>
+                                    )}
                                   </div>
-                                  {x.following ? (
-                                    <button
-                                      className="w-full h-[34px] mt-[12px] bg-[#EFEEEF] rounded-[4px] text-[#909090] text-[15px] font-medium"
-                                      onClick={() => {
-                                        if (isAuth) {
-                                          follow_tag({ variables: { id: x.id } }).then(() => {
-                                            refetch().then(console.log);
-                                          });
-                                        }
-                                      }}
-                                    >
-                                      ДАГАСАН
-                                    </button>
-                                  ) : (
-                                    <Button
-                                      type="primary"
-                                      loading={follow_saving}
-                                      className="w-full h-[34px] mt-[12px] bg-caak-primary rounded-[4px] text-white text-[15px] font-bold"
-                                      onClick={() => {
-                                        if (isAuth) {
-                                          follow_tag({ variables: { id: x.id } }).then(() => {
-                                            refetch().then(console.log);
-                                          });
-                                        }
-                                      }}
-                                    >
-                                      Дагах
-                                    </Button>
-                                  )}
-                                </div>
-                              ))}
+                                ))}
+                            </div>
                           </div>
-                        </div>
+                        ) : (
+                          <div className="w-full border-t">
+                            <p className="text-[20px] font-medium text-center py-[20px]">Дагасан төрөл байхгүй байна</p>
+                          </div>
+                        )}
                       </Tabs.TabPane>
-                      {/* <Tabs.TabPane key={'user'} tab={<p>Хэрэглэгчид</p>}>
-                        <div className="border-t w-full p-[10px] sm:p-[30px]" id="user">
-                          <div className="flex flex-wrap justify-center sm:justify-start gap-[16px]">
-                            {me.follows
-                              ?.filter((x) => x.target.__typename === 'User')
-                              .map(({ target: x }) => (
-                                <div
-                                  key={x.id}
-                                  className="w-[232px] h-[153px] border border-[#EFEEEF] flex flex-col items-center p-[16px]"
-                                >
-                                  {x.avatar ? (
-                                    <Avatar size={48} src={imagePath(x.avatar)} />
-                                  ) : (
-                                    <Avatar size={48} className="bg-[#257CEE19] text-[#257CEE] text-[32px] font-medium">
-                                      {(x?.firstName || x?.name)[0]}
-                                    </Avatar>
-                                  )}
-                                  <Link
-                                    to={`/profile/${x.id}`}
-                                    className="text-caak-black text-[16px] leading-[19px] mt-[6px]"
-                                  >
-                                    {x.firstName}
-                                  </Link>
-                                  {x.following ? (
-                                    <button
-                                      className="w-full h-[34px] mt-[14px] bg-[#EFEEEF] rounded-[4px] text-[#909090] text-[15px] font-medium"
-                                      onClick={() => {
-                                        if (isAuth) {
-                                          follow_user({ variables: { id: x.id } }).then(() => {
-                                            refetch().then(console.log);
-                                          });
-                                        }
-                                      }}
+                      <Tabs.TabPane
+                        key={'source'}
+                        tab={
+                          <p
+                            className={`text-[16px] leading-[19px] ${
+                              tabs === 'source' ? 'text-caak-black' : 'text-caak-darkGray'
+                            }`}
+                          >
+                            Суваг
+                          </p>
+                        }
+                      >
+                        {me.follows?.filter((x) => x.target.__typename === 'Source').length > 0 ? (
+                          <div className="border-t w-full p-[10px] sm:p-[30px]" id="source">
+                            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 justify-start gap-[10px]">
+                              {me.follows
+                                ?.filter((x) => x.target.__typename === 'Source')
+                                .map(({ target: x }) => (
+                                  <div key={x} className="flex flex-col">
+                                    <Link
+                                      to={`/channel/${x.id}`}
+                                      className="w-full h-[100px] relative items-center justify-center rounded-md cursor-pointer overflow-hidden"
                                     >
-                                      ДАГАСАН
-                                    </button>
-                                  ) : (
-                                    <Button
-                                      type="primary"
-                                      loading={follow_saving}
-                                      className="w-full h-[34px] mt-[14px] bg-caak-primary rounded-[4px] text-white text-[15px] font-bold"
-                                      onClick={() => {
-                                        if (isAuth) {
-                                          follow_user({ variables: { id: x.id } }).then(() => {
-                                            refetch().then(console.log);
-                                          });
-                                        }
-                                      }}
-                                    >
-                                      Дагах
-                                    </Button>
-                                  )}
-                                </div>
-                              ))}
+                                      {x.cover && (
+                                        <div
+                                          style={{ backgroundImage: `url(${imagePath(x.cover)})` }}
+                                          className="w-full h-full bg-center bg-cover bg-no-repeat"
+                                        />
+                                      )}
+                                      <span className="absolute top-0 h-full w-full flex items-center justify-center text-white text-[15px] font-medium bg-black bg-opacity-50 rounded-md">
+                                        {x.name}
+                                      </span>
+                                    </Link>
+                                    {x.following ? (
+                                      <button
+                                        className="w-full h-[34px] mt-[8px] bg-[#EFEEEF] rounded-[4px] text-[#909090] text-[15px] font-medium"
+                                        onClick={() => {
+                                          if (isAuth) {
+                                            follow_source({ variables: { id: x.id } }).then(() => {
+                                              refetch().then(console.log);
+                                            });
+                                          }
+                                        }}
+                                      >
+                                        ДАГАСАН
+                                      </button>
+                                    ) : (
+                                      <Button
+                                        type="primary"
+                                        className="w-[172px] h-[34px] mt-[8px] bg-caak-primary rounded-[4px] text-white text-[15px] font-bold"
+                                        onClick={() => {
+                                          if (isAuth) {
+                                            follow_source({ variables: { id: x.id } }).then(() => {
+                                              refetch().then(console.log);
+                                            });
+                                          }
+                                        }}
+                                      >
+                                        ДАГАХ
+                                      </Button>
+                                    )}
+                                  </div>
+                                ))}
+                            </div>
                           </div>
-                        </div>
-                      </Tabs.TabPane> */}
+                        ) : (
+                          <div className="w-full border-t">
+                            <p className="text-[20px] font-medium text-center py-[20px]">Дагасан суваг байхгүй байна</p>
+                          </div>
+                        )}
+                      </Tabs.TabPane>
+                      <Tabs.TabPane
+                        key={'tag'}
+                        tab={
+                          <p
+                            className={`text-[16px] leading-[19px] ${
+                              tabs === 'tag' ? 'text-caak-black' : 'text-caak-darkGray'
+                            }`}
+                          >
+                            Таг
+                          </p>
+                        }
+                      >
+                        {me.follows?.filter((x) => x.target.__typename === 'Tag').length > 0 ? (
+                          <div className="border-t w-full p-[10px] sm:p-[30px]" id="tag">
+                            <div className="flex flex-wrap justify-center sm:justify-start gap-[10px]">
+                              {me.follows
+                                ?.filter((x) => x.target.__typename === 'Tag')
+                                .map(({ target: x }) => (
+                                  <div
+                                    className="w-[232px] h-[124px] rounded-[4px] border border-[#EFEEEF] p-[16px]"
+                                    key={x.id}
+                                  >
+                                    <div className="flex flex-row">
+                                      <span className="h-[46px] w-[46px] rounded-[4px] bg-caak-primary bg-opacity-10 flex items-center justify-center text-[28px] font-medium text-caak-primary">
+                                        #
+                                      </span>
+                                      <div className="ml-[14px] flex flex-col">
+                                        <Link
+                                          to={`/tags/${x.slug}`}
+                                          className="text-caak-black text-[15px] font-medium"
+                                        >
+                                          #{x.name}
+                                        </Link>
+                                        <span className="text-[#707070] text-[13px] leading-[15px]">
+                                          {x.articlesCount} Мэдээтэй
+                                        </span>
+                                      </div>
+                                    </div>
+                                    {x.following ? (
+                                      <button
+                                        className="w-full h-[34px] mt-[12px] bg-[#EFEEEF] rounded-[4px] text-[#909090] text-[15px] font-medium"
+                                        onClick={() => {
+                                          if (isAuth) {
+                                            follow_tag({ variables: { id: x.id } }).then(() => {
+                                              refetch().then(console.log);
+                                            });
+                                          }
+                                        }}
+                                      >
+                                        ДАГАСАН
+                                      </button>
+                                    ) : (
+                                      <Button
+                                        type="primary"
+                                        loading={follow_saving}
+                                        className="w-full h-[34px] mt-[12px] bg-caak-primary rounded-[4px] text-white text-[15px] font-bold"
+                                        onClick={() => {
+                                          if (isAuth) {
+                                            follow_tag({ variables: { id: x.id } }).then(() => {
+                                              refetch().then(console.log);
+                                            });
+                                          }
+                                        }}
+                                      >
+                                        Дагах
+                                      </Button>
+                                    )}
+                                  </div>
+                                ))}
+                            </div>
+                          </div>
+                        ) : (
+                          <div className="w-full border-t">
+                            <p className="text-[20px] font-medium text-center py-[20px]">Дагасан таг байхгүй байна</p>
+                          </div>
+                        )}
+                      </Tabs.TabPane>
                     </Tabs>
                   </Form>
                   {tabs === 'category' && (
@@ -507,7 +507,7 @@ export default function Settings() {
                       Суваг нэмэх
                     </Button>
                   )}
-                  {tabs === 'tag' && (
+                  {/* {tabs === 'tag' && (
                     <Button
                       type="primary"
                       onClick={() => setOpenTags(true)}
@@ -516,7 +516,7 @@ export default function Settings() {
                     >
                       Таг нэмэх
                     </Button>
-                  )}
+                  )} */}
                   {openModal && <AddCategoriesModal toggle={() => setOpenModal(false)} />}
                   {openSource && <AddSourceModal toggle={() => setOpenSource(false)} />}
                   {openTags && <AddTagsModal toggle={() => setOpenTags(false)} />}
@@ -532,8 +532,8 @@ export default function Settings() {
                       }`}
                     />
                     <p
-                      className={`text-[16px] font-bold h-[32px] ${
-                        selected === 'history' ? 'text-caak-primary' : 'text-caak-black'
+                      className={`text-[16px] h-[32px] ${
+                        selected === 'history' ? 'text-caak-primary font-medium' : 'text-caak-black'
                       }`}
                     >
                       Нууцлал

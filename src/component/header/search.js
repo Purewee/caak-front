@@ -19,7 +19,7 @@ export default function Search({ transparent }) {
             }`}
           />
         }
-        className={`border-0`}
+        className={`border-0 mr-[10px]`}
         onClick={() => setOpen(!open)}
         shape="circle"
         type="ghost"

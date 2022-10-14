@@ -5,13 +5,13 @@ import { ESService } from '../../lib/esService';
 import { ME, USER } from '../post/view/_gql';
 import { Avatar, Col, Statistic, Tabs, Skeleton, Button, Badge } from 'antd';
 import PostCard from '../../component/card/Post';
-import { Title } from '../post/view/wrapper';
 import { useAuth } from '../../context/AuthContext';
 import { Link } from 'react-router-dom';
 import { AppContext } from '../../App';
 import useMediaQuery from '../../component/navigation/useMediaQuery';
 import { imagePath } from '../../utility/Util';
 import { useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const FOLLOW = gql`
   mutation Follow($id: ID!) {
@@ -64,7 +64,6 @@ export default function Profile() {
   const [loading, setLoading] = useState(false);
   const { data, loading: fetching, refetch } = useQuery(USER, { variables: { id } });
   const user = data?.user || {};
-  console.log(user);
   const { data: me } = useQuery(ME);
   const loggedUser = me?.me;
   const { isAuth, openModal } = useAuth();
@@ -72,6 +71,7 @@ export default function Profile() {
   const [follow, { loading: saving }] = useMutation(FOLLOW, { variables: { id } });
   const { data: historyData, loading: historyLoading } = useQuery(HISTORY, { skip: selected !== 'history' });
   const histories = historyData?.impressions?.edges?.map((x) => x.node) || [];
+  const navigate = useNavigate();
 
   const isMobile = useMediaQuery('screen and (max-width: 767px)');
 
@@ -100,23 +100,41 @@ export default function Profile() {
         <div className="pt-[17px] md:pt-[71px] pb-[17px] md:pb-[50px] flex flex-col md:flex-row justify-between w-full items-center">
           <div className="flex flex-row w-full">
             {user.avatar ? (
-              <Avatar
-                className="w-[57px] h-[57px] md:w-[82px] md:h-[82px] object-cover"
-                src={imagePath(user?.avatar)}
-              />
+              <div className="relative">
+                <Avatar
+                  className="w-[57px] h-[57px] md:w-[82px] md:h-[82px] object-cover"
+                  src={imagePath(user?.avatar)}
+                />
+                {user?.id === loggedUser?.id && (
+                  <span
+                    onClick={() => navigate(`/settings/${loggedUser?.id}`)}
+                    style={{ boxShadow: '0px 1px 4px #00000029' }}
+                    className="w-[32px] h-[32px] rounded-full cursor-pointer flex justify-center items-center text-[19px] absolute bottom-0 -right-[6px] text-black icon-fi-rs-camera-f bg-white"
+                  />
+                )}
+              </div>
             ) : (
               user.firstName && (
-                <Avatar className="w-[57px] h-[57px] flex items-center md:w-[82px] md:h-[82px] bg-[#257CEE19] text-[#257CEE] text-[32px] font-medium">
-                  {(user?.firstName || user?.name)[0] || null}
-                </Avatar>
+                <div className="relative">
+                  <Avatar className="w-[57px] h-[57px] flex items-center md:w-[82px] md:h-[82px] bg-[#257CEE19] text-[#257CEE] text-[32px] font-medium">
+                    {(user?.firstName || user?.name)[0] || null}
+                  </Avatar>
+                  {user?.id === loggedUser?.id && (
+                    <span
+                      onClick={() => navigate(`/settings/${loggedUser?.id}`)}
+                      style={{ boxShadow: '0px 1px 4px #00000029' }}
+                      className="w-[32px] h-[32px] rounded-full cursor-pointer flex justify-center items-center text-[19px] absolute bottom-0 -right-[6px] text-black icon-fi-rs-camera-f bg-white"
+                    />
+                  )}
+                </div>
               )
             )}
-            <div className="ml-[16px]">
-              <Title className="font-condensed mt-0 font-bold text-[30px] leading-[35px]">{user?.firstName}</Title>
+            <div className="ml-[16px] max-h-[57px] md:max-h-[82px]">
+              <p className="font-condensed font-bold text-[30px] leading-[35px]">{user?.firstName}</p>
               <p className="md:mt-[12px] text-[15px] text-[#555555] leading-[18px] max-w-[600px]">{user?.data?.bio}</p>
-              <div className="flex flex-row text-[#555555] gap-[23px] sm:mt-[18px] text-[15px] leading-[18px] font-merri text-center">
-                <Statistic title="нийтлэл" value={user?.articles?.totalCount || 0} />
-                <Statistic title="дагагч" value={user?.followersCount || 0} />
+              <div className="flex flex-row text-[#555555] gap-[23px] sm:mt-[18px] text-[15px] font-roboto text-center">
+                <Statistic className="leading-[18px]" title="нийтлэл" value={user?.articles?.totalCount || 0} />
+                <Statistic className="leading-[18px]" title="дагагч" value={user?.followersCount || 0} />
               </div>
             </div>
           </div>
@@ -168,15 +186,32 @@ export default function Profile() {
         <Tabs
           defaultActiveKey={location.state === 'saved' ? 'saved' : 'posts'}
           onChange={(e) => setSelected(e)}
+          tabBarStyle={{ borderBottom: '1px solid #EFEEEF' }}
           className="mb-[200px] font-condensed w-full border-t border-1"
         >
           <Tabs.TabPane
             key="posts"
             tab={
               <Statistic
-                title={<span className="font-condensed text-[16px]">ОРУУЛСАН МЭДЭЭ</span>}
+                title={
+                  <span
+                    className={`font-bold text-[16px] ${
+                      selected === 'posts' ? 'text-caak-black' : 'text-caak-darkGray'
+                    }`}
+                  >
+                    ОРУУЛСАН МЭДЭЭ
+                  </span>
+                }
                 value={user.articles?.totalCount}
-                className="flex font-condensed font-bold"
+                valueStyle={{
+                  backgroundColor: '#BBBEBE',
+                  paddingInline: 6,
+                  fontSize: 14,
+                  height: 20,
+                  color: 'white',
+                  borderRadius: 4,
+                  fontWeight: 'bold',
+                }}
                 style={{ flexDirection: 'row', gap: 6 }}
               />
             }
@@ -204,9 +239,25 @@ export default function Profile() {
               key="saved"
               tab={
                 <Statistic
-                  title={<span className="font-condensed text-[16px]">ХАДГАЛСАН МЭДЭЭ</span>}
+                  title={
+                    <span
+                      className={`font-bold text-[16px] ${
+                        selected === 'saved' ? 'text-caak-black' : 'text-caak-darkGray'
+                      }`}
+                    >
+                      ХАДГАЛСАН МЭДЭЭ
+                    </span>
+                  }
                   value={saved_articles.length}
-                  className="flex font-condensed font-bold"
+                  valueStyle={{
+                    backgroundColor: '#BBBEBE',
+                    paddingInline: 6,
+                    fontSize: 14,
+                    height: 20,
+                    color: 'white',
+                    borderRadius: 4,
+                    fontWeight: 'bold',
+                  }}
                   style={{ flexDirection: 'row', gap: 8 }}
                 />
               }
@@ -225,8 +276,25 @@ export default function Profile() {
               key="history"
               tab={
                 <Statistic
-                  title={<span className="font-condensed text-[16px]">ҮЗСЭН ТҮҮХ</span>}
+                  title={
+                    <span
+                      className={`font-bold text-[16px] ${
+                        selected === 'history' ? 'text-caak-black' : 'text-caak-darkGray'
+                      }`}
+                    >
+                      ҮЗСЭН ТҮҮХ
+                    </span>
+                  }
                   value={historyData?.impressions?.totalCount || ' '}
+                  valueStyle={{
+                    backgroundColor: '#BBBEBE',
+                    paddingInline: historyData?.impressions?.totalCount && 6,
+                    fontSize: 14,
+                    height: 20,
+                    color: 'white',
+                    borderRadius: 4,
+                    fontWeight: 'bold',
+                  }}
                   className="flex font-condensed font-bold"
                   style={{ flexDirection: 'row', gap: 8 }}
                   loading={historyLoading}

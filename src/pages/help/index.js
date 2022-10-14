@@ -201,7 +201,7 @@ export default function Help() {
             <div className="w-full h-[230px] md:h-[340px] bg-[#463146] flex justify-center px-[16px]">
                 <div className='max-w-[1310px] w-full flex flex-row justify-between items-center'>
                     <div className='max-w-[480px] w-full'>
-                        <p className='text-[35px] md:text-[52px] text-white font-medium leading-[41px] md:leading-[54px]'>Мэдээ мэдээллийн төв цэг!</p>
+                        <p className='text-[35px] md:text-[52px] text-white condMedium leading-[41px] md:leading-[54px]'>Мэдээ мэдээллийн төв цэг!</p>
                         <p className='max-w-[372px] w-full text-white text-[18px] leading-[23px] text-opacity-80 mt-[30px]'>Дотоод, гадаадын шилдэг, шинэ мэдээллүүдийг нэг цэгээс хүргэнэ!</p>
                     </div>
                     <img className='w-[604px] h-[271px] hidden md:block' alt='' src={require('../../assets/images/help2x.png')} />
@@ -212,9 +212,9 @@ export default function Help() {
                     {
                         Tabs.map((data, index) => {
                             return(
-                                <div onClick={() => setSelected(index)} key={index} className={`flex flex-row items-center pl-[14px] cursor-pointer h-[50px] ${selected === index && 'bg-[#FF6600] bg-opacity-20 rounded-[2px]'}`}>
+                                <div onClick={() => setSelected(index)} key={index} className={`flex flex-row items-center pl-[14px] cursor-pointer h-[50px] ${selected === index && 'bg-[#FF6600] bg-opacity-10 rounded-[2px]'}`}>
                                     <span className={`${data.icon} w-[22px] h-[22px] text-[20px] flex justify-center items-center ${selected === index ? 'text-[#FF6600]' : 'text-[#909090]'}`} />
-                                    <p className={`ml-[10px] ${selected === index ? 'text-[#FF6600]' : 'text-[#111111]'}`}>{data.name}</p>
+                                    <p className={`ml-[10px] text-[16px] leading-[19px] ${selected === index ? 'text-[#FF6600] font-medium' : 'text-[#111111]'}`}>{data.name}</p>
                                 </div>
                             )
                         })

@@ -31,25 +31,25 @@ export default function PostSaveModal({ post, toggle, image }) {
   const openNotification = () => {
     const args = {
       message: (
-        <div className="md:inline-flex">
+        <div className="md:flex flex-row items-center">
           Амжилттай хадгалагдлаа.
           <div className="inline-flex">
             <p
-              className="font-bold mx-[6px] cursor-pointer"
+              className="font-medium text-[15px] flex items-center justify-center font-roboto border h-[30px] w-[64px] rounded-[4px] ml-[49px] border-white cursor-pointer"
               onClick={() => navigate(`/profile/${me?.me.id}`, { state: 'saved' })}
             >
-              ЭНД
+              ҮЗЭХ
             </p>
-            дарж үзнэ үү!
           </div>
         </div>
       ),
-      duration: 4,
+      duration: 20,
       icon: (
-        <FIcon className="icon-fi-rs-check text-[13px] mt-[5px] bg-white text-[#12805C] rounded-full w-[14px] h-[14px]" />
+        <FIcon className="icon-fi-rs-check text-[14px] mt-[5px] bg-white text-[#12805C] rounded-full w-[20px] h-[20px]" />
       ),
+      closeIcon: <FIcon className="icon-fi-rs-close text-[14px] mt-[3px] text-white w-[14px] h-[14px]" />,
       placement: 'bottom',
-      className: 'md:h-[50px] bg-[#12805C] w-[450px] flex flex-row items-center',
+      className: 'md:h-[50px] bg-[#12805C] sm:w-[470px] flex flex-row items-center',
     };
     notification.open(args);
   };

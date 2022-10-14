@@ -89,84 +89,80 @@ export default function UserInfo({ transparent }) {
           type="ghost"
         />
       )}
-      {saved_articles.length > 0 && (
-        <Popover
-          placement="bottomRight"
-          trigger="click"
-          overlayClassName="padding_zero paddin"
-          visible={savedVisible}
-          onVisibleChange={toggleSaving}
-          content={
-            <div>
-              <h3 className="text-[22px] leading-[25px] border-b border-[#D4D8D8] condMedium mb-1 pb-2 px-[16px] pt-[22px]">
-                Хадгалсан мэдээнүүд
-              </h3>
-              <div className="w-full max-w-[368px] pt-[6px]">
-                {saved_articles.map((x, index) => {
-                  if (index < 10) {
-                    return (
-                      <div
-                        key={index}
-                        onMouseEnter={() => setHovered(x.id)}
-                        onMouseLeave={() => setHovered(null)}
-                        className="flex flex-row items-center w-full justify-between px-[16px] hover:bg-[#EFEEEF] h-[64px]"
-                      >
-                        <Link onClick={hideSaved} className="flex flex-row" to={`/post/view/${x.id}`}>
-                          <Avatar
-                            className="min-w-[60px] max-w-[60px] h-[44px] object-cover"
-                            src={imagePath(x.imageUrl)}
-                            shape="square"
-                          />
-                          <p className="text-[#111111] w-full text-[15px] font-roboto ml-[14px] truncate-2">
-                            {x.title}
-                          </p>
-                        </Link>
-                        <Button
-                          size="small"
-                          className={`${hovered !== x.id ? 'flex sm:hidden' : 'flex'}`}
-                          icon={<span className="icon-fi-rs-close text-caak-primary text-[13.5px] w-[13.5px]" />}
-                          type="link"
-                          onClick={() => {
-                            remove({ variables: { articleId: x.id } }).then(() => {
-                              refetch();
-                              message.success('Амжилттай устгалаа');
-                            });
-                          }}
-                          loading={removing}
+      <Popover
+        placement="bottomRight"
+        trigger="click"
+        overlayClassName="padding_zero paddin"
+        visible={savedVisible}
+        onVisibleChange={toggleSaving}
+        content={
+          <div>
+            <h3 className="text-[22px] leading-[25px] border-b border-[#D4D8D8] condMedium mb-1 pb-[14px] px-[16px] pt-[18px]">
+              Хадгалсан мэдээнүүд
+            </h3>
+            <div className="w-full max-w-[368px] pt-[6px] pb-[10px]">
+              {saved_articles.map((x, index) => {
+                if (index < 10) {
+                  return (
+                    <div
+                      key={index}
+                      onMouseEnter={() => setHovered(x.id)}
+                      onMouseLeave={() => setHovered(null)}
+                      className="flex flex-row items-center w-full justify-between px-[16px] hover:bg-[#EFEEEF] h-[64px]"
+                    >
+                      <Link onClick={hideSaved} className="flex flex-row" to={`/post/view/${x.id}`}>
+                        <Avatar
+                          className="min-w-[60px] max-w-[60px] h-[44px] object-cover"
+                          src={imagePath(x.imageUrl)}
+                          shape="square"
                         />
-                      </div>
-                    );
-                  }
-                })}
-              </div>
-              {totalSaved > 10 && (
-                <Link
-                  state={'saved'}
-                  to={{ pathname: `/profile/${me.id}` }}
-                  className="w-full h-[47px] cursor-pointer flex justify-center items-center bg-[#F5F5F5]"
-                >
-                  <p className="text-caak-primary font-medium text-[16px]">Бусад мэдээнүүд</p>
-                </Link>
-              )}
+                        <p className="text-[#111111] w-full text-[15px] font-roboto ml-[14px] truncate-2">{x.title}</p>
+                      </Link>
+                      <Button
+                        size="small"
+                        className={`${hovered !== x.id ? 'flex sm:hidden' : 'flex'}`}
+                        icon={<span className="icon-fi-rs-close text-caak-primary text-[13.5px] w-[13.5px]" />}
+                        type="link"
+                        onClick={() => {
+                          remove({ variables: { articleId: x.id } }).then(() => {
+                            refetch();
+                            message.success('Амжилттай устгалаа');
+                          });
+                        }}
+                        loading={removing}
+                      />
+                    </div>
+                  );
+                }
+              })}
             </div>
+            {totalSaved > 10 && (
+              <Link
+                state={'saved'}
+                to={{ pathname: `/profile/${me.id}` }}
+                className="w-full h-[47px] cursor-pointer flex justify-center items-center bg-[#F5F5F5]"
+              >
+                <p className="text-caak-primary font-medium text-[16px]">Бусад мэдээнүүд</p>
+              </Link>
+            )}
+          </div>
+        }
+      >
+        <Button
+          icon={
+            <Badge className="mt-[3px]" count={totalSaved} size="small" showZero={false} overflowCount={20}>
+              <FIcon
+                className={`icon-fi-rs-list-o text-[22px] ${
+                  transparent ? (isMobile ? 'text-caak-black' : 'text-white') : 'text-[#555555]'
+                }`}
+              />
+            </Badge>
           }
-        >
-          <Button
-            icon={
-              <Badge className="mt-[3px]" count={totalSaved} size="small" showZero={false} overflowCount={20}>
-                <FIcon
-                  className={`icon-fi-rs-list-o text-[22px] ${
-                    transparent ? (isMobile ? 'text-caak-black' : 'text-white') : 'text-[#555555]'
-                  }`}
-                />
-              </Badge>
-            }
-            className="border-0"
-            shape="circle"
-            type="ghost"
-          />
-        </Popover>
-      )}
+          className="border-0 sm:ml-[10px]"
+          shape="circle"
+          type="ghost"
+        />
+      </Popover>
       <Popover
         placement="bottomRight"
         trigger="click"
@@ -239,7 +235,7 @@ export default function UserInfo({ transparent }) {
             <Avatar
               src={imagePath(me.avatar)}
               size={34}
-              className="ml-[16px] cursor-pointer flex justify-center items-center "
+              className="ml-[20px] cursor-pointer flex justify-center items-center "
               shape="circle"
             />
           </div>
@@ -247,7 +243,7 @@ export default function UserInfo({ transparent }) {
           <div>
             <Avatar
               size={34}
-              className="ml-[16px] flex items-center bg-[#257CEE19] text-[#257CEE] text-[20px] cursor-pointer font-medium"
+              className="ml-[20px] flex items-center bg-[#257CEE19] text-[#257CEE] text-[20px] cursor-pointer font-medium"
             >
               {me?.firstName ? me?.firstName[0] : '?'}
             </Avatar>
