@@ -167,7 +167,7 @@ const Post = () => {
   if (fetching) return <Skeleton />;
 
   return (
-    <div className="pb-[100px]">
+    <div className="pb-[100px] px-[16px]">
       <div className="flex flex-row pb-[100px] justify-center w-full pt-[20px] xl:pt-[41px]">
         <PostMeta title={title} description={metaDescription} image={article.image} />
         <div className="w-full hidden xl:block max-w-[200px]">
@@ -259,7 +259,7 @@ const Post = () => {
             </div>
           </div>
         </div>
-        <div className="flex flex-col max-w-[960px] w-full items-center px-[16px] md:px-0">
+        <div className="flex flex-col max-w-[960px] w-full items-center">
           <Banner position="a1" />
           <div className="pt-0 md:pt-[40px] flex flex-col items-center max-w-[760px] w-full font-roboto md:mx-[100px]">
             <img
@@ -270,7 +270,7 @@ const Post = () => {
             <div className="flex flex-row gap-[15px]">
               {article.categories?.nodes?.map((x) => (
                 <Link key={x.id} to={`/category/${x.slug}`}>
-                  <HashTag className="text-center hidden md:block leading-[15px]">{x.name}</HashTag>
+                  <HashTag className="text-center hidden md:block leading-[15px] uppercase">{x.name}</HashTag>
                 </Link>
               ))}
             </div>
@@ -327,7 +327,7 @@ const Post = () => {
                   </TwitterShareButton>
                   <span
                     onClick={() => setSaving(true)}
-                    className="icon-fi-rs-bookmark cursor-pointer hover:text-[#111111] w-[32px] h-[32px] flex justify-center items-center rounded-[2px] hover:bg-[#EFEEEF] border border-[#EFEEEF] text-[#909090] text-[20px] ml-[17px]"
+                    className="icon-fi-rs-bookmark cursor-pointer w-[24px] h-[24px] flex justify-center items-center rounded-[2px] text-[#909090] text-[20px] ml-[17px]"
                   />
                 </div>
               </div>
@@ -477,7 +477,7 @@ const Post = () => {
             )}
           </div>
         </div>
-        <div className="w-[270px] hidden xl:block sticky top-[80px">
+        <div className="w-[270px] hidden xl:block">
           <div className={`rounded ${leftMenuSticky ? 'sticky top-[80px] fade-in-banner' : 'hidden'}`}>
             <Banner position="a3" />
           </div>

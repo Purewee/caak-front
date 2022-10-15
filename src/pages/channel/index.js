@@ -81,7 +81,7 @@ export default function Channel() {
   if (fetching) return <Skeleton />;
 
   return (
-    <div className="flex flex-col w-full items-center mb-[40px] px-[16px] sm:px-0">
+    <div className="flex flex-col w-full items-center mb-[100px] px-[16px] sm:px-0">
       <img
         className="w-[94px] h-[94px] rounded-full mt-[30px] md:mt-[51px]"
         alt={source.domain}
@@ -91,8 +91,8 @@ export default function Channel() {
         {source.name || source.domain}
       </p>
       <div className="flex flex-row items-center mt-[18px] text-[15px]">
-        <Statistic title="нийтлэл" value={count} className="mx-[24px] text-center" />
-        <Statistic title="дагагч" value={source.followersCount} className="mx-[24px] text-center" />
+        <Statistic title="нийтлэл" value={count} className="text-center" />
+        <Statistic title="дагагч" value={source.followersCount} className="ml-[20px] text-center" />
       </div>
       <div className="flex flex-row items-center mt-[20px]">
         {source.following ? (
@@ -114,7 +114,7 @@ export default function Channel() {
           <Button
             type="primary"
             loading={saving}
-            className="w-[90px] h-[34px] bg-caak-primary rounded-[4px] text-white text-[15px] font-bold"
+            className="w-[90px] h-[34px] bg-caak-primary rounded-[4px] text-white text-[15px] font-medium"
             onClick={() => {
               if (isAuth) {
                 follow().then(() => {
@@ -137,10 +137,32 @@ export default function Channel() {
         onChange={(e) => {
           setSort(e);
         }}
-        className="w-full flex items-center mt-[40px] border-b font-merri text-[18px]"
+        className="w-full max-w-[1310px] flex items-center mt-[40px] border-b border-[#EFEEEF] text-[18px]"
       >
-        <Tabs.TabPane tab={<span className="text-[24px] font-normal font-merri">ШИНЭ</span>} key="recent" />
-        <Tabs.TabPane tab={<span className="text-[24px] font-normal font-merri">ШИЛДЭГ</span>} key="top" />
+        <Tabs.TabPane
+          tab={
+            <p
+              className={`text-[18px] leading-[21px] font-bold ${
+                sort === 'recent' ? 'text-caak-black' : 'text-caak-darkGray'
+              }`}
+            >
+              ШИНЭ
+            </p>
+          }
+          key="recent"
+        />
+        <Tabs.TabPane
+          tab={
+            <p
+              className={`text-[18px] leading-[21px] font-bold ${
+                sort === 'top' ? 'text-caak-black' : 'text-caak-darkGray'
+              }`}
+            >
+              ШИЛДЭГ
+            </p>
+          }
+          key="top"
+        />
       </Tabs>
       <div className="max-w-[1310px] w-full flex flex-wrap justify-center 2xl:justify-start gap-x-[22px] gap-y-[40px] pt-[30px] md:pt-[70px]">
         {articles.map((post) => (
@@ -154,11 +176,12 @@ export default function Channel() {
             <Button
               block
               size="large"
-              className="font-roboto my-[24px] text-caak-primary border-caak-primary"
+              className="font-roboto font-medium mt-[24px] h-[74px] text-caak-primary border-caak-primary"
               onClick={() => setPage(page + 1)}
               loading={loading}
             >
-              Цааш үзэх
+              Илүү ихийг үзэх
+              <span className="icon-fi-rs-down-chevron text-[14px] ml-[8px]" />
             </Button>
           </Col>
         )}

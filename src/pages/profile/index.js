@@ -187,7 +187,7 @@ export default function Profile() {
           defaultActiveKey={location.state === 'saved' ? 'saved' : 'posts'}
           onChange={(e) => setSelected(e)}
           tabBarStyle={{ borderBottom: '1px solid #EFEEEF' }}
-          className="mb-[200px] font-condensed w-full border-t border-1"
+          className="mb-[100px] font-condensed w-full border-t border-1"
         >
           <Tabs.TabPane
             key="posts"
@@ -226,11 +226,12 @@ export default function Profile() {
               <Button
                 block
                 size="large"
-                className="font-roboto border-caak-primary text-caak-primary mt-[20px]"
+                className="font-roboto font-medium h-[74px] border-caak-primary text-caak-primary mt-[20px]"
                 onClick={() => setPage(page + 1)}
                 loading={loading}
               >
-                Цааш үзэх
+                Илүү ихийг үзэх
+                <span className="icon-fi-rs-down-chevron text-[14px] ml-[8px]" />
               </Button>
             </div>
           </Tabs.TabPane>

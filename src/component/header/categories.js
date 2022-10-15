@@ -112,7 +112,7 @@ const Categories = () => {
                               </p>
                             ) : (
                               <Link
-                                className="text-[#555555] font-roboto hover:text-caak-primary leading-[20px] hover:tracking-[0.23px] tracking-[0.24px] text-[17px]"
+                                className="text-[#555555] condMedium hover:text-caak-primary leading-[20px] hover:tracking-[0.23px] tracking-[0.24px] text-[17px]"
                                 to={`/category/${x.slug}`}
                                 onClick={hide}
                               >
@@ -122,7 +122,7 @@ const Categories = () => {
                             {x.childs?.nodes?.map((data, index) => {
                               return (
                                 <Link
-                                  className="text-[#555555] font-roboto hover:text-caak-primary leading-[20px] hover:tracking-[0.23px] tracking-[0.24px] text-[17px]"
+                                  className="text-[#555555] font-condensed hover:text-caak-primary leading-[20px] hover:tracking-[0.23px] tracking-[0.24px] text-[17px]"
                                   to={`/category/${data.slug}`}
                                   key={index}
                                   onClick={hide}

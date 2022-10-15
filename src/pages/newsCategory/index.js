@@ -75,8 +75,8 @@ export default function Category() {
   return (
     <div className="flex justify-center pt-[20px] md:pt-[51px] pb-[100px] px-[16px] md:px-[0px]">
       <div className="max-w-[1310px] w-full flex flex-col items-center">
-        <HashTag className="uppercase">Мэдээний төрөл</HashTag>
-        <div className="flex flex-col sm:flex-row items-center justify-center relative w-full">
+        <p className="uppercase text-caak-primary font-medium text-[13px] leading-[15px]">Мэдээний төрөл</p>
+        <div className="flex flex-col sm:flex-row items-center justify-center relative w-full mt-[10px]">
           <p className="text-[38px] font-condensed font-bold leading-[44px] uppercase">{category.name}</p>
           <div className="flex flex-row items-center mt-[20px] sm:mt-0 sm:absolute top-0 right-0">
             {category.following ? (
@@ -98,7 +98,8 @@ export default function Category() {
               <Button
                 type="primary"
                 loading={saving}
-                className="w-[90px] h-[34px] bg-caak-primary rounded-[4px] text-white text-[15px] font-bold"
+                style={{ border: '1px solid #FF6600', background: '#FF6600 0% 0% no-repeat padding-box' }}
+                className="w-[90px] h-[34px] bg-caak-primary rounded-[4px] text-white text-[15px] font-medium"
                 onClick={() => {
                   if (isAuth) {
                     follow().then(() => {
@@ -113,7 +114,7 @@ export default function Category() {
               </Button>
             )}
             <div className="w-[42px] h-[34px] flex justify-center items-center border rounded-[4px] ml-[10px] cursor-pointer">
-              <span className="icon-fi-rs-more-ver rotate-90 text-[18px]" />
+              <span className="icon-fi-rs-more-ver rotate-90 text-[20px]" />
             </div>
           </div>
         </div>
@@ -121,38 +122,40 @@ export default function Category() {
           <Statistic title="нийтлэл" value={count} className="mx-[24px] text-center" />
           <Statistic title="дагагч" value={category.followersCount} className="text-center font-condensed" />
         </div>
-        <Tabs
-          defaultActiveKey="recent"
-          onChange={(e) => {
-            setSort(e);
-          }}
-          className="mt-[35px]"
-        >
-          <Tabs.TabPane
-            tab={
-              <span
-                className={`text-[18px] font-bold leading-[21px] ${
-                  sort === 'recent' ? 'text-[#111111]' : 'text-[#555555]'
-                }`}
-              >
-                ШИНЭ
-              </span>
-            }
-            key="recent"
-          />
-          <Tabs.TabPane
-            tab={
-              <span
-                className={`text-[18px] font-bold leading-[21px] ${
-                  sort === 'top' ? 'text-[#111111]' : 'text-[#555555]'
-                }`}
-              >
-                ШИЛДЭГ
-              </span>
-            }
-            key="top"
-          />
-        </Tabs>
+        <div className="border-b border-t border-[#EFEEEF] w-full flex justify-center mt-[35px]">
+          <Tabs
+            defaultActiveKey="recent"
+            onChange={(e) => {
+              setSort(e);
+            }}
+            className="pt-[6px]"
+          >
+            <Tabs.TabPane
+              tab={
+                <span
+                  className={`text-[18px] font-bold leading-[21px] ${
+                    sort === 'recent' ? 'text-[#111111]' : 'text-[#555555]'
+                  }`}
+                >
+                  ШИНЭ
+                </span>
+              }
+              key="recent"
+            />
+            <Tabs.TabPane
+              tab={
+                <span
+                  className={`text-[18px] font-bold leading-[21px] ${
+                    sort === 'top' ? 'text-[#111111]' : 'text-[#555555]'
+                  }`}
+                >
+                  ШИЛДЭГ
+                </span>
+              }
+              key="top"
+            />
+          </Tabs>
+        </div>
         <div className="max-w-[1310px] w-full flex flex-wrap justify-center 2xl:justify-start gap-x-[22px] gap-y-[40px] pt-[30px] md:pt-[70px]">
           {articles.map((post) => (
             <Col key={post.id}>
@@ -165,11 +168,12 @@ export default function Category() {
               <Button
                 block
                 size="large"
-                className="font-roboto mt-[24px] text-caak-primary border-caak-primary"
+                className="font-roboto font-medium mt-[24px] h-[74px] text-caak-primary border-caak-primary"
                 onClick={() => setPage(page + 1)}
                 loading={loading}
               >
-                Цааш үзэх
+                Илүү ихийг үзэх
+                <span className="icon-fi-rs-down-chevron text-[14px] ml-[8px]" />
               </Button>
             </Col>
           )}

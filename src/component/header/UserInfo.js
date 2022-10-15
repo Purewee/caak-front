@@ -96,11 +96,11 @@ export default function UserInfo({ transparent }) {
         visible={savedVisible}
         onVisibleChange={toggleSaving}
         content={
-          <div>
+          <div className="w-screen sm:w-[400px]">
             <h3 className="text-[22px] leading-[25px] border-b border-[#D4D8D8] condMedium mb-1 pb-[14px] px-[16px] pt-[18px]">
               Хадгалсан мэдээнүүд
             </h3>
-            <div className="w-full max-w-[368px] pt-[6px] pb-[10px]">
+            <div className="w-full pt-[6px] pb-[10px]">
               {saved_articles.map((x, index) => {
                 if (index < 10) {
                   return (

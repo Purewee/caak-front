@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { FIcon } from '../icon';
 import useMediaQuery from '../navigation/useMediaQuery';
 
-export default function Search({ transparent }) {
+export default function Search({ transparent, drawer }) {
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
   const isMobile = useMediaQuery('screen and (max-width: 670px)');
@@ -15,7 +15,13 @@ export default function Search({ transparent }) {
         icon={
           <FIcon
             className={`icon-fi-rs-search text-[22px] ${
-              transparent ? (isMobile ? 'text-caak-black' : 'text-white') : 'text-[#555555]'
+              transparent
+                ? isMobile
+                  ? 'text-caak-black'
+                  : 'text-white'
+                : drawer
+                ? 'text-caak-black'
+                : 'text-[#555555]'
             }`}
           />
         }

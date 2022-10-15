@@ -3,7 +3,7 @@ import StoryItem from '../../component/story/Story';
 import { ESService } from '../../lib/esService';
 import { AppContext } from '../../App';
 import { Link } from 'react-router-dom';
-import moment from 'moment';
+import AllStory from '../../images/allstory.png';
 
 export default function AllStories() {
   // prettier-ignore
@@ -84,18 +84,18 @@ export default function AllStories() {
   // prettier-ignore
   return (
     <div className='flex flex-col items-center w-full px-[16px]'>
-        <p className='text-[20px] md:text-[36px] md:leading-[42px] text-[#111111] font-merri font-bold mt-[30px] md:mt-[101px]'>БҮХ СТОРИ</p>
+        <img src={AllStory} className="mt-[30px] md:mt-[101px] h-[20px] sm:h-[42px]" />
         {todayStory.length > 0 && (
           <div className='sm:px-[30px] mt-[20px] w-full flex flex-col items-center'>
             <div className="w-full">
-                <div className='flex flex-row items-center md:ml-[96px]'>
+                <div className='flex flex-row items-center'>
                     <span className='icon-fi-rs-star-f text-[#FF6600] text-[20px] mr-[10px]' />
                     <p className='font-condensed text-[26px] leading-[30px] font-bold'>ӨНӨӨДӨР</p>
                 </div>
             </div>
             <div
                 className={
-                    "flex flex-col max-w-[400px] sm:max-w-[600px] md:max-w-[700px] lg:max-w-[1002px] xl:max-w-[1202px] 2xl:max-w-[1502px] w-full justify-center relative"
+                    "flex flex-col max-w-[1502px] w-full justify-center relative"
                 }
             >
                 {activeIndexToday + 3 < todayStory.length - 1 && (
@@ -145,14 +145,14 @@ export default function AllStories() {
         {yesterdayStory.length > 0 && (
           <div className='mt-[20px] md:mt-[80px] sm:px-[30px] w-full flex flex-col items-center'>
             <div className="w-full">
-                <div className='flex flex-row items-center md:ml-[96px]'>
+                <div className='flex flex-row items-center'>
                     <span className='icon-fi-rs-time-f text-[#909090] text-[20px] mr-[10px]' />
                     <p className='font-condensed text-[26px] leading-[30px] font-bold'>ӨЧИГДӨР</p>
                 </div>
             </div>
             <div
                 className={
-                    "flex flex-col max-w-[400px] sm:max-w-[600px] md:max-w-[700px] lg:max-w-[1002px] xl:max-w-[1202px] 2xl:max-w-[1502px] w-full justify-center relative"
+                    "flex flex-col max-w-[1502px] w-full justify-center relative"
                 }
             >
                 {activeIndexYes + 3 < yesterdayStory.length - 1 && (
@@ -201,14 +201,14 @@ export default function AllStories() {
         )}
         <div className='mt-[20px] md:mt-[80px] sm:px-[30px] w-full flex flex-col items-center'>
             <div className="w-full">
-                <div className='flex flex-row items-center md:ml-[96px]'>
+                <div className='flex flex-row items-center'>
                     <span className='icon-fi-rs-time-f text-[#909090] text-[20px] mr-[10px]' />
                     <p className='font-condensed text-[26px] leading-[30px] font-bold'>ЭНЭ ДОЛОО ХОНОГ</p>
                 </div>
             </div>
             <div
                 className={
-                    "flex flex-col max-w-[400px] sm:max-w-[600px] md:max-w-[700px] lg:max-w-[1002px] xl:max-w-[1202px] 2xl:max-w-[1502px] w-full justify-center relative"
+                    "flex flex-col max-w-[1502px] w-full justify-center relative"
                 }
             >
                 {activeIndexWeek + 3 < stories.length - 1 && (

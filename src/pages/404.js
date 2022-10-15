@@ -10,18 +10,21 @@ export default function NotFound() {
   const isMobile = useMediaQuery('screen and (max-width: 640px)');
   return (
     <div className="flex flex-col w-full items-center pb-[100px]">
-      <Lottie
-        options={{
-          animationData: notfound,
-          loop: true,
-          autoplay: true,
-          rendererSettings: {
-            preserveAspectRatio: 'xMidYMid slice',
-          },
-        }}
-        height={isMobile ? 300 : 400}
-        width={isMobile ? 300 : 400}
-      />
+      <div className="relative flex justify-center">
+        <Lottie
+          options={{
+            animationData: notfound,
+            loop: true,
+            autoplay: true,
+            rendererSettings: {
+              preserveAspectRatio: 'xMidYMid slice',
+            },
+          }}
+          height={isMobile ? 300 : 400}
+          width={isMobile ? 300 : 400}
+        />
+        <p className="condMedium text-[60px] sm:text-[80px] leading-[94px] absolute bottom-[55px]">404</p>
+      </div>
       <p className="text-caak-black text-[32px] leading-[38px] font-condensed font-bold mt-[5px]">Хуудас олдсонгүй</p>
       <p className="text-caak-darkGray text-[15px] text-center leading-[20px] mt-[28px] px-[16px] sm:px-0">
         Тухайн хуудасны линк устгагдсан эсвэл солигдсон байж болзошгүй.

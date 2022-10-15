@@ -1,13 +1,11 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { Tabs, Statistic, Button, Row, Col, Skeleton } from 'antd';
+import { Tabs, Statistic, Button, Col, Skeleton } from 'antd';
 import { ESService } from '../../lib/esService';
 import { gql, useMutation, useQuery } from '@apollo/client';
 import { useParams } from 'react-router-dom';
 import PostCard from '../../component/card/Post';
-import { HashTag, Title } from '../post/view/wrapper';
 import { AppContext } from '../../App';
 import { useAuth } from '../../context/AuthContext';
-import { BellOutlined, HeartOutlined } from '@ant-design/icons';
 
 const CATEGORY = gql`
   query getTag($slug: String) {
@@ -73,14 +71,17 @@ export default function Category() {
 
   return (
     <div className="flex justify-center pt-[20px] md:pt-[51px] pb-[100px] px-[16px] md:px-[0px]">
-      <div className="max-w-[1310px] w-full flex flex-col items-center leading-[44px]">
-        <HashTag className="uppercase">Таг</HashTag>
-        <p className="font-condensed font-bold text-[38px]">#{category.name}</p>
-        <div className="flex">
-          <Statistic title="нийтлэл" value={count} className="mx-[24px] text-center" />
-          <Statistic title="дагагч" value={category.followersCount} className="text-center font-condensed" />
+      <div className="max-w-[1310px] w-full flex flex-col items-center relative">
+        <p className="font-condensed font-bold text-[38px] leading-[44px] uppercase">#{category.name}</p>
+        <div className="flex mt-[10px] font-roboto">
+          <Statistic title="нийтлэл" value={count} className="text-center text-[15px] leading-[18px]" />
+          <Statistic
+            title="дагагч"
+            value={category.followersCount}
+            className="text-center text-[15px] leading-[18px] ml-[20px]"
+          />
         </div>
-        <div className="flex flex-row items-center mt-[20px]">
+        <div className="flex flex-row items-center absolute top-0 right-0">
           {category.following ? (
             <button
               className="w-[90px] h-[34px] bg-caak-darkGray flex justify-center items-center rounded-[4px] text-white text-[15px] font-bold"
@@ -123,10 +124,32 @@ export default function Category() {
           onChange={(e) => {
             setSort(e);
           }}
-          className="mt-[48px]"
+          className="mt-[48px] flex items-center w-full border-t border-b"
         >
-          <Tabs.TabPane tab={<span className="text-[24px] font-normal font-merri">ШИНЭ</span>} key="recent" />
-          <Tabs.TabPane tab={<span className="text-[24px] font-normal font-merri">ШИЛДЭГ</span>} key="top" />
+          <Tabs.TabPane
+            tab={
+              <span
+                className={`text-[18px] font-bold leading-[21px] ${
+                  sort === 'recent' ? 'text-[#111111]' : 'text-[#555555]'
+                }`}
+              >
+                ШИНЭ
+              </span>
+            }
+            key="recent"
+          />
+          <Tabs.TabPane
+            tab={
+              <span
+                className={`text-[18px] font-bold leading-[21px] ${
+                  sort === 'top' ? 'text-[#111111]' : 'text-[#555555]'
+                }`}
+              >
+                ШИЛДЭГ
+              </span>
+            }
+            key="top"
+          />
         </Tabs>
         <div className="max-w-[1310px] w-full flex flex-wrap justify-center xl:justify-start gap-x-[22px] gap-y-[40px] pt-[30px] md:pt-[70px]">
           {articles.map((post) => (
@@ -140,11 +163,12 @@ export default function Category() {
               <Button
                 block
                 size="large"
-                className="font-roboto mt-[24px] text-caak-primary border-caak-primary"
+                className="font-roboto font-medium mt-[24px] h-[74px] text-caak-primary border-caak-primary"
                 onClick={() => setPage(page + 1)}
                 loading={loading}
               >
-                Цааш үзэх
+                Илүү ихийг үзэх
+                <span className="icon-fi-rs-down-chevron text-[14px] ml-[8px]" />
               </Button>
             </Col>
           )}

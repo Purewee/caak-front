@@ -54,14 +54,14 @@ export default function DrawerMenu({ isMobile }) {
         visible={open}
         width={380}
         placement="left"
+        headerStyle={{ padding: 30 }}
         onClose={() => setOpen(false)}
         className="font-condensed caak-menu"
         closeIcon={false}
         bodyStyle={{ paddingInline: 0, paddingTop: 0, scrollbarWidth: 0 }}
         title={
           <div className="flex flex-row items-center justify-between w-full">
-            {/* <FIcon className="icon-fi-rs-search" /> */}
-            <Search isMobile={isMobile} />
+            <Search drawer />
             <Logo />
             <FIcon
               className="icon-fi-rs-close"
@@ -72,14 +72,14 @@ export default function DrawerMenu({ isMobile }) {
           </div>
         }
       >
-        {categories.map((x, index) => {
-          return (
-            x.parent === null && (
-              <Collapse key={index} className="w-full custom" bordered={false} accordion={true}>
+        <Collapse className="w-full custom" bordered={false} accordion>
+          {categories.map((x, index) => {
+            return (
+              x.parent === null && (
                 <Collapse.Panel
                   header={
                     <div
-                      onClick={() => (selected === null ? setSelected(x.id) : setSelected(null))}
+                      onClick={() => setSelected(x.id)}
                       className={`flex items-center ${
                         selected !== x.id ? 'justify-between pl-[40px]' : 'pl-[20px]'
                       } cursor-pointer w-full py-[20px] border-b pr-[30px] text-caak-black hover:text-[#555555]`}
@@ -87,7 +87,7 @@ export default function DrawerMenu({ isMobile }) {
                       {selected === x.id && (
                         <span className="icon-fi-rs-down-chevron text-[#FF6600] text-[16px] rotate-90 mr-[8px]" />
                       )}
-                      <p className="text-[20px] condMedium leading-[24px]">{x.name}</p>
+                      <p className="text-[20px] font-condensed leading-[24px]">{x.name}</p>
                       {selected !== x.id && (
                         <span className="icon-fi-rs-down-chevron text-[#FF6600] text-[16px] -rotate-90" />
                       )}
@@ -101,7 +101,7 @@ export default function DrawerMenu({ isMobile }) {
                       return (
                         <Link onClick={() => setOpen(false)} key={index} to={`/category/${data.slug}`}>
                           <div className="flex items-center cursor-pointer justify-between w-full py-[20px] border-b">
-                            <p className="text-[18px] font-roboto leading-[21px] text-[#111111]">{data.name}</p>
+                            <p className="text-[18px] font-roboto leading-[21px] text-[#555555]">{data.name}</p>
                             <span className="icon-fi-rs-down-chevron text-[#BBBEBE] text-[16px] -rotate-90" />
                           </div>
                         </Link>
@@ -109,10 +109,10 @@ export default function DrawerMenu({ isMobile }) {
                     })}
                   </div>
                 </Collapse.Panel>
-              </Collapse>
-            )
-          );
-        })}
+              )
+            );
+          })}
+        </Collapse>
         <Link
           onClick={() => setOpen(false)}
           className="mt-[40px] text-caak-black hover:text-caak-darkGray flex flex-row items-center cursor-pointer pl-[40px] pr-[30px]"
