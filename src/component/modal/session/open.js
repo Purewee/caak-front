@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Modal, Button, Row, Col, Divider } from 'antd';
 import logoIcon from '../../../images/New-Logo.svg';
-import { FacebookFilled, GoogleCircleFilled, MailFilled } from '@ant-design/icons';
+import Google from '../../../assets/images/fi-rs-google.svg';
 import { useNavigate } from 'react-router-dom';
 import { FIcon } from '../../icon';
 
@@ -55,7 +55,12 @@ function OpenStep({ setStep }) {
             >
               Facebook
             </Button>
-            <Button block className="h-[44px]" icon={<GoogleCircleFilled />} size="large">
+            <Button
+              block
+              className="h-[44px]"
+              icon={<img src={Google} className="w-[26px] absolute left-[18px] top-[9px]" />}
+              size="large"
+            >
               Google
             </Button>
             <Divider>

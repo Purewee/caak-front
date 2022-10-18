@@ -78,7 +78,7 @@ function LoginWithFB() {
     <Button
       size="large"
       loading={loading}
-      icon={<FacebookFilled />}
+      icon={<span className="icon-fi-rs-fb w-[26px] h-[26px] absolute text-[24px] left-[18px] top-[9px]" />}
       block
       onClick={onClickFbBtn}
       className="bg-[#1876F3] mb-4 text-white border-0 hover:border"

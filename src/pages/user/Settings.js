@@ -12,6 +12,16 @@ import { Link } from 'react-router-dom';
 import AddSourceModal from '../../component/modal/AddSourceModal';
 import AddTagsModal from '../../component/modal/AddTagsModal';
 
+const colors = [
+  'rgb(170, 109, 228, 0.06)',
+  'rgb(255, 102, 0, 0.06)',
+  'rgb(59, 68, 145, 0.06)',
+  'rgb(37, 124, 238, 0.06)',
+  'rgb(55, 175, 55, 0.06)',
+];
+
+const colors1 = ['#AA6DE4', '#FF6600', '#3B4491', '#257CEE', '#37AF37'];
+
 const ME = gql`
   query Me {
     me {
@@ -37,6 +47,9 @@ const ME = gql`
             name
             slug
             following
+            articlesCount
+            followersCount
+            icon
           }
           ... on Tag {
             id
@@ -74,12 +87,6 @@ const FOLLOW_CATEGORY = gql`
   }
 `;
 
-const FOLLOW_USER = gql`
-  mutation Follow($id: ID!) {
-    toggleFollow(input: { targetType: "user", targetId: $id })
-  }
-`;
-
 const FOLLOW_SOURCE = gql`
   mutation Follow($id: ID!) {
     toggleFollow(input: { targetType: "source", targetId: $id })
@@ -105,7 +112,6 @@ export default function Settings() {
   const [update, { loading: saving }] = useMutation(UPDATE, { context: { upload: true } });
   const [follow_category] = useMutation(FOLLOW_CATEGORY);
   const [follow_source] = useMutation(FOLLOW_SOURCE);
-  const [follow_user] = useMutation(FOLLOW_USER);
   const [follow_tag] = useMutation(FOLLOW_TAG);
 
   const me = data?.me || {};
@@ -351,47 +357,61 @@ export default function Settings() {
                       >
                         {me.follows?.filter((x) => x.target.__typename === 'Source').length > 0 ? (
                           <div className="border-t w-full p-[10px] sm:p-[30px]" id="source">
-                            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 justify-start gap-[10px]">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 justify-start gap-[10px]">
                               {me.follows
                                 ?.filter((x) => x.target.__typename === 'Source')
                                 .map(({ target: x }) => (
-                                  <div key={x} className="flex flex-col">
-                                    <Link
-                                      to={`/channel/${x.id}`}
-                                      className="w-full h-[100px] relative items-center justify-center rounded-md cursor-pointer overflow-hidden"
-                                    >
-                                      {x.cover && (
-                                        <div
-                                          style={{ backgroundImage: `url(${imagePath(x.cover)})` }}
-                                          className="w-full h-full bg-center bg-cover bg-no-repeat"
-                                        />
-                                      )}
-                                      <span className="absolute top-0 h-full w-full flex items-center justify-center text-white text-[15px] font-medium bg-black bg-opacity-50 rounded-md">
+                                  <div
+                                    key={x.id}
+                                    className="h-[224px] bg-[#F5F5F5] rounded-[4px] flex flex-col items-center px-[20px] justify-between py-[20px]"
+                                  >
+                                    <div className="flex flex-col items-center">
+                                      <Link to={`/channel/${x.id}`}>
+                                        <Avatar className="h-[64px] w-[64px]" src={imagePath(x.icon)} />
+                                      </Link>
+                                      <Link
+                                        className="text-black font-medium text-[17px] leading-[23px] mt-[8px]"
+                                        to={`/channel/${x.id}`}
+                                      >
                                         {x.name}
-                                      </span>
-                                    </Link>
+                                      </Link>
+                                      <div className="flex flex-row mt-[15px]">
+                                        <p className="text-[#555555] text-[15px] leading-[20px]">
+                                          <span className="text-caak-black font-medium">{x.articlesCount || 0}</span>
+                                          &nbsp;Пост
+                                        </p>
+                                        <p className="text-[#555555] text-[15px] leading-[20px] ml-[10px]">
+                                          <span className="text-caak-black font-medium">{x.followersCount || 0}</span>
+                                          &nbsp;Дагагчид
+                                        </p>
+                                      </div>
+                                    </div>
                                     {x.following ? (
                                       <button
-                                        className="w-full h-[34px] mt-[8px] bg-[#EFEEEF] rounded-[4px] text-[#909090] text-[15px] font-medium"
+                                        className="w-[90px] h-[34px] bg-[#FFFFFF] rounded-[4px] text-[#909090] text-[15px] font-bold"
                                         onClick={() => {
                                           if (isAuth) {
                                             follow_source({ variables: { id: x.id } }).then(() => {
                                               refetch().then(console.log);
                                             });
+                                          } else {
+                                            openModal('login');
                                           }
                                         }}
                                       >
-                                        ДАГАСАН
+                                        Дагасан
                                       </button>
                                     ) : (
                                       <Button
                                         type="primary"
-                                        className="w-[172px] h-[34px] mt-[8px] bg-caak-primary rounded-[4px] text-white text-[15px] font-bold"
+                                        className="w-[90px] h-[34px] bg-caak-primary rounded-[4px] text-white text-[15px] font-bold"
                                         onClick={() => {
                                           if (isAuth) {
                                             follow_source({ variables: { id: x.id } }).then(() => {
                                               refetch().then(console.log);
                                             });
+                                          } else {
+                                            openModal('login');
                                           }
                                         }}
                                       >
@@ -425,58 +445,66 @@ export default function Settings() {
                             <div className="flex flex-wrap justify-center sm:justify-start gap-[10px]">
                               {me.follows
                                 ?.filter((x) => x.target.__typename === 'Tag')
-                                .map(({ target: x }) => (
-                                  <div
-                                    className="w-[232px] h-[124px] rounded-[4px] border border-[#EFEEEF] p-[16px]"
-                                    key={x.id}
-                                  >
-                                    <div className="flex flex-row">
-                                      <span className="h-[46px] w-[46px] rounded-[4px] bg-caak-primary bg-opacity-10 flex items-center justify-center text-[28px] font-medium text-caak-primary">
-                                        #
-                                      </span>
-                                      <div className="ml-[14px] flex flex-col">
-                                        <Link
-                                          to={`/tags/${x.slug}`}
-                                          className="text-caak-black text-[15px] font-medium"
+                                .map(({ target: x }) => {
+                                  const random = Math.floor(Math.random() * 5);
+                                  const color = colors[random];
+                                  const color1 = colors1[random];
+                                  return (
+                                    <div
+                                      className="w-[232px] h-[124px] rounded-[4px] border border-[#EFEEEF] p-[16px]"
+                                      key={x.id}
+                                    >
+                                      <div className="flex flex-row">
+                                        <span
+                                          style={{ color: color1, backgroundColor: color }}
+                                          className="h-[46px] w-[46px] rounded-[4px] flex items-center justify-center text-[28px] font-medium"
                                         >
-                                          #{x.name}
-                                        </Link>
-                                        <span className="text-[#707070] text-[13px] leading-[15px]">
-                                          {x.articlesCount} Мэдээтэй
+                                          #
                                         </span>
+                                        <div className="ml-[14px] flex flex-col">
+                                          <Link
+                                            to={`/tags/${x.slug}`}
+                                            className="text-caak-black text-[15px] font-medium"
+                                          >
+                                            #{x.name}
+                                          </Link>
+                                          <span className="text-[#707070] text-[13px] leading-[15px]">
+                                            {x.articlesCount} Мэдээтэй
+                                          </span>
+                                        </div>
                                       </div>
+                                      {x.following ? (
+                                        <button
+                                          className="w-full h-[34px] mt-[12px] bg-[#EFEEEF] rounded-[4px] text-[#909090] text-[15px] font-medium"
+                                          onClick={() => {
+                                            if (isAuth) {
+                                              follow_tag({ variables: { id: x.id } }).then(() => {
+                                                refetch().then(console.log);
+                                              });
+                                            }
+                                          }}
+                                        >
+                                          ДАГАСАН
+                                        </button>
+                                      ) : (
+                                        <Button
+                                          type="primary"
+                                          loading={follow_saving}
+                                          className="w-full h-[34px] mt-[12px] bg-caak-primary rounded-[4px] text-white text-[15px] font-bold"
+                                          onClick={() => {
+                                            if (isAuth) {
+                                              follow_tag({ variables: { id: x.id } }).then(() => {
+                                                refetch().then(console.log);
+                                              });
+                                            }
+                                          }}
+                                        >
+                                          Дагах
+                                        </Button>
+                                      )}
                                     </div>
-                                    {x.following ? (
-                                      <button
-                                        className="w-full h-[34px] mt-[12px] bg-[#EFEEEF] rounded-[4px] text-[#909090] text-[15px] font-medium"
-                                        onClick={() => {
-                                          if (isAuth) {
-                                            follow_tag({ variables: { id: x.id } }).then(() => {
-                                              refetch().then(console.log);
-                                            });
-                                          }
-                                        }}
-                                      >
-                                        ДАГАСАН
-                                      </button>
-                                    ) : (
-                                      <Button
-                                        type="primary"
-                                        loading={follow_saving}
-                                        className="w-full h-[34px] mt-[12px] bg-caak-primary rounded-[4px] text-white text-[15px] font-bold"
-                                        onClick={() => {
-                                          if (isAuth) {
-                                            follow_tag({ variables: { id: x.id } }).then(() => {
-                                              refetch().then(console.log);
-                                            });
-                                          }
-                                        }}
-                                      >
-                                        Дагах
-                                      </Button>
-                                    )}
-                                  </div>
-                                ))}
+                                  );
+                                })}
                             </div>
                           </div>
                         ) : (

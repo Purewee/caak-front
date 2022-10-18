@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { message, Modal, Radio, List } from 'antd';
+import { message, Modal, Radio, List, Button } from 'antd';
 import { gql, useQuery, useMutation } from '@apollo/client';
 import { useAuth } from '../../context/AuthContext';
 
@@ -32,46 +32,64 @@ export default function ReportModal({ post, toggle }) {
   return (
     <Modal
       visible
-      width={600}
-      onCancel={toggle}
-      afterClose={toggle}
+      width={480}
       confirmLoading={sending || loading}
-      onOk={() => {
-        if (isAuth) {
-          sendReport({ variables: { typeId } }).then(() => {
-            message.success('Таны хүсэлтийг хүлээн авлаа.');
-            toggle();
-          });
-        } else {
-          openModal('login');
-        }
-      }}
-      title={<p className="text-[26px] font-condensed font-bold leading-[30px]">Мэдээг репортлох</p>}
+      bodyStyle={{ padding: 0 }}
+      closable={false}
+      footer={false}
+      title={<p className="text-[26px] font-condensed font-bold leading-[32px]">Мэдээг репортлох</p>}
     >
-      <List
-        grid={{ column: 2, gutter: 0 }}
-        dataSource={reportTypes}
-        renderItem={(x) => {
-          return (
-            <List.Item key={x.id} className="font-merri">
-              <Radio
-                id={x.id}
-                onChange={(e) => {
-                  if (e.target.checked) {
-                    setTypeId(x.id);
-                  }
-                }}
-                value={x.id}
-                checked={typeId === x.id}
-                name="report"
-              />
-              <label className="cursor-pointer text-15px" htmlFor={x.id}>
-                {x.name}
-              </label>
-            </List.Item>
-          );
-        }}
-      />
+      <div>
+        <List
+          grid={{ column: 2, gutter: 0 }}
+          style={{ padding: 20 }}
+          dataSource={reportTypes}
+          renderItem={(x) => {
+            return (
+              <List.Item key={x.id}>
+                <Radio
+                  id={x.id}
+                  onChange={(e) => {
+                    if (e.target.checked) {
+                      setTypeId(x.id);
+                    }
+                  }}
+                  value={x.id}
+                  checked={typeId === x.id}
+                  name="report"
+                />
+                <label className="cursor-pointer font-roboto text-[15px] leading-[20px] text-[#111111]" htmlFor={x.id}>
+                  {x.name}
+                </label>
+              </List.Item>
+            );
+          }}
+        />
+        <div className="border-t py-[18px] flex flex-row items-center justify-end pr-[24px]">
+          <Button
+            onClick={toggle}
+            className="w-[76px] h-[34px] border border-[#D4D8D8] hover:border-[#D4D8D8] rounded-[4px] text-[15px] text-caak-black hover:text-caak-black font-medium font-roboto"
+          >
+            Болих
+          </Button>
+          <Button
+            onClick={() => {
+              if (isAuth) {
+                sendReport({ variables: { typeId } }).then(() => {
+                  message.success('Таны хүсэлтийг хүлээн авлаа.');
+                  toggle();
+                });
+              } else {
+                openModal('login');
+              }
+            }}
+            className="w-[82px] h-[34px] rounded-[4px] text-[15px] font-medium font-roboto ml-[10px]"
+            type="primary"
+          >
+            Илгээх
+          </Button>
+        </div>
+      </div>
     </Modal>
   );
 }

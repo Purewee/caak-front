@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { Form, Modal, Input, Button, message, Divider } from 'antd';
-import { CheckOutlined, FacebookFilled, GoogleCircleFilled } from '@ant-design/icons';
+import { CheckOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
 import { loginWithPassword } from '../../../utility/WithApolloProvider';
 import { useAuth } from '../../../context/AuthContext';
 import LoginWithFB from './facebook';
+import Google from '../../../assets/images/fi-rs-google.svg';
 
 function LoginStep({ setStep }) {
   const navigate = useNavigate();
@@ -23,7 +24,12 @@ function LoginStep({ setStep }) {
         <div className="p-[40px]">
           <p className="my-[12px] text-[28px] font-condensed text-[#111111] text-center font-bold">Нэвтрэх</p>
           <LoginWithFB />
-          <Button block icon={<GoogleCircleFilled />} size="large">
+          <Button
+            block
+            className="h-[44px] font-medium text-caak-black"
+            icon={<img src={Google} className="w-[26px] absolute left-[18px] top-[9px]" />}
+            size="large"
+          >
             Google
           </Button>
           <Divider>

@@ -600,3 +600,15 @@
 .story-linear {
   background: transparent linear-gradient(180deg, #00000000 0%, #000000B2 100%) 0% 0% no-repeat padding-box;;
 }
+
+.ant-radio-checked .ant-radio-inner{
+  border-color: #3B4491 !important ;
+}
+
+.ant-radio-checked .ant-radio-inner:after{
+  background-color: #3B4491;
+}
+
+.ant-radio:hover .ant-radio-inner {
+  border-color: #3B4491 ;
+}

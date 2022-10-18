@@ -3,10 +3,13 @@ import { Input, Form, Button, Avatar, Tabs, Comment, Skeleton, Modal } from 'ant
 import AvatarSvg from '../../../assets/images/avatar.svg';
 import { useMutation, useQuery } from '@apollo/client';
 import { ADD_COMMENT, COMMENTS, REACT_COMMENT } from './_gql';
+import { useAuth } from '../../../context/AuthContext';
 import { BlockTitle } from './wrapper';
 import moment from 'moment';
 import { FIcon } from '../../../component/icon';
 import { DownOutlined } from '@ant-design/icons';
+import { ME } from './_gql';
+import { imagePath } from '../../../utility/Util';
 
 const SORTS = {
   recent: { direction: 'desc', field: 'createdAt' },
@@ -20,6 +23,9 @@ export default function Comments({ articleId, refProp }) {
   const { data, loading, refetch, fetchMore } = useQuery(COMMENTS, { variables: { articleId, sort: SORTS[sort] } });
   const comments = data?.article?.comments;
   const pageInfo = comments?.pageInfo;
+  const { data: loggedUser } = useQuery(ME);
+  const { isAuth } = useAuth();
+  const me = loggedUser?.me;
   return (
     <>
       <Form
@@ -31,10 +37,43 @@ export default function Comments({ articleId, refProp }) {
         }}
         initialValues={{ name: 'Зочин' }}
       >
-        <Avatar size="large" src={AvatarSvg} shape="square" />
+        {isAuth ? (
+          me.avatar ? (
+            <div className="relative">
+              <Avatar shape="square" className="w-[50px] h-[50px] object-cover" src={imagePath(me?.avatar)} />
+              {me?.id === loggedUser?.id && (
+                <span
+                  onClick={() => navigate(`/settings/${loggedUser?.id}`)}
+                  style={{ boxShadow: '0px 1px 4px #00000029' }}
+                  className="w-[32px] h-[32px] rounded-full cursor-pointer flex justify-center items-center text-[19px] absolute bottom-0 -right-[6px] text-black icon-fi-rs-camera-f bg-white"
+                />
+              )}
+            </div>
+          ) : (
+            me.firstName && (
+              <div className="relative">
+                <Avatar
+                  shape="square"
+                  className="w-[50px] h-[50px] flex items-center bg-[#257CEE19] text-[#257CEE] text-[32px] font-medium"
+                >
+                  {(me?.firstName || me?.name)[0] || null}
+                </Avatar>
+                {me?.id === loggedUser?.id && (
+                  <span
+                    onClick={() => navigate(`/settings/${loggedUser?.id}`)}
+                    style={{ boxShadow: '0px 1px 4px #00000029' }}
+                    className="w-[32px] h-[32px] rounded-full cursor-pointer flex justify-center items-center text-[19px] absolute bottom-0 -right-[6px] text-black icon-fi-rs-camera-f bg-white"
+                  />
+                )}
+              </div>
+            )
+          )
+        ) : (
+          <Avatar size="large" src={AvatarSvg} shape="square" />
+        )}
         <div className="w-full ml-[12px]">
           <Form.Item
-            className="w-full"
+            className="w-full mb-[10px]"
             name="comment"
             rules={[{ required: true, min: 3, message: '3 - аас дээш тэмдэгт бичнэ үү.' }]}
           >
@@ -44,31 +83,64 @@ export default function Comments({ articleId, refProp }) {
               placeholder="Сэтгэгдлээ үлдээнэ үү..."
             />
           </Form.Item>
-          <div className="flex flex-row items-start">
-            <Form.Item className="w-full" name="name">
+          <div className="flex flex-row h-[54px]">
+            <Form.Item className="w-full mr-[10px]" name="name">
               <Input
-                className="w-full max-w-[508px] h-[54px] rounded-[2px] px-[24px] border border-[#D4D8D8] mr-[10px]"
+                className="w-full h-[54px] rounded-[2px] px-[24px] border border-[#D4D8D8]"
                 placeholder="Нэрээ бичнэ үү"
               />
             </Form.Item>
             <Button
               htmlType="submit"
               loading={saving}
-              className="w-[180px] h-[54px] bg-[#555555] rounded-[2px] text-white text-[16px] font-medium"
+              className="min-w-[180px] h-[54px] bg-[#363946] rounded-[2px] text-white text-[16px] font-medium"
             >
               Сэтгэгдэл үлдээх
             </Button>
           </div>
         </div>
       </Form>
-      <div className="flex flex-col justify-start w-full" ref={refProp}>
-        <BlockTitle className="text-left px-[0px] font-medium md:font-bold text-[17px] md:text-[22px]">
+      <div className="flex flex-col justify-start w-full mt-[57px]" ref={refProp}>
+        <BlockTitle className="text-left sm:mb-[37px] px-[0px] font-medium md:font-bold text-[17px] md:text-[22px]">
           Нийт сэтгэгдэл ({data?.article?.commentsCount})
         </BlockTitle>
-        <Tabs size="small" defaultActiveKey="tab-1" onChange={(e) => setSort(e)}>
-          <Tabs.TabPane tab="ШИНЭ" key="recent" />
-          <Tabs.TabPane tab="ТААЛАГДСАН" key="liked" />
-          <Tabs.TabPane tab="ТААЛАГДААГҮЙ" key="disliked" />
+        <Tabs className="flex border-b" size="small" defaultActiveKey="tab-1" onChange={(e) => setSort(e)}>
+          <Tabs.TabPane
+            tab={
+              <p
+                className={`text-[14px] leading-[19px] font-medium ${
+                  sort === 'recent' ? 'text-caak-black' : 'text-caak-darkGray'
+                }`}
+              >
+                ШИНЭ
+              </p>
+            }
+            key="recent"
+          />
+          <Tabs.TabPane
+            tab={
+              <p
+                className={`text-[14px] leading-[19px] font-medium ${
+                  sort === 'liked' ? 'text-caak-black' : 'text-caak-darkGray'
+                }`}
+              >
+                ТААЛАГДСАН
+              </p>
+            }
+            key="liked"
+          />
+          <Tabs.TabPane
+            tab={
+              <p
+                className={`text-[14px] leading-[19px] font-medium ${
+                  sort === 'disliked' ? 'text-caak-black' : 'text-caak-darkGray'
+                }`}
+              >
+                ТААЛАГДААГҮЙ
+              </p>
+            }
+            key="disliked"
+          />
         </Tabs>
         {loading && <Skeleton />}
         {comments?.edges?.map((x) => {
@@ -126,9 +198,9 @@ function SingleComment({ comment, refetch }) {
       key={comment.id}
       content={
         <>
-          <div className="bg-[#F7F7F7] mt-[10px] rounded-[10px] p-[20px] rounded-t-[0px] rounded-r-[10px]">
+          <div className="bg-[#F7F7F7] mt-[10px] rounded-[10px] pt-[20px] px-[20px] pb-[15px] rounded-t-[0px] rounded-r-[10px]">
             <p className="text-[#555555] text-[15px] leading-[21px]">{comment.comment}</p>
-            <div className="flex flex-row items-center mt-[17px]">
+            <div className="flex flex-row items-center mt-[12px]">
               <Button
                 icon={
                   <FIcon className="text-[#37AF37] text-[13px] w-[16px] h-[16px] icon-fi-rs-down-chevron rotate-180" />

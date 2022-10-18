@@ -57,7 +57,7 @@ export default function Session({ transparent }) {
         </div>
         {mobileSideMenu && (
           <div className="left-0 right-0 bottom-0 top-0 overflow-auto fixed flex justify-end bg-black bg-opacity-70">
-            <div ref={mobileRef} className="w-3/4 h-screen overflow-hidden overflow-y-scroll bg-white pt-[26px]">
+            <div ref={mobileRef} className="w-4/5 h-screen overflow-hidden overflow-y-scroll bg-white pt-[26px]">
               <div>
                 <div className="w-[56px] h-[56px] rounded-full bg-[#EFEEEF] flex items-center justify-center ml-[16px]">
                   <span
@@ -89,7 +89,7 @@ export default function Session({ transparent }) {
                   </button>
                 </div>
               </div>
-              <div className="w-full border-t border-b mt-[30px] flex flex-col">
+              {/* <div className="w-full border-t border-b mt-[30px] flex flex-col">
                 {mobileItems.map((data, index) => {
                   return (
                     <a
@@ -103,8 +103,8 @@ export default function Session({ transparent }) {
                     </a>
                   );
                 })}
-              </div>
-              <div
+              </div> */}
+              {/* <div
                 onClick={() => {
                   navigate('/help', { state: 1 });
                   setMobileSideMenu(false);
@@ -145,6 +145,20 @@ export default function Session({ transparent }) {
                   <FIcon className={`icon-fi-rs-phone mr-[18px] text-[24px] w-[26px] h-[26px]`} />
                   <p className="text-[18px]">Үйлчилгээний нөхцөл</p>
                 </div>
+              </div> */}
+              <div className="border-t border-b w-full border-[#D4D8D8] flex flex-row items-center justify-center gap-[19px] mt-[50px]">
+                <a href="https://www.facebook.com/caakweb" target={`_blank`}>
+                  <span className="icon-fi-rs-fb text-[22px] text-black" />
+                </a>
+                <a href="https://www.instagram.com/caak.mn/" target={`_blank`}>
+                  <span className="icon-fi-rs-ig text-[22px] text-black" />
+                </a>
+                <a href="https://twitter.com/caaktwt" target={`_blank`}>
+                  <span className="icon-fi-rs-tw text-[22px] text-black" />
+                </a>
+                <a href="https://www.youtube.com/c/caakvideo" target={`_blank`}>
+                  <span className="icon-fi-rs-yt text-[22px] text-black" />
+                </a>
               </div>
             </div>
           </div>

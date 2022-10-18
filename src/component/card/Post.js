@@ -44,10 +44,10 @@ export default function PostCard({ isMobile, post, removeSaved, asd, ...rest }) 
         sponsored
           ? 'h-[417px]'
           : asd
-          ? 'max-h-[340px] sm:max-h-[520px] h-full'
+          ? 'max-h-[340px] sm:max-h-[523px] h-full'
           : `h-[150px] w-[${width - 32}px] sm:w-full`
       }
-        sm:h-[520px] flex flex-col justify-between text-[#111111] sm:w-[422px] border-b border-[#EFEFEF] rounded-sm`}
+        sm:h-[523px] flex flex-col justify-between text-[#111111] sm:w-[422px] border-b border-[#EFEFEF] rounded-sm`}
       style={color}
     >
       {sponsored && (
@@ -70,16 +70,18 @@ export default function PostCard({ isMobile, post, removeSaved, asd, ...rest }) 
             } sm:h-[300px] object-cover`}
           />
         </Link>
-        <div className="flex flex-row gap-[15px] overflow-hidden">
+        <div className="flex flex-row gap-[15px] overflow-hidden mt-[18px]">
           {!sponsored &&
             post?.categories?.map((x, index) => (
-              <Link className="hidden sm:block mt-[20px]" key={index} to={`/category/${x.slug}`}>
-                <HashTag className="uppercase font-roboto font-medium leading-[15px]">{x.name}</HashTag>
+              <Link className="hidden sm:block" key={index} to={`/category/${x.slug}`}>
+                <p className="uppercase font-roboto font-medium text-caak-primary text-[13px] leading-[18px]">
+                  {x.name}
+                </p>
               </Link>
             ))}
         </div>
         <Link
-          className={`${sponsored ? 'mt-[22px]' : 'sm:mt-[10px]'} calculated-width ${text}`}
+          className={`${sponsored ? 'mt-[22px]' : 'sm:mt-[9px]'} calculated-width ${text}`}
           to={postURL}
           target={post.kind === 'linked' ? '_blank' : '_self'}
         >
@@ -87,7 +89,7 @@ export default function PostCard({ isMobile, post, removeSaved, asd, ...rest }) 
             className={`${
               sponsored
                 ? 'px-[16px] h-[85px] truncate-3 text-[22px] sm:text-[21px] leading-[30px] sm:leading-[29px] font-bold sm:font-normal'
-                : `truncate-3 font-medium hover:underline underline-offset-4 decoration-[#3B4491]/20 sm:font-normal sm:text-[19px] leading-[20px] sm:leading-[29px] ${
+                : `truncate-4 font-medium hover:underline underline-offset-4 decoration-[#3B4491]/20 sm:font-normal sm:text-[19px] leading-[20px] sm:leading-[27px] ${
                     asd ? 'text-[18px] mt-[12px] sm:mt-0 truncate-3' : 'text-[16px] mt-0 ml-[16px] sm:ml-0'
                   }`
             } font-roboto sm:font-merri ${text}`}
@@ -96,7 +98,7 @@ export default function PostCard({ isMobile, post, removeSaved, asd, ...rest }) 
           </p>
         </Link>
         {!sponsored && (
-          <div className={`text-[14px] text-[#909090] hidden sm:block tracking-[0.21px] leading-[16px] mt-[12px]`}>
+          <div className={`text-[14px] text-[#909090] hidden sm:block tracking-[0.21px] leading-[16px] mt-[8px]`}>
             {generateTimeAgo(post.publish_date)}
           </div>
         )}
