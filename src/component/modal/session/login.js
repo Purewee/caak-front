@@ -27,7 +27,7 @@ function LoginStep({ setStep }) {
           <Button
             block
             className="h-[44px] font-medium text-caak-black"
-            icon={<img src={Google} className="w-[26px] absolute left-[18px] top-[9px]" />}
+            icon={<img src={Google} alt="" className="w-[26px] absolute left-[18px] top-[9px]" />}
             size="large"
           >
             Google

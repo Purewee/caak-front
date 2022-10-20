@@ -289,7 +289,7 @@ const Post = () => {
                       <p className="text-caak-black text-[14px] leading-[16px]">{article?.source?.name}</p>
                     </Link>
                     <div className="text-[12px] text-[#909090] flex flex-row items-center leading-[14px]">
-                      <p>{moment(article.publishDate).format('YYYY.MM.DD, hh:mm')}</p>
+                      <p>{moment(article.publishDate).format('YYYY.MM.DD, HH:mm')}</p>
                       <Button
                         type="link"
                         size="small"

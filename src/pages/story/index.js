@@ -50,6 +50,11 @@ export default function Story() {
   if (loading) return <Skeleton />;
   return (
     <div className="w-full h-full z-50 fixed top-0 flex justify-center lg:justify-between bg-[#212121] sm:p-[20px]">
+      <span
+        onClick={() => navigate('/')}
+        style={{ zIndex: 1000 }}
+        className="icon-fi-rs-close sm:hidden absolute right-[15px] top-[25px] text-[20px] text-white"
+      />
       <div className="hidden lg:flex flex-col h-full w-[272px] mr-[16px] items-start justify-start">
         <Logo white className="mb-[135px]" />
         {story.nextStory ? (
@@ -113,7 +118,6 @@ export default function Story() {
 }
 
 function ImageStory({ block, story }) {
-  const navigate = useNavigate();
   return (
     <div className="w-full h-full flex justify-center">
       <div

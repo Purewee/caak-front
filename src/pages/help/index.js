@@ -9,6 +9,7 @@ import { useLocation } from 'react-router-dom';
 import VideoContent from '../../assets/images/newsmade.png';
 import OntslohNews from '../../assets/images/ontsloh.png';
 import NewsMade from '../../assets/images/realnews.png';
+import BannerModal from '../../component/modal/BannerModal';
 
 //prettier-ignore
 const Tabs = [
@@ -172,6 +173,7 @@ export default function Help() {
     const location = useLocation();
     const [selected, setSelected] = useState(0)
     const [hovered, setHovered] = useState(false)
+    const [open, setOpen] = useState(false)
     const [hoveredNews, setHoveredNews] = useState(false)
     const context = useContext(AppContext);
 
@@ -390,7 +392,7 @@ export default function Help() {
                                                 <p className='text-caak-darkGray mt-[4px] text-[15px] leading-[18px]'>Хэмжээ</p>
                                                 <p className='text-caak-darkGray text-[15px] leading-[19px] mt-[14px]'>{data.desc}</p>
                                             </div>
-                                            <button className='bg-[#3B4491] text-white text-[16px] font-medium w-full h-[44px] rounded-[4px]'>
+                                            <button onClick={() => setOpen(data.pos)} className='bg-[#3B4491] text-white text-[16px] font-medium w-full h-[44px] rounded-[4px]'>
                                                 Жишээ үзэх
                                             </button>
                                         </div>
@@ -435,6 +437,7 @@ export default function Help() {
                             </ul>
                         </div>
                     </div>
+                    <BannerModal setOpen={setOpen} open={open} />
                 </div>
             }
             {/* {
