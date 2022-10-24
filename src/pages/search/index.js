@@ -65,7 +65,7 @@ export default function Search() {
           </Col>
         ))}
         {loading && <Skeleton />}
-        {totalResult > 24 * (page + 1) && (
+        {/* {totalResult > 24 * (page + 1) && (
           <Col span={24}>
             <Button
               block
@@ -77,6 +77,20 @@ export default function Search() {
               Цааш үзэх
             </Button>
           </Col>
+        )} */}
+        {totalResult > 24 * (page + 1) && (
+          <div className="max-w-[1310px] w-full px-[16px] sm:px-0">
+            <Button
+              block
+              size="large"
+              className="font-roboto border-caak-primary h-[60px] sm:h-[74px] text-[18px] font-medium text-caak-primary mt-[20px]"
+              onClick={() => setPage(page + 1)}
+              loading={loading}
+            >
+              Илүү ихийг үзэх
+              <FIcon className="icon-fi-rs-down-chevron text-caak-primary text-[16px] w-[16px] ml-[8px]" />
+            </Button>
+          </div>
         )}
       </div>
     </div>
