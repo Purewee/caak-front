@@ -133,7 +133,7 @@ export default function AllStories() {
                 )}
                 <div
                     ref={todayRef}
-                    className={'w-full wrapper gap-[13px] transition-all pb-[26px] md:pb-0 duration-300 mt-[14px] md:mt-[39px]'}
+                    className={'w-full md:h-[447px] wrapper gap-[13px] transition-all pb-[26px] md:pb-0 duration-300 mt-[14px] md:mt-[39px]'}
                 >
                     {todayStory.map((item, index) => {
                       return <StoryItem story={item} key={index} index={index} />;
@@ -190,7 +190,7 @@ export default function AllStories() {
                 )}
                 <div
                     ref={yesterdayRef}
-                    className={'w-full wrapper gap-[13px] transition-all pb-[26px] md:pb-0 duration-300 mt-[14px] md:mt-[39px]'}
+                    className={'w-full md:h-[447px] wrapper gap-[13px] transition-all pb-[26px] md:pb-0 duration-300 mt-[14px] md:mt-[39px]'}
                 >
                     {yesterdayStory.map((item, index) => {
                       return <StoryItem story={item} key={index} index={index} />;
@@ -246,7 +246,7 @@ export default function AllStories() {
                 )}
                 <div
                     ref={weekRef}
-                    className={'w-full wrapper gap-[13px] transition-all pb-[26px] md:pb-0 duration-300 mt-[14px] md:mt-[39px]'}
+                    className={'w-full md:h-[447px] wrapper gap-[13px] transition-all pb-[26px] md:pb-0 duration-300 mt-[14px] md:mt-[39px]'}
                 >
                     {stories.map((item, index) => {
                     return <StoryItem story={item} key={index} index={index} />;

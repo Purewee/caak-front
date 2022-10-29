@@ -42,11 +42,11 @@ export default function ReportModal({ post, toggle }) {
       <div>
         <List
           grid={{ column: 2, gutter: 0 }}
-          style={{ padding: 20 }}
+          style={{ paddingInline: 20 }}
           dataSource={reportTypes}
           renderItem={(x) => {
             return (
-              <List.Item key={x.id}>
+              <div className="py-[17px]" key={x.id}>
                 <Radio
                   id={x.id}
                   onChange={(e) => {
@@ -61,7 +61,7 @@ export default function ReportModal({ post, toggle }) {
                 <label className="cursor-pointer font-roboto text-[15px] leading-[20px] text-[#111111]" htmlFor={x.id}>
                   {x.name}
                 </label>
-              </List.Item>
+              </div>
             );
           }}
         />

@@ -6,7 +6,7 @@ import moment from 'moment';
 import { useMutation } from '@apollo/client';
 import Loader from '../../../component/loader';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
-import { imagePath, parseVideoURL, isAdmin } from '../../../utility/Util';
+import { imagePath, parseVideoURL, isAdmin, kFormatter } from '../../../utility/Util';
 import { Wrapper, Title, BlockTitle, Paragraph, HashTag, MetaTag } from './wrapper';
 import Comments from './comments';
 import { ARTICLE, ME, REACTIONS } from './_gql';
@@ -296,7 +296,7 @@ const Post = () => {
                         icon={<span className="icon-fi-rs-eye text-[18px] mr-[4px]" />}
                         className="flex flex-row items-center text-[#555555] text-[14px]"
                       >
-                        {article?.viewsCount}
+                        {kFormatter(article?.viewsCount)}
                       </Button>
                       <Button
                         icon={<span className="icon-fi-rs-comment-o text-[18px] mr-[4px]" />}
@@ -305,7 +305,7 @@ const Post = () => {
                         type="link"
                         onClick={() => commentsRef.current.scrollIntoView()}
                       >
-                        {article?.commentsCount || 0}
+                        {kFormatter(article?.commentsCount) || 0}
                       </Button>
                     </div>
                   </div>
@@ -313,7 +313,7 @@ const Post = () => {
                 <div className="flex sm:hidden flex-row items-center">
                   <img className="w-[20px]" src={LoveIcon} alt="" />
                   <img className="w-[20px]" src={HahaIcon} alt="" />
-                  <p className="ml-[6px] text-[15px] text-caak-primary leading-[16px]">{reactionsCount}</p>
+                  <p className="ml-[6px] text-[15px] text-caak-primary leading-[16px]">{kFormatter(reactionsCount)}</p>
                 </div>
                 <div className="hidden md:flex flex-row items-center">
                   <FacebookShareButton className="h-[20px]" url={`${Configure.domain}/post/view/${article?.id}`}>

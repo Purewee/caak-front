@@ -73,15 +73,7 @@ export default function Category() {
     <div className="flex justify-center pt-[20px] md:pt-[51px] pb-[100px] px-[16px] md:px-[0px]">
       <div className="max-w-[1310px] w-full flex flex-col items-center relative">
         <p className="font-condensed font-bold text-[38px] leading-[44px] uppercase">#{category.name}</p>
-        <div className="flex mt-[10px] font-roboto">
-          <Statistic title="нийтлэл" value={count} className="text-center text-[15px] leading-[18px]" />
-          <Statistic
-            title="дагагч"
-            value={category.followersCount}
-            className="text-center text-[15px] leading-[18px] ml-[20px]"
-          />
-        </div>
-        <div className="flex flex-row items-center absolute top-0 right-0">
+        <div className="flex flex-row items-center sm:absolute mt-[20px] sm:mt-0 top-0 right-0">
           {category.following ? (
             <button
               className="w-[90px] h-[34px] bg-caak-darkGray flex justify-center items-center rounded-[4px] text-white text-[15px] font-bold"
@@ -118,6 +110,14 @@ export default function Category() {
           <div className="w-[42px] h-[34px] flex justify-center items-center border rounded-[4px] ml-[10px] cursor-pointer">
             <span className="icon-fi-rs-more-ver rotate-90 text-[18px]" />
           </div>
+        </div>
+        <div className="flex mt-[10px] font-roboto">
+          <Statistic title="нийтлэл" value={count} className="text-center text-[15px] leading-[18px]" />
+          <Statistic
+            title="дагагч"
+            value={category.followersCount}
+            className="text-center text-[15px] leading-[18px] ml-[20px]"
+          />
         </div>
         <Tabs
           defaultActiveKey="recent"
