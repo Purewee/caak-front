@@ -171,7 +171,7 @@ export const CONVERT_LINK = gql`
 
 export const SOURCES = gql`
   query GetSources {
-    sources {
+    sources(sort: { field: "id", direction: asc }) {
       nodes {
         id
         name

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef, HTMLAttributes } from 'react';
 import styled from 'styled-components';
 import { BlockTitle, Paragraph } from './wrapper';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
@@ -49,12 +49,20 @@ export default function PostBlock({ b, numbering }) {
               {b.data.meta}
             </span>
           )}
-          {b.content && <Paragraph dangerouslySetInnerHTML={createMarkup(b.content)} />}
+          {b.content && (
+            <Paragraph>
+              <DangerouslySetHtmlContent html={b.content} />
+            </Paragraph>
+          )}
         </div>
       )}
       {b.kind === 'text' && (
         <div key={b.id} className="flex flex-col md:items-center mb-[26px] md:mb-[50px] w-full">
-          <Paragraph className="mt-[16px] md:mt-0" dangerouslySetInnerHTML={createMarkup(b.content)} />
+          {b.content && (
+            <Paragraph className="mt-[16px] md:mt-0">
+              <DangerouslySetHtmlContent html={b.content} />
+            </Paragraph>
+          )}
         </div>
       )}
       {b.kind === 'video' && (
@@ -66,15 +74,30 @@ export default function PostBlock({ b, numbering }) {
               width="100%"
               height="100%"
               className="react-player"
+              controls
             />
           </div>
-          <Paragraph className="mt-[16px] md:mt-0" dangerouslySetInnerHTML={createMarkup(b.content)} />
+          {b.content && (
+            <Paragraph className="mt-[16px] md:mt-0">
+              <DangerouslySetHtmlContent html={b.content} />
+            </Paragraph>
+          )}
         </div>
       )}
     </Wrapper>
   );
 }
 
-function createMarkup(e) {
-  return { __html: e };
+export function DangerouslySetHtmlContent({ html, ...rest }) {
+  const divRef = useRef(null);
+
+  useEffect(() => {
+    if (!html || !divRef.current) throw "html prop cant't be null";
+
+    const slotHtml = document.createRange().createContextualFragment(html); // Create a 'tiny' document and parse the html string
+    divRef.current.innerHTML = ''; // Clear the container
+    divRef.current.appendChild(slotHtml); // Append the new content
+  }, [html, divRef]);
+
+  return <div {...rest} ref={divRef}></div>;
 }

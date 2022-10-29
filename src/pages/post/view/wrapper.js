@@ -14,7 +14,7 @@ export const BlockTitle = tw.h2`
   text-[#111111] text-[20px] md:text-[26px] font-bold md:font-semibold mb-[10px] w-full
 `;
 
-export const Paragraph = tw.p`
+export const Paragraph = tw.div`
   text-[#303030] md:text-[#555555] mt-[16px] text-[18px] md:leading-[36px] tracking-[0.54px] font-literata
 `;
 

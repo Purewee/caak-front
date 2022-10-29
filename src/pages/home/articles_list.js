@@ -5,8 +5,9 @@ import PostCard from '../../component/card/Post';
 import useMediaQuery from '../../component/navigation/useMediaQuery';
 import Banner from '../../component/banner';
 import { FIcon } from '../../component/icon';
+import LoadMore from '../../component/LoadMore';
 
-export default function ArticlesList({ filter = [], sort = {}, size = 24, asd }) {
+export default function ArticlesList({ filter = [], sort = {}, size = 24, asd, autoLoad = 0 }) {
   const es = new ESService('caak');
   const [page, setPage] = useState(0);
   const [list, setList] = useState([]);
@@ -66,7 +67,14 @@ export default function ArticlesList({ filter = [], sort = {}, size = 24, asd })
           </div>
         );
       })}
-      {count > list?.length && (
+      {!loading && autoLoad > page && (
+        <LoadMore
+          callback={() => {
+            setPage(page + 1);
+          }}
+        />
+      )}
+      {count > list?.length && autoLoad <= page && (
         <div className="max-w-[1310px] w-full px-[16px] sm:px-0">
           <Button
             block
