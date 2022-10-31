@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { useMutation, useQuery } from '@apollo/client';
-import { CATEGORIES, CREATE, POST, SOURCES, TAGS, UPDATE } from './_gql';
+import { CATEGORIES, CONVERT_LINK, CREATE, POST, SOURCES, TAGS, UPDATE } from './_gql';
 import { sortBy } from 'lodash';
 import moment from 'moment';
 import {
@@ -494,12 +494,9 @@ export function TextBlock({ block, idx, setBlocks, onRemove }) {
 }
 
 function VideoBlock({ block, idx, setBlocks, onRemove }) {
-  const [url, setUrl] = useState();
   const [image, setImage] = useState(null);
   const [title, setTitle] = useState('');
-  useEffect(() => {
-    setUrl(block?.data?.url);
-  }, [block]);
+  const [convert, { loading: converting }] = useMutation(CONVERT_LINK);
 
   useEffect(() => {
     setBlocks((blocks) => {
@@ -508,27 +505,6 @@ function VideoBlock({ block, idx, setBlocks, onRemove }) {
     });
   }, [image, title]);
 
-  useEffect(() => {
-    if (!url) return;
-    const parsed = parseVideoURL(url);
-    if (parsed?.provider === 'youtube') {
-      fetch(
-        `https://www.googleapis.com/youtube/v3/videos?id=${parsed.id}&key=AIzaSyCdT6cNcu3-5fOz8QunPi786ToSbbyXrbo&fields=items(snippet(title))&part=snippet`,
-      )
-        .then((response) => response.json())
-        .then((data) => {
-          setTitle(data.items[0].snippet.title);
-          setImage(`https://img.youtube.com/vi/${parsed.id}/hqdefault.jpg`);
-        });
-    } else if (parsed?.provider === 'facebook') {
-      console.log({ parsed });
-      // FB.api(`/${parsed.id}`, function (response) {
-      //   if (response && !response.error) {
-      //     console.log({ response });
-      //   }
-      // });
-    }
-  }, [url]);
   return (
     <Card
       className="my-[24px] bg-[#EFEFEF] font-merri shadow-md"
@@ -549,7 +525,17 @@ function VideoBlock({ block, idx, setBlocks, onRemove }) {
         </Col>
         <Col span={18}>
           <Form.Item name={[idx, 'data', 'url']} help={<small className="text-[10px]">{title}</small>}>
-            <Input onChange={(e) => setUrl(e.target.value)} placeholder="Video Link" />
+            <Input.Search
+              placeholder="Video Link"
+              enterButton="Хөрвүүлэх"
+              onSearch={(value) => {
+                convert({ variables: { link: value } }).then((data) => {
+                  setTitle(data?.data?.convertLink?.title);
+                  setImage(data?.data?.convertLink?.image);
+                });
+              }}
+              loading={converting}
+            />
           </Form.Item>
           <Form.Item
             name={[idx, 'content']}

@@ -4,6 +4,7 @@ import { BlockTitle, Paragraph } from './wrapper';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { imagePath, parseVideoURL } from '../../../utility/Util';
 import ReactPlayer from 'react-player';
+import Configure from '../../../component/configure';
 
 const Wrapper = styled.div`
   ul {
@@ -33,6 +34,7 @@ const Wrapper = styled.div`
       position: absolute;
       top: 0;
       left: 0;
+      overflow: hidden;
     }
   }
 `;
@@ -70,11 +72,17 @@ export default function PostBlock({ b, numbering }) {
           {b.title && <BlockTitle>{`${numbering ? `${b.position}. ` : ''}${b.title}`}</BlockTitle>}
           <div className="video-wrapper">
             <ReactPlayer
-              url={`https://www.youtube.com/embed/${parseVideoURL(b.data.url).id}`}
+              // url={`https://www.youtube.com/embed/${parseVideoURL(b.data.url).id}`}
+              url={b.data.url}
               width="100%"
               height="100%"
               className="react-player"
               controls
+              config={{
+                facebook: {
+                  appId: Configure.appFacebookId,
+                },
+              }}
             />
           </div>
           {b.content && (

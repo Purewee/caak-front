@@ -4,6 +4,7 @@ export const Wrapper = tw.div`
   font-roboto
   text-[18px]
   text-[#555555]
+  w-full
 `;
 
 export const Title = tw.h1`

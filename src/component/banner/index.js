@@ -1,4 +1,4 @@
-import react, { useEffect } from 'react';
+import React from 'react';
 import { gql, useQuery } from '@apollo/client';
 import A1 from './a1';
 import A2 from './a2';

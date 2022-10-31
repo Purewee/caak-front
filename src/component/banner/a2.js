@@ -1,6 +1,5 @@
 import React from 'react';
 import { imagePath } from '../../utility/Util';
-import { Link } from 'react-router-dom';
 
 export default function A2({ banner }) {
   if (!banner) {
