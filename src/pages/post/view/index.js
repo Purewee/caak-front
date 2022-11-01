@@ -338,7 +338,7 @@ const Post = () => {
                 <PostBlock b={b} numbering={numbering} key={b.id} />
               ))}
             </Wrapper>
-            <div className="flex flex-row gap-[8px] w-full mt-[20px]">
+            <div className="flex flex-row flex-wrap gap-[8px] w-full mt-[20px]">
               {article.tags?.map((x) => (
                 <Link to={`/tags/${x.slug}`} key={x.slug}>
                   <p

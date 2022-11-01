@@ -1,11 +1,10 @@
 import * as React from 'react';
-import { Button, Form, message } from 'antd';
+import { Button, message } from 'antd';
 import { loginWithAssertion } from '../../../utility/WithApolloProvider';
 import { useAuth } from '../../../context/AuthContext';
 import Configure from '../../configure';
-import { FacebookFilled } from '@ant-design/icons';
 
-function initFB() {
+export function initFB() {
   window.fbAsyncInit = () => {
     const { FB } = window;
     FB.init({

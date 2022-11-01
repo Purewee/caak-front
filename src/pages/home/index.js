@@ -206,7 +206,8 @@ export default function Home() {
           asd={selected === 'vidyeo' ? true : selected === 'chuluut_tsag' ? true : selected === 'blog' ? true : false}
           filter={filter}
           sort={sort}
-          size={22}
+          size={33}
+          autoLoad={3}
         />
       </div>
       {isMobile && <Banner position="a3" />}

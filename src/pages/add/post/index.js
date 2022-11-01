@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { useMutation, useQuery } from '@apollo/client';
-import { CATEGORIES, CREATE, POST, TAGS, UPDATE } from './_gql';
+import { CATEGORIES, CONVERT_LINK, CREATE, POST, SOURCES, TAGS, UPDATE } from './_gql';
 import { sortBy } from 'lodash';
 import moment from 'moment';
 import {
@@ -84,8 +84,9 @@ function AddPost() {
   const context = useContext(AppContext);
   const { id } = useParams();
   const navigate = useNavigate();
-  const { data, refetch } = useQuery(CATEGORIES);
+  const { data } = useQuery(CATEGORIES);
   const { data: post, loading } = useQuery(POST, { variables: { id }, skip: !id });
+  const { data: sources, loading: source_fetching } = useQuery(SOURCES);
   const categories = data?.categories?.nodes || [];
   const article = post?.article;
   const [blocks, setBlocks] = useState([]);
@@ -142,6 +143,7 @@ function AddPost() {
       initialValues={{
         status: 'published',
         acceptComment: true,
+        sourceId: '1',
         ...article,
         tags: article?.tags.map((x) => x.slug),
         blocks: sortBy(article?.blocks, 'position'),
@@ -273,11 +275,9 @@ function AddPost() {
             </Form.List>
           </Card>
         </Col>
-        <Col span={6} className="border-l border-[#efefef] bg-[#ffffff] p-[12px]">
+        <Col span={6}>
           <Affix offsetTop={12}>
-            <div className="h-screen">
-              <h3 className="font-merri font-bold text-[16px]">Мэдээний төрөл</h3>
-              <hr className="mb-[24px] mt-[8px]" />
+            <div className="h-screen border-l border-[#efefef] bg-[#ffffff] p-3">
               <Form.Item name="categoryIds" className="font-merri">
                 <Select
                   mode="multiple"
@@ -302,6 +302,28 @@ function AddPost() {
               >
                 <TagsField mode="tags" placeholder="Tags" />
               </Form.Item>
+              <Form.Item
+                className="font-merri"
+                name="sourceId"
+                rules={[{ required: true, message: 'Суваг заавал сонгоно уу' }]}
+              >
+                <Select
+                  placeholder="Суваг"
+                  size="large"
+                  showSearch
+                  loading={source_fetching}
+                  allowClear
+                  filterOption={(input, option) =>
+                    option.props.value.toLowerCase().indexOf(input.toLowerCase()) >= 0 ||
+                    option.props.label.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                  }
+                  options={sources?.sources?.nodes?.map((x) => ({
+                    value: x.id,
+                    label: `${x.name} - ${x.domain}`,
+                    key: x.id,
+                  }))}
+                />
+              </Form.Item>
               <Form.Item name="acceptComment" className="font-merri mb-[0px]" valuePropName="checked">
                 <Checkbox checked>Сэтгэгдэл зөвшөөрөх</Checkbox>
               </Form.Item>
@@ -317,24 +339,25 @@ function AddPost() {
               )}
               <Form.Item name={['data', 'numbering']} className="font-merri text-[10px]">
                 <Radio.Group>
-                  <Radio.Button value={null}>Дугаарлахгүй</Radio.Button>
+                  <Radio.Button>Дугаарлахгүй</Radio.Button>
                   <Radio.Button value="asc">Өсөхөөр</Radio.Button>
                   <Radio.Button value="desc">Буурхаар</Radio.Button>
                 </Radio.Group>
               </Form.Item>
-
-              <Form.Item name="publishDate" className="font-merri w-full" label="Нийтлэх огноо">
-                <DatePicker showTime format="YYYY-MM-DD HH:mm" />
-              </Form.Item>
-              <Form.Item name="status" className="font-merri">
-                <Select
-                  size="large"
-                  options={[
-                    { label: 'Нийтлэх', value: 'published' },
-                    { label: 'Ноорог', value: 'draft' },
-                  ]}
-                />
-              </Form.Item>
+              <div className="flex items-end justify-between">
+                <Form.Item name="status" className="font-merri w-full">
+                  <Select
+                    size="medium"
+                    options={[
+                      { label: 'Нийтлэх', value: 'published' },
+                      { label: 'Ноорог', value: 'draft' },
+                    ]}
+                  />
+                </Form.Item>
+                <Form.Item name="publishDate" className="font-merri w-full" label={false}>
+                  <DatePicker showTime format="YYYY-MM-DD HH:mm" />
+                </Form.Item>
+              </div>
               <hr className="my-[20px]" />
               <Button.Group className="w-full">
                 <Button title="Save" size="large" icon={<SearchOutlined />} loading={saving} shape="round" block>
@@ -471,12 +494,9 @@ export function TextBlock({ block, idx, setBlocks, onRemove }) {
 }
 
 function VideoBlock({ block, idx, setBlocks, onRemove }) {
-  const [url, setUrl] = useState();
   const [image, setImage] = useState(null);
   const [title, setTitle] = useState('');
-  useEffect(() => {
-    setUrl(block?.data?.url);
-  }, [block]);
+  const [convert, { loading: converting }] = useMutation(CONVERT_LINK);
 
   useEffect(() => {
     setBlocks((blocks) => {
@@ -485,20 +505,6 @@ function VideoBlock({ block, idx, setBlocks, onRemove }) {
     });
   }, [image, title]);
 
-  useEffect(() => {
-    if (!url) return;
-    const parsed = parseVideoURL(url);
-    if (parsed?.provider === 'youtube') {
-      fetch(
-        `https://www.googleapis.com/youtube/v3/videos?id=${parsed.id}&key=AIzaSyCdT6cNcu3-5fOz8QunPi786ToSbbyXrbo&fields=items(snippet(title))&part=snippet`,
-      )
-        .then((response) => response.json())
-        .then((data) => {
-          setTitle(data.items[0].snippet.title);
-          setImage(`https://img.youtube.com/vi/${parsed.id}/hqdefault.jpg`);
-        });
-    }
-  }, [url]);
   return (
     <Card
       className="my-[24px] bg-[#EFEFEF] font-merri shadow-md"
@@ -519,7 +525,17 @@ function VideoBlock({ block, idx, setBlocks, onRemove }) {
         </Col>
         <Col span={18}>
           <Form.Item name={[idx, 'data', 'url']} help={<small className="text-[10px]">{title}</small>}>
-            <Input onChange={(e) => setUrl(e.target.value)} placeholder="Video Link" />
+            <Input.Search
+              placeholder="Video Link"
+              enterButton="Хөрвүүлэх"
+              onSearch={(value) => {
+                convert({ variables: { link: value } }).then((data) => {
+                  setTitle(data?.data?.convertLink?.title);
+                  setImage(data?.data?.convertLink?.image);
+                });
+              }}
+              loading={converting}
+            />
           </Form.Item>
           <Form.Item
             name={[idx, 'content']}

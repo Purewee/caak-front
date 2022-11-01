@@ -10,6 +10,7 @@ import { FIcon } from '../../../component/icon';
 import { DownOutlined } from '@ant-design/icons';
 import { ME } from './_gql';
 import { imagePath } from '../../../utility/Util';
+import { useNavigate } from 'react-router-dom';
 
 const SORTS = {
   recent: { direction: 'desc', field: 'createdAt' },
@@ -25,7 +26,8 @@ export default function Comments({ articleId, refProp }) {
   const pageInfo = comments?.pageInfo;
   const { data: loggedUser } = useQuery(ME);
   const { isAuth } = useAuth();
-  const me = loggedUser?.me;
+  const me = loggedUser?.me || {};
+  const navigate = useNavigate();
   return (
     <>
       <Form

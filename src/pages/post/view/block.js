@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useEffect, useRef, HTMLAttributes } from 'react';
 import styled from 'styled-components';
 import { BlockTitle, Paragraph } from './wrapper';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { imagePath, parseVideoURL } from '../../../utility/Util';
 import ReactPlayer from 'react-player';
+import Configure from '../../../component/configure';
 
 const Wrapper = styled.div`
   ul {
@@ -33,6 +34,7 @@ const Wrapper = styled.div`
       position: absolute;
       top: 0;
       left: 0;
+      overflow: hidden;
     }
   }
 `;
@@ -49,12 +51,20 @@ export default function PostBlock({ b, numbering }) {
               {b.data.meta}
             </span>
           )}
-          {b.content && <Paragraph dangerouslySetInnerHTML={createMarkup(b.content)} />}
+          {b.content && (
+            <Paragraph>
+              <DangerouslySetHtmlContent html={b.content} />
+            </Paragraph>
+          )}
         </div>
       )}
       {b.kind === 'text' && (
         <div key={b.id} className="flex flex-col md:items-center mb-[26px] md:mb-[50px] w-full">
-          <Paragraph className="mt-[16px] md:mt-0" dangerouslySetInnerHTML={createMarkup(b.content)} />
+          {b.content && (
+            <Paragraph className="mt-[16px] md:mt-0">
+              <DangerouslySetHtmlContent html={b.content} />
+            </Paragraph>
+          )}
         </div>
       )}
       {b.kind === 'video' && (
@@ -62,19 +72,40 @@ export default function PostBlock({ b, numbering }) {
           {b.title && <BlockTitle>{`${numbering ? `${b.position}. ` : ''}${b.title}`}</BlockTitle>}
           <div className="video-wrapper">
             <ReactPlayer
-              url={`https://www.youtube.com/embed/${parseVideoURL(b.data.url).id}`}
+              // url={`https://www.youtube.com/embed/${parseVideoURL(b.data.url).id}`}
+              url={b.data.url}
               width="100%"
               height="100%"
               className="react-player"
+              controls
+              config={{
+                facebook: {
+                  appId: Configure.appFacebookId,
+                },
+              }}
             />
           </div>
-          <Paragraph className="mt-[16px] md:mt-0" dangerouslySetInnerHTML={createMarkup(b.content)} />
+          {b.content && (
+            <Paragraph className="mt-[16px] md:mt-0">
+              <DangerouslySetHtmlContent html={b.content} />
+            </Paragraph>
+          )}
         </div>
       )}
     </Wrapper>
   );
 }
 
-function createMarkup(e) {
-  return { __html: e };
+export function DangerouslySetHtmlContent({ html, ...rest }) {
+  const divRef = useRef(null);
+
+  useEffect(() => {
+    if (!html || !divRef.current) throw "html prop cant't be null";
+
+    const slotHtml = document.createRange().createContextualFragment(html); // Create a 'tiny' document and parse the html string
+    divRef.current.innerHTML = ''; // Clear the container
+    divRef.current.appendChild(slotHtml); // Append the new content
+  }, [html, divRef]);
+
+  return <div {...rest} ref={divRef}></div>;
 }

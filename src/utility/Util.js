@@ -3,6 +3,7 @@ import { DateTime } from 'luxon';
 import { useEffect, useRef, useState } from 'react';
 import Configure from '../component/configure';
 import moment from 'moment';
+import urlParser from 'js-video-url-parser';
 
 const regexEmail = '^[a-zA-Z0-9._:$!%-]+@[a-zA-Z0-9.-]+.[a-zA-Z]$';
 const regexNumber = '^[0-9]{8}$';
@@ -439,18 +440,22 @@ export const imagePath = (src) => {
   if (!src) return false;
   return `${Configure.host}${src}`;
 };
+//
+// export function parseVideoURL(url) {
+//   const match = url.match(
+//     /(https:|https:|)\/\/(player.|www.)?(vimeo|youtu(be|be\.googleapis))(\.be|\.com)\/(video\/|embed\/|watch\?v=|v\/)?([A-Za-z0-9._%-]*)(\&\S+)?/,
+//   );
+//   return (
+//     match &&
+//     match[7] && {
+//       provider: match[3],
+//       id: match[7],
+//     }
+//   );
+// }
 
 export function parseVideoURL(url) {
-  const match = url.match(
-    /(https:|https:|)\/\/(player.|www.)?(vimeo|youtu(be|be\.googleapis))(\.be|\.com)\/(video\/|embed\/|watch\?v=|v\/)?([A-Za-z0-9._%-]*)(\&\S+)?/,
-  );
-  return (
-    match &&
-    match[7] && {
-      provider: match[3],
-      id: match[7],
-    }
-  );
+  return urlParser.parse(url);
 }
 
 export function isAdmin(user) {
