@@ -16,7 +16,8 @@ function LoginStep({ setStep }) {
       visible
       footer={false}
       title={false}
-      width={400}
+      width={380}
+      closeIcon={<span className="icon-fi-rs-close text-[#909090] text-[18px]" />}
       bodyStyle={{ padding: 0 }}
       onCancel={() => setStep('closed')}
     >
@@ -55,7 +56,7 @@ function LoginStep({ setStep }) {
             layout="vertical"
           >
             <Form.Item name="login" rules={[{ required: true, message: 'Заавал оруулна уу!' }]}>
-              <Input size="large" placeholder="Утасны дугаар / Имэйл" />
+              <Input size="large" placeholder="Имэйл хаяг/Утасны дугаар" />
             </Form.Item>
             <Form.Item
               name="password"
@@ -69,17 +70,24 @@ function LoginStep({ setStep }) {
               <Input.Password size="large" placeholder="Нууц үг" />
             </Form.Item>
 
-            <Button htmlType="submit" type="primary" size="large" block icon={<CheckOutlined />} loading={loading}>
+            <Button
+              className="font-medium rounded-[4px] h-[44px]"
+              htmlType="submit"
+              type="primary"
+              size="large"
+              block
+              loading={loading}
+            >
               Нэвтрэх
             </Button>
           </Form>
         </div>
       </div>
-      <div className="p-[24px]">
-        <div className="flex items-center justify-center text-[#555555] text-[14px]">
-          <span>Шинэ хэрэглэгч бол </span>
-          <Button type="link" onClick={() => setStep('open')}>
-            Бүртгүүлэх
+      <div className="pt-[21px] pb-[31px]">
+        <div className="flex items-center justify-center text-[#555555] text-[15px] h-[18px]">
+          <p>Шинэ хэрэглэгч бол </p>
+          <Button className="text-[15px] font-bold p-0" type="link" onClick={() => setStep('open')}>
+            &nbsp;Бүртгүүлэх
           </Button>
         </div>
       </div>

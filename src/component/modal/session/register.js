@@ -29,13 +29,16 @@ function RegisterStep({ setStep }) {
       visible
       footer={false}
       title={false}
-      width={400}
+      width={380}
+      closeIcon={<span className="icon-fi-rs-close text-[#909090] text-[18px]" />}
       bodyStyle={{ padding: 0 }}
       onCancel={() => setStep('closed')}
     >
       <div className="font-roboto border-b">
         <div className="p-[40px]">
-          <p className="my-[12px] text-[28px] font-condensed text-[#111111] text-center font-bold">Бүртгүүлэх</p>
+          <p className="my-[25px] text-[32px] font-condensed leading-[38px] text-[#111111] text-center font-bold">
+            Бүртгүүлэх
+          </p>
           <Form
             autoComplete="off"
             onFinish={(values) => {
@@ -48,19 +51,21 @@ function RegisterStep({ setStep }) {
             }}
             layout="vertical"
           >
-            <Form.Item name="login" rules={[{ required: true, message: 'Заавал оруулна уу!' }]}>
-              <Input size="large" placeholder="Утасны дугаар / Имэйл" />
+            <Form.Item className="mb-[12px]" name="login" rules={[{ required: true, message: 'Заавал оруулна уу!' }]}>
+              <Input className="h-[44px] rounded-[4px]" size="large" placeholder="Утасны дугаар / Имэйл" />
             </Form.Item>
             <Form.Item
               name="password"
+              className="mb-[12px]"
               rules={[
                 { required: true, message: 'Заавал оруулна уу!' },
                 { min: 4, message: 'Хэт богинохон байна!' },
               ]}
             >
-              <Input.Password size="large" placeholder="Нууц үг" />
+              <Input.Password className="h-[44px] rounded-[4px]" size="large" placeholder="Нууц үг" />
             </Form.Item>
             <Form.Item
+              className="mb-[22px]"
               name="passwordConfirmation"
               dependencies={['password']}
               hasFeedback
@@ -79,14 +84,14 @@ function RegisterStep({ setStep }) {
                 }),
               ]}
             >
-              <Input.Password size="large" placeholder="Нууц үг давтах" />
+              <Input.Password className="h-[44px] rounded-[4px]" size="large" placeholder="Нууц үг давтах" />
             </Form.Item>
             <Button
               htmlType="submit"
+              className="h-[44px] font-medium"
               type="primary"
               size="large"
               block
-              icon={<CheckOutlined />}
               loading={loading}
               disabled={checking}
             >
@@ -96,13 +101,17 @@ function RegisterStep({ setStep }) {
         </div>
       </div>
       <div className="p-[24px]">
-        <div className="flex items-center justify-center text-[#555555] text-[14px]">
-          <span>Бүртгэлтэй хэрэглэгч бол </span>
-          <Button type="link" onClick={() => setStep('login')}>
-            Нэвтрэх
+        <div className="flex items-center justify-center text-[#555555] h-[18px]">
+          <p className="text-[15px] leading-[18px]">Бүртгэлтэй хэрэглэгч бол </p>
+          <Button
+            className="p-0 text-[15px] leading-[18px] h-[18px] font-bold"
+            type="link"
+            onClick={() => setStep('login')}
+          >
+            &nbsp;Нэвтрэх
           </Button>
         </div>
-        <p className="mt-[40px] flex items-center flex-wrap text-[13px] text-[#909090] justify-center">
+        <p className="mt-[24px] flex items-center flex-wrap text-[13px] text-[#909090] justify-center">
           Та энэ алхамыг үргэлжлүүлснээр, сайтын
           <Button
             onClick={() => {

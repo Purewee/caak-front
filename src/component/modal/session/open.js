@@ -14,6 +14,7 @@ function OpenStep({ setStep }) {
       footer={false}
       bodyStyle={{ padding: 0 }}
       width={720}
+      closeIcon={<span className="icon-fi-rs-close text-[#909090] text-[18px]" />}
       destroyOnClose={true}
       onCancel={() => setStep('closed')}
     >
@@ -68,7 +69,7 @@ function OpenStep({ setStep }) {
             </Divider>
             <Button
               block
-              icon={<FIcon className="icon-fi-rs-mail-f text-[26px] absolute left-[22px] top-[9px]" />}
+              icon={<FIcon className="icon-fi-rs-mail-f text-[26px] hidden sm:block absolute left-[22px] top-[6px]" />}
               size="large"
               type="primary"
               onClick={() => setStep('register')}
