@@ -15,13 +15,7 @@ export default function Search({ transparent, drawer }) {
         icon={
           <FIcon
             className={`icon-fi-rs-search text-[22px] ${
-              transparent
-                ? isMobile
-                  ? 'text-caak-black'
-                  : 'text-white'
-                : drawer
-                ? 'text-caak-black'
-                : 'text-[#555555]'
+              transparent ? (isMobile ? 'text-[#555555]' : 'text-white') : drawer ? 'text-caak-black' : 'text-[#555555]'
             }`}
           />
         }

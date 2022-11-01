@@ -322,6 +322,7 @@ const Post = () => {
                   <TwitterShareButton
                     className="h-[20px] ml-[24px]"
                     url={`${Configure.domain}/post/view/${article?.id}`}
+                    title={article?.title}
                   >
                     <FIcon className="text-[#909090] hover:text-[#1877F2] text-[22px] w-[24px] h-[24px] icon-fi-rs-tw" />
                   </TwitterShareButton>
