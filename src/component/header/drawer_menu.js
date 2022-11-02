@@ -51,7 +51,7 @@ export default function DrawerMenu({ isMobile }) {
         onClick={() => setOpen(!open)}
       />
       <Drawer
-        visible={open}
+        open={open}
         width={380}
         placement="left"
         headerStyle={{ padding: 30 }}

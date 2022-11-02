@@ -45,16 +45,11 @@ export default function AddCategoriesModal({ toggle, image }) {
   const filtered = categories.filter((category) => {
     return category.parent === null;
   });
-  //prettier-ignore
   return (
     <Modal
-      visible
+      open
       width={738}
-      onOk={() =>
-        isAuth
-          ? toggle()
-          : openModal('login')
-      }
+      onOk={() => (isAuth ? toggle() : openModal('login'))}
       onCancel={toggle}
       title={
         <p className="text-[38px] font-condensed font-bold leading-[44px] text-center pt-[15px]">
@@ -66,7 +61,12 @@ export default function AddCategoriesModal({ toggle, image }) {
       closeIcon={<span className="icon-fi-rs-close text-[18px] text-[#909090]" />}
       footer={
         <div className="w-full flex justify-center">
-          <p onClick={() => toggle()} className="w-[300px] rounded-[4px] cursor-pointer h-[44px] flex justify-center items-center font-medium font-roboto text-[16px] text-[#909090] bg-[#EFEEEF]">Хадгалах</p>
+          <p
+            onClick={() => toggle()}
+            className="w-[300px] rounded-[4px] cursor-pointer h-[44px] flex justify-center items-center font-medium font-roboto text-[16px] text-[#909090] bg-[#EFEEEF]"
+          >
+            Хадгалах
+          </p>
         </div>
       }
       okType="primary"
@@ -74,19 +74,32 @@ export default function AddCategoriesModal({ toggle, image }) {
     >
       <div className="flex flex-wrap justify-center px-[62px] gap-[14px] pt-[20px] pb-[30px]">
         {filtered.map((x, index) => {
-          if(index < 2){
+          if (index < 2) {
             return x.parent === null ? (
-              <div onClick={() => selected === x.id ? setSelected(null) : setSelected(x.id)} key={index} className={`w-[300px] cursor-pointer h-[110px] rounded-[6px] relative ${selected === x.id && 'border-[#FF6600] p-[4px] border-[2px]'}`}>
+              <div
+                onClick={() => (selected === x.id ? setSelected(null) : setSelected(x.id))}
+                key={index}
+                className={`w-[300px] cursor-pointer h-[110px] rounded-[6px] relative ${
+                  selected === x.id && 'border-[#FF6600] p-[4px] border-[2px]'
+                }`}
+              >
                 <img className="w-full h-full object-cover rounded-[6px]" src={imagePath(x.cover)} />
-                <p className={`text-white rounded-[6px] absolute top-0 h-full w-full flex justify-center font-roboto font-medium text-[17px] items-center bg-black bg-opacity-50 ${selected === x.id && 'w-[288px] top-[4px] h-[98px]'}`}>{x.name}</p>
+                <p
+                  className={`text-white rounded-[6px] absolute top-0 h-full w-full flex justify-center font-roboto font-medium text-[17px] items-center bg-black bg-opacity-50 ${
+                    selected === x.id && 'w-[288px] top-[4px] h-[98px]'
+                  }`}
+                >
+                  {x.name}
+                </p>
               </div>
             ) : null;
           }
         })}
         {selected && (
           <div className="w-full bg-[#F5F5F5] flex flex-wrap gap-x-[6px] border border-[#EFEEEF] gap-y-[12px] p-[14px]">
-            {categories.map((data, index) => {
-              if(selected === data.parent?.id){
+            {categories
+              .filter((x) => x.parent?.id === selected)
+              .map((data, index) => {
                 return (
                   <p
                     onClick={() => {
@@ -96,22 +109,35 @@ export default function AddCategoriesModal({ toggle, image }) {
                         });
                       }
                     }}
-                    className={`${data.following ? ' bg-caak-primary text-white' : 'bg-white text-caak-black'} border cursor-pointer border-[#D4D8D8] rounded-full font-roboto px-[14px] py-[4px] leading-[23px]`}
+                    className={`${
+                      data.following ? ' bg-caak-primary text-white' : 'bg-white text-caak-black'
+                    } border cursor-pointer border-[#D4D8D8] rounded-full font-roboto px-[14px] py-[4px] leading-[23px]`}
                     key={index}
                   >
                     {data.name}
                   </p>
-                )
-              }
-            })}
+                );
+              })}
           </div>
         )}
         {filtered.map((x, index) => {
-          if(index >= 2){
+          if (index >= 2) {
             return x.parent === null ? (
-              <div onClick={() => selected === x.id ? setSelected(null) : setSelected(x.id)} key={index} className={`w-[300px] cursor-pointer h-[110px] rounded-[6px] relative ${selected === x.id && 'border-[#FF6600] p-[4px] border-[2px]'}`}>
+              <div
+                onClick={() => (selected === x.id ? setSelected(null) : setSelected(x.id))}
+                key={index}
+                className={`w-[300px] cursor-pointer h-[110px] rounded-[6px] relative ${
+                  selected === x.id && 'border-[#FF6600] p-[4px] border-[2px]'
+                }`}
+              >
                 <img className="w-full h-full object-cover rounded-[6px]" src={imagePath(x.cover)} />
-                <p className={`text-white rounded-[6px] absolute top-0 h-full w-full flex justify-center font-roboto font-medium text-[17px] items-center bg-black bg-opacity-50 ${selected === x.id && 'w-[288px] top-[4px] h-[98px]'}`}>{x.name}</p>
+                <p
+                  className={`text-white rounded-[6px] absolute top-0 h-full w-full flex justify-center font-roboto font-medium text-[17px] items-center bg-black bg-opacity-50 ${
+                    selected === x.id && 'w-[288px] top-[4px] h-[98px]'
+                  }`}
+                >
+                  {x.name}
+                </p>
               </div>
             ) : null;
           }

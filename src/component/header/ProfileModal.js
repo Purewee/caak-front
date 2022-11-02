@@ -21,7 +21,7 @@ function ProfileModal({ login }) {
   return (
     <>
       <Modal
-        visible={true}
+        open={true}
         footer={false}
         title={false}
         width={400}

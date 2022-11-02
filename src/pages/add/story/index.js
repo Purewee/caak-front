@@ -64,7 +64,7 @@ function AddStory() {
   const context = useContext(AppContext);
   const { id } = useParams();
   const navigate = useNavigate();
-  const { data, refetch } = useQuery(CATEGORIES);
+  const { data } = useQuery(CATEGORIES);
   const { data: post, loading } = useQuery(POST, { variables: { id }, skip: !id });
   const categories = data?.categories?.nodes || [];
   const article = post?.article;

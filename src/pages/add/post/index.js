@@ -33,7 +33,7 @@ import {
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import InlineEditor from 'ckeditor5-custom-build';
 
-import { imagePath, parseVideoURL } from '../../../utility/Util';
+import { imagePath } from '../../../utility/Util';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { getDataFromBlob, imageCompress } from '../../../lib/imageCompress';
 import AddBlock from './AddBlock';
@@ -64,6 +64,7 @@ const ckConfig = {
     '|',
     'undo',
     'redo',
+    'sourceEditing',
   ],
   link: {
     decorators: {

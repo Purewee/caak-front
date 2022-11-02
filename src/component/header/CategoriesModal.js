@@ -9,19 +9,29 @@ const BATCH_FOLLOW = gql`
     updateFollows(input: { targetType: $targetType, ids: $ids })
   }
 `;
-
 const CATEGORIES = gql`
   query GetCategories {
-    categories(filter: { parentId: { blank: true } }) {
-      edges {
-        node {
+    categories(sort: { direction: asc, field: "position" }, filter: { status: { eq: "active" } }) {
+      nodes {
+        id
+        name
+        slug
+        following
+        position
+        parent {
           id
-          slug
           name
-          fullName
-          cover
-          position
+          slug
         }
+        childs(sort: { direction: asc, field: "position" }) {
+          nodes {
+            id
+            name
+            position
+            slug
+          }
+        }
+        cover
       }
     }
   }
@@ -33,7 +43,7 @@ function CategoriesModal({ refetch }) {
   const [ids, setIds] = useState([]);
   const categories = data?.categories?.edges?.map((x) => x.node) || [];
   return (
-    <Modal visible closable={false} header={false} footer={false} width={850}>
+    <Modal open closable={false} header={false} footer={false} width={850}>
       {loading ? (
         <Skeleton active />
       ) : (
@@ -45,34 +55,36 @@ function CategoriesModal({ refetch }) {
             </p>
           </div>
           <div className="px-[20px] h-[60vh] flex items-center justify-center gap-[8px] flex-wrap overflow-auto">
-            {categories.map((x) => {
-              const selected = ids.includes(x.id);
-              return (
-                <div
-                  className={`w-[170px] h-[100px] relative items-center justify-center rounded-md cursor-pointer border-caak-primary ${
-                    selected && 'border-2'
-                  }`}
-                  key={x.id}
-                  onClick={() => {
-                    if (selected) {
-                      setIds(ids.filter((id) => id !== x.id));
-                    } else {
-                      setIds([...ids, x.id]);
-                    }
-                  }}
-                >
-                  {x.cover && (
-                    <div
-                      style={{ backgroundImage: `url(${imagePath(x.cover)})` }}
-                      className="w-full h-full bg-center bg-cover bg-no-repeat"
-                    />
-                  )}
-                  <span className="absolute top-0 h-full w-full flex items-center justify-center text-white text-[15px] font-medium bg-black bg-opacity-50 rounded-md">
-                    {x.name}
-                  </span>
-                </div>
-              );
-            })}
+            {categories
+              .filter((x) => !x.parent?.id)
+              .map((x) => {
+                const selected = ids.includes(x.id);
+                return (
+                  <div
+                    className={`w-[170px] h-[100px] relative items-center justify-center rounded-md cursor-pointer border-caak-primary ${
+                      selected && 'border-2'
+                    }`}
+                    key={x.id}
+                    onClick={() => {
+                      if (selected) {
+                        setIds(ids.filter((id) => id !== x.id));
+                      } else {
+                        setIds([...ids, x.id]);
+                      }
+                    }}
+                  >
+                    {x.cover && (
+                      <div
+                        style={{ backgroundImage: `url(${imagePath(x.cover)})` }}
+                        className="w-full h-full bg-center bg-cover bg-no-repeat"
+                      />
+                    )}
+                    <span className="absolute top-0 h-full w-full flex items-center justify-center text-white text-[15px] font-medium bg-black bg-opacity-50 rounded-md">
+                      {x.name}
+                    </span>
+                  </div>
+                );
+              })}
           </div>
           <div className="w-full flex justify-center mt-[24px]">
             <Button

@@ -8,6 +8,7 @@ const Configure = {
   cs: 'Z31TDT2SopqUVcXyxrymJpIxfPrsuWyuneVQIhOaz9o',
   userTokenField: 'us.t',
   appFacebookId: '832214398199458',
+  appGoogleKey: '367475317387-9jh4k84vo1hkoehf520lmsrdanfvaqsk.apps.googleusercontent.com',
   domain: 'https://www.caak.mn',
 };
 
