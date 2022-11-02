@@ -3,7 +3,7 @@ import { Button, message } from 'antd';
 import { loginWithAssertion } from '../../../utility/WithApolloProvider';
 import { useAuth } from '../../../context/AuthContext';
 import Configure from '../../configure';
-import { FacebookFilled, FacebookOutlined } from '@ant-design/icons';
+import { FacebookFilled } from '@ant-design/icons';
 
 export function initFB() {
   window.fbAsyncInit = () => {

@@ -4,6 +4,8 @@ import logoIcon from '../../../images/New-Logo.svg';
 import Google from '../../../assets/images/fi-rs-google.svg';
 import { useNavigate } from 'react-router-dom';
 import { FIcon } from '../../icon';
+import LoginWithFB from './facebook';
+import GoogleAuth from './google_auth';
 
 function OpenStep({ setStep }) {
   const navigate = useNavigate();
@@ -48,22 +50,8 @@ function OpenStep({ setStep }) {
             <h3 className="text-[32px] font-bold font-condensed leading-[38px]">
               Бүртгэл үүсгэн мэдээллийг өөрийн болгоорой!
             </h3>
-            <Button
-              block
-              icon={<FIcon className="icon-fi-rs-fb text-[26px] absolute left-[22px] top-[9px]" />}
-              size="large"
-              className="bg-[#1876F3] mb-4 h-[44px] text-white font-medium border-0 hover:border mt-[30px]"
-            >
-              Facebook
-            </Button>
-            <Button
-              block
-              className="h-[44px]"
-              icon={<img src={Google} alt="" className="w-[26px] absolute left-[18px] top-[9px]" />}
-              size="large"
-            >
-              Google
-            </Button>
+            <LoginWithFB />
+            <GoogleAuth />
             <Divider>
               <span className="text-[#AFAFAF] font-normal text-[14px]">Эсвэл</span>
             </Divider>

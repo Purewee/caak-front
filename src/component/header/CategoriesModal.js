@@ -41,7 +41,7 @@ function CategoriesModal({ refetch }) {
   const { data, loading } = useQuery(CATEGORIES);
   const [follow, { loading: following }] = useMutation(BATCH_FOLLOW);
   const [ids, setIds] = useState([]);
-  const categories = data?.categories?.edges?.map((x) => x.node) || [];
+  const categories = data?.categories?.nodes || [];
   return (
     <Modal open closable={false} header={false} footer={false} width={850}>
       {loading ? (
@@ -56,7 +56,7 @@ function CategoriesModal({ refetch }) {
           </div>
           <div className="px-[20px] h-[60vh] flex items-center justify-center gap-[8px] flex-wrap overflow-auto">
             {categories
-              .filter((x) => !x.parent?.id)
+              .filter((x) => !!x.parent?.id)
               .map((x) => {
                 const selected = ids.includes(x.id);
                 return (

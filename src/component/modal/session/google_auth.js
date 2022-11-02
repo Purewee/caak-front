@@ -1,11 +1,16 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { GoogleLogin } from 'react-google-login';
 import { gapi } from 'gapi-script';
 import Configure from '../../configure';
-import { Button } from 'antd';
+import { Button, message } from 'antd';
 import { GoogleOutlined } from '@ant-design/icons';
+import { loginWithAssertion } from '../../../utility/WithApolloProvider';
+import { useAuth } from '../../../context/AuthContext';
 
 function GoogleAuth() {
+  const [loading, setLoading] = useState(false);
+  const { login } = useAuth();
+
   useEffect(() => {
     const initClient = () => {
       gapi.client.init({
@@ -19,14 +24,23 @@ function GoogleAuth() {
   return (
     <GoogleLogin
       clientId={Configure.appGoogleKey}
-      buttonText="Sign in with Google"
       onSuccess={(res) => {
         console.log({ res });
+        loginWithAssertion(res.accessToken, 'google')
+          .then((token) => {
+            setLoading(false);
+            if (!token) return;
+            login();
+          })
+          .catch((e) => {
+            message.error(e).then();
+            setLoading(false);
+          });
       }}
       onFailure={(res) => {
         console.log({ res });
       }}
-      cookiePolicy={'single_host_origin'}
+      cookiePolicy="single_host_origin"
       isSignedIn={true}
       render={(renderProps) => (
         <Button
@@ -35,6 +49,7 @@ function GoogleAuth() {
           block
           size="large"
           icon={<GoogleOutlined />}
+          loading={loading}
         >
           Google
         </Button>
