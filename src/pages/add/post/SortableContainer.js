@@ -89,7 +89,7 @@ function SortableBlock({ block }) {
         <span style={{ height: 90, width: 90 }} className="flex items-center justify-center bg-[#EFEFEF] rounded">
           {block.imageUrl ? (
             <Badge.Ribbon placement="start" text="VIDEO" className="text-[10px] h-[16px] leading-[16px]">
-              <Image src={block.imageUrl} preview={false} className="object-cover w-[90px] rounded" />
+              <Image src={block.imageUrl} preview={false} className="object-cover w-[90px] h-[90px] rounded" />
             </Badge.Ribbon>
           ) : (
             <YoutubeFilled className="text-[40px]" />

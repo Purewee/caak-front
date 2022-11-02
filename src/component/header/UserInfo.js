@@ -8,6 +8,7 @@ import { imagePath, isAdmin } from '../../utility/Util';
 import { ME } from '../../pages/post/view/_gql';
 import { sumBy } from 'lodash';
 import ProfileModal from './ProfileModal';
+import CategoriesModal from './CategoriesModal';
 import useMediaQuery from '../navigation/useMediaQuery';
 
 const REMOVE_SAVED = gql`
@@ -22,12 +23,12 @@ export default function UserInfo({ transparent }) {
   const [hovered, setHovered] = useState();
   const [savedVisible, setSavedVisible] = useState(false);
   const [profileVisible, setProfileVisible] = useState(false);
-  const [open, setOpen] = useState(false);
+  const [step, setStep] = useState(0);
   const { data, loading, refetch } = useQuery(ME);
   const { logout } = useAuth();
   const me = data?.me || {};
-  const saved_articles = data?.me?.recipes.map((x) => x?.articles.nodes).flat() || [];
-  const totalSaved = sumBy(data?.me?.recipes.map((x) => x.articlesCount));
+  const saved_articles = me?.recipes?.map((x) => x?.articles.nodes).flat() || [];
+  const totalSaved = sumBy(me?.recipes?.map((x) => x.articlesCount));
   const [remove, { loading: removing }] = useMutation(REMOVE_SAVED);
   const navigate = useNavigate();
   const isMobile = useMediaQuery('screen and (max-width: 670px)');
@@ -49,28 +50,34 @@ export default function UserInfo({ transparent }) {
   };
 
   useEffect(() => {
-    if (me.id && !me.firstName) {
-      setOpen(true);
+    if (!me.id) {
+      setStep(0);
+    } else if (!me.firstName) {
+      setStep(1);
+    } else if (me.follows?.length === 0) {
+      setStep(2);
+    } else {
+      setStep(0);
     }
   }, [me]);
 
-  if (loading) return <Spin className={'text-caak-primary'} />;
+  if (loading) return <Spin className="text-caak-primary" />;
 
   const Settings = [
     {
       title: 'Профайл',
       icon: 'icon-fi-rs-user',
-      link: `/profile/${data?.me?.id}`,
+      link: `/profile/${me?.id}`,
     },
     {
       title: 'Дашбоард',
       icon: 'icon-fi-rs-statistic',
-      link: `/dashboard/${data?.me?.id}`,
+      link: `/dashboard/${me?.id}`,
     },
     {
       title: 'Тохиргоо',
       icon: 'icon-fi-rs-settings',
-      link: `/settings/${data?.me?.id}`,
+      link: `/settings/${me?.id}`,
     },
   ];
 
@@ -125,8 +132,7 @@ export default function UserInfo({ transparent }) {
                         type="link"
                         onClick={() => {
                           remove({ variables: { articleId: x.id } }).then(() => {
-                            refetch();
-                            message.success('Амжилттай устгалаа');
+                            refetch().then(() => message.success('Амжилттай устгалаа'));
                           });
                         }}
                         loading={removing}
@@ -138,7 +144,7 @@ export default function UserInfo({ transparent }) {
             </div>
             {totalSaved > 10 && (
               <Link
-                state={'saved'}
+                state="saved"
                 to={{ pathname: `/profile/${me.id}` }}
                 className="w-full h-[47px] cursor-pointer flex justify-center items-center bg-[#F5F5F5]"
               >
@@ -190,7 +196,7 @@ export default function UserInfo({ transparent }) {
                   onClick={hide}
                   to={`/profile/${me.id}`}
                 >
-                  {data?.me?.firstName || null}
+                  {me?.firstName || null}
                 </Link>
                 <Link onClick={hide} to={`/settings/${me.id}`} className="text-[14px] leading-[16px] mt-[3px]">
                   Мэдээллээ засах
@@ -198,12 +204,12 @@ export default function UserInfo({ transparent }) {
               </div>
             </div>
             <div className="pl-[18px] flex flex-col border-b gap-y-[16px] py-[19px]">
-              {Settings.map((data, index) => {
+              {Settings.map((item, index) => {
                 return (
-                  <Link onClick={hide} key={index} to={{ pathname: data.link }}>
+                  <Link onClick={hide} key={index} to={{ pathname: item.link }}>
                     <div className="flex flex-row items-center cursor-pointer">
-                      <span className={`${data.icon} text-[20px]`} />
-                      <p className="text-[15px] ml-[12px] -mt-[3px] leading-[18px]">{data.title}</p>
+                      <span className={`${item.icon} text-[20px]`} />
+                      <p className="text-[15px] ml-[12px] -mt-[3px] leading-[18px]">{item.title}</p>
                     </div>
                   </Link>
                 );
@@ -250,7 +256,8 @@ export default function UserInfo({ transparent }) {
           </div>
         )}
       </Popover>
-      {open && <ProfileModal login={me?.login} />}
+      {step === 1 && <ProfileModal login={me?.login} />}
+      {step === 2 && <CategoriesModal refetch={refetch} />}
     </div>
   );
 }

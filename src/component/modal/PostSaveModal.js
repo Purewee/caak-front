@@ -26,7 +26,7 @@ export default function PostSaveModal({ post, toggle, image }) {
   const [save, { loading }] = useMutation(SAVE_POST, { variables: { articleId: post.id } });
   const { isAuth, openModal } = useAuth();
   const navigate = useNavigate();
-  const { data: me } = useQuery(ME);
+  const { data: me } = useQuery(ME, { skip: !isAuth });
 
   const openNotification = () => {
     const args = {

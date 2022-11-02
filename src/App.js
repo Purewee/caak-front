@@ -1,6 +1,6 @@
 import './styles/index.css';
 import './App.css';
-import React, { useEffect, useState, createContext } from 'react';
+import React, { useState, createContext } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Home from './pages/home';
 import { Helmet } from 'react-helmet';

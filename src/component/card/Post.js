@@ -10,6 +10,7 @@ import { FIcon } from '../icon';
 import moment from 'moment';
 import { useMutation, gql, useQuery } from '@apollo/client';
 import { ME } from '../../pages/post/view/_gql';
+import { useAuth } from '../../context/AuthContext';
 
 const REMOVE_SAVED = gql`
   mutation RemoveSavedArticle($id: ID, $articleId: ID!) {
@@ -22,11 +23,12 @@ const REMOVE_SAVED = gql`
 const colors = ['#163943', '#463146', '#131D1C', '#1E1642', '#854D0E', '#233C6A', '#813333'];
 
 export default function PostCard({ isMobile, post, removeSaved, asd, ...rest }) {
+  const { isAuth } = useAuth();
   const [saving, setSaving] = useState(false);
   const [fixedMenu, setFixedMenu] = useState(false);
   const [reporting, setReporting] = useState(false);
   const [sharing, setSharing] = useState(false);
-  const { refetch } = useQuery(ME);
+  const { refetch } = useQuery(ME, { skip: !isAuth });
   const [remove, { loading: removing }] = useMutation(REMOVE_SAVED);
   const [random] = useState(Math.floor(Math.random() * colors.length));
 

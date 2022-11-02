@@ -49,7 +49,9 @@ const mobileItems = [
 
 export default function NavbarNew() {
   const context = useContext(AppContext);
-  const { data: me, loading: me_loading } = useQuery(ME);
+  const { isAuth, logout, openModal } = useAuth();
+
+  const { data: me, loading: me_loading } = useQuery(ME, { skip: !isAuth });
   const [loaded, setLoaded] = useState(false);
   const [posts, setPosts] = useState([]);
   const [mobileSideMenu, setMobileSideMenu] = useState(false);
@@ -58,10 +60,10 @@ export default function NavbarNew() {
   const [navBarStyle, setNavBarStyle] = useState(true);
   const [sideMenuOpen, setSideMenuOpen] = useState(false);
   const navigate = useNavigate();
+
   const isLaptop = useMediaQuery('(min-width: 1001px) and (max-width: 1920px)');
   const isTablet = useMediaQuery('(min-width: 401px) and (max-width: 1000px)');
   const isMobile = useMediaQuery('screen and (max-width: 400)');
-  const { isAuth, logout, openModal } = useAuth();
 
   const Settings = [
     {
@@ -89,10 +91,8 @@ export default function NavbarNew() {
           setMobileSideMenu(false);
         }
       }
-      // Bind the event listener
       document.addEventListener('mousedown', handleClickOutside);
       return () => {
-        // Unbind the event listener on clean up
         document.removeEventListener('mousedown', handleClickOutside);
       };
     }, [ref]);

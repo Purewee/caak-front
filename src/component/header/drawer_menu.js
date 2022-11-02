@@ -36,7 +36,7 @@ export default function DrawerMenu({ isMobile }) {
   const [open, setOpen] = useState(false);
   const [selected, setSelected] = useState(null);
   const { data, loading } = useQuery(CATEGORIES);
-  const categories = data?.categories?.nodes || [];
+  const categories = data?.categories?.nodes;
 
   const navigate = useNavigate();
 
@@ -73,7 +73,7 @@ export default function DrawerMenu({ isMobile }) {
         }
       >
         <Collapse className="w-full custom" bordered={false} accordion>
-          {categories.map((x, index) => {
+          {categories?.map((x, idx) => {
             return (
               x.parent === null && (
                 <Collapse.Panel
@@ -93,15 +93,15 @@ export default function DrawerMenu({ isMobile }) {
                       )}
                     </div>
                   }
-                  key={index}
+                  key={idx}
                   showArrow={false}
                 >
                   <div className="ml-[60px] flex flex-col pr-[30px] custom">
-                    {x.childs?.nodes?.map((data, index) => {
+                    {x.childs?.nodes?.map((child, index) => {
                       return (
-                        <Link onClick={() => setOpen(false)} key={index} to={`/category/${data.slug}`}>
+                        <Link onClick={() => setOpen(false)} key={index} to={`/category/${child.slug}`}>
                           <div className="flex items-center cursor-pointer justify-between w-full py-[20px] border-b">
-                            <p className="text-[18px] font-roboto leading-[21px] text-[#555555]">{data.name}</p>
+                            <p className="text-[18px] font-roboto leading-[21px] text-[#555555]">{child.name}</p>
                             <span className="icon-fi-rs-down-chevron text-[#BBBEBE] text-[16px] -rotate-90" />
                           </div>
                         </Link>

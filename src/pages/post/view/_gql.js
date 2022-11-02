@@ -176,6 +176,10 @@ export const ME = gql`
           }
         }
       }
+      follows {
+        id
+        __typename
+      }
     }
   }
 `;

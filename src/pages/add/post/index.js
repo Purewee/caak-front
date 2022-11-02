@@ -521,7 +521,7 @@ function VideoBlock({ block, idx, setBlocks, onRemove }) {
     >
       <Row gutter={12}>
         <Col span={6}>
-          <Image src={image || fallback} className="w-full object-cover rounded" preview={false} />
+          <Image src={image || fallback} className="w-full object-contain rounded" preview={false} />
         </Col>
         <Col span={18}>
           <Form.Item name={[idx, 'data', 'url']} help={<small className="text-[10px]">{title}</small>}>

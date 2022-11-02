@@ -81,6 +81,10 @@ export default function PostBlock({ b, numbering }) {
               config={{
                 facebook: {
                   appId: Configure.appFacebookId,
+                  attributes: {
+                    'data-height': 430,
+                    'data-width': 860,
+                  },
                 },
               }}
             />

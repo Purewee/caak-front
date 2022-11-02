@@ -20,6 +20,10 @@
   justify-content: center;
 }
 
+.ant-btn:not(.ant-btn-round) {
+  border-radius: 3px;
+}
+
 .ant-btn .anticon {
   margin: 0;
 }

@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import { Form, Modal, Input, Button, message, Avatar, Upload, Skeleton } from 'antd';
-import { CameraOutlined, CheckOutlined } from '@ant-design/icons';
-import { gql, useMutation, useQuery } from '@apollo/client';
+import { Form, Modal, Input, Button, Avatar, Upload } from 'antd';
+import { CameraOutlined } from '@ant-design/icons';
+import { gql, useMutation } from '@apollo/client';
 import { getDataFromBlob, imageCompress } from '../../lib/imageCompress';
-import { imagePath } from '../../utility/Util';
 
 const UPDATE_PROFILE = gql`
   mutation UpdateProfile($name: String, $avatar: Upload) {
@@ -16,14 +15,13 @@ const UPDATE_PROFILE = gql`
 `;
 
 function ProfileModal({ login }) {
-  const [open, setOpen] = useState(true);
   const [updateProfile, { loading }] = useMutation(UPDATE_PROFILE, { context: { upload: true } });
   const [name, setName] = useState('');
   const [avatar, setAvatar] = useState('');
   return (
     <>
       <Modal
-        visible={open}
+        visible={true}
         footer={false}
         title={false}
         width={400}
@@ -36,9 +34,7 @@ function ProfileModal({ login }) {
             <Form
               autoComplete="off"
               onFinish={(values) => {
-                updateProfile({ variables: values }).then(() => {
-                  setOpen(false);
-                });
+                updateProfile({ variables: values }).then();
               }}
               className="flex flex-col gap-[20px] items-center"
             >
@@ -104,101 +100,7 @@ function ProfileModal({ login }) {
           </div>
         </div>
       </Modal>
-      {!open && <CategoriesModal />}
     </>
-  );
-}
-
-const CATEGORIES = gql`
-  query GetCategories {
-    categories {
-      edges {
-        node {
-          id
-          slug
-          name
-          fullName
-          cover
-          position
-        }
-      }
-    }
-  }
-`;
-
-const BATCH_FOLLOW = gql`
-  mutation FollowCategories($ids: [ID!]!, $targetType: String!) {
-    updateFollows(input: { targetType: $targetType, ids: $ids })
-  }
-`;
-
-function CategoriesModal() {
-  const [open, setOpen] = useState(true);
-  const { data, loading } = useQuery(CATEGORIES);
-  const [follow, { loading: following }] = useMutation(BATCH_FOLLOW);
-  const [ids, setIds] = useState([]);
-  const categories = data?.categories?.edges?.map((x) => x.node) || [];
-  return (
-    <Modal visible={open} closable={false} header={false} footer={false} width={850}>
-      {loading ? (
-        <Skeleton active />
-      ) : (
-        <>
-          <div className="w-full text-center mb-[12px]">
-            <h3 className="font-condensed text-[38px] font-bold text-[#111111]">Таны дуртай мэдээний төрлүүд</h3>
-            <p className="font-roboto text-[#555555] text-[15px]">
-              Таны дуртай төрлөөр мэдээг шүүцгээе. Хамгийн багадаа 3 төрөл сонгоно уу.
-            </p>
-          </div>
-          <div className="px-[20px] h-[60vh] flex items-center justify-center gap-[8px] flex-wrap overflow-auto">
-            {categories.map((x) => {
-              const selected = ids.includes(x.id);
-              return (
-                <div
-                  className={`w-[170px] h-[100px] relative items-center justify-center rounded-md cursor-pointer border-caak-primary ${
-                    selected && 'border-2'
-                  }`}
-                  key={x.id}
-                  onClick={() => {
-                    if (selected) {
-                      setIds(ids.filter((id) => id !== x.id));
-                    } else {
-                      setIds([...ids, x.id]);
-                    }
-                  }}
-                >
-                  {x.cover && (
-                    <div
-                      style={{ backgroundImage: `url(${imagePath(x.cover)})` }}
-                      className="w-full h-full bg-center bg-cover bg-no-repeat"
-                    />
-                  )}
-                  <span className="absolute top-0 h-full w-full flex items-center justify-center text-white text-[15px] font-medium bg-black bg-opacity-50 rounded-md">
-                    {x.name}
-                  </span>
-                </div>
-              );
-            })}
-          </div>
-          <div className="w-full flex justify-center mt-[24px]">
-            <Button
-              size="large"
-              icon={<CheckOutlined />}
-              disabled={ids.length < 3}
-              onClick={() => {
-                follow({ variables: { targetType: 'category', ids } }).then(() => {
-                  message.success('Амжилттай хадгаллаа.');
-                  setOpen(false);
-                });
-              }}
-              loading={following}
-            >
-              Дуусгах ({ids.length})
-            </Button>
-          </div>
-        </>
-      )}
-    </Modal>
   );
 }
 

@@ -41,8 +41,7 @@ function RegisterStep({ setStep }) {
             onFinish={(values) => {
               register({ variables: values })
                 .then(() => {
-                  message.success('Бүртгэл амжилттай');
-                  setStep('login');
+                  message.success('Бүртгэл амжилттай').then(() => setStep('login'));
                 })
                 .catch((e) => message.error(JSON.stringify(e.message)));
             }}

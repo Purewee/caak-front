@@ -19,13 +19,13 @@ const SORTS = {
 };
 
 export default function Comments({ articleId, refProp }) {
+  const { isAuth } = useAuth();
   const [sort, setSort] = useState('recent');
   const [addComment, { loading: saving }] = useMutation(ADD_COMMENT, { variables: { articleId } });
   const { data, loading, refetch, fetchMore } = useQuery(COMMENTS, { variables: { articleId, sort: SORTS[sort] } });
   const comments = data?.article?.comments;
   const pageInfo = comments?.pageInfo;
-  const { data: loggedUser } = useQuery(ME);
-  const { isAuth } = useAuth();
+  const { data: loggedUser } = useQuery(ME, { skip: !isAuth });
   const me = loggedUser?.me || {};
   const navigate = useNavigate();
   return (
