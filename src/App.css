@@ -260,6 +260,23 @@
   display: flex;
 }
 
+.ant-btn {
+  box-shadow: none;
+  text-shadow: none;
+  border-radius: 4px;
+}
+
+.ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
+  text-shadow: none;
+}
+
+.ant-btn-primary {
+  box-shadow: none;
+  text-shadow: none;
+  border-radius: 4px;
+}
+
+
 .popup_modal {
   top: 0;
   left: 0;

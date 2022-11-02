@@ -138,12 +138,13 @@ export default function Home() {
     <>
       <div className={`relative bg-white flex flex-col items-center mb-[40px] sm:mb-[100px]`}>
         <NavbarPostHeader />
-        <div style={{ zIndex: 10 }} className="sticky sm:hidden bg-white top-0 w-full px-[16px] sm:px-0">
-          <div className="w-full flex items-center justify-between">
+        <div style={{ zIndex: 10 }} className="sticky sm:hidden bg-white top-0 w-full">
+          <div className="w-full flex items-center z-10 justify-between relative ml-[16px]">
             <HomeTabs selected={selected} />
           </div>
+          <div className="h-[2px] w-full bg-[#D4D8D8] z-0 absolute bottom-0 left-0"></div>
         </div>
-        <div className="mt-[20px] hidden sm:block sm:mt-[50px] px-[16px] sm:px-0 ">
+        <div className="mt-[20px] hidden sm:block sm:mt-[50px] px-[16px] sm:px-0">
           <Banner position="a1" />
         </div>
         {selected === 'recent' && (

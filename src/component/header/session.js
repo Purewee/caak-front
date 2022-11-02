@@ -28,7 +28,7 @@ export default function Session({ transparent }) {
         <div className="w-full flex flex-row justify-between">
           <span
             onClick={() => setMobileSideMenu(!mobileSideMenu)}
-            className={`icon-fi-rs-user text-[27.5px] ${transparent ? 'text-[#555555]' : 'text-caak-black'}`}
+            className={`icon-fi-rs-user-f text-[26px] ${transparent ? 'text-[#555555]' : 'text-caak-black'}`}
           />
         </div>
         {mobileSideMenu && (
@@ -41,7 +41,7 @@ export default function Session({ transparent }) {
                     className="icon-fi-rs-user-f text-[#BBBEBE] text-[35px]"
                   />
                 </div>
-                <div className="px-[16px]">
+                <div className="px-[16px] flex flex-col">
                   <p className="font-bold text-[28px] text-caak-black font-condensed w-[233px] leading-[32px] mt-[30px]">
                     Та бүртгэл үүсгэн мэдээллийг өөрийн болгоорой!
                   </p>
@@ -59,7 +59,7 @@ export default function Session({ transparent }) {
                       openModal('login');
                       setMobileSideMenu(false);
                     }}
-                    className="w-full h-[58px] text-[16px] font-medium text-caak-black mt-[20px] border rounded-[4px]"
+                    className="w-full h-[58px] text-[16px] font-medium mt-[12px] text-caak-black border rounded-[4px]"
                   >
                     Нэвтрэх
                   </button>
