@@ -144,7 +144,7 @@ function AddPost() {
       initialValues={{
         status: 'published',
         acceptComment: true,
-        sourceId: '1',
+        sourceId: article?.source?.id || '1',
         ...article,
         tags: article?.tags.map((x) => x.slug),
         blocks: sortBy(article?.blocks, 'position'),

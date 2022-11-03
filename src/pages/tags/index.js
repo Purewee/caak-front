@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { gql, useQuery } from '@apollo/client';
 import { Link } from 'react-router-dom';
+import { Skeleton } from 'antd';
 
 const colors = [
   'rgb(170, 109, 228, 0.06)',
@@ -33,7 +34,7 @@ const TAGS = gql`
 `;
 
 export default function AllTags() {
-  const { data } = useQuery(TAGS);
+  const { data, loading } = useQuery(TAGS);
   const tags = data?.tags.edges.map((x) => x.node) || [];
   return (
     <div className="flex flex-col items-center">
@@ -42,6 +43,7 @@ export default function AllTags() {
         ТАГУУД
       </p>
       <div className="bg-[#F5F5F5] w-full pt-[50px] flex justify-center pb-[62px]">
+        {loading && <Skeleton />}
         <div className="max-w-[1310px] flex flex-wrap justify-center gap-[18px]">
           {tags.map((tag, index) => {
             const random = Math.floor(Math.random() * 5);

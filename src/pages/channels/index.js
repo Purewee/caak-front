@@ -55,12 +55,13 @@ export default function Channels() {
         <span className="text-caak-primary text-[24px] mr-[12px] icon-fi-rs-rss-o" />
         СУВГУУД
       </p>
-      <Tabs onChange={(e) => setFilter(e)} loading={loading_cat} activeKey={filter}>
-        <Tabs.TabPane key="all" tab={<span className="font-condensed">БҮГД</span>} />
-        {categories.map((x) => (
-          <Tabs.TabPane key={x} tab={<span className="font-condensed">{x}</span>} />
-        ))}
-      </Tabs>
+      <Tabs
+        onChange={(e) => setFilter(e)}
+        activeKey={filter}
+        items={[{ key: 'all', label: 'БҮГД' }, ...categories.map((x) => ({ key: x, label: x }))]}
+        className="font-condensed"
+        size="large"
+      />
       <div className="bg-[#F5F5F5] w-full pt-[50px] flex justify-center pb-[62px]">
         {loading && <Skeleton />}
         <div className="max-w-[1312px] flex flex-wrap justify-center gap-[18px]">
@@ -85,7 +86,7 @@ export default function Channels() {
                   </p>
                 </div>
                 {source.following ? (
-                  <button
+                  <Button
                     className="w-[90px] h-[34px] bg-caak-darkGray rounded-[4px] text-white text-[15px] font-bold"
                     onClick={() => {
                       if (isAuth) {
@@ -96,12 +97,14 @@ export default function Channels() {
                         openModal('login');
                       }
                     }}
+                    loading={saving}
                   >
                     ДАГАСАН
-                  </button>
+                  </Button>
                 ) : (
                   <Button
                     type="primary"
+                    loading={saving}
                     className="w-[90px] h-[34px] bg-caak-primary rounded-[4px] text-white text-[15px] font-bold"
                     onClick={() => {
                       if (isAuth) {

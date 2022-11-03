@@ -120,43 +120,23 @@ export default function Category() {
         </div>
         <div className="flex mt-[10px]">
           <Statistic title="нийтлэл" value={count} className="mx-[24px] text-center" />
-          <Statistic title="дагагч" value={category.followersCount} className="text-center font-condensed" />
+          <Statistic title="дагагч" value={category.followersCount} className="text-center" />
         </div>
-        <div className="border-b border-t border-[#EFEEEF] w-full flex justify-center mt-[35px]">
+        <div className="border-b border-[#EFEEEF] w-full flex justify-center mt-[24px]">
           <Tabs
             defaultActiveKey="recent"
             onChange={(e) => {
               setSort(e);
             }}
-            className="pt-[6px]"
-          >
-            <Tabs.TabPane
-              tab={
-                <span
-                  className={`text-[18px] font-bold leading-[21px] ${
-                    sort === 'recent' ? 'text-[#111111]' : 'text-[#555555]'
-                  }`}
-                >
-                  ШИНЭ
-                </span>
-              }
-              key="recent"
-            />
-            <Tabs.TabPane
-              tab={
-                <span
-                  className={`text-[18px] font-bold leading-[21px] ${
-                    sort === 'top' ? 'text-[#111111]' : 'text-[#555555]'
-                  }`}
-                >
-                  ШИЛДЭГ
-                </span>
-              }
-              key="top"
-            />
-          </Tabs>
+            className="font-condensed uppercase"
+            items={[
+              { key: 'recent', label: 'Шинэ' },
+              { key: 'top', label: 'Шилдэг' },
+            ]}
+            size="large"
+          />
         </div>
-        <div className="max-w-[1310px] w-full flex flex-wrap justify-center 2xl:justify-start gap-x-[22px] gap-y-[40px] pt-[30px] md:pt-[70px]">
+        <div className="max-w-[1310px] w-full flex flex-wrap justify-center 2xl:justify-start gap-x-[22px] gap-y-[40px] pt-[30px] ">
           {articles.map((post) => (
             <Col key={post.id}>
               <PostCard post={post} />

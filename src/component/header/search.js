@@ -32,8 +32,10 @@ export default function Search({ transparent, drawer }) {
         className="font-condensed caak-menu p-0"
         closeIcon={false}
         bodyStyle={{ padding: 0 }}
+        title={false}
+        headerStyle={{ display: 'none' }}
       >
-        <div className="flex items-start justify-center">
+        <div className="h-[72px] flex items-end justify-center">
           <Input.Search
             placeholder="Хайлт хийх..."
             onSearch={(text) => {

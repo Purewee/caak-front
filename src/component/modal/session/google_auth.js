@@ -41,7 +41,7 @@ function GoogleAuth() {
         console.log({ res });
       }}
       cookiePolicy="single_host_origin"
-      isSignedIn={true}
+      isSignedIn={false}
       render={(renderProps) => (
         <Button
           onClick={renderProps.onClick}
