@@ -75,7 +75,7 @@ function CategoriesModal({ refetch }) {
                   >
                     {x.cover && (
                       <div
-                        style={{ backgroundImage: `url(${imagePath(x.cover)})` }}
+                        style={{ backgroundImage: `url("${imagePath(x.cover)}")` }}
                         className="w-full h-full bg-center bg-cover bg-no-repeat"
                       />
                     )}

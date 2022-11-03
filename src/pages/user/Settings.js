@@ -297,7 +297,7 @@ export default function Settings() {
                                     >
                                       {x.cover && (
                                         <div
-                                          style={{ backgroundImage: `url(${imagePath(x.cover)})` }}
+                                          style={{ backgroundImage: `url("${imagePath(x.cover)}")` }}
                                           className="w-full h-full bg-center bg-cover bg-no-repeat"
                                         />
                                       )}
@@ -599,109 +599,6 @@ export default function Settings() {
               </Tabs.TabPane>
             </Tabs>
           </div>
-          {/* <Form
-            className="w-full md:w-[790px] font-merri"
-            layout="vertical"
-            autoComplete="off"
-            initialValues={{ firstName: me.firstName, data: me.data }}
-            onFinish={(values) => {
-              update({ variables: values }).then((res) => message.success('Мэдээлэл шинэчилэгдлээ'));
-            }}
-          >
-            <div className="border-[#EFEEEF] border rounded-[4px] w-full p-[30px]" id="profile">
-              <p className="text-[22px] font-bold leading-[25px] w-full border-b border-[#D4D8D8] pb-[14px]">Профайл</p>
-              <div className="mt-[24px]">
-                <Form.Item
-                  name="firstName"
-                  label={
-                    <>
-                      Нэр
-                      <p className="text-[14px] text-[#909090] font-normal mx-2">/Нийтэд харагдана/</p>
-                    </>
-                  }
-                >
-                  <Input size="large" />
-                </Form.Item>
-                <div className="flex items-end mt-[12px]">
-                  <Form.Item
-                    name="avatar"
-                    valuePropName="file"
-                    getValueFromEvent={(e) => {
-                      return e?.fileList[0].originFileObj;
-                    }}
-                  >
-                    <Upload
-                      showUploadList={false}
-                      maxCount={1}
-                      accept="image/*"
-                      className=""
-                      customRequest={({ file, onSuccess }) => {
-                        imageCompress(file).then((result) => {
-                          return getDataFromBlob(result).then((base64) => {
-                            setAvatar(base64);
-                            onSuccess('ok');
-                          });
-                        });
-                      }}
-                    >
-                      <div className="relative">
-                        {avatar && <Avatar size={120} src={avatar} preview={false} />}
-                        <Button
-                          type="primary"
-                          shape="circle"
-                          icon={<FIcon className="icon-fi-rs-camera-f" />}
-                          className="absolute right-0 bottom-0"
-                        />
-                      </div>
-                    </Upload>
-                  </Form.Item>
-                </div>
-                <Form.Item name={['data', 'bio']} label="Тухай">
-                  <Input.TextArea rows={4} />
-                </Form.Item>
-              </div>
-            </div>
-            <div className="border-[#EFEEEF] border rounded-[4px] w-full p-[30px] my-[50px]" id="category">
-              <p className="text-[22px] font-bold leading-[25px] w-full border-b border-[#D4D8D8] pb-[14px]">
-                Мэдээний төрөл
-              </p>
-              <div className="mt-[24px] flex flex-wrap justify-start gap-[10px]">
-                {me.follows
-                  .filter((x) => x.target.__typename === 'Category')
-                  .map(({ target: x }) => (
-                    <div
-                      className="w-[170px] h-[100px] relative items-center justify-center rounded-md cursor-pointer overflow-hidden"
-                      key={x.id}
-                    >
-                      {x.cover && (
-                        <div
-                          style={{ backgroundImage: `url(${imagePath(x.cover)})` }}
-                          className="w-full h-full bg-center bg-cover bg-no-repeat"
-                        />
-                      )}
-                      <span className="absolute top-0 h-full w-full flex items-center justify-center text-white text-[15px] font-medium bg-black bg-opacity-50 rounded-md">
-                        {x.name}
-                      </span>
-                    </div>
-                  ))}
-              </div>
-            </div>
-            <div className="border-[#EFEEEF] border rounded-[4px] w-full p-[30px] my-[50px]" id="security">
-              <p className="text-[22px] font-bold leading-[25px] w-full border-b border-[#D4D8D8] pb-[14px]">Нууцлал</p>
-              <Form.Item name="password" label="Нууц үг солих" className="mt-[20px]">
-                <Input.Password size="large" />
-              </Form.Item>
-              <Form.Item name="hideProfile" label="Профайл нуух" valuePropName="checked">
-                <Switch className="mt-[12px] w-[40px] h-[22px] bg-[#E4E4E5]" />
-              </Form.Item>
-              <Form.Item name="hideSaved" label="Хадгалсан мэдээнүүд нуух" valuePropName="checked">
-                <Switch className="mt-[12px] w-[40px] h-[22px] bg-[#E4E4E5]" />
-              </Form.Item>
-            </div>
-            <Button htmlType="submit" icon={<SaveOutlined />} type="primary" size="large" loading={saving}>
-              Хадгалах
-            </Button>
-          </Form> */}
         </div>
       </div>
     </div>

@@ -128,7 +128,7 @@ function ImageStory({ block, story }) {
       ></div>
       <div
         className="w-full sm:rounded-[8px] bg-contain bg-no-repeat bg-center"
-        style={{ backgroundImage: `url(${imagePath(block.imageUrl)})` }}
+        style={{ backgroundImage: `url("${imagePath(block.imageUrl)}")` }}
       >
         <div className="relative w-full h-full">
           {block.kind === 'post' && (
