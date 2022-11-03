@@ -132,11 +132,10 @@ function AddPost() {
           },
         })
           .then((res) => {
-            message.success('Амжилттай хадгаллаа');
-            navigate(`/post/view/${res?.data?.article.id}`);
+            message.success('Амжилттай хадгаллаа').then(() => navigate(`/post/view/${res?.data?.article.id}`));
           })
           .catch((e) => {
-            message.error(JSON.stringify(e.message));
+            message.error(JSON.stringify(e.message)).then();
           });
       }}
       layout="vertical"

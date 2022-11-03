@@ -351,13 +351,13 @@ const Post = () => {
               ))}
             </div>
             <div className="hidden md:flex flex-row  w-full justify-end items-center">
-              <FacebookShareButton url={`${Configure.domain}'/post/view/${article.id}`}>
+              <FacebookShareButton url={`${Configure.domain}/post/view/${article?.id}`}>
                 <div className="bg-[#1877F2] text-white font-roboto text-[15px] flex flex-row items-center justify-center rounded-[4px] h-[34px] pl-[11.6px] pr-[10px]">
                   <span className="icon-fi-rs-fb text-[16.8px] mr-[7.4px]" />
                   ХУВААЛЦАХ
                 </div>
               </FacebookShareButton>
-              <TwitterShareButton url={`${Configure.domain}'/post/view/${article.id}`}>
+              <TwitterShareButton url={`${Configure.domain}/post/view/${article?.id}`} title={article?.title}>
                 <div className="bg-[#1D9BF1] ml-[10px] text-white font-roboto text-[15px] flex flex-row items-center justify-center rounded-[4px] h-[34px] pl-[11.6px] pr-[10px]">
                   <span className="icon-fi-rs-tw text-[16.5px] mr-[7.7px]" />
                   ЖИРГЭХ

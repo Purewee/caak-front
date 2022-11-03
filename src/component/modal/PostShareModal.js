@@ -52,7 +52,11 @@ export default function PostShareModal({ post, toggle, image }) {
               <span className="absolute top-[10px] left-[20px] w-[24px] h-[24px] icon-fi-rs-fb text-white text-[23px] flex items-center justify-center" />
             </div>
           </FacebookShareButton>
-          <TwitterShareButton className="mt-[8px] w-full" url={`${Configure.domain}/post/view/${post?.id}`}>
+          <TwitterShareButton
+            className="mt-[8px] w-full"
+            url={`${Configure.domain}/post/view/${post?.id}`}
+            title={post?.title}
+          >
             <div className="cursor-pointer w-full rounded-[4px] h-[44px] bg-[#1D9BF1] flex items-center justify-center relative">
               <p className="text-[16px] text-white font-medium leading-[19px]">Жиргэх</p>
               <span className="absolute top-[10px] left-[20px] w-[24px] h-[24px] icon-fi-rs-tw text-white text-[22px] flex items-center justify-center" />
