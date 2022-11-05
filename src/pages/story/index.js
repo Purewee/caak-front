@@ -136,21 +136,24 @@ function ImageStory({ block, story }) {
               style={{ zIndex: 1000 }}
               className="absolute bottom-0 pb-[20px] p-[16px] sm:p-[32px] story-linear w-full rounded-[8px]"
             >
-              <p></p>
               <div className="flex flex-col">
-                <span
-                  className="truncate-2 text-white condMedium text-[34px] leading-[40px]"
-                  dangerouslySetInnerHTML={{ __html: block?.content }}
-                />
+                <Link to={block?.data?.url}>
+                  <span
+                    className="truncate-2 text-white condMedium text-[26px] sm:text-[34px] leading-[30px] sm:leading-[40px]"
+                    dangerouslySetInnerHTML={{ __html: block?.content }}
+                  />
+                </Link>
                 <span className="text-white opacity-80 text-[14px] leading-[16px] mt-[10px]">
                   {moment(story.publishDate).utc('Asia/Mongolia').format('YYYY.MM.DD, HH:MM')}
                 </span>
-                <Link className="mt-[24px]" to={block?.data?.url}>
-                  <div className="w-[180px] h-[44px] bg-white flex p-1 px-2 border-0 text-[15px] font-medium text-caak-black rounded-sm items-center justify-center">
-                    Дэлгэрэнгүй үзэх
-                    <FIcon className="icon-fi-rs-down-chevron text-caak-primary text-[14px] -rotate-90" />
-                  </div>
-                </Link>
+                <div className="flex justify-center w-full">
+                  <Link className="mt-[24px]" to={block?.data?.url}>
+                    <div className="w-[124px] sm:w-[148px] h-[34px] relative sm:h-[44px] bg-white flex p-1 px-2 border-0 text-[15px] font-medium text-caak-black rounded-sm items-center justify-center">
+                      Дэлгэрэнгүй
+                      <FIcon className="icon-fi-rs-down-chevron absolute bottom-[40px] text-white sm:text-caak-primary text-[14px] rotate-180 sm:-rotate-90" />
+                    </div>
+                  </Link>
+                </div>
               </div>
             </div>
           )}
@@ -222,10 +225,10 @@ function VideoStory({ block, story, action }) {
           />
           {block?.data?.url && (
             <a
-              className="w-[180px] bg-white flex p-1 px-2 border-0 rounded-sm items-center justify-between font-bold"
+              className="w-[148px] bg-white flex p-1 px-2 border-0 rounded-sm items-center justify-between font-bold"
               href={block.data.url}
             >
-              Дэлгэрэнгүй үзэх
+              Дэлгэрэнгүй
               <FIcon className="icon-fi-rs-down-chevron text-caak-primary text-[16px]" />
             </a>
           )}

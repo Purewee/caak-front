@@ -42,7 +42,7 @@ export default function HomeTabs({ selected }) {
     <Wrapper
       tabBarGutter={isMobile ? 16 : 30}
       onChange={(e) => navigate(`/?type=${e}`)}
-      className="w-full font-condensed"
+      className="w-full font-condensed pl-[16px]"
       centered
       activeKey={selected}
     >

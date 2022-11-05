@@ -33,7 +33,7 @@ export default function PostShareModal({ post, toggle, image }) {
       footer={false}
       okType="primary"
     >
-      <div className="w-[480px] rounded-[4px] pt-[22px] pb-[20px]">
+      <div className="sm:w-[480px] rounded-[4px] pt-[22px] pb-[20px]">
         <p className="text-[26px] font-condensed font-bold leading-[30px] ml-[24px]">Түгээх</p>
         <div className="bg-[#FBFAFB] w-full h-[132px] mt-[13px] border-t border-b border-[#D4D8D8] px-[24px] py-[16px] flex flex-row">
           <img alt="" className="min-w-[100px] max-w-[100px] h-[100px] object-cover truncate-3" src={image} />
