@@ -72,7 +72,7 @@ export default function PostCard({ isMobile, post, removeSaved, asd, ...rest }) 
             } sm:h-[300px] object-cover`}
           />
         </Link>
-        <div className="flex flex-row gap-[15px] overflow-hidden mt-[18px]">
+        <div className="flex flex-row gap-[15px] overflow-hidden">
           {!sponsored &&
             post?.categories?.map((x, index) => (
               <Link className="hidden sm:block" key={index} to={`/category/${x.slug}`}>
@@ -105,7 +105,7 @@ export default function PostCard({ isMobile, post, removeSaved, asd, ...rest }) 
           </div>
         )}
       </div>
-      <div className={`flex flex-col justify-between pb-[13px] sm:pb-[15px] ${asd && 'mt-[20px] sm:mt-0'}`}>
+      <div className={`flex flex-col justify-between pb-[13px] sm:pb-[15px] ${asd && 'mt-[16px] sm:mt-0'}`}>
         <div className={`flex items-center w-full justify-between ${sponsored && 'sm:pl-[20px] sm:pr-[16px]'}`}>
           <div className={`flex flex-row items-center ${sponsored && 'px-[13px] sm:px-0'}`}>
             <div className="flex flex-row items-center">
