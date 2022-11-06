@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Input, Form, Button, Avatar, Tabs, Comment, Skeleton, Modal } from 'antd';
+import { Input, Form, Button, Avatar, Tabs, Comment, Skeleton, Modal, message } from 'antd';
 import AvatarSvg from '../../../assets/images/avatar.svg';
 import { useMutation, useQuery } from '@apollo/client';
 import { ADD_COMMENT, COMMENTS, REACT_COMMENT } from './_gql';
@@ -28,16 +28,20 @@ export default function Comments({ articleId, refProp }) {
   const { data: loggedUser } = useQuery(ME, { skip: !isAuth });
   const me = loggedUser?.me || {};
   const navigate = useNavigate();
+  const [form] = Form.useForm();
+
   return (
     <>
       <Form
+        form={form}
         className="mt-[37px] md:mt-[50px] w-full flex flex-row"
         onFinish={(values) => {
           addComment({ variables: values }).then(() => {
-            refetch().then(() => message.success('Сэтггдэл үлдээсэнд баярлала.'));
+            refetch().then(() => message.success('Сэтггдэл үлдээсэнд баярлалаа.'));
           });
+          form.resetFields();
         }}
-        initialValues={{ name: 'Зочин' }}
+        initialValues={{ name: me?.firstName || 'Зочин' }}
       >
         {isAuth ? (
           me.avatar ? (
@@ -190,8 +194,6 @@ function SingleComment({ comment, refetch }) {
     },
   });
   const [reacted, setReacted] = useState(false);
-  const [name, setName] = useState('');
-  const [body, setBody] = useState('');
   const random = Math.floor(Math.random() * 2);
   const color = colors[random];
   const color1 = colors1[random];
