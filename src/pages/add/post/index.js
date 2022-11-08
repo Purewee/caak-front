@@ -83,6 +83,9 @@ const ckConfig = {
 
 function AddPost() {
   const context = useContext(AppContext);
+  const [dirty, setDirty] = useState(false);
+  const [featured, setFeatured] = useState(false);
+  const [blocks, setBlocks] = useState([]);
   const { id } = useParams();
   const navigate = useNavigate();
   const { data } = useQuery(CATEGORIES);
@@ -90,8 +93,6 @@ function AddPost() {
   const { data: sources, loading: source_fetching } = useQuery(SOURCES);
   const categories = data?.categories?.nodes || [];
   const article = post?.article;
-  const [blocks, setBlocks] = useState([]);
-  const [featured, setFeatured] = useState(false);
   const [saveArticle, { loading: saving }] = useMutation(id ? UPDATE : CREATE, { context: { upload: true } });
   const [cover, setCover] = useState();
 
@@ -105,7 +106,14 @@ function AddPost() {
 
   useEffect(() => {
     context.setStore('default');
-  }, []);
+    window.addEventListener('beforeunload', (e) => {
+      if (dirty) {
+        e.returnValue = 'Уучлаарай, та энэ цонхыг хаахад итгэлтэй байна уу?';
+      } else {
+        e = null;
+      }
+    });
+  });
 
   if (loading) {
     return <Skeleton />;
@@ -132,6 +140,7 @@ function AddPost() {
           },
         })
           .then((res) => {
+            setDirty(false);
             message.success('Амжилттай хадгаллаа').then(() => navigate(`/post/view/${res?.data?.article.id}`));
           })
           .catch((e) => {
@@ -140,6 +149,7 @@ function AddPost() {
       }}
       layout="vertical"
       className="caak_article"
+      onValuesChange={() => setDirty(true)}
       initialValues={{
         status: 'published',
         acceptComment: true,

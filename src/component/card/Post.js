@@ -72,7 +72,7 @@ export default function PostCard({ isMobile, post, removeSaved, asd, ...rest }) 
             } sm:h-[300px] object-cover`}
           />
         </Link>
-        <div className="flex flex-row gap-[15px] overflow-hidden">
+        <div className="flex flex-row gap-[15px] overflow-hidden md:mt-[16px]">
           {!sponsored &&
             post?.categories?.map((x, index) => (
               <Link className="hidden sm:block" key={index} to={`/category/${x.slug}`}>

@@ -64,13 +64,14 @@ function AddStory() {
   const context = useContext(AppContext);
   const { id } = useParams();
   const navigate = useNavigate();
+  const [featured, setFeatured] = useState(false);
+  const [dirty, setDirty] = useState(false);
   const { data } = useQuery(CATEGORIES);
   const { data: post, loading } = useQuery(POST, { variables: { id }, skip: !id });
   const categories = data?.categories?.nodes || [];
   const article = post?.article;
   const [blocks, setBlocks] = useState([]);
   const [saveArticle, { loading: saving }] = useMutation(id ? UPDATE : CREATE, { context: { upload: true } });
-  const [featured, setFeatured] = useState(false);
 
   useEffect(() => {
     setFeatured(article?.featured);
@@ -79,7 +80,14 @@ function AddStory() {
 
   useEffect(() => {
     context.setStore('default');
-  }, []);
+    window.addEventListener('beforeunload', (e) => {
+      if (dirty) {
+        e.returnValue = 'Уучлаарай, та энэ цонхыг хаахад итгэлтэй байна уу?';
+      } else {
+        e = null;
+      }
+    });
+  });
 
   if (loading) {
     return <Skeleton />;
@@ -105,15 +113,18 @@ function AddStory() {
           },
         })
           .then((res) => {
-            message.success('Амжилттай хадгаллаа');
-            navigate(`/story/${res?.data?.article.id}`);
+            message.success('Амжилттай хадгаллаа').then(() => {
+              setDirty(false);
+              navigate(`/story/${res?.data?.article.id}`);
+            });
           })
           .catch((e) => {
-            message.error(JSON.stringify(e.message));
+            message.error(JSON.stringify(e.message)).then();
           });
       }}
       layout="vertical"
       className="caak_article"
+      onValuesChange={() => setDirty(true)}
       initialValues={{
         status: 'published',
         ...article,

@@ -28,6 +28,7 @@ import { Helmet } from 'react-helmet';
 function AddLink() {
   const { id } = useParams();
   const navigate = useNavigate();
+  const [dirty, setDirty] = useState(false);
   const { data: categories, refetch } = useQuery(CATEGORIES);
   const { data: post, loading } = useQuery(POST, { variables: { id }, skip: !id });
   const { data: sources, loading: source_fetching } = useQuery(SOURCES);
@@ -38,6 +39,16 @@ function AddLink() {
   useEffect(() => {
     setFeatured(article?.featured);
   }, [article]);
+
+  useEffect(() => {
+    window.addEventListener('beforeunload', (e) => {
+      if (dirty) {
+        e.returnValue = 'Уучлаарай, та энэ цонхыг хаахад итгэлтэй байна уу?';
+      } else {
+        e = null;
+      }
+    });
+  });
 
   if (loading) {
     return <Skeleton />;
@@ -54,14 +65,17 @@ function AddLink() {
           },
         })
           .then(() => {
-            message.success('Амжилттай хадгаллаа');
-            navigate(`/`);
+            message.success('Амжилттай хадгаллаа').then(() => {
+              setDirty(false);
+              navigate(`/`);
+            });
           })
           .catch((e) => {
-            message.error(JSON.stringify(e.message));
+            message.error(JSON.stringify(e.message)).then();
           });
       }}
       layout="vertical"
+      onValuesChange={() => setDirty(true)}
       className="caak_article font-merri"
       initialValues={{
         status: 'published',
@@ -119,7 +133,7 @@ function AddLink() {
                 getValueFromEvent={(e) => {
                   return e?.fileList[0].originFileObj;
                 }}
-                rules={[{ required: !data?.image, message: 'Зураг заавал сонгоно уу' }]}
+                rules={[{ required: !data?.image && !article?.imageUrl, message: 'Зураг заавал сонгоно уу' }]}
               >
                 <Upload
                   showUploadList={false}

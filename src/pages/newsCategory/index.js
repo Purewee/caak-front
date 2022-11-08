@@ -1,13 +1,13 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { Tabs, Statistic, Button, Row, Col, Skeleton } from 'antd';
+import { Tabs, Statistic, Button, Col, Skeleton } from 'antd';
 import { ESService } from '../../lib/esService';
 import { gql, useMutation, useQuery } from '@apollo/client';
 import { useParams } from 'react-router-dom';
 import PostCard from '../../component/card/Post';
-import { HashTag, Title } from '../post/view/wrapper';
 import { AppContext } from '../../App';
-import { BellOutlined, HeartOutlined } from '@ant-design/icons';
 import { useAuth } from '../../context/AuthContext';
+import { isAdmin } from '../../utility/Util';
+import NotFound from '../404';
 
 const CATEGORY = gql`
   query GetCategory($slug: String) {
@@ -71,6 +71,10 @@ export default function Category() {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+  if (category.status !== 'active') {
+    return <NotFound />;
+  }
 
   return (
     <div className="flex justify-center pt-[20px] md:pt-[51px] pb-[100px] px-[16px] md:px-[0px]">
