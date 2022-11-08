@@ -18,7 +18,7 @@ const CATEGORIES = gql`
           name
           slug
         }
-        childs(sort: { direction: asc, field: "position" }) {
+        childs(sort: { direction: asc, field: "position" }, filter: { status: { eq: "active" } }) {
           nodes {
             id
             name
