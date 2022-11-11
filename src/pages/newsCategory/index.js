@@ -126,8 +126,40 @@ export default function Category() {
           <Statistic title="нийтлэл" value={count} className="mx-[24px] text-center" />
           <Statistic title="дагагч" value={category.followersCount} className="text-center" />
         </div>
-        <div className="border-b border-[#EFEEEF] w-full flex justify-center mt-[24px]">
+        <div className="w-full flex justify-center">
           <Tabs
+            defaultActiveKey="recent"
+            onChange={(e) => {
+              setSort(e);
+            }}
+            className="flex items-center w-full border-t border-b mt-[24px]"
+          >
+            <Tabs.TabPane
+              tab={
+                <span
+                  className={`text-[18px] font-bold leading-[21px] ${
+                    sort === 'recent' ? 'text-[#111111]' : 'text-[#555555]'
+                  }`}
+                >
+                  ШИНЭ
+                </span>
+              }
+              key="recent"
+            />
+            <Tabs.TabPane
+              tab={
+                <span
+                  className={`text-[18px] font-bold leading-[21px] ${
+                    sort === 'top' ? 'text-[#111111]' : 'text-[#555555]'
+                  }`}
+                >
+                  ШИЛДЭГ
+                </span>
+              }
+              key="top"
+            />
+          </Tabs>
+          {/* <Tabs
             defaultActiveKey="recent"
             onChange={(e) => {
               setSort(e);
@@ -138,7 +170,7 @@ export default function Category() {
               { key: 'top', label: 'Шилдэг' },
             ]}
             size="large"
-          />
+          /> */}
         </div>
         <div className="max-w-[1310px] w-full flex flex-wrap justify-center 2xl:justify-start gap-x-[22px] gap-y-[40px] pt-[30px] ">
           {articles.map((post) => (

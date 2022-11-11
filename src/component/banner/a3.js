@@ -28,7 +28,7 @@ const Wrapper = styled(Drawer)`
 
 export default function A3({ banner }) {
   const isMobile = useMediaQuery('screen and (max-width: 767px)');
-  const key = `banner_${banner.id}`;
+  const key = `banner_${banner?.id}`;
   const [open, setOpen] = useState(false);
 
   const handleScroll = () => {
