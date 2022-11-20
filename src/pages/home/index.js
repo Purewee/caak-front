@@ -59,8 +59,9 @@ const StickyWrapper = styled.div`
 `;
 
 export default function Home() {
-  const [q] = useSearchParams();
+  const [q, setQ] = useSearchParams();
   const selected = q.get('type') || 'recent';
+  const page = parseInt(q.get('p') || 1);
   const tabsRef = useRef(null);
   const stickyRef = useRef(null);
 
@@ -208,6 +209,7 @@ export default function Home() {
           sort={sort}
           size={33}
           autoLoad={3}
+          currentPage={page}
         />
       </div>
       {isMobile && <Banner position="a3" />}

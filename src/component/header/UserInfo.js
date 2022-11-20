@@ -62,24 +62,16 @@ export default function UserInfo({ transparent }) {
   }, [me]);
 
   if (loading) return <Spin className="text-caak-primary" />;
-
-  const Settings = [
-    {
-      title: 'Профайл',
-      icon: 'icon-fi-rs-user',
-      link: `/profile/${me?.id}`,
-    },
-    {
-      title: 'Дашбоард',
-      icon: 'icon-fi-rs-statistic',
-      link: `/dashboard/${me?.id}`,
-    },
-    {
-      title: 'Тохиргоо',
-      icon: 'icon-fi-rs-settings',
-      link: `/settings/${me?.id}`,
-    },
-  ];
+  const Settings = isAdmin(me)
+    ? [
+        { title: 'Профайл', icon: 'icon-fi-rs-user', link: `/profile/${me?.id}` },
+        { title: 'Дашбоард', icon: 'icon-fi-rs-statistic', link: `/dashboard/${me?.id}` },
+        { title: 'Тохиргоо', icon: 'icon-fi-rs-settings', link: `/settings/${me?.id}` },
+      ]
+    : [
+        { title: 'Профайл', icon: 'icon-fi-rs-user', link: `/profile/${me?.id}` },
+        { title: 'Тохиргоо', icon: 'icon-fi-rs-settings', link: `/settings/${me?.id}` },
+      ];
 
   return (
     <div className="flex flex-row items-center">

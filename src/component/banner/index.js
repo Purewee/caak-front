@@ -24,11 +24,15 @@ const BANNER = gql`
 function Banner({ position }) {
   const { data, loading } = useQuery(BANNER, { variables: { position } });
 
+  const banner = data?.banner;
+
   if (loading) return <Skeleton />;
-  if (position === 'a1') return <A1 banner={data?.banner} />;
-  if (position === 'a2') return <A2 banner={data?.banner} />;
-  if (position === 'a3') return <A3 banner={data?.banner} />;
-  if (position === 'a4') return <A4 banner={data?.banner} />;
+  if (!banner) return null;
+
+  if (position === 'a1') return <A1 banner={banner} />;
+  if (position === 'a2') return <A2 banner={banner} />;
+  if (position === 'a3') return <A3 banner={banner} />;
+  if (position === 'a4') return <A4 banner={banner} />;
 }
 
 export default Banner;

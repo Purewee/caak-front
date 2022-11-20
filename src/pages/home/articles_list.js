@@ -7,9 +7,9 @@ import Banner from '../../component/banner';
 import { FIcon } from '../../component/icon';
 import LoadMore from '../../component/LoadMore';
 
-export default function ArticlesList({ filter = [], sort = {}, size = 24, asd, autoLoad = 0 }) {
+export default function ArticlesList({ filter = [], sort = {}, size = 24, asd, autoLoad = 0, currentPage = 1 }) {
   const es = new ESService('caak');
-  const [page, setPage] = useState(0);
+  const [page, setPage] = useState(currentPage - 1);
   const [list, setList] = useState([]);
   const [count, setCount] = useState(0);
   const [loading, setLoading] = useState(false);
@@ -17,7 +17,7 @@ export default function ArticlesList({ filter = [], sort = {}, size = 24, asd, a
 
   useEffect(() => {
     setLoading(true);
-    es.posts(filter, sort, size, 0).then((response) => {
+    es.posts(filter, sort, size, page).then((response) => {
       setList(response.hits);
       setCount(response.total);
       setLoading(false);
@@ -80,7 +80,9 @@ export default function ArticlesList({ filter = [], sort = {}, size = 24, asd, a
             block
             size="large"
             className="font-roboto border-caak-primary h-[60px] sm:h-[74px] text-[18px] font-medium text-caak-primary mt-[20px]"
-            onClick={() => setPage(page + 1)}
+            onClick={() => {
+              setPage(page + 1);
+            }}
             loading={loading}
           >
             Илүү ихийг үзэх

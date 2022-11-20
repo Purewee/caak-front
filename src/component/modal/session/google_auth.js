@@ -25,7 +25,6 @@ function GoogleAuth() {
     <GoogleLogin
       clientId={Configure.appGoogleKey}
       onSuccess={(res) => {
-        console.log({ res });
         loginWithAssertion(res.accessToken, 'google')
           .then((token) => {
             setLoading(false);

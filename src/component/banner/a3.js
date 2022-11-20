@@ -12,15 +12,19 @@ const Wrapper = styled(Drawer)`
     .ant-drawer-body {
       display: flex;
       flex-direction: column;
-      padding: 24px;
+      padding: 0px;
+      height: 360px;
       .ant-btn-default {
-        border-radius: 10px;
-        height: 54px;
+        border-radius: 8px;
+        height: 44px;
         width: 100%;
         i {
           transform: rotate(270deg);
           margin: 0 6px;
         }
+      }
+      .ant-btn-link {
+        border-radius: 100%;
       }
     }
   }
@@ -54,38 +58,29 @@ export default function A3({ banner }) {
           <Wrapper
             footer={false}
             placement="bottom"
-            visible={open}
+            open={open}
             bodyStyle={{ background: '#F5F5F5', position: 'relative' }}
             closable={false}
             height={360}
           >
             <Button
               icon={<CloseOutlined />}
-              size="small"
-              className="absolute top-[8px] right-[8px] bg-white text-[#555555] border-[1px] border-[#00000010]"
+              className="absolute top-[8px] right-[8px] bg-white text-[#000000] h-[34px] w-[34px]"
               type="link"
-              shape="circle"
               onClick={() => {
                 setOpen(false);
                 localStorage.setItem(key, 'closed');
                 window.removeEventListener('scroll', handleScroll);
               }}
             />
-            <a
-              href={banner?.url}
-              target="_blank"
-              className="w-full flex flex-col justify-between items-center h-[360px]"
-            >
-              <img
-                src={imagePath(banner?.mobileFileUrl)}
-                alt={banner?.title}
-                className="w-full max-h-[240px] object-contain"
-              />
+            <a href={banner?.url} target="_blank" className="w-full flex flex-col justify-between items-center">
+              <img src={imagePath(banner?.mobileFileUrl)} alt={banner?.title} className="w-full object-cover" />
               <Button
-                className="mt-2 text-[17px] border-0"
+                className="text-[17px] border-0 absolute bottom-[6px] font-condensed"
                 style={{
                   color: banner?.data?.button_text_color || '#555555',
                   background: banner?.data?.button_color || '#ffffff',
+                  width: 360,
                 }}
               >
                 Дэлгэрэнгүй үзэх

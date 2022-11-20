@@ -23,7 +23,6 @@ export default function A4({ banner }) {
   useEffect(() => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-    //  eslint-disable-next-line
   }, []);
 
   return (

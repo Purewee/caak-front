@@ -1,20 +1,20 @@
 import React, { useEffect, useState, useRef } from 'react';
 import Logo from '../../component/logo';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { generateTimeAgo, imagePath } from '../../utility/Util';
+import { imagePath } from '../../utility/Util';
 import { useQuery } from '@apollo/client';
 import { STORY } from './_gql';
 import Stories from 'react-insta-stories';
 import { Button, Skeleton } from 'antd';
 import ReactPlayer from 'react-player';
 import { FIcon } from '../../component/icon';
-import { CloseOutlined } from '@ant-design/icons';
 import AllStories from '../../assets/images/all-stories.png';
 import moment from 'moment';
 
 export default function Story() {
   const { id } = useParams();
   const navigate = useNavigate();
+  const [current, setCurrent] = useState(0);
   const { data, loading } = useQuery(STORY, { variables: { id } });
   const story = data?.article || {};
   const stories = story?.blocks?.map((b) => {
@@ -37,15 +37,24 @@ export default function Story() {
         event.preventDefault();
         navigate('/');
       }
+      if (event.key === 'ArrowLeft') {
+        if (current === 0 && story?.nextStory?.id) {
+          event.preventDefault();
+          navigate(`/story/${story.nextStory.id}`);
+        }
+      }
+      if (event.key === 'ArrowRight') {
+        if (current === stories?.length - 1 && story?.prevStory?.id) {
+          event.preventDefault();
+          navigate(`/story/${story.prevStory.id}`);
+        }
+      }
     };
-
     document.addEventListener('keydown', keyDownHandler);
-
-    // 👇️ clean up event listener
     return () => {
       document.removeEventListener('keydown', keyDownHandler);
     };
-  }, []);
+  }, [stories]);
 
   if (loading) return <Skeleton />;
   return (
@@ -76,14 +85,10 @@ export default function Story() {
         width="100%"
         height="100%"
         keyboardNavigation
-        // preventDefault
         defaultInterval={1500}
-        storyContainerStyles={{
-          overflow: 'hidden',
-          background: '#323232',
-        }}
+        storyContainerStyles={{ overflow: 'hidden', background: '#323232' }}
         stories={stories}
-        currentIndex={() => console.log('first')}
+        onStoryStart={(currentId) => setCurrent(currentId)}
         onAllStoriesEnd={() => {
           if (story?.prevStory?.id) {
             navigate(`/story/${story.prevStory.id}`);
