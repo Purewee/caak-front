@@ -25,7 +25,24 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-
+.icon-fi-rs-eye-f:before {
+  content: "\e932";
+}
+.icon-fi-rs-eye-o:before {
+  content: "\e934";
+}
+.icon-fi-rs-calendar-o:before {
+  content: "\e964";
+}
+.icon-fi-rs-trend-f:before {
+  content: "\e966";
+}
+.icon-fi-rs-warning-f:before {
+  content: "\e963";
+}
+.icon-fi-rs-rss-o:before {
+  content: "\e962";
+}
 .icon-fi-rs-bookmark-f:before {
   content: "\e960";
 }

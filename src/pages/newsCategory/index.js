@@ -96,7 +96,7 @@ export default function Category() {
                   }
                 }}
               >
-                ДАГАСАН
+                Дагасан
               </button>
             ) : (
               <Button
@@ -114,7 +114,7 @@ export default function Category() {
                   }
                 }}
               >
-                ДАГАХ
+                Дагах
               </Button>
             )}
             <div className="w-[42px] h-[34px] flex justify-center items-center border rounded-[4px] ml-[10px] cursor-pointer">

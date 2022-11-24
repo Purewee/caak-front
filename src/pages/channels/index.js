@@ -99,7 +99,7 @@ export default function Channels() {
                     }}
                     loading={saving}
                   >
-                    ДАГАСАН
+                    Дагасан
                   </Button>
                 ) : (
                   <Button
@@ -116,7 +116,7 @@ export default function Channels() {
                       }
                     }}
                   >
-                    ДАГАХ
+                    Дагах
                   </Button>
                 )}
               </div>

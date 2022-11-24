@@ -128,7 +128,7 @@ export default function Settings() {
       <div className="max-w-[1140px] w-full mt-[51px]">
         <div className="flex flex-col md:flex-row gap-[20px] md:gap-[60px]">
           <div>
-            <p className="text-[28px] leading-[24px]">Тохиргоо</p>
+            <p className="text-[28px] leading-[24px] condMedium">Тохиргоо</p>
             <Tabs
               defaultActiveKey={'posts'}
               onChange={(e) => setSelected(e)}
@@ -166,11 +166,11 @@ export default function Settings() {
                   </div>
                 }
               >
-                <p className="text-[22px] font-bold leading-[25px] text-caak-black mt-[20px] sm:mt-0">
+                <p className="text-[22px] font-medium leading-[25px] text-caak-black mt-[20px] sm:mt-0">
                   Ерөнхий мэдээлэл
                 </p>
                 <Form
-                  className="w-full md:w-[790px] mt-[20px]"
+                  className="w-full flex flex-col items-end md:w-[790px] mt-[20px]"
                   layout="vertical"
                   autoComplete="off"
                   initialValues={{ firstName: me.firstName, data: me.data }}
@@ -234,7 +234,13 @@ export default function Settings() {
                       </Form.Item>
                     </div>
                   </div>
-                  <Button className="mt-[20px] h-[34px]" htmlType="submit" type="primary" size="large" loading={saving}>
+                  <Button
+                    className="mt-[20px] h-[34px] w-[100px]"
+                    htmlType="submit"
+                    type="primary"
+                    size="large"
+                    loading={saving}
+                  >
                     Хадгалах
                   </Button>
                 </Form>
@@ -316,7 +322,7 @@ export default function Settings() {
                                           }
                                         }}
                                       >
-                                        ДАГАСАН
+                                        Дагасан
                                       </button>
                                     ) : (
                                       <Button
@@ -330,7 +336,7 @@ export default function Settings() {
                                           }
                                         }}
                                       >
-                                        ДАГАХ
+                                        Дагах
                                       </Button>
                                     )}
                                   </div>
@@ -415,7 +421,7 @@ export default function Settings() {
                                           }
                                         }}
                                       >
-                                        ДАГАХ
+                                        Дагах
                                       </Button>
                                     )}
                                   </div>
@@ -484,7 +490,7 @@ export default function Settings() {
                                             }
                                           }}
                                         >
-                                          ДАГАСАН
+                                          Дагасан
                                         </button>
                                       ) : (
                                         <Button
@@ -570,7 +576,7 @@ export default function Settings() {
                 }
               >
                 <Form
-                  className="w-full md:w-[790px]"
+                  className="w-full flex flex-col items-end md:w-[790px]"
                   layout="vertical"
                   autoComplete="off"
                   initialValues={{ firstName: me.firstName, data: me.data }}
@@ -582,17 +588,37 @@ export default function Settings() {
                     <p className="text-[22px] font-bold leading-[25px] w-full border-b border-[#D4D8D8] pb-[14px]">
                       Нууцлал
                     </p>
-                    <Form.Item name="password" label="Нууц үг солих" className="mt-[20px]">
-                      <Input.Password size="large" />
+                    <Form.Item
+                      name="password"
+                      label={<p className="text-[16px] font-medium leading-[19px]">Нууц үг солих</p>}
+                      className="mt-[20px]"
+                    >
+                      <Input size="large" />
                     </Form.Item>
-                    <Form.Item name="hideProfile" label="Профайл нуух" valuePropName="checked">
-                      <Switch className="mt-[12px] w-[40px] h-[22px] bg-[#E4E4E5]" />
+                    <Form.Item
+                      style={{ marginBottom: 0 }}
+                      name="hideProfile"
+                      label={<p className="text-[16px] font-medium leading-[19px]">Профайл нуух</p>}
+                      valuePropName="checked"
+                    >
+                      <Switch className="mt-[4px] w-[40px] h-[22px] bg-[#E4E4E5]" />
                     </Form.Item>
-                    <Form.Item name="hideSaved" label="Хадгалсан мэдээнүүд нуух" valuePropName="checked">
-                      <Switch className="mt-[12px] w-[40px] h-[22px] bg-[#E4E4E5]" />
+                    <Form.Item
+                      style={{ marginBottom: 0, marginTop: 24 }}
+                      name="hideSaved"
+                      label={<p className="text-[16px] font-medium leading-[19px]">Хадгалсан мэдээнүүд нуух</p>}
+                      valuePropName="checked"
+                    >
+                      <Switch className="mt-[4px] w-[40px] h-[22px] bg-[#E4E4E5]" />
                     </Form.Item>
                   </div>
-                  <Button className="mt-[20px] h-[34px]" htmlType="submit" type="primary" size="large" loading={saving}>
+                  <Button
+                    className="mt-[20px] h-[34px] w-[100px]"
+                    htmlType="submit"
+                    type="primary"
+                    size="large"
+                    loading={saving}
+                  >
                     Хадгалах
                   </Button>
                 </Form>

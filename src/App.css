@@ -629,3 +629,7 @@
 .ant-radio:hover .ant-radio-inner {
   border-color: #3B4491 ;
 }
+
+.ant-form-item-control-input {
+  min-height: 22px;
+}

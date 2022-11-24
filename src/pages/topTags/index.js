@@ -87,7 +87,7 @@ export default function Category() {
                 }
               }}
             >
-              ДАГАСАН
+              Дагасан
             </button>
           ) : (
             <Button
@@ -104,7 +104,7 @@ export default function Category() {
                 }
               }}
             >
-              ДАГАХ
+              Дагах
             </Button>
           )}
           <div className="w-[42px] h-[34px] flex justify-center items-center border rounded-[4px] ml-[10px] cursor-pointer">
@@ -151,7 +151,7 @@ export default function Category() {
             key="top"
           />
         </Tabs>
-        <div className="max-w-[1310px] w-full flex flex-wrap justify-center xl:justify-start gap-x-[22px] gap-y-[40px] pt-[30px] md:pt-[70px]">
+        <div className="max-w-[1310px] w-full flex flex-wrap justify-center xl:justify-start gap-x-[22px] gap-y-[40px] pt-[30px] md:pt-[50px]">
           {articles.map((post) => (
             <Col key={post.id}>
               <PostCard post={post} />

@@ -215,7 +215,7 @@ const Post = () => {
                   content={
                     <div className="flex flex-col gap-[15px] h-full justify-between">
                       {isAdmin(me?.me) && (
-                        <Link to={`/edit/${article.kind}/${article.id}`} target="_blank">
+                        <Link to={`/edit/${article.kind}/${article.id}`}>
                           <div className="flex flex-row items-center cursor-pointer">
                             <span className="text-[#555555] text-[20px] mr-[8px] w-[22px] h-[22px] flex items-center justify-center icon-fi-rs-editor-o" />
                             <p className="text-[#555555] text-[15px] leading-[18px]">Засах</p>
@@ -281,7 +281,7 @@ const Post = () => {
                 <img className="w-[20px]" src={HahaIcon} alt="" />
                 <p className="ml-[6px] text-[15px] text-caak-primary leading-[16px]">{article.data?.like_count}</p>
               </div> */}
-              <div className="flex flex-row justify-between w-full h-[32px] mt-[21px]">
+              <div className="flex flex-row justify-between items-center w-full h-[34px] mt-[21px]">
                 <div className="flex flex-row items-center h-[32px]">
                   <Avatar className="w-[32px] h-[32px] rounded-full" src={imagePath(article.source?.icon)} />
                   <div className="ml-[8px] h-full flex flex-col justify-between">
@@ -293,7 +293,7 @@ const Post = () => {
                       <Button
                         type="link"
                         size="small"
-                        icon={<span className="icon-fi-rs-eye text-[18px] mr-[4px]" />}
+                        icon={<span className="icon-fi-rs-eye-o text-[18px] mr-[4px]" />}
                         className="flex flex-row items-center text-[#555555] text-[14px]"
                       >
                         {kFormatter(article?.viewsCount)}
@@ -315,20 +315,20 @@ const Post = () => {
                   <img className="w-[20px]" src={HahaIcon} alt="" />
                   <p className="ml-[6px] text-[15px] text-caak-primary leading-[16px]">{kFormatter(reactionsCount)}</p>
                 </div>
-                <div className="hidden md:flex flex-row items-center">
-                  <FacebookShareButton className="h-[20px]" url={`${Configure.domain}/post/view/${article?.id}`}>
-                    <FIcon className="text-[#909090] hover:text-[#1877F2] text-[22px] w-[24px] h-[24px] icon-fi-rs-fb" />
+                <div className="hidden md:flex flex-row items-center h-[24px]">
+                  <FacebookShareButton className="h-[24px]" url={`${Configure.domain}/post/view/${article?.id}`}>
+                    <FIcon className="text-[#909090] hover:text-[#1877F2] text-[24px] w-[24px] h-[24px] icon-fi-rs-fb" />
                   </FacebookShareButton>
                   <TwitterShareButton
-                    className="h-[20px] ml-[24px]"
+                    className="h-[24px]"
                     url={`${Configure.domain}/post/view/${article?.id}`}
                     title={article?.title}
                   >
-                    <FIcon className="text-[#909090] hover:text-[#1877F2] text-[22px] w-[24px] h-[24px] icon-fi-rs-tw" />
+                    <FIcon className="text-[#909090] hover:text-[#1877F2] text-[24px] w-[24px] h-[24px] icon-fi-rs-tw ml-[20px]" />
                   </TwitterShareButton>
                   <span
                     onClick={() => setSaving(true)}
-                    className="icon-fi-rs-bookmark cursor-pointer w-[24px] h-[24px] flex justify-center items-center rounded-[2px] text-[#909090] text-[20px] ml-[17px]"
+                    className="icon-fi-rs-bookmark cursor-pointer w-[24px] h-[24px] flex justify-center items-center rounded-[2px] text-[#909090] text-[20px] ml-[20px]"
                   />
                 </div>
               </div>
@@ -376,7 +376,7 @@ const Post = () => {
                 content={
                   <div className="flex flex-col gap-[15px] h-full justify-between">
                     {isAdmin(me?.me) && (
-                      <Link to={`/edit/${article.kind}/${article.id}`} target="_blank">
+                      <Link to={`/edit/${article.kind}/${article.id}`}>
                         <div className="flex flex-row items-center cursor-pointer">
                           <span className="text-[#555555] text-[20px] mr-[8px] w-[22px] h-[22px] flex items-center justify-center icon-fi-rs-editor-o" />
                           <p className="text-[#555555] text-[15px] leading-[18px]">Засах</p>
@@ -430,7 +430,7 @@ const Post = () => {
                     }
                   }}
                 >
-                  ДАГАСАН
+                  Дагасан
                 </button>
               ) : (
                 <Button
@@ -457,7 +457,7 @@ const Post = () => {
                     }
                   }}
                 >
-                  ДАГАХ
+                  Дагах
                 </Button>
               )}
             </div>
@@ -491,7 +491,7 @@ const Post = () => {
         {reporting && <ReportModal post={article} toggle={() => setReporting(false)} />}
       </div>
       <div className="w-full flex flex-col items-center">
-        <span className="font-bold inline-flex text-[24px] max-w-[1310px] px-[40px] border-b border-[#EFEEEF] pb-[20px] w-full">
+        <span className="font-bold inline-flex text-[24px] max-w-[1310px] border-b border-[#EFEEEF] pb-[20px] w-full">
           ТӨСТЭЙ<p className="font-normal">&nbsp;МЭДЭЭНҮҮД</p>
         </span>
         <ArticlesList filter={filter} sort={sort} size={24} />

@@ -129,7 +129,7 @@ export default function Profile() {
                 </div>
               )
             )}
-            <div className="ml-[16px] max-h-[57px] md:max-h-[82px]">
+            <div className="ml-[24px] max-h-[57px] md:max-h-[82px]">
               <p className="font-condensed font-bold text-[30px] leading-[35px]">{user?.firstName}</p>
               <p className="md:mt-[12px] text-[15px] text-[#555555] leading-[18px] max-w-[600px]">{user?.data?.bio}</p>
               <div className="flex flex-row text-[#555555] gap-[23px] sm:mt-[18px] text-[15px] font-roboto text-center">
@@ -158,7 +158,7 @@ export default function Profile() {
                   }
                 }}
               >
-                ДАГАСАН
+                Дагасан
               </button>
             ) : (
               <Button
@@ -175,7 +175,7 @@ export default function Profile() {
                   }
                 }}
               >
-                ДАГАХ
+                Дагах
               </Button>
             )}
             <div className=" border-[1px] cursor-pointer border-[#D4D8D8] w-[42px] h-[34px] flex justify-center items-center rounded-[4px] ml-[10px]">
