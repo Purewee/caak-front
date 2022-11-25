@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Form, Modal, Input, Button, Avatar, Upload } from 'antd';
-import { CameraOutlined } from '@ant-design/icons';
 import { gql, useMutation } from '@apollo/client';
 import { getDataFromBlob, imageCompress } from '../../lib/imageCompress';
+import Bubble from '../../assets/images/bubble.svg';
 
 const UPDATE_PROFILE = gql`
   mutation UpdateProfile($name: String, $avatar: Upload) {
@@ -24,21 +24,22 @@ function ProfileModal({ login }) {
         open={true}
         footer={false}
         title={false}
-        width={400}
-        heigh={500}
+        width={440}
+        heigh={506}
         bodyStyle={{ padding: 0 }}
         closable={false}
       >
-        <div className="font-roboto">
-          <div className="p-[20px] flex flex-col items-center justify-between gap-4">
-            <Form
-              autoComplete="off"
-              onFinish={(values) => {
-                updateProfile({ variables: values }).then();
-              }}
-              className="flex flex-col gap-[20px] items-center"
-            >
-              <div className="relative w-[112px]">
+        <div className="p-[40px] flex flex-col items-center">
+          <Form
+            autoComplete="off"
+            onFinish={(values) => {
+              updateProfile({ variables: values }).then();
+            }}
+            className="flex flex-col gap-[20px] items-center"
+          >
+            <div className="relative flex flex-col items-center">
+              <img className="w-[197px] h-[144px]" src={Bubble} />
+              <div className="absolute top-[9px] w-[112px]">
                 {avatar.length > 0 ? (
                   <Avatar
                     size={112}
@@ -79,25 +80,41 @@ function ProfileModal({ login }) {
                       });
                     }}
                   >
-                    <Button type="primary" shape="circle" icon={<CameraOutlined />} />
+                    <Button
+                      className="w-[32px] h-[32px] bg-white"
+                      type="primary"
+                      shape="circle"
+                      icon={<span className="icon-fi-rs-camera text-black text-[18px]" />}
+                    />
                   </Upload>
                 </Form.Item>
               </div>
-              <p className="text-[14px] text-center">{login}</p>
-              <h3 className="font-condensed text-[32px] font-bold">Таныг хэн гэж дуудах вэ?</h3>
-              <Form.Item name="name" rules={[{ required: true, message: 'Заавал оруулна уу!' }]} className="w-full">
-                <Input
-                  size="large"
-                  placeholder="Нэрээ оруулна уу."
-                  className="w-full"
-                  onChange={({ target }) => setName(target.value)}
-                />
-              </Form.Item>
-              <Button htmlType="submit" type="primary" size="large" block loading={loading}>
-                Үргэлжлүүлэх
-              </Button>
-            </Form>
-          </div>
+            </div>
+            <p className="text-[14px] leading-[19px] text-center mt-[43px]">{login}</p>
+            <h3 className="font-condensed text-[32px] leading-[38px] font-bold mt-[20px]">Таныг хэн гэж дуудах вэ?</h3>
+            <Form.Item
+              name="name"
+              rules={[{ required: true, message: 'Заавал оруулна уу!' }]}
+              className="w-full mt-[20px]"
+            >
+              <Input
+                size="large"
+                placeholder="Нэрээ оруулна уу."
+                className="w-full h-[64px]"
+                onChange={({ target }) => setName(target.value)}
+              />
+            </Form.Item>
+            <Button
+              className="mt-[40px] h-[44px]"
+              htmlType="submit"
+              type="primary"
+              size="large"
+              block
+              loading={loading}
+            >
+              Үргэлжлүүлэх
+            </Button>
+          </Form>
         </div>
       </Modal>
     </>

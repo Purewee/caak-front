@@ -45,7 +45,7 @@ const Reclam = [
     },
     {
         icon: 'icon-fi-rs-multimedia',
-        title: 'Хөдөлгөөнт, зураг болон видео баннер байршуулах.',
+        title: 'Видео, зураг, хөдөлгөөнт зургийг баннер, стори хэлбэрээр харуулж болно.',
         color: '#F2DFF2',
         textColor: '#463146'
     },
@@ -57,7 +57,7 @@ const Reclam = [
     },
     {
         icon: 'icon-fi-rs-visible',
-        title: 'Таны бизнес мэдээг хэрэглэгчийн нүдэнд өртөх боломжтой бүх газар харуулах бөгөөд нийгмийн сүлжээгээр (facebook, twitter)-ээр үнэ төлбөргүй түгээнэ.',
+        title: 'Таны сурталчилгаа, постыг хэрэглэгчийн нүдэнд өртөх боломжтой бүх газар харуулах бөгөөд нийгмийн сүлжээгээр (facebook, twitter)-ээр үнэ төлбөргүй түгээнэ.',
         color: '#F2F1DF',
         textColor: '#5D5B42'
     },
@@ -129,18 +129,18 @@ const security = [
 const caakAds = [
     {
         pos: 'A1',
-        size: '990x160',
-        desc: 'Нүүр хуудасны толгойд болон мэдээ үзэхэд хамгийн дээр нь харагдана.'
+        size: '1300х200',
+        desc: 'Нүүр хуудас болон мэдээний дэлгэрэнгүйн толгойн хэсэгт харагдана.'
     },
     {
         pos: 'A2',
-        size: '340x400',
-        desc: 'Нүүр хуудас болон мэдээг үзэх үед баруун дээр харагдах бөгөөд гүйлгэхэд тогтож дагана.'
+        size: '420х520',
+        desc: 'Нүүр хуудсан дээрх мэдээний жагсаалт дунд олон дамтамжтай ялгарч харагдана.'
     },
     {
         pos: 'A3',
-        size: '790x500',
-        desc: 'Дурын мэдээг дэлгэрэнгүй үзэх үед мэдээн дунд харагдана.'
+        size: '340х500, 780х780',
+        desc: 'Компьютераас үзэх үед мэдээний баруун талд дагаж харагдах бол утсаар үзэхэд доороос дээшээ гүйж гарч ирнэ.'
     },
     // {
     //     pos: 'A4',
@@ -380,7 +380,7 @@ export default function Help() {
                             </div>
                         </div>
                         <p className='mt-[40px] font-condensed font-bold text-[38px] leading-[44px]'>Баннер байршуулах</p>
-                        <p className='text-caak-primary text-[18px] leading-[21px] mt-[12px] w-full text-center'>/ Үнэ өдрөөр /</p>
+                        {/* <p className='text-caak-primary text-[18px] leading-[21px] mt-[12px] w-full text-center'>/ Үнэ өдрөөр /</p> */}
                         <div className='mt-[30px] flex flex-wrap justify-center gap-[23px] w-full'>
                             {
                                 caakAds.map((data, index) => {

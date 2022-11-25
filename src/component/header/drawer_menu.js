@@ -72,7 +72,7 @@ export default function DrawerMenu({ isMobile }) {
           </div>
         }
       >
-        <Collapse className="w-full custom" bordered={false} accordion>
+        <Collapse className="w-full custom borderb" bordered={false} accordion>
           {categories?.map((x, idx) => {
             return (
               x.parent === null && (
@@ -82,7 +82,7 @@ export default function DrawerMenu({ isMobile }) {
                       onClick={() => setSelected(x.id)}
                       className={`flex items-center ${
                         selected !== x.id ? 'justify-between pl-[40px]' : 'pl-[20px]'
-                      } cursor-pointer w-full py-[20px] border-b pr-[30px] text-caak-black hover:text-[#555555]`}
+                      } cursor-pointer w-full py-[20px] pr-[30px] text-caak-black hover:text-[#555555]`}
                     >
                       {selected === x.id && (
                         <span className="icon-fi-rs-down-chevron text-[#FF6600] text-[16px] rotate-90 mr-[8px]" />
@@ -115,7 +115,7 @@ export default function DrawerMenu({ isMobile }) {
         </Collapse>
         <Link
           onClick={() => setOpen(false)}
-          className="mt-[40px] text-caak-black hover:text-caak-darkGray flex flex-row items-center cursor-pointer pl-[40px] pr-[30px]"
+          className="mt-[24px] text-caak-black hover:text-caak-darkGray flex flex-row items-center cursor-pointer pl-[40px] pr-[30px]"
           to={`/channels`}
         >
           <span className="icon-fi-rs-tv w-[24px] h-[24px] flex items-center justify-center text-[20px] mr-[26px]" />
@@ -123,7 +123,7 @@ export default function DrawerMenu({ isMobile }) {
         </Link>
         <Link
           onClick={() => setOpen(false)}
-          className="mt-[40px] text-caak-black hover:text-caak-darkGray flex flex-row items-center cursor-pointer pl-[40px] pr-[30px]"
+          className="mt-[24px] text-caak-black hover:text-caak-darkGray flex flex-row items-center cursor-pointer pl-[40px] pr-[30px]"
           to={`/tags`}
         >
           <span className="icon-fi-rs-hashtag w-[24px] h-[24px] flex items-center justify-center text-[20px] mr-[26px]" />
@@ -132,7 +132,7 @@ export default function DrawerMenu({ isMobile }) {
         <a
           target={'_blank'}
           href="https://www.youtube.com/c/caakvideo"
-          className="mt-[40px] flex flex-row text-caak-black hover:text-caak-darkGray items-center cursor-pointer pl-[40px] pr-[30px]"
+          className="mt-[24px] flex flex-row text-caak-black hover:text-caak-darkGray items-center cursor-pointer pl-[40px] pr-[30px]"
         >
           <span className="icon-fi-rs-tv w-[24px] h-[24px] flex items-center justify-center text-[20px] mr-[26px]" />
           <p className="text-[18px] font-medium leading-[21px]">ВИДЕО</p>
@@ -140,7 +140,7 @@ export default function DrawerMenu({ isMobile }) {
         <a
           target={'_blank'}
           href="https://soundcloud.com/caak-podcast"
-          className="mt-[40px] flex flex-row text-caak-black hover:text-caak-darkGray items-center cursor-pointer pl-[40px] pr-[30px]"
+          className="mt-[24px] flex flex-row text-caak-black hover:text-caak-darkGray items-center cursor-pointer pl-[40px] pr-[30px]"
         >
           <span className="icon-fi-rs-mic w-[24px] h-[24px] flex items-center justify-center text-[20px] mr-[26px]" />
           <p className="text-[18px] font-medium leading-[21px]">ПОДКАСТ</p>
@@ -148,7 +148,7 @@ export default function DrawerMenu({ isMobile }) {
         <a
           target={'_blank'}
           href="https://www.caak.mn/radio"
-          className="mt-[40px] flex flex-row text-caak-black hover:text-caak-darkGray items-center cursor-pointer pl-[40px] pr-[30px]"
+          className="mt-[24px] flex flex-row text-caak-black hover:text-caak-darkGray items-center cursor-pointer pl-[40px] pr-[30px]"
         >
           <span className="icon-fi-rs-wave w-[24px] h-[24px] flex items-center justify-center text-[20px] mr-[26px]" />
           <p className="text-[18px] font-medium leading-[21px]">РАДИО</p>
@@ -173,7 +173,7 @@ export default function DrawerMenu({ isMobile }) {
           <span className="icon-fi-rs-phone w-[24px] h-[24px] flex items-center justify-center text-[20px] mr-[26px]" />
           <p className="text-[18px] font-medium leading-[21px]">ХОЛБОО БАРИХ</p>
         </div>
-        <div className="border-t border-b w-full border-[#D4D8D8] flex flex-row items-center justify-center gap-[19px] py-[30px] mt-[137px]">
+        <div className="border-t border-b w-full border-[#D4D8D8] flex flex-row items-center justify-center gap-[19px] py-[30px] mt-[26px]">
           <a href="https://www.facebook.com/caakweb" className="h-[22px]" target={`_blank`}>
             <span className="icon-fi-rs-fb text-[22px]" />
           </a>
@@ -187,7 +187,7 @@ export default function DrawerMenu({ isMobile }) {
             <span className="icon-fi-rs-yt text-[22px]" />
           </a>
         </div>
-        <p className="text-[#555555] text-[15px] mt-[30px] text-center">©2022 “Саак Холдинг” ХХК</p>
+        {/* <p className="text-[#555555] text-[15px] mt-[30px] text-center">©2022 “Саак Холдинг” ХХК</p> */}
       </Drawer>
     </>
   );

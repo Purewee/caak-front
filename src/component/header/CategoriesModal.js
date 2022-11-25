@@ -89,7 +89,6 @@ function CategoriesModal({ refetch }) {
           <div className="w-full flex justify-center mt-[24px]">
             <Button
               size="large"
-              icon={<CheckOutlined />}
               disabled={ids.length < 3}
               onClick={() => {
                 follow({ variables: { targetType: 'category', ids } }).then(() => {
@@ -99,7 +98,7 @@ function CategoriesModal({ refetch }) {
               }}
               loading={following}
             >
-              Дуусгах ({ids.length})
+              Үргэлжлүүлэх ({ids.length})
             </Button>
           </div>
         </>

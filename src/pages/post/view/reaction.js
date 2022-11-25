@@ -76,7 +76,7 @@ export default function Reaction({ reactions, articleId, left, refetch, fetching
                 }
               }}
             >
-              <span className={`${!left && 'rounded-full border p-[12px]'}`}>
+              <span className={`${!left && 'rounded-full border p-[11px] sm:p-[12px]'}`}>
                 <Lottie
                   options={{
                     animationData: x.icon,

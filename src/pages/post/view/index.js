@@ -262,77 +262,91 @@ const Post = () => {
         <div className="flex flex-col max-w-[960px] w-full items-center">
           <Banner position="a1" />
           <div className="pt-0 md:pt-[40px] flex flex-col items-center max-w-[760px] w-full font-roboto md:mx-[100px]">
-            <img
-              src={imagePath(article.imageUrl)}
-              alt=""
-              className="w-full h-[210px] flex md:hidden mt-[20px] object-cover"
-            />
-            <div className="flex flex-row gap-[15px]">
+            <div className="flex flex-row gap-[15px] mt-[20px]">
               {article.categories?.nodes?.map((x) => (
                 <Link key={x.id} to={`/category/${x.slug}`}>
-                  <HashTag className="text-center hidden md:block leading-[15px] uppercase">{x.name}</HashTag>
+                  <HashTag className="text-center leading-[15px] uppercase">{x.name}</HashTag>
                 </Link>
               ))}
             </div>
-            <Wrapper>
-              <Title className="text-center">{article.title}</Title>
-              {/* <div className="hidden sm:flex flex-row items-center mt-[30px]">
-                <img className="w-[20px]" src={LoveIcon} alt="" />
-                <img className="w-[20px]" src={HahaIcon} alt="" />
-                <p className="ml-[6px] text-[15px] text-caak-primary leading-[16px]">{article.data?.like_count}</p>
-              </div> */}
-              <div className="flex flex-row justify-between items-center w-full h-[34px] mt-[21px]">
-                <div className="flex flex-row items-center h-[32px]">
-                  <Avatar className="w-[32px] h-[32px] rounded-full" src={imagePath(article.source?.icon)} />
-                  <div className="ml-[8px] h-full flex flex-col justify-between">
-                    <Link to={`/channel/${article.source?.id}`} className="flex flex-row items-center">
-                      <p className="text-caak-black text-[14px] leading-[16px]">{article?.source?.name}</p>
-                    </Link>
-                    <div className="text-[12px] text-[#909090] flex flex-row items-center leading-[14px]">
-                      <p>{moment(article.publishDate).format('YYYY.MM.DD, HH:mm')}</p>
-                      <Button
-                        type="link"
-                        size="small"
-                        icon={<span className="icon-fi-rs-eye-o text-[18px] mr-[4px]" />}
-                        className="flex flex-row items-center text-[#555555] text-[14px]"
-                      >
-                        {kFormatter(article?.viewsCount)}
-                      </Button>
-                      <Button
-                        icon={<span className="icon-fi-rs-comment-o text-[18px] mr-[4px]" />}
-                        className="flex flex-row items-center text-[#555555] text-[14px]"
-                        size="small"
-                        type="link"
-                        onClick={() => commentsRef.current.scrollIntoView()}
-                      >
-                        {kFormatter(article?.commentsCount) || 0}
-                      </Button>
-                    </div>
+            <Title className="text-center mt-[8px]">{article.title}</Title>
+            <div className="flex flex-row justify-between items-center w-full h-[34px] mt-[21px]">
+              <div className="flex flex-row items-center h-[32px]">
+                <Avatar className="w-[32px] h-[32px] rounded-full" src={imagePath(article.source?.icon)} />
+                <div className="ml-[8px] h-full flex flex-col justify-between">
+                  <Link to={`/channel/${article.source?.id}`} className="flex flex-row items-center">
+                    <p className="text-caak-black text-[14px] leading-[16px]">{article?.source?.name}</p>
+                  </Link>
+                  <div className="text-[12px] text-[#909090] flex flex-row items-center leading-[14px]">
+                    <p>{moment(article.publishDate).format('YYYY.MM.DD, HH:mm')}</p>
+                    <Button
+                      type="link"
+                      size="small"
+                      icon={<span className="icon-fi-rs-eye-o text-[18px] mr-[4px]" />}
+                      className="hidden sm:flex flex-row items-center text-[#555555] text-[14px]"
+                    >
+                      {kFormatter(article?.viewsCount)}
+                    </Button>
+                    <Button
+                      icon={<span className="icon-fi-rs-comment-o text-[18px] mr-[4px]" />}
+                      className="hidden sm:flex flex-row items-center text-[#555555] text-[14px]"
+                      size="small"
+                      type="link"
+                      onClick={() => commentsRef.current.scrollIntoView()}
+                    >
+                      {kFormatter(article?.commentsCount) || 0}
+                    </Button>
                   </div>
                 </div>
-                <div className="flex sm:hidden flex-row items-center">
-                  <img className="w-[20px]" src={LoveIcon} alt="" />
-                  <img className="w-[20px]" src={HahaIcon} alt="" />
-                  <p className="ml-[6px] text-[15px] text-caak-primary leading-[16px]">{kFormatter(reactionsCount)}</p>
-                </div>
-                <div className="hidden md:flex flex-row items-center h-[24px]">
-                  <FacebookShareButton className="h-[24px]" url={`${Configure.domain}/post/view/${article?.id}`}>
-                    <FIcon className="text-[#909090] hover:text-[#1877F2] text-[24px] w-[24px] h-[24px] icon-fi-rs-fb" />
-                  </FacebookShareButton>
-                  <TwitterShareButton
-                    className="h-[24px]"
-                    url={`${Configure.domain}/post/view/${article?.id}`}
-                    title={article?.title}
-                  >
-                    <FIcon className="text-[#909090] hover:text-[#1877F2] text-[24px] w-[24px] h-[24px] icon-fi-rs-tw ml-[20px]" />
-                  </TwitterShareButton>
-                  <span
-                    onClick={() => setSaving(true)}
-                    className="icon-fi-rs-bookmark cursor-pointer w-[24px] h-[24px] flex justify-center items-center rounded-[2px] text-[#909090] text-[20px] ml-[20px]"
-                  />
-                </div>
               </div>
-              <img src={imagePath(article.imageUrl)} alt="" className="w-full hidden md:flex mt-[30px] object-cover" />
+              <div className="flex flex-row items-center h-[24px]">
+                <FacebookShareButton className="h-[24px]" url={`${Configure.domain}/post/view/${article?.id}`}>
+                  <FIcon className="text-[#909090] hover:text-[#1877F2] text-[24px] w-[24px] h-[24px] icon-fi-rs-fb" />
+                </FacebookShareButton>
+                <TwitterShareButton
+                  className="h-[24px]"
+                  url={`${Configure.domain}/post/view/${article?.id}`}
+                  title={article?.title}
+                >
+                  <FIcon className="text-[#909090] hover:text-[#1877F2] text-[24px] w-[24px] h-[24px] icon-fi-rs-tw ml-[15px] sm:ml-[20px]" />
+                </TwitterShareButton>
+                <span
+                  onClick={() => setSaving(true)}
+                  className="icon-fi-rs-bookmark cursor-pointer w-[24px] h-[24px] flex justify-center items-center rounded-[2px] text-[#909090] text-[20px] ml-[13px] sm:ml-[20px]"
+                />
+              </div>
+            </div>
+            <Wrapper>
+              <img src={imagePath(article.imageUrl)} alt="" className="w-full mt-[20px] sm:mt-[30px] object-cover" />
+              <div className="flex sm:hidden flex-row items-center h-[18px] mt-[16px]">
+                <Button
+                  icon={<span className="icon-fi-rs-eye-o text-[18px] mr-[4px]" />}
+                  className="flex flex-row items-center text-[#555555] text-[14px]"
+                  size="small"
+                  type="link"
+                  onClick={() => commentsRef.current.scrollIntoView()}
+                >
+                  {kFormatter(article?.viewsCount) || 0}
+                </Button>
+                <Button
+                  icon={<span className="icon-fi-rs-comment-o text-[18px] mr-[4px]" />}
+                  className="flex flex-row items-center text-[#555555] text-[14px]"
+                  size="small"
+                  type="link"
+                  onClick={() => commentsRef.current.scrollIntoView()}
+                >
+                  {kFormatter(article?.commentsCount) || 0}
+                </Button>
+                <Button
+                  icon={<span className="icon-fi-rs-heart text-[18px] mr-[4px]" />}
+                  className="flex flex-row items-center text-[#555555] text-[14px]"
+                  size="small"
+                  type="link"
+                  onClick={() => commentsRef.current.scrollIntoView()}
+                >
+                  {kFormatter(reactionsCount)}
+                </Button>
+              </div>
               {article.description && <PostBlock b={{ kind: 'text', id: '00', content: article.description }} />}
               {orderBy(article?.blocks, ['position'], [numbering || 'asc']).map((b) => (
                 <PostBlock b={b} numbering={numbering} key={b.id} />
@@ -403,63 +417,78 @@ const Post = () => {
               <div className="flex flex-row items-center text-[#555555] h-[36px]">
                 <Link to={`/channel/${article.source?.id}`} className="flex flex-row items-center">
                   <Avatar src={imagePath(article.source?.icon)} className="w-[36px] h-[36px]" />
-                  <MetaTag className="ml-[8px] text-[15px]">{article.source?.name}</MetaTag>
+                  <div className="ml-[8px]">
+                    <MetaTag className="text-[15px] ml-0 leading-[18px] font-medium sm:font-normal">
+                      {article.source?.name}
+                    </MetaTag>
+                    <p className="text-[12px] leading-[14px] mt-[2px] text-[#909090]">
+                      {moment(article.publishDate).format('YYYY.MM.DD, HH:mm')}
+                    </p>
+                  </div>
                 </Link>
-                &nbsp;•&nbsp;
-                <Link className="leading-[36px]" to={`/profile/${article.author?.id}`}>
+                <Link className="leading-[36px] hidden sm:block" to={`/profile/${article.author?.id}`}>
+                  &nbsp;•&nbsp;
                   <MetaTag className="ml-0">{`${article.author?.firstName}`}</MetaTag>
                 </Link>
               </div>
-              {source.following ? (
-                <button
-                  className="h-[34px] text-[15px] font-bold w-[90px] bg-caak-darkGray text-white rounded-[4px]"
-                  onClick={() => {
-                    if (isAuth) {
-                      follow().then(() => {
-                        refetch().then(console.log);
-                      });
-                      const args = {
-                        message: `Та ${article?.source?.name}-г дагахаа болилоо.`,
-                        duration: 4,
-                        placement: 'bottom',
-                        className: 'h-[50px] bg-[#FF0000] w-[300px]',
-                      };
-                      notification.open(args);
-                    } else {
-                      openModal('login');
-                    }
-                  }}
-                >
-                  Дагасан
-                </button>
-              ) : (
-                <Button
-                  className="h-[34px] text-[15px] font-bold w-[90px]"
-                  type="primary"
-                  loading={follow_saving}
-                  onClick={() => {
-                    if (isAuth) {
-                      follow().then(() => {
-                        refetch().then(console.log);
-                      });
-                      const followNotify = {
-                        message: `Та ${article?.source?.name} сувгийг дагалаа.`,
-                        duration: 4,
-                        placement: 'bottom',
-                        className: 'h-[50px] bg-[#12805C] w-[300px]',
-                        icon: (
-                          <FIcon className="icon-fi-rs-check w-[20px] h-[20px] text-[13px] bg-white rounded-full text-[#12805C]" />
-                        ),
-                      };
-                      notification.open(followNotify);
-                    } else {
-                      openModal('login');
-                    }
-                  }}
-                >
-                  Дагах
-                </Button>
-              )}
+              <FacebookShareButton className="sm:hidden" url={`${Configure.domain}/post/view/${article?.id}`}>
+                <div className="bg-[#1877F2] text-white font-condensed text-[15px] flex flex-row items-center justify-center rounded-[4px] h-[34px] w-[124px]">
+                  <span className="icon-fi-rs-share text-[16.8px] mr-[6px]" />
+                  ХУВААЛЦАХ
+                </div>
+              </FacebookShareButton>
+              <div className="hidden sm:flex">
+                {source.following ? (
+                  <button
+                    className="h-[34px] text-[15px] font-bold w-[90px] bg-caak-darkGray text-white rounded-[4px]"
+                    onClick={() => {
+                      if (isAuth) {
+                        follow().then(() => {
+                          refetch().then(console.log);
+                        });
+                        const args = {
+                          message: `Та ${article?.source?.name}-г дагахаа болилоо.`,
+                          duration: 4,
+                          placement: 'bottom',
+                          className: 'h-[50px] bg-[#FF0000] w-[300px]',
+                        };
+                        notification.open(args);
+                      } else {
+                        openModal('login');
+                      }
+                    }}
+                  >
+                    Дагасан
+                  </button>
+                ) : (
+                  <Button
+                    className="h-[34px] text-[15px] font-bold w-[90px]"
+                    type="primary"
+                    loading={follow_saving}
+                    onClick={() => {
+                      if (isAuth) {
+                        follow().then(() => {
+                          refetch().then(console.log);
+                        });
+                        const followNotify = {
+                          message: `Та ${article?.source?.name} сувгийг дагалаа.`,
+                          duration: 4,
+                          placement: 'bottom',
+                          className: 'h-[50px] bg-[#12805C] w-[300px]',
+                          icon: (
+                            <FIcon className="icon-fi-rs-check w-[20px] h-[20px] text-[13px] bg-white rounded-full text-[#12805C]" />
+                          ),
+                        };
+                        notification.open(followNotify);
+                      } else {
+                        openModal('login');
+                      }
+                    }}
+                  >
+                    Дагах
+                  </Button>
+                )}
+              </div>
             </div>
             {!reactions_loading && (
               <Reaction articleId={article?.id} reactions={reactions} refetch={refetch} fetching={reactions_loading} />
