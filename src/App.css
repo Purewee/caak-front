@@ -633,3 +633,12 @@
 .ant-form-item-control-input {
   min-height: 22px;
 }
+
+.box {
+  display: block;
+  transition: transform 2s;
+}
+
+.box:hover {
+  margin-bottom: 6px;
+}
