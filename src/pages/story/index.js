@@ -58,12 +58,25 @@ export default function Story() {
 
   if (loading) return <Skeleton />;
   return (
-    <div className="w-full h-full z-50 fixed top-0 flex justify-center lg:justify-between bg-[#212121] sm:p-[20px]">
-      <span
+    <div className="w-full h-full z-50 fixed top-0 flex flex-col sm:flex-row justify-center lg:justify-between bg-[#212121] sm:p-[20px]">
+      {/* <span
         onClick={() => navigate('/')}
         style={{ zIndex: 1000 }}
         className="icon-fi-rs-close sm:hidden absolute right-[15px] top-[25px] text-[20px] text-white"
-      />
+      /> */}
+      <div
+        style={{
+          background: 'transparent linear-gradient(0deg, #00000000 0%, #000000 100%) 0% 0% no-repeat padding-box',
+        }}
+        className="flex flex-row items-center justify-between w-full sm:hidden p-[10px]"
+      >
+        <Logo white />
+        <span
+          onClick={() => navigate('/')}
+          style={{ zIndex: 1000 }}
+          className="icon-fi-rs-close sm:hidden right-[15px] top-[25px] text-[20px] text-white"
+        />
+      </div>
       <div className="hidden lg:flex flex-col h-full w-[272px] mr-[16px] items-start justify-start">
         <Logo white className="mb-[135px]" />
         {story.nextStory ? (
@@ -86,7 +99,7 @@ export default function Story() {
         height="100%"
         keyboardNavigation
         defaultInterval={1500}
-        storyContainerStyles={{ overflow: 'hidden', background: '#323232' }}
+        storyContainerStyles={{ overflow: 'hidden', background: '#212121' }}
         stories={stories}
         onStoryStart={(currentId) => setCurrent(currentId)}
         onAllStoriesEnd={() => {
@@ -142,6 +155,16 @@ function ImageStory({ block, story }) {
               className="absolute bottom-0 pb-[20px] p-[16px] sm:p-[32px] story-linear w-full rounded-[8px]"
             >
               <div className="flex flex-col">
+                <div className="flex flex-wrap gap-[10px] justify-start mb-[10px]">
+                  {story?.categories?.nodes?.map((x) => (
+                    <p
+                      key={x.name}
+                      className="bg-[#FF6600] px-[8px] py-[4px] text-white text-[12px] font-bold uppercase"
+                    >
+                      {x.name}
+                    </p>
+                  ))}
+                </div>
                 <Link to={block?.data?.url}>
                   <span
                     className="truncate-2 text-white condMedium text-[26px] sm:text-[34px] leading-[30px] sm:leading-[40px]"
