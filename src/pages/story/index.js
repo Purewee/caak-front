@@ -178,7 +178,7 @@ function ImageStory({ block, story }) {
                   <Link className="mt-[24px]" to={block?.data?.url}>
                     <div className="w-[124px] sm:w-[148px] h-[34px] relative sm:h-[44px] bg-white flex p-1 px-2 border-0 text-[15px] font-medium text-caak-black rounded-sm items-center justify-center">
                       Дэлгэрэнгүй
-                      <FIcon className="icon-fi-rs-down-chevron absolute bottom-[40px] text-white sm:text-caak-primary text-[14px] rotate-180 sm:-rotate-90" />
+                      <FIcon className="icon-fi-rs-down-chevron absolute sm:relative bottom-[40px] sm:bottom-0 text-white sm:text-caak-primary text-[14px] rotate-180 sm:-rotate-90" />
                     </div>
                   </Link>
                 </div>
