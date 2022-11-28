@@ -9,7 +9,6 @@ import A3 from '../../assets/images/A3.png';
 import A3_SP from '../../assets/images/A3-SP.png';
 import { Modal } from 'antd';
 export default function BannerModal({ open, setOpen }) {
-  console.log(open);
   //prettier-ignore
   return open && (
     <Modal
@@ -55,12 +54,12 @@ export default function BannerModal({ open, setOpen }) {
               <p className="text-caak-primary font-bold text-[16px] leading-[21px]">Веб сайт</p>
               <div className="flex flex-col items-center mt-[30px]">
                 <img className="w-[330px]" src={A2} />
-                <p className="mt-[18px] text-caak-darkGray text-[15px] leading-[20px]">Бусад карт өрөлттэй хуудсанд харагдах байдал</p>
+                <p className="mt-[18px] text-caak-darkGray text-[15px] leading-[20px]">Нүүр хуудасны мэдээнүүд дунд ингэж харагдана</p>
               </div>
               <p className="text-caak-primary font-bold text-[16px] leading-[21px] mt-[28px]">Гар утас</p>
               <div className="flex flex-col items-center mt-[30px]">
                 <img className="w-[132px]" src={A2_SP} />
-                <p className="mt-[18px] text-caak-darkGray text-[15px] leading-[20px]">Бусад карт өрөлттэй хуудсанд харагдах байдал</p>
+                <p className="mt-[18px] text-caak-darkGray text-[15px] leading-[20px]">Утсаар үзэхэд мэдээнүүд дунд ингэж харагдах</p>
               </div>
             </div>
           ) : open === 'A3' ? (
@@ -68,12 +67,12 @@ export default function BannerModal({ open, setOpen }) {
               <p className="text-caak-primary font-bold text-[16px] leading-[21px]">Веб сайт</p>
               <div className="flex flex-col items-center mt-[30px]">
                 <img className="w-[330px]" src={A3} />
-                <p className="mt-[18px] text-caak-darkGray text-[15px] leading-[20px]">Тухайн хуудсан дээр Pop-Up хэлбэрээр харагдана.</p>
+                <p className="mt-[18px] text-caak-darkGray text-[15px] leading-[20px]">Мэдээний дэлгэрэнгүй дээр баруун талд дагаж харагдана</p>
               </div>
               <p className="text-caak-primary font-bold text-[16px] leading-[21px] mt-[28px]">Гар утас</p>
               <div className="flex flex-col items-center mt-[30px]">
                 <img className="w-[132px]" src={A3_SP} />
-                <p className="mt-[18px] text-caak-darkGray text-[15px] leading-[20px]">Тухайн хуудсан дээр Pop-Up хэлбэрээр харагдана.</p>
+                <p className="mt-[18px] text-caak-darkGray text-[15px] leading-[20px]">Утсаар үзэхэд доороос дээш дэлгэцийн 40%-г эзлэн гарч ирнэ</p>
               </div>
             </div>
           ) : null}
