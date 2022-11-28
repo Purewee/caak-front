@@ -174,14 +174,12 @@ function ImageStory({ block, story }) {
                 <span className="text-white opacity-80 text-[14px] leading-[16px] mt-[10px]">
                   {moment(story.publishDate).utc('Asia/Mongolia').format('YYYY.MM.DD, HH:MM')}
                 </span>
-                <div className="flex justify-center w-full">
-                  <Link className="mt-[24px]" to={block?.data?.url}>
-                    <div className="w-[124px] sm:w-[148px] h-[34px] relative sm:h-[44px] bg-white flex p-1 px-2 border-0 text-[15px] font-medium text-caak-black rounded-sm items-center justify-center">
-                      Дэлгэрэнгүй
-                      <FIcon className="icon-fi-rs-down-chevron absolute sm:relative bottom-[40px] sm:bottom-0 text-white sm:text-caak-primary text-[14px] rotate-180 sm:-rotate-90" />
-                    </div>
-                  </Link>
-                </div>
+                <Link className="mt-[24px]" to={block?.data?.url}>
+                  <div className="w-[124px] sm:w-[148px] h-[34px] relative sm:h-[44px] bg-white flex p-1 px-2 border-0 text-[15px] font-medium text-caak-black rounded-sm items-center justify-center">
+                    Дэлгэрэнгүй
+                    <FIcon className="icon-fi-rs-down-chevron absolute sm:relative bottom-[40px] sm:bottom-0 text-white sm:text-caak-primary text-[14px] rotate-180 sm:-rotate-90" />
+                  </div>
+                </Link>
               </div>
             </div>
           )}
