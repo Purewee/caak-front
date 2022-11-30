@@ -10,7 +10,7 @@ import * as wow from '../../../assets/json/wow-js.json';
 import Lottie from 'react-lottie';
 import { useAuth } from '../../../context/AuthContext';
 
-export default function Reaction({ reactions, articleId, left, refetch, fetching }) {
+export default function Reaction({ reactions, articleId, left, refetch, fetching, refProp }) {
   const [active, setActive] = useState(true);
   const { isAuth } = useAuth();
   const [add, { loading }] = useMutation(ADD_REACTION, { variables: { articleId } });
@@ -33,6 +33,7 @@ export default function Reaction({ reactions, articleId, left, refetch, fetching
         ЭНЭ МЭДЭЭНД ӨГӨХ ТАНЫ СЭТГЭГДЭЛ?
       </p>
       <div
+        ref={refProp}
         className={`flex flex-row items-center ${left ? 'gap-[8px] h-[46px]' : 'gap-[7px] md:gap-[24px] mt-[14px]'}`}
       >
         {ACTIONS.map((x, idx) => (

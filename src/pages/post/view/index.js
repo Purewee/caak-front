@@ -83,6 +83,7 @@ const Post = () => {
   const article = data?.article || {};
   const numbering = article?.data?.numbering || false;
   const commentsRef = useRef(null);
+  const reactionRef = useRef(null);
   const { data: data_source, loading: fetching } = useQuery(SOURCE, {
     variables: { id: article?.source?.id },
     skip: !!!article?.source?.id,
@@ -324,7 +325,7 @@ const Post = () => {
                   className="flex flex-row items-center text-[#555555] text-[14px]"
                   size="small"
                   type="link"
-                  onClick={() => commentsRef.current.scrollIntoView()}
+                  // onClick={() => commentsRef.current.scrollIntoView()}
                 >
                   {kFormatter(article?.viewsCount) || 0}
                 </Button>
@@ -342,7 +343,7 @@ const Post = () => {
                   className="flex flex-row items-center text-[#555555] text-[14px]"
                   size="small"
                   type="link"
-                  onClick={() => commentsRef.current.scrollIntoView()}
+                  onClick={() => window.scrollTo({ top: reactionRef.current?.offsetTop - 380, behavior: 'smooth' })}
                 >
                   {kFormatter(reactionsCount)}
                 </Button>
@@ -491,9 +492,16 @@ const Post = () => {
                 )}
               </div>
             </div>
-            {!reactions_loading && (
-              <Reaction articleId={article?.id} reactions={reactions} refetch={refetch} fetching={reactions_loading} />
-            )}
+            <div ref={reactionRef}>
+              {!reactions_loading && (
+                <Reaction
+                  articleId={article?.id}
+                  reactions={reactions}
+                  refetch={refetch}
+                  fetching={reactions_loading}
+                />
+              )}
+            </div>
             {article?.acceptComment === true ? (
               <Comments articleId={article?.id} refProp={commentsRef} />
             ) : (
