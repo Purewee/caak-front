@@ -318,7 +318,7 @@ const Post = () => {
             </div>
             <Wrapper>
               <img src={imagePath(article.imageUrl)} alt="" className="w-full mt-[20px] sm:mt-[30px] object-cover" />
-              <div className="flex sm:hidden flex-row items-center h-[18px] mt-[16px]">
+              <div className="flex sm:hidden flex-row items-center h-[18px] mt-[6px]">
                 <Button
                   icon={<span className="icon-fi-rs-eye-o text-[18px] mr-[4px]" />}
                   className="flex flex-row items-center text-[#555555] text-[14px]"
@@ -431,12 +431,13 @@ const Post = () => {
                   <MetaTag className="ml-0">{`${article.author?.firstName}`}</MetaTag>
                 </Link>
               </div>
-              <FacebookShareButton className="sm:hidden" url={`${Configure.domain}/post/view/${article?.id}`}>
-                <div className="bg-[#1877F2] text-white font-condensed text-[15px] flex flex-row items-center justify-center rounded-[4px] h-[34px] w-[124px]">
-                  <span className="icon-fi-rs-share text-[16.8px] mr-[6px]" />
-                  ХУВААЛЦАХ
-                </div>
-              </FacebookShareButton>
+              <div
+                onClick={() => setSharing(true)}
+                className="bg-[#1877F2] sm:hidden text-white font-condensed text-[15px] flex flex-row items-center justify-center rounded-[4px] h-[34px] w-[124px]"
+              >
+                <span className="icon-fi-rs-share text-[16.8px] mr-[6px]" />
+                ХУВААЛЦАХ
+              </div>
               <div className="hidden sm:flex">
                 {source.following ? (
                   <button

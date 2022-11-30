@@ -132,7 +132,7 @@ export default function Category() {
             onChange={(e) => {
               setSort(e);
             }}
-            className="flex items-center w-full border-t border-b mt-[24px]"
+            className="flex items-center w-full border-b mt-[24px]"
           >
             <Tabs.TabPane
               tab={

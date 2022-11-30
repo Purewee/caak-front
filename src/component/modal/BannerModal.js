@@ -77,7 +77,7 @@ export default function BannerModal({ open, setOpen }) {
             </div>
           ) : null}
           <div className="mt-[20px] w-full border-t border-[#D4D8D8] pt-[24px] px-[24px] flex flex-row items-center justify-between">
-            <span className="text-[#111111] text-[16px] font-bold leading-[21px] inline-flex">Хэмжээ:<p className="text-[#555555] font-normal ml-[4px]">{open === 'A1' ? '1310x150' : open === 'A2' ? '422x520' : open === 'A3' ? 'Веб сайт: 340x400, Гар утас:780X780' : null}</p></span>
+            <span className="text-[#111111] text-[16px] font-bold leading-[21px] inline-flex">Хэмжээ:<p className="text-[#555555] font-normal ml-[4px]">{open === 'A1' ? '1300х200' : open === 'A2' ? '420х520' : open === 'A3' ? 'Веб сайт: 340х500, Гар утас: 780x780' : null}</p></span>
             <button onClick={() => setOpen(false)} className="w-[66px] h-[34px] border border-[#D4D8D8] rounded-[4px] text-[#111111] font-medium text-[15px]">Хаах</button>
           </div>
         </div>
