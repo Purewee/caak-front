@@ -425,16 +425,11 @@ const Post = () => {
               <div className="flex flex-row items-center text-[#555555] h-[36px]">
                 <Link to={`/channel/${article.source?.id}`} className="flex flex-row items-center">
                   <Avatar src={imagePath(article.source?.icon)} className="w-[36px] h-[36px]" />
-                  <div className="ml-[8px]">
-                    <MetaTag className="text-[15px] ml-0 leading-[18px] font-medium sm:font-normal">
-                      {article.source?.name}
-                    </MetaTag>
-                    <p className="text-[12px] sm:hidden leading-[14px] mt-[2px] text-[#909090]">
-                      {moment(article.publishDate).format('YYYY.MM.DD, HH:mm')}
-                    </p>
-                  </div>
+                  <MetaTag className="text-[15px] ml-[8px] leading-[18px] font-medium sm:font-normal">
+                    {article.source?.name}
+                  </MetaTag>
                 </Link>
-                <Link className="leading-[21px] hidden sm:block" to={`/profile/${article.author?.id}`}>
+                <Link className="leading-[21px]" to={`/profile/${article.author?.id}`}>
                   &nbsp;•&nbsp;
                   <MetaTag className="ml-0">{`${article.author?.firstName}`}</MetaTag>
                 </Link>
