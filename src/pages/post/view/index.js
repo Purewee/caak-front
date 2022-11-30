@@ -366,7 +366,7 @@ const Post = () => {
               ))}
             </div>
             <div className="hidden md:flex flex-row  w-full justify-end items-center">
-              <FacebookShareButton url={`${Configure.domain}/post/view/${article?.id}`}>
+              {/* <FacebookShareButton url={`${Configure.domain}/post/view/${article?.id}`}>
                 <div className="bg-[#1877F2] text-white font-roboto text-[15px] flex flex-row items-center justify-center rounded-[4px] h-[34px] pl-[11.6px] pr-[10px]">
                   <span className="icon-fi-rs-fb text-[16.8px] mr-[7.4px]" />
                   ХУВААЛЦАХ
@@ -377,12 +377,19 @@ const Post = () => {
                   <span className="icon-fi-rs-tw text-[16.5px] mr-[7.7px]" />
                   ЖИРГЭХ
                 </div>
-              </TwitterShareButton>
+              </TwitterShareButton> */}
+              <div
+                onClick={() => setSharing(true)}
+                className="bg-[#1877F2] cursor-pointer text-white font-condensed text-[15px] flex flex-row items-center justify-center rounded-[4px] h-[34px] w-[124px]"
+              >
+                <span className="icon-fi-rs-share text-[16.8px] mr-[6px]" />
+                ХУВААЛЦАХ
+              </div>
               <span
                 onClick={() => setSaving(true)}
                 className="icon-fi-rs-bookmark text-[#555555] text-[23.5px] w-[50px] h-[50px] rounded-full bg-[#F7F7F7] flex justify-center items-center cursor-pointer ml-[20px]"
               />
-              <Popover
+              {/* <Popover
                 placement="bottom"
                 trigger="click"
                 className="font-bold text-[14px] leading-[16px] tracking-[0px] ml-[14px]"
@@ -412,7 +419,7 @@ const Post = () => {
                 }
               >
                 <span className="icon-fi-rs-more-ver rotate-90 text-[#555555] text-[23.5px] w-[50px] h-[50px] rounded-full bg-[#F7F7F7] flex justify-center items-center cursor-pointer" />
-              </Popover>
+              </Popover> */}
             </div>
             <div className="flex flex-row mt-[19px] md:mt-[38px] justify-between w-full md:border-t py-[17px] border-b border-[#EFEEEF]">
               <div className="flex flex-row items-center text-[#555555] h-[36px]">
@@ -422,12 +429,12 @@ const Post = () => {
                     <MetaTag className="text-[15px] ml-0 leading-[18px] font-medium sm:font-normal">
                       {article.source?.name}
                     </MetaTag>
-                    <p className="text-[12px] leading-[14px] mt-[2px] text-[#909090]">
+                    <p className="text-[12px] sm:hidden leading-[14px] mt-[2px] text-[#909090]">
                       {moment(article.publishDate).format('YYYY.MM.DD, HH:mm')}
                     </p>
                   </div>
                 </Link>
-                <Link className="leading-[36px] hidden sm:block" to={`/profile/${article.author?.id}`}>
+                <Link className="leading-[21px] hidden sm:block" to={`/profile/${article.author?.id}`}>
                   &nbsp;•&nbsp;
                   <MetaTag className="ml-0">{`${article.author?.firstName}`}</MetaTag>
                 </Link>
