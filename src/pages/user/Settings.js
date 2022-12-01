@@ -197,7 +197,7 @@ export default function Settings() {
                         <Form.Item
                           name="avatar"
                           valuePropName="file"
-                          style={{ marginBottom: 0, marginLeft: 12 }}
+                          style={{ marginBottom: 0, marginLeft: avatar ? 12 : 0 }}
                           getValueFromEvent={(e) => {
                             return e?.fileList[0].originFileObj;
                           }}

@@ -634,11 +634,16 @@
   min-height: 22px;
 }
 
-.box {
-  display: block;
-  transition: transform 2s;
-}
+@media only screen and (min-width: 600px) {
 
-.box:hover {
-  margin-bottom: 6px;
+  .box {
+    display: block;
+    transition: 1s;
+    transition-timing-function: ease-in;
+  }
+
+  .box:hover {
+    transform: translate(0px, -10px);
+  }
+
 }

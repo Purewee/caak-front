@@ -43,7 +43,7 @@ export default function ArticlesList({ filter = [], sort = {}, size = 24, asd, a
     return res;
   }, []);
   return (
-    <div className="mt-[30px]">
+    <div className="mt-[30px] px-[16px] sm:px-0">
       {chunked.map((section, index) => {
         const divider = Math.floor(6 + Math.random() * 5);
         return (

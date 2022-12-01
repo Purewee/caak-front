@@ -156,7 +156,7 @@ export default function UserInfo({ transparent }) {
               />
             </Badge>
           }
-          className="border-0 sm:ml-[10px]"
+          className="border-0 sm:ml-[5px]"
           shape="circle"
           type="ghost"
         />

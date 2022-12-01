@@ -47,7 +47,7 @@ const StoryFeed = () => {
       </div>
       <div
         ref={trendPostsRef}
-        className="w-full md:h-[447px] flex flex-row items-center wrapper overflow-y-visible gap-x-[6px] sm:gap-x-[13px] transition-all pb-[10px] md:pb-0 duration-300 mt-[14px] md:mt-[39px]"
+        className="w-full md:h-[457px] flex flex-row items-center wrapper overflow-y-visible gap-x-[6px] sm:gap-x-[13px] transition-all pb-[10px] md:pb-0 duration-300 mt-[14px] md:mt-[29px]"
       >
         {activeIndex + 1 < stories.length - 1 && (
           <div

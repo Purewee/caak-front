@@ -53,9 +53,9 @@ export default function PostCard({ isMobile, post, removeSaved, asd, ...rest }) 
       style={color}
     >
       {sponsored && (
-        <div className="flex flex-row items-center text-white justify-center absolute top-[14px] left-[14px] w-[133px] h-[25px] rounded-[2px] bg-black bg-opacity-20">
+        <div className="flex flex-row items-center text-white pl-[8px] pr-[10px] absolute top-[14px] left-[14px] h-[25px] rounded-[2px] bg-black bg-opacity-20">
           <FIcon className="icon-fi-rs-bolt text-[15px] w-[16px] h-[16px]" />
-          <p className="text-[13px] condMedium font-medium ml-[4px]">ОНЦЛОХ МЭДЭЭ</p>
+          <p className="text-[13px] condMedium leading-[15px] ml-[4px]">ОНЦЛОХ МЭДЭЭ</p>
         </div>
       )}
       <div className={`flex ${sponsored || asd ? 'flex-col' : 'flex-row md:flex-col'}`}>
@@ -128,9 +128,13 @@ export default function PostCard({ isMobile, post, removeSaved, asd, ...rest }) 
                 </div>
               )}
             </div>
-            <span className={`h-[18px] hidden items-center sm:flex ${sponsored ? 'text-white' : 'sm:text-[#555555]'}`}>
-              &nbsp;&#8226;&nbsp;
-            </span>
+            {post.author?.name !== ' ' && (
+              <span
+                className={`h-[18px] hidden items-center sm:flex ${sponsored ? 'text-white' : 'sm:text-[#555555]'}`}
+              >
+                &nbsp;&#8226;&nbsp;
+              </span>
+            )}
             <Link
               className={`hidden sm:block leading-[16px] ${sponsored ? 'text-white' : 'sm:text-[#555555]'}`}
               to={`/profile/${post.author?.id}`}

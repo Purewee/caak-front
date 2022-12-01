@@ -283,14 +283,16 @@ const Post = () => {
                     <Button
                       type="link"
                       size="small"
+                      style={{ padding: 0 }}
                       icon={<span className="icon-fi-rs-eye-o text-[18px] mr-[4px]" />}
-                      className="hidden sm:flex flex-row items-center text-[#555555] text-[14px]"
+                      className="hidden sm:flex flex-row items-center ml-[12px] text-[#555555] text-[14px]"
                     >
                       {kFormatter(article?.viewsCount)}
                     </Button>
                     <Button
                       icon={<span className="icon-fi-rs-comment-o text-[18px] mr-[4px]" />}
-                      className="hidden sm:flex flex-row items-center text-[#555555] text-[14px]"
+                      className="hidden sm:flex flex-row items-center ml-[12px] text-[#555555] text-[14px]"
+                      style={{ padding: 0 }}
                       size="small"
                       type="link"
                       onClick={() => commentsRef.current.scrollIntoView()}
