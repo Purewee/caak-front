@@ -647,3 +647,11 @@
   }
 
 }
+
+.ant-modal-header {
+  border-bottom: 1px solid #D4D8D8;
+}
+
+.ant-modal-content {
+  border-radius: 4px;
+}
