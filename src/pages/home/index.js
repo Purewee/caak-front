@@ -118,17 +118,6 @@ export default function Home() {
       setFilter([{ bool: { should: should } }]);
 
       setSort({ publish_date: 'desc' });
-    } else if (selected === 'vidyeo') {
-      const should = [];
-      should.push({ term: { 'source.category': selected } });
-      should.push({
-        nested: {
-          path: 'categories',
-          query: { term: { 'categories.slug': 'video' } },
-        },
-      });
-      setFilter([{ bool: { should: should } }]);
-      setSort({ publish_date: 'desc' });
     } else {
       setFilter([{ term: { 'source.category': selected } }]);
       setSort({ publish_date: 'desc' });
@@ -204,7 +193,7 @@ export default function Home() {
           <span ref={tabsRef} style={{ position: 'absolute', top: selected === 'trend' ? '-80px' : '-40px' }} />
         </span>
         <ArticlesList
-          asd={selected === 'vidyeo' ? true : selected === 'chuluut_tsag' ? true : selected === 'blog' ? true : false}
+          asd={selected === 'chuluut_tsag'}
           filter={filter}
           sort={sort}
           size={33}

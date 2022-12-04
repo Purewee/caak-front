@@ -8,6 +8,7 @@ export const CATEGORIES = gql`
         name
         fullName
         slug
+        status
       }
     }
   }

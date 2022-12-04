@@ -236,6 +236,7 @@ function AddStory() {
                     value: x.id,
                     label: x.fullName,
                     key: x.id,
+                    disabled: x.status !== 'active',
                   }))}
                 />
               </Form.Item>

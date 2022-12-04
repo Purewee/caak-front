@@ -6,7 +6,6 @@ import { useParams } from 'react-router-dom';
 import PostCard from '../../component/card/Post';
 import { AppContext } from '../../App';
 import { useAuth } from '../../context/AuthContext';
-import { isAdmin } from '../../utility/Util';
 import NotFound from '../404';
 
 const CATEGORY = gql`
@@ -71,10 +70,6 @@ export default function Category() {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-
-  if (category.status !== 'active') {
-    return <NotFound />;
-  }
 
   return (
     <div className="flex justify-center pt-[20px] md:pt-[51px] pb-[100px] px-[16px] md:px-[0px]">

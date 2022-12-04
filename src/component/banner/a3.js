@@ -41,12 +41,13 @@ export default function A3({ banner }) {
       if (!closed) setOpen(true);
     }
   };
+
   useEffect(() => {
     window.addEventListener('scroll', handleScroll);
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
-  }, []);
+  }, [banner]);
 
   if (!banner) {
     return <></>;
@@ -60,8 +61,14 @@ export default function A3({ banner }) {
             placement="bottom"
             open={open}
             bodyStyle={{ background: '#F5F5F5', position: 'relative' }}
-            closable={false}
             height={360}
+            closeIcon={false}
+            headerStyle={{ display: 'none' }}
+            onClose={() => {
+              setOpen(false);
+              localStorage.setItem(key, 'closed');
+              window.removeEventListener('scroll', handleScroll);
+            }}
           >
             <Button
               icon={<CloseOutlined />}
