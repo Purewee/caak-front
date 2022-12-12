@@ -41,17 +41,14 @@ export default function HomeTabs({ selected }) {
       className="w-full font-condensed pl-[16px]"
       centered
       activeKey={selected}
-    >
-      {categories.map((x) => (
-        <Tabs.TabPane
-          key={x.key}
-          tab={
-            <span className="text-[16px] sm:text-[22px] font-bold leading-[16px] sm:leading-[22px] uppercase">
-              {x.label}
-            </span>
-          }
-        />
-      ))}
-    </Wrapper>
+      items={categories.map((x) => ({
+        key: x.key,
+        label: (
+          <span className="text-[16px] sm:text-[22px] font-bold leading-[16px] sm:leading-[22px] uppercase">
+            {x.label}
+          </span>
+        ),
+      }))}
+    />
   );
 }

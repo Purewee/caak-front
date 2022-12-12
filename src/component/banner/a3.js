@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { imagePath } from '../../utility/Util';
+import { getStorageExpiry, imagePath, setStorageExpiry } from '../../utility/Util';
 import useMediaQuery from '../navigation/useMediaQuery';
 import { Drawer, Button } from 'antd';
 import { FIcon } from '../icon';
@@ -32,12 +32,14 @@ const Wrapper = styled(Drawer)`
 
 export default function A3({ banner }) {
   const isMobile = useMediaQuery('screen and (max-width: 767px)');
-  const key = `banner_${banner?.id}`;
+  const key = `a3_banner_${banner?.id}`;
+  const duration = 60000 * 60 * 24; // a day
   const [open, setOpen] = useState(false);
+  const [onceClosed, setOnceClosed] = useState(false);
 
   const handleScroll = () => {
-    if (!open && window.scrollY > 1200) {
-      const closed = localStorage.getItem(key) || false;
+    if (!onceClosed && !open && window.scrollY > 1200) {
+      const closed = getStorageExpiry(key) || false;
       if (!closed) setOpen(true);
     }
   };
@@ -47,7 +49,7 @@ export default function A3({ banner }) {
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
-  }, [banner]);
+  }, [banner, onceClosed, open]);
 
   if (!banner) {
     return <></>;
@@ -66,7 +68,7 @@ export default function A3({ banner }) {
             headerStyle={{ display: 'none' }}
             onClose={() => {
               setOpen(false);
-              localStorage.setItem(key, 'closed');
+              setOnceClosed(true);
               window.removeEventListener('scroll', handleScroll);
             }}
           >
@@ -76,7 +78,7 @@ export default function A3({ banner }) {
               type="link"
               onClick={() => {
                 setOpen(false);
-                localStorage.setItem(key, 'closed');
+                setStorageExpiry(key, 'closed', duration);
                 window.removeEventListener('scroll', handleScroll);
               }}
             />
