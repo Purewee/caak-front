@@ -18,7 +18,11 @@ export default function ArticlesList({ filter = [], sort = {}, size = 24, asd, a
   useEffect(() => {
     setLoading(true);
     es.posts(filter, sort, size, page).then((response) => {
-      setList(response.hits);
+      if (page === 0) {
+        setList(response.hits);
+      } else {
+        setList([...list, ...response.hits]);
+      }
       setCount(response.total);
       setLoading(false);
     });

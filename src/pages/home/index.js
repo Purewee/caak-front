@@ -119,24 +119,39 @@ export default function Home() {
 
       setSort({ publish_date: 'desc' });
     } else if (selected === 'current') {
-      setFilter([
-        { term: { 'source.id': 1 } },
-        { nested: { path: 'categories', query: { terms: { 'categories.slug': ['news', 'social'] } } } },
-      ]);
+      const should = [];
+      should.push({
+        bool: {
+          must: [
+            { term: { 'source.id': 1 } },
+            { nested: { path: 'categories', query: { terms: { 'categories.slug': ['news', 'social'] } } } },
+          ],
+        },
+      });
+      should.push({ term: { 'source.category': 'tsag_uye' } });
+      setFilter([{ bool: { should: should } }]);
       setSort({ publish_date: 'desc' });
     } else if (selected === 'interesting') {
-      setFilter([
-        { term: { 'source.id': 1 } },
-        {
-          nested: {
-            path: 'categories',
-            query: { bool: { must_not: [{ terms: { 'categories.slug': ['social', 'news'] } }] } },
-          },
+      const should = [];
+      should.push({
+        bool: {
+          must: [
+            { term: { 'source.id': 1 } },
+            {
+              nested: {
+                path: 'categories',
+                query: { bool: { must_not: [{ terms: { 'categories.slug': ['social', 'news'] } }] } },
+              },
+            },
+          ],
         },
-      ]);
+      });
+      should.push({ term: { 'source.category': 'chuluut_tsag' } });
+      setFilter([{ bool: { should: should } }]);
       setSort({ publish_date: 'desc' });
     }
   }, [q, selected, page]);
+  console.log({ selected });
 
   return (
     <>

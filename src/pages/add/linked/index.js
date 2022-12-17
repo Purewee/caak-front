@@ -142,7 +142,7 @@ function AddLink() {
                   customRequest={({ file, onSuccess }) => {
                     imageCompress(file).then((result) => {
                       return getDataFromBlob(result).then((base64) => {
-                        setData({ ...data, image: base64 });
+                        setData({ ...data, base64: base64 });
                         onSuccess('ok');
                       });
                     });
@@ -150,7 +150,7 @@ function AddLink() {
                 >
                   {data?.image || article?.imageUrl ? (
                     <Image
-                      src={data?.image || imagePath(article?.imageUrl)}
+                      src={data?.image || data?.base64 || imagePath(article?.imageUrl)}
                       className="object-cover w-[300px] h-[200px]"
                       preview={false}
                     />
