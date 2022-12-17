@@ -9,10 +9,10 @@ import LoadMore from '../../component/LoadMore';
 
 export default function ArticlesList({ filter = [], sort = {}, size = 24, asd, autoLoad = 0, currentPage = 1 }) {
   const es = new ESService('caak');
-  const [page, setPage] = useState(currentPage - 1);
   const [list, setList] = useState([]);
   const [count, setCount] = useState(0);
   const [loading, setLoading] = useState(false);
+  const [page, setPage] = useState(currentPage - 1);
   const isMobile = useMediaQuery('screen and (max-width: 767px)');
 
   useEffect(() => {
@@ -22,24 +22,14 @@ export default function ArticlesList({ filter = [], sort = {}, size = 24, asd, a
       setCount(response.total);
       setLoading(false);
     });
-  }, [filter, sort, size]);
+  }, [filter, sort, size, page]);
 
-  useEffect(() => {
-    setLoading(true);
-    es.posts(filter, sort, size, page).then((response) => {
-      setList([...list, ...response.hits]);
-      setCount(response.total);
-      setLoading(false);
-    });
-  }, [page]);
   const chunked = list.reduce((res, item, index) => {
     const chunkIndex = Math.floor(index / 11);
     if (!res[chunkIndex]) {
       res[chunkIndex] = []; // start a new chunk
     }
-
     res[chunkIndex].push(item);
-
     return res;
   }, []);
   return (

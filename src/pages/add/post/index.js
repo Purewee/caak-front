@@ -121,6 +121,9 @@ function AddPost() {
   return (
     <Form
       onFinish={(values) => {
+        if (blocks?.length < 1) {
+          return message.error('Блок заавал оруулна уу!');
+        }
         saveArticle({
           variables: {
             id: id,
@@ -227,6 +230,7 @@ function AddPost() {
                 showUploadList={false}
                 className="overflow-hidden rounded border h-[240px] flex"
                 accept="image/*"
+                beforeUpload={(file) => beforeUpload(file, setCover)}
                 customRequest={({ file, onSuccess }) => {
                   imageCompress(file).then((result) => {
                     return getDataFromBlob(result).then((base64) => {
@@ -599,5 +603,24 @@ function RemoveBlock({ position, setBlocks, onRemove }) {
     </Popconfirm>
   );
 }
+const beforeUpload = (file, setCover) => {
+  return new Promise((resolve) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+      const image = document.createElement('img');
+      image.src = reader.result;
+      image.onload = () => {
+        const width = image.naturalWidth;
+        if (width < 760) {
+          message.error('760px - ээс их хэмжээтэй зураг оруулна уу');
+          resolve(false);
+        } else {
+          resolve(true);
+        }
+      };
+    };
+  });
+};
 
 export default AddPost;

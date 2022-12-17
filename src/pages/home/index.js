@@ -59,19 +59,19 @@ const StickyWrapper = styled.div`
 `;
 
 export default function Home() {
-  const [q, setQ] = useSearchParams();
+  const [q] = useSearchParams();
   const selected = q.get('type') || 'recent';
   const page = parseInt(q.get('p') || 1);
+
   const tabsRef = useRef(null);
   const stickyRef = useRef(null);
 
   const { isAuth } = useAuth();
-  const [filter, setFilter] = useState([]);
-  const [sort, setSort] = useState({ publish_date: 'desc' });
+  const [filter, setFilter] = useState(false);
+  const [sort, setSort] = useState(false);
+  const isMobile = useMediaQuery('screen and (max-width: 640px)');
   const { data } = useQuery(FOLLOWS, { skip: !isAuth && selected !== 'user' });
   const follows = groupBy(data?.me?.follows.map((x) => x.target) || [], (x) => x.__typename.toLowerCase());
-  const isMobile = useMediaQuery('screen and (max-width: 640px)');
-
   useEffect(() => {
     window.addEventListener('scroll', () => {
       if (window.scrollY >= 1500) {
@@ -118,11 +118,25 @@ export default function Home() {
       setFilter([{ bool: { should: should } }]);
 
       setSort({ publish_date: 'desc' });
-    } else {
-      setFilter([{ term: { 'source.category': selected } }]);
+    } else if (selected === 'current') {
+      setFilter([
+        { term: { 'source.id': 1 } },
+        { nested: { path: 'categories', query: { terms: { 'categories.slug': ['news', 'social'] } } } },
+      ]);
+      setSort({ publish_date: 'desc' });
+    } else if (selected === 'interesting') {
+      setFilter([
+        { term: { 'source.id': 1 } },
+        {
+          nested: {
+            path: 'categories',
+            query: { bool: { must_not: [{ terms: { 'categories.slug': ['social', 'news'] } }] } },
+          },
+        },
+      ]);
       setSort({ publish_date: 'desc' });
     }
-  }, [selected]);
+  }, [q, selected, page]);
 
   return (
     <>
@@ -192,14 +206,16 @@ export default function Home() {
         <span style={{ position: 'relative' }}>
           <span ref={tabsRef} style={{ position: 'absolute', top: selected === 'trend' ? '-80px' : '-40px' }} />
         </span>
-        <ArticlesList
-          asd={selected === 'chuluut_tsag'}
-          filter={filter}
-          sort={sort}
-          size={33}
-          autoLoad={3}
-          currentPage={page}
-        />
+        {sort && filter && page && (
+          <ArticlesList
+            asd={selected === 'chuluut_tsag'}
+            filter={filter}
+            sort={sort}
+            size={33}
+            autoLoad={3}
+            currentPage={page}
+          />
+        )}
       </div>
       {isMobile && <Banner position="a3" />}
     </>

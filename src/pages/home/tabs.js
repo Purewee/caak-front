@@ -24,14 +24,14 @@ export default function HomeTabs({ selected }) {
         { label: 'Шинэ', key: 'recent' },
         { label: 'Трэнд', key: 'trend' },
         { label: 'Танд', key: 'user' },
-        { label: 'Цаг үе', key: 'tsag_uye' },
-        { label: 'Чөлөөт цаг', key: 'chuluut_tsag' },
+        { label: 'Цаг үе', key: 'current' },
+        { label: 'Чөлөөт цаг', key: 'interesting' },
       ]
     : [
         { label: 'Шинэ', key: 'recent' },
         { label: 'Трэнд', key: 'trend' },
-        { label: 'Цаг үе', key: 'tsag_uye' },
-        { label: 'Чөлөөт цаг', key: 'chuluut_tsag' },
+        { label: 'Цаг үе', key: 'current' },
+        { label: 'Чөлөөт цаг', key: 'interesting' },
       ];
 
   return (
