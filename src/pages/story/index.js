@@ -5,11 +5,14 @@ import { imagePath } from '../../utility/Util';
 import { useQuery } from '@apollo/client';
 import { STORY } from './_gql';
 import Stories from 'react-insta-stories';
-import { Button, Skeleton } from 'antd';
+import { Button, Skeleton, Typography } from 'antd';
 import ReactPlayer from 'react-player';
 import { FIcon } from '../../component/icon';
 import AllStories from '../../assets/images/all-stories.png';
 import moment from 'moment';
+import sanitize from 'sanitize-html';
+
+const { Paragraph, Text } = Typography;
 
 export default function Story() {
   const { id } = useParams();
@@ -83,7 +86,7 @@ export default function Story() {
           <Preview story={story.nextStory} />
         ) : (
           <div className="w-[272px] h-[440px] relative flex imems-center justify-center">
-            <img src={AllStories} alt="Бүх стори" className="object-cover bg-black bg-opacity-70" />
+            <img src={AllStories} alt="Бүх стори" className="object-cover opacity-70" />
             <div
               className="py-4 absolute top-[180px] bg-white flex w-[188px] cursor-pointer flex-col items-center text-[#111111] text-[15px] h-[80px] rounded-[8px]"
               onClick={() => navigate('/stories')}
@@ -120,7 +123,7 @@ export default function Story() {
           <Preview story={story.prevStory} />
         ) : (
           <div className="w-[272px] h-[440px] relative flex imems-center justify-center">
-            <img src={AllStories} alt="Бүх стори" className="object-cover bg-black bg-opacity-70" />
+            <img src={AllStories} alt="Бүх стори" className="object-cover opacity-70" />
             <div
               className="py-4 absolute top-[180px] bg-white flex w-[188px] cursor-pointer flex-col items-center text-[#111111] text-[15px] h-[80px] rounded-[8px]"
               onClick={() => navigate('/stories')}
@@ -136,6 +139,11 @@ export default function Story() {
 }
 
 function ImageStory({ block, story }) {
+  console.log(block);
+  const [ellipsis, setEllipsis] = useState(true);
+  const clean = sanitize(block?.content ? block.content : '', {
+    allowedTags: ['b', 'i', 'em', 'strong', 'a'],
+  });
   return (
     <div className="w-full h-full flex justify-center">
       <div
@@ -184,11 +192,16 @@ function ImageStory({ block, story }) {
             </div>
           )}
           {block.kind === 'image' && block?.content && (
-            <div className="absolute w-full story-linear bottom-0 pb-[20px] p-[16px] sm:p-[32px] flex flex-col items-center">
-              <h3
+            <div
+              style={{ zIndex: 1002 }}
+              className="absolute w-full max-h-[500px] overflow-y-scroll wrapper story-linear bottom-0 pb-[20px] p-[16px] sm:p-[32px] flex flex-col items-center"
+            >
+              <Paragraph
                 className="text-center w-full text-white opacity-80 leading-[32px] text-[28px] sm:text-[32px] font-condensed tracking-[0.48px] font-normal mb-[16px]"
-                dangerouslySetInnerHTML={{ __html: block?.content }}
-              />
+                ellipsis={ellipsis ? { rows: 3, expandable: true, symbol: 'дэлгэрэнгүй' } : null}
+              >
+                {clean}
+              </Paragraph>
               <div className="h-[4px] w-[60px] bg-caak-primary" />
             </div>
           )}
@@ -201,6 +214,10 @@ function ImageStory({ block, story }) {
 function VideoStory({ block, story, action }) {
   const [muted, setMuted] = useState(true);
   const [playing, setPlaying] = useState(true);
+  const [ellipsis, setEllipsis] = useState(true);
+  const clean = sanitize(block?.content ? block.content : '', {
+    allowedTags: ['b', 'i', 'em', 'strong', 'a'],
+  });
   const navigate = useNavigate();
 
   return (
@@ -225,12 +242,12 @@ function VideoStory({ block, story, action }) {
               setMuted(!muted);
             }}
           />
-          <Button
+          {/* <Button
             type="link"
             className="sm:hidden"
             icon={<FIcon className={`icon-fi-rs-close text-white`} />}
             onClick={() => navigate('/')}
-          />
+          /> */}
         </div>
         <ReactPlayer
           url={imagePath(block.videoUrl)}
@@ -244,18 +261,22 @@ function VideoStory({ block, story, action }) {
           onPause={() => action('pause')}
           onPlay={() => action('play')}
         />
-        <div style={{ zIndex: 1000 }} className="absolute bottom-[80px] sm:left-[36px] flex flex-col">
-          <h3
-            className="truncate-2 text-center w-full text-white leading-[26px] text-[26px] font-condensed tracking-[0.39px] font-normal mb-[16px]"
-            dangerouslySetInnerHTML={{ __html: block?.content }}
-          />
+        <div
+          style={{ zIndex: 1001 }}
+          className="absolute story-linear bottom-0 pb-[50px] sm:left-[36px] flex flex-col items-center"
+        >
+          <Paragraph
+            className="text-center w-full text-white leading-[32px] text-[28px] sm:text-[32px] font-condensed tracking-[0.48px] font-normal mb-[16px]"
+            ellipsis={ellipsis ? { rows: 3, expandable: true, symbol: 'дэлгэрэнгүй' } : null}
+          >
+            {clean}
+          </Paragraph>
           {block?.data?.url && (
-            <a
-              className="w-[148px] bg-white flex p-1 px-2 border-0 rounded-sm items-center justify-between font-bold"
-              href={block.data.url}
-            >
-              Дэлгэрэнгүй
-              <FIcon className="icon-fi-rs-down-chevron text-caak-primary text-[16px]" />
+            <a href={block.data.url} target="_blank">
+              <div className="w-[124px] sm:w-[148px] h-[34px] relative sm:h-[44px] bg-white flex p-1 px-2 border-0 text-[15px] font-medium text-caak-black rounded-[4px] items-center justify-center">
+                Дэлгэрэнгүй
+                <FIcon className="icon-fi-rs-down-chevron relative bottom-0 text-caak-primary text-[14px] -rotate-90" />
+              </div>
             </a>
           )}
         </div>
