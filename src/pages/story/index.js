@@ -10,9 +10,9 @@ import ReactPlayer from 'react-player';
 import { FIcon } from '../../component/icon';
 import AllStories from '../../assets/images/all-stories.png';
 import moment from 'moment';
-import sanitize from 'sanitize-html';
+// import sanitize from 'sanitize-html';
 
-const { Paragraph, Text } = Typography;
+const { Paragraph } = Typography;
 
 export default function Story() {
   const { id } = useParams();
@@ -139,11 +139,10 @@ export default function Story() {
 }
 
 function ImageStory({ block, story }) {
-  console.log(block);
   const [ellipsis, setEllipsis] = useState(true);
-  const clean = sanitize(block?.content ? block.content : '', {
-    allowedTags: ['b', 'i', 'em', 'strong', 'a'],
-  });
+  // const clean = sanitize(block?.content ? block.content : '', {
+  //   allowedTags: ['b', 'i', 'em', 'strong', 'a'],
+  // });
   return (
     <div className="w-full h-full flex justify-center">
       <div
@@ -193,14 +192,14 @@ function ImageStory({ block, story }) {
           )}
           {block.kind === 'image' && block?.content && (
             <div
-              style={{ zIndex: 1002 }}
+              style={{ zIndex: 1001 }}
               className="absolute w-full max-h-[500px] overflow-y-scroll wrapper story-linear bottom-0 pb-[20px] p-[16px] sm:p-[32px] flex flex-col items-center"
             >
               <Paragraph
                 className="text-center w-full text-white opacity-80 leading-[32px] text-[28px] sm:text-[32px] font-condensed tracking-[0.48px] font-normal mb-[16px]"
                 ellipsis={ellipsis ? { rows: 3, expandable: true, symbol: 'дэлгэрэнгүй' } : null}
               >
-                {clean}
+                <span dangerouslySetInnerHTML={{ __html: block.content || null }} />
               </Paragraph>
               <div className="h-[4px] w-[60px] bg-caak-primary" />
             </div>
@@ -215,9 +214,10 @@ function VideoStory({ block, story, action }) {
   const [muted, setMuted] = useState(true);
   const [playing, setPlaying] = useState(true);
   const [ellipsis, setEllipsis] = useState(true);
-  const clean = sanitize(block?.content ? block.content : '', {
-    allowedTags: ['b', 'i', 'em', 'strong', 'a'],
-  });
+  const clean = block?.content || '';
+  // const clean = sanitize(block?.content ? block.content : '', {
+  //   allowedTags: ['b', 'i', 'em', 'strong', 'a'],
+  // });
   const navigate = useNavigate();
 
   return (
@@ -269,7 +269,7 @@ function VideoStory({ block, story, action }) {
             className="text-center w-full text-white leading-[32px] text-[28px] sm:text-[32px] font-condensed tracking-[0.48px] font-normal mb-[16px]"
             ellipsis={ellipsis ? { rows: 3, expandable: true, symbol: 'дэлгэрэнгүй' } : null}
           >
-            {clean}
+            {block.content || null}
           </Paragraph>
           {block?.data?.url && (
             <a href={block.data.url} target="_blank">

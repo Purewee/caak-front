@@ -208,7 +208,7 @@ export default function Home() {
         </span>
         {sort && filter && page && (
           <ArticlesList
-            asd={selected === 'chuluut_tsag'}
+            asd={selected === 'recent' ? true : selected === 'video' ? true : selected === 'blog' ? true : false}
             filter={filter}
             sort={sort}
             size={33}
