@@ -269,7 +269,7 @@ function VideoStory({ block, story, action }) {
             className="text-center w-full text-white leading-[32px] text-[28px] sm:text-[32px] font-condensed tracking-[0.48px] font-normal mb-[16px]"
             ellipsis={ellipsis ? { rows: 3, expandable: true, symbol: 'дэлгэрэнгүй' } : null}
           >
-            {block.content || null}
+            <span dangerouslySetInnerHTML={{ __html: block.content || null }} />
           </Paragraph>
           {block?.data?.url && (
             <a href={block.data.url} target="_blank">
