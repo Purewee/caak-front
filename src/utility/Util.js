@@ -519,6 +519,6 @@ const object = {
   generateTimeAgo,
   isAdmin,
   setStorageExpiry,
-  getStorageExpiry
+  getStorageExpiry,
 };
 export default object;
