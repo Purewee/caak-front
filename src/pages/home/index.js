@@ -151,7 +151,6 @@ export default function Home() {
       setSort({ publish_date: 'desc' });
     }
   }, [q, selected, page]);
-  console.log({ selected });
 
   return (
     <>
@@ -223,7 +222,7 @@ export default function Home() {
         </span>
         {sort && filter && page && (
           <ArticlesList
-            asd={selected === 'recent' ? true : selected === 'video' ? true : selected === 'blog' ? true : false}
+            asd={['recent', 'video', 'blog'].includes(selected)}
             filter={filter}
             sort={sort}
             size={33}
