@@ -263,7 +263,7 @@ function VideoStory({ block, story, action }) {
         />
         <div
           style={{ zIndex: 1001 }}
-          className="absolute story-linear bottom-0 pb-[50px] sm:left-[36px] flex flex-col items-center"
+          className="absolute story-linear bottom-0 pb-[50px] sm:pb-[80px] sm:left-[36px] flex flex-col items-center sm:items-start"
         >
           <Paragraph
             className="text-center w-full text-white leading-[32px] text-[28px] sm:text-[32px] font-condensed tracking-[0.48px] font-normal mb-[16px]"

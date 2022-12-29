@@ -131,22 +131,26 @@ export default function Home() {
       should.push({ term: { 'source.category': 'tsag_uye' } });
       setFilter([{ bool: { should: should } }]);
       setSort({ publish_date: 'desc' });
-    } else if (selected === 'interesting') {
+    } else if (selected === 'video') {
       const should = [];
+      should.push({ term: { 'source.category': selected } });
       should.push({
-        bool: {
-          must: [
-            { term: { 'source.id': 1 } },
-            {
-              nested: {
-                path: 'categories',
-                query: { bool: { must_not: [{ terms: { 'categories.slug': ['social', 'news'] } }] } },
-              },
-            },
-          ],
+        nested: {
+          path: 'categories',
+          query: { term: { 'categories.slug': 'video' } },
         },
       });
-      should.push({ term: { 'source.category': 'chuluut_tsag' } });
+      setFilter([{ bool: { should: should } }]);
+      setSort({ publish_date: 'desc' });
+    } else if (selected === 'blog') {
+      const should = [];
+      should.push({ term: { 'source.category': selected } });
+      should.push({
+        nested: {
+          path: 'categories',
+          query: { term: { 'categories.slug': 'blog' } },
+        },
+      });
       setFilter([{ bool: { should: should } }]);
       setSort({ publish_date: 'desc' });
     }
