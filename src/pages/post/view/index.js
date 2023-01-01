@@ -78,10 +78,12 @@ const Post = () => {
   const [isShown, setIsShown] = useState(false);
   const [filter, setFilter] = useState([]);
   const [sort, setSort] = useState({});
-  const { data, loading } = useQuery(ARTICLE, { variables: { id, slug } });
+  const { data, loading } = useQuery(ARTICLE, { variables: { id, slug }, fetchPolicy: 'network-only' });
   const { data: me, loading: me_loading } = useQuery(ME);
   const article = data?.article || {};
   const numbering = article?.data?.numbering || false;
+  const numerableBlocksCount = article?.blocks?.filter((x) => !!x.title).length;
+  let currentIdx = numbering === 'desc' ? numerableBlocksCount : 1;
   const commentsRef = useRef(null);
   const reactionRef = useRef(null);
   const { data: data_source, loading: fetching } = useQuery(SOURCE, {
@@ -350,9 +352,15 @@ const Post = () => {
                   {kFormatter(reactionsCount)}
                 </Button>
               </div>
-              {article.description && <PostBlock b={{ kind: 'text', id: '00', content: article.description }} />}
-              {orderBy(article?.blocks, ['position'], [numbering || 'asc']).map((b) => (
-                <PostBlock b={b} numbering={numbering} key={b.id} />
+              {article.description && (
+                <PostBlock b={{ kind: 'text', id: '00', content: article.description }} idx={false} />
+              )}
+              {orderBy(article?.blocks, ['position'], 'asc').map((b, idx) => (
+                <>
+                  {numbering === 'asc' && <PostBlock b={b} idx={!!b.title && currentIdx++} key={b.id} />}
+                  {numbering === 'desc' && <PostBlock b={b} idx={!!b.title && currentIdx--} key={b.id} />}
+                  {numbering === false && <PostBlock b={b} idx={false} key={b.id} />}
+                </>
               ))}
             </Wrapper>
             <div className="flex flex-row flex-wrap gap-[8px] w-full mt-[20px]">
@@ -368,18 +376,6 @@ const Post = () => {
               ))}
             </div>
             <div className="hidden md:flex flex-row  w-full justify-end items-center">
-              {/* <FacebookShareButton url={`${Configure.domain}/post/view/${article?.id}`}>
-                <div className="bg-[#1877F2] text-white font-roboto text-[15px] flex flex-row items-center justify-center rounded-[4px] h-[34px] pl-[11.6px] pr-[10px]">
-                  <span className="icon-fi-rs-fb text-[16.8px] mr-[7.4px]" />
-                  ХУВААЛЦАХ
-                </div>
-              </FacebookShareButton>
-              <TwitterShareButton url={`${Configure.domain}/post/view/${article?.id}`} title={article?.title}>
-                <div className="bg-[#1D9BF1] ml-[10px] text-white font-roboto text-[15px] flex flex-row items-center justify-center rounded-[4px] h-[34px] pl-[11.6px] pr-[10px]">
-                  <span className="icon-fi-rs-tw text-[16.5px] mr-[7.7px]" />
-                  ЖИРГЭХ
-                </div>
-              </TwitterShareButton> */}
               <div
                 onClick={() => setSharing(true)}
                 className="bg-[#1877F2] cursor-pointer text-white font-condensed text-[15px] flex flex-row items-center justify-center rounded-[4px] h-[34px] w-[124px]"
@@ -391,37 +387,6 @@ const Post = () => {
                 onClick={() => setSaving(true)}
                 className="icon-fi-rs-bookmark text-[#555555] text-[23.5px] w-[50px] h-[50px] rounded-full bg-[#F7F7F7] flex justify-center items-center cursor-pointer ml-[20px]"
               />
-              {/* <Popover
-                placement="bottom"
-                trigger="click"
-                className="font-bold text-[14px] leading-[16px] tracking-[0px] ml-[14px]"
-                overlayStyle={{ width: 166 }}
-                overlayInnerStyle={{ borderRadius: 8 }}
-                content={
-                  <div className="flex flex-col gap-[15px] h-full justify-between">
-                    {isAdmin(me?.me) && (
-                      <Link to={`/edit/${article.kind}/${article.id}`}>
-                        <div className="flex flex-row items-center cursor-pointer">
-                          <span className="text-[#555555] text-[20px] mr-[8px] w-[22px] h-[22px] flex items-center justify-center icon-fi-rs-editor-o" />
-                          <p className="text-[#555555] text-[15px] leading-[18px]">Засах</p>
-                        </div>
-                      </Link>
-                    )}
-                    {isAdmin(me?.me) && (
-                      <div className="flex flex-row items-center cursor-pointer">
-                        <span className="text-[#555555] text-[20px] mr-[8px] w-[22px] h-[22px] flex items-center justify-center icon-fi-rs-delete" />
-                        <p className="text-[#555555] text-[15px] leading-[18px]">Устгах</p>
-                      </div>
-                    )}
-                    <div onClick={() => setReporting(true)} className="flex flex-row items-center cursor-pointer">
-                      <span className="text-[#555555] text-[18px] mr-[8px] w-[22px] h-[22px] flex items-center justify-center icon-fi-rs-flag" />
-                      <p className="text-[#555555] text-[15px] leading-[18px]">Репорт</p>
-                    </div>
-                  </div>
-                }
-              >
-                <span className="icon-fi-rs-more-ver rotate-90 text-[#555555] text-[23.5px] w-[50px] h-[50px] rounded-full bg-[#F7F7F7] flex justify-center items-center cursor-pointer" />
-              </Popover> */}
             </div>
             <div className="flex flex-row mt-[19px] md:mt-[38px] justify-between w-full md:border-t py-[17px] border-b border-[#EFEEEF]">
               <div className="flex flex-row items-center text-[#555555] h-[36px]">

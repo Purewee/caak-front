@@ -352,9 +352,9 @@ function AddPost() {
                   </Form.Item>
                 </div>
               )}
-              <Form.Item name={['data', 'numbering']} className="font-merri text-[10px]">
+              <Form.Item name={['data', 'numbering']} className="font-merri text-[10px]" valuePropName="value">
                 <Radio.Group>
-                  <Radio.Button>Дугаарлахгүй</Radio.Button>
+                  <Radio.Button value={false}>Дугаарлахгүй</Radio.Button>
                   <Radio.Button value="asc">Өсөхөөр</Radio.Button>
                   <Radio.Button value="desc">Буурхаар</Radio.Button>
                 </Radio.Group>
