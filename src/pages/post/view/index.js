@@ -5,16 +5,13 @@ import { useNavigate, useParams } from 'react-router-dom';
 import moment from 'moment';
 import { useMutation } from '@apollo/client';
 import Loader from '../../../component/loader';
-import { LazyLoadImage } from 'react-lazy-load-image-component';
-import { imagePath, parseVideoURL, isAdmin, kFormatter } from '../../../utility/Util';
-import { Wrapper, Title, BlockTitle, Paragraph, HashTag, MetaTag } from './wrapper';
+import { imagePath, isModerator, kFormatter } from '../../../utility/Util';
+import { Wrapper, Title, HashTag, MetaTag } from './wrapper';
 import Comments from './comments';
 import { ARTICLE, ME, REACTIONS } from './_gql';
-import LoveIcon from '../../../assets/images/fi-rs-react-love.png';
-import HahaIcon from '../../../assets/images/fi-rs-react-haha.svg';
 import PostSaveModal from '../../../component/modal/PostSaveModal';
 import PostShareModal from '../../../component/modal/PostShareModal';
-import { Avatar, Popover, notification, Button, Alert, Statistic, Skeleton, Popconfirm, message } from 'antd';
+import { Avatar, Popover, notification, Button, Alert, Skeleton, Popconfirm, message } from 'antd';
 import { useAuth } from '../../../context/AuthContext';
 import { useHeader } from '../../../context/HeaderContext';
 import SignInUpController from '../../../component/modal/SignInUpController';
@@ -163,7 +160,7 @@ const Post = () => {
   if (!loading && !article.id) {
     return <NotFound />;
   }
-  if (!isAdmin(me?.me) && article?.status === 'draft') {
+  if (!isModerator(me?.me) && article?.status === 'draft') {
     return <NotFound />;
   }
 
@@ -217,7 +214,7 @@ const Post = () => {
                   overlayInnerStyle={{ borderRadius: 8 }}
                   content={
                     <div className="flex flex-col gap-[15px] h-full justify-between">
-                      {isAdmin(me?.me) && (
+                      {article?.editable && (
                         <Link to={`/edit/${article.kind}/${article.id}`}>
                           <div className="flex flex-row items-center cursor-pointer">
                             <span className="text-[#555555] text-[20px] mr-[8px] w-[22px] h-[22px] flex items-center justify-center icon-fi-rs-editor-o" />
@@ -225,7 +222,7 @@ const Post = () => {
                           </div>
                         </Link>
                       )}
-                      {isAdmin(me?.me) && (
+                      {article?.editable && (
                         <Popconfirm
                           title="Энэ мэдээг үнэхээр устгах уу?"
                           onConfirm={() => {

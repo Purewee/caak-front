@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import Configure from '../component/configure';
 import moment from 'moment';
 import urlParser from 'js-video-url-parser';
+import { includes } from 'lodash/collection';
 
 const regexEmail = '^[a-zA-Z0-9._:$!%-]+@[a-zA-Z0-9.-]+.[a-zA-Z]$';
 const regexNumber = '^[0-9]{8}$';
@@ -458,8 +459,12 @@ export function parseVideoURL(url) {
   return urlParser.parse(url);
 }
 
-export function isAdmin(user) {
+export function isModerator(user) {
   return ['admin', 'moderator'].includes(user?.role);
+}
+
+export function isAdmin(user) {
+  return 'admin' === user?.role;
 }
 
 export function setStorageExpiry(key, value, ttl) {
@@ -518,6 +523,7 @@ const object = {
   differenceDate,
   generateTimeAgo,
   isAdmin,
+  isModerator,
   setStorageExpiry,
   getStorageExpiry,
 };
