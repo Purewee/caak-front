@@ -59,6 +59,7 @@ export const STORY = gql`
         }
       }
       author {
+        avatar
         id
         avatar
         firstName

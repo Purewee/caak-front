@@ -5,33 +5,39 @@ import CaakPodcast from '../../images/caak-podcast.png';
 import CaakRadio from '../../images/Caak-radio.png';
 import CaakEnt from '../../images/caak-entertainment.png';
 import Caak from '../../images/New-Logo.svg';
-import { useLocation } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import VideoContent from '../../assets/images/newsmade.png';
 import OntslohNews from '../../assets/images/ontsloh.png';
 import NewsMade from '../../assets/images/realnews.png';
 import BannerModal from '../../component/modal/BannerModal';
+import { useNavigate } from 'react-router-dom';
 
 //prettier-ignore
 const Tabs = [
     {
         icon: 'icon-fi-rs-info',
         name: 'Бидний тухай',
+        slug: 'about,'
     },
     {
         icon: 'icon-fi-rs-megaphone',
         name: 'Сурталчилгаа байршуулах',
+        slug: 'adds,'
     },
     {
         icon: 'icon-fi-rs-mail-f',
         name: 'Холбоо барих',
+        slug: 'contactus,'
     },
     {
         icon: 'icon-fi-rs-shield',
         name: 'Нууцлалын баталгаа',
+        slug: 'privacy,'
     },
     {
         icon: 'icon-fi-rs-article-f',
         name: 'Үйлчилгээний нөхцөл',
+        slug: 'terms,'
     },
 ]
 
@@ -170,12 +176,13 @@ const moneyNews = [
 
 //prettier-ignore
 export default function Help() {
-    const location = useLocation();
-    const [selected, setSelected] = useState(0)
+    const { id } = useParams();
+    const [selected, setSelected] = useState(JSON.parse(id))
     const [hovered, setHovered] = useState(false)
     const [open, setOpen] = useState(false)
     const [hoveredNews, setHoveredNews] = useState(false)
     const context = useContext(AppContext);
+    const navigate = useNavigate();
 
     // useEffect(() => {
     //     window.scrollTo(0, 0)
@@ -193,10 +200,6 @@ export default function Help() {
         context.setStore('default');
     }, []);
 
-    useEffect(() => {
-        setSelected(location.state || 0)
-        window.scrollTo(0, 0)
-      }, [location.state])
     return (
         //prettier-ignore
         <div className='w-full flex flex-col items-center bg-[#F5F5F5]'>
@@ -214,7 +217,14 @@ export default function Help() {
                     {
                         Tabs.map((data, index) => {
                             return(
-                                <div onClick={() => setSelected(index)} key={index} className={`flex flex-row items-center pl-[14px] cursor-pointer h-[50px] ${selected === index && 'bg-[#FF6600] bg-opacity-10 rounded-[2px]'}`}>
+                                <div
+                                    onClick={() => {
+                                        setSelected(index)
+                                        navigate(`/help/${index}`)
+                                    }}
+                                    key={index}
+                                    className={`flex flex-row items-center pl-[14px] cursor-pointer h-[50px] ${selected === index && 'bg-[#FF6600] bg-opacity-10 rounded-[2px]'}`}
+                                >
                                     <span className={`${data.icon} w-[22px] h-[22px] text-[20px] flex justify-center items-center ${selected === index ? 'text-[#FF6600]' : 'text-[#909090]'}`} />
                                     <p className={`ml-[10px] text-[16px] leading-[19px] ${selected === index ? 'text-[#FF6600] font-medium' : 'text-[#111111]'}`}>{data.name}</p>
                                 </div>

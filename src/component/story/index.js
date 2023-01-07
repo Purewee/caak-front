@@ -3,7 +3,7 @@ import StoryItem from './Story';
 import { ESService } from '../../lib/esService';
 import { Link } from 'react-router-dom';
 
-const StoryFeed = () => {
+const StoryFeed = ({ home }) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [stories, setStories] = useState([]);
   const trendPostsRef = useRef(null);
@@ -27,27 +27,39 @@ const StoryFeed = () => {
   };
 
   return stories?.length > 0 ? (
-    <div className="flex flex-col w-full max-w-[1502px] justify-center relative mt-[14px] md:mt-0 md:pt-[80px]">
-      <div className="flex flex-row items-center w-full relative justify-between md:justify-center">
-        <p className="text-[17px] condMedium font-medium leading-[20px] sm:hidden">Стори мэдээ</p>
-        <img
-          className="h-[20px] md:h-[42px] md:w-[324px] mt-[30px] md:mt-0 hidden sm:block"
-          src={require('../../assets/images/feed_story.svg').default}
-          alt="Feeds"
-        />
-        <Link
-          className="flex flex-row-reverse sm:flex-row gap-[6px] sm:absolute items-center right-[121px]"
-          to="/stories"
-        >
-          <p className="text-[14px] condMedium sm:font-normal sm:text-[16px] text-[#909090] sm:text-[#111111]">
-            Бүх сторинууд
-          </p>
-          <span className="icon-fi-rs-stories-o text-[#909090] sm:text-[#FF6600] text-[18px]" />
-        </Link>
-      </div>
+    <div
+      className={`flex flex-col w-full max-w-[1502px] justify-center relative mt-[14px] md:mt-0 ${
+        home ? 'md:pt-[80px]' : 'md:pt-[50px]'
+      }`}
+    >
+      {home ? (
+        <div className="flex flex-row items-center w-full relative justify-between md:justify-center">
+          <p className="text-[17px] condMedium font-medium leading-[20px] sm:hidden">Стори мэдээ</p>
+          <img
+            className="h-[20px] md:h-[42px] md:w-[324px] mt-[30px] md:mt-0 hidden sm:block"
+            src={require('../../assets/images/feed_story.svg').default}
+            alt="Feeds"
+          />
+          <Link
+            className="flex flex-row-reverse sm:flex-row gap-[6px] sm:absolute items-center right-[121px]"
+            to="/stories"
+          >
+            <p className="text-[14px] condMedium sm:font-normal sm:text-[16px] text-[#909090] sm:text-[#111111]">
+              Бүх сторинууд
+            </p>
+            <span className="icon-fi-rs-stories-o text-[#909090] sm:text-[#FF6600] text-[18px]" />
+          </Link>
+        </div>
+      ) : (
+        <p className="text-[18px] text-[#111111] leading-[21px]">
+          <span className="font-bold">Стори</span> мэдээнүүд
+        </p>
+      )}
       <div
         ref={trendPostsRef}
-        className="w-full md:h-[457px] flex flex-row items-center wrapper overflow-y-visible gap-x-[6px] sm:gap-x-[13px] transition-all pb-[10px] md:pb-0 duration-300 mt-[14px] md:mt-[29px]"
+        className={`w-full md:h-[457px] flex flex-row items-center wrapper overflow-y-visible gap-x-[6px] sm:gap-x-[13px] transition-all pb-[10px] md:pb-0 duration-300 mt-[14px] ${
+          home ? 'md:mt-[29px]' : 'md:mt-[20px]'
+        }`}
       >
         {activeIndex + 1 < stories.length - 1 && (
           <div

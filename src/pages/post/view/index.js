@@ -275,10 +275,19 @@ const Post = () => {
             <Title className="text-center mt-[8px]">{article.title}</Title>
             <div className="flex flex-row justify-between items-center w-full h-[34px] mt-[21px]">
               <div className="flex flex-row items-center h-[32px]">
-                <Avatar className="w-[32px] h-[32px] rounded-full" src={imagePath(article.source?.icon)} />
+                {/* <Avatar className="w-[32px] h-[32px] rounded-full" src={imagePath(article.source?.icon)} /> */}
+                {article?.author?.avatar ? (
+                  <Avatar className="w-[32px] h-[32px]" src={imagePath(article.author?.avatar)} />
+                ) : (
+                  article?.author?.firstName && (
+                    <Avatar className="w-[32px] h-[32px] flex items-center justify-center font-medium bg-[#257CEE19] text-[#257CEE]">
+                      {(article?.author?.firstName || article?.author?.firstName)[0] || null}
+                    </Avatar>
+                  )
+                )}
                 <div className="ml-[8px] h-full flex flex-col justify-between">
-                  <Link to={`/channel/${article.source?.id}`} className="flex flex-row items-center">
-                    <p className="text-caak-black text-[14px] leading-[16px]">{article?.source?.name}</p>
+                  <Link to={`/profile/${article.author?.id}`} className="flex flex-row items-center">
+                    <p className="text-caak-black text-[14px] leading-[16px]">{article?.author?.firstName}</p>
                   </Link>
                   <div className="text-[12px] text-[#909090] flex flex-row items-center leading-[14px]">
                     <p>{moment(article.publishDate).format('YYYY.MM.DD, HH:mm')}</p>
@@ -347,7 +356,7 @@ const Post = () => {
                   className="flex flex-row items-center text-[#555555] text-[14px]"
                   size="small"
                   type="link"
-                  onClick={() => window.scrollTo({ top: reactionRef.current?.offsetTop - 380, behavior: 'smooth' })}
+                  onClick={() => reactionRef.current.scrollIntoView()}
                 >
                   {kFormatter(reactionsCount)}
                 </Button>
