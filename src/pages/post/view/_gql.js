@@ -17,6 +17,7 @@ export const ARTICLE = gql`
       description
       createdAt
       acceptComment
+      editable
       categories {
         nodes {
           id

@@ -157,6 +157,7 @@ function AddPost() {
         status: 'published',
         acceptComment: true,
         sourceId: article?.source?.id || '1',
+        data: { numbering: false },
         ...article,
         tags: article?.tags.map((x) => x.slug),
         blocks: sortBy(article?.blocks, 'position'),
