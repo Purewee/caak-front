@@ -135,7 +135,9 @@ export default function Profile() {
               <p className="font-condensed font-bold text-[30px] leading-[35px]">{user?.firstName}</p>
               <p className="md:mt-[12px] text-[15px] text-[#555555] leading-[18px] max-w-[600px]">{user?.data?.bio}</p>
               <div className="flex flex-row text-[#555555] gap-[23px] sm:mt-[12px] text-[15px] font-roboto text-center">
-                <Statistic className="leading-[18px]" title="нийтлэл" value={user?.articles?.totalCount || 0} />
+                {user?.role !== 'member' && (
+                  <Statistic className="leading-[18px]" title="нийтлэл" value={user?.articles?.totalCount || 0} />
+                )}
                 <Statistic className="leading-[18px]" title="дагагчид" value={user?.followersCount || 0} />
                 {id === me?.id && (
                   <Statistic
