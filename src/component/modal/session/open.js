@@ -47,7 +47,7 @@ function OpenStep({ setStep }) {
         </Col>
         <Col xs={24} xl={14} className="border-l">
           <div className="px-[40px] py-[30px] mt-[40px] border-b">
-            <h3 className="text-[32px] font-bold font-condensed leading-[38px]">
+            <h3 className="text-[32px] font-bold font-condensed leading-[38px] mb-[20px]">
               Бүртгэл үүсгэн мэдээллийг өөрийн болгоорой!
             </h3>
             <LoginWithFB />

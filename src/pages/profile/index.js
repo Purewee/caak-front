@@ -12,6 +12,7 @@ import useMediaQuery from '../../component/navigation/useMediaQuery';
 import { imagePath } from '../../utility/Util';
 import { useLocation } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import FollowsModal from '../../component/modal/FollowsModal';
 
 const FOLLOW = gql`
   mutation Follow($id: ID!) {
@@ -58,6 +59,7 @@ export default function Profile() {
   const es = new ESService('caak');
   const location = useLocation();
   const [articles, setArticles] = useState([]);
+  const [followsOpen, setFollowsOpen] = useState(false);
   const [selected, setSelected] = useState(location.state ? location.state : 'posts');
   const [count, setCount] = useState(0);
   const [page, setPage] = useState(0);
@@ -100,7 +102,7 @@ export default function Profile() {
         <div className="pt-[17px] md:pt-[71px] pb-[17px] md:pb-[50px] flex flex-col md:flex-row justify-between w-full items-center">
           <div className="flex flex-row w-full">
             {user.avatar ? (
-              <div className="relative">
+              <div className="relative w-[57px] h-[57px] md:w-[82px] md:h-[82px]">
                 <Avatar
                   className="w-[57px] h-[57px] md:w-[82px] md:h-[82px] object-cover"
                   src={imagePath(user?.avatar)}
@@ -109,13 +111,13 @@ export default function Profile() {
                   <span
                     onClick={() => navigate(`/settings/${loggedUser?.id}`)}
                     style={{ boxShadow: '0px 1px 4px #00000029' }}
-                    className="w-[32px] h-[32px] rounded-full cursor-pointer flex justify-center items-center text-[19px] absolute bottom-0 -right-[6px] text-black icon-fi-rs-camera-f bg-white"
+                    className="w-[32px] h-[32px] rounded-full cursor-pointer flex justify-center items-center text-[19px] absolute -bottom-[11px] -right-[6px] text-black icon-fi-rs-camera-f bg-white"
                   />
                 )}
               </div>
             ) : (
               user.firstName && (
-                <div className="relative">
+                <div className="relative w-[57px] h-[57px] md:w-[82px] md:h-[82px]">
                   <Avatar className="w-[57px] h-[57px] flex items-center md:w-[82px] md:h-[82px] bg-[#257CEE19] text-[#257CEE] text-[32px] font-medium">
                     {(user?.firstName || user?.name)[0] || null}
                   </Avatar>
@@ -123,18 +125,30 @@ export default function Profile() {
                     <span
                       onClick={() => navigate(`/settings/${loggedUser?.id}`)}
                       style={{ boxShadow: '0px 1px 4px #00000029' }}
-                      className="w-[32px] h-[32px] rounded-full cursor-pointer flex justify-center items-center text-[19px] absolute bottom-0 -right-[6px] text-black icon-fi-rs-camera-f bg-white"
+                      className="w-[32px] h-[32px] rounded-full cursor-pointer flex justify-center items-center text-[19px] absolute -bottom-[11px] -right-[6px] text-black icon-fi-rs-camera-f bg-white"
                     />
                   )}
                 </div>
               )
             )}
-            <div className="ml-[24px] max-h-[57px] md:max-h-[82px]">
+            <div className="ml-[24px] max-h-[82px]">
               <p className="font-condensed font-bold text-[30px] leading-[35px]">{user?.firstName}</p>
               <p className="md:mt-[12px] text-[15px] text-[#555555] leading-[18px] max-w-[600px]">{user?.data?.bio}</p>
               <div className="flex flex-row text-[#555555] gap-[23px] sm:mt-[12px] text-[15px] font-roboto text-center">
                 <Statistic className="leading-[18px]" title="нийтлэл" value={user?.articles?.totalCount || 0} />
-                <Statistic className="leading-[18px]" title="дагагч" value={user?.followersCount || 0} />
+                <Statistic className="leading-[18px]" title="дагагчид" value={user?.followersCount || 0} />
+                {id === me?.id && (
+                  <Statistic
+                    className="leading-[18px]"
+                    title={
+                      <p className="cursor-pointer" onClick={() => setFollowsOpen(true)}>
+                        дагасан
+                      </p>
+                    }
+                    value={user?.follows?.length || 0}
+                  />
+                )}
+                {followsOpen && <FollowsModal follows={user?.follows} toggle={() => setFollowsOpen(!followsOpen)} />}
               </div>
             </div>
           </div>
@@ -189,67 +203,21 @@ export default function Profile() {
           tabBarStyle={{ borderBottom: '1px solid #EFEEEF' }}
           className="mb-[100px] font-condensed w-full border-t border-1"
         >
-          <Tabs.TabPane
-            key="posts"
-            tab={
-              <Statistic
-                title={
-                  <span
-                    className={`font-bold text-[16px] ${
-                      selected === 'posts' ? 'text-caak-black' : 'text-caak-darkGray'
-                    }`}
-                  >
-                    ОРУУЛСАН МЭДЭЭ
-                  </span>
-                }
-                value={user.articles?.totalCount}
-                valueStyle={{
-                  backgroundColor: '#BBBEBE',
-                  paddingInline: 6,
-                  fontSize: 14,
-                  height: 20,
-                  color: 'white',
-                  borderRadius: 4,
-                  fontWeight: 'bold',
-                }}
-                style={{ flexDirection: 'row', gap: 6 }}
-              />
-            }
-          >
-            <div className="max-w-[1310px] w-full flex flex-wrap justify-center mt-[50px] xl:justify-start gap-x-[22px] gap-y-[40px]">
-              {articles.map((post, index) => (
-                <Col className="w-full sm:w-[422px]" key={index}>
-                  <PostCard isMobile={isMobile} post={post} />
-                </Col>
-              ))}
-              {loading && <Skeleton />}
-              <Button
-                block
-                size="large"
-                className="font-roboto font-medium h-[74px] border-caak-primary text-caak-primary mt-[20px]"
-                onClick={() => setPage(page + 1)}
-                loading={loading}
-              >
-                Илүү ихийг үзэх
-                <span className="icon-fi-rs-down-chevron text-[14px] ml-[8px]" />
-              </Button>
-            </div>
-          </Tabs.TabPane>
-          {id === loggedUser?.id && (
+          {loggedUser?.role !== 'member' && (
             <Tabs.TabPane
-              key="saved"
+              key="posts"
               tab={
                 <Statistic
                   title={
                     <span
                       className={`font-bold text-[16px] ${
-                        selected === 'saved' ? 'text-caak-black' : 'text-caak-darkGray'
+                        selected === 'posts' ? 'text-caak-black' : 'text-caak-darkGray'
                       }`}
                     >
-                      ХАДГАЛСАН МЭДЭЭ
+                      ОРУУЛСАН МЭДЭЭ
                     </span>
                   }
-                  value={saved_articles.length}
+                  value={user.articles?.totalCount}
                   valueStyle={{
                     backgroundColor: '#BBBEBE',
                     paddingInline: 6,
@@ -259,20 +227,31 @@ export default function Profile() {
                     borderRadius: 4,
                     fontWeight: 'bold',
                   }}
-                  style={{ flexDirection: 'row', gap: 8 }}
+                  style={{ flexDirection: 'row', gap: 6 }}
                 />
               }
             >
-              <div className="max-w-[1310px] w-full flex flex-wrap mt-[50px] justify-center xl:justify-start gap-x-[22px] gap-y-[40px] px-[32px] sm:px-0 border-t">
-                {saved_articles.map((post, index) => (
+              <div className="max-w-[1310px] w-full flex flex-wrap justify-center mt-[50px] xl:justify-start gap-x-[22px] gap-y-[40px]">
+                {articles.map((post, index) => (
                   <Col className="w-full sm:w-[422px]" key={index}>
-                    <PostCard removeSaved isMobile={isMobile} post={post} />
+                    <PostCard isMobile={isMobile} post={post} />
                   </Col>
                 ))}
+                {loading && <Skeleton />}
+                <Button
+                  block
+                  size="large"
+                  className="font-roboto font-medium h-[74px] border-caak-primary text-caak-primary mt-[20px]"
+                  onClick={() => setPage(page + 1)}
+                  loading={loading}
+                >
+                  Илүү ихийг үзэх
+                  <span className="icon-fi-rs-down-chevron text-[14px] ml-[8px]" />
+                </Button>
               </div>
             </Tabs.TabPane>
           )}
-          {id === loggedUser?.id && (
+          {id === loggedUser?.id && loggedUser?.role === 'member' && (
             <Tabs.TabPane
               key="history"
               tab={
@@ -311,6 +290,80 @@ export default function Profile() {
                     </Col>
                   );
                 })}
+              </div>
+            </Tabs.TabPane>
+          )}
+          {id === loggedUser?.id && (
+            <Tabs.TabPane
+              key="saved"
+              tab={
+                <Statistic
+                  title={
+                    <span
+                      className={`font-bold text-[16px] ${
+                        selected === 'saved' ? 'text-caak-black' : 'text-caak-darkGray'
+                      }`}
+                    >
+                      ХАДГАЛСАН МЭДЭЭ
+                    </span>
+                  }
+                  value={saved_articles.length}
+                  valueStyle={{
+                    backgroundColor: '#BBBEBE',
+                    paddingInline: 6,
+                    fontSize: 14,
+                    height: 20,
+                    color: 'white',
+                    borderRadius: 4,
+                    fontWeight: 'bold',
+                  }}
+                  style={{ flexDirection: 'row', gap: 8 }}
+                />
+              }
+            >
+              <div className="max-w-[1310px] w-full flex flex-wrap mt-[50px] justify-center xl:justify-start gap-x-[22px] gap-y-[40px] px-[32px] sm:px-0 border-t">
+                {saved_articles.map((post, index) => (
+                  <Col className="w-full sm:w-[422px]" key={index}>
+                    <PostCard removeSaved isMobile={isMobile} post={post} />
+                  </Col>
+                ))}
+              </div>
+            </Tabs.TabPane>
+          )}
+          {loggedUser?.id === id && (
+            <Tabs.TabPane
+              key="note"
+              tab={
+                <Statistic
+                  title={
+                    <span
+                      className={`font-bold text-[16px] ${
+                        selected === 'note' ? 'text-caak-black' : 'text-caak-darkGray'
+                      }`}
+                    >
+                      Ноорог
+                    </span>
+                  }
+                  // value={saved_articles.length}
+                  valueStyle={{
+                    backgroundColor: '#BBBEBE',
+                    paddingInline: 6,
+                    fontSize: 14,
+                    height: 20,
+                    color: 'white',
+                    borderRadius: 4,
+                    fontWeight: 'bold',
+                  }}
+                  style={{ flexDirection: 'row', gap: 8 }}
+                />
+              }
+            >
+              <div className="max-w-[1310px] w-full flex flex-wrap mt-[50px] justify-center xl:justify-start gap-x-[22px] gap-y-[40px] px-[32px] sm:px-0 border-t">
+                {/* {saved_articles.map((post, index) => (
+                  <Col className="w-full sm:w-[422px]" key={index}>
+                    <PostCard removeSaved isMobile={isMobile} post={post} />
+                  </Col>
+                ))} */}
               </div>
             </Tabs.TabPane>
           )}

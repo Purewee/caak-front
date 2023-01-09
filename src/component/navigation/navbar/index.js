@@ -268,7 +268,7 @@ export default function NavbarNew() {
               <span className="icon-fi-rs-tw text-[22px]" />
               <span className="icon-fi-rs-yt text-[22px]" />
             </div>
-            <p className="text-[#555555] text-[15px] mt-[30px] text-center">©2022 “Саак Холдинг” ХХК</p>
+            <p className="text-[#555555] text-[15px] mt-[30px] text-center">©2023 “Саак Холдинг” ХХК</p>
           </div>
         )}
         {sideMenuOpen && <SideMenu setSideMenuOpen={setSideMenuOpen} />}
@@ -362,7 +362,7 @@ export default function NavbarNew() {
             </div>
             <div
               onClick={() => {
-                navigate('/help', { state: 1 });
+                navigate('/help/1');
                 setMobileSideMenu(false);
               }}
               className="flex flex-row items-center ml-[24px] mt-[24px]"
@@ -372,7 +372,7 @@ export default function NavbarNew() {
             </div>
             <div
               onClick={() => {
-                navigate('/help', { state: 2 });
+                navigate('/help/2');
                 setMobileSideMenu(false);
               }}
               className="flex flex-row items-center ml-[24px] mt-[24px]"
@@ -383,7 +383,7 @@ export default function NavbarNew() {
             <div className="w-full border-t border-b mt-[30px] py-[25px] flex flex-col gap-[24px] ml-[24px]">
               <div
                 onClick={() => {
-                  navigate('/help', { state: 1 });
+                  navigate('/help/1');
                   setMobileSideMenu(false);
                 }}
                 className="flex flex-row items-center"
@@ -393,7 +393,7 @@ export default function NavbarNew() {
               </div>
               <div
                 onClick={() => {
-                  navigate('/help', { state: 1 });
+                  navigate('/help/1');
                   setMobileSideMenu(false);
                 }}
                 className="flex flex-row items-center"

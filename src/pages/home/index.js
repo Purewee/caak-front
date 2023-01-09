@@ -171,7 +171,7 @@ export default function Home() {
         </div>
         {selected === 'recent' && (
           <div className="md:px-[30px] w-full flex justify-center px-[16px] sm:px-0">
-            <Story />
+            <Story home />
           </div>
         )}
         <StickyWrapper

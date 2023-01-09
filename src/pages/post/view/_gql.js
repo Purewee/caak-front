@@ -37,6 +37,7 @@ export const ARTICLE = gql`
         name
       }
       author {
+        avatar
         id
         firstName
         lastName
@@ -220,6 +221,8 @@ export const USER = gql`
             }
             author {
               name: firstName
+              avatar
+              id
             }
           }
         }

@@ -115,7 +115,7 @@ export default function SideMenu({ setSideMenuOpen }) {
             </a>
             <div
                 onClick={() => {
-                navigate('/help', { state: 1 });
+                navigate('/help/1');
                 setSideMenuOpen(false);
                 }}
                 className="mt-[40px] flex flex-row text-caak-black hover:text-caak-darkGray items-center cursor-pointer"
@@ -125,7 +125,7 @@ export default function SideMenu({ setSideMenuOpen }) {
             </div>
             <div
                 onClick={() => {
-                navigate('/help', { state: 2 });
+                navigate('/help/2');
                 setSideMenuOpen(false);
                 }}
                 className="mt-[40px] flex flex-row text-caak-black hover:text-caak-darkGray items-center cursor-pointer"
@@ -139,7 +139,7 @@ export default function SideMenu({ setSideMenuOpen }) {
                 <span className="icon-fi-rs-tw text-[22px]" />
                 <span className="icon-fi-rs-yt text-[22px]" />
             </div>
-            <p className="text-[#555555] text-[15px] mt-[30px] text-center">©2022 “Саак Холдинг” ХХК</p>
+            <p className="text-[#555555] text-[15px] mt-[30px] text-center">©2023 “Саак Холдинг” ХХК</p>
         </div>
     )
 }
