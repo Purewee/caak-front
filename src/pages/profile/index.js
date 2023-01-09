@@ -142,7 +142,7 @@ export default function Profile() {
                     className="leading-[18px]"
                     title={
                       <p className="cursor-pointer" onClick={() => setFollowsOpen(true)}>
-                        дагасан
+                        дагаж буй
                       </p>
                     }
                     value={user?.follows?.length || 0}
@@ -198,10 +198,10 @@ export default function Profile() {
           </div>
         </div>
         <Tabs
-          defaultActiveKey={location.state === 'saved' ? 'saved' : 'posts'}
+          defaultActiveKey={location.state === 'saved' ? 'saved' : id === loggedUser?.id ? 'history' : 'posts'}
           onChange={(e) => setSelected(e)}
           tabBarStyle={{ borderBottom: '1px solid #EFEEEF' }}
-          className="mb-[100px] font-condensed w-full border-t border-1"
+          className="mb-[120px] font-condensed w-full border-t border-1"
         >
           {loggedUser?.role !== 'member' && (
             <Tabs.TabPane
@@ -293,6 +293,43 @@ export default function Profile() {
               </div>
             </Tabs.TabPane>
           )}
+          {loggedUser?.id === id && (
+            <Tabs.TabPane
+              key="note"
+              tab={
+                <Statistic
+                  title={
+                    <span
+                      className={`font-bold text-[16px] ${
+                        selected === 'note' ? 'text-caak-black' : 'text-caak-darkGray'
+                      }`}
+                    >
+                      НООРОГ
+                    </span>
+                  }
+                  // value={saved_articles.length}
+                  valueStyle={{
+                    backgroundColor: '#BBBEBE',
+                    paddingInline: 6,
+                    fontSize: 14,
+                    height: 20,
+                    color: 'white',
+                    borderRadius: 4,
+                    fontWeight: 'bold',
+                  }}
+                  style={{ flexDirection: 'row', gap: 8 }}
+                />
+              }
+            >
+              <div className="max-w-[1310px] w-full flex flex-wrap mt-[50px] justify-center xl:justify-start gap-x-[22px] gap-y-[40px] px-[32px] sm:px-0 border-t">
+                {/* {saved_articles.map((post, index) => (
+                  <Col className="w-full sm:w-[422px]" key={index}>
+                    <PostCard removeSaved isMobile={isMobile} post={post} />
+                  </Col>
+                ))} */}
+              </div>
+            </Tabs.TabPane>
+          )}
           {id === loggedUser?.id && (
             <Tabs.TabPane
               key="saved"
@@ -327,43 +364,6 @@ export default function Profile() {
                     <PostCard removeSaved isMobile={isMobile} post={post} />
                   </Col>
                 ))}
-              </div>
-            </Tabs.TabPane>
-          )}
-          {loggedUser?.id === id && (
-            <Tabs.TabPane
-              key="note"
-              tab={
-                <Statistic
-                  title={
-                    <span
-                      className={`font-bold text-[16px] ${
-                        selected === 'note' ? 'text-caak-black' : 'text-caak-darkGray'
-                      }`}
-                    >
-                      Ноорог
-                    </span>
-                  }
-                  // value={saved_articles.length}
-                  valueStyle={{
-                    backgroundColor: '#BBBEBE',
-                    paddingInline: 6,
-                    fontSize: 14,
-                    height: 20,
-                    color: 'white',
-                    borderRadius: 4,
-                    fontWeight: 'bold',
-                  }}
-                  style={{ flexDirection: 'row', gap: 8 }}
-                />
-              }
-            >
-              <div className="max-w-[1310px] w-full flex flex-wrap mt-[50px] justify-center xl:justify-start gap-x-[22px] gap-y-[40px] px-[32px] sm:px-0 border-t">
-                {/* {saved_articles.map((post, index) => (
-                  <Col className="w-full sm:w-[422px]" key={index}>
-                    <PostCard removeSaved isMobile={isMobile} post={post} />
-                  </Col>
-                ))} */}
               </div>
             </Tabs.TabPane>
           )}
