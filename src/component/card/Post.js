@@ -109,14 +109,23 @@ export default function PostCard({ isMobile, post, removeSaved, asd, ...rest }) 
         <div className={`flex items-center w-full justify-between ${sponsored && 'sm:pl-[20px] sm:pr-[16px]'}`}>
           <div className={`flex flex-row items-center ${sponsored && 'px-[13px] sm:px-0'}`}>
             <div className="flex flex-row items-center">
-              <Link to={`/channel/${post.source?.id}`} className="flex flex-row items-center">
-                <Avatar className={`w-[22px] h-[22px]`} src={imagePath(post.source?.icon)} />
+              <Link to={`/profile/${post.author?.id}`} className="flex flex-row items-center">
+                {/* <Avatar className={`w-[22px] h-[22px]`} src={imagePath(post.author?.avatar)} /> */}
+                {post?.author?.avatar ? (
+                  <Avatar className="w-[22px] h-[22px]" src={imagePath(post.author?.avatar)} />
+                ) : (
+                  post?.author?.name && (
+                    <Avatar className="w-[22px] h-[22px] flex items-center justify-center font-medium bg-[#257CEE19] text-[#257CEE]">
+                      {(post?.author?.firstName || post?.author?.name)[0] || null}
+                    </Avatar>
+                  )
+                )}
                 <MetaTag
-                  className={`ml-[6px] text-[14px] leading-[16px] font-roboto ${
+                  className={`ml-[6px] sm:hidden text-[14px] leading-[16px] font-roboto ${
                     sponsored ? 'text-white' : 'text-[#555555]'
                   }`}
                 >
-                  {post?.source?.name}
+                  {post?.author?.name}
                 </MetaTag>
               </Link>
               {!sponsored && (
@@ -128,18 +137,18 @@ export default function PostCard({ isMobile, post, removeSaved, asd, ...rest }) 
                 </div>
               )}
             </div>
-            {post.author?.name !== ' ' && (
+            {/* {post.author?.name !== ' ' && (
               <span
                 className={`h-[18px] hidden items-center sm:flex ${sponsored ? 'text-white' : 'sm:text-[#555555]'}`}
               >
                 &nbsp;&#8226;&nbsp;
               </span>
-            )}
+            )} */}
             <Link
               className={`hidden sm:block leading-[16px] ${sponsored ? 'text-white' : 'sm:text-[#555555]'}`}
               to={`/profile/${post.author?.id}`}
             >
-              <MetaTag className={`ml-0 font-roboto ${sponsored && 'text-white'}`}>{post.author?.name}</MetaTag>
+              <MetaTag className={`ml-[6px] font-roboto ${sponsored && 'text-white'}`}>{post.author?.name}</MetaTag>
             </Link>
           </div>
           <div className="flex flex-row items-center">

@@ -53,7 +53,7 @@ export class ESService {
     }).then(convertHits);
   }
 
-  stories(page = 0, size = 10) {
+  stories(page = 0, size = 20) {
     return this.post({
       query: {
         bool: {

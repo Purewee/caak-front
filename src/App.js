@@ -197,7 +197,7 @@ function App() {
                     }
                   />
                   <Route
-                    path="/help"
+                    path="/help/:id"
                     element={
                       <ProtectedRoute>
                         <Help />
