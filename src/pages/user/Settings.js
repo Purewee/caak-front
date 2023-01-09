@@ -102,9 +102,9 @@ const FOLLOW_TAG = gql`
 export default function Settings() {
   const context = useContext(AppContext);
   const { data, loading, refetch } = useQuery(ME);
-  const { isAuth } = useAuth();
+  const { isAuth, openModal } = useAuth();
   const [avatar, setAvatar] = useState();
-  const [openModal, setOpenModal] = useState();
+  const [isOpenModal, setOpenModal] = useState(false);
   const [openSource, setOpenSource] = useState();
   const [openTags, setOpenTags] = useState();
   const [selected, setSelected] = useState('posts');
@@ -551,7 +551,7 @@ export default function Settings() {
                       Таг нэмэх
                     </Button>
                   )} */}
-                  {openModal && <AddCategoriesModal toggle={() => setOpenModal(false)} />}
+                  {isOpenModal && <AddCategoriesModal toggle={() => setOpenModal(false)} />}
                   {openSource && <AddSourceModal toggle={() => setOpenSource(false)} />}
                   {openTags && <AddTagsModal toggle={() => setOpenTags(false)} />}
                 </div>

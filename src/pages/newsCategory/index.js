@@ -7,6 +7,7 @@ import PostCard from '../../component/card/Post';
 import { AppContext } from '../../App';
 import { useAuth } from '../../context/AuthContext';
 import NotFound from '../404';
+import StoryFeed from '../../component/story';
 
 const CATEGORY = gql`
   query GetCategory($slug: String) {
@@ -120,6 +121,9 @@ export default function Category() {
         <div className="flex mt-[10px]">
           <Statistic title="нийтлэл" value={count} className="mx-[24px] text-center" />
           <Statistic title="дагагч" value={category.followersCount} className="text-center" />
+        </div>
+        <div className="w-full flex justify-center px-[16px] sm:px-0">
+          <StoryFeed />
         </div>
         <div className="w-full flex justify-center">
           <Tabs

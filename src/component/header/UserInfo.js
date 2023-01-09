@@ -4,7 +4,7 @@ import { Popover, Badge, Button, Avatar, message, Spin } from 'antd';
 import { useAuth } from '../../context/AuthContext';
 import { FIcon } from '../icon';
 import { Link, useNavigate } from 'react-router-dom';
-import { imagePath, isAdmin } from '../../utility/Util';
+import { imagePath, isModerator } from '../../utility/Util';
 import { ME } from '../../pages/post/view/_gql';
 import { sumBy } from 'lodash';
 import ProfileModal from './ProfileModal';
@@ -62,7 +62,7 @@ export default function UserInfo({ transparent }) {
   }, [me]);
 
   if (loading) return <Spin className="text-caak-primary" />;
-  const Settings = isAdmin(me)
+  const Settings = isModerator(me)
     ? [
         { title: 'Профайл', icon: 'icon-fi-rs-user', link: `/profile/${me?.id}` },
         { title: 'Дашбоард', icon: 'icon-fi-rs-statistic', link: `/dashboard/${me?.id}` },
@@ -75,7 +75,7 @@ export default function UserInfo({ transparent }) {
 
   return (
     <div className="flex flex-row items-center">
-      {isAdmin(me) && (
+      {isModerator(me) && (
         <Button
           onClick={() => navigate('/add')}
           className={`hidden md:flex border-0`}

@@ -268,7 +268,7 @@ export default function NavbarNew() {
               <span className="icon-fi-rs-tw text-[22px]" />
               <span className="icon-fi-rs-yt text-[22px]" />
             </div>
-            <p className="text-[#555555] text-[15px] mt-[30px] text-center">©2022 “Саак Холдинг” ХХК</p>
+            <p className="text-[#555555] text-[15px] mt-[30px] text-center">©2023 “Саак Холдинг” ХХК</p>
           </div>
         )}
         {sideMenuOpen && <SideMenu setSideMenuOpen={setSideMenuOpen} />}

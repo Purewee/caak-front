@@ -5,16 +5,13 @@ import { useNavigate, useParams } from 'react-router-dom';
 import moment from 'moment';
 import { useMutation } from '@apollo/client';
 import Loader from '../../../component/loader';
-import { LazyLoadImage } from 'react-lazy-load-image-component';
-import { imagePath, parseVideoURL, isAdmin, kFormatter } from '../../../utility/Util';
-import { Wrapper, Title, BlockTitle, Paragraph, HashTag, MetaTag } from './wrapper';
+import { imagePath, isModerator, kFormatter } from '../../../utility/Util';
+import { Wrapper, Title, HashTag, MetaTag } from './wrapper';
 import Comments from './comments';
 import { ARTICLE, ME, REACTIONS } from './_gql';
-import LoveIcon from '../../../assets/images/fi-rs-react-love.png';
-import HahaIcon from '../../../assets/images/fi-rs-react-haha.svg';
 import PostSaveModal from '../../../component/modal/PostSaveModal';
 import PostShareModal from '../../../component/modal/PostShareModal';
-import { Avatar, Popover, notification, Button, Alert, Statistic, Skeleton, Popconfirm, message } from 'antd';
+import { Avatar, Popover, notification, Button, Alert, Skeleton, Popconfirm, message } from 'antd';
 import { useAuth } from '../../../context/AuthContext';
 import { useHeader } from '../../../context/HeaderContext';
 import SignInUpController from '../../../component/modal/SignInUpController';
@@ -163,7 +160,7 @@ const Post = () => {
   if (!loading && !article.id) {
     return <NotFound />;
   }
-  if (!isAdmin(me?.me) && article?.status === 'draft') {
+  if (!isModerator(me?.me) && article?.status === 'draft') {
     return <NotFound />;
   }
 
@@ -217,7 +214,7 @@ const Post = () => {
                   overlayInnerStyle={{ borderRadius: 8 }}
                   content={
                     <div className="flex flex-col gap-[15px] h-full justify-between">
-                      {isAdmin(me?.me) && (
+                      {article?.editable && (
                         <Link to={`/edit/${article.kind}/${article.id}`}>
                           <div className="flex flex-row items-center cursor-pointer">
                             <span className="text-[#555555] text-[20px] mr-[8px] w-[22px] h-[22px] flex items-center justify-center icon-fi-rs-editor-o" />
@@ -225,7 +222,7 @@ const Post = () => {
                           </div>
                         </Link>
                       )}
-                      {isAdmin(me?.me) && (
+                      {article?.editable && (
                         <Popconfirm
                           title="Энэ мэдээг үнэхээр устгах уу?"
                           onConfirm={() => {
@@ -275,10 +272,19 @@ const Post = () => {
             <Title className="text-center mt-[8px]">{article.title}</Title>
             <div className="flex flex-row justify-between items-center w-full h-[34px] mt-[21px]">
               <div className="flex flex-row items-center h-[32px]">
-                <Avatar className="w-[32px] h-[32px] rounded-full" src={imagePath(article.source?.icon)} />
+                {/* <Avatar className="w-[32px] h-[32px] rounded-full" src={imagePath(article.source?.icon)} /> */}
+                {article?.author?.avatar ? (
+                  <Avatar className="w-[32px] h-[32px]" src={imagePath(article.author?.avatar)} />
+                ) : (
+                  article?.author?.firstName && (
+                    <Avatar className="w-[32px] h-[32px] flex items-center justify-center font-medium bg-[#257CEE19] text-[#257CEE]">
+                      {(article?.author?.firstName || article?.author?.firstName)[0] || null}
+                    </Avatar>
+                  )
+                )}
                 <div className="ml-[8px] h-full flex flex-col justify-between">
-                  <Link to={`/channel/${article.source?.id}`} className="flex flex-row items-center">
-                    <p className="text-caak-black text-[14px] leading-[16px]">{article?.source?.name}</p>
+                  <Link to={`/profile/${article.author?.id}`} className="flex flex-row items-center">
+                    <p className="text-caak-black text-[14px] leading-[16px]">{article?.author?.firstName}</p>
                   </Link>
                   <div className="text-[12px] text-[#909090] flex flex-row items-center leading-[14px]">
                     <p>{moment(article.publishDate).format('YYYY.MM.DD, HH:mm')}</p>
@@ -347,7 +353,7 @@ const Post = () => {
                   className="flex flex-row items-center text-[#555555] text-[14px]"
                   size="small"
                   type="link"
-                  onClick={() => window.scrollTo({ top: reactionRef.current?.offsetTop - 380, behavior: 'smooth' })}
+                  onClick={() => reactionRef.current.scrollIntoView()}
                 >
                   {kFormatter(reactionsCount)}
                 </Button>

@@ -158,7 +158,7 @@ export default function Footer() {
             </div>
         </div>
         <div className='border-t border-[#3B3B3B] flex justify-center w-full py-[20px] md:py-[40px]'>
-            <p className='text-[#838383] text-[15px]'>©2022 “Саак Холдинг” ХХК</p>
+            <p className='text-[#838383] text-[15px]'>©2023 “Саак Холдинг” ХХК</p>
         </div>
     </div>
   )

@@ -25,6 +25,10 @@ export default function AllStories() {
     return new Date(story?.publish_date).toLocaleDateString() === yesterday.toLocaleDateString();
   });
 
+  const weekStory = stories.filter((story) => {
+    return !todayStory.includes(story) && !yesterdayStory.includes(story);
+  });
+
   const todayRef = useRef(null);
   const yesterdayRef = useRef(null);
   const weekRef = useRef(null);
@@ -90,7 +94,7 @@ export default function AllStories() {
             <div className="w-full">
                 <div className='flex flex-row items-center'>
                     <span className='icon-fi-rs-star-f text-[#FF6600] text-[20px] mr-[10px]' />
-                    <p className='font-condensed text-[26px] leading-[30px] font-bold'>ӨНӨӨДӨР</p>
+                    <p className='font-condensed text-[18px] leading-[21px] md:text-[26px] md:leading-[30px] font-bold'>ӨНӨӨДӨР</p>
                 </div>
             </div>
             <div
@@ -147,7 +151,7 @@ export default function AllStories() {
             <div className="w-full">
                 <div className='flex flex-row items-center'>
                     <span className='icon-fi-rs-time-f text-[#909090] text-[20px] mr-[10px]' />
-                    <p className='font-condensed text-[26px] leading-[30px] font-bold'>ӨЧИГДӨР</p>
+                    <p className='font-condensed text-[18px] leading-[21px] md:text-[26px] md:leading-[30px] font-bold'>ӨЧИГДӨР</p>
                 </div>
             </div>
             <div
@@ -203,7 +207,7 @@ export default function AllStories() {
             <div className="w-full">
                 <div className='flex flex-row items-center'>
                     <span className='icon-fi-rs-time-f text-[#909090] text-[20px] mr-[10px]' />
-                    <p className='font-condensed text-[26px] leading-[30px] font-bold'>ЭНЭ ДОЛОО ХОНОГ</p>
+                    <p className='font-condensed text-[18px] leading-[21px] md:text-[26px] md:leading-[30px] font-bold'>ЭНЭ ДОЛОО ХОНОГ</p>
                 </div>
             </div>
             <div
@@ -248,7 +252,7 @@ export default function AllStories() {
                     ref={weekRef}
                     className={'w-full md:h-[447px] wrapper gap-[13px] transition-all pb-[26px] md:pb-0 duration-300 mt-[14px] md:mt-[39px]'}
                 >
-                    {stories.map((item, index) => {
+                    {weekStory.map((item, index) => {
                     return <StoryItem story={item} key={index} index={index} />;
                     })}
                 </div>
