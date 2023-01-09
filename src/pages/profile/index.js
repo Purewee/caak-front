@@ -137,15 +137,17 @@ export default function Profile() {
               <div className="flex flex-row text-[#555555] gap-[23px] sm:mt-[12px] text-[15px] font-roboto text-center">
                 <Statistic className="leading-[18px]" title="нийтлэл" value={user?.articles?.totalCount || 0} />
                 <Statistic className="leading-[18px]" title="дагагчид" value={user?.followersCount || 0} />
-                <Statistic
-                  className="leading-[18px]"
-                  title={
-                    <p className="cursor-pointer" onClick={() => setFollowsOpen(true)}>
-                      дагасан
-                    </p>
-                  }
-                  value={user?.follows?.length || 0}
-                />
+                {id === me?.id && (
+                  <Statistic
+                    className="leading-[18px]"
+                    title={
+                      <p className="cursor-pointer" onClick={() => setFollowsOpen(true)}>
+                        дагасан
+                      </p>
+                    }
+                    value={user?.follows?.length || 0}
+                  />
+                )}
                 {followsOpen && <FollowsModal follows={user?.follows} toggle={() => setFollowsOpen(!followsOpen)} />}
               </div>
             </div>
@@ -328,7 +330,7 @@ export default function Profile() {
               </div>
             </Tabs.TabPane>
           )}
-          {loggedUser?.role === ('admin' || 'moderator') && (
+          {loggedUser?.id === id && (
             <Tabs.TabPane
               key="note"
               tab={
