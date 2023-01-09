@@ -51,6 +51,7 @@ type Article {
   createdAt: ISO8601DateTime
   data: JSON
   description: String
+  editable: Boolean!
   featured: Boolean!
   featuredFrom: ISO8601DateTime
   featuredTo: ISO8601DateTime
