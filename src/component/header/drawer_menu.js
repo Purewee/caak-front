@@ -155,7 +155,7 @@ export default function DrawerMenu({ isMobile }) {
         </a>
         <div
           onClick={() => {
-            navigate('/help', { state: 1 });
+            navigate('/help/1');
             setOpen(false);
           }}
           className="mt-[40px] flex flex-row text-caak-black hover:text-caak-darkGray items-center cursor-pointer pl-[40px] pr-[30px]"
@@ -165,7 +165,7 @@ export default function DrawerMenu({ isMobile }) {
         </div>
         <div
           onClick={() => {
-            navigate('/help', { state: 2 });
+            navigate('/help/2');
             setOpen(false);
           }}
           className="mt-[40px] flex flex-row text-caak-black hover:text-caak-darkGray items-center cursor-pointer pl-[40px] pr-[30px]"

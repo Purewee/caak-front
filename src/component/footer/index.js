@@ -65,9 +65,9 @@ export default function Footer() {
                     showArrow={false}
                 >
                     <div className='flex flex-col gap-[10px] justify-between items-center px-[16px] text-[15px] text-[#838383] pb-[30px]'>
-                        <p className='cursor-pointer hover:text-[#FF6600]' onClick={() => navigate("/help", { state: 2 })}>Холбоо барих</p>
-                        <p className='cursor-pointer hover:text-[#FF6600]' onClick={() => navigate("/help", { state: 1 })}>Сурталчилгаа</p>
-                        <p className='cursor-pointer hover:text-[#FF6600]' onClick={() => navigate("/help", { state: 2 })}>Контент нийлүүлэх</p>
+                        <p className='cursor-pointer hover:text-[#FF6600]' onClick={() => navigate("/help/2")}>Холбоо барих</p>
+                        <p className='cursor-pointer hover:text-[#FF6600]' onClick={() => navigate("/help/1")}>Сурталчилгаа</p>
+                        <p className='cursor-pointer hover:text-[#FF6600]' onClick={() => navigate("/help/2")}>Контент нийлүүлэх</p>
                     </div>
                 </Collapse.Panel>
                 <Collapse.Panel
@@ -81,9 +81,9 @@ export default function Footer() {
                     showArrow={false}
                 >
                     <div className='flex flex-col gap-[10px] px-[16px] justify-between items-center text-[15px] text-[#838383] pb-[30px]'>
-                        <p className='cursor-pointer hover:text-[#FF6600]' onClick={() => navigate("/help", { state: 0 })}>Бидний тухай</p>
-                        <p className='cursor-pointer hover:text-[#FF6600]' onClick={() => navigate("/help", { state: 4 })}>Үйлчилгээний нөхцөл</p>
-                        <p className='cursor-pointer hover:text-[#FF6600]' onClick={() => navigate("/help", {  state: 3 })}>Нууцлалын бодлого</p>
+                        <p className='cursor-pointer hover:text-[#FF6600]' onClick={() => navigate("/help/0")}>Бидний тухай</p>
+                        <p className='cursor-pointer hover:text-[#FF6600]' onClick={() => navigate("/help/4")}>Үйлчилгээний нөхцөл</p>
+                        <p className='cursor-pointer hover:text-[#FF6600]' onClick={() => navigate("/help/3")}>Нууцлалын бодлого</p>
                     </div>
                 </Collapse.Panel>
                 <div className='flex flex-row gap-[15px] justify-center text-[15px] text-white py-[20px]'>

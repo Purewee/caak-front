@@ -195,6 +195,7 @@ export const USER = gql`
       email
       data
       avatar
+      role
       status
       following
       followersCount
