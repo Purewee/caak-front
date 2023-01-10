@@ -72,7 +72,9 @@ export default function Category() {
   return (
     <div className="flex justify-center pt-[20px] md:pt-[51px] pb-[100px] px-[16px] md:px-[0px]">
       <div className="max-w-[1310px] w-full flex flex-col items-center relative">
-        <p className="font-condensed font-bold text-[38px] leading-[44px] uppercase">#{category.name}</p>
+        <p className="font-condensed text-center font-bold text-[30px] leading-[36px] sm:text-[38px] sm:leading-[44px] uppercase">
+          #{category.name}
+        </p>
         <div className="flex flex-row items-center sm:absolute mt-[20px] sm:mt-0 top-0 right-0">
           {category.following ? (
             <button

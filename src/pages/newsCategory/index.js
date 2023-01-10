@@ -77,7 +77,9 @@ export default function Category() {
       <div className="max-w-[1310px] w-full flex flex-col items-center">
         <p className="uppercase text-caak-primary font-medium text-[13px] leading-[15px]">Мэдээний төрөл</p>
         <div className="flex flex-col sm:flex-row items-center justify-center relative w-full mt-[10px]">
-          <p className="text-[38px] font-condensed font-bold leading-[44px] uppercase">{category.name}</p>
+          <p className="text-[33px] leading-[39px] sm:text-[38px] font-condensed font-bold sm:leading-[44px] uppercase">
+            {category.name}
+          </p>
           <div className="flex flex-row items-center mt-[20px] sm:mt-0 sm:absolute top-0 right-0">
             {category.following ? (
               <button
@@ -122,7 +124,7 @@ export default function Category() {
           <Statistic title="нийтлэл" value={count} className="mx-[24px] text-center" />
           <Statistic title="дагагч" value={category.followersCount} className="text-center" />
         </div>
-        <div className="w-full flex justify-center px-[16px] sm:px-0">
+        <div className="w-full flex justify-center">
           <StoryFeed />
         </div>
         <div className="w-full flex justify-center">

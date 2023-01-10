@@ -274,12 +274,16 @@ const Post = () => {
               <div className="flex flex-row items-center h-[32px]">
                 {/* <Avatar className="w-[32px] h-[32px] rounded-full" src={imagePath(article.source?.icon)} /> */}
                 {article?.author?.avatar ? (
-                  <Avatar className="w-[32px] h-[32px]" src={imagePath(article.author?.avatar)} />
+                  <Link to={`/profile/${article.author?.id}`}>
+                    <Avatar className="w-[32px] h-[32px]" src={imagePath(article.author?.avatar)} />
+                  </Link>
                 ) : (
                   article?.author?.firstName && (
-                    <Avatar className="w-[32px] h-[32px] flex items-center justify-center font-medium bg-[#257CEE19] text-[#257CEE]">
-                      {(article?.author?.firstName || article?.author?.firstName)[0] || null}
-                    </Avatar>
+                    <Link to={`/profile/${article.author?.id}`}>
+                      <Avatar className="w-[32px] h-[32px] flex items-center justify-center font-medium bg-[#257CEE19] text-[#257CEE]">
+                        {(article?.author?.firstName || article?.author?.firstName)[0] || null}
+                      </Avatar>
+                    </Link>
                   )
                 )}
                 <div className="ml-[8px] h-full flex flex-col justify-between">

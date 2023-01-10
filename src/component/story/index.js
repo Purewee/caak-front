@@ -52,7 +52,7 @@ const StoryFeed = ({ home }) => {
         </div>
       ) : (
         <p className="text-[18px] text-[#111111] leading-[21px]">
-          <span className="font-bold">Стори</span> мэдээнүүд
+          <span className="font-bold">СТОРИ</span> МЭДЭЭ
         </p>
       )}
       <div
