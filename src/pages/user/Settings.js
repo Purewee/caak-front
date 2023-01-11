@@ -132,7 +132,7 @@ export default function Settings() {
             <Tabs
               defaultActiveKey={'posts'}
               onChange={(e) => setSelected(e)}
-              tabPosition={!isMobile && 'left'}
+              tabPosition={isMobile ? 'top' : 'left'}
               type="card"
               className="mt-[25px]"
               tabBarStyle={{
@@ -140,10 +140,9 @@ export default function Settings() {
                 width: isMobile ? '100%' : 290,
                 boxShadow: '0px 1px 2px #00000010',
                 backgroundColor: 'white',
-                padding: 10,
+                padding: isMobile ? 0 : 10,
                 border: '1px solid #EFEEEF',
-                display: 'flex',
-                flexDirection: 'column',
+                display: isMobile ? 'block' : 'flex',
                 borderRadius: 4,
               }}
             >
@@ -265,7 +264,7 @@ export default function Settings() {
                 }
               >
                 <div className="flex flex-col items-end">
-                  <p className="text-caak-black font-medium text-[22px] leading-[24px] mb-[20px] w-full">
+                  <p className="text-caak-black font-medium text-[22px] leading-[24px] mb-[20px] mt-[20px] sm:mt-0 w-full">
                     Миний дагасан
                   </p>
                   <Form
