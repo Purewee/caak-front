@@ -9,7 +9,7 @@ import { useAuth } from '../../context/AuthContext';
 import { Link } from 'react-router-dom';
 import { AppContext } from '../../App';
 import useMediaQuery from '../../component/navigation/useMediaQuery';
-import { imagePath } from '../../utility/Util';
+import { imagePath, isModerator } from '../../utility/Util';
 import { useLocation } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import FollowsModal from '../../component/modal/FollowsModal';
@@ -66,12 +66,13 @@ export default function Profile() {
   const [loading, setLoading] = useState(false);
   const { data, loading: fetching, refetch } = useQuery(USER, { variables: { id } });
   const user = data?.user || {};
+  console.log(isModerator(user));
   const { data: me } = useQuery(ME);
   const loggedUser = me?.me;
   const { isAuth, openModal } = useAuth();
   const saved_articles = user?.recipes?.map((x) => x?.articles.nodes).flat() || [];
   const [follow, { loading: saving }] = useMutation(FOLLOW, { variables: { id } });
-  const { data: historyData, loading: historyLoading } = useQuery(HISTORY, { skip: selected !== 'history' });
+  const { data: historyData, loading: historyLoading } = useQuery(HISTORY);
   const histories = historyData?.impressions?.edges?.map((x) => x.node) || [];
   const navigate = useNavigate();
 
@@ -133,13 +134,15 @@ export default function Profile() {
             )}
             <div className="ml-[24px] max-h-[82px]">
               <p className="font-condensed font-bold text-[30px] leading-[35px]">{user?.firstName}</p>
-              <p className="md:mt-[12px] text-[15px] text-[#555555] leading-[18px] max-w-[600px]">{user?.data?.bio}</p>
-              <div className="flex flex-row text-[#555555] gap-[23px] sm:mt-[12px] text-[15px] font-roboto text-center">
-                {user?.role !== 'member' && (
+              <p className="mt-[8px] md:mt-[12px] text-[15px] text-[#555555] leading-[18px] max-w-[600px]">
+                {user?.data?.bio}
+              </p>
+              <div className="flex flex-row text-[#555555] gap-[23px] mt-[8px] sm:mt-[12px] text-[15px] font-roboto text-center">
+                {isModerator(user) && (
                   <Statistic className="leading-[18px]" title="нийтлэл" value={user?.articles?.totalCount || 0} />
                 )}
                 <Statistic className="leading-[18px]" title="дагагчид" value={user?.followersCount || 0} />
-                {id === me?.id && (
+                {id === loggedUser?.id && (
                   <Statistic
                     className="leading-[18px]"
                     title={
@@ -205,7 +208,7 @@ export default function Profile() {
           tabBarStyle={{ borderBottom: '1px solid #EFEEEF' }}
           className="mb-[120px] font-condensed w-full border-t border-1"
         >
-          {loggedUser?.role !== 'member' && (
+          {isModerator(user) && (
             <Tabs.TabPane
               key="posts"
               tab={
@@ -284,7 +287,7 @@ export default function Profile() {
               }
             >
               {historyLoading && <Skeleton className="p-2" />}
-              <div className="max-w-[1310px] w-full flex flex-wrap mt-[50px] justify-center xl:justify-start gap-x-[22px] gap-y-[40px] px-[32px] sm:px-0 border-t">
+              <div className="max-w-[1310px] w-full flex flex-wrap mt-[50px] justify-center xl:justify-start gap-x-[22px] gap-y-[40px] border-t">
                 {histories.map((x) => {
                   return (
                     <Col className="w-full sm:w-[422px]" key={x.id}>
@@ -295,7 +298,7 @@ export default function Profile() {
               </div>
             </Tabs.TabPane>
           )}
-          {loggedUser?.id === id && (
+          {isModerator(user) && user?.id === loggedUser?.id && (
             <Tabs.TabPane
               key="note"
               tab={
@@ -323,7 +326,7 @@ export default function Profile() {
                 />
               }
             >
-              <div className="max-w-[1310px] w-full flex flex-wrap mt-[50px] justify-center xl:justify-start gap-x-[22px] gap-y-[40px] px-[32px] sm:px-0 border-t">
+              <div className="max-w-[1310px] w-full flex flex-wrap mt-[50px] justify-center xl:justify-start gap-x-[22px] gap-y-[40px] border-t">
                 {/* {saved_articles.map((post, index) => (
                   <Col className="w-full sm:w-[422px]" key={index}>
                     <PostCard removeSaved isMobile={isMobile} post={post} />
@@ -360,7 +363,7 @@ export default function Profile() {
                 />
               }
             >
-              <div className="max-w-[1310px] w-full flex flex-wrap mt-[50px] justify-center xl:justify-start gap-x-[22px] gap-y-[40px] px-[32px] sm:px-0 border-t">
+              <div className="max-w-[1310px] w-full flex flex-wrap mt-[50px] justify-center xl:justify-start gap-x-[22px] gap-y-[40px] border-t">
                 {saved_articles.map((post, index) => (
                   <Col className="w-full sm:w-[422px]" key={index}>
                     <PostCard removeSaved isMobile={isMobile} post={post} />

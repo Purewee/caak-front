@@ -132,7 +132,7 @@ export default function Settings() {
             <Tabs
               defaultActiveKey={'posts'}
               onChange={(e) => setSelected(e)}
-              tabPosition={isMobile ? 'top' : 'left'}
+              tabPosition={!isMobile && 'left'}
               type="card"
               className="mt-[25px]"
               tabBarStyle={{
@@ -566,7 +566,7 @@ export default function Settings() {
                       }`}
                     />
                     <p
-                      className={`text-[16px] h-[32px] ${
+                      className={`text-[16px] ${
                         selected === 'history' ? 'text-caak-primary font-medium' : 'text-caak-black'
                       }`}
                     >

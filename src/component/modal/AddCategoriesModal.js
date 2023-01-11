@@ -72,7 +72,7 @@ export default function AddCategoriesModal({ toggle, image }) {
       okType="primary"
       confirmLoading={loading}
     >
-      <div className="flex flex-wrap justify-center px-[62px] gap-[14px] pt-[20px] pb-[30px]">
+      <div className="flex flex-wrap justify-center px-[20px] sm:px-[62px] gap-[14px] pt-[20px] pb-[30px]">
         {filtered.map((x, index) => {
           if (index < 2) {
             return x.parent === null ? (
