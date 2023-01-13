@@ -9,7 +9,7 @@ import { useAuth } from '../../context/AuthContext';
 import { Link } from 'react-router-dom';
 import { AppContext } from '../../App';
 import useMediaQuery from '../../component/navigation/useMediaQuery';
-import { imagePath, isModerator } from '../../utility/Util';
+import { imagePath, isModerator, kFormatter } from '../../utility/Util';
 import { useLocation } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import FollowsModal from '../../component/modal/FollowsModal';
@@ -66,7 +66,6 @@ export default function Profile() {
   const [loading, setLoading] = useState(false);
   const { data, loading: fetching, refetch } = useQuery(USER, { variables: { id } });
   const user = data?.user || {};
-  console.log(isModerator(user));
   const { data: me } = useQuery(ME);
   const loggedUser = me?.me;
   const { isAuth, openModal } = useAuth();
@@ -132,14 +131,18 @@ export default function Profile() {
                 </div>
               )
             )}
-            <div className="ml-[24px] max-h-[82px]">
+            <div className="ml-[24px] max-h-[90px]">
               <p className="font-condensed font-bold text-[30px] leading-[35px]">{user?.firstName}</p>
               <p className="mt-[8px] md:mt-[12px] text-[15px] text-[#555555] leading-[18px] max-w-[600px]">
                 {user?.data?.bio}
               </p>
-              <div className="flex flex-row text-[#555555] gap-[23px] mt-[8px] sm:mt-[12px] text-[15px] font-roboto text-center">
+              <div className="flex flex-row text-[#555555] gap-[8px] sm:gap-[23px] mt-[8px] sm:mt-[12px] text-[15px] font-roboto text-center">
                 {isModerator(user) && (
-                  <Statistic className="leading-[18px]" title="нийтлэл" value={user?.articles?.totalCount || 0} />
+                  <Statistic
+                    className="leading-[18px]"
+                    title="нийтлэл"
+                    value={kFormatter(user?.articles?.totalCount || 0)}
+                  />
                 )}
                 <Statistic className="leading-[18px]" title="дагагчид" value={user?.followersCount || 0} />
                 {id === loggedUser?.id && (
@@ -147,7 +150,7 @@ export default function Profile() {
                     className="leading-[18px]"
                     title={
                       <p className="cursor-pointer" onClick={() => setFollowsOpen(true)}>
-                        дагаж буй
+                        дагасан
                       </p>
                     }
                     value={user?.follows?.length || 0}

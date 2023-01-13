@@ -45,9 +45,17 @@ export default function Story() {
           event.preventDefault();
           navigate(`/story/${story.nextStory.id}`);
         }
+        if (current + 1 === story.length) {
+          event.preventDefault();
+          navigate(`/story/${story.nextStory.id}`);
+        }
       }
       if (event.key === 'ArrowRight') {
         if (current === stories?.length - 1 && story?.prevStory?.id) {
+          event.preventDefault();
+          navigate(`/story/${story.prevStory.id}`);
+        }
+        if (current === 0) {
           event.preventDefault();
           navigate(`/story/${story.prevStory.id}`);
         }
@@ -172,12 +180,14 @@ function ImageStory({ block, story }) {
                     </p>
                   ))}
                 </div>
-                <Link to={block?.data?.url}>
-                  <span
-                    className="truncate-2 text-white condMedium text-[26px] sm:text-[34px] leading-[30px] sm:leading-[40px]"
-                    dangerouslySetInnerHTML={{ __html: block?.content }}
-                  />
-                </Link>
+                {block?.content && (
+                  <Link to={block?.data?.url}>
+                    <span
+                      className="truncate-2 text-white condMedium text-[26px] sm:text-[34px] leading-[30px] sm:leading-[40px]"
+                      dangerouslySetInnerHTML={{ __html: block?.content }}
+                    />
+                  </Link>
+                )}
                 <span className="text-white opacity-80 text-[14px] leading-[16px] mt-[10px]">
                   {moment(story.publishDate).utc('Asia/Mongolia').format('YYYY.MM.DD, HH:MM')}
                 </span>
@@ -199,7 +209,7 @@ function ImageStory({ block, story }) {
                 className="text-center w-full text-white opacity-80 leading-[32px] text-[28px] sm:text-[32px] font-condensed tracking-[0.48px] font-normal mb-[16px]"
                 ellipsis={ellipsis ? { rows: 3, expandable: true, symbol: 'дэлгэрэнгүй' } : null}
               >
-                <span dangerouslySetInnerHTML={{ __html: block.content || null }} />
+                <span dangerouslySetInnerHTML={{ __html: block?.content || null }} />
               </Paragraph>
               <div className="h-[4px] w-[60px] bg-caak-primary" />
             </div>
@@ -269,7 +279,7 @@ function VideoStory({ block, story, action }) {
             className="text-center w-full text-white leading-[32px] text-[28px] sm:text-[32px] font-condensed tracking-[0.48px] font-normal mb-[16px]"
             ellipsis={ellipsis ? { rows: 3, expandable: true, symbol: 'дэлгэрэнгүй' } : null}
           >
-            <span dangerouslySetInnerHTML={{ __html: block.content || null }} />
+            <span dangerouslySetInnerHTML={{ __html: block?.content || null }} />
           </Paragraph>
           {block?.data?.url && (
             <a href={block.data.url} target="_blank">
