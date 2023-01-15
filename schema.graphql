@@ -51,6 +51,7 @@ type Article {
   createdAt: ISO8601DateTime
   data: JSON
   description: String
+  editable: Boolean!
   featured: Boolean!
   featuredFrom: ISO8601DateTime
   featuredTo: ISO8601DateTime
@@ -146,6 +147,7 @@ type Category {
     after: String,
     "Returns the elements in the list that come before the specified cursor."
     before: String,
+    filter: ArticleFilter,
     "Returns the first _n_ elements from the list."
     first: Int,
     "Returns the last _n_ elements from the list."
@@ -460,6 +462,7 @@ type Query {
     after: String,
     "Returns the elements in the list that come before the specified cursor."
     before: String,
+    filter: ArticleFilter,
     "Returns the first _n_ elements from the list."
     first: Int,
     "Returns the last _n_ elements from the list."
@@ -469,6 +472,7 @@ type Query {
     "Sorting functionality"
     sort: SortFilter
   ): ArticleConnection
+  banner(id: ID!, impression: Boolean): Banner!
   categories(
     "Returns the elements in the list that come after the specified cursor."
     after: String,
@@ -573,6 +577,7 @@ type Recipe {
     after: String,
     "Returns the elements in the list that come before the specified cursor."
     before: String,
+    filter: ArticleFilter,
     "Returns the first _n_ elements from the list."
     first: Int,
     "Returns the last _n_ elements from the list."
@@ -608,6 +613,7 @@ type Source {
     after: String,
     "Returns the elements in the list that come before the specified cursor."
     before: String,
+    filter: ArticleFilter,
     "Returns the first _n_ elements from the list."
     first: Int,
     "Returns the last _n_ elements from the list."
@@ -669,6 +675,7 @@ type Tag {
     after: String,
     "Returns the elements in the list that come before the specified cursor."
     before: String,
+    filter: ArticleFilter,
     "Returns the first _n_ elements from the list."
     first: Int,
     "Returns the last _n_ elements from the list."
@@ -729,6 +736,7 @@ type User {
     after: String,
     "Returns the elements in the list that come before the specified cursor."
     before: String,
+    filter: ArticleFilter,
     "Returns the first _n_ elements from the list."
     first: Int,
     "Returns the last _n_ elements from the list."
@@ -807,6 +815,19 @@ scalar ISO8601DateTime
 scalar JSON
 
 scalar Upload
+
+"Article filter"
+input ArticleFilter {
+  authorId: IntFilter
+  createdAt: DateFilter
+  id: IDFilter
+  kind: StringFilter
+  publishDate: DateFilter
+  sourceId: IntFilter
+  status: StringFilter
+  title: StringFilter
+  updatedAt: DateFilter
+}
 
 input BlockInput {
   _destroy: Boolean

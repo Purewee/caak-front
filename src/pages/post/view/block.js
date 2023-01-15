@@ -69,7 +69,7 @@ export default function PostBlock({ b, idx }) {
       )}
       {b.kind === 'video' && (
         <div key={b.id} className="flex flex-col md:items-center my-[26px] md:mb-[50px] w-full">
-          {b.title && <BlockTitle>{`${numbering ? `${b.position}. ` : ''}${b.title}`}</BlockTitle>}
+          {b.title && <BlockTitle>{`${!!idx ? `${idx}. ` : ''}${b.title}`}</BlockTitle>}
           <div className="video-wrapper">
             <ReactPlayer
               // url={`https://www.youtube.com/embed/${parseVideoURL(b.data.url).id}`}

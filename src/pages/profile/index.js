@@ -13,6 +13,7 @@ import { imagePath, isModerator, kFormatter } from '../../utility/Util';
 import { useLocation } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import FollowsModal from '../../component/modal/FollowsModal';
+import Drafts from './drafts';
 
 const FOLLOW = gql`
   mutation Follow($id: ID!) {
@@ -303,13 +304,13 @@ export default function Profile() {
           )}
           {isModerator(user) && user?.id === loggedUser?.id && (
             <Tabs.TabPane
-              key="note"
+              key="draft"
               tab={
                 <Statistic
                   title={
                     <span
                       className={`font-bold text-[16px] ${
-                        selected === 'note' ? 'text-caak-black' : 'text-caak-darkGray'
+                        selected === 'draft' ? 'text-caak-black' : 'text-caak-darkGray'
                       }`}
                     >
                       НООРОГ
@@ -329,13 +330,7 @@ export default function Profile() {
                 />
               }
             >
-              <div className="max-w-[1310px] w-full flex flex-wrap mt-[50px] justify-center xl:justify-start gap-x-[22px] gap-y-[40px] border-t">
-                {/* {saved_articles.map((post, index) => (
-                  <Col className="w-full sm:w-[422px]" key={index}>
-                    <PostCard removeSaved isMobile={isMobile} post={post} />
-                  </Col>
-                ))} */}
-              </div>
+              <Drafts userId={user.id} />
             </Tabs.TabPane>
           )}
           {id === loggedUser?.id && (
