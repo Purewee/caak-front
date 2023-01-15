@@ -6,7 +6,6 @@ import { useParams } from 'react-router-dom';
 import PostCard from '../../component/card/Post';
 import { AppContext } from '../../App';
 import { useAuth } from '../../context/AuthContext';
-import NotFound from '../404';
 import StoryFeed from '../../component/story';
 
 const CATEGORY = gql`
@@ -124,9 +123,11 @@ export default function Category() {
           <Statistic title="нийтлэл" value={count} className="mx-[24px] text-center" />
           <Statistic title="дагагч" value={category.followersCount} className="text-center" />
         </div>
-        <div className="w-full flex justify-center">
-          <StoryFeed />
-        </div>
+        {category.slug && (
+          <div className="w-full flex justify-center">
+            <StoryFeed slug={category.slug} />
+          </div>
+        )}
         <div className="w-full flex justify-center">
           <Tabs
             defaultActiveKey="recent"

@@ -262,6 +262,18 @@ const Post = () => {
         <div className="flex flex-col max-w-[960px] w-full items-center">
           <Banner position="a1" />
           <div className="pt-0 md:pt-[40px] flex flex-col items-center max-w-[760px] w-full font-roboto md:mx-[100px]">
+            {article?.status === 'draft' && (
+              <Alert
+                type="warning"
+                description="Энэ мэдээ ноорог болсон байна!"
+                showIcon={true}
+                action={
+                  <Link to={`/edit/post/${article.id}`}>
+                    <Button size="small">Мэдээг засах</Button>
+                  </Link>
+                }
+              />
+            )}
             <div className="flex flex-row gap-[15px] mt-[20px]">
               {article.categories?.nodes?.map((x) => (
                 <Link key={x.id} to={`/category/${x.slug}`}>

@@ -3,16 +3,22 @@ import StoryItem from './Story';
 import { ESService } from '../../lib/esService';
 import { Link } from 'react-router-dom';
 
-const StoryFeed = ({ home }) => {
+const StoryFeed = ({ home, slug = null }) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [stories, setStories] = useState([]);
   const trendPostsRef = useRef(null);
 
   useEffect(() => {
     const es = new ESService('caak');
-    es.stories().then((res) => {
-      setStories(res);
-    });
+    if (slug) {
+      es.categoryStories(slug).then((res) => {
+        setStories(res);
+      });
+    } else {
+      es.stories().then((res) => {
+        setStories(res);
+      });
+    }
   }, []);
 
   const nextItem = () => {

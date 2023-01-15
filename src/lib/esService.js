@@ -68,6 +68,29 @@ export class ESService {
     }).then(convertHits);
   }
 
+  categoryStories(slug, page = 0, size = 20) {
+    return this.post({
+      query: {
+        bool: {
+          must: [
+            ...defaultStoryFilters,
+            {
+              nested: {
+                path: 'categories',
+                query: { term: { 'categories.slug': slug } },
+              },
+            },
+          ],
+        },
+      },
+      sort: {
+        publish_date: 'desc',
+      },
+      size: size,
+      from: page * size,
+    }).then(convertHits);
+  }
+
   boostedPosts(page = 0, size = 3) {
     return this.post({
       query: {
