@@ -103,7 +103,7 @@ export default function Settings() {
   const context = useContext(AppContext);
   const { data, loading, refetch } = useQuery(ME);
   const { isAuth, openModal } = useAuth();
-  const [avatar, setAvatar] = useState();
+  const [avatar, setAvatar] = useState(false);
   const [isOpenModal, setOpenModal] = useState(false);
   const [openSource, setOpenSource] = useState();
   const [openTags, setOpenTags] = useState();
@@ -142,7 +142,8 @@ export default function Settings() {
                 backgroundColor: 'white',
                 padding: isMobile ? 0 : 10,
                 border: '1px solid #EFEEEF',
-                display: isMobile ? 'block' : 'flex',
+                display: 'flex',
+                flexDirection: 'column',
                 borderRadius: 4,
               }}
             >
@@ -196,7 +197,7 @@ export default function Settings() {
                         <Form.Item
                           name="avatar"
                           valuePropName="file"
-                          style={{ marginBottom: 0, marginLeft: avatar ? 12 : 0 }}
+                          style={{ marginBottom: 0, marginLeft: avatar && 12 }}
                           getValueFromEvent={(e) => {
                             return e?.fileList[0].originFileObj;
                           }}

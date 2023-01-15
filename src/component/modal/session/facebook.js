@@ -3,7 +3,6 @@ import { Button, message } from 'antd';
 import { loginWithAssertion } from '../../../utility/WithApolloProvider';
 import { useAuth } from '../../../context/AuthContext';
 import Configure from '../../configure';
-import { FacebookFilled } from '@ant-design/icons';
 
 export function initFB() {
   window.fbAsyncInit = () => {
@@ -76,10 +75,10 @@ function LoginWithFB() {
     <Button
       size="large"
       loading={loading}
-      icon={<FacebookFilled />}
+      icon={<span className="icon-fi-rs-fb text-[26px] absolute left-[22px] top-[9px]" />}
       block
       onClick={() => onClickFbBtn()}
-      className="bg-[#1876F3] mb-4 text-white border-[#1876F3]"
+      className="bg-[#1876F3] hover:bg-[#1876F3] mb-[12px] text-white hover:text-white font-medium text-[16px] border-[#1876F3] hover:border-[#1876F3] h-[44px]"
     >
       Facebook
     </Button>

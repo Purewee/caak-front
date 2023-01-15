@@ -16,7 +16,7 @@ function OpenStep({ setStep }) {
       footer={false}
       bodyStyle={{ padding: 0 }}
       width={720}
-      closeIcon={<span className="icon-fi-rs-close text-[#909090] text-[18px]" />}
+      closeIcon={<span className="icon-fi-rs-close text-[#909090] text-[24px]" />}
       destroyOnClose={true}
       onCancel={() => setStep('closed')}
     >
@@ -46,7 +46,7 @@ function OpenStep({ setStep }) {
           </div>
         </Col>
         <Col xs={24} xl={14} className="border-l">
-          <div className="px-[40px] py-[30px] mt-[40px] border-b">
+          <div className="px-[40px] py-[30px] mt-[40px] border-b border-[#E0E0E1]">
             <h3 className="text-[32px] font-bold font-condensed leading-[38px] mb-[20px]">
               Бүртгэл үүсгэн мэдээллийг өөрийн болгоорой!
             </h3>
@@ -57,10 +57,11 @@ function OpenStep({ setStep }) {
             </Divider>
             <Button
               block
-              icon={<FIcon className="icon-fi-rs-mail-f text-[26px] hidden sm:block absolute left-[22px] top-[6px]" />}
+              icon={<FIcon className="icon-fi-rs-mail-f text-[26px] hidden sm:block absolute left-[22px] top-[9px]" />}
               size="large"
               type="primary"
               onClick={() => setStep('register')}
+              className="h-[44px]"
             >
               Утасны дугаар / И-мэйл хаяг
             </Button>

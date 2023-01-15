@@ -3,9 +3,9 @@ import { GoogleLogin } from 'react-google-login';
 import { gapi } from 'gapi-script';
 import Configure from '../../configure';
 import { Button, message } from 'antd';
-import { GoogleOutlined } from '@ant-design/icons';
 import { loginWithAssertion } from '../../../utility/WithApolloProvider';
 import { useAuth } from '../../../context/AuthContext';
+import google from '../../../assets/images/fi-rs-google.svg';
 
 function GoogleAuth() {
   const [loading, setLoading] = useState(false);
@@ -47,7 +47,8 @@ function GoogleAuth() {
           disabled={renderProps.disabled}
           block
           size="large"
-          icon={<GoogleOutlined />}
+          icon={<img src={google} className="absolute left-[22px] top-[9px]" />}
+          className="h-[44px] text-[#111111] hover:text-[#111111] border-[#D4D8D8] hover:border-[#D4D8D8]"
           loading={loading}
         >
           Google

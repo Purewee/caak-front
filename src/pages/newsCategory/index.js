@@ -125,7 +125,7 @@ export default function Category() {
           <Statistic title="дагагч" value={category.followersCount} className="text-center" />
         </div>
         <div className="w-full flex justify-center">
-          <StoryFeed />
+          <StoryFeed data={slug} />
         </div>
         <div className="w-full flex justify-center">
           <Tabs

@@ -17,7 +17,7 @@ function LoginStep({ setStep }) {
       footer={false}
       title={false}
       width={380}
-      closeIcon={<span className="icon-fi-rs-close text-[#909090] text-[18px]" />}
+      closeIcon={<span className="icon-fi-rs-close text-[#909090] text-[24px]" />}
       bodyStyle={{ padding: 0 }}
       onCancel={() => setStep('closed')}
     >
@@ -48,21 +48,24 @@ function LoginStep({ setStep }) {
             }}
             layout="vertical"
           >
-            <Form.Item name="login" rules={[{ required: true, message: 'Заавал оруулна уу!' }]}>
-              <Input size="large" placeholder="Имэйл хаяг/Утасны дугаар" />
+            <Form.Item
+              style={{ marginBottom: 12 }}
+              name="login"
+              rules={[{ required: true, message: 'Заавал оруулна уу!' }]}
+            >
+              <Input className="h-[44px]" size="large" placeholder="Имэйл хаяг/Утасны дугаар" />
             </Form.Item>
             <Form.Item
               name="password"
               rules={[{ required: true, message: 'Заавал оруулна уу!' }]}
               help={
-                <Button type="link" onClick={() => setStep('password')} className="text-[#555555] p-0 mb-2" block>
+                <Button type="link" onClick={() => setStep('password')} className="text-[#555555] p-0 mb-[22px]" block>
                   <span className="w-full text-right">Нууц үг мартсан?</span>
                 </Button>
               }
             >
-              <Input.Password size="large" placeholder="Нууц үг" />
+              <Input.Password className="h-[44px]" size="large" placeholder="Нууц үг" />
             </Form.Item>
-
             <Button
               className="font-medium rounded-[4px] h-[44px]"
               htmlType="submit"

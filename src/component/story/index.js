@@ -3,17 +3,24 @@ import StoryItem from './Story';
 import { ESService } from '../../lib/esService';
 import { Link } from 'react-router-dom';
 
-const StoryFeed = ({ home }) => {
+const StoryFeed = ({ home, data }) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [stories, setStories] = useState([]);
+  const [categoryStories, setCategoryStories] = useState([]);
   const trendPostsRef = useRef(null);
+  const es = new ESService('caak');
 
   useEffect(() => {
-    const es = new ESService('caak');
     es.stories().then((res) => {
       setStories(res);
     });
   }, []);
+
+  useEffect(() => {
+    es.categoryStory(data, { size: 20 }).then(({ hits }) => {
+      setCategoryStories(hits);
+    });
+  }, [data]);
 
   const nextItem = () => {
     if (activeIndex < stories.length - 1) {
@@ -90,7 +97,7 @@ const StoryFeed = ({ home }) => {
             <span className="icon-fi-rs-down-chevron text-[#555555] text-[18px] -rotate-90" />
           </div>
         )}
-        {stories.map((item, index) => {
+        {(data ? categoryStories : stories).map((item, index) => {
           return <StoryItem border={index === 0} story={item} key={index} index={index} />;
         })}
         <div className="min-w-[106px] hidden sm:min-w-[290px] relative sm:flex items-center justify-center max-w-[290px] rounded-[8px] min-h-[160px] sm:min-h-[435px] max-h-[435px]">

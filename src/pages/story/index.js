@@ -45,20 +45,20 @@ export default function Story() {
           event.preventDefault();
           navigate(`/story/${story.nextStory.id}`);
         }
-        if (current + 1 === story.length) {
-          event.preventDefault();
-          navigate(`/story/${story.nextStory.id}`);
-        }
+        // if (current + 1 === story.length) {
+        //   event.preventDefault();
+        //   navigate(`/story/${story.nextStory.id}`);
+        // }
       }
       if (event.key === 'ArrowRight') {
         if (current === stories?.length - 1 && story?.prevStory?.id) {
           event.preventDefault();
           navigate(`/story/${story.prevStory.id}`);
         }
-        if (current === 0) {
-          event.preventDefault();
-          navigate(`/story/${story.prevStory.id}`);
-        }
+        // if (current === 0) {
+        //   event.preventDefault();
+        //   navigate(`/story/${story.prevStory.id}`);
+        // }
       }
     };
     document.addEventListener('keydown', keyDownHandler);

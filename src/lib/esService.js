@@ -111,6 +111,29 @@ export class ESService {
     }).then(convertHitsTotal);
   }
 
+  categoryStory(slug, rest) {
+    return this.post({
+      query: {
+        bool: {
+          must: [
+            ...defaultStoryFilters,
+            {
+              nested: {
+                path: 'categories',
+                query: { term: { 'categories.slug': slug } },
+              },
+            },
+          ],
+        },
+      },
+      sort: {
+        publish_date: 'desc',
+      },
+      ...rest,
+      track_total_hits: true,
+    }).then(convertHitsTotal);
+  }
+
   tagPosts(slug, rest) {
     return this.post({
       query: {

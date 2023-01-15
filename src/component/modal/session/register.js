@@ -30,7 +30,7 @@ function RegisterStep({ setStep }) {
       footer={false}
       title={false}
       width={380}
-      closeIcon={<span className="icon-fi-rs-close text-[#909090] text-[18px]" />}
+      closeIcon={<span className="icon-fi-rs-close text-[#909090] text-[24px]" />}
       bodyStyle={{ padding: 0 }}
       onCancel={() => setStep('closed')}
     >
@@ -110,29 +110,29 @@ function RegisterStep({ setStep }) {
             &nbsp;Нэвтрэх
           </Button>
         </div>
-        <p className="mt-[24px] flex items-center flex-wrap text-[13px] text-[#909090] justify-center">
-          Та энэ алхамыг үргэлжлүүлснээр, сайтын
-          <Button
+        <p className="mt-[24px] flex items-center leading-[17px] flex-wrap text-[14px] text-[#909090]">
+          Та энэ алхамын үргэлжлүүлснээр, сайтын
+          <button
             onClick={() => {
               navigate('/help', { state: 4 });
             }}
             type="link"
-            className="text-[#111111] text-[13px]"
+            className="text-[#111111] text-[14px]"
             size="small"
           >
-            Үйлчилгээний нөхцөл
-          </Button>
+            Үйлчилгээний нөхцөл&nbsp;
+          </button>
           болон
-          <Button
+          <button
             onClick={() => {
               navigate('/help', { state: 3 });
             }}
-            className="text-[#111111] text-[13px]"
+            className="text-[#111111] text-[14px]"
             type="link"
             size="small"
           >
-            Нууцлалын бодлогыг
-          </Button>
+            &nbsp;Нууцлалын бодлогыг&nbsp;
+          </button>
           зөвшөөрсөнд тооцно.
         </p>
       </div>

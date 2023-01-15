@@ -653,5 +653,13 @@
 }
 
 .ant-modal-content {
+  border-radius: 6px;
+}
+
+.ant-btn:not(.ant-btn-round) {
+  border-radius: 4px;
+}
+
+.ant-input {
   border-radius: 4px;
 }
