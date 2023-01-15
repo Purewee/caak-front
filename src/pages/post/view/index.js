@@ -167,8 +167,8 @@ const Post = () => {
   if (fetching) return <Skeleton />;
 
   return (
-    <div className="pb-[100px] px-[16px]">
-      <div className="flex flex-row pb-[100px] justify-center w-full pt-[20px] xl:pt-[41px]">
+    <div className="pb-[100px]">
+      <div className="flex flex-row pb-[50px] justify-center w-full pt-[20px] xl:pt-[41px] px-[16px]">
         <PostMeta title={title} description={metaDescription} image={article.image} />
         <div className="w-full hidden xl:block max-w-[200px]">
           <div
@@ -345,16 +345,11 @@ const Post = () => {
             </div>
             <Wrapper>
               <img src={imagePath(article.imageUrl)} alt="" className="w-full mt-[20px] sm:mt-[30px] object-cover" />
-              <div className="flex sm:hidden flex-row items-center h-[18px] mt-[6px]">
-                <Button
-                  icon={<span className="icon-fi-rs-eye-o text-[18px] mr-[4px]" />}
-                  className="flex flex-row items-center text-[#555555] text-[14px]"
-                  size="small"
-                  type="link"
-                  // onClick={() => commentsRef.current.scrollIntoView()}
-                >
-                  {kFormatter(article?.viewsCount) || 0}
-                </Button>
+              <div className="flex sm:hidden flex-row items-center h-[18px] mt-[12px]">
+                <div className="flex flex-row items-center text-[#555555] text-[14px]">
+                  <span className="icon-fi-rs-eye-o text-[18px] mr-[4px]" />
+                  <p>{kFormatter(article?.viewsCount) || 0}</p>
+                </div>
                 <Button
                   icon={<span className="icon-fi-rs-comment-o text-[18px] mr-[4px]" />}
                   className="flex flex-row items-center text-[#555555] text-[14px]"
@@ -520,7 +515,7 @@ const Post = () => {
         {reporting && <ReportModal post={article} toggle={() => setReporting(false)} />}
       </div>
       <div className="w-full flex flex-col items-center">
-        <span className="font-bold inline-flex text-[24px] max-w-[1310px] border-b border-[#EFEEEF] pb-[20px] w-full">
+        <span className="font-bold inline-flex text-[24px] max-w-[1310px] border-b border-[#EFEEEF] pb-[20px] w-full ml-[16px]">
           ТӨСТЭЙ<p className="font-normal">&nbsp;МЭДЭЭНҮҮД</p>
         </span>
         <ArticlesList filter={filter} sort={sort} size={24} />

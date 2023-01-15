@@ -6,8 +6,8 @@ import { ESService } from '../../lib/esService';
 import { Tabs } from 'antd';
 import PostCard from '../../component/card/Post';
 import { imagePath } from '../../utility/Util';
-import { BellOutlined, HeartOutlined } from '@ant-design/icons';
 import { useAuth } from '../../context/AuthContext';
+import useMediaQuery from '../../component/navigation/useMediaQuery';
 
 const SOURCE = gql`
   query GetSource($id: ID!) {
@@ -55,6 +55,7 @@ export default function Channel() {
   const [page, setPage] = useState(0);
   const [loading, setLoading] = useState(true);
   const [follow, { loading: saving }] = useMutation(FOLLOW, { variables: { id } });
+  const isMobile = useMediaQuery('screen and (max-width: 767px)');
 
   useEffect(() => {
     setLoading(true);
@@ -164,10 +165,10 @@ export default function Channel() {
           key="top"
         />
       </Tabs>
-      <div className="max-w-[1310px] w-full flex flex-wrap justify-center 2xl:justify-start gap-x-[22px] gap-y-[40px] pt-[30px] md:pt-[50px]">
+      <div className="max-w-[1310px] w-full flex flex-wrap justify-center 2xl:justify-start gap-x-[22px] gap-y-[20px] sm:gap-y-[40px] pt-[30px] md:pt-[50px]">
         {articles.map((post) => (
           <Col key={post.id}>
-            <PostCard post={post} />
+            <PostCard post={post} isMobile={isMobile} />
           </Col>
         ))}
         {loading && <Skeleton />}

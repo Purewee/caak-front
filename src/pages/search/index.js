@@ -5,6 +5,7 @@ import { FIcon } from '../../component/icon';
 import { ESService } from '../../lib/esService';
 import PostCard from '../../component/card/Post';
 import { AppContext } from '../../App';
+import useMediaQuery from '../../component/navigation/useMediaQuery';
 
 export default function Search() {
   const context = useContext(AppContext);
@@ -15,6 +16,7 @@ export default function Search() {
   const [loading, setLoading] = useState(false);
   const [articles, setArticles] = useState([]);
   const [totalResult, setTotalResult] = useState(0);
+  const isMobile = useMediaQuery('screen and (max-width: 767px)');
 
   useEffect(() => {
     setSearch(q.get('q'));
@@ -61,7 +63,7 @@ export default function Search() {
       <div className="max-w-[1310px] w-full flex flex-wrap justify-center gap-x-[22px] gap-y-[40px] pt-[30px] md:pt-[70px] px-[16px] md:px-[0px]">
         {articles.map((post, index) => (
           <Col key={index}>
-            <PostCard post={post} />
+            <PostCard post={post} isMobile={isMobile} />
           </Col>
         ))}
         {loading && <Skeleton />}

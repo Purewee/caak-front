@@ -35,7 +35,6 @@ const CATEGORIES = gql`
 export default function DrawerMenu({ isMobile }) {
   const [open, setOpen] = useState(false);
   const [selected, setSelected] = useState(null);
-  console.log(selected);
   const { data, loading } = useQuery(CATEGORIES);
   const categories = data?.categories?.nodes;
 

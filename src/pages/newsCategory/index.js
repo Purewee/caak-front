@@ -7,6 +7,7 @@ import PostCard from '../../component/card/Post';
 import { AppContext } from '../../App';
 import { useAuth } from '../../context/AuthContext';
 import StoryFeed from '../../component/story';
+import useMediaQuery from '../../component/navigation/useMediaQuery';
 
 const CATEGORY = gql`
   query GetCategory($slug: String) {
@@ -44,6 +45,7 @@ export default function Category() {
   const [page, setPage] = useState(0);
   const [loading, setLoading] = useState(true);
   const [follow, { loading: saving }] = useMutation(FOLLOW, { variables: { id: category?.id } });
+  const isMobile = useMediaQuery('screen and (max-width: 767px)');
 
   useEffect(() => {
     setLoading(true);
@@ -174,10 +176,10 @@ export default function Category() {
             size="large"
           /> */}
         </div>
-        <div className="max-w-[1310px] w-full flex flex-wrap justify-center 2xl:justify-start gap-x-[22px] gap-y-[40px] pt-[30px] ">
+        <div className="max-w-[1310px] w-full flex flex-wrap justify-center 2xl:justify-start gap-x-[22px] gap-y-[16px] sm:gap-y-[40px] pt-[30px] ">
           {articles.map((post) => (
             <Col key={post.id}>
-              <PostCard post={post} />
+              <PostCard post={post} isMobile={isMobile} />
             </Col>
           ))}
           {loading && <Skeleton />}

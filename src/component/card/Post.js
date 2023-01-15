@@ -40,16 +40,17 @@ export default function PostCard({ isMobile, post, removeSaved, asd, ...rest }) 
 
   const width = window.screen.width;
 
+  console.log(width - 178);
+
   return (
     <div
       className={`${
         sponsored
-          ? 'h-[417px]'
+          ? 'h-[417px] rounded-t-[8px] rounded-b-[8px]'
           : asd
           ? 'max-h-[340px] sm:max-h-[523px] h-full'
-          : `h-[150px] w-[${width - 32}px] sm:w-full`
-      }
-        sm:h-[523px] flex flex-col justify-between text-[#111111] sm:w-[422px] border-b border-[#EFEFEF] rounded-sm`}
+          : `h-[150px] sm:w-full`
+      } sm:h-[523px] flex flex-col justify-between text-[#111111] sm:w-[422px] border-b border-[#EFEFEF] rounded-sm`}
       style={color}
     >
       {sponsored && (
@@ -62,10 +63,11 @@ export default function PostCard({ isMobile, post, removeSaved, asd, ...rest }) 
         <Link className="sm:h-[300px]" to={postURL} target={post.kind === 'linked' ? '_blank' : '_self'}>
           <img
             alt={post.title}
+            style={{ boxShadow: '0px 3px 6px #0000002B' }}
             src={imagePath(post.image)}
             className={`${
               sponsored
-                ? 'h-[220px] w-full'
+                ? 'h-[220px] w-full rounded-t-[8px]'
                 : asd
                 ? 'h-[212px] min-w-full rounded-[8px] sm:rounded-none'
                 : 'h-[105px] min-w-[130px] max-w-[130px] sm:min-w-full sm:max-w-[422px]'
@@ -83,7 +85,7 @@ export default function PostCard({ isMobile, post, removeSaved, asd, ...rest }) 
             ))}
         </div>
         <Link
-          className={`${sponsored ? 'mt-[22px]' : 'sm:mt-[9px]'} calculated-width ${text}`}
+          className={`${sponsored ? 'mt-[22px]' : 'sm:mt-[9px]'} ${text}`}
           to={postURL}
           target={post.kind === 'linked' ? '_blank' : '_self'}
         >
@@ -92,7 +94,9 @@ export default function PostCard({ isMobile, post, removeSaved, asd, ...rest }) 
               sponsored
                 ? 'px-[16px] h-[85px] truncate-3 text-[22px] sm:text-[21px] leading-[30px] sm:leading-[29px] font-bold sm:font-normal'
                 : `truncate-4 font-medium hover:underline underline-offset-4 decoration-[#3B4491]/20 sm:font-normal sm:text-[19px] leading-[20px] sm:leading-[27px] ${
-                    asd ? 'text-[18px] mt-[12px] sm:mt-0 truncate-3' : 'text-[16px] mt-0 ml-[16px] sm:ml-0'
+                    asd
+                      ? 'text-[18px] mt-[12px] sm:mt-0 truncate-3'
+                      : `text-[16px] mt-0 ml-[16px] sm:ml-0 w-[${isMobile && width - 178}px]`
                   }`
             } font-roboto sm:font-merri ${text}`}
           >

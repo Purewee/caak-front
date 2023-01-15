@@ -8,7 +8,11 @@ export default function A2({ banner }) {
   return (
     <a href={banner?.url} target="_blank" className="w-[425px] h-[520px]">
       {banner?.bannerType === 'image' ? (
-        <img src={imagePath(banner?.fileUrl)} alt={banner?.title} className="w-full sm:h-[520px]" />
+        <img
+          src={imagePath(banner?.fileUrl)}
+          alt={banner?.title}
+          className="w-full rounded-[8px] sm:rounded-none sm:h-[520px]"
+        />
       ) : (
         <video src={imagePath(banner?.fileUrl)} />
       )}
