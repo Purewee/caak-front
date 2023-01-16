@@ -29,7 +29,7 @@ export default function PostCard({ isMobile, post, removeSaved, asd, ...rest }) 
   const [reporting, setReporting] = useState(false);
   const [sharing, setSharing] = useState(false);
   const { refetch } = useQuery(ME, { skip: !isAuth });
-  const [remove, { loading: removing }] = useMutation(REMOVE_SAVED);
+  const [remove] = useMutation(REMOVE_SAVED);
   const [random] = useState(Math.floor(Math.random() * colors.length));
 
   const postURL = `/post/view/${post?.id}`;
@@ -39,8 +39,6 @@ export default function PostCard({ isMobile, post, removeSaved, asd, ...rest }) 
   const text = sponsored ? 'text-[#ffffff] sm:text-center hover:text-[#ffffff]' : 'hover:text-[#111111]';
 
   const width = window.screen.width;
-
-  console.log(width - 178);
 
   return (
     <div
@@ -160,8 +158,7 @@ export default function PostCard({ isMobile, post, removeSaved, asd, ...rest }) 
               <FIcon
                 onClick={() => {
                   remove({ variables: { articleId: post.id } }).then(() => {
-                    refetch();
-                    message.success('Амжилттай устгалаа');
+                    refetch().then(() => message.success('Амжилттай устгалаа'));
                   });
                 }}
                 className={`h-[22px] ${

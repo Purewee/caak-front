@@ -13,7 +13,7 @@ export default function AddBlock({ items, setItems, add, top = false }) {
 
   return (
     <>
-      <Button.Group className="w-full my-[40px]">
+      <Button.Group className="w-full my-[40px] gap-2">
         <Upload
           multiple
           accept="image/*"
@@ -126,7 +126,7 @@ function PostsModal({ toggle, onComplete }) {
   return (
     <Modal
       title="Мэдээ сонгох"
-      visible
+      open
       onCancel={toggle}
       width={600}
       onOk={() => {

@@ -59,8 +59,8 @@ const MenuItems = ({ navBarStyle }) => {
                 className="leading-[16px] tracking-[0px]"
                 overlayStyle={{ width: 600 }}
                 overlayInnerStyle={{ borderRadius: 8 }}
-                visible={isShown}
-                onVisibleChange={handleMenu}
+                open={isShown}
+                onOpenChange={handleMenu}
                 content={
                   <Row className="p-[12px] gap-y-[12px]">
                     {categories?.map((x) => {

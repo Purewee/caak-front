@@ -19,22 +19,15 @@ import {
   Select,
   Skeleton,
   Upload,
-  Tabs,
   DatePicker,
 } from 'antd';
-import {
-  CameraOutlined,
-  DeleteOutlined,
-  LinkOutlined,
-  PlaySquareOutlined,
-  SaveOutlined,
-  SearchOutlined,
-} from '@ant-design/icons';
+import { CameraOutlined, DeleteOutlined, SaveOutlined, SearchOutlined } from '@ant-design/icons';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import InlineEditor from 'ckeditor5-custom-build';
+import AddTabs from '../tabs';
 
 import { imagePath } from '../../../utility/Util';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { getDataFromBlob, imageCompress } from '../../../lib/imageCompress';
 import AddBlock from './AddBlock';
 import SortableContainer from './SortableContainer';
@@ -174,35 +167,7 @@ function AddPost() {
       </Helmet>
       <Row gutter={12} className="mb-[400px]">
         <Col span={16} className="w-full mx-[50px]">
-          <Tabs className="max-w-[880px] mx-auto mt-[20px] border-b" defaultActiveKey="post" size="large">
-            <Tabs.TabPane
-              tab={
-                <Link to="/add/post" className="flex items-center">
-                  <SaveOutlined />
-                  <span className="uppercase font-merri font-bold">Үндсэн мэдээ</span>
-                </Link>
-              }
-              key="post"
-            />
-            <Tabs.TabPane
-              tab={
-                <Link to="/add/story" className="flex items-center">
-                  <PlaySquareOutlined />
-                  <span className="uppercase font-merri font-bold">Стори мэдээ</span>
-                </Link>
-              }
-              key="story"
-            />
-            <Tabs.TabPane
-              tab={
-                <Link to="/add/linked" className="flex items-center">
-                  <LinkOutlined />
-                  <span className="uppercase font-merri font-bold">Линктэй мэдээ</span>
-                </Link>
-              }
-              key="linked"
-            />
-          </Tabs>
+          <AddTabs defaultActiveKey="post" />
           <Card bordered={false} className="max-w-[920px] mx-auto">
             <Form.Item name="title" className="font-merri" size="large">
               <Input placeholder="Гарчиг" maxLength={200} showCount />
@@ -307,7 +272,7 @@ function AddPost() {
                     value: x.id,
                     label: x.fullName,
                     key: x.id,
-                    disabled: x.status !== 'active',
+                    disabled: x.status !== 'active' || !x?.parent?.id,
                   }))}
                 />
               </Form.Item>

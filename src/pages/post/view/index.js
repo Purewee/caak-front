@@ -104,10 +104,6 @@ const Post = () => {
   const metaDescription = article?.description;
   if (article?.kind === 'linked') window.location = article.data?.link;
 
-  function createMarkup(e) {
-    return { __html: e };
-  }
-
   useEffect(() => {
     context.setStore('default');
     setMode('sticky');
@@ -274,16 +270,18 @@ const Post = () => {
                 }
               />
             )}
-            <div className="flex flex-row gap-[15px] mt-[20px]">
+            <div className="flex flex-row gap-[15px] mt-[20px]" key="tags">
               {article.categories?.nodes?.map((x) => (
                 <Link key={x.id} to={`/category/${x.slug}`}>
                   <HashTag className="text-center leading-[15px] uppercase">{x.name}</HashTag>
                 </Link>
               ))}
             </div>
-            <Title className="text-center mt-[8px]">{article.title}</Title>
-            <div className="flex flex-row justify-between items-center w-full h-[34px] mt-[21px]">
-              <div className="flex flex-row items-center h-[32px]">
+            <Title className="text-center mt-[8px]" key="title">
+              {article.title}
+            </Title>
+            <div className="flex flex-row justify-between items-center w-full h-[34px] mt-[21px]" key="meta">
+              <div className="flex flex-row items-center h-[32px]" key="author">
                 {/* <Avatar className="w-[32px] h-[32px] rounded-full" src={imagePath(article.source?.icon)} /> */}
                 {article?.author?.avatar ? (
                   <Link to={`/profile/${article.author?.id}`}>
@@ -326,20 +324,26 @@ const Post = () => {
                   </div>
                 </div>
               </div>
-              <div className="flex flex-row items-center h-[24px]">
-                <FacebookShareButton className="h-[24px]" url={`${Configure.domain}/post/view/${article?.id}`}>
+              <div className="flex flex-row items-center h-[24px]" key="shares">
+                <FacebookShareButton
+                  className="h-[24px]"
+                  url={`${Configure.domain}/post/view/${article?.id}`}
+                  key="facebook"
+                >
                   <FIcon className="text-[#909090] hover:text-[#1877F2] text-[24px] w-[24px] h-[24px] icon-fi-rs-fb" />
                 </FacebookShareButton>
                 <TwitterShareButton
                   className="h-[24px]"
                   url={`${Configure.domain}/post/view/${article?.id}`}
                   title={article?.title}
+                  key="twitter"
                 >
                   <FIcon className="text-[#909090] hover:text-[#1877F2] text-[24px] w-[24px] h-[24px] icon-fi-rs-tw ml-[15px] sm:ml-[20px]" />
                 </TwitterShareButton>
                 <span
                   onClick={() => setSaving(true)}
                   className="icon-fi-rs-bookmark cursor-pointer w-[24px] h-[24px] flex justify-center items-center rounded-[2px] text-[#909090] text-[20px] ml-[13px] sm:ml-[20px]"
+                  key="save"
                 />
               </div>
             </div>

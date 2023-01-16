@@ -221,9 +221,9 @@ export const USER = gql`
               name
             }
             author {
+              id
               name: firstName
               avatar
-              id
             }
           }
         }
@@ -250,6 +250,7 @@ export const UPDATE_REACTION = gql`
 export const REACTIONS = gql`
   query GetReactions($articleId: ID!) {
     article(id: $articleId) {
+      id
       reactionsSummary
     }
   }

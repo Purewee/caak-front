@@ -1,12 +1,13 @@
 import React from 'react';
 import { imagePath } from '../../utility/Util';
+import ImpressedLink from './clicks';
 
 export default function A2({ banner }) {
   if (!banner) {
     return <></>;
   }
   return (
-    <a href={banner?.url} target="_blank" className="w-[425px] h-[520px]">
+    <ImpressedLink id={banner.id} href={banner?.url} target="_blank" className="w-[425px] h-[520px]">
       {banner?.bannerType === 'image' ? (
         <img
           src={imagePath(banner?.fileUrl)}
@@ -16,6 +17,6 @@ export default function A2({ banner }) {
       ) : (
         <video src={imagePath(banner?.fileUrl)} />
       )}
-    </a>
+    </ImpressedLink>
   );
 }

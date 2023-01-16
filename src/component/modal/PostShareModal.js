@@ -17,7 +17,7 @@ export default function PostShareModal({ post, toggle, image }) {
 
   return (
     <Modal
-      visible
+      open
       width={480}
       onOk={() =>
         isAuth

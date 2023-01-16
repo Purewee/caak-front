@@ -17,7 +17,7 @@ export default function AddSourceModal({ toggle, image }) {
   //prettier-ignore
   return (
     <Modal
-      visible
+      open
       width={738}
       onOk={() =>
         isAuth

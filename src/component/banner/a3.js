@@ -5,6 +5,7 @@ import { Drawer, Button } from 'antd';
 import { FIcon } from '../icon';
 import styled from 'styled-components';
 import { CloseOutlined } from '@ant-design/icons';
+import ImpressedLink from './clicks';
 
 const Wrapper = styled(Drawer)`
   .ant-drawer-content {
@@ -82,7 +83,12 @@ export default function A3({ banner }) {
                 window.removeEventListener('scroll', handleScroll);
               }}
             />
-            <a href={banner?.url} target="_blank" className="w-full flex flex-col justify-between items-center">
+            <ImpressedLink
+              id={banner.id}
+              href={banner?.url}
+              target="_blank"
+              className="w-full flex flex-col justify-between items-center"
+            >
               <img src={imagePath(banner?.mobileFileUrl)} alt={banner?.title} className="w-full object-cover" />
               <Button
                 className="text-[17px] border-0 absolute bottom-[6px] font-condensed"
@@ -95,11 +101,11 @@ export default function A3({ banner }) {
                 Дэлгэрэнгүй үзэх
                 <FIcon className="icon-fi-rs-down-chevron text-[17px]" />
               </Button>
-            </a>
+            </ImpressedLink>
           </Wrapper>
         )
       ) : (
-        <a href={banner?.url} target="_blank">
+        <ImpressedLink id={banner.id} href={banner?.url} target="_blank">
           {banner?.bannerType === 'image' ? (
             <img
               src={imagePath(banner?.fileUrl)}
@@ -109,7 +115,7 @@ export default function A3({ banner }) {
           ) : (
             <video src={imagePath(banner?.fileUrl)} />
           )}
-        </a>
+        </ImpressedLink>
       )}
     </>
   );

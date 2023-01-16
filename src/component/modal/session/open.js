@@ -12,7 +12,7 @@ function OpenStep({ setStep }) {
   return (
     <Modal
       title={false}
-      visible
+      open
       footer={false}
       bodyStyle={{ padding: 0 }}
       width={720}

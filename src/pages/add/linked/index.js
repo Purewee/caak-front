@@ -15,10 +15,10 @@ import {
   Select,
   Checkbox,
 } from 'antd';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
 import { CREATE, POST, UPDATE, CONVERT_LINK, SOURCES, CATEGORIES, TAGS } from '../post/_gql';
-import { LinkOutlined, PlaySquareOutlined, SaveOutlined } from '@ant-design/icons';
+import { LinkOutlined, SaveOutlined } from '@ant-design/icons';
 import { getDataFromBlob, imageCompress } from '../../../lib/imageCompress';
 import { DatePicker } from 'antd/es';
 import moment from 'moment';
@@ -29,7 +29,7 @@ function AddLink() {
   const { id } = useParams();
   const navigate = useNavigate();
   const [dirty, setDirty] = useState(false);
-  const { data: categories, refetch } = useQuery(CATEGORIES);
+  const { data: categories } = useQuery(CATEGORIES);
   const { data: post, loading } = useQuery(POST, { variables: { id }, skip: !id });
   const { data: sources, loading: source_fetching } = useQuery(SOURCES);
   const [featured, setFeatured] = useState(false);
@@ -95,35 +95,7 @@ function AddLink() {
       </Helmet>
       <Row gutter={24} className="mb-[400px]">
         <Col span={16} className="x-[50px]">
-          <Tabs className="max-w-[880px] mx-auto mt-[20px] border-b" defaultActiveKey="linked" size="large">
-            <Tabs.TabPane
-              tab={
-                <Link to="/add/post" className="flex items-center">
-                  <SaveOutlined />
-                  <span className="uppercase font-merri font-bold">Үндсэн мэдээ</span>
-                </Link>
-              }
-              key="post"
-            />
-            <Tabs.TabPane
-              tab={
-                <Link to="/add/story" className="flex items-center">
-                  <PlaySquareOutlined />
-                  <span className="uppercase font-merri font-bold">Стори мэдээ</span>
-                </Link>
-              }
-              key="story"
-            />
-            <Tabs.TabPane
-              tab={
-                <Link to="/add/linked" className="flex items-center">
-                  <LinkOutlined />
-                  <span className="uppercase font-merri font-bold">Линктэй мэдээ</span>
-                </Link>
-              }
-              key="linked"
-            />
-          </Tabs>
+          <Tabs defaultActiveKey="linked" />
           <Card bordered={false} className="max-w-[920px] mx-auto">
             <LinkField onSuccess={setData} />
             <div className="flex gap-[20px]">

@@ -1,14 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Form, Modal, Input, Button, message } from 'antd';
 import { gql, useMutation } from '@apollo/client';
-import { CheckOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
-
-const CHECK = gql`
-  mutation CheckUser($login: String!) {
-    checkLogin(input: { login: $login })
-  }
-`;
 
 const REGISTER = gql`
   mutation RegisterUser($login: String!, $password: String!) {
@@ -22,11 +15,10 @@ const REGISTER = gql`
 
 function RegisterStep({ setStep }) {
   const navigate = useNavigate();
-  const [check, { loading: checking }] = useMutation(CHECK);
   const [register, { loading }] = useMutation(REGISTER);
   return (
     <Modal
-      visible
+      open
       footer={false}
       title={false}
       width={380}
@@ -92,7 +84,6 @@ function RegisterStep({ setStep }) {
               size="large"
               block
               loading={loading}
-              disabled={checking}
             >
               Бүртгүүлэх
             </Button>
@@ -112,7 +103,7 @@ function RegisterStep({ setStep }) {
         </div>
         <p className="mt-[24px] flex items-center leading-[17px] flex-wrap text-[14px] text-[#909090]">
           Та энэ алхамын үргэлжлүүлснээр, сайтын
-          <button
+          <Button
             onClick={() => {
               navigate('/help', { state: 4 });
             }}
@@ -121,18 +112,17 @@ function RegisterStep({ setStep }) {
             size="small"
           >
             Үйлчилгээний нөхцөл&nbsp;
-          </button>
+          </Button>
           болон
-          <button
+          <Button
             onClick={() => {
               navigate('/help', { state: 3 });
             }}
             className="text-[#111111] text-[14px]"
             type="link"
-            size="small"
           >
             &nbsp;Нууцлалын бодлогыг&nbsp;
-          </button>
+          </Button>
           зөвшөөрсөнд тооцно.
         </p>
       </div>

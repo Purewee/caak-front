@@ -92,8 +92,8 @@ export default function UserInfo({ transparent }) {
         placement="bottomRight"
         trigger="click"
         overlayClassName="padding_zero paddin"
-        visible={savedVisible}
-        onVisibleChange={toggleSaving}
+        open={savedVisible}
+        onOpenChange={toggleSaving}
         content={
           <div className="w-screen sm:w-[400px]">
             <h3 className="text-[22px] leading-[25px] border-b border-[#D4D8D8] condMedium mb-1 pb-[14px] px-[16px] pt-[18px]">
@@ -165,8 +165,8 @@ export default function UserInfo({ transparent }) {
         placement="bottomRight"
         trigger="click"
         overlayClassName="padding_zero"
-        visible={profileVisible}
-        onVisibleChange={toggleMenu}
+        open={profileVisible}
+        onOpenChange={toggleMenu}
         overlayInnerStyle={{ borderRadius: 4 }}
         content={
           <div className="text-[#555555] w-[220px] py-[18px]">
