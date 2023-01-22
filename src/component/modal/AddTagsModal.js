@@ -17,7 +17,7 @@ export default function AddTagsModal({ toggle, image }) {
   //prettier-ignore
   return (
     <Modal
-      open
+      visible
       width={738}
       onOk={() =>
         isAuth

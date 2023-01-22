@@ -207,6 +207,9 @@ export const USER = gql`
       }
       follows {
         id
+        user {
+          id
+        }
       }
       recipes {
         articles {
