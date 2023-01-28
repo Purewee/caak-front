@@ -126,7 +126,7 @@ function PostsModal({ toggle, onComplete }) {
   return (
     <Modal
       title="Мэдээ сонгох"
-      open
+      visible
       onCancel={toggle}
       width={600}
       onOk={() => {

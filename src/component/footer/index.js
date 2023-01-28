@@ -14,6 +14,9 @@ export default function Footer() {
   const isLaptop = useMediaQuery('(min-width: 1001px) and (max-width: 1920px)');
   const isTablet = useMediaQuery('(min-width: 401px) and (max-width: 1000px)');
   const isMobile = useMediaQuery('screen and (max-width: 400)');
+
+  const year = new Date().getFullYear();
+
   // prettier-ignore
   useEffect(() => {
     if (context.shown === true) {
@@ -158,7 +161,7 @@ export default function Footer() {
             </div>
         </div>
         <div className='border-t border-[#3B3B3B] flex justify-center w-full py-[20px] md:py-[40px]'>
-            <p className='text-[#838383] text-[15px]'>©2023 “Саак Холдинг” ХХК</p>
+            <p className='text-[#838383] text-[15px] whitespace-nowrap'>©{year} “Саак Холдинг” ХХК</p>
         </div>
     </div>
   )

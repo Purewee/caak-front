@@ -7,7 +7,7 @@ export const AuthContext = React.createContext({
   step: 'closed',
   login: () => {},
   logout: () => {},
-  openModal: (currentStep) => {},
+  openModal: () => {},
 });
 
 export const useAuth = () => React.useContext(AuthContext);

@@ -12,7 +12,7 @@ export default function BannerModal({ open, setOpen }) {
   return (
     open && (
       <Modal
-        open
+        visible
         width={810}
         bodyStyle={{ padding: 0 }}
         style={{ top: 20 }}
