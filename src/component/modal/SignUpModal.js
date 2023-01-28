@@ -10,8 +10,6 @@ export default function SignUpModal({ setIsShown }) {
   const [code, setCode] = useState('');
   const navigate = useNavigate();
 
-  console.log(code);
-
   const handleChange = (code) => setCode(code);
   return (
     <div className="popup_modal">

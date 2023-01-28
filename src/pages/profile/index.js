@@ -67,7 +67,6 @@ export default function Profile() {
   const [loading, setLoading] = useState(false);
   const { data, loading: fetching, refetch } = useQuery(USER, { variables: { id } });
   const user = data?.user || {};
-  console.log(user);
   const { data: me } = useQuery(ME);
   const loggedUser = me?.me;
   const { isAuth, openModal } = useAuth();
