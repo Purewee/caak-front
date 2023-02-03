@@ -14,16 +14,11 @@ export default function AddTagsModal({ toggle, image }) {
   const { data, loading, refetch } = useQuery(TAGS);
   const [follow_tag] = useMutation(FOLLOW_TAG);
   const tags = data?.tags?.nodes || [];
-  //prettier-ignore
   return (
     <Modal
-      visible
+      open
       width={738}
-      onOk={() =>
-        isAuth
-          ? toggle()
-          : openModal('login')
-      }
+      onOk={() => (isAuth ? toggle() : openModal('login'))}
       onCancel={toggle}
       title={
         <span className="text-[38px] font-condensed font-bold leading-[44px] text-center">
@@ -39,23 +34,25 @@ export default function AddTagsModal({ toggle, image }) {
     >
       <div className="flex flex-wrap justify-center px-[62px] gap-[14px] pt-[20px] pb-[30px]">
         <div className="w-full bg-[#F5F5F5] flex flex-wrap gap-x-[6px] border border-[#EFEEEF] gap-y-[12px] p-[14px]">
-            {tags.map((data, index) => {
-              return (
-                <p
-                  onClick={() => {
-                      if (isAuth) {
-                      follow_tag({ variables: { id: data.id } }).then(() => {
-                          refetch().then(console.log);
-                      });
-                      }
-                  }}
-                  className={`${data.following ? ' bg-caak-primary text-white' : 'bg-white text-caak-black'} border cursor-pointer border-[#D4D8D8] rounded-full font-roboto px-[14px] py-[4px] leading-[16px]`}
-                  key={index}
-                >
-                  {data.name}
-                </p>
-              )
-            })}
+          {tags.map((data, index) => {
+            return (
+              <p
+                onClick={() => {
+                  if (isAuth) {
+                    follow_tag({ variables: { id: data.id } }).then(() => {
+                      refetch().then(console.log);
+                    });
+                  }
+                }}
+                className={`${
+                  data.following ? ' bg-caak-primary text-white' : 'bg-white text-caak-black'
+                } border cursor-pointer border-[#D4D8D8] rounded-full font-roboto px-[14px] py-[4px] leading-[16px]`}
+                key={index}
+              >
+                {data.name}
+              </p>
+            );
+          })}
         </div>
       </div>
     </Modal>

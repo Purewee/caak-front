@@ -35,7 +35,7 @@ export default function ReportModal({ post, toggle }) {
   return (
     <Modal
       width={600}
-      visible
+      open
       confirmLoading={sending || loading}
       bodyStyle={{ padding: 0 }}
       closable={false}

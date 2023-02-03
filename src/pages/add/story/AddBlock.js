@@ -111,7 +111,7 @@ function PostsModal({ toggle, onComplete }) {
   useEffect(() => {
     setLoading(true);
     if (filter.length > 0) {
-      es.searchFromCaak(debouncedFilter, 0, 10).then(({ hits, total }) => {
+      es.searchFromCaak(debouncedFilter, 0, 10).then(({ hits, _ }) => {
         setPosts(hits);
         setLoading(false);
       });
@@ -126,7 +126,7 @@ function PostsModal({ toggle, onComplete }) {
   return (
     <Modal
       title="Мэдээ сонгох"
-      visible
+      open
       onCancel={toggle}
       width={600}
       onOk={() => {
@@ -157,7 +157,10 @@ function PostsModal({ toggle, onComplete }) {
                     className="mr-2"
                     onChange={({ target }) => {
                       if (target.checked) {
-                        setSelected([...selected, { id: item.id, title: item.title, image: item.image }]);
+                        setSelected([
+                          ...selected,
+                          { id: item.id, title: item.title, image: item.org_image || item.image },
+                        ]);
                       } else {
                         setSelected(selected.filter((x) => x.id !== item.id));
                       }

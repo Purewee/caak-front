@@ -199,6 +199,7 @@ export const USER = gql`
       status
       following
       followersCount
+      draftsCount
       articles {
         totalCount
       }

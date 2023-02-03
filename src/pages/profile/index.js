@@ -316,7 +316,7 @@ export default function Profile() {
                       НООРОГ
                     </span>
                   }
-                  // value={saved_articles.length}
+                  value={user?.draftsCount}
                   valueStyle={{
                     backgroundColor: '#BBBEBE',
                     paddingInline: 6,

@@ -56,7 +56,7 @@ export default function PostSaveModal({ post, toggle, image }) {
 
   return (
     <Modal
-      visible
+      open
       width={480}
       title={<span className="text-[26px] font-condensed font-bold leading-[30px]">Мэдээ хадгалах</span>}
       bodyStyle={{ padding: 0 }}

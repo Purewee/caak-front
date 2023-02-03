@@ -13,7 +13,7 @@ function LoginStep({ setStep }) {
   const [loading, setLoading] = useState(false);
   return (
     <Modal
-      visible
+      open
       footer={false}
       title={false}
       width={380}

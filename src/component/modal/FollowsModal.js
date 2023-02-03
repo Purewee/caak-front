@@ -48,7 +48,7 @@ const data = [
 export default function FollowsModal({ toggle, follows }) {
   return (
     <Modal
-      visible
+      open
       width={540}
       title={<span className="text-[26px] font-condensed font-bold leading-[30px]">Дагаж буй</span>}
       bodyStyle={{ padding: 0 }}

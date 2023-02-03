@@ -12,7 +12,7 @@ function OpenStep({ setStep }) {
   return (
     <Modal
       title={false}
-      visible
+      open
       footer={false}
       bodyStyle={{ padding: 0 }}
       width={720}
@@ -24,7 +24,7 @@ function OpenStep({ setStep }) {
         <Col className="hidden sm:block" span={10}>
           <div className="h-full bg-[#F7F7F7] rounded-l-[6px] flex flex-col items-center justify-center p-[24px]">
             <img src={logoIcon} className="cursor-pointer object-contain" alt="Caak Logo" width={157} height={47} />
-            <p className="mt-[24px] text-[18px] leading-[21px] condMedium text-[#111111]">Мэдээ мэдээллийн төв цэг!</p>
+            <p className="mt-[24px] text-[18px] leading-[21px] condMedium text-[#111111]">Бусдаас өөр мэдрэмж!</p>
             <div className="flex flex-row mt-[60px]">
               <FIcon className="icon-fi-rs-filter-f text-white text-[15px] w-[30px] h-[30px] bg-[#FF6600] rounded-full" />
               <p className="text-[#111111] text-[15px] leading-[18px] w-[152px] ml-[14px]">

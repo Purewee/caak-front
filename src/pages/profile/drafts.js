@@ -50,9 +50,13 @@ const Drafts = ({ userId }) => {
           }
         >
           <List.Item.Meta
-            title={item.title}
+            title={<Link to={`/post/view/${item.id}`}>{item.title}</Link>}
             description={moment(item.createdAt).format('YYYY-MM-DD HH:mm')}
-            avatar={<Avatar src={imagePath(item.imageUrl)} size={60} shape="square" />}
+            avatar={
+              <Link to={`/post/view/${item.id}`}>
+                <Avatar src={imagePath(item.imageUrl)} size={60} shape="square" />
+              </Link>
+            }
           />
         </List.Item>
       )}
