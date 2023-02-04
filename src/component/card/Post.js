@@ -61,7 +61,6 @@ export default function PostCard({ isMobile, post, removeSaved, asd, ...rest }) 
         <Link className="sm:h-[300px]" to={postURL} target={post.kind === 'linked' ? '_blank' : '_self'}>
           <img
             alt={post.title}
-            style={{ boxShadow: '0px 3px 6px #0000002B' }}
             src={imagePath(post.image)}
             className={`${
               sponsored
@@ -217,12 +216,7 @@ export default function PostCard({ isMobile, post, removeSaved, asd, ...rest }) 
           <div className="w-full">
             <div className="w-full bg-white min-h-[300px] px-[16px]">
               <div className="flex flex-row pt-[20px] pb-[25px] border-b">
-                <img
-                  style={{ boxShadow: '0px 3px 6px #00000029' }}
-                  className="w-[90px] h-[74px] object-cover"
-                  alt=""
-                  src={imagePath(post.image)}
-                />
+                <img className="w-[90px] h-[74px] object-cover" alt="" src={imagePath(post.image)} />
                 <p className="text-[#555555] text-[16px] leading-[19px] hover:underline font-medium ml-[18px]">
                   {post.title}
                 </p>

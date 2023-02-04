@@ -90,7 +90,7 @@ export default function AllStories() {
     <div className='flex flex-col items-center w-full px-[16px]'>
         <img src={AllStory} className="mt-[30px] md:mt-[101px] h-[20px] sm:h-[42px]" />
         {todayStory.length > 0 && (
-          <div className='sm:px-[30px] mt-[20px] w-full flex flex-col items-center'>
+          <div className='sm:px-[30px] mt-[20px] max-w-[1502px] w-full flex flex-col items-center'>
             <div className="w-full">
                 <div className='flex flex-row items-center'>
                     <span className='icon-fi-rs-star-f text-[#FF6600] text-[20px] mr-[10px]' />
@@ -99,7 +99,7 @@ export default function AllStories() {
             </div>
             <div
                 className={
-                    "flex flex-col max-w-[1502px] w-full justify-center relative"
+                    "flex flex-col w-full justify-center relative"
                 }
             >
                 {activeIndexToday + 3 < todayStory.length - 1 && (
@@ -147,7 +147,7 @@ export default function AllStories() {
           </div>
         )}
         {yesterdayStory.length > 0 && (
-          <div className='mt-[20px] md:mt-[80px] sm:px-[30px] w-full flex flex-col items-center'>
+          <div className='mt-[20px] md:mt-[80px] max-w-[1502px] sm:px-[30px] w-full flex flex-col items-center'>
             <div className="w-full">
                 <div className='flex flex-row items-center'>
                     <span className='icon-fi-rs-time-f text-[#909090] text-[20px] mr-[10px]' />
@@ -156,7 +156,7 @@ export default function AllStories() {
             </div>
             <div
                 className={
-                    "flex flex-col max-w-[1502px] w-full justify-center relative"
+                    "flex flex-col w-full justify-center relative"
                 }
             >
                 {activeIndexYes + 3 < yesterdayStory.length - 1 && (
@@ -203,7 +203,7 @@ export default function AllStories() {
             </div>
         </div>
         )}
-        <div className='mt-[20px] md:mt-[80px] sm:px-[30px] w-full flex flex-col items-center'>
+        <div className='mt-[20px] md:mt-[80px] sm:px-[30px] max-w-[1502px] w-full flex flex-col items-center'>
             <div className="w-full">
                 <div className='flex flex-row items-center'>
                     <span className='icon-fi-rs-time-f text-[#909090] text-[20px] mr-[10px]' />
@@ -212,7 +212,7 @@ export default function AllStories() {
             </div>
             <div
                 className={
-                    "flex flex-col max-w-[1502px] w-full justify-center relative"
+                    "flex flex-col w-full justify-center relative"
                 }
             >
                 {activeIndexWeek + 3 < stories.length - 1 && (

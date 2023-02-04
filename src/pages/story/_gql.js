@@ -13,6 +13,8 @@ export const STORY = gql`
       featuredTo
       acceptComment
       publishDate
+      viewsCount
+      viewCount
       categories {
         nodes {
           id
