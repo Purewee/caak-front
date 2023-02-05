@@ -205,6 +205,13 @@ export const USER = gql`
       }
       followers {
         totalCount
+        nodes {
+          user {
+            id
+            firstName
+            avatar
+          }
+        }
       }
       follows {
         id

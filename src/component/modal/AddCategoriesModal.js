@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Modal } from 'antd';
+import { Modal, message } from 'antd';
 import { gql, useQuery, useMutation } from '@apollo/client';
 import { useAuth } from '../../context/AuthContext';
 import { imagePath } from '../../utility/Util';
@@ -31,117 +31,90 @@ const CATEGORIES = gql`
     }
   }
 `;
-const FOLLOW_CATEGORY = gql`
-  mutation Follow($id: ID!) {
-    toggleFollow(input: { targetType: "category", targetId: $id })
+
+const BATCH_FOLLOW = gql`
+  mutation FollowCategories($ids: [ID!]!, $targetType: String!) {
+    updateFollows(input: { targetType: $targetType, ids: $ids })
   }
 `;
-export default function AddCategoriesModal({ toggle, image }) {
+
+export default function AddCategoriesModal({ toggle }) {
+  const [ids, setIds] = useState([]);
   const { isAuth, openModal } = useAuth();
   const { data, loading, refetch } = useQuery(CATEGORIES);
-  const [selected, setSelected] = useState(null);
-  const [follow_category] = useMutation(FOLLOW_CATEGORY);
+  const [follow, { loading: following }] = useMutation(BATCH_FOLLOW);
   const categories = data?.categories?.nodes || [];
-  const filtered = categories.filter((category) => {
-    return category.parent === null;
-  });
+
+  // const filtered = categories.filter((category) => {
+  //   return category.parent === null;
+  // });
+
   return (
     <Modal
       open
-      width={738}
+      width={750}
       onOk={() => (isAuth ? toggle() : openModal('login'))}
       onCancel={toggle}
       title={
-        <p className="text-[38px] font-condensed font-bold leading-[44px] text-center pt-[15px]">
-          Таны дуртай мэдээний төрлүүд?
-        </p>
+        <p className="text-[26px] text-caak-black font-condensed font-bold leading-[35px] text-center">Төрөл нэмэх</p>
       }
-      bodyStyle={{ padding: 0 }}
       afterClose={toggle}
       closeIcon={<span className="icon-fi-rs-close text-[18px] text-[#909090]" />}
-      footer={
-        <div className="w-full flex justify-center">
-          <p
-            onClick={() => toggle()}
-            className="w-[300px] rounded-[4px] cursor-pointer h-[44px] flex justify-center items-center font-medium font-roboto text-[16px] text-[#909090] bg-[#EFEEEF]"
-          >
-            Хадгалах
-          </p>
-        </div>
-      }
+      footer={false}
       okType="primary"
       confirmLoading={loading}
     >
-      <div className="flex flex-wrap justify-center px-[20px] sm:px-[62px] gap-[14px] pt-[20px] pb-[30px]">
-        {filtered.map((x, index) => {
-          if (index < 2) {
-            return x.parent === null ? (
+      <div className="h-[60vh] md:flex items-center gap-[10px] grid grid-cols-2 md:flex-wrap overflow-auto">
+        {categories
+          .filter((x) => !!x.parent?.id)
+          .map((x) => {
+            const selected = ids.includes(x.id);
+            return (
               <div
-                onClick={() => (selected === x.id ? setSelected(null) : setSelected(x.id))}
-                key={index}
-                className={`w-[300px] cursor-pointer h-[110px] rounded-[6px] relative ${
-                  selected === x.id && 'border-[#FF6600] p-[4px] border-[2px]'
+                className={`w-full h-[90px] md:w-[160px] md:h-[97px] relative items-center justify-center rounded-md cursor-pointer border-caak-primary ${
+                  selected && 'border-[2px]'
                 }`}
+                key={x.id}
+                onClick={() => {
+                  if (selected) {
+                    setIds(ids.filter((id) => id !== x.id));
+                  } else {
+                    setIds([...ids, x.id]);
+                  }
+                }}
               >
-                <img className="w-full h-full object-cover rounded-[6px]" src={imagePath(x.cover)} />
-                <p
-                  className={`text-white rounded-[6px] absolute top-0 h-full w-full flex justify-center font-roboto font-medium text-[17px] items-center bg-black bg-opacity-50 ${
-                    selected === x.id && 'w-[288px] top-[4px] h-[98px]'
-                  }`}
+                {!selected && x.cover && (
+                  <div
+                    style={{ backgroundImage: `url("${imagePath(x.cover)}")` }}
+                    className="w-full h-full bg-center rounded-md bg-cover bg-no-repeat"
+                  />
+                )}
+                <span
+                  className={`absolute top-0 h-full w-full flex items-center justify-center text-[15px] font-medium ${
+                    selected ? 'bg-white text-caak-primary' : 'bg-black bg-opacity-50 text-white'
+                  } rounded-md`}
                 >
                   {x.name}
-                </p>
+                </span>
+                {selected && (
+                  <span className="absolute rounded-full text-white top-[7px] right-[7px] icon-fi-rs-check bg-caak-primary w-6 h-6 text-[14px] flex items-center justify-center" />
+                )}
               </div>
-            ) : null;
-          }
-        })}
-        {selected && (
-          <div className="w-full bg-[#F5F5F5] flex flex-wrap gap-x-[6px] border border-[#EFEEEF] gap-y-[12px] p-[14px]">
-            {categories
-              .filter((x) => x.parent?.id === selected)
-              .map((data, index) => {
-                return (
-                  <p
-                    onClick={() => {
-                      if (isAuth) {
-                        follow_category({ variables: { id: data.id } }).then(() => {
-                          refetch().then(console.log);
-                        });
-                      }
-                    }}
-                    className={`${
-                      data.following ? ' bg-caak-primary text-white' : 'bg-white text-caak-black'
-                    } border cursor-pointer border-[#D4D8D8] rounded-full font-roboto px-[14px] py-[4px] leading-[23px]`}
-                    key={index}
-                  >
-                    {data.name}
-                  </p>
-                );
-              })}
-          </div>
-        )}
-        {filtered.map((x, index) => {
-          if (index >= 2) {
-            return x.parent === null ? (
-              <div
-                onClick={() => (selected === x.id ? setSelected(null) : setSelected(x.id))}
-                key={index}
-                className={`w-[300px] cursor-pointer h-[110px] rounded-[6px] relative ${
-                  selected === x.id && 'border-[#FF6600] p-[4px] border-[2px]'
-                }`}
-              >
-                <img className="w-full h-full object-cover rounded-[6px]" src={imagePath(x.cover)} />
-                <p
-                  className={`text-white rounded-[6px] absolute top-0 h-full w-full flex justify-center font-roboto font-medium text-[17px] items-center bg-black bg-opacity-50 ${
-                    selected === x.id && 'w-[288px] top-[4px] h-[98px]'
-                  }`}
-                >
-                  {x.name}
-                </p>
-              </div>
-            ) : null;
-          }
-        })}
+            );
+          })}
+      </div>
+      <div className="w-full flex justify-center pt-[30px] pb-[40px]">
+        <p
+          onClick={() => {
+            follow({ variables: { targetType: 'category', ids } }).then(() => {
+              refetch();
+              message.success('Амжилттай хадгаллаа.').then();
+            });
+          }}
+          className="w-[300px] rounded-[4px] cursor-pointer h-[44px] flex justify-center items-center font-medium font-roboto text-[16px] text-white bg-caak-primary"
+        >
+          Хадгалах
+        </p>
       </div>
     </Modal>
   );

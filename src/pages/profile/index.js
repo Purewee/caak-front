@@ -145,19 +145,21 @@ export default function Profile() {
                     value={kFormatter(user?.articles?.totalCount || 0)}
                   />
                 )}
-                <Statistic className="leading-[18px]" title="дагагчид" value={user?.followersCount || 0} />
+                <Statistic
+                  className="leading-[18px]"
+                  title={
+                    <p className="cursor-pointer" onClick={() => setFollowsOpen(true)}>
+                      дагагчид
+                    </p>
+                  }
+                  value={user?.followersCount || 0}
+                />
                 {id === loggedUser?.id && (
-                  <Statistic
-                    className="leading-[18px]"
-                    title={
-                      <p className="cursor-pointer" onClick={() => setFollowsOpen(true)}>
-                        дагасан
-                      </p>
-                    }
-                    value={user?.follows?.length || 0}
-                  />
+                  <Statistic className="leading-[18px]" title={<p>дагасан </p>} value={user?.follows?.length || 0} />
                 )}
-                {followsOpen && <FollowsModal follows={user?.follows} toggle={() => setFollowsOpen(!followsOpen)} />}
+                {followsOpen && (
+                  <FollowsModal followers={user?.followers} toggle={() => setFollowsOpen(!followsOpen)} />
+                )}
               </div>
             </div>
           </div>
