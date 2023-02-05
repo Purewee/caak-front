@@ -2,12 +2,15 @@ import React from 'react';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { generateTimeAgo, imagePath } from '../../utility/Util';
 import { Link } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 export default function StoryItem({ story, border }) {
+  const location = useLocation();
   return (
     <Link
       className="h-[203px] min-w-[136px] box max-w-[136px] item md:min-w-[290px] md:max-w-[290px] md:h-[435px]"
-      to={`/story/${story.id}`}
+      to={{ pathname: `/story/${story.id}` }}
+      state={location.pathname}
     >
       <div className={`h-full w-full rounded-[6px] ${border && 'border-2 border-[#FF6600] sm:p-[5px]'}`}>
         <div className={`relative h-full w-full bg-white rounded-[6px]`}>

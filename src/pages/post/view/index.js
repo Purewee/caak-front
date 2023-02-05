@@ -163,7 +163,7 @@ const Post = () => {
   if (fetching) return <Skeleton />;
 
   return (
-    <div className="pb-[100px]">
+    <div className="pb-[100px] flex flex-col items-center">
       <div className="flex flex-row pb-[50px] justify-center w-full pt-[20px] xl:pt-[41px] px-[16px]">
         <PostMeta title={title} description={metaDescription} image={article.image} />
         <div className="w-full hidden xl:block max-w-[200px]">
@@ -377,11 +377,11 @@ const Post = () => {
                 <PostBlock b={{ kind: 'text', id: '00', content: article.description }} idx={false} />
               )}
               {orderBy(article?.blocks, ['position'], 'asc').map((b, idx) => (
-                <>
-                  {numbering === 'asc' && <PostBlock b={b} idx={!!b.title && currentIdx++} key={b.id} />}
-                  {numbering === 'desc' && <PostBlock b={b} idx={!!b.title && currentIdx--} key={b.id} />}
-                  {numbering === false && <PostBlock b={b} idx={false} key={b.id} />}
-                </>
+                <div key={b.id}>
+                  {numbering === 'asc' && <PostBlock b={b} idx={!!b.title && currentIdx++} />}
+                  {numbering === 'desc' && <PostBlock b={b} idx={!!b.title && currentIdx--} />}
+                  {numbering === false && <PostBlock b={b} idx={false} />}
+                </div>
               ))}
             </Wrapper>
             <div className="flex flex-row flex-wrap gap-[8px] w-full mt-[20px]">
@@ -518,10 +518,10 @@ const Post = () => {
         <SignInUpController isShown={isShown} setIsShown={setIsShown} />
         {reporting && <ReportModal post={article} toggle={() => setReporting(false)} />}
       </div>
-      <div className="w-full flex flex-col items-center">
-        <span className="font-bold inline-flex text-[24px] max-w-[1310px] border-b border-[#EFEEEF] pb-[20px] w-full ml-[16px]">
-          ТӨСТЭЙ<p className="font-normal">&nbsp;МЭДЭЭНҮҮД</p>
-        </span>
+      <div>
+        <p className="font-bold mt-5 flex flex-row items-center text-[24px] border-b border-[#EFEEEF] pb-5 pl-4 lg:pl-0">
+          ТӨСТЭЙ<span className="font-normal">&nbsp;МЭДЭЭНҮҮД</span>
+        </p>
         <ArticlesList filter={filter} sort={sort} size={24} />
       </div>
     </div>

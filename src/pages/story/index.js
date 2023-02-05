@@ -1,7 +1,7 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import Logo from '../../component/logo';
-import { Link, useNavigate, useParams } from 'react-router-dom';
-import { imagePath, kFormatter } from '../../utility/Util';
+import { Link, useNavigate, useParams, useLocation } from 'react-router-dom';
+import { imagePath } from '../../utility/Util';
 import { useQuery } from '@apollo/client';
 import { STORY } from './_gql';
 import Stories from 'react-insta-stories';
@@ -17,6 +17,7 @@ const { Paragraph } = Typography;
 export default function Story() {
   const { id } = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
   const [current, setCurrent] = useState(0);
   const { data, loading } = useQuery(STORY, { variables: { id } });
   const story = data?.article || {};
@@ -38,7 +39,7 @@ export default function Story() {
     const keyDownHandler = (event) => {
       if (event.key === 'Escape') {
         event.preventDefault();
-        navigate('/');
+        navigate(location.state);
       }
       if (event.key === 'ArrowLeft') {
         if (current === 0 && story?.nextStory?.id) {
@@ -83,7 +84,7 @@ export default function Story() {
       >
         <Logo white />
         <span
-          onClick={() => navigate('/')}
+          onClick={() => navigate(location.state)}
           style={{ zIndex: 1000 }}
           className="icon-fi-rs-close sm:hidden right-[15px] top-[25px] text-[20px] text-white"
         />
@@ -124,7 +125,7 @@ export default function Story() {
           <Button
             type="link"
             icon={<FIcon className={`icon-fi-rs-close text-white`} />}
-            onClick={() => navigate('/')}
+            onClick={() => navigate(location.state)}
           />
         </div>
         {story.prevStory ? (

@@ -28,7 +28,7 @@ function CaakHeader() {
   }
 
   return (
-    <Layout.Header className={`${cls} h-[60px] z-10 w-full px-[16px] md:px-[48px]`}>
+    <Layout.Header className={`${cls} h-[60px] md:h-[71px] z-10 w-full px-[16px] md:px-[48px]`}>
       <div className="flex items-center justify-between h-full">
         <div className="flex items-center gap-[15px] sm:gap-[24px]">
           <DrawerMenu isMobile={isMobile} />
