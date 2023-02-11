@@ -76,7 +76,7 @@ export default function Profile() {
   const histories = historyData?.impressions?.edges?.map((x) => x.node) || [];
   const navigate = useNavigate();
 
-  const isMobile = useMediaQuery('screen and (max-width: 767px)');
+  const isMobile = useMediaQuery(767);
 
   useEffect(() => {
     setLoading(true);

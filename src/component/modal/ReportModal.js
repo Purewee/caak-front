@@ -26,7 +26,7 @@ export default function ReportModal({ post, toggle }) {
   const [sendReport, { loading: sending }] = useMutation(SEND_REPORT, { variables: { articleId: post.id } });
   const reportTypes = data?.reportTypes || [];
 
-  const isMobile = useMediaQuery('screen and (max-width: 600px)');
+  const isMobile = useMediaQuery(640);
 
   useEffect(() => {
     setTypeId(reportTypes[0]?.id);

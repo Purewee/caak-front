@@ -7,7 +7,8 @@ import useMediaQuery from '../navigation/useMediaQuery';
 export default function Search({ transparent, drawer }) {
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
-  const isMobile = useMediaQuery('screen and (max-width: 670px)');
+  const isMobile = useMediaQuery(640);
+  const isFold = useMediaQuery(300);
 
   return (
     <>
@@ -16,7 +17,7 @@ export default function Search({ transparent, drawer }) {
           <FIcon
             className={`icon-fi-rs-search text-[22px] ${
               transparent ? (isMobile ? 'text-[#555555]' : 'text-white') : drawer ? 'text-caak-black' : 'text-[#555555]'
-            }`}
+            } ${isFold && 'hidden'}`}
           />
         }
         className={`border-0 mr-[10px] sm:mt-[4px]`}

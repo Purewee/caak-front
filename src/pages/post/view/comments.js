@@ -11,6 +11,7 @@ import { DownOutlined } from '@ant-design/icons';
 import { ME } from './_gql';
 import { imagePath } from '../../../utility/Util';
 import { useNavigate } from 'react-router-dom';
+import useMediaQuery from '../../../component/navigation/useMediaQuery';
 
 const SORTS = {
   recent: { direction: 'desc', field: 'createdAt' },
@@ -30,6 +31,8 @@ export default function Comments({ articleId, refProp }) {
   const navigate = useNavigate();
   const [form] = Form.useForm();
 
+  const isMobile = useMediaQuery(400);
+
   return (
     <>
       <Form
@@ -43,7 +46,7 @@ export default function Comments({ articleId, refProp }) {
         }}
         initialValues={{ name: me?.firstName || 'Зочин' }}
       >
-        {isAuth ? (
+        {!isMobile && isAuth ? (
           me.avatar ? (
             <div className="relative">
               <Avatar shape="square" className="w-[50px] h-[50px] object-cover" src={imagePath(me?.avatar)} />
@@ -56,7 +59,8 @@ export default function Comments({ articleId, refProp }) {
               )}
             </div>
           ) : (
-            me.firstName && (
+            me.firstName &&
+            !isMobile && (
               <div className="relative">
                 <Avatar
                   shape="square"
@@ -75,9 +79,9 @@ export default function Comments({ articleId, refProp }) {
             )
           )
         ) : (
-          <Avatar size="large" src={AvatarSvg} shape="square" />
+          !isMobile && <Avatar size="large" src={AvatarSvg} shape="square" />
         )}
-        <div className="w-full ml-[12px]">
+        <div className={`w-full ${!isMobile && 'ml-3'}`}>
           <Form.Item
             className="w-full mb-[10px]"
             name="comment"
@@ -92,7 +96,7 @@ export default function Comments({ articleId, refProp }) {
           <div className="flex flex-row h-[54px]">
             <Form.Item className="w-full mr-[10px]" name="name">
               <Input
-                className="w-full h-[54px] rounded-[2px] px-[24px] border border-[#D4D8D8]"
+                className={`w-full h-[54px] rounded-[2px] ${isMobile ? 'px-2' : 'px-6'} border border-[#D4D8D8]`}
                 placeholder="Нэрээ бичнэ үү"
               />
             </Form.Item>

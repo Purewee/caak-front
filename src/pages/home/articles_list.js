@@ -13,7 +13,7 @@ export default function ArticlesList({ filter = [], sort = {}, size = 24, asd, a
   const [count, setCount] = useState(0);
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(currentPage - 1);
-  const isMobile = useMediaQuery('screen and (max-width: 767px)');
+  const isMobile = useMediaQuery(767);
 
   useEffect(() => {
     setLoading(true);

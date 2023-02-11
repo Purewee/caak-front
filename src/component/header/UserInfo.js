@@ -31,7 +31,7 @@ export default function UserInfo({ transparent }) {
   const totalSaved = sumBy(me?.recipes?.map((x) => x.articlesCount));
   const [remove, { loading: removing }] = useMutation(REMOVE_SAVED);
   const navigate = useNavigate();
-  const isMobile = useMediaQuery('screen and (max-width: 670px)');
+  const isMobile = useMediaQuery(640);
 
   const toggleMenu = () => {
     setProfileVisible(!profileVisible);

@@ -1,19 +1,12 @@
 import React, { useEffect, useState, useContext } from 'react';
 import Logo from '../../images/New-Logo-Light.svg';
 import { AppContext } from '../../App';
-import { Link, useNavigate } from 'react-router-dom';
-import useMediaQuery from '../navigation/useMediaQuery';
 import { Collapse } from 'antd';
 
 export default function Footer() {
   // prettier-ignore
   const [isFooter, setIsFooter] = useState(true)
   const context = useContext(AppContext);
-  const navigate = useNavigate();
-
-  const isLaptop = useMediaQuery('(min-width: 1001px) and (max-width: 1920px)');
-  const isTablet = useMediaQuery('(min-width: 401px) and (max-width: 1000px)');
-  const isMobile = useMediaQuery('screen and (max-width: 400)');
 
   const year = new Date().getFullYear();
 

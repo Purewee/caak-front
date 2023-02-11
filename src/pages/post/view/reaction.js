@@ -34,7 +34,7 @@ export default function Reaction({ reactions, articleId, left, refetch, fetching
       </p>
       <div
         ref={refProp}
-        className={`flex flex-row items-center justify-center ${
+        className={`flex flex-wrap items-center justify-center ${
           left ? 'gap-[8px] h-[46px]' : 'gap-[7px] md:gap-[24px] mt-[14px]'
         }`}
       >

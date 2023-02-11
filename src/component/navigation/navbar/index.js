@@ -61,9 +61,10 @@ export default function NavbarNew() {
   const [sideMenuOpen, setSideMenuOpen] = useState(false);
   const navigate = useNavigate();
 
-  const isLaptop = useMediaQuery('(min-width: 1001px) and (max-width: 1920px)');
-  const isTablet = useMediaQuery('(min-width: 401px) and (max-width: 1000px)');
-  const isMobile = useMediaQuery('screen and (max-width: 400)');
+  const isLaptop = useMediaQuery(1000);
+  const isTablet = useMediaQuery(640);
+
+  console.log(isTablet);
 
   const Settings = [
     {
@@ -120,7 +121,7 @@ export default function NavbarNew() {
     }
   }, [context.store]);
 
-  return navBarStyle === null ? null : isLaptop ? (
+  return navBarStyle === null ? null : !isLaptop ? (
     loaded && (
       <nav
         className={`${
@@ -137,13 +138,13 @@ export default function NavbarNew() {
               <span className={`icon-fi-rs-hamburger-menu text-[22px] ${navBarStyle ? 'text-white' : 'text-black'}`} />
             </div>
             <Logo navBarStyle={navBarStyle} />
-            {isLaptop && <MenuItems navBarStyle={navBarStyle} />}
+            {!isLaptop && <MenuItems navBarStyle={navBarStyle} />}
           </div>
           <div className={'flex flex-row items-center'}>
             <div
               onClick={() => setSearchShown(true)}
               className={`${
-                isTablet ? 'mr-0' : isAuth ? 'mr-[15px]' : 'mr-[22px]'
+                !isTablet ? 'mr-0' : isAuth ? 'mr-[15px]' : 'mr-[22px]'
               } flex w-[22px] h-[22px] items-center justify-center cursor-pointer`}
             >
               <span

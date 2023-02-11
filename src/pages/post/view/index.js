@@ -27,6 +27,7 @@ import Configure from '../../../component/configure';
 import NotFound from '../../404';
 import PostMeta from './meta';
 import PostBlock from './block';
+import useMediaQuery from '../../../component/navigation/useMediaQuery';
 
 const SOURCE = gql`
   query GetSource($id: ID!) {
@@ -97,6 +98,8 @@ const Post = () => {
     loading: reactions_loading,
     refetch,
   } = useQuery(REACTIONS, { variables: { articleId: article?.id }, skip: article?.kind !== 'post' });
+
+  const isMobile = useMediaQuery(400);
 
   const reactions = data_reactions?.article?.reactionsSummary || {};
   const reactionsCount = sum(Object.values(reactions)) || 0;
@@ -426,7 +429,7 @@ const Post = () => {
                 onClick={() => setSharing(true)}
                 className="bg-[#1877F2] sm:hidden text-white font-condensed text-[15px] flex flex-row items-center justify-center rounded-[4px] h-[34px] w-[124px]"
               >
-                <span className="icon-fi-rs-share text-[16.8px] mr-[6px]" />
+                {!isMobile && <span className="icon-fi-rs-share text-[16.8px] mr-[6px]" />}
                 ХУВААЛЦАХ
               </div>
               <div className="hidden sm:flex">
@@ -518,7 +521,7 @@ const Post = () => {
         <SignInUpController isShown={isShown} setIsShown={setIsShown} />
         {reporting && <ReportModal post={article} toggle={() => setReporting(false)} />}
       </div>
-      <div>
+      <div className="w-full">
         <p className="font-bold mt-5 flex flex-row items-center text-[24px] border-b border-[#EFEEEF] pb-5 pl-4 lg:pl-0">
           ТӨСТЭЙ<span className="font-normal">&nbsp;МЭДЭЭНҮҮД</span>
         </p>

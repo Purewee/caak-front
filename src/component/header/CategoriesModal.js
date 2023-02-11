@@ -41,6 +41,15 @@ function CategoriesModal({ refetch }) {
   const [follow, { loading: following }] = useMutation(BATCH_FOLLOW);
   const [ids, setIds] = useState([]);
   const categories = data?.categories?.nodes || [];
+
+  const followedCats = categories.filter(function (el) {
+    return el.following === true;
+  });
+
+  followedCats.map((item) => {
+    ids.push(item.id);
+  });
+
   return (
     <Modal open closable={false} header={false} footer={false} width={750}>
       {loading ? (
@@ -57,7 +66,7 @@ function CategoriesModal({ refetch }) {
           </div>
           <div className="h-[60vh] md:flex items-center mt-[20px] lg:mt-[30px] gap-[10px] grid grid-cols-2 md:flex-wrap overflow-auto">
             {categories
-              .filter((x) => !!x.parent?.id)
+              .filter((x) => !x.following && !!x.parent?.id)
               .map((x) => {
                 const selected = ids.includes(x.id);
                 return (

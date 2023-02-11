@@ -6,7 +6,6 @@ import Home from './pages/home';
 import { Helmet } from 'react-helmet';
 import Post from './pages/post/view';
 import Profile from './pages/profile';
-import Magazine from './pages/magazine';
 import TopTags from './pages/topTags';
 import Channel from './pages/channel';
 import Story from './pages/story';
@@ -73,14 +72,6 @@ function App() {
                     element={
                       <ProtectedRoute>
                         <Profile />
-                      </ProtectedRoute>
-                    }
-                  />
-                  <Route
-                    path="/magazine/:id"
-                    element={
-                      <ProtectedRoute>
-                        <Magazine />
                       </ProtectedRoute>
                     }
                   />

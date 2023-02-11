@@ -130,7 +130,7 @@ export default function Settings() {
   const [follow_tag] = useMutation(FOLLOW_TAG);
 
   const me = data?.me || {};
-  const isMobile = useMediaQuery('screen and (max-width: 767px)');
+  const isMobile = useMediaQuery(767);
 
   useEffect(() => {
     context.setStore('default');

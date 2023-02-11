@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Modal, message } from 'antd';
 import { gql, useQuery, useMutation } from '@apollo/client';
 import { useAuth } from '../../context/AuthContext';
@@ -45,9 +45,13 @@ export default function AddCategoriesModal({ toggle }) {
   const [follow, { loading: following }] = useMutation(BATCH_FOLLOW);
   const categories = data?.categories?.nodes || [];
 
-  // const filtered = categories.filter((category) => {
-  //   return category.parent === null;
-  // });
+  const followedCats = categories.filter(function (el) {
+    return el.following === true;
+  });
+
+  followedCats.map((item) => {
+    ids.push(item.id);
+  });
 
   return (
     <Modal
@@ -66,7 +70,7 @@ export default function AddCategoriesModal({ toggle }) {
     >
       <div className="h-[60vh] md:flex items-center gap-[10px] grid grid-cols-2 md:flex-wrap overflow-auto">
         {categories
-          .filter((x) => !!x.parent?.id)
+          .filter((x) => !x.following && !!x.parent?.id)
           .map((x) => {
             const selected = ids.includes(x.id);
             return (

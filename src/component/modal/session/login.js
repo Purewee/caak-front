@@ -59,7 +59,7 @@ function LoginStep({ setStep }) {
               name="password"
               rules={[{ required: true, message: 'Заавал оруулна уу!' }]}
               help={
-                <Button type="link" onClick={() => setStep('password')} className="text-[#555555] p-0 mb-[22px]" block>
+                <Button type="link" onClick={() => setStep('password')} className="text-[#555555] p-0" block>
                   <span className="w-full text-right">Нууц үг мартсан?</span>
                 </Button>
               }
@@ -67,7 +67,7 @@ function LoginStep({ setStep }) {
               <Input.Password className="h-[44px]" size="large" placeholder="Нууц үг" />
             </Form.Item>
             <Button
-              className="font-medium rounded-[4px] h-[44px]"
+              className="font-medium rounded-[4px] h-[44px] mt-[22px]"
               htmlType="submit"
               type="primary"
               size="large"

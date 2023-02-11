@@ -69,7 +69,7 @@ export default function Home() {
   const { isAuth } = useAuth();
   const [filter, setFilter] = useState(false);
   const [sort, setSort] = useState(false);
-  const isMobile = useMediaQuery('screen and (max-width: 640px)');
+  const isMobile = useMediaQuery(767);
   const { data } = useQuery(FOLLOWS, { skip: !isAuth && selected !== 'user' });
   const follows = groupBy(data?.me?.follows.map((x) => x.target) || [], (x) => x.__typename.toLowerCase());
   useEffect(() => {

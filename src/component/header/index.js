@@ -13,7 +13,7 @@ import useMediaQuery from '../navigation/useMediaQuery';
 function CaakHeader() {
   const { isAuth } = useAuth();
   const { mode } = useHeader();
-  const isMobile = useMediaQuery('screen and (max-width: 670px)');
+  const isMobile = useMediaQuery(640);
   let cls = '';
   switch (mode) {
     case 'default':

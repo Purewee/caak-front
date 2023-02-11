@@ -18,7 +18,7 @@ const Wrapper = styled(Tabs)`
 export default function HomeTabs({ selected }) {
   const { isAuth } = useAuth();
   const navigate = useNavigate();
-  const isMobile = useMediaQuery('screen and (max-width: 640px)');
+  const isMobile = useMediaQuery(640);
   const categories = isAuth
     ? [
         { label: 'Шинэ', key: 'recent' },

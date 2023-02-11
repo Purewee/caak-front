@@ -103,26 +103,22 @@ function RegisterStep({ setStep }) {
         </div>
         <p className="mt-[24px] flex items-center leading-[17px] flex-wrap text-[14px] text-[#909090]">
           Та энэ алхамын үргэлжлүүлснээр, сайтын
-          <Button
-            onClick={() => {
-              navigate('/help', { state: 4 });
-            }}
+          <div
+            onClick={() => (window.location.href = '/help/4')}
             type="link"
-            className="text-[#111111] text-[14px]"
+            className="text-[#111111] text-[14px] cursor-pointer"
             size="small"
           >
             Үйлчилгээний нөхцөл&nbsp;
-          </Button>
+          </div>
           болон
-          <Button
-            onClick={() => {
-              navigate('/help', { state: 3 });
-            }}
-            className="text-[#111111] text-[14px]"
+          <div
+            onClick={() => (window.location.href = '/help/3')}
+            className="text-[#111111] text-[14px] cursor-pointer"
             type="link"
           >
             &nbsp;Нууцлалын бодлогыг&nbsp;
-          </Button>
+          </div>
           зөвшөөрсөнд тооцно.
         </p>
       </div>

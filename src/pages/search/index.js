@@ -16,7 +16,7 @@ export default function Search() {
   const [loading, setLoading] = useState(false);
   const [articles, setArticles] = useState([]);
   const [totalResult, setTotalResult] = useState(0);
-  const isMobile = useMediaQuery('screen and (max-width: 767px)');
+  const isMobile = useMediaQuery(767);
 
   useEffect(() => {
     setSearch(q.get('q'));

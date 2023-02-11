@@ -44,7 +44,7 @@ export default function Category() {
   const [loading, setLoading] = useState(true);
   const [follow, { loading: saving }] = useMutation(FOLLOW, { variables: { id: category?.id } });
 
-  const isMobile = useMediaQuery('screen and (max-width: 767px)');
+  const isMobile = useMediaQuery(767);
 
   useEffect(() => {
     setLoading(true);

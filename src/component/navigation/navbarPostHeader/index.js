@@ -8,7 +8,7 @@ const NavbarPostHeader = () => {
   const [posts, setPosts] = useState([]);
   const { setMode } = useHeader();
 
-  const isLaptop = useMediaQuery('(min-width: 1001px) and (max-width: 1920px)');
+  const isLaptop = useMediaQuery(1001);
 
   useEffect(() => {
     const es = new ESService('caak');
@@ -22,7 +22,7 @@ const NavbarPostHeader = () => {
   }, [posts]);
 
   return (
-    isLaptop &&
+    !isLaptop &&
     posts.length > 0 && (
       <div className="relative flex flex-col lg:flex-row items-center justify-center h-full min-h-[560px] w-full">
         <div style={{ flex: 1 }} className="h-full w-full">

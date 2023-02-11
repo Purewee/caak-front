@@ -7,7 +7,7 @@ import useMediaQuery from '../component/navigation/useMediaQuery';
 
 export default function NotFound() {
   const navigate = useNavigate();
-  const isMobile = useMediaQuery('screen and (max-width: 640px)');
+  const isMobile = useMediaQuery(640);
   return (
     <div className="flex flex-col w-full items-center pb-[100px]">
       <div className="relative flex justify-center">
