@@ -14,7 +14,6 @@ import PostShareModal from '../../../component/modal/PostShareModal';
 import { Avatar, Popover, notification, Button, Alert, Skeleton, Popconfirm, message } from 'antd';
 import { useAuth } from '../../../context/AuthContext';
 import { useHeader } from '../../../context/HeaderContext';
-import SignInUpController from '../../../component/modal/SignInUpController';
 import { Link } from 'react-router-dom';
 import { FacebookShareButton, TwitterShareButton } from 'react-share';
 import Reaction from './reaction';
@@ -73,7 +72,6 @@ const Post = () => {
   const [reporting, setReporting] = useState(false);
   const [saving, setSaving] = useState(false);
   const [sharing, setSharing] = useState(false);
-  const [isShown, setIsShown] = useState(false);
   const [filter, setFilter] = useState([]);
   const [sort, setSort] = useState({});
   const { data, loading } = useQuery(ARTICLE, { variables: { id, slug }, fetchPolicy: 'network-only' });
@@ -518,7 +516,6 @@ const Post = () => {
         {sharing && (
           <PostShareModal post={article} toggle={() => setSharing(false)} image={imagePath(article.imageUrl)} />
         )}
-        <SignInUpController isShown={isShown} setIsShown={setIsShown} />
         {reporting && <ReportModal post={article} toggle={() => setReporting(false)} />}
       </div>
       <div className="w-full">

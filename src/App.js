@@ -20,7 +20,6 @@ import AllStories from './pages/allstories';
 import Footer from './component/footer';
 import Search from './pages/search';
 import Help from './pages/help';
-import Dashboard from './pages/user/Dashboard';
 import Settings from './pages/user/Settings';
 import Category from './pages/newsCategory';
 import PostSaved from './pages/user/saved';
@@ -200,14 +199,6 @@ function App() {
                     element={
                       <ProtectedRoute>
                         <Category />
-                      </ProtectedRoute>
-                    }
-                  />
-                  <Route
-                    path="/dashboard/:id"
-                    element={
-                      <ProtectedRoute>
-                        <Dashboard />
                       </ProtectedRoute>
                     }
                   />

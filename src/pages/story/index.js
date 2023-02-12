@@ -39,7 +39,7 @@ export default function Story() {
     const keyDownHandler = (event) => {
       if (event.key === 'Escape') {
         event.preventDefault();
-        navigate(location.state);
+        navigate(location.state || '/');
       }
       if (event.key === 'ArrowLeft') {
         if (current === 0 && story?.nextStory?.id) {
@@ -84,7 +84,7 @@ export default function Story() {
       >
         <Logo white />
         <span
-          onClick={() => navigate(location.state)}
+          onClick={() => navigate(location.state || '/')}
           style={{ zIndex: 1000 }}
           className="icon-fi-rs-close sm:hidden right-[15px] top-[25px] text-[20px] text-white"
         />
@@ -125,7 +125,7 @@ export default function Story() {
           <Button
             type="link"
             icon={<FIcon className={`icon-fi-rs-close text-white`} />}
-            onClick={() => navigate(location.state)}
+            onClick={() => navigate(location.state || '/')}
           />
         </div>
         {story.prevStory ? (
