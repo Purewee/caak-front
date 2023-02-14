@@ -518,7 +518,7 @@ const Post = () => {
         )}
         {reporting && <ReportModal post={article} toggle={() => setReporting(false)} />}
       </div>
-      <div className="w-full">
+      <div className="w-full max-w-[1310px]">
         <p className="font-bold mt-5 flex flex-row items-center text-[24px] border-b border-[#EFEEEF] pb-5 pl-4 lg:pl-0">
           ТӨСТЭЙ<span className="font-normal">&nbsp;МЭДЭЭНҮҮД</span>
         </p>
