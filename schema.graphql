@@ -749,6 +749,7 @@ type User {
   avatar: String
   createdAt: ISO8601DateTime
   data: JSON
+  draftsCount: Int!
   email: String
   firstName: String
   followers(
