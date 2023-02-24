@@ -1,1 +1,4 @@
 User-agent: *
+
+Sitemap: https://graph.caak.mn/sitemap/sitemap1.xml
+Sitemap: https://graph.caak.mn/sitemap/sitemap2.xml
