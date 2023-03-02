@@ -62,7 +62,7 @@ const Categories = () => {
           <li key={index} className="flex flex-row relative items-center list-none mr-[40px] cursor-pointer float-left">
             {item.link && (
               <a rel="noreferrer" href={item.link} target="_blank">
-                <p className="hover:text-caak-primary font-bold text-[14px] leading-[16px] tracking-[0px]">
+                <p className="hover:text-caak-primary font-bold text-[14px] leading-[16px] select-none tracking-[0px]">
                   {item.title}
                 </p>
               </a>
@@ -74,7 +74,6 @@ const Categories = () => {
                 overlayClassName="padding_zero"
                 className="leading-[16px] tracking-[0px]"
                 overlayInnerStyle={{ borderRadius: 8 }}
-                visible={open}
                 onOpenChange={toggleMenu}
                 content={
                   <div className="p-[30px] flex flex-row gap-x-[50px]">
@@ -120,7 +119,7 @@ const Categories = () => {
                 }
               >
                 <p className="hover:text-caak-primary font-bold flex">
-                  <span>{item.title}</span>
+                  <span className="select-none">{item.title}</span>
                   <FIcon className="icon-fi-rs-down-chevron text-[14px] h-[14px] text-caak-primary" />
                 </p>
               </Popover>
