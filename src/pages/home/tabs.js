@@ -39,20 +39,31 @@ export default function HomeTabs({ selected }) {
       ];
 
   return (
-    <Wrapper
-      tabBarGutter={isMobile ? 16 : 30}
-      onChange={(e) => navigate(`/?type=${e}`)}
-      className="w-full font-condensed pl-[16px]"
-      centered
-      activeKey={selected}
-      items={categories.map((x) => ({
-        key: x.key,
-        label: (
-          <span className="text-[16px] sm:text-[22px] font-bold leading-[16px] sm:leading-[22px] uppercase">
-            {x.label}
-          </span>
-        ),
-      }))}
-    />
+    // <Wrapper
+    //   tabBarGutter={isMobile ? 16 : 30}
+    //   onChange={(e) => navigate(`/?type=${e}`)}
+    //   className="w-full font-condensed pl-[16px]"
+    //   centered
+    //   activeKey={selected}
+    //   items={categories.map((x) => ({
+    //     key: x.key,
+    //     label: (
+    //       <span className="text-[16px] sm:text-[22px] font-bold leading-[16px] sm:leading-[22px] uppercase">
+    //         {x.label}
+    //       </span>
+    //     ),
+    //   }))}
+    // />
+    <div className={`flex items-center font-condensed pl-[16px] ${isMobile ? 'gap-x-4' : 'gap-x-[30px]'}`}>
+      {categories.map((x) => (
+        <span
+          onClick={() => navigate(`/?type=${x.key}`)}
+          key={x.key}
+          className="text-[16px] cursor-pointer sm:text-[22px] font-bold leading-[16px] sm:leading-[22px] uppercase"
+        >
+          {x.label}
+        </span>
+      ))}
+    </div>
   );
 }

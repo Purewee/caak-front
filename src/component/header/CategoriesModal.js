@@ -51,7 +51,7 @@ function CategoriesModal({ refetch }) {
   });
 
   return (
-    <Modal open closable={false} header={false} footer={false} width={750}>
+    <Modal visible closable={false} header={false} footer={false} width={750}>
       {loading ? (
         <Skeleton active />
       ) : (
