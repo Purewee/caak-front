@@ -18,7 +18,7 @@ function RegisterStep({ setStep }) {
   const [register, { loading }] = useMutation(REGISTER);
   return (
     <Modal
-      open
+      visible
       footer={false}
       title={false}
       width={380}

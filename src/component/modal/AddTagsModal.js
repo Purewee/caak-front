@@ -16,7 +16,7 @@ export default function AddTagsModal({ toggle, image }) {
   const tags = data?.tags?.nodes || [];
   return (
     <Modal
-      open
+      visible
       width={738}
       onOk={() => (isAuth ? toggle() : openModal('login'))}
       onCancel={toggle}

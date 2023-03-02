@@ -62,7 +62,7 @@ export default function A3({ banner }) {
           <Wrapper
             footer={false}
             placement="bottom"
-            open={open}
+            visible={open}
             bodyStyle={{ background: '#F5F5F5', position: 'relative' }}
             height={360}
             closeIcon={false}

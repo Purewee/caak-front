@@ -26,7 +26,7 @@ export default function Search({ transparent, drawer }) {
         type="ghost"
       />
       <Drawer
-        open={open}
+        visible={open}
         height={72}
         placement="top"
         onClose={() => setOpen(false)}

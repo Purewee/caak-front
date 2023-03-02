@@ -74,7 +74,7 @@ const Categories = () => {
                 overlayClassName="padding_zero"
                 className="leading-[16px] tracking-[0px]"
                 overlayInnerStyle={{ borderRadius: 8 }}
-                open={open}
+                visible={open}
                 onOpenChange={toggleMenu}
                 content={
                   <div className="p-[30px] flex flex-row gap-x-[50px]">

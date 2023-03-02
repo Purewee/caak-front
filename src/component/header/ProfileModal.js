@@ -19,7 +19,7 @@ function ProfileModal({ login }) {
   const [name, setName] = useState('');
   const [avatar, setAvatar] = useState('');
   return (
-    <Modal open footer={false} title={false} width={440} bodyStyle={{ padding: 0, height: 506 }} closable={false}>
+    <Modal visible footer={false} title={false} width={440} bodyStyle={{ padding: 0, height: 506 }} closable={false}>
       <div className="p-[40px] flex flex-col items-center">
         <Form
           autoComplete="off"

@@ -21,7 +21,7 @@ export default function FollowsModal({ toggle, followers }) {
 
   return (
     <Modal
-      open
+      visible
       width={540}
       title={<span className="text-[26px] font-condensed font-bold leading-[30px]">Дагагчид</span>}
       bodyStyle={{ padding: 0 }}

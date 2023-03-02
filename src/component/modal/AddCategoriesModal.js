@@ -55,7 +55,7 @@ export default function AddCategoriesModal({ toggle }) {
 
   return (
     <Modal
-      open
+      visible
       width={750}
       onOk={() => (isAuth ? toggle() : openModal('login'))}
       onCancel={toggle}

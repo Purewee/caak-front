@@ -254,7 +254,7 @@ function SingleComment({ comment, refetch }) {
                   {open && (
                     <Modal
                       width={400}
-                      open
+                      visible
                       title="Сэтгэгдэл бичих"
                       onCancel={() => setOpen(false)}
                       confirmLoading={loading}
