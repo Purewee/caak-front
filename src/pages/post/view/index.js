@@ -310,7 +310,7 @@ const Post = () => {
                       icon={<span className="icon-fi-rs-eye-o text-[18px] mr-[4px]" />}
                       className="hidden sm:flex flex-row items-center ml-[12px] text-[#555555] text-[14px]"
                     >
-                      {kFormatter(article?.viewsCount)}
+                      {(article?.viewsCount).toLocaleString()}
                     </Button>
                     <Button
                       icon={<span className="icon-fi-rs-comment-o text-[18px] mr-[4px]" />}

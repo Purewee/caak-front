@@ -57,7 +57,7 @@ export default function PostCard({ isMobile, post, removeSaved, asd, ...rest }) 
           <p className="text-[13px] condMedium leading-[15px] ml-[4px]">ОНЦЛОХ МЭДЭЭ</p>
         </div>
       )}
-      <div className={`flex ${sponsored || asd ? 'flex-col' : 'flex-row md:flex-col'}`}>
+      <div className={`flex ${sponsored || asd ? 'flex-col' : 'flex-row sm:flex-col'}`}>
         <Link className="sm:h-[300px]" to={postURL} target={post.kind === 'linked' ? '_blank' : '_self'}>
           <img
             alt={post.title}

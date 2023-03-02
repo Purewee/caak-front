@@ -178,7 +178,7 @@ export default function Category() {
         </div>
         <div className="max-w-[1310px] w-full flex flex-wrap justify-center 2xl:justify-start gap-x-[22px] gap-y-[16px] sm:gap-y-[40px] pt-[30px] ">
           {articles.map((post) => (
-            <Col key={post.id}>
+            <Col className="w-full sm:w-auto" key={post.id}>
               <PostCard post={post} isMobile={isMobile} />
             </Col>
           ))}
