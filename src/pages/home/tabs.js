@@ -16,6 +16,7 @@ const Wrapper = styled(Tabs)`
 `;
 
 export default function HomeTabs({ selected }) {
+  console.log(selected);
   const { isAuth } = useAuth();
   const navigate = useNavigate();
   const isMobile = useMediaQuery(640);
@@ -54,12 +55,18 @@ export default function HomeTabs({ selected }) {
     //     ),
     //   }))}
     // />
-    <div className={`flex items-center font-condensed pl-[16px] ${isMobile ? 'gap-x-4' : 'gap-x-[30px]'}`}>
+    <div
+      className={`flex items-center overflow-x-auto scrollbar font-condensed pt-2 px-4 ${
+        isMobile ? 'gap-x-4' : 'gap-x-10'
+      }`}
+    >
       {categories.map((x) => (
         <span
           onClick={() => navigate(`/?type=${x.key}`)}
           key={x.key}
-          className="text-[16px] cursor-pointer sm:text-[22px] font-bold leading-[16px] sm:leading-[22px] uppercase"
+          className={`text-[21px] cursor-pointer whitespace-nowrap sm:text-[20px] font-bold leading-[24px] uppercase ${
+            selected === x.key ? 'text-[#111111] border-b-[3px] border-[#FF6600] pb-[10px]' : 'text-[#555555] pb-[13px]'
+          }`}
         >
           {x.label}
         </span>
