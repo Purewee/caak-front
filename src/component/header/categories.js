@@ -71,6 +71,7 @@ const Categories = () => {
               <Popover
                 placement="bottom"
                 trigger="click"
+                visible={open}
                 overlayClassName="padding_zero"
                 className="leading-[16px] tracking-[0px]"
                 overlayInnerStyle={{ borderRadius: 8 }}
@@ -118,7 +119,7 @@ const Categories = () => {
                   </div>
                 }
               >
-                <p className="hover:text-caak-primary font-bold flex">
+                <p onClick={() => setOpen(true)} className="hover:text-caak-primary font-bold flex">
                   <span className="select-none">{item.title}</span>
                   <FIcon className="icon-fi-rs-down-chevron text-[14px] h-[14px] text-caak-primary" />
                 </p>
