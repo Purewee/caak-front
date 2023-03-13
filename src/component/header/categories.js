@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { gql, useQuery } from '@apollo/client';
 import { Popover, Skeleton } from 'antd';
 import { Link } from 'react-router-dom';
 import { FIcon } from '../icon';
+import { useClickOutSide } from '../../utility/Util';
 
 const menuItems = [
   { title: 'ВИДЕО', link: 'https://www.youtube.com/c/caakvideo' },
@@ -38,7 +39,25 @@ const CATEGORIES = gql`
   }
 `;
 
+function useOnClickOutside(ref, handler) {
+  useEffect(() => {
+    const listener = (event) => {
+      if (!ref.current || ref.current.contains(event.target)) {
+        return;
+      }
+      handler(event);
+    };
+    document.addEventListener('mousedown', listener);
+    document.addEventListener('touchstart', listener);
+    return () => {
+      document.removeEventListener('mousedown', listener);
+      document.removeEventListener('touchstart', listener);
+    };
+  }, [ref, handler]);
+}
+
 const Categories = () => {
+  const ref = useRef(null);
   const { data, loading } = useQuery(CATEGORIES);
   const [open, setOpen] = useState(false);
   const categories = data?.categories?.nodes || [];
@@ -46,6 +65,10 @@ const Categories = () => {
   const toggleMenu = () => {
     setOpen(!open);
   };
+
+  useOnClickOutside(ref, () => {
+    setOpen(false);
+  });
 
   const hide = () => {
     setOpen(false);
@@ -77,7 +100,7 @@ const Categories = () => {
                 overlayInnerStyle={{ borderRadius: 8 }}
                 onOpenChange={toggleMenu}
                 content={
-                  <div className="p-[30px] flex flex-row gap-x-[50px]">
+                  <div ref={ref} className="p-[30px] flex flex-row gap-x-[50px]">
                     {categories.map((x, index) => {
                       return (
                         x.parent === null && (
@@ -119,7 +142,7 @@ const Categories = () => {
                   </div>
                 }
               >
-                <p onClick={() => setOpen(true)} className="hover:text-caak-primary font-bold flex">
+                <p onClick={() => setOpen(!open)} className="hover:text-caak-primary font-bold flex">
                   <span className="select-none">{item.title}</span>
                   <FIcon className="icon-fi-rs-down-chevron text-[14px] h-[14px] text-caak-primary" />
                 </p>
