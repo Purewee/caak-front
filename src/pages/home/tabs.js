@@ -16,7 +16,6 @@ const Wrapper = styled(Tabs)`
 `;
 
 export default function HomeTabs({ selected }) {
-  console.log(selected);
   const { isAuth } = useAuth();
   const navigate = useNavigate();
   const isMobile = useMediaQuery(640);
@@ -56,7 +55,7 @@ export default function HomeTabs({ selected }) {
     //   }))}
     // />
     <div
-      className={`flex items-center overflow-x-auto scrollbar font-condensed pt-2 px-4 ${
+      className={`flex items-center overflow-x-auto scrollBar font-condensed pt-2 px-4 ${
         isMobile ? 'gap-x-4' : 'gap-x-10'
       }`}
     >

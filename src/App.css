@@ -75,14 +75,16 @@
   background: 0 0;
 }
 
+.scrollBar::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  background: 0 0;
+}
+
 .calculated-width {
   width: -webkit-calc(100% - 10px);
   width:    -moz-calc(100% - 10px);
   width:         calc(100% - 10px);
-}​
-
-.hideScrollbar {
-  overflow: hidden;
 }
 
 .truncate-4 {

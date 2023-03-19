@@ -3,7 +3,6 @@ import { gql, useQuery } from '@apollo/client';
 import { Popover, Skeleton } from 'antd';
 import { Link } from 'react-router-dom';
 import { FIcon } from '../icon';
-import { useClickOutSide } from '../../utility/Util';
 
 const menuItems = [
   { title: 'ВИДЕО', link: 'https://www.youtube.com/c/caakvideo' },
@@ -39,39 +38,18 @@ const CATEGORIES = gql`
   }
 `;
 
-function useOnClickOutside(ref, handler) {
-  useEffect(() => {
-    const listener = (event) => {
-      if (!ref.current || ref.current.contains(event.target)) {
-        return;
-      }
-      handler(event);
-    };
-    document.addEventListener('mousedown', listener);
-    document.addEventListener('touchstart', listener);
-    return () => {
-      document.removeEventListener('mousedown', listener);
-      document.removeEventListener('touchstart', listener);
-    };
-  }, [ref, handler]);
-}
-
 const Categories = () => {
   const ref = useRef(null);
   const { data, loading } = useQuery(CATEGORIES);
   const [open, setOpen] = useState(false);
   const categories = data?.categories?.nodes || [];
 
-  const toggleMenu = () => {
-    setOpen(!open);
-  };
-
-  useOnClickOutside(ref, () => {
-    setOpen(false);
-  });
-
   const hide = () => {
     setOpen(false);
+  };
+
+  const handleVisibleChange = (visible) => {
+    setOpen(visible);
   };
 
   if (loading) {
@@ -95,12 +73,12 @@ const Categories = () => {
                 placement="bottom"
                 trigger="click"
                 visible={open}
+                onVisibleChange={handleVisibleChange}
                 overlayClassName="padding_zero"
                 className="leading-[16px] tracking-[0px]"
                 overlayInnerStyle={{ borderRadius: 8 }}
-                onOpenChange={toggleMenu}
                 content={
-                  <div ref={ref} className="p-[30px] flex flex-row gap-x-[50px]">
+                  <div className="p-[30px] flex flex-row gap-x-[50px]">
                     {categories.map((x, index) => {
                       return (
                         x.parent === null && (
