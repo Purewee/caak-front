@@ -62,7 +62,7 @@ export default function Search() {
       </div>
       <div className="max-w-[1310px] w-full flex flex-wrap justify-center gap-x-[22px] gap-y-[40px] pt-[30px] md:pt-[70px] px-[16px] md:px-[0px]">
         {articles.map((post, index) => (
-          <Col className="w-full" key={index}>
+          <Col className="w-full sm:max-w-[422px]" key={index}>
             <PostCard post={post} isMobile={isMobile} />
           </Col>
         ))}

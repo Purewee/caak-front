@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Logo from '../../component/logo';
 import { Link, useNavigate, useParams, useLocation } from 'react-router-dom';
-import { imagePath } from '../../utility/Util';
+import { generateTimeAgo, imagePath } from '../../utility/Util';
 import { useQuery } from '@apollo/client';
 import { STORY } from './_gql';
 import Stories from 'react-insta-stories';
@@ -10,7 +10,7 @@ import ReactPlayer from 'react-player';
 import { FIcon } from '../../component/icon';
 import AllStories from '../../assets/images/all-stories.png';
 import moment from 'moment';
-// import sanitize from 'sanitize-html';
+import sanitizeHtml from 'sanitize-html';
 
 const { Paragraph } = Typography;
 
@@ -148,79 +148,100 @@ export default function Story() {
 }
 
 function ImageStory({ block, story }) {
-  const [ellipsis, setEllipsis] = useState(true);
-  // const clean = sanitize(block?.content ? block.content : '', {
-  //   allowedTags: ['b', 'i', 'em', 'strong', 'a'],
-  // });
+  const [expanded, setExpanded] = useState(false);
+  const [hasMore, setHasMore] = useState(false);
+  const containerRef = useRef(null);
+
+  const ellipsis = sanitizeHtml(block?.content, {
+    allowedTags: [],
+    allowedAttributes: {},
+    allowedIframeHostnames: [],
+    parser: {
+      decodeEntities: true,
+    },
+  });
+
+  useEffect(() => {
+    if (containerRef.current?.offsetHeight > 2) {
+      setHasMore(true);
+    }
+  }, []);
+
   return (
-    <div className="w-full h-full flex justify-center">
-      <div
+    <div className="w-full h-full relative">
+      {/* <div
         style={{
           background: 'transparent linear-gradient(180deg, #00000067 0%, #00000000 100%) 0% 0% no-repeat padding-box',
         }}
         className="w-full h-[100px] absolute top-0"
-      ></div>
-      <div
-        className="w-full sm:rounded-[8px] bg-contain bg-no-repeat bg-center"
-        style={{ backgroundImage: `url("${imagePath(block.imageUrl)}")` }}
-      >
-        <div className="relative w-full h-full">
-          {block.kind === 'post' && (
-            <div
-              style={{ zIndex: 1000 }}
-              className="absolute bottom-0 pb-[20px] p-[16px] sm:p-[32px] h-1/3 story-linear w-full rounded-[8px] flex flex-col justify-end"
-            >
-              <div className="flex flex-col">
-                <div className="flex flex-wrap gap-[10px] justify-start mb-[10px]">
-                  {story?.categories?.nodes?.map((x) => (
-                    <p
-                      key={x.name}
-                      className="bg-[#FF6600] px-[8px] py-[4px] text-white text-[12px] font-bold uppercase"
-                    >
-                      {x.name}
-                    </p>
-                  ))}
-                </div>
-                {block?.content && (
-                  <Link to={block?.data?.url}>
-                    <span
-                      className="truncate-2 max-w-[500px] text-white condMedium text-[26px] leading-[30px]"
-                      dangerouslySetInnerHTML={{ __html: block?.content }}
-                    />
-                  </Link>
-                )}
-                <span className="text-white opacity-80 text-[14px] leading-[16px] mt-[10px]">
-                  {moment(story.publishDate).utc('Asia/Mongolia').format('YYYY.MM.DD, HH:MM')}
-                </span>
-              </div>
-              <Link className="mt-[40px] sm:mt-[24px] flex justify-center sm:justify-start" to={block?.data?.url}>
-                <div className="w-[124px] sm:w-[136px] h-[34px] relative bg-white flex p-1 px-2 border-0 text-[15px] font-medium text-caak-black rounded-[4px] items-center justify-center">
-                  Дэлгэрэнгүй
-                  <FIcon className="icon-fi-rs-down-chevron absolute sm:relative bottom-[40px] sm:bottom-0 text-white sm:text-caak-primary text-[14px] rotate-180 sm:-rotate-90" />
-                </div>
+      ></div> */}
+      <div className="w-full h-full flex items-center">
+        <img alt="" src={imagePath(block.imageUrl)} className="w-full mb-[53px] sm:mb-0" />
+      </div>
+      {block.kind === 'post' && (
+        <div className="absolute bottom-0 pb-[20px] p-[16px] sm:p-[32px] h-1/3 story-linear w-full rounded-[8px] flex flex-col justify-end">
+          <div className="flex flex-col">
+            <div className="flex flex-wrap gap-[10px] justify-start mb-[10px]">
+              {story?.categories?.nodes?.map((x) => (
+                <p
+                  key={x.name}
+                  className="bg-[#FF6600] px-[8px] py-[4px] text-white text-[12px] leading-[14px] font-bold uppercase"
+                >
+                  {x.name}
+                </p>
+              ))}
+            </div>
+            {block?.content && (
+              <Link to={block?.data?.url}>
+                <span
+                  className="truncate-2 max-w-[500px] text-white condMedium text-[26px] leading-[30px]"
+                  dangerouslySetInnerHTML={{ __html: block?.content }}
+                />
               </Link>
-            </div>
-          )}
-          {block.kind === 'image' && block?.content && (
-            <div
-              style={{ zIndex: 1001 }}
-              className="absolute w-full max-h-[500px] overflow-y-scroll wrapper story-linear bottom-0 pb-[20px] p-[16px] sm:p-[32px] flex flex-col items-center"
-            >
-              <Paragraph
-                className="text-center w-full max-w-[500px] text-white opacity-80 leading-[32px] text-[28px] sm:text-[32px] font-condensed tracking-[0.48px] font-normal mb-[16px]"
-                ellipsis={ellipsis ? { rows: 2, expandable: true, symbol: 'дэлгэрэнгүй' } : null}
-              >
-                <span dangerouslySetInnerHTML={{ __html: block?.content || null }} />
-              </Paragraph>
-              <div className="h-[4px] w-[60px] bg-caak-primary" />
-            </div>
-          )}
-          <div className="flex flex-row items-center absolute top-7 right-[14px]">
-            <div className="flex flex-row items-center h-9 px-[12px] text-white bg-black bg-opacity-40 rounded-full">
-              <span className="icon-fi-rs-eye-o text-[18px] mr-1" />
-              <p className="text-[14px] leading-[16px]">{story?.viewCount}</p>
-            </div>
+            )}
+            <span className="text-white opacity-80 text-[14px] leading-[16px] mt-[10px]">
+              {generateTimeAgo(story.publishDate)}
+            </span>
           </div>
+          <Link
+            style={{ zIndex: 1000 }}
+            className="mt-10 sm:mt-5 flex justify-center sm:justify-start"
+            to={block?.data?.url}
+          >
+            <div className="w-[124px] sm:w-[136px] h-[34px] relative bg-white flex p-1 px-2 border-0 text-[15px] font-medium text-caak-black rounded-[4px] items-center justify-center">
+              Дэлгэрэнгүй
+              <FIcon className="icon-fi-rs-down-chevron absolute sm:relative bottom-[40px] sm:bottom-0 text-white sm:text-caak-primary text-[14px] rotate-180 sm:-rotate-90" />
+            </div>
+          </Link>
+        </div>
+      )}
+      {block.kind === 'image' && block?.content && (
+        <div className="flex flex-col absolute bottom-0 items-start justify-end h-1/2 p-4 md:p-[30px] story-linear">
+          <p
+            style={{ textShadow: '0px 2px 3px #00000029' }}
+            className={`${
+              !expanded && 'truncate-2 max-w-[500px]'
+            } w-full text-white opacity-80 text-[22px] leading-[27px] font-condensed tracking-[0.48px] font-normal mb-[16px]`}
+            ref={containerRef}
+          >
+            {ellipsis}
+          </p>
+          {hasMore && (
+            <button
+              onClick={() => setExpanded(!expanded)}
+              style={{ zIndex: 1001 }}
+              className="w-[112px] text-[14px] flex items-center justify-center h-[28px] rounded-[100px] bg-white bg-opacity-20 text-white"
+            >
+              Илүү ихийг
+              <FIcon className={`icon-fi-rs-down-chevron text-white text-[12px] ${expanded && 'rotate-180'}`} />
+            </button>
+          )}
+        </div>
+      )}
+      <div className="flex flex-row items-center absolute top-7 right-[14px]">
+        <div className="flex flex-row items-center h-9 px-[12px] text-white bg-black bg-opacity-40 rounded-full">
+          <span className="icon-fi-rs-eye-o text-[18px] mr-1" />
+          <p className="text-[14px] leading-[16px]">{story?.viewCount}</p>
         </div>
       </div>
     </div>

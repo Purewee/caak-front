@@ -665,3 +665,14 @@
 .ant-input {
   border-radius: 4px;
 }
+
+.text-container {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.see-more {
+  display: none;
+}
