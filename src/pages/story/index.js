@@ -168,16 +168,14 @@ function ImageStory({ block, story }) {
   }, []);
 
   return (
-    <div className="w-full h-full relative">
+    <div className="w-full h-full flex items-center justify-center relative">
       {/* <div
         style={{
           background: 'transparent linear-gradient(180deg, #00000067 0%, #00000000 100%) 0% 0% no-repeat padding-box',
         }}
         className="w-full h-[100px] absolute top-0"
       ></div> */}
-      <div className="w-full h-full flex items-center">
-        <img alt="" src={imagePath(block.imageUrl)} className="w-full mb-[53px] sm:mb-0" />
-      </div>
+      <img alt="" src={imagePath(block.imageUrl)} className="w-full h-full object-contain mb-[53px] sm:mb-0" />
       {block.kind === 'post' && (
         <div className="absolute bottom-0 pb-[20px] p-[16px] sm:p-[32px] h-1/3 story-linear w-full rounded-[8px] flex flex-col justify-end">
           <div className="flex flex-col">
