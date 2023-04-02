@@ -162,7 +162,7 @@ function ImageStory({ block, story }) {
   });
 
   useEffect(() => {
-    if (containerRef.current?.offsetHeight > 2) {
+    if (block.content && block.content?.length > 90) {
       setHasMore(true);
     }
   }, []);
@@ -249,6 +249,7 @@ function ImageStory({ block, story }) {
 function VideoStory({ block, story, action }) {
   const [muted, setMuted] = useState(true);
   const [playing, setPlaying] = useState(true);
+  console.log(playing);
   const [expanded, setExpanded] = useState(false);
   const [hasMore, setHasMore] = useState(false);
   const containerRef = useRef(null);
@@ -262,10 +263,8 @@ function VideoStory({ block, story, action }) {
     },
   });
 
-  console.log(ellipsis);
-
   useEffect(() => {
-    if (containerRef.current?.offsetHeight > 2) {
+    if (block.content && block.content?.length > 90) {
       setHasMore(true);
     }
   }, []);
@@ -279,30 +278,31 @@ function VideoStory({ block, story, action }) {
         className="w-full h-[100px] absolute top-0"
       ></div>
       <div className="w-[100%] h-full sm:rounded-[8px] flex flex-col items-center justify-center bg-contain bg-no-repeat bg-center bg-[#212121] relative">
-        <div style={{ zIndex: 1001 }} className="flex flex-row items-center absolute top-7 right-[14px] gap-2">
-          <div className="flex flex-row items-center h-9 px-[12px] text-white bg-black bg-opacity-40 rounded-full">
+        <div
+          style={{ zIndex: 1001 }}
+          className="flex flex-row items-center absolute top-[18px] lg:top-7 right-[14px] gap-2"
+        >
+          <div className="flex flex-row items-center h-[30px] lg:h-9 px-[12px] text-white bg-black bg-opacity-40 rounded-full">
             <span className="icon-fi-rs-eye-o text-[18px] mr-1" />
             <p className="text-[14px] leading-[16px]">{story?.viewCount}</p>
           </div>
-          <Button
-            type="link"
-            className="w-9 h9 flex items-center justify-center bg-black bg-opacity-40"
-            icon={<FIcon className={`${playing ? 'icon-fi-rs-pause' : 'icon-fi-rs-play'} text-[20px] text-white`} />}
+          <FIcon
             onClick={() => setPlaying(!playing)}
+            className={`${playing ? 'icon-fi-rs-pause' : 'icon-fi-rs-play'}
+              w-[30px] h-[30px] lg:w-9 lg:h-9 bg-black bg-opacity-40 rounded-full text-[18px] lg:text-[20px] text-white`}
           />
-          <Button
-            type="link"
-            className="w-9 h9 flex items-center justify-center bg-black bg-opacity-40"
-            icon={<FIcon className={`${muted ? 'icon-fi-rs-mute' : 'icon-fi-rs-volume'} text-[20px] text-white`} />}
+          <FIcon
             onClick={() => {
               setMuted(!muted);
             }}
+            className={`${muted ? 'icon-fi-rs-mute' : 'icon-fi-rs-volume'}
+              w-[30px] h-[30px] lg:w-9 lg:h-9 bg-black bg-opacity-40 rounded-full text-[18px] lg:text-[20px] text-white`}
           />
         </div>
         <ReactPlayer
           url={imagePath(block.videoUrl)}
           playing={playing}
-          controls
+          controls={false}
           width="100%"
           height="100%"
           muted={muted}
@@ -313,13 +313,13 @@ function VideoStory({ block, story, action }) {
         />
         <div
           style={{ zIndex: 1001 }}
-          className="flex flex-col absolute bottom-0 pb-[60px] md:pb-[70px] items-start w-full justify-end h-1/2 p-4 md:p-[30px] story-linear"
+          className="flex flex-col absolute bottom-0 items-start w-full justify-end h-1/2 p-4 md:p-[30px] story-linear"
         >
           <p
             style={{ textShadow: '0px 2px 3px #00000029' }}
             className={`${
-              !expanded && 'truncate-2 max-w-[500px]'
-            } w-full text-white opacity-80 text-[22px] leading-[27px] font-condensed tracking-[0.48px] font-normal mb-[16px]`}
+              !expanded && 'truncate-2 max-w-[450px]'
+            } w-full text-white opacity-80 text-[16px] lg:text-[22px] leading-[27px] font-condensed tracking-[0.48px] font-normal mb-[16px]`}
             ref={containerRef}
           >
             {ellipsis}
