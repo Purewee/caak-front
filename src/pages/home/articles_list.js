@@ -13,7 +13,7 @@ export default function ArticlesList({ filter = [], sort = {}, size = 24, asd, a
   const [count, setCount] = useState(0);
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(currentPage - 1);
-  const isMobile = useMediaQuery(767);
+  const isMobile = useMediaQuery(640);
 
   useEffect(() => {
     setLoading(true);
@@ -49,7 +49,7 @@ export default function ArticlesList({ filter = [], sort = {}, size = 24, asd, a
               <React.Fragment key={index}>
                 {index === divider && (
                   <Col className="w-full sm:w-[422px]" key={`${index}-banner`}>
-                    <Banner position="a2" />
+                    <Banner index={page} position="a2" />
                   </Col>
                 )}
                 <Col className="w-full sm:w-[422px]" key={index}>

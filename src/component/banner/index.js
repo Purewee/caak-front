@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { gql, useQuery } from '@apollo/client';
 import A1 from './a1';
 import A2 from './a2';
@@ -21,10 +21,16 @@ const BANNER = gql`
   }
 `;
 
-function Banner({ position }) {
-  const { data, loading } = useQuery(BANNER, { variables: { position } });
+function Banner({ position, index }) {
+  const { data, loading, refetch } = useQuery(BANNER, { variables: { position } });
 
   const banner = data?.banner;
+
+  useEffect(() => {
+    if (index) {
+      refetch();
+    }
+  }, [index]);
 
   if (loading) return <Skeleton />;
   if (!banner) return null;

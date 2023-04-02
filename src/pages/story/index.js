@@ -214,7 +214,7 @@ function ImageStory({ block, story }) {
         </div>
       )}
       {block.kind === 'image' && block?.content && (
-        <div className="flex flex-col absolute bottom-0 items-start justify-end h-1/2 p-4 md:p-[30px] story-linear">
+        <div className="flex flex-col absolute bottom-0 items-start w-full justify-end h-1/2 p-4 md:p-[30px] story-linear">
           <p
             style={{ textShadow: '0px 2px 3px #00000029' }}
             className={`${
@@ -249,12 +249,26 @@ function ImageStory({ block, story }) {
 function VideoStory({ block, story, action }) {
   const [muted, setMuted] = useState(true);
   const [playing, setPlaying] = useState(true);
-  const [ellipsis, setEllipsis] = useState(true);
-  const clean = block?.content || '';
-  // const clean = sanitize(block?.content ? block.content : '', {
-  //   allowedTags: ['b', 'i', 'em', 'strong', 'a'],
-  // });
-  const navigate = useNavigate();
+  const [expanded, setExpanded] = useState(false);
+  const [hasMore, setHasMore] = useState(false);
+  const containerRef = useRef(null);
+
+  const ellipsis = sanitizeHtml(block?.content, {
+    allowedTags: [],
+    allowedAttributes: {},
+    allowedIframeHostnames: [],
+    parser: {
+      decodeEntities: true,
+    },
+  });
+
+  console.log(ellipsis);
+
+  useEffect(() => {
+    if (containerRef.current?.offsetHeight > 2) {
+      setHasMore(true);
+    }
+  }, []);
 
   return (
     <div className="w-full h-full flex justify-between">
@@ -299,21 +313,25 @@ function VideoStory({ block, story, action }) {
         />
         <div
           style={{ zIndex: 1001 }}
-          className="absolute story-linear bottom-0 pb-[50px] sm:pb-[80px] sm:left-[36px] flex flex-col items-center sm:items-start"
+          className="flex flex-col absolute bottom-0 pb-[60px] md:pb-[70px] items-start w-full justify-end h-1/2 p-4 md:p-[30px] story-linear"
         >
-          <Paragraph
-            className="text-center w-full text-white leading-[32px] text-[28px] sm:text-[32px] font-condensed tracking-[0.48px] font-normal mb-[16px]"
-            ellipsis={ellipsis ? { rows: 3, expandable: true, symbol: 'дэлгэрэнгүй' } : null}
+          <p
+            style={{ textShadow: '0px 2px 3px #00000029' }}
+            className={`${
+              !expanded && 'truncate-2 max-w-[500px]'
+            } w-full text-white opacity-80 text-[22px] leading-[27px] font-condensed tracking-[0.48px] font-normal mb-[16px]`}
+            ref={containerRef}
           >
-            <span dangerouslySetInnerHTML={{ __html: block?.content || null }} />
-          </Paragraph>
-          {block?.data?.url && (
-            <a href={block.data.url} target="_blank">
-              <div className="w-[124px] sm:w-[148px] h-[34px] relative sm:h-[44px] bg-white flex p-1 px-2 border-0 text-[15px] font-medium text-caak-black rounded-[4px] items-center justify-center">
-                Дэлгэрэнгүй
-                <FIcon className="icon-fi-rs-down-chevron relative bottom-0 text-caak-primary text-[14px] -rotate-90" />
-              </div>
-            </a>
+            {ellipsis}
+          </p>
+          {hasMore && (
+            <button
+              onClick={() => setExpanded(!expanded)}
+              className="w-[112px] text-[14px] flex items-center justify-center h-[28px] rounded-[100px] bg-white bg-opacity-20 text-white"
+            >
+              Илүү ихийг
+              <FIcon className={`icon-fi-rs-down-chevron text-white text-[12px] ${expanded && 'rotate-180'}`} />
+            </button>
           )}
         </div>
       </div>

@@ -16,6 +16,7 @@ import Search from '../../component/header/search';
 import UserInfo from '../../component/header/UserInfo';
 import Session from '../../component/header/session';
 import styled from 'styled-components';
+import DrawerMenu from '../../component/header/drawer_menu';
 
 const FOLLOWS = gql`
   query GetFollows {
@@ -69,7 +70,7 @@ export default function Home() {
   const { isAuth } = useAuth();
   const [filter, setFilter] = useState(false);
   const [sort, setSort] = useState(false);
-  const isMobile = useMediaQuery(767);
+  const isMobile = useMediaQuery(640);
   const { data } = useQuery(FOLLOWS, { skip: !isAuth && selected !== 'user' });
   const follows = groupBy(data?.me?.follows.map((x) => x.target) || [], (x) => x.__typename.toLowerCase());
   useEffect(() => {
@@ -179,7 +180,10 @@ export default function Home() {
           className="hidden sm:flex sticky sm:justify-center bg-white z-[2] top-0 w-full px-[16px] sm:px-0 mt-[80px]"
         >
           <div className="w-full flex items-center justify-between border-b px-[16px] md:px-[48px]">
-            <Logo className="sm:h-[32px] sticky-part" />
+            <div className="flex items-center gap-[15px] lg:gap-6 sticky-part">
+              <DrawerMenu isMobile={isMobile} />
+              <Logo className="sm:h-[32px]" />
+            </div>
             <HomeTabs selected={selected} />
             <div className="flex items-center sticky-part">
               <Search transparent={false} />

@@ -32,6 +32,7 @@ const Wrapper = styled(Drawer)`
 `;
 
 export default function A3({ banner }) {
+  console.log(banner);
   const isMobile = useMediaQuery(640);
   const key = `a3_banner_${banner?.id}`;
   const duration = 60000 * 60 * 24; // a day

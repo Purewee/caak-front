@@ -165,7 +165,8 @@ const Post = () => {
 
   return (
     <div className="pb-[100px] flex flex-col items-center">
-      <div className="flex flex-row pb-[50px] justify-center w-full pt-[20px] xl:pt-[41px] px-[16px]">
+      <Banner position="a1" />
+      <div className="flex flex-row pb-[50px] justify-center w-full xl:pt-[41px] px-[16px]">
         <PostMeta title={title} description={metaDescription} image={article.image} />
         <div className="w-full hidden xl:block max-w-[200px]">
           <div
@@ -257,7 +258,6 @@ const Post = () => {
           </div>
         </div>
         <div className="flex flex-col max-w-[960px] w-full items-center">
-          <Banner position="a1" />
           <div className="pt-0 md:pt-[40px] flex flex-col items-center max-w-[760px] w-full font-roboto md:mx-[100px]">
             {article?.status === 'draft' && (
               <Alert
@@ -353,7 +353,7 @@ const Post = () => {
               <div className="flex sm:hidden flex-row items-center h-[18px] mt-[12px]">
                 <div className="flex flex-row items-center text-[#555555] text-[14px]">
                   <span className="icon-fi-rs-eye-o text-[18px] mr-[4px]" />
-                  <p>{kFormatter(article?.viewsCount) || 0}</p>
+                  <p>{(article?.viewsCount).toLocaleString()}</p>
                 </div>
                 <Button
                   icon={<span className="icon-fi-rs-comment-o text-[18px] mr-[4px]" />}
@@ -377,6 +377,11 @@ const Post = () => {
               {article.description && (
                 <PostBlock b={{ kind: 'text', id: '00', content: article.description }} idx={false} />
               )}
+              <div className="w-[270px] hidden xl:block">
+                <div className={`rounded ${leftMenuSticky ? 'sticky top-[80px] fade-in-banner' : 'hidden'}`}>
+                  <Banner position="a3" />
+                </div>
+              </div>
               {orderBy(article?.blocks, ['position'], 'asc').map((b, idx) => (
                 <div key={b.id}>
                   {numbering === 'asc' && <PostBlock b={b} idx={!!b.title && currentIdx++} />}
@@ -505,11 +510,6 @@ const Post = () => {
                 ref={commentsRef}
               />
             )}
-          </div>
-        </div>
-        <div className="w-[270px] hidden xl:block">
-          <div className={`rounded ${leftMenuSticky ? 'sticky top-[80px] fade-in-banner' : 'hidden'}`}>
-            <Banner position="a3" />
           </div>
         </div>
         {saving && <PostSaveModal post={article} image={imagePath(article.imageUrl)} toggle={() => setSaving(false)} />}

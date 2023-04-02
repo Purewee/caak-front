@@ -33,8 +33,8 @@ export default function UserInfo({ transparent }) {
   const navigate = useNavigate();
   const isMobile = useMediaQuery(640);
 
-  const toggleMenu = () => {
-    setProfileVisible(!profileVisible);
+  const handleVisibleChange = (visible) => {
+    setProfileVisible(visible);
   };
 
   const toggleSaving = () => {
@@ -165,8 +165,8 @@ export default function UserInfo({ transparent }) {
         placement="bottomRight"
         trigger="click"
         overlayClassName="padding_zero"
-        open={profileVisible}
-        onOpenChange={toggleMenu}
+        visible={profileVisible}
+        onVisibleChange={handleVisibleChange}
         overlayInnerStyle={{ borderRadius: 4 }}
         content={
           <div className="text-[#555555] w-[220px] py-[18px]">
@@ -229,7 +229,7 @@ export default function UserInfo({ transparent }) {
         }
       >
         {me.avatar ? (
-          <div>
+          <div onClick={() => setProfileVisible(!profileVisible)}>
             <Avatar
               src={imagePath(me.avatar)}
               size={34}
@@ -238,7 +238,7 @@ export default function UserInfo({ transparent }) {
             />
           </div>
         ) : (
-          <div>
+          <div onClick={() => setProfileVisible(!profileVisible)}>
             <Avatar
               size={34}
               className="ml-[20px] flex items-center bg-[#257CEE19] text-[#257CEE] text-[20px] cursor-pointer font-medium"
