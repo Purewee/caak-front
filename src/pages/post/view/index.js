@@ -166,7 +166,7 @@ const Post = () => {
   return (
     <div className="pb-[100px] flex flex-col items-center">
       <Banner position="a1" />
-      <div className="flex flex-row pb-[50px] justify-center w-full xl:pt-[41px] px-[16px]">
+      <div className="flex flex-row pb-[50px] justify-center w-full xl:pt-[41px] px-[16px] lg:px-0">
         <PostMeta title={title} description={metaDescription} image={article.image} />
         <div className="w-full hidden xl:block max-w-[200px]">
           <div
@@ -512,6 +512,7 @@ const Post = () => {
             )}
           </div>
         </div>
+        <div className="w-full hidden xl:block max-w-[200px]"></div>
         {saving && <PostSaveModal post={article} image={imagePath(article.imageUrl)} toggle={() => setSaving(false)} />}
         {sharing && (
           <PostShareModal post={article} toggle={() => setSharing(false)} image={imagePath(article.imageUrl)} />
