@@ -73,6 +73,7 @@ export default function Home() {
   const isMobile = useMediaQuery(640);
   const { data } = useQuery(FOLLOWS, { skip: !isAuth && selected !== 'user' });
   const follows = groupBy(data?.me?.follows.map((x) => x.target) || [], (x) => x.__typename.toLowerCase());
+
   useEffect(() => {
     window.addEventListener('scroll', () => {
       if (window.scrollY >= 1500) {
@@ -239,7 +240,7 @@ export default function Home() {
           />
         )}
       </div>
-      {isMobile && <Banner position="a3" />}
+      {/* {isMobile && <Banner position="a3" />} */}
     </>
   );
 }

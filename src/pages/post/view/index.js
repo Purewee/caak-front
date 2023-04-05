@@ -164,9 +164,9 @@ const Post = () => {
   if (fetching) return <Skeleton />;
 
   return (
-    <div className="pb-[100px] flex flex-col items-center">
+    <div className="pb-[100px] flex flex-col items-center xl:pt-[41px]">
       <Banner position="a1" />
-      <div className="flex flex-row pb-[50px] justify-center w-full xl:pt-[41px] px-[16px] lg:px-0">
+      <div className="flex flex-row pb-[50px] justify-center w-full px-[16px] lg:px-0">
         <PostMeta title={title} description={metaDescription} image={article.image} />
         <div className="w-full hidden xl:block max-w-[200px]">
           <div
@@ -377,11 +377,7 @@ const Post = () => {
               {article.description && (
                 <PostBlock b={{ kind: 'text', id: '00', content: article.description }} idx={false} />
               )}
-              <div className="w-[270px] hidden xl:block">
-                <div className={`rounded ${leftMenuSticky ? 'sticky top-[80px] fade-in-banner' : 'hidden'}`}>
-                  <Banner position="a3" />
-                </div>
-              </div>
+              <Banner position="a3" />
               {orderBy(article?.blocks, ['position'], 'asc').map((b, idx) => (
                 <div key={b.id}>
                   {numbering === 'asc' && <PostBlock b={b} idx={!!b.title && currentIdx++} />}

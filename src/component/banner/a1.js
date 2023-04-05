@@ -12,7 +12,7 @@ export default function A1({ banner }) {
   return isMobile ? (
     isShown && (
       <div className="w-full relative">
-        <ImpressedLink id={banner.id} href={banner?.href} target="_blank" className="z-0">
+        <ImpressedLink id={banner.id} href={banner?.url} target="_blank" className="z-0">
           <img src={imagePath(banner?.mobileFileUrl)} alt={banner?.title} className="w-full" />
         </ImpressedLink>
         <span

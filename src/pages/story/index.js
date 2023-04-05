@@ -203,7 +203,7 @@ function ImageStory({ block, story }) {
           </div>
           <Link
             style={{ zIndex: 1000 }}
-            className="mt-10 sm:mt-5 flex justify-center sm:justify-start"
+            className="mt-10 sm:mt-5 flex w-full justify-center sm:justify-start"
             to={block?.data?.url}
           >
             <div className="w-[124px] sm:w-[136px] h-[34px] relative bg-white flex p-1 px-2 border-0 text-[15px] font-medium text-caak-black rounded-[4px] items-center justify-center">
@@ -249,7 +249,6 @@ function ImageStory({ block, story }) {
 function VideoStory({ block, story, action }) {
   const [muted, setMuted] = useState(true);
   const [playing, setPlaying] = useState(true);
-  console.log(playing);
   const [expanded, setExpanded] = useState(false);
   const [hasMore, setHasMore] = useState(false);
   const containerRef = useRef(null);
@@ -332,6 +331,18 @@ function VideoStory({ block, story, action }) {
               Илүү ихийг
               <FIcon className={`icon-fi-rs-down-chevron text-white text-[12px] ${expanded && 'rotate-180'}`} />
             </button>
+          )}
+          {block?.data?.url && (
+            <a
+              className="mt-[10px] sm:mt-5 flex w-full justify-center sm:justify-start"
+              href={block?.data?.url}
+              target="_blank"
+            >
+              <div className="w-[124px] sm:w-[136px] h-[34px] relative bg-white flex p-1 px-2 border-0 text-[15px] font-medium text-caak-black rounded-[4px] items-center justify-center">
+                Дэлгэрэнгүй
+                <FIcon className="icon-fi-rs-down-chevron absolute sm:relative bottom-[40px] sm:bottom-0 text-white sm:text-caak-primary text-[14px] rotate-180 sm:-rotate-90" />
+              </div>
+            </a>
           )}
         </div>
       </div>
