@@ -17,10 +17,10 @@ export default function A3({ banner }) {
         <span className="icon-fi-rs-megaphone text-[16px] mr-1" />
         <p className="text-[#BBBEBE] text-[15px] leading-[18px]">Caak Ads</p>
       </div>
-      <p className="text-[#555555] text-[18px] leading-[30px]">
+      {/* <p className="text-[#555555] text-[18px] leading-[30px]">
         Туйлын туяан гэрлийн доор буга болон хаски нохойн чарга хөлөглөн мартагдашгүй дурсамжаа бүтээх алхмаа яг одоо
         хийгээрэй.
-      </p>
+      </p> */}
     </div>
   );
 }
