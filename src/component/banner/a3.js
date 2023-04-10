@@ -16,12 +16,12 @@ export default function A3({ banner }) {
       <a href={banner.url} target="_blank">
         <img src={imagePath(banner?.mobileFileUrl)} alt={banner?.title} className="w-full object-cover" />
       </a>
-      <Link to="/help/1">
+      <a target="_blank" href="/help/1">
         <div className="flex w-full justify-end py-[10px] items-center">
           <span className="icon-fi-rs-megaphone text-[16px] mr-1" />
           <p className="text-[#BBBEBE] text-[15px] leading-[18px]">Caak Ads</p>
         </div>
-      </Link>
+      </a>
       {/* <p className="text-[#555555] text-[18px] leading-[30px]">
         Туйлын туяан гэрлийн доор буга болон хаски нохойн чарга хөлөглөн мартагдашгүй дурсамжаа бүтээх алхмаа яг одоо
         хийгээрэй.

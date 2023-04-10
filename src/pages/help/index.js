@@ -178,6 +178,10 @@ export default function Help() {
     context.setStore('default');
   }, []);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <div className="w-full flex flex-col items-center bg-[#F5F5F5]">
       <div className="w-full h-[230px] md:h-[340px] bg-[#463146] flex justify-center px-[16px]">

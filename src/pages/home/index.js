@@ -240,7 +240,6 @@ export default function Home() {
           />
         )}
       </div>
-      {/* {isMobile && <Banner position="a3" />} */}
     </>
   );
 }

@@ -379,7 +379,7 @@ const Post = () => {
               )}
               <Banner position="a3" />
               {orderBy(article?.blocks, ['position'], 'asc').map((b, idx) => (
-                <div key={b.id}>
+                <div className="mt-6 lg:mt-10" key={b.id}>
                   {numbering === 'asc' && <PostBlock b={b} idx={!!b.title && currentIdx++} />}
                   {numbering === 'desc' && <PostBlock b={b} idx={!!b.title && currentIdx--} />}
                   {numbering === false && <PostBlock b={b} idx={false} />}
