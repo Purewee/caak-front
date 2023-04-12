@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState, useContext } from 'react';
 import { Tabs, Statistic, Button, Col, Skeleton } from 'antd';
 import { ESService } from '../../lib/esService';

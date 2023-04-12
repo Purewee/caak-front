@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useMutation, useQuery } from '@apollo/client';
+import { useMutation } from '@apollo/client';
 import { ADD_REACTION, UPDATE_REACTION } from './_gql';
 import { Button, Spin, message } from 'antd';
 import * as love from '../../../assets/json/love-js.json';

@@ -1,19 +1,7 @@
 import React from 'react';
-import { Tabs } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import useMediaQuery from '../../component/navigation/useMediaQuery';
-import styled from 'styled-components';
 import { useAuth } from '../../context/AuthContext';
-
-const Wrapper = styled(Tabs)`
-  .ant-tabs-tab {
-    padding: 8px 0px;
-    color: #555555;
-    &-active {
-      color: #111111;
-    }
-  }
-`;
 
 export default function HomeTabs({ selected }) {
   const { isAuth } = useAuth();

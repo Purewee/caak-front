@@ -3,7 +3,7 @@ import { useQuery, gql, useMutation } from '@apollo/client';
 import { useParams } from 'react-router-dom';
 import { ESService } from '../../lib/esService';
 import { ME, USER } from '../post/view/_gql';
-import { Avatar, Col, Statistic, Tabs, Skeleton, Button, Badge } from 'antd';
+import { Avatar, Col, Statistic, Tabs, Skeleton, Button } from 'antd';
 import PostCard from '../../component/card/Post';
 import { useAuth } from '../../context/AuthContext';
 import { Link } from 'react-router-dom';
@@ -62,7 +62,6 @@ export default function Profile() {
   const [articles, setArticles] = useState([]);
   const [followsOpen, setFollowsOpen] = useState(false);
   const [selected, setSelected] = useState(location.state ? location.state : 'posts');
-  const [count, setCount] = useState(0);
   const [page, setPage] = useState(0);
   const [loading, setLoading] = useState(false);
   const { data, loading: fetching, refetch } = useQuery(USER, { variables: { id } });
@@ -83,17 +82,18 @@ export default function Profile() {
     es.authorPosts(id, page).then(({ hits, total }) => {
       setLoading(false);
       setArticles([...articles, ...hits]);
-      setCount(total);
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id, page]);
 
   useEffect(() => {
     context.setStore('default');
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, [user]);
+  }, [id]);
 
   if (fetching) return <Skeleton />;
 

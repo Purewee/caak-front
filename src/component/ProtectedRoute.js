@@ -1,4 +1,3 @@
-import React from 'react';
 import { useHeader } from '../context/HeaderContext';
 import { useQuery } from '@apollo/client';
 import { ME } from '../pages/post/view/_gql';

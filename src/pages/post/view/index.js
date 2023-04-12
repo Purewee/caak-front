@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext, useRef } from 'react';
+import React, { useState, useEffect, useContext, useRef, useMemo } from 'react';
 import { AppContext } from '../../../App';
 import { gql, useQuery } from '@apollo/client';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -75,8 +75,8 @@ const Post = () => {
   const [filter, setFilter] = useState([]);
   const [sort, setSort] = useState({});
   const { data, loading } = useQuery(ARTICLE, { variables: { id, slug }, fetchPolicy: 'network-only' });
-  const { data: me, loading: me_loading } = useQuery(ME);
-  const article = data?.article || {};
+  const { data: me } = useQuery(ME);
+  const article = useMemo(() => data?.article || {}, [data?.article]);
   const numbering = article?.data?.numbering || false;
   const numerableBlocksCount = article?.blocks?.filter((x) => !!x.title).length;
   let currentIdx = numbering === 'desc' ? numerableBlocksCount : 1;
@@ -88,7 +88,7 @@ const Post = () => {
   });
   const source = data_source?.source || {};
   const [follow, { loading: follow_saving }] = useMutation(FOLLOW, { variables: { id: article?.source?.id } });
-  const [remove, { loading: removing }] = useMutation(REMOVE, { variables: { id: article?.id } });
+  const [remove] = useMutation(REMOVE, { variables: { id: article?.id } });
   const { isAuth, openModal } = useAuth();
   const { setMode } = useHeader();
   const {
@@ -108,10 +108,12 @@ const Post = () => {
   useEffect(() => {
     context.setStore('default');
     setMode('sticky');
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
     context.setShown(true);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {

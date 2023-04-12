@@ -6,7 +6,6 @@ import { useQuery, gql, useMutation } from '@apollo/client';
 import { useAuth } from '../../context/AuthContext';
 import { imagePath } from '../../utility/Util';
 import { getDataFromBlob, imageCompress } from '../../lib/imageCompress';
-import useMediaQuery from '../../component/navigation/useMediaQuery';
 import AddCategoriesModal from '../../component/modal/AddCategoriesModal';
 import { Link } from 'react-router-dom';
 import AddSourceModal from '../../component/modal/AddSourceModal';
@@ -130,11 +129,11 @@ export default function Settings() {
   const [follow_tag] = useMutation(FOLLOW_TAG);
 
   const me = data?.me || {};
-  const isMobile = useMediaQuery(767);
 
   useEffect(() => {
     context.setStore('default');
     if (me.avatar) setAvatar(imagePath(me.avatar));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [me]);
 
   if (loading) return <Skeleton />;
@@ -481,7 +480,6 @@ export default function Settings() {
                                   ) : (
                                     <Button
                                       type="primary"
-                                      loading={follow_saving}
                                       className="w-full h-[34px] mt-[12px] bg-caak-primary rounded-[4px] text-white text-[15px] font-bold"
                                       onClick={() => {
                                         if (isAuth) {

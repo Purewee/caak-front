@@ -4,7 +4,6 @@ import { useEffect, useRef, useState } from 'react';
 import Configure from '../component/configure';
 import moment from 'moment';
 import urlParser from 'js-video-url-parser';
-import { includes } from 'lodash/collection';
 
 const regexEmail = '^[a-zA-Z0-9._:$!%-]+@[a-zA-Z0-9.-]+.[a-zA-Z]$';
 const regexNumber = '^[0-9]{8}$';

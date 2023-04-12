@@ -3,8 +3,10 @@ import { notification, Modal } from 'antd';
 import { FacebookShareButton, TwitterShareButton } from 'react-share';
 import Configure from '../configure';
 import { CopyToClipboard } from 'react-copy-to-clipboard/src';
+import { useAuth } from '../../context/AuthContext';
 
 export default function PostShareModal({ post, toggle, image }) {
+  const { isAuth, openModal } = useAuth();
   const openNotification = () => {
     const args = {
       message: 'Линк хуулагдлаа',
@@ -19,14 +21,14 @@ export default function PostShareModal({ post, toggle, image }) {
     <Modal
       visible
       width={480}
-      onOk={() =>
-        isAuth
-          ? save().then((e) => {
-              openNotification();
-              toggle();
-            })
-          : openModal('login')
-      }
+      onOk={() => {
+        if (isAuth) {
+          openNotification();
+          toggle();
+        } else {
+          openModal('login');
+        }
+      }}
       onCancel={toggle}
       bodyStyle={{ padding: 0 }}
       afterClose={toggle}

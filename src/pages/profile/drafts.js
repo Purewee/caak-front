@@ -1,6 +1,6 @@
 import React from 'react';
 import { gql, useQuery } from '@apollo/client';
-import { Avatar, Button, Image, List, Tag } from 'antd';
+import { Avatar, Button, List, Tag } from 'antd';
 import { imagePath } from '../../utility/Util';
 import moment from 'moment';
 import { EditOutlined } from '@ant-design/icons';

@@ -1,8 +1,8 @@
-import React, { useEffect, useRef, HTMLAttributes } from 'react';
+import React, { useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import { BlockTitle, Paragraph } from './wrapper';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
-import { imagePath, parseVideoURL } from '../../../utility/Util';
+import { imagePath } from '../../../utility/Util';
 import ReactPlayer from 'react-player';
 import Configure from '../../../component/configure';
 
@@ -104,6 +104,7 @@ export function DangerouslySetHtmlContent({ html, ...rest }) {
   const divRef = useRef(null);
 
   useEffect(() => {
+    // eslint-disable-next-line no-throw-literal
     if (!html || !divRef.current) throw "html prop cant't be null";
 
     const slotHtml = document.createRange().createContextualFragment(html); // Create a 'tiny' document and parse the html string

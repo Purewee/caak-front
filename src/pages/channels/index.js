@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { gql, useQuery, useMutation } from '@apollo/client';
 import { Link } from 'react-router-dom';
 import { Avatar, Button, Skeleton, Tabs } from 'antd';
@@ -45,7 +45,7 @@ export default function Channels() {
   const { data, loading, refetch } = useQuery(SOURCES, {
     variables: filter !== 'all' ? { filter: { category: { eq: filter } } } : {},
   });
-  const { data: data_cat, loading: loading_cat } = useQuery(CATEGORIES);
+  const { data: data_cat } = useQuery(CATEGORIES);
   const categories = data_cat?.sourceCategories || [];
   const channels = data?.sources.edges.map((x) => x.node) || [];
   const [follow, { loading: saving }] = useMutation(FOLLOW);

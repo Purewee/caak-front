@@ -1,6 +1,7 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState, useContext } from 'react';
-import { useLocation, useSearchParams } from 'react-router-dom';
-import { Col, Input, Row, Button, Skeleton } from 'antd';
+import { useSearchParams } from 'react-router-dom';
+import { Col, Input, Button, Skeleton } from 'antd';
 import { FIcon } from '../../component/icon';
 import { ESService } from '../../lib/esService';
 import PostCard from '../../component/card/Post';

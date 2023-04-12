@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useRef, useState } from 'react';
 import Logo from '../../component/logo';
 import { Link, useNavigate, useParams, useLocation } from 'react-router-dom';
@@ -5,14 +6,11 @@ import { generateTimeAgo, imagePath } from '../../utility/Util';
 import { useQuery } from '@apollo/client';
 import { STORY } from './_gql';
 import Stories from 'react-insta-stories';
-import { Button, Skeleton, Typography } from 'antd';
+import { Button, Skeleton } from 'antd';
 import ReactPlayer from 'react-player';
 import { FIcon } from '../../component/icon';
 import AllStories from '../../assets/images/all-stories.png';
-import moment from 'moment';
 import sanitizeHtml from 'sanitize-html';
-
-const { Paragraph } = Typography;
 
 export default function Story() {
   const { id } = useParams();
@@ -337,6 +335,7 @@ function VideoStory({ block, story, action }) {
               className="mt-[10px] sm:mt-5 flex w-full justify-center sm:justify-start"
               href={block?.data?.url}
               target="_blank"
+              rel="noreferrer"
             >
               <div className="w-[124px] sm:w-[136px] h-[34px] relative bg-white flex p-1 px-2 border-0 text-[15px] font-medium text-caak-black rounded-[4px] items-center justify-center">
                 Дэлгэрэнгүй

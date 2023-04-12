@@ -30,6 +30,7 @@ function Banner({ position, index }) {
     if (index) {
       refetch();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [index]);
 
   if (loading) return <Skeleton />;
