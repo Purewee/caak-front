@@ -14,15 +14,16 @@ import {
   Upload,
   Select,
   Checkbox,
+  InputNumber,
 } from 'antd';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
 import { CREATE, POST, UPDATE, CONVERT_LINK, SOURCES, CATEGORIES, TAGS } from '../post/_gql';
 import { LinkOutlined, SaveOutlined } from '@ant-design/icons';
-import { getDataFromBlob, imageCompress } from '../../../lib/imageCompress';
+import { getDataFromBlob, imageCompress } from 'lib/imageCompress';
 import { DatePicker } from 'antd/es';
 import moment from 'moment';
-import { imagePath } from '../../../utility/Util';
+import { imagePath } from 'utility/Util';
 import { Helmet } from 'react-helmet';
 
 function AddLink() {
@@ -58,10 +59,12 @@ function AddLink() {
       onFinish={(values) => {
         saveArticle({
           variables: {
-            id: id,
-            kind: 'linked',
-            ...values,
-            imageUrl: data?.image,
+            input: {
+              id: id,
+              kind: 'linked',
+              ...values,
+              imageUrl: data?.image,
+            },
           },
         })
           .then(() => {
@@ -79,11 +82,12 @@ function AddLink() {
       className="caak_article font-merri"
       initialValues={{
         status: 'published',
+        featuredDays: 7,
         ...article,
         sourceId: article?.source?.id,
         tags: article?.tags.map((x) => x.slug),
-        featuredDates: [moment(article?.featuredFrom || undefined), moment(article?.featuredTo || undefined)],
         publishDate: moment(article?.publishDate || undefined),
+        featuredFrom: moment(article?.featuredFrom || undefined),
       }}
     >
       <Helmet>
@@ -151,6 +155,7 @@ function AddLink() {
                   href={imagePath('/admin/sources/new')}
                   className="font-merri text-caak-primary  text-[12px] mt-1"
                   target="_blank"
+                  rel="noreferrer"
                 >
                   Суваг нэмэх
                 </a>
@@ -203,8 +208,11 @@ function AddLink() {
               </Form.Item>
               {featured && (
                 <div className="flex justify-between">
-                  <Form.Item name="featuredDates" className="font-merri text-[12px]" label="Онцлох огноо">
-                    <DatePicker.RangePicker showTime format="YYYY-MM-DD HH:mm" />
+                  <Form.Item name="featuredFrom" className="font-merri text-[12px]" label="Онцлох огноо">
+                    <DatePicker showTime format="YYYY-MM-DD HH:mm" />
+                  </Form.Item>
+                  <Form.Item name="featuredDays" className="font-merri text-[12px]" label="Онцлох өдөр">
+                    <InputNumber />
                   </Form.Item>
                 </div>
               )}

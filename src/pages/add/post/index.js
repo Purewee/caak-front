@@ -12,6 +12,7 @@ import {
   Form,
   Image,
   Input,
+  InputNumber,
   message,
   Popconfirm,
   Radio,
@@ -26,12 +27,12 @@ import { CKEditor } from '@ckeditor/ckeditor5-react';
 import InlineEditor from 'ckeditor5-custom-build';
 import AddTabs from '../tabs';
 
-import { imagePath } from '../../../utility/Util';
+import { imagePath } from 'utility/Util';
 import { useNavigate, useParams } from 'react-router-dom';
-import { getDataFromBlob, imageCompress } from '../../../lib/imageCompress';
+import { getDataFromBlob, imageCompress } from 'lib/imageCompress';
 import AddBlock from './AddBlock';
 import SortableContainer from './SortableContainer';
-import { AppContext } from '../../../App';
+import { AppContext } from 'App';
 import { Helmet } from 'react-helmet';
 
 const fallback =
@@ -119,20 +120,20 @@ function AddPost() {
         }
         saveArticle({
           variables: {
-            id: id,
-            kind: 'post',
-            featuredFrom: values.featuredDates?.[0],
-            featuredTo: values.featuredDates?.[1],
-            ...values,
-            blocks: values.blocks.map((x, idx) => ({
-              id: x.id,
-              kind: x.kind,
-              position: idx + 1,
-              title: x.title,
-              image: x.image,
-              content: x.content,
-              data: x.data,
-            })),
+            input: {
+              id,
+              kind: 'post',
+              ...values,
+              blocks: values.blocks.map((x, idx) => ({
+                id: x.id,
+                kind: x.kind,
+                position: idx + 1,
+                title: x.title,
+                image: x.image,
+                content: x.content,
+                data: x.data,
+              })),
+            },
           },
         })
           .then((res) => {
@@ -150,11 +151,12 @@ function AddPost() {
         status: 'published',
         acceptComment: true,
         sourceId: article?.source?.id || '1',
+        featuredDays: 7,
         data: { numbering: false },
         ...article,
+        featuredFrom: moment(article?.featuredFrom || undefined),
         tags: article?.tags.map((x) => x.slug),
         blocks: sortBy(article?.blocks, 'position'),
-        featuredDates: [moment(article?.featuredFrom || undefined), moment(article?.featuredTo || undefined)],
         publishDate: moment(article?.publishDate || undefined),
       }}
     >
@@ -313,8 +315,11 @@ function AddPost() {
               </Form.Item>
               {featured && (
                 <div className="flex justify-between">
-                  <Form.Item name="featuredDates" className="font-merri text-[12px]" label="Онцлох огноо">
-                    <DatePicker.RangePicker showTime format="YYYY-MM-DD HH:mm" />
+                  <Form.Item name="featuredFrom" className="font-merri text-[12px]" label="Онцлох огноо">
+                    <DatePicker showTime format="YYYY-MM-DD HH:mm" />
+                  </Form.Item>
+                  <Form.Item name="featuredDays" className="font-merri text-[12px]" label="Онцлох өдөр">
+                    <InputNumber />
                   </Form.Item>
                 </div>
               )}

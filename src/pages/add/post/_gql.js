@@ -30,6 +30,7 @@ export const POST = gql`
       featured
       featuredFrom
       featuredTo
+      featuredDays
       acceptComment
       author {
         id
@@ -65,90 +66,16 @@ export const POST = gql`
 `;
 
 export const CREATE = gql`
-  mutation AddPost(
-    $title: String!
-    $status: String
-    $description: String
-    $publishDate: ISO8601DateTime
-    $image: Upload
-    $acceptComment: Boolean
-    $featured: Boolean
-    $featuredFrom: ISO8601DateTime
-    $featuredTo: ISO8601DateTime
-    $blocks: [BlockInput!]
-    $categoryIds: [ID!]
-    $tags: [String!]
-    $data: JSON
-    $sourceId: ID
-    $imageUrl: String
-    $kind: String
-  ) {
-    article: addArticle(
-      input: {
-        title: $title
-        status: $status
-        description: $description
-        image: $image
-        publishDate: $publishDate
-        acceptComment: $acceptComment
-        featured: $featured
-        featuredFrom: $featuredFrom
-        featuredTo: $featuredTo
-        blocks: $blocks
-        categoryIds: $categoryIds
-        tags: $tags
-        data: $data
-        sourceId: $sourceId
-        imageUrl: $imageUrl
-        kind: $kind
-      }
-    ) {
+  mutation AddPost($input: addArticleInput!) {
+    article: addArticle(input: $input) {
       id
     }
   }
 `;
 
 export const UPDATE = gql`
-  mutation UpdatePost(
-    $id: ID!
-    $title: String!
-    $status: String
-    $description: String
-    $image: Upload
-    $publishDate: ISO8601DateTime
-    $acceptComment: Boolean
-    $featured: Boolean
-    $featuredFrom: ISO8601DateTime
-    $featuredTo: ISO8601DateTime
-    $blocks: [BlockInput!]
-    $categoryIds: [ID!]
-    $tags: [String!]
-    $data: JSON
-    $sourceId: ID
-    $imageUrl: String
-    $kind: String
-  ) {
-    article: updateArticle(
-      input: {
-        id: $id
-        title: $title
-        status: $status
-        description: $description
-        image: $image
-        publishDate: $publishDate
-        acceptComment: $acceptComment
-        featured: $featured
-        featuredFrom: $featuredFrom
-        featuredTo: $featuredTo
-        blocks: $blocks
-        categoryIds: $categoryIds
-        tags: $tags
-        data: $data
-        sourceId: $sourceId
-        imageUrl: $imageUrl
-        kind: $kind
-      }
-    ) {
+  mutation UpdatePost($input: updateArticleInput!) {
+    article: updateArticle(input: $input) {
       id
     }
   }

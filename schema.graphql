@@ -53,6 +53,7 @@ type Article {
   description: String
   editable: Boolean!
   featured: Boolean!
+  featuredDays: Int
   featuredFrom: ISO8601DateTime
   featuredTo: ISO8601DateTime
   id: ID!
@@ -988,6 +989,7 @@ input addArticleInput {
   data: JSON
   description: String
   featured: Boolean
+  featuredDays: Int
   featuredFrom: ISO8601DateTime
   featuredTo: ISO8601DateTime
   image: Upload
@@ -1172,6 +1174,7 @@ input updateArticleInput {
   data: JSON
   description: String
   featured: Boolean
+  featuredDays: Int
   featuredFrom: ISO8601DateTime
   featuredTo: ISO8601DateTime
   id: ID!

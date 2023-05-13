@@ -19,18 +19,19 @@ import {
   Upload,
   DatePicker,
   Checkbox,
+  InputNumber,
 } from 'antd';
 import { DeleteOutlined, SaveOutlined, SearchOutlined } from '@ant-design/icons';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import InlineEditor from 'ckeditor5-custom-build';
 import ReactPlayer from 'react-player';
 
-import { imagePath } from '../../../utility/Util';
+import { imagePath } from 'utility/Util';
 import { useNavigate, useParams } from 'react-router-dom';
-import { getDataFromBlob, imageCompress } from '../../../lib/imageCompress';
+import { getDataFromBlob, imageCompress } from 'lib/imageCompress';
 import AddBlock from './AddBlock';
 import SortableContainer from './SortableContainer';
-import { AppContext } from '../../../App';
+import { AppContext } from 'App';
 import { Helmet } from 'react-helmet';
 import AddTabs from '../tabs';
 
@@ -97,19 +98,22 @@ function AddStory() {
       onFinish={(values) => {
         saveArticle({
           variables: {
-            id: id,
-            kind: 'story',
-            ...values,
-            blocks: values.blocks.map((x, idx) => ({
-              id: x.id,
-              kind: x.kind,
-              position: idx + 1,
-              title: x.title,
-              image: x.image,
-              content: x.content,
-              videoFile: x.videoFile,
-              data: x.data,
-            })),
+            input: {
+              id: id,
+              kind: 'story',
+              featuredDays: 7,
+              ...values,
+              blocks: values.blocks.map((x, idx) => ({
+                id: x.id,
+                kind: x.kind,
+                position: idx + 1,
+                title: x.title,
+                image: x.image,
+                content: x.content,
+                videoFile: x.videoFile,
+                data: x.data,
+              })),
+            },
           },
         })
           .then((res) => {
@@ -127,11 +131,12 @@ function AddStory() {
       onValuesChange={() => setDirty(true)}
       initialValues={{
         status: 'published',
+        featuredDays: 7,
         ...article,
         tags: article?.tags.map((x) => x.slug),
         blocks: sortBy(article?.blocks, 'position'),
         publishDate: moment(article?.publishDate || undefined),
-        featuredDates: [moment(article?.featuredFrom || undefined), moment(article?.featuredTo || undefined)],
+        featuredFrom: moment(article?.featuredFrom || undefined),
       }}
     >
       <Helmet>
@@ -217,8 +222,11 @@ function AddStory() {
               </Form.Item>
               {featured && (
                 <div className="flex justify-between">
-                  <Form.Item name="featuredDates" className="font-merri text-[12px]" label="Онцлох огноо">
-                    <DatePicker.RangePicker showTime format="YYYY-MM-DD HH:mm" />
+                  <Form.Item name="featuredFrom" className="font-merri text-[12px]" label="Онцлох огноо">
+                    <DatePicker showTime format="YYYY-MM-DD HH:mm" />
+                  </Form.Item>
+                  <Form.Item name="featuredDays" className="font-merri text-[12px]" label="Онцлох өдөр">
+                    <InputNumber />
                   </Form.Item>
                 </div>
               )}
