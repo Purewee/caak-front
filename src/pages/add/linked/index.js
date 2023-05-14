@@ -23,7 +23,7 @@ import { LinkOutlined, SaveOutlined } from '@ant-design/icons';
 import { getDataFromBlob, imageCompress } from 'lib/imageCompress';
 import { DatePicker } from 'antd/es';
 import moment from 'moment';
-import { imagePath } from 'utility/Util';
+import { imagePath, useDebounce } from 'utility/Util';
 import { Helmet } from 'react-helmet';
 
 function AddLink() {
@@ -270,8 +270,20 @@ export default AddLink;
 
 function TagsField({ ...rest }) {
   const [filter, setFilter] = useState(null);
-  const { data, loading } = useQuery(TAGS, { variables: { filter } });
-  const options = data?.tags?.nodes.map((x) => ({ key: x.slug, value: x.slug, label: x.name })) || [];
+  const debouncedFilter = useDebounce(filter, 500);
+  const { data, loading } = useQuery(TAGS, { variables: { filter: debouncedFilter } });
+  const options =
+    data?.tags?.nodes.map((x) => ({ key: x.slug, value: x.slug, label: `${x.name} (${x.articlesCount})` })) || [];
 
-  return <Select showSearch onSearch={setFilter} filterOption={false} options={options} loading={loading} {...rest} />;
+  return (
+    <Select
+      showSearch
+      onSearch={setFilter}
+      filterOption={false}
+      options={options}
+      loading={loading}
+      {...rest}
+      size="large"
+    />
+  );
 }

@@ -27,7 +27,7 @@ import { CKEditor } from '@ckeditor/ckeditor5-react';
 import InlineEditor from 'ckeditor5-custom-build';
 import AddTabs from '../tabs';
 
-import { imagePath } from 'utility/Util';
+import { imagePath, useDebounce } from 'utility/Util';
 import { useNavigate, useParams } from 'react-router-dom';
 import { getDataFromBlob, imageCompress } from 'lib/imageCompress';
 import AddBlock from './AddBlock';
@@ -541,8 +541,10 @@ function VideoBlock({ block, idx, setBlocks, onRemove }) {
 
 function TagsField({ ...rest }) {
   const [filter, setFilter] = useState(null);
-  const { data, loading } = useQuery(TAGS, { variables: { filter } });
-  const options = data?.tags?.nodes.map((x) => ({ key: x.slug, value: x.slug, label: x.name })) || [];
+  const debouncedFilter = useDebounce(filter, 500);
+  const { data, loading } = useQuery(TAGS, { variables: { filter: debouncedFilter } });
+  const options =
+    data?.tags?.nodes.map((x) => ({ key: x.slug, value: x.slug, label: `${x.name} (${x.articlesCount})` })) || [];
 
   return (
     <Select

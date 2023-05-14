@@ -89,6 +89,7 @@ export const TAGS = gql`
         name
         slug
         following
+        articlesCount
       }
     }
   }
