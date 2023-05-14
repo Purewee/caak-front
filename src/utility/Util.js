@@ -466,6 +466,10 @@ export function isAdmin(user) {
   return 'admin' === user?.role;
 }
 
+export function isManager(user) {
+  return 'manager' === user?.role;
+}
+
 export function setStorageExpiry(key, value, ttl) {
   const now = new Date();
 
@@ -523,6 +527,7 @@ const object = {
   generateTimeAgo,
   isAdmin,
   isModerator,
+  isManager,
   setStorageExpiry,
   getStorageExpiry,
 };

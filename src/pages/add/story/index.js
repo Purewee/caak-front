@@ -101,7 +101,6 @@ function AddStory() {
             input: {
               id: id,
               kind: 'story',
-              featuredDays: 7,
               ...values,
               blocks: values.blocks.map((x, idx) => ({
                 id: x.id,
