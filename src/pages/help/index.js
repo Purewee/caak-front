@@ -3,7 +3,7 @@ import { AppContext } from '../../App';
 import CaakRadio from '../../images/Caak-radio.png';
 import CaakEnt from '../../images/caak-entertainment.png';
 import Caak from '../../images/New-Logo.svg';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import OntslohNews from '../../assets/images/ontsloh.png';
 import NewsMade from '../../assets/images/realnews.png';
 import BannerModal from '../../component/modal/BannerModal';
@@ -129,7 +129,7 @@ const security = [
 const caakAds = [
   {
     pos: 'A1',
-    size: '1300х200',
+    size: '1900х300',
     desc: 'Нүүр хуудас болон мэдээний дэлгэрэнгүйн толгойн хэсэгт харагдана.',
   },
   {
@@ -139,21 +139,33 @@ const caakAds = [
   },
   {
     pos: 'A3',
-    size: '340х500, 780х780',
-    desc: 'Компьютераас үзэх үед мэдээний баруун талд дагаж харагдах бол утсаар үзэхэд доороос дээшээ гүйж гарч ирнэ.',
+    size: '760х390',
+    desc: 'Мэдээг дэлгэрэнгүй үзэх үед мэдээн дунд таны баннер том хэмжээтэй, хүртээмжтэй байршилд харагдах болно',
   },
 ];
 
 const moneyNews = [
   {
     pos: 'ОНЦЛОХ МЭДЭЭ',
-    desc: 'Нүүр хуудасны хамгийн эхэнд 24 цаг онцлогдоно. Мөн мэдээний жагсаалт дунд ялгарч харагдана. Сайтын баруунд доод хэсгээс pop-up хэлбэрээр хэрэглэгчид санал болгоно. Сайтын сошиал (facebook, twitter) сувгуудаар давхар шэйр хийгдэнэ',
+    desc: (
+      <ul className="square-list text-caak-darkGray  text-[15px] leading-[20px]">
+        <li>Бусад мэдээнүүдээс дэвсгэр өнгөөр харагдана</li>
+        <li>Сайтын бүх мэдээний дэлгэрэнгүй дунд харагадана (спонсород пост)</li>
+        <li>Манай сошиал сувгууд (facebook, twitter)-аар давхар шэйр хийгдэнэ</li>
+      </ul>
+    ),
     pic: OntslohNews,
   },
   {
     pos: 'МЭДЭЭ, НИЙТЛЭЛ БЭЛТГЭХ',
-    desc: 'Тухайн үйлчилгээ, бүтээгдэхүүнийг далд хэлбэрээр сурталчилсан сонирхолтой мэдээ бэлтгэж өгнө. Мөн дараах сувгуудаар түгээж өгнө: Caak.mn, фэйсбүүк, Твиттер',
+    desc: (
+      <p className="text-caak-darkGray text-[15px] leading-[20px]">
+        Тухайн үйлчилгээ, бүтээгдэхүүнийг далд хэлбэрээр сурталчилсан сонирхолтой мэдээ бэлтгэж өгнө. Мөн дараах
+        сувгуудаар түгээж өгнө: Caak.mn, фэйсбүүк, Твиттер
+      </p>
+    ),
     pic: NewsMade,
+    url: '/post/view/265692',
   },
 ];
 
@@ -512,10 +524,19 @@ export default function Help() {
                       </p>
                     </div>
                     <div className="flex flex-col justify-between h-[203px] p-[20px]">
-                      <p className="text-caak-darkGray text-[15px] leading-[20px]">{data.desc}</p>
-                      <button className="bg-[#363946] text-white text-[16px] font-medium w-full h-[44px] rounded-[4px]">
-                        Жишээ үзэх
-                      </button>
+                      {data.desc}
+                      {data.url ? (
+                        <Link
+                          to={data.url}
+                          className="bg-[#363946] text-white flex items-center justify-center text-[16px] hover:text-white font-medium w-full h-[44px] rounded-[4px]"
+                        >
+                          Жишээ үзэх
+                        </Link>
+                      ) : (
+                        <button className="bg-[#363946] text-white text-[16px] font-medium w-full h-[44px] rounded-[4px]">
+                          Жишээ үзэх
+                        </button>
+                      )}
                     </div>
                   </div>
                 );

@@ -676,3 +676,13 @@
 .see-more {
   display: none;
 }
+
+.square-list {
+  list-style: none;
+  padding-left: 0;
+}
+
+.square-list li:before {
+  content: '▪';
+  margin-right: 0.5em;
+}
