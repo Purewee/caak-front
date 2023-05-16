@@ -459,7 +459,7 @@ export function parseVideoURL(url) {
 }
 
 export function isModerator(user) {
-  return ['admin', 'moderator'].includes(user?.role);
+  return ['admin', 'moderator', 'manager'].includes(user?.role);
 }
 
 export function isAdmin(user) {

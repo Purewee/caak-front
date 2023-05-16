@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { useMutation, useQuery } from '@apollo/client';
-import { CATEGORIES, CREATE, POST, UPDATE, UPLOAD } from '../post/_gql';
+import { CATEGORIES, CREATE, POST, TAGS, UPDATE, UPLOAD } from '../post/_gql';
 import { sortBy } from 'lodash';
 import moment from 'moment';
 import {
@@ -26,7 +26,7 @@ import { CKEditor } from '@ckeditor/ckeditor5-react';
 import InlineEditor from 'ckeditor5-custom-build';
 import ReactPlayer from 'react-player';
 
-import { imagePath } from 'utility/Util';
+import { imagePath, useDebounce } from 'utility/Util';
 import { useNavigate, useParams } from 'react-router-dom';
 import { getDataFromBlob, imageCompress } from 'lib/imageCompress';
 import AddBlock from './AddBlock';
@@ -215,6 +215,13 @@ function AddStory() {
                     disabled: x.status !== 'active',
                   }))}
                 />
+              </Form.Item>
+              <Form.Item
+                name="tags"
+                className="font-merri"
+                rules={[{ required: true, message: 'Таг заавал сонгоно уу' }]}
+              >
+                <TagsField mode="tags" placeholder="Tags" />
               </Form.Item>
               <Form.Item name="featured" className="font-merri" valuePropName="checked">
                 <Checkbox onChange={(e) => setFeatured(e.target.checked)}>Сториг онцлох</Checkbox>
@@ -503,6 +510,26 @@ function RemoveBlock({ position, setBlocks, onRemove }) {
     >
       <Button icon={<DeleteOutlined />} key="delete" type="link" className="bg-[#F53757] text-white" />
     </Popconfirm>
+  );
+}
+
+function TagsField({ ...rest }) {
+  const [filter, setFilter] = useState(null);
+  const debouncedFilter = useDebounce(filter, 500);
+  const { data, loading } = useQuery(TAGS, { variables: { filter: debouncedFilter } });
+  const options =
+    data?.tags?.nodes.map((x) => ({ key: x.slug, value: x.slug, label: `${x.name} (${x.articlesCount})` })) || [];
+
+  return (
+    <Select
+      showSearch
+      onSearch={setFilter}
+      filterOption={false}
+      options={options}
+      loading={loading}
+      {...rest}
+      size="large"
+    />
   );
 }
 
