@@ -77,6 +77,8 @@ export default function Profile() {
 
   const isMobile = useMediaQuery(767);
 
+  console.log(user.follows);
+
   useEffect(() => {
     setLoading(true);
     es.authorPosts(id, page).then(({ hits, total }) => {

@@ -14,7 +14,7 @@ export default function HomeTabs({ selected }) {
         { label: 'Танд', key: 'user' },
         { label: 'Цаг үе', key: 'current' },
         { label: 'Видео', key: 'video' },
-        { label: 'Блог', key: 'blog' },
+        // { label: 'Блог', key: 'blog' },
         // { label: 'Чөлөөт цаг', key: 'interesting' },
       ]
     : [
@@ -22,7 +22,7 @@ export default function HomeTabs({ selected }) {
         { label: 'Трэнд', key: 'trend' },
         { label: 'Цаг үе', key: 'current' },
         { label: 'Видео', key: 'video' },
-        { label: 'Блог', key: 'blog' },
+        // { label: 'Блог', key: 'blog' },
         // { label: 'Чөлөөт цаг', key: 'interesting' },
       ];
 
@@ -58,6 +58,14 @@ export default function HomeTabs({ selected }) {
           {x.label}
         </span>
       ))}
+      <a
+        href="https://www.caak.mn/radio/"
+        target="_blank"
+        rel="noreferrer"
+        className={`text-[21px] cursor-pointer whitespace-nowrap sm:text-[20px] font-bold leading-[24px] uppercase text-[#555555] pb-[13px]`}
+      >
+        Радио
+      </a>
     </div>
   );
 }

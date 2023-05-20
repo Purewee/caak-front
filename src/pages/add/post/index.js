@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState, useContext } from 'react';
 import { useMutation, useQuery } from '@apollo/client';
 import { CATEGORIES, CONVERT_LINK, CREATE, POST, SOURCES, TAGS, UPDATE } from './_gql';

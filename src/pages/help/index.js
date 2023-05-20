@@ -188,6 +188,7 @@ export default function Help() {
 
   useEffect(() => {
     context.setStore('default');
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -269,6 +270,7 @@ export default function Help() {
                     <a
                       href={data.url}
                       target="_blank"
+                      rel="noreferrer"
                       key={index}
                       style={{ boxShadow: '0px 2px 2px #0000000F' }}
                       className="w-[306px] h-[226px] flex flex-col items-center justify-center bg-white rounded-[4px] border border-[#EFEEEF] px-[20px]"
