@@ -157,6 +157,29 @@ export class ESService {
     }).then(convertHitsTotal);
   }
 
+  tagStories(slug, page = 0, size = 20) {
+    return this.post({
+      query: {
+        bool: {
+          must: [
+            ...defaultStoryFilters,
+            {
+              nested: {
+                path: 'tags',
+                query: { term: { 'tags.slug': slug } },
+              },
+            },
+          ],
+        },
+      },
+      sort: {
+        publish_date: 'desc',
+      },
+      size: size,
+      from: page * size,
+    }).then(convertHits);
+  }
+
   tagPosts(slug, rest) {
     return this.post({
       query: {

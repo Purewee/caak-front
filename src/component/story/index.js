@@ -3,15 +3,21 @@ import StoryItem from './Story';
 import { ESService } from '../../lib/esService';
 import { Link } from 'react-router-dom';
 
-const StoryFeed = ({ home, slug = null }) => {
+const StoryFeed = ({ home, slug = null, tag = null }) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [stories, setStories] = useState([]);
   const trendPostsRef = useRef(null);
   const es = new ESService('caak');
 
+  stories.sort((a, b) => (b.featured === true) - (a.featured === true));
+
   useEffect(() => {
     if (!!slug) {
       es.categoryStories(slug).then((res) => {
+        setStories(res);
+      });
+    } else if (!!tag) {
+      es.tagStories(tag).then((res) => {
         setStories(res);
       });
     } else {
@@ -19,7 +25,7 @@ const StoryFeed = ({ home, slug = null }) => {
         setStories(res);
       });
     }
-  }, []);
+  }, [slug, tag]);
 
   const nextItem = () => {
     if (activeIndex < stories.length - 1) {

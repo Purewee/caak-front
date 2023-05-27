@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Avatar, Popover, message } from 'antd';
 import { generateTimeAgo, imagePath } from '../../utility/Util';
-import { HashTag, MetaTag } from '../../pages/post/view/wrapper';
+import { MetaTag } from '../../pages/post/view/wrapper';
 import PostSaveModal from '../modal/PostSaveModal';
 import PostShareModal from '../modal/PostShareModal';
 import ReportModal from '../modal/ReportModal';

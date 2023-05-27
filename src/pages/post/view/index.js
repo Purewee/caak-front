@@ -72,6 +72,7 @@ const Post = () => {
   const [reporting, setReporting] = useState(false);
   const [saving, setSaving] = useState(false);
   const [sharing, setSharing] = useState(false);
+  const [isBannerShown, setIsBannerShown] = useState(true);
   const [filter, setFilter] = useState([]);
   const [sort, setSort] = useState({});
   const { data, loading } = useQuery(ARTICLE, { variables: { id, slug }, fetchPolicy: 'network-only' });
@@ -147,6 +148,16 @@ const Post = () => {
       setSort({ _score: 'desc', publish_date: 'desc' });
     }
   }, [article]);
+
+  useEffect(() => {
+    const isMarketing = article.categories?.nodes?.includes((item) => {
+      if (item.slug === 'marketing') {
+        return true;
+      }
+      return false;
+    });
+    console.log(isMarketing);
+  }, []);
 
   if (loading) {
     return (
@@ -379,7 +390,7 @@ const Post = () => {
               {article.description && (
                 <PostBlock b={{ kind: 'text', id: '00', content: article.description }} idx={false} />
               )}
-              <Banner position="a3" />
+              {isBannerShown && <Banner position="a3" />}
               {orderBy(article?.blocks, ['position'], 'asc').map((b, idx) => (
                 <div className="mt-6 lg:mt-10" key={b.id}>
                   {numbering === 'asc' && <PostBlock b={b} idx={!!b.title && currentIdx++} />}

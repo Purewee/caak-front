@@ -3,6 +3,7 @@ import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { generateTimeAgo, imagePath } from '../../utility/Util';
 import { Link } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
+import Star from '../../images/start.png';
 
 export default function StoryItem({ story, border }) {
   const location = useLocation();
@@ -36,6 +37,7 @@ export default function StoryItem({ story, border }) {
               {generateTimeAgo(story?.publish_date)}
             </p>
           </div>
+          <img alt="" className="absolute top-3 right-3 w-7 " src={Star} />
         </div>
       </div>
     </Link>

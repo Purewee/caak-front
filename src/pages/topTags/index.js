@@ -8,6 +8,7 @@ import PostCard from '../../component/card/Post';
 import { AppContext } from '../../App';
 import { useAuth } from '../../context/AuthContext';
 import useMediaQuery from '../../component/navigation/useMediaQuery';
+import StoryFeed from 'component/story';
 
 const CATEGORY = gql`
   query getTag($slug: String) {
@@ -125,12 +126,13 @@ export default function Category() {
             className="text-center text-[15px] leading-[18px] ml-[20px]"
           />
         </div>
+        <StoryFeed tag={category.slug} />
         <Tabs
           defaultActiveKey="recent"
           onChange={(e) => {
             setSort(e);
           }}
-          className="mt-[48px] flex items-center w-full border-t border-b"
+          className="mt-[48px] lg:mt-[60px] flex items-center w-full border-t border-b"
         >
           <Tabs.TabPane
             tab={
