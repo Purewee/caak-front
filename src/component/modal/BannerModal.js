@@ -80,14 +80,14 @@ const BannerModal = ({ open, setOpen }) => {
               <div className="flex flex-col items-center mt-[30px]">
                 <img alt="" className="w-[330px]" src={A3} />
                 <p className="mt-[18px] text-caak-darkGray text-[15px] leading-[20px]">
-                  Мэдээний дэлгэрэнгүй дээр баруун талд дагаж харагдана
+                  Тухайн хуудсан дээр Pop-Up хэлбэрээр харагдана.
                 </p>
               </div>
               <p className="text-caak-primary font-bold text-[16px] leading-[21px] mt-[28px]">Гар утас</p>
               <div className="flex flex-col items-center mt-[30px]">
                 <img alt="" className="w-[132px]" src={A3_SP} />
                 <p className="mt-[18px] text-caak-darkGray text-[15px] leading-[20px]">
-                  Утсаар үзэхэд доороос дээш дэлгэцийн 40%-г эзлэн гарч ирнэ
+                  Тухайн хуудсан дээр Pop-Up хэлбэрээр харагдана.
                 </p>
               </div>
             </div>
