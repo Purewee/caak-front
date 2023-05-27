@@ -37,7 +37,7 @@ export default function StoryItem({ story, border }) {
               {generateTimeAgo(story?.publish_date)}
             </p>
           </div>
-          <img alt="" className="absolute top-3 right-3 w-7 " src={Star} />
+          {story?.featured && <img alt="" className="absolute top-3 right-3 w-7 " src={Star} />}
         </div>
       </div>
     </Link>
