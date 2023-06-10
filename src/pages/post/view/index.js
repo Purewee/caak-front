@@ -149,15 +149,15 @@ const Post = () => {
     }
   }, [article]);
 
+  console.log(isBannerShown);
+
   useEffect(() => {
-    const isMarketing = article.categories?.nodes?.includes((item) => {
-      if (item.slug === 'marketing') {
-        return true;
+    article.categories?.nodes?.map((data) => {
+      if (data.slug === 'marketing') {
+        setIsBannerShown(false);
       }
-      return false;
     });
-    console.log(isMarketing);
-  }, []);
+  }, [article.categories?.nodes]);
 
   if (loading) {
     return (
